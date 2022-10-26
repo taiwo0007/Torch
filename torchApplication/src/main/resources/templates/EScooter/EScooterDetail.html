@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset = "ISO-8859-1" />
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <title>Spring Boot Application</title>
+</head>
+<body>
+
+<div class="col-4">
+
+    <div class="card" style="width: 350px">
+        <img th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." width="350" height="200">
+        <div class="card-body">
+            <h5 th:text="${escooter.getModelName()}" class="card-title"></h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+            <p th:text="${userScooter.getFirstName()}" class="card-text"></p>
+            <p th:text="${userScooter.getUserTrips()}" class="card-text"></p>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+</body>
+</html>
