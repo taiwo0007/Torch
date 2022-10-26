@@ -24,7 +24,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
@@ -40,8 +40,7 @@ public class User {
 
     private Integer userTrips;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private List<EScooter> eScooters = new ArrayList<>();
+
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = CascadeType.ALL)
@@ -52,6 +51,23 @@ public class User {
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "host_id", referencedColumnName = "id")
+    private Host host;
+
+    @OneToMany(mappedBy = "user_reviewer", cascade = CascadeType.ALL)
+    List<HostReview> hostReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
+    List<ScooterReview> scooterReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
+    List<Trip> renterTrips = new ArrayList<>();
+
+    private Boolean isVerified;
+
+
 
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles){
         this.firstName= firstName;

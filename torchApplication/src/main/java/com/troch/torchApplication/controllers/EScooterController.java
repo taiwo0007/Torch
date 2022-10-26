@@ -49,7 +49,7 @@ public class EScooterController {
         List<EScooter> scooters = eScooterService.findAllEScooters();
         List<User> userList = userServiceimpl.findAllUsers();
         List<Make> makeList = makeService.findAllMake();
-        logger.info(scooters.get(0).getImage());
+
 
         map.addAttribute("userList", userList);
         map.addAttribute("scooters", scooters);
@@ -79,14 +79,14 @@ public class EScooterController {
         if(escooter.isPresent()){
             model.addAttribute("escooter", escooter.get());
 
-            User userScooter = eScooterService.findUser(id);
+//            User userScooter = eScooterService.findUser(id);
 
 
 
 
 
-            model.addAttribute("userScooter", userScooter);
-            logger.info(userScooter.getFirstName());
+//            model.addAttribute("userScooter", userScooter);
+//            logger.info(userScooter.getFirstName());
 
         }
         else {

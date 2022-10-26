@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Getter
@@ -16,11 +19,12 @@ import java.util.List;
 public class EScooter {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name="scooter_host_id", referencedColumnName = "id")
+    private Host host;
 
     @ManyToOne
     @JoinColumn(name = "make_id", referencedColumnName = "id")
@@ -37,13 +41,25 @@ public class EScooter {
     @Column(name = "imageURL")
     private String image;
 
+
     private Date tripStart;
     private Date tripEnd;
+
+    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL)
+    List<ScooterReview> escooterReviews = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "eScooterOnTrip", cascade = CascadeType.ALL)
+    List<Trip> escooterTrips = new ArrayList<>();
+
+
 
 
     public String getImage(){
         return this.image;
     }
+
+
 
 
 

@@ -1,7 +1,7 @@
 package com.troch.torchApplication.services;
 
 import com.troch.torchApplication.models.EScooter;
-import com.troch.torchApplication.models.User;
+import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.repositories.EScooterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +30,10 @@ public class EScooterService {
 
     }
 
-    public User findUser(Integer id){
+    public Host findUser(Integer id){
 
 
-        return eScooterRepository.findById(id).get().getUser();
+        return eScooterRepository.findById(id).get().getHost();
 
     }
 
