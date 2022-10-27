@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+        * {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<nav
+        style=" padding: 1.2rem 10rem 1.2rem 10rem"
+        class="d-flex justify-content-between bg-light" id="navbarNavDropdown">
+
+    <a class="navbar-brand"  th:href = "@{/}">
+        <img style="filter: invert(98%)" src="/images/website/torch.png" width="90" height="auto" alt="" />
+    </a>
+
+    <div>
+        <!-- <button type="button" class="btn btn-outline-light  rounded-0" >Log out</button> -->
+
+        <a  th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-dark  rounded-0" >Become a Host</a>
+
+    </div>
+
+</nav>
+
+
+
+<section style="max-width: 67% !important; " class="container">
+    <div class="row pt-3 mb-3">
+        <div style="width: auto;" class="col-4">
+            <div class="card " style="width: 18rem;">
+                <img  style="border-radius: 50% !important; width: 8.7rem; height: auto;" src="/images/website/avatar.png" class="card-img-top p-4 m-auto" alt="...">
+                <h4 th:text="${user.getFirstName() +' '+user.getLastName()}" class="fw-bold text-center">Bob Dylan </h4>
+                <span class="text-info text-center" style="font-size: 1rem;  ">41 trips</span>
+                <div class="card-body p-4 mx-auto">
+                    <!-- <h5 class="card-title">Card title</h5> -->
+
+                    <p style="margin: 0 !important;" class="card-text border-top border-bottom py-3 border-light">Verification: <span class=" ms-3 text-info">Not verified</span></p>
+                    <p style="margin: 0 !important" class="card-text border-bottom py-3 border-light ">Host Status: <span class=" ms-3 text-info">Not active</span></p>
+                    <p style="margin: 0 !important" class="card-text border-bottom py-3 border-light ">Your rating: <span class=" ms-3 text-info text-end">5.0 </span></p>
+
+                    <p class="card-text border-bottom py-3 border-light ">Active trips: <span class=" ms-3 text-info">0</span></p>
+
+
+                    <a href="#" class="btn btn-outline-info text-center mx-auto">Update profile image</a>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-8">
+
+            <div class="container card "
+                 style="
+
+                background-color: white;
+           margin: auto !important;
+
+              ">
+
+                <form class="p-4">
+                    <h2 class="fw-bold ">Profile</h2>
+
+                    <!-- IF CUSTOMER IS ANONYMOUS -->
+                    <div th:if="${user.getIsVerified()}">
+
+                    </div>
+                    <!-- ELSE -->
+                    <div th:unless="${user.getIsVerified()}">
+                        <div class="alert alert-primary d-flex align-items-center" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            <div>
+                                Your account is not yet verified.
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div style="" class="mb-3 d-flex justify-content-between form-group">
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">First Name</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" />
+                        </div>
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Last Name</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" />
+                        </div>
+                    </div>
+
+                    <div style="" class="form-group mb-3 d-flex justify-content-between ">
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Phone Number:</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" />
+                        </div>
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Email Address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" disabled placeholder="taiwo.obadare@gmail.com"/>
+                        </div>
+                    </div>
+
+                    <div style="" class="mb-3 d-flex justify-content-between pt-3 form-group">
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Country:</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" />
+                        </div>
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">State/County:</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp"  placeholder="taiwo.obadare@gmail.com"/>
+                        </div>
+                    </div>
+                    <div style="" class="mb-3 d-flex justify-content-between form-group">
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Post Code:</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" />
+                        </div>
+                        <div style="width: 47% !important;">
+                            <label for="exampleInputEmail1" class="form-label fw-bold">Account type</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" disabled  placeholder="Premium"/>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                        <!-- IF CUSTOMER IS ANONYMOUS -->
+                        <div id="emailHelp" class="form-text py-4 " th:if="${user.getIsVerified()}">
+
+                        </div>
+                        <!-- ELSE -->
+                        <div id="emailHelp" class="form-text py-4 " th:unless="${user.getIsVerified()}">
+                            Please fill out all the information and click verify, to verify account.
+                        </div>
+
+
+                    <button style="width: 24%" type="submit" class="btn btn-info text-light p-2 mt-4 rounded-0">
+                        Update
+                    </button>
+                    <button style="width: 24%" type="submit" class=" ms-4 btn btn-outline-success  p-2 mt-4 rounded-0">
+                        Verify
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</section>
+</body>
+
+</html>

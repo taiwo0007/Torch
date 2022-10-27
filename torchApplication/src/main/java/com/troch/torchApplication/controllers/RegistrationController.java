@@ -27,6 +27,7 @@ public class RegistrationController {
     @GetMapping
     public String singUp()  {
 
+
         return "authentication/signup";
 
     }
@@ -34,6 +35,12 @@ public class RegistrationController {
 
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+
+        String formatFirstName = registrationDto.getFirstName().replaceAll(",", "");
+        registrationDto.setFirstName(formatFirstName);
+
+        String formatLastName = registrationDto.getLastName().replaceAll(",", "");
+        registrationDto.setLastName(formatLastName);
         userService.save(registrationDto);
         return "redirect:/user/signin?success";
     }

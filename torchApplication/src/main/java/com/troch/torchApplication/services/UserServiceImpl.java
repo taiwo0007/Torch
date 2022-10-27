@@ -34,6 +34,10 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     @Override
     public User save(UserRegistrationDto registrationDto) {
         User user = new User(registrationDto.getFirstName(),

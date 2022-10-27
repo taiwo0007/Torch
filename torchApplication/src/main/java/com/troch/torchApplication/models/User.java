@@ -35,6 +35,12 @@ public class User {
     @Column(name = "rating")
     private Double rating;
 
+    private Integer phoneNumber;
+
+    private String postCode;
+
+    private String country;
+
     @Column(name = "profilePicture")
     private String profilePicture;
 

@@ -39,18 +39,27 @@
 
 
 
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" th:href = "@{/}">
         <img src="/images/website/torch.png" width="90" height="auto" alt="" />
     </a>
+
     <div sec:authorize="isAnonymous()">
         <a th:href = "@{/user/signin}" style="background-color: black" class="btn text-light">
             Log in
         </a>
-        <a th:href = "@{/registration}" class="btn btn-light">Sign up</a>
+<!--        <a th:href = "@{/registration}" class="btn btn-light">Sign up</a>-->
+        <a th:href = "@{/registration}" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;" class="btn btn-light rounded-0 fw-bolder">Sign up</a>
+        <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
     </div>
-    <div sec:authorize="isAuthenticated()">
-        <a class=" btn text-light" th:href="@{/logout}">Log out</a>
-    </div>
+
+        <div sec:authorize="isAuthenticated()">
+            <a class=" btn text-light" th:href="@{/logout}">Log out</a>
+            <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
+            <a th:href="@{/user/profileEdit}" type="button" class="btn btn-outline-light  rounded-0" >Profile</a>
+        </div>
+
+
+
 </nav>
 
 <!--<div th:if="${param.success}" >-->
