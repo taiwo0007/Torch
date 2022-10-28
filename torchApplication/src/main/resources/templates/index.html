@@ -55,7 +55,7 @@
         <div sec:authorize="isAuthenticated()">
             <a class=" btn text-light" th:href="@{/logout}">Log out</a>
             <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
-            <a th:href="@{/user/profileEdit}" type="button" class="btn btn-outline-light  rounded-0" >Profile</a>
+            <a th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn btn-outline-light  rounded-0" >Profile</a>
         </div>
 
 

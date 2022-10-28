@@ -29,6 +29,7 @@ public class User {
     private String firstName;
     @Column(name = "lastName")
     private String lastName;
+
     private String email;
     @Column(name = "password")
     private String password;
@@ -40,6 +41,11 @@ public class User {
     private String postCode;
 
     private String country;
+
+    private String state;
+
+    private String accountType;
+
 
     @Column(name = "profilePicture")
     private String profilePicture;

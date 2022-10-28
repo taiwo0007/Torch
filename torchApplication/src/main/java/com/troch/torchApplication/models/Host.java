@@ -20,7 +20,6 @@ import java.util.List;
 public class Host {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne(mappedBy = "host")

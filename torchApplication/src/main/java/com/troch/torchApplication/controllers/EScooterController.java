@@ -12,6 +12,9 @@ import com.troch.torchApplication.services.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -43,8 +46,11 @@ public class EScooterController {
     @Autowired
     MakeService makeService;
 
+    @Autowired
+    UserServiceImpl userServiceImpl;
+
     @GetMapping(value = "/")
-    public String index(ModelMap map)  {
+    public String index(ModelMap map, Model model)  {
 
         List<EScooter> scooters = eScooterService.findAllEScooters();
         List<User> userList = userServiceimpl.findAllUsers();
@@ -54,6 +60,30 @@ public class EScooterController {
         map.addAttribute("userList", userList);
         map.addAttribute("scooters", scooters);
         map.addAttribute("makeList", makeList);
+
+        if( SecurityContextHolder.getContext().getAuthentication() != null &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
+                //when Anonymous Authentication is enabled
+                !(SecurityContextHolder.getContext().getAuthentication()
+                        instanceof AnonymousAuthenticationToken) ){
+
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username;
+
+            if (principal instanceof UserDetails) {
+                username = ((UserDetails)principal).getUsername();
+            } else {
+                username = principal.toString();
+            }
+
+
+            User currentUserObj = userServiceImpl.findUserByEmail(username);
+
+            model.addAttribute("user", currentUserObj);
+        }
+        else{
+            model.addAttribute("user", null);
+        }
 
         return "index";
 

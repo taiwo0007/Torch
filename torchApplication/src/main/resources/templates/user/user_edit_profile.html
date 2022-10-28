@@ -19,7 +19,7 @@
 
     <style>
         * {
-            overflow: hidden;
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -55,7 +55,8 @@
                     <!-- <h5 class="card-title">Card title</h5> -->
 
                     <p style="margin: 0 !important;" class="card-text border-top border-bottom py-3 border-light">Verification: <span class=" ms-3 text-info">Not verified</span></p>
-                    <p style="margin: 0 !important" class="card-text border-bottom py-3 border-light ">Host Status: <span class=" ms-3 text-info">Not active</span></p>
+                    <p style="margin: 0 !important" class="card-text border-bottom py-3 border-light ">Host ID: <span th:if="${user.getHost()}" th:text="${user.getHost().getId()}" class=" ms-3 text-info text-end">Not active</span>
+                        <span th:unless="${user.getHost()}"  class="text-end ms-3 text-info">Not active</span></p>
                     <p style="margin: 0 !important" class="card-text border-bottom py-3 border-light ">Your rating: <span class=" ms-3 text-info text-end">5.0 </span></p>
 
                     <p class="card-text border-bottom py-3 border-light ">Active trips: <span class=" ms-3 text-info">0</span></p>
@@ -78,11 +79,19 @@
 
               ">
 
-                <form class="p-4">
+                <form th:action="@{/user/update/{id}(id=${user.getId()})}"  th:object="${user}" class="p-4" method="post">
                     <h2 class="fw-bold ">Profile</h2>
 
                     <!-- IF CUSTOMER IS ANONYMOUS -->
                     <div th:if="${user.getIsVerified()}">
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </symbol>
+                            </svg>
+                            <strong class="mx-2">Status: </strong> You've successfully been verified.
+                        </div>
 
                     </div>
                     <!-- ELSE -->
@@ -101,55 +110,56 @@
 
                     <div style="" class="mb-3 d-flex justify-content-between form-group">
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">First Name</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" />
+                            <label class="form-label fw-bold" for="firstName"> First Name </label>
+                            <input id="firstName" class="form-control" th:field="*{firstName}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                         </div>
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Last Name</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" />
+                            <label class="form-label fw-bold" for="lastName"> Last Name </label>
+                            <input id="lastName" class="form-control" th:field="*{lastName}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+
                         </div>
                     </div>
 
                     <div style="" class="form-group mb-3 d-flex justify-content-between ">
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Phone Number:</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" />
+                            <label class="form-label fw-bold" for="phoneNumber"> Phone Number </label>
+                            <input type="tel" id="phoneNumber" class="form-control" th:field="*{phoneNumber}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
                         </div>
+
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Email Address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" disabled placeholder="taiwo.obadare@gmail.com"/>
+                            <label for="postCode" class="form-label fw-bold">Post Code:</label>
+                            <input id="postCode" class="form-control" th:field="*{postCode}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}"></span>
                         </div>
+
+
                     </div>
 
                     <div style="" class="mb-3 d-flex justify-content-between pt-3 form-group">
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Country:</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" />
+                            <label for="country" class="form-label fw-bold">Country:</label>
+                            <input id="country" class="form-control" th:field="*{country}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
                         </div>
                         <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">State/County:</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp"  placeholder="taiwo.obadare@gmail.com"/>
+                            <label for="state" class="form-label fw-bold">State/County:</label>
+                            <input id="state" class="form-control" th:field="*{state}"
+                                   required autofocus="autofocus" />
+                            <span th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
                         </div>
                     </div>
-                    <div style="" class="mb-3 d-flex justify-content-between form-group">
-                        <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Post Code:</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" />
-                        </div>
-                        <div style="width: 47% !important;">
-                            <label for="exampleInputEmail1" class="form-label fw-bold">Account type</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" disabled  placeholder="Premium"/>
-                        </div>
 
-                    </div>
+
+
+
 
 
 
@@ -165,12 +175,12 @@
                         </div>
 
 
-                    <button style="width: 24%" type="submit" class="btn btn-info text-light p-2 mt-4 rounded-0">
+                    <button style="width: 24%" type="submit" class="btn btn-info text-light p-2 mt-1 rounded-0">
                         Update
                     </button>
-                    <button style="width: 24%" type="submit" class=" ms-4 btn btn-outline-success  p-2 mt-4 rounded-0">
-                        Verify
-                    </button>
+<!--                    <button style="width: 24%" type="submit" class=" ms-4 btn btn-outline-success  p-2 mt-4 rounded-0">-->
+<!--                        Verify-->
+<!--                    </button>-->
                 </form>
             </div>
         </div>

@@ -4,6 +4,7 @@ import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
+import com.troch.torchApplication.repositories.UserRepository;
 import com.troch.torchApplication.services.UserService;
 import com.troch.torchApplication.services.UserServiceImpl;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,9 @@ public class UserController {
     @Autowired
     UserServiceImpl userServiceImpl;
 
+    @Autowired
+    UserRepository userRepository;
+
     Logger logger = LoggerFactory.getLogger(EScooterController.class);
 
     public UserController(UserService userService) {
@@ -42,43 +47,52 @@ public class UserController {
 
 
     @GetMapping(value = "/signin")
-    public String singIn()  {
+    public String singIn(Model model)  {
 
+        model.addAttribute("error", "Incorrect email or passowrd.");
         return "authentication/signin";
 
     }
 
 
 
-    @GetMapping(value = "/sginin")
-    public String login()  {
 
-        return "authentication/signin";
+    @GetMapping("/profileEdit/{id}")
+    public String profileEdit(@PathVariable("id") Integer id, Model model) throws Exception {
 
-    }
+        User user = userServiceImpl.findUser(id);
 
-    @GetMapping("/profileEdit")
-    public String profileEdit(Model model) throws Exception {
-
-
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-
-        User currentUserObj = userServiceImpl.findUserByEmail(username);
-        model.addAttribute("user", currentUserObj);
+        model.addAttribute("user", user);
 
 
 
         return "user/user_edit_profile";
 
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") Integer id, @ModelAttribute("user") User user,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            user.setId(id);
+            return "/user/user_edit_profile";
+        }
+
+        User currentUsr = userServiceImpl.findUser(id);
+        currentUsr.setIsVerified(true);
+        currentUsr.setProfilePicture(user.getProfilePicture());
+        currentUsr.setCountry(user.getCountry());
+        currentUsr.setPostCode(user.getPostCode());
+        currentUsr.setLastName(user.getLastName());
+        currentUsr.setPhoneNumber(user.getPhoneNumber());
+        currentUsr.setState(user.getState());
+        currentUsr.setEmail(currentUsr.getEmail());
+
+        userRepository.save(currentUsr);
+
+        model.addAttribute("user", user);
+
+        return "redirect:/user/profileEdit/"+id;
     }
 
 

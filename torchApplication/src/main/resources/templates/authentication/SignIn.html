@@ -39,12 +39,17 @@
             <div class="container pt-5 ">
                 <form th:action="@{/user/signin}" method="post" class="p-5" style="width: 35.9rem !important;background-color: white;margin: auto auto !important;"   >
 
-                        <div th:if="${param.success}">
-                            <div class="alert alert-info">You've successfully registered
-                                </div>
-                        </div>
+
+                    <div class="alert alert-info d-flex align-items-center fade show" th:if="${param.success}">
+                        <strong class="mx-2">Success:</strong> <span>You've successfuly registered.</span>
+                    </div>
+
+                    <div class="alert alert-danger d-flex align-items-center fade show" th:if="${param.error}">
+                        <strong class="mx-2">Error!</strong> <span>Incorrect email address or password.</span>
+                    </div>
 
                     <h2 class="fw-bold ">Sign in</h2>
+
 
                     <div id="" class="form-text py-4 ">
                         Don't have an account? <a th:href= "@{/registration}" class="link text-info">Sign Up</a>
