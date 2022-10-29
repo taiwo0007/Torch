@@ -74,9 +74,9 @@
                     </div>
 
                     <div class="row pb-5">
-                        <div class="col-4 mx-auto pt-3 pb-4">
+                        <div th:each="" class="col-4 mx-auto pt-3 pb-4">
                             <div class="card" style="width: 22rem">
-                                <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;"  src="/images/website/scooterOne.png" class="card-img-top" alt="..." />
+                                <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;"  src="${escooter.getImage()}" class="card-img-top" alt="..." />
                                 <div class="card-body pt-3">
                                     <div class=" pb-3 border-bottom">
                                         <div class="d-flex justify-content-between">

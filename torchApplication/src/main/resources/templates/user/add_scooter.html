@@ -45,7 +45,7 @@
 
 <section style="max-width: 67% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter mb-5 pb-5">
     <h2 class="fw-bold p-4">Add new Electric Scooter</h2>
-    <form class="p-4" th:object="${escooter}" th:action="@{/user/process-add-scooter/{id}(id=${user.getId()})}" method="post">
+    <form class="p-4" th:object="${escooterForm}" th:action="@{/user/process-add-scooter/{id}(id=${user.getId()})}" method="post" enctype="multipart/form-data">
 
         <div style="" class="mb-3 d-flex justify-content-between ">
             <div style="width: 47% !important;">
@@ -124,7 +124,7 @@
         <div style="flex-direction: column; width: 47% !important; " class="form-group ">
             <label class="form-label fw-bold ">Scooter image</label>
             <div class="">
-                <input th:field="*{image}"  type="file" accept="image/*" class="form-control" aria-label="file example" required>
+                <input th:field="*{image}" name="image" type="file" accept="image/*" class="form-control" aria-label="file example" required>
             </div>
             <!--            <input type="file" name="image" accept="image/*" class="form-control-file ">-->
         </div>

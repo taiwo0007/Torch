@@ -2,6 +2,7 @@ package com.troch.torchApplication.controllers;
 
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
+import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;

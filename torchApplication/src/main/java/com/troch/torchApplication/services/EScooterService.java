@@ -30,6 +30,8 @@ public class EScooterService {
 
     }
 
+
+
     public EScooter save(EScooter eScooter){
         return eScooterRepository.save(eScooter);
     }
