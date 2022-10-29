@@ -23,7 +23,7 @@ public class Host {
     private Integer id;
 
     @OneToOne(mappedBy = "host")
-    private User host_user;
+    private User hostUser;
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
     List<EScooter> eScooters = new ArrayList<>();

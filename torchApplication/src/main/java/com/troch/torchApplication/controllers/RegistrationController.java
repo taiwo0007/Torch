@@ -49,6 +49,8 @@ public class RegistrationController {
         registrationDto.setLastName(formatLastName);
 
 
+
+
         model.addAttribute("success", "You've been successfully registred.");
 
 

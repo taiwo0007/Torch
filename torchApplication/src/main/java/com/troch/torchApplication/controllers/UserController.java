@@ -2,11 +2,11 @@ package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.models.EScooter;
+import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.UserRepository;
-import com.troch.torchApplication.services.UserService;
-import com.troch.torchApplication.services.UserServiceImpl;
+import com.troch.torchApplication.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,17 @@ public class UserController {
 
     private UserService userService;
 
+
+
+    @Autowired
+    EScooterService eScooterService;
+
+    @Autowired
+    HostService hostService;
+
+    @Autowired
+    MakeService makeService;
+
     @Autowired
     UserServiceImpl userServiceImpl;
 
@@ -46,11 +57,66 @@ public class UserController {
 
 
 
+
     @GetMapping(value = "/signin")
     public String singIn(Model model)  {
 
         model.addAttribute("error", "Incorrect email or passowrd.");
         return "authentication/signin";
+
+    }
+
+
+
+
+
+@GetMapping("/scooter-list/{id}")
+public String scooterList(@PathVariable("id") Integer id, Model model) throws Exception {
+
+      User user = userServiceImpl.findUser(id);
+
+       model.addAttribute("user", user);
+
+
+
+       return "user/view_scooters";
+
+}
+
+    @GetMapping("/scooter-add/{id}")
+    public String scooterAdd(@PathVariable("id") Integer id, Model model) throws Exception {
+
+
+        model.addAttribute("escooter", new EScooter());
+        model.addAttribute("makes", makeService.findAllMake());
+
+        User user  = userServiceImpl.findUser(id);
+        model.addAttribute("user", user);
+
+
+
+
+
+
+        return "user/add_scooter";
+
+    }
+
+    @PostMapping("/process-add-scooter/{id}")
+    public String scooterAdd(@PathVariable("id") Integer id, @ModelAttribute("escooter")  EScooter eScooter ,  Model model) throws Exception {
+
+        User user = userServiceImpl.findUser(id);
+
+        model.addAttribute("user", user);
+
+        Host hostFound = hostService.findHostByUser(user);
+        eScooter.setHost(user.getHost());
+
+        eScooterService.save(eScooter);
+
+        model.addAttribute("success", eScooter.getModelName()+" electric scooter has been created.");
+
+        return "user/view_scooters";
 
     }
 

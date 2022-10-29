@@ -61,7 +61,7 @@ public class HostController {
 
                 Host formNewHost = new Host();
                 formNewHost.setId(currentUser.hashCode());
-                formNewHost.setHost_user(currentUser);
+                formNewHost.setHostUser(currentUser);
                 currentUser.setHost(formNewHost);
 
                 userService.saveUser(currentUser);

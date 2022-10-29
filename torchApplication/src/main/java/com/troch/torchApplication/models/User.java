@@ -34,7 +34,7 @@ public class User {
     @Column(name = "password")
     private String password;
     @Column(name = "rating")
-    private Double rating;
+    private Double rating = 0.0;
 
     private Integer phoneNumber;
 
@@ -47,10 +47,14 @@ public class User {
     private String accountType;
 
 
+
+
+
+
     @Column(name = "profilePicture")
     private String profilePicture;
 
-    private Integer userTrips;
+    private Integer userTrips = 0;
 
 
 
@@ -77,7 +81,9 @@ public class User {
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
     List<Trip> renterTrips = new ArrayList<>();
 
-    private Boolean isVerified;
+
+
+    private Boolean isVerified = false;
 
 
 
