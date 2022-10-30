@@ -20,53 +20,47 @@
 name: Build and deploy JAR app to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: torchApp    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: torchapp    # set this to the name of your Azure Web App
   JAVA_VERSION: '16'                  # set this to the Java version to use
   DISTRIBUTION: zulu                  # set this to the Java distribution
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Set up Java version
-        uses: actions/setup-java@v3.0.0
+        uses: actions/setup-java@v1
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.DISTRIBUTION }}
-          cache: 'maven'
+          java-version: '11'
 
       - name: Build with Maven
         run: mvn clean install
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
-      name: 'Development'
+      name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: java-app
 
@@ -74,6 +68,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: 'torchapp'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_6625466ebd5c4b7fbc36f4dfa2b513ea }}
           package: '*.jar'
