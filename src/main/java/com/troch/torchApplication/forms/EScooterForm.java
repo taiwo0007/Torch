@@ -30,6 +30,7 @@ public class EScooterForm {
     private Double maxRange;
     private Boolean waterResistant;
     private String about;
+    private String country;
     private MultipartFile image;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -78,20 +78,26 @@ public class UserController {
 
 
 
-@GetMapping("/scooter-list/{id}")
-public String scooterList(@PathVariable("id") Integer id, Model model) throws Exception {
+    @GetMapping("/scooter-list/{id}")
+    public String scooterList(@PathVariable("id") Integer id, Model model) throws Exception {
 
-      User user = userServiceImpl.findUser(id);
+        User user = userServiceImpl.findUser(id);
 
-//      eScooterService.
-
-       model.addAttribute("user", user);
+        Integer host_id = user.getHost().getId();
 
 
+        Host host = hostService.findById(host_id).get();
 
-       return "user/view_scooters";
+        List<EScooter> eScooterList = eScooterService.findAllEscootersByHost(host.getId());
 
-}
+        model.addAttribute("user", user);
+        model.addAttribute("eScooterList", eScooterList);
+
+
+
+        return "user/view_scooters";
+
+    }
 
     @GetMapping("/scooter-add/{id}")
     public String scooterAdd(@PathVariable("id") Integer id, Model model) throws Exception {
@@ -132,7 +138,9 @@ public String scooterList(@PathVariable("id") Integer id, Model model) throws Ex
         eScooter.setScooterWeight(escooterForm.getScooterWeight());
         eScooter.setMaxSpeed(escooterForm.getMaxSpeed());
         eScooter.setHost(user.getHost());
-        eScooter.setModelName(eScooter.getModelName());
+        eScooter.setModelName(escooterForm.getModelName());
+        eScooter.setCountry(escooterForm.getCountry());
+        eScooter.setMake(escooterForm.getMake());
 
 
         fileUploadUtil.saveFile(file);
@@ -140,7 +148,7 @@ public String scooterList(@PathVariable("id") Integer id, Model model) throws Ex
 
         model.addAttribute("success", eScooter.getModelName()+" electric scooter has been created.");
 
-        return "user/view_scooters";
+        return "redirect:/user/scooter-list/"+id+"?success";
 
     }
 
@@ -167,6 +175,7 @@ public String scooterList(@PathVariable("id") Integer id, Model model) throws Ex
             user.setId(id);
             return "/user/user_edit_profile";
         }
+
 
         User currentUsr = userServiceImpl.findUser(id);
         currentUsr.setIsVerified(true);

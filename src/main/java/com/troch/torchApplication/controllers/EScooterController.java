@@ -3,6 +3,7 @@ package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.forms.EScooterForm;
+import org.springframework.data.repository.query.Param;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +89,7 @@ public class EScooterController {
             model.addAttribute("user", null);
         }
 
+        model.addAttribute("escooterSearch", new EScooterForm());
         return "index";
 
     }
@@ -142,6 +146,23 @@ public class EScooterController {
         model.addAttribute("msg", "Uploaded images: " + file.getOriginalFilename().toString());
         return "index";
     }
+
+    @GetMapping("/findEscooters")
+    public String findEscooters( Model model,@ModelAttribute("escootersearch") EScooterForm escooterSearch){
+
+
+
+        List<EScooter> eScooterList = eScooterService.findAllByTripDatesAndLocation(escooterSearch.getTripStart(), escooterSearch.getTripEnd(), escooterSearch.getCountry());
+
+//        logger.info(eScooterList.get(0).getModelName());
+        model.addAttribute("escooterList", eScooterList);
+
+        logger.info("hellow orld");
+
+        return "EScooter/results";
+
+    }
+
 
 
 }

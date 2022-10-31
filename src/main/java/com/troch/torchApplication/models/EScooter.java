@@ -34,11 +34,11 @@ public class EScooter {
 
     @Column(name = "model_name")
     private String modelName;
-    @Column(name = "trips")
+    @Column(name = "trips", columnDefinition = "integer default 0")
     private Integer trips;
     @Column(name = "cost")
     private Double cost;
-    @Column(name = "rating")
+    @Column(name = "rating" , columnDefinition = "double default 0.0")
     private Double rating;
     @Column(name = "imageURL")
     private String image;
@@ -50,6 +50,7 @@ public class EScooter {
     private Double maxRange;
     private Boolean waterResistant;
     private String about;
+    private String country;
 
 
 

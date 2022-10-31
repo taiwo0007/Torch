@@ -6,6 +6,7 @@ import com.troch.torchApplication.repositories.EScooterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,10 @@ public class EScooterService {
 
         return eScooterRepository.findAll();
 
+    }
+
+    public List<EScooter> findAllEscootersByHost(Integer id){
+        return eScooterRepository.findEscootersByHostId(id);
     }
 
 
@@ -41,6 +46,10 @@ public class EScooterService {
 
         return eScooterRepository.findById(id).get().getHost();
 
+    }
+
+    public List<EScooter> findAllByTripDatesAndLocation(Date tripStart, Date tripEnd, String country){
+        return eScooterRepository.findAllByTripDatesAndLocation(tripStart, tripEnd, country);
     }
 
 

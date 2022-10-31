@@ -77,22 +77,23 @@
             class="hero-container my-auto">
 
         <div  class="container pt-5">
-            <form class="p-5" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
                 <h2 class="fw-bold text-center">Make your trip</h2>
-                <div id="emailHelp" class="form-text py-4">We'll never share your email with anyone else.</div>
+                <div id="emailHelp" class="form-text py-4">Enter your trip information to find your next scooter trip.</div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Pickup location</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="country" class="form-label">Pickup location</label>
+                    <input th:field="*{country}" type="text" class="form-control" id="country" aria-describedby="emailHelp" >
 
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">From date</label>
-                    <input type="date" class="form-control" id="exampleInputPassword1">
+                    <label for="tripStart" class="form-label">From date</label>
+                    <input th:field="*{tripStart}" type="date" class="form-control" id="tripStart" >
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">To date</label>
-                    <input type="date" class="form-control" id="exampleInputPassword1">
+                    <label for="tripEnd" class="form-label">To date</label>
+                    <input th:field="*{tripEnd}" type="date" class="form-control" id="tripEnd" >
                 </div>
+
 
                 <button style="width: 100%;" type="submit" class="btn btn-dark text-light">Submit</button>
             </form>
