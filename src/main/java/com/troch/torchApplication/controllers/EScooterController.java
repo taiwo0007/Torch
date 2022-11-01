@@ -115,14 +115,8 @@ public class EScooterController {
             model.addAttribute("escooter", escooter.get());
 
 //            User userScooter = eScooterService.findUser(id);
-
-
-
-
-
 //            model.addAttribute("userScooter", userScooter);
 //            logger.info(userScooter.getFirstName());
-
         }
         else {
             throw new Exception("Cannot find user");
@@ -161,6 +155,13 @@ public class EScooterController {
 
         return "EScooter/results";
 
+    }
+
+    @GetMapping("/escooterBooking")
+    public String escooterBooking(Model model){
+
+
+        return "Escooter/EscooterBooking";
     }
 
 

@@ -85,7 +85,7 @@
     <div class="row pt-2 mt-5">
         <div class="col-8">
             <div th:if="${escooterList}" class="row">
-                <a th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark" href="">
+                <a  th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark" th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
                     <div class="col-12">
                         <div class="row border-bottom p-4 rounded border-end shadow-sm">
                             <div class="col-12">
