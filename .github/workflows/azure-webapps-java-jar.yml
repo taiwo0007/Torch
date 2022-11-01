@@ -35,11 +35,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Login via Az module
-          uses: azure/login@v1
-          with:
-            creds: ${{secrets.AZURE_CREDENTIALS}}
-            enable-AzPSSession: true
+#      - name: Login via Az module
+#          uses: azure/login@v1
+#          with:
+#            creds: ${{secrets.AZURE_CREDENTIALS}}
+#            enable-AzPSSession: true
 
             - run: |
                 Get-AzVM -ResourceGroupName "torch-group"
