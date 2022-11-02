@@ -36,9 +36,9 @@ public class EScooter {
     private String modelName;
     @Column(name = "trips", columnDefinition = "integer default 0")
     private Integer trips;
-    @Column(name = "cost")
+    @Column(name = "cost", precision=2, scale=2, columnDefinition = "double default 0.00")
     private Double cost;
-    @Column(name = "rating" , columnDefinition = "double default 0.0")
+    @Column(name = "rating" , columnDefinition = "double default 0.00")
     private Double rating;
     @Column(name = "imageURL")
     private String image;

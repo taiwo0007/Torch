@@ -254,16 +254,16 @@
 
                 <div>
                     <p class="fw-bold mt-2">Trip Start Time</p>
-                    <form class="mt-2" th:action="@{/escooterBooking}" method="get">
+                    <form th:object="${trip}" class="mt-2" th:action="@{/escooterBooking/{id}(id=${escooter.getId()})}" method="get">
                         <div class="p-2">
-                            <input class="form-control form-control-lg mb-2 bg-light" type="date"
-                                   placeholder="Trip start" aria-label=".form-control-lg example">
-                            <input class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
+                            <input th:field="*{tripStart}" for="tripStart" class="form-control form-control-lg mb-2 bg-light" type="date"
+                                   placeholder="Trip start" required aria-label=".form-control-lg example">
+                            <input for="tripEnd" required  th:field="*{tripEnd}" class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
                                    aria-label=".form-control-lg example">
 
 
                             <button style="width: 100%;" type="submit"
-                                    class="btn btn-dark text-light p-2 mt-4 ">Submit</a>
+                                    class="btn btn-dark text-light p-2 mt-4 ">Submit</button>
 
 
                         </div>

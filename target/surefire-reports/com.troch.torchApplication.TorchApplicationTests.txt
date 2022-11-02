@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.troch.torchApplication.TorchApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.542 s - in com.troch.torchApplication.TorchApplicationTests

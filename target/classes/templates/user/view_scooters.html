@@ -46,7 +46,7 @@
 
 <section style="" class="container escooter pt-5 pb-5 mb-4">
 
-    <div style=" " class="row">
+    <div  class="row">
 
         <div class="col-12">
 
@@ -79,7 +79,7 @@
 
 
 
-                        <div th:each="escooter: ${eScooterList}" class="col-4 mx-auto pt-3 pb-4">
+                        <div th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-4 mx-auto pt-3 pb-4">
                             <div class="card" style="width: 22rem">
                                 <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;"   th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." />
                                 <div class="card-body pt-3">

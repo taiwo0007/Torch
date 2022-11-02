@@ -47,6 +47,17 @@
     ></script>
 
     <title>Torch Scooter Rental Service</title>
+    <style>
+
+        a{
+            transition: all .2s ease-in-out;
+        }
+
+        a:hover{
+            transform: scale(1.01);
+            opacity: .8;
+        }
+    </style>
 </head>
 <body>
 <!-- Just an image -->
@@ -87,12 +98,12 @@
             <div th:if="${escooterList}" class="row">
                 <a  th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark" th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
                     <div class="col-12">
-                        <div class="row border-bottom p-4 rounded border-end shadow-sm">
+                        <div class="row border-bottom p-4 rounded  shadow-sm">
                             <div class="col-12">
                                 <div class="d-flex">
                                     <img
                                             class="rounded "
-                                            style="object-fit: cover; width: 15.2rem; height: 15.2rem"
+                                            style="object-fit: cover; width: 17.2rem; height: 15.2rem"
                                             th:src="@{${escooter.getImage()}}"
                                             alt=""
                                     />

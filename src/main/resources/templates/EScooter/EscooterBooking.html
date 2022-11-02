@@ -135,10 +135,10 @@
 
                                 <div class="row  py-2">
                                     <div class="col-6 my-auto">
-                                        <p class="card-text my-auto text-secondary"><span>€400.00</span> for  <span>3 days</span> </p>
+                                        <p class="card-text my-auto text-secondary">€<span th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}">€400.00</span> for  <span th:text="${days}">3 days</span> day(s) </p>
                                     </div>
                                     <div class="col-6 my-auto">
-                                        <p class=" text-info text-end my-auto fw-bold">€1,200.00</p>
+                                        <p  class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(normalCost, 0, 'COMMA', 2, 'POINT')}"></span></p>
                                     </div>
 
                                 </div>
@@ -171,10 +171,10 @@
                                 </div>
                                 <div class="row border-top   mt-3 pt-4">
                                     <div class="col-6 my-auto">
-                                        <p class="card-text  my-auto text-dark fw-bold">Total cost</p>
+                                        <p  class="card-text  my-auto text-dark fw-bold">Total cost</p>
                                     </div>
                                     <div class="col-6 my-auto">
-                                        <h3 class=" text-info text-end my-auto fw-bold">€2,300.00</h3>
+                                        <h3  class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></h3>
                                     </div>
 
                                 </div>
@@ -193,12 +193,13 @@
             </div>
             <div class="p-4 border rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
-                <h5 class="fw-bold  px-3 pb-3 pt-3">Xiomi Modertan pro x6</h5>
+                <h5
+                th:text="${escooter.getModelName}" class="fw-bold  px-3 pb-3 pt-3">Xiomi Modertan pro x6</h5>
                 <div class="mx-auto text-center">
                     <img
                             class="rounded mx-auto text-center"
                             style="object-fit: cover; width: 15.2rem; height: 15.2rem"
-                            src="/images/1.png"
+                            th:src="@{${escooter.getImage()}}"
                             alt=""
                     />
                 </div>
@@ -216,7 +217,7 @@
                         <p class="card-text fw-bold  my-auto ">Pick up</p>
                     </div>
                     <div class="col-6 my-auto">
-                        <p class=" text-end my-auto  fw-bolder">2022/02/06</p>
+                        <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}" class=" text-end my-auto  fw-bolder">2022/02/06</p>
                     </div>
 
                 </div>
@@ -225,7 +226,7 @@
                         <p class="card-text fw-bold  my-auto ">Drop of</p>
                     </div>
                     <div class="col-6 my-auto">
-                        <p class=" text-end my-auto fw-bold">2022/04/03</p>
+                        <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}" class=" text-end my-auto fw-bold">2022/04/03</p>
                     </div>
 
                 </div>
