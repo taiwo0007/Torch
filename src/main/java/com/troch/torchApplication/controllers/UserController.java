@@ -141,6 +141,7 @@ public class UserController {
         eScooter.setModelName(escooterForm.getModelName());
         eScooter.setCountry(escooterForm.getCountry());
         eScooter.setMake(escooterForm.getMake());
+        eScooter.setTrips(0);
 
 
         fileUploadUtil.saveFile(file);
