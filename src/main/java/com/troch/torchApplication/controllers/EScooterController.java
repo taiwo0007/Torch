@@ -3,12 +3,9 @@ package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.forms.EScooterForm;
-import com.troch.torchApplication.models.Trip;
+import com.troch.torchApplication.models.*;
 import com.troch.torchApplication.services.*;
 import org.springframework.data.repository.query.Param;
-import com.troch.torchApplication.models.EScooter;
-import com.troch.torchApplication.models.Make;
-import com.troch.torchApplication.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,23 +166,26 @@ public class EScooterController {
 
             User currentUserObj = userServiceImpl.findUserByEmail(username);
 
-
-
             Date startingDate = trip.getTripStart();
             Date endingDate = trip.getTripEnd();
             trip.setUser_renter(currentUserObj);
             trip.setTrip_owner(eScooter.getHost());
+            eScooter.setTrips(eScooter.getTrips()+1);
 
             int days = Math.abs(startingDate.getDate() - endingDate.getDate());
-
-            logger.info(String.valueOf(startingDate.getDate()));
 
             trip.setTripCost(eScooter.getCost() * days + 20);
 
             trip.setEScooterOnTrip(eScooter);
 
+            //database triggers to +1 so overriding here instead of in db code
+            trip.setId(trip.getId()-1);
+
             tripService.saveTrip(trip);
+
             eScooter.getEscooterTrips().add(trip);
+
+            eScooterService.save(eScooter);
             model.addAttribute("days", days);
             model.addAttribute("user", currentUserObj);
             model.addAttribute("escooter", eScooter);
@@ -200,11 +200,36 @@ public class EScooterController {
 
     }
 
-    @GetMapping("/processTrip/{id}")
-    public String escooterBookingTrip(Model model, @ModelAttribute("trip")  Trip trip){
+    @PostMapping("/processTrip/{id}")
+    public String escooterBookingTrip(@PathVariable("id") Integer id, Model model) throws Exception {
 
-        return "Escooter/EscooterBooking";
+        Trip trip;
+        Optional<Trip> optionalTrip = tripService.findTripById(id);
+
+        if(!optionalTrip.isPresent()){
+            throw new Exception("Trip is not present with this ID");
+        }
+        else{
+
+            trip = tripService.findTripByIdCertain(id);
+        }
+        int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
+
+
+
+        model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
+        model.addAttribute("host", trip.getTrip_owner().getHostUser());
+        model.addAttribute("escooter", trip.getEScooterOnTrip());
+        model.addAttribute("trip", trip);
+
+
+
+        model.addAttribute("days", days);
+
+        return "Escooter/trip";
     }
+
+
 
 
 

@@ -55,7 +55,7 @@
                 Trip Payment
             </h1>
 
-            <form style="padding: 0 10rem  0rem 10rem !important;" class="p-5 my-5">
+            <form th:action="@{/processTrip/{id}(id=${trip.getId()})}" style="padding: 0 10rem  0rem 10rem !important;" class="p-5 my-5" method="post">
 
                 <h3 style="font-size: 1.8rem !important" class="h1 text-start fw-bold mb-5 text-info">
                     Credit card
@@ -97,9 +97,9 @@
                     Please fill out all the information and click verify, to verify account.
                 </div>
 
-                <a style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3  me-4  rounded-0">
+                <button style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3  me-4  rounded-0">
                     Finish Booking
-                </a>
+                </button>
 
             </form>
             <div  class="d-flex justify-content-evenly">
