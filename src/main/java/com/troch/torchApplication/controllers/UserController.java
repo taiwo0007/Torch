@@ -143,7 +143,6 @@ public class UserController {
         eScooter.setMake(escooterForm.getMake());
         eScooter.setTrips(0);
 
-
         fileUploadUtil.saveFile(file);
         eScooterService.save(eScooter);
 
@@ -163,8 +162,6 @@ public class UserController {
 
         model.addAttribute("user", user);
 
-
-
         return "user/user_edit_profile";
 
     }
@@ -176,7 +173,6 @@ public class UserController {
             user.setId(id);
             return "/user/user_edit_profile";
         }
-
 
         User currentUsr = userServiceImpl.findUser(id);
         currentUsr.setIsVerified(true);

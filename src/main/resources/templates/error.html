@@ -52,7 +52,14 @@
             <p  style="font-size: 3rem !important; margin-top: -3rem;"  class="badge-info fw-bold text-center text-dark text-center">
                 Page Not Found
             </p>
-            <p>Something went wrong.</p>
+            <div th:if="${error}">
+                <p th:text="${error}"></p>
+            </div>
+            <div th:unless=${error}>
+
+                <p>Something went wrong.</p>
+            </div>
+
         </div>
     </div>
 

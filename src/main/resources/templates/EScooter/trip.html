@@ -47,7 +47,11 @@
 
 
 <section class="container-fluid mt-5 mb-5 bg-light">
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>Succesfuly Booked</strong>
 
+        </button>
+    </div>
 
     <div class="row bg-light">
         <div class="col-3">
@@ -103,9 +107,9 @@
                 <div>
                     <div class="row">
 
-                        <div class="col-8 text-start">
+                        <div class="col-7 text-start">
                             <div class="p-3">
-                                <h3 class="fw-bold">Trip ID:<span>#<span th:text="${trip.getId()}">GW5625H</span></span></h3>
+                                <h3 class="fw-bold">Trip ID: <span class="fw-bold">#<span class="fw-bold" th:text="${trip.getId()}">GW5625H</span></span></h3>
                                 <h5  th:text="${escooter.getModelName}" style="" class="text-secondary mb-5">Xiomi ultran pro</h5>
 
                                 <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
@@ -163,7 +167,7 @@
 
 
                         </div>
-                        <div class="col-4 my-auto">
+                        <div class="col-5 my-auto">
                             <div class="mx-auto my-auto text-center">
                                 <img
                                         class="rounded mx-auto text-center"

@@ -55,7 +55,7 @@
                 Trip Payment
             </h1>
 
-            <form th:action="@{/processTrip/{id}(id=${trip.getId()})}" style="padding: 0 10rem  0rem 10rem !important;" class="p-5 my-5" method="post">
+            <form th:action="@{/processTrip/{tripId}(tripId=${trip.getId()})}" style="padding: 0 10rem  0rem 10rem !important;" class="p-5 my-5" method="post">
 
                 <h3 style="font-size: 1.8rem !important" class="h1 text-start fw-bold mb-5 text-info">
                     Credit card

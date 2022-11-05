@@ -21,15 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 public class EScooterController {
@@ -123,17 +118,17 @@ public class EScooterController {
     @GetMapping("/EScooterDetail/{id}")
     public String EScooterDetail(@PathVariable("id") Integer id, Model model) throws Exception {
 
-
-
         Optional<EScooter> escooter = eScooterService.findEScooter(id);
+        Trip newTrip = new Trip();
+
         if(escooter.isPresent()){
             model.addAttribute("escooter", escooter.get());
-            model.addAttribute("trip", new Trip());
+            model.addAttribute("trip", newTrip);
 
         }
         else {
-            throw new Exception("Cannot find escooter");
-        }
+            model.addAttribute("error", "Cannot find escooter selected");
+            return "error";        }
 
         List<User> scooterUser = userServiceimpl.findAllUsers();
 
@@ -141,7 +136,10 @@ public class EScooterController {
 
     }
     @GetMapping("/escooterBooking/{id}")
-    public String escooterBooking(@PathVariable("id") Integer id, Model model, @ModelAttribute("trip")  Trip trip) throws Exception {
+    public String escooterBooking(@PathVariable("id") Integer id, Model model, @ModelAttribute("trip") Trip trip) throws Exception {
+
+
+        Trip bookingTrip = new Trip();
 
 
         if( SecurityContextHolder.getContext().getAuthentication() != null &&
@@ -161,69 +159,71 @@ public class EScooterController {
 
             EScooter eScooter = eScooterService.findEScooter(id).get();
             if(eScooter == null){
-                throw new Exception("No escooter");
+                model.addAttribute("error", "No escooter selected");
+                return "error";
             }
 
             User currentUserObj = userServiceImpl.findUserByEmail(username);
 
             Date startingDate = trip.getTripStart();
             Date endingDate = trip.getTripEnd();
-            trip.setUser_renter(currentUserObj);
-            trip.setTrip_owner(eScooter.getHost());
+
+            bookingTrip.setTripStart(startingDate);
+            bookingTrip.setTripEnd(endingDate);
+            bookingTrip.setUser_renter(currentUserObj);
+            bookingTrip.setTrip_owner(eScooter.getHost());
             eScooter.setTrips(eScooter.getTrips()+1);
 
             int days = Math.abs(startingDate.getDate() - endingDate.getDate());
 
-            trip.setTripCost(eScooter.getCost() * days + 20);
+            bookingTrip.setTripCost(eScooter.getCost() * days + 20);
 
-            trip.setEScooterOnTrip(eScooter);
+            bookingTrip.setEScooterOnTrip(eScooter);
 
             //database triggers to +1 so overriding here instead of in db code
-            trip.setId(trip.getId()-1);
+//            trip.setId(trip.getId());
 
-            tripService.saveTrip(trip);
+            tripService.saveTrip(bookingTrip);
 
-            eScooter.getEscooterTrips().add(trip);
+            eScooter.getEscooterTrips().add(bookingTrip);
 
-            eScooterService.save(eScooter);
+
             model.addAttribute("days", days);
             model.addAttribute("user", currentUserObj);
             model.addAttribute("escooter", eScooter);
             model.addAttribute("normalCost", eScooter.getCost()*days);
+            model.addAttribute("trip", bookingTrip);
             return "Escooter/EscooterBooking";
 
         }
         else{
-            throw new Exception("You must log in to book  ");
-        }
+            model.addAttribute("error", "You must log in to book");
+            return "error";        }
 
 
     }
 
-    @PostMapping("/processTrip/{id}")
-    public String escooterBookingTrip(@PathVariable("id") Integer id, Model model) throws Exception {
+    @PostMapping("/processTrip/{tripId}")
+    public String escooterBookingTrip(@PathVariable("tripId") Integer tripId, Model model) throws Exception {
 
-        Trip trip;
-        Optional<Trip> optionalTrip = tripService.findTripById(id);
+        Trip trip = new Trip();
+        Optional<Trip> optionalTrip = tripService.findTripById(tripId);
 
         if(!optionalTrip.isPresent()){
-            throw new Exception("Trip is not present with this ID");
+
+            model.addAttribute("error", "Escoter not found for this trip");
+            return "error";
         }
         else{
 
-            trip = tripService.findTripByIdCertain(id);
+            trip = tripService.findTripByIdCertain(tripId);
         }
         int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
-
-
 
         model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
         model.addAttribute("host", trip.getTrip_owner().getHostUser());
         model.addAttribute("escooter", trip.getEScooterOnTrip());
         model.addAttribute("trip", trip);
-
-
-
         model.addAttribute("days", days);
 
         return "Escooter/trip";
