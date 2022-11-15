@@ -16,7 +16,9 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
     <style>
         * {
             overflow-x: hidden;
@@ -56,7 +58,7 @@
 </nav>
 
 <section class="header container mt-5">
-    <h1 style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
+    <h1 th:text="${escooter.getModelName()}" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
         Xiomi vultron pro evolution.
     </h1>
     <div style="" class="d-flex  ">
@@ -128,13 +130,13 @@
 
 
                         </div>
-                        <p>49 ratings</p>
+                        <p><span th:if="${not #lists.isEmpty(reviews)}" th:text="${reviews.size()}"></span> ratings</p>
                     </div>
 
                 </div>
                 <div class="col-12 d-flex justify-content-between ">
                     <div class="d-flex">
-                        <button disabled class="btn btn-info text-light">
+                        <button th:if="${not #lists.isEmpty(reviews)}" th:text="${reviews.size()}" disabled class="btn btn-info text-light">
                             10
                         </button>
                         <h4 class="my-auto ms-3">Comments</h4>
@@ -144,37 +146,45 @@
                 </div>
 
                 <div class="col-12 mt-5 mb-5">
-                    <form action="">
+                    <form th:object="${ScooterReviewForm}" th:action="@{/reviewScooter/{scooterId}(scooterId=${escooter.getId()})}" method="post">
                         <div class="form-group">
                             <label for="comment" class="fw-bold">Review this scooter</label>
-                            <textarea class="form-control bg-light shadow" rows="5" id="comment"></textarea>
+                            <textarea th:field="*{comment}" class="form-control bg-light shadow" rows="5" id="comment"></textarea>
+                            <input th:field="*{starRating}" type="number" class="form-control" id="starRating" />
+
                         </div>
 
-                        <button style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
+
+
+
+                        <button th:if="${isAuthenticated}" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
                             Review
                         </button>
+                        <p th:unless="${isAuthenticated}" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
+                            Book a Trip to review.
+                        </p>
                     </form>
                 </div>
 
 
 
-                <div class="row border-bottom my-2 pb-4 pt-3">
+                <div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row border-bottom my-2 pb-4 pt-3">
                     <div class="col-1">
-                        <img style="object-fit: cover;" src="/images/4.png" width="60" height="60" class="rounded"
+                        <img style="object-fit: cover; border-radius: 50% !important" th:src="@{${review.getScooter_reviewer().getProfilePicture()}}" width="60" height="60" class="rounded"
                              alt="..." />
 
                     </div>
-                    <div class="col-11">
-                        <div class="row">
+                    <div   class="col-11">
+                        <div   class="row">
                             <div class="col-10">
-                                <p>Stephen Walsh <br> <span class="text-secondary">Ireland</span> </p>
+                                <p ><span th:text="${review.getScooter_reviewer().getFirstName() +' ' +review.getScooter_reviewer().getLastName()}"></span> <br> <span th:text="${review.getScooter_reviewer().getCountry()}" class="text-secondary">Ireland</span> </p>
 
 
                             </div>
                             <div class="col-2 d-flex justify-content-between">
-                                <p class=" text-secondary">12/04</p>
+                                <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">12/04</p>
                                 <div class="d-flex">
-                                    <p class="me-2">5.0</p>
+                                    <p th:text="${review.getStarRating()}" class="me-2">5.0</p>
                                     <i class="fa fa-star  text-info pt-1"></i>
                                 </div>
 
@@ -183,7 +193,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p class="text-secondary">Lorem Ipsum is simply dummy text of the printing and
+                            <p th:text="${review.getComment()}" class="text-secondary">Lorem Ipsum is simply dummy text of the printing and
                                 typesetting industry.
                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
                                 an unknown
@@ -191,6 +201,10 @@
 
                             </p>
                         </div>
+                    </div>
+
+                    <div th:unless="${reviews}" class="col-11">
+                        No reviews
                     </div>
 
 
@@ -216,8 +230,8 @@
                                 <div class="d-flex my-auto t">
                                         <span class="badge rounded-pill text-bg-light"> <i class="fa fa-bolt my-auto "
                                                                                            aria-hidden="true"></i></span>
-                                    <span th:text="${escooter.getMaxSpeed()}" class="badge rounded-pill text-bg-light"> 20</span>
-                                    <span class="badge rounded-pill text-bg-light">km/h </span>
+                                    <span th:text="${escooter.getMaxSpeed()}+'km/h'" class="badge rounded-pill text-bg-light"> 20</span>
+
 
 
                                 </div>
@@ -226,8 +240,8 @@
                                 <div class="d-flex my-auto t">
                                         <span class="badge rounded-pill text-bg-light"> <i
                                                 class="fa fa-clock-o my-auto " aria-hidden="true"></i></span>
-                                    <span class="badge rounded-pill text-bg-light"> 30</span>
-                                    <span class="badge rounded-pill text-bg-light">mins </span>
+                                    <span class="badge rounded-pill text-bg-light"> 30 mins</span>
+<!--                                    <span class="badge rounded-pill text-bg-light">mins </span>-->
 
 
                                 </div>
@@ -236,7 +250,7 @@
                                 <div class="d-flex my-auto t">
                                         <span class="badge rounded-pill text-bg-light"> <i
                                                 class="fa fa-credit-card-alt my-auto " aria-hidden="true"></i></span>
-                                    <span th:text="${escooter.getCost()}" class="badge rounded-pill text-bg-light"> $20</span>
+                                    <span th:text="'€'+${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}" class="badge rounded-pill text-bg-light"> $20</span>
 
                                 </div>
                             </div>
@@ -270,7 +284,7 @@
                         </div>
                         <div class="d-flex p-2 my-auto justify-content-between pt-4">
                             <p class="my-auto fw-bold">Cost per day:</p>
-                            <h3 class="text-end text-info my-auto">$32.00</h3>
+                            <h3 th:text="'€'+${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}" class="text-end text-info my-auto">$32.00</h3>
                         </div>
 
 

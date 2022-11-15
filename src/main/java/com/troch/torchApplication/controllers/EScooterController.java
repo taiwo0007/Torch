@@ -2,10 +2,11 @@ package com.troch.torchApplication.controllers;
 
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
+import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.forms.EScooterForm;
+import com.troch.torchApplication.forms.ScooterReviewForm;
 import com.troch.torchApplication.models.*;
 import com.troch.torchApplication.services.*;
-import org.springframework.data.repository.query.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -32,7 +30,14 @@ public class EScooterController {
     Logger logger = LoggerFactory.getLogger(EScooterController.class);
 
     @Autowired
+    ValidateUser validateUserutil;
+
+
+    @Autowired
     FileUploadUtil fileUploadUtil;
+
+    @Autowired
+    EScooterReviewService eScooterReviewService;
 
     @Autowired
     EScooterService eScooterService;
@@ -118,12 +123,56 @@ public class EScooterController {
     @GetMapping("/EScooterDetail/{id}")
     public String EScooterDetail(@PathVariable("id") Integer id, Model model) throws Exception {
 
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated") == false){
+            model.addAttribute("isAuthenticated", false);
+
+        }
+        else{
+            model.addAttribute("isAuthenticated", true);
+
+        }
+
+        List<ScooterReview> allScootersReview = eScooterReviewService.findAllReviewsByScooter(id);
+        double averageRating = 0.0;
+
+        int one = 0,two =0, three = 0, four = 0, five = 0;
+        for(ScooterReview scoot : allScootersReview){
+            if(scoot.getStarRating() == 1){
+                one++;
+            }
+            if(scoot.getStarRating() == 2){
+                two++;
+            }
+            if(scoot.getStarRating() == 3){
+                three++;
+            }
+            if(scoot.getStarRating() == 4){
+                four++;
+            }
+            if(scoot.getStarRating() == 5){
+                five++;
+            }
+
+             averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five+four+three+two+one);
+
+        }
+        model.addAttribute("reviews", allScootersReview);
+
         Optional<EScooter> escooter = eScooterService.findEScooter(id);
         Trip newTrip = new Trip();
 
         if(escooter.isPresent()){
+            ScooterReviewForm ScooterReviewForm = new ScooterReviewForm();
+
+            //Add review number and save in db
+            escooter.get().setRating(averageRating);
+            eScooterService.save(escooter.get());
+
+
             model.addAttribute("escooter", escooter.get());
             model.addAttribute("trip", newTrip);
+            model.addAttribute("ScooterReviewForm", ScooterReviewForm);
 
         }
         else {
@@ -135,6 +184,7 @@ public class EScooterController {
         return "EScooter/EScooterDetail";
 
     }
+
     @GetMapping("/escooterBooking/{id}")
     public String escooterBooking(@PathVariable("id") Integer id, Model model, @ModelAttribute("trip") Trip trip) throws Exception {
 
@@ -177,14 +227,8 @@ public class EScooterController {
             int days = Math.abs(startingDate.getDate() - endingDate.getDate());
 
             bookingTrip.setTripCost(eScooter.getCost() * days + 20);
-
             bookingTrip.setEScooterOnTrip(eScooter);
-
-            //database triggers to +1 so overriding here instead of in db code
-//            trip.setId(trip.getId());
-
             tripService.saveTrip(bookingTrip);
-
             eScooter.getEscooterTrips().add(bookingTrip);
 
 
@@ -211,7 +255,7 @@ public class EScooterController {
 
         if(!optionalTrip.isPresent()){
 
-            model.addAttribute("error", "Escoter not found for this trip");
+            model.addAttribute("error", "Escooter not found for this trip");
             return "error";
         }
         else{
@@ -229,8 +273,46 @@ public class EScooterController {
         return "Escooter/trip";
     }
 
+    @PostMapping("/reviewScooter/{scooterId}")
+    public String reviewScooter(@PathVariable("scooterId") Integer scooterId, @ModelAttribute("ScooterReviewForm") ScooterReviewForm scooterReviewForm, Model model) throws Exception {
 
 
+        HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();
+        if ((Boolean) validatorObj.get("authenticated") == false) {
 
+            throw new Exception("User not logged in");
+
+        } else {
+
+
+            EScooter escooter;
+            Optional<EScooter> optionalEscooter = eScooterService.findEScooter(scooterId);
+
+            if (!optionalEscooter.isPresent()) {
+
+                model.addAttribute("error", "Escooter not found for this Review");
+                return "error";
+            } else {
+
+                escooter = optionalEscooter.get();
+            }
+
+            ScooterReview scooterReview = new ScooterReview();
+            scooterReview.setReviewDate(Calendar.getInstance().getTime());
+            scooterReview.setEScooter(escooter);
+            scooterReview.setStarRating(scooterReviewForm.getStarRating());
+            scooterReview.setComment(scooterReviewForm.getComment());
+            scooterReview.setScooter_reviewer((User) validatorObj.get(("currentUserObj")));
+
+
+            eScooterReviewService.save(scooterReview);
+
+
+            return "redirect:/EScooterDetail/" + scooterId;
+
+        }
+
+
+    }
 
 }

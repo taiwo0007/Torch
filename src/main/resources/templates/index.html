@@ -4,7 +4,9 @@
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,29 +42,31 @@
 <body>
 <!-- Just an image -->
 <nav
-        style="  padding: 0.8rem 10rem; "
-        class="d-flex justify-content-between bg-light sticky fixed-top my-auto " id="navbarNavDropdown">
+        style="background-color: black !important;  padding: 0.8rem 10rem; "
+        class="d-flex justify-content-between sticky fixed-top my-auto " id="navbarNavDropdown">
 
 
     <a class="navbar-brand" th:href = "@{/}">
-        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />
+<!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
+        <img src="/images/website/torch.png" width="80" height="auto" alt="" />
+
     </a>
 
     <div sec:authorize="isAnonymous()">
-        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-dark  rounded-0 my-auto" >Become a Host</a>
+        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
 
-        <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light text-dark rounded-0 fw-bold">
+        <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
             Log in
         </a>
 
-        <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-dark rounded-0 text-white">Sign up</a>
+        <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light rounded-0 text-dark">Sign up</a>
     </div>
 
         <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
 
-            <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-dark rounded-0 my-auto " >Become a Host</a>
-            <a style="border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light text-dark rounded-0 fw-bold" th:href="@{/logout}">Log out</a>
-            <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn btn-light text-dark rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
+            <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+            <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
+            <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
 
         </div>
 
@@ -75,17 +79,17 @@
 <!--        You've successfully registered-->
 <!--    </div>-->
 
-<section class="hero-header mt-5">
+<section class="hero-header pt-5 mt-2 ">
     <div
             style="
           background-image: url('/images/website/header.png');
-          height: 83vh;
+          height: 43rem;
           width: 100vw;
         "
-            class="hero-container my-auto">
+            class="hero-container my-auto mx-auto">
 
         <div  class="container pt-5 ">
-            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-5" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
                 <h2 class="fw-bold text-center">Make your <span class="text-info">trip</span> </h2>
                 <div id="emailHelp" class="form-text py-4 text-center fw-bold text-dark">Search for Electric scooters across Ireland.</div>
                 <div class="mb-3">
@@ -103,7 +107,7 @@
                 </div>
 
 
-                <button style="width: 100%; border-radius: 2.1rem !important;" type="submit" class="btn btn-info text-light p-2 mt-4 fw-bold ">Submit</button>
+                <button style="width: 100%; border-radius: 2.1rem !important;" type="submit" class="btn btn-info text-light p-2 mt-4 fw-bold ">Search</button>
             </form>
         </div>
 

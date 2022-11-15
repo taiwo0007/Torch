@@ -1,6 +1,8 @@
 package com.troch.torchApplication.models;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ public class HostReview {
     @JoinColumn(name = "user_reviewer_id", referencedColumnName = "id")
     private User user_reviewer;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date reviewDate;
 
     private String comment;

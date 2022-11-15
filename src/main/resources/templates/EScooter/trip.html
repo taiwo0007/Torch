@@ -22,6 +22,9 @@
             overflow-x: hidden;
         }
     </style>
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
 </head>
 
 <body>
@@ -47,11 +50,6 @@
 
 
 <section class="container-fluid mt-5 mb-5 bg-light">
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>Succesfuly Booked</strong>
-
-        </button>
-    </div>
 
     <div class="row bg-light">
         <div class="col-3">

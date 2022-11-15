@@ -16,6 +16,9 @@
             crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
 
     <style>
         * {
@@ -86,7 +89,7 @@
                                     <div class=" pb-3 border-bottom">
                                         <div class="d-flex justify-content-between">
                                             <h5 th:text="${escooter.getModelName()}" class="card-text  fw-bold">Xiaomi 6 pro edition</h5>
-                                            <p  th:text="${escooter.getCost()}" class="fw-bold">$10/day</p>
+                                            <p  th:text="'€'+${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}+'/day'" class="fw-bold">$10/day</p>
                                         </div>
                                         <div style="margin-top:-.61rem;">
                                             <i class="fa fa-star text-info"></i>

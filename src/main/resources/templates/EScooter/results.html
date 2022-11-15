@@ -40,6 +40,9 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
             rel="stylesheet"
     />
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
     <!-- MDB -->
     <script
             type="text/javascript"
@@ -154,7 +157,8 @@
 
                                             <div class="col-4 fw-bold mt-auto">
                                                 <p style="font-size: 1.2rem" class="text-end">
-                                                    $<span th:text="${escooter.getCost()}"></span>/day
+                                                    €<span th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}"></span>/day
+
                                                 </p>
                                             </div>
                                         </div>
