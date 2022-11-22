@@ -1,138 +1,114 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styleuser_trips.css" />
-    <!-- CSS only -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-            crossorigin="anonymous"
-    />
-    <!-- JavaScript Bundle with Popper -->
-    <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous"
-    ></script>
 
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
-            rel="stylesheet"
-    />
-    <link rel="icon"
-          type="image/png"
-          th:href="@{${@environment.getProperty('favicon.image')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" th:href="@{${@environment.getProperty('favicon.image')}}">
     <!-- MDB -->
-    <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"
-    ></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
 
     <title>Torch Scooter Rental Service</title>
     <style>
-
-        a{
+        a {
             transition: all .2s ease-in-out;
         }
 
-        a:hover{
+        a:hover {
             transform: scale(1.01);
             opacity: .8;
         }
     </style>
 </head>
-<body>
-<!-- Just an image -->
-<nav
-        style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem"
-        class="d-flex justify-content-between"
->
 
+<body>
+<nav
+        style="background-color: black !important;  padding: 0.8rem 10rem; "
+        class="d-flex justify-content-between sticky fixed-top my-auto " id="navbarNavDropdown">
 
 
     <a class="navbar-brand" th:href = "@{/}">
-        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
+        <!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
+        <img src="/images/website/torch.png" width="80" height="auto" alt="" />
+
     </a>
 
     <div sec:authorize="isAnonymous()">
-        <a th:href = "@{/user/signin}" style="background-color: black" class="btn text-light">
+        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+
+        <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
             Log in
         </a>
-        <!--        <a th:href = "@{/registration}" class="btn btn-light">Sign up</a>-->
-        <a th:href = "@{/registration}" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;" class="btn btn-light rounded-0 fw-bolder">Sign up</a>
-        <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
+
+        <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light rounded-0 text-dark">Sign up</a>
     </div>
 
-    <div sec:authorize="isAuthenticated()">
-        <a class=" btn text-light" th:href="@{/logout}">Log out</a>
-        <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
-<!--        <a th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn btn-outline-light  rounded-0" >Profile</a>-->
+    <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
+
+        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+        <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
+        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
+
     </div>
 
 
 
 </nav>
 
-
-<div class="container pt-5">
-    <div class="row pt-2 mt-5">
-        <div class="col-8">
+<div class="container pt-5 mt-3">
+    <div class="row ">
+        <div style="overflow: auto !important;" class="col-8">
             <div th:if="${escooterList}" class="row">
-                <a  th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark" th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
+                <a th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark"
+                   th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
                     <div class="col-12">
                         <div class="row border-bottom p-4 rounded  shadow-sm">
                             <div class="col-12">
                                 <div class="d-flex">
-                                    <img
-                                            class="rounded "
-                                            style="object-fit: cover; width: 17.2rem; height: 15.2rem"
-                                            th:src="@{${escooter.getImage()}}"
-                                            alt=""
-                                    />
+                                    <img class="rounded " style="object-fit: cover; width: 17.2rem; height: 15.2rem"
+                                         th:src="@{${escooter.getImage()}}" alt="" />
                                     <div style="flex-grow: 1" class="ms-4 d-flex flex-column">
                                         <div class="row d-flex">
                                             <div class="col-12 d-flex justify-content-between">
                                                 <div>
                                                     <h4 th:text="${escooter.getModelName()}" class="fw-bold">Xiomi Moderna</h4>
                                                     <p>
-                                <span
-                                        style="font-size: 1.1rem"
-                                        class="text-success"
-<!--                                ><i-->
-<!--                                        class="fa fa-shield"-->
-<!--                                        aria-hidden="true"-->
-<!--                                ></i>-->
-<!--                                  Insured-->
-                                </span>
-                                                        <span class="fw-light" th:text="${escooter.getHost().getHostUser().getFirstName()}"> Philip maulrer</span> <span class="fw-light" th:text="${escooter.getHost().getHostUser().getLastName()}"> Philip maulrer</span>
-                                                        ·  <span class="fw-light" th:text="${escooter.getTrips()}">21 Trips</span> <span class="fw-light" >Trips</span>
+                                                        <span style="font-size: 1.1rem" class="text-success" <!-->
+                                                        <i-->
+                                                            <!--                                        class="fa fa-shield"-->
+                                                            <!--                                        aria-hidden="true"-->
+                                                            <!--                                ></i>-->
+                                                            <!--                                  Insured-->
+                                                            </span>
+                                                            <span class="" th:text="${escooter.getHost().getHostUser().getFirstName()}">
+                                Philip maulrer</span> <span class="fw-light"
+                                                            th:text="${escooter.getHost().getHostUser().getLastName()}"> Philip maulrer</span>
+                                                            · <span class="fw-light" th:text="${escooter.getTrips()}">21 Trips</span> <span
+                                                                class="fw-light">Trips</span>
 
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <p  class="text-info">
-                                                        <span th:text="${escooter.getRating()}" ></span> <i class="fa fa-star"></i>
+                                                    <p class="text-info">
+                                                        <span th:text="${escooter.getRating()}"></span> <i class="fa fa-star"></i>
                                                     </p>
                                                 </div>
                                             </div>
@@ -147,17 +123,15 @@
                                             </div>
                                             <div class="col-4 mt-auto">
                                                 <p class="fw-light">
-                                                    <i
-                                                            class="fa fa-map-marker"
-                                                            aria-hidden="true"
-                                                    ></i>
-                                                    <span th:text="${escooter.getCountry()}" ></span>
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                    <span th:text="${escooter.getCountry()}"></span>
                                                 </p>
                                             </div>
 
                                             <div class="col-4 fw-bold mt-auto">
                                                 <p style="font-size: 1.2rem" class="text-end">
-                                                    €<span th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}"></span>/day
+                                                    €<span
+                                                        th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}"></span>/day
 
                                                 </p>
                                             </div>
@@ -168,11 +142,48 @@
                         </div>
                     </div>
                 </a>
-
             </div>
         </div>
-        <div class="col-4"></div>
+        <div style=" position: fixed !important; overflow: hidden; right:0 !important;" class="col-4">
+            <div class="border " style="height: 92vh; position: fixed !important; overflow: hidden; ;" id="map"></div>
+
+
+        </div>
     </div>
-</div>
+
+
+
+    <script>
+        let map;
+
+        function initMap() {
+
+            var location = { lat: -34.397, lng: 150.644 }
+            var options = {
+
+                center: location,
+                zoom: 8
+            }
+
+            map = new google.maps.Map(document.getElementById("map"), options)
+
+
+            autocomplete = new google.maps.places.Autocomplete(document.getElementById("location"), {
+
+                componentRestrictions : {'country': ['ie']},
+                fields: ['geometry', 'name'],
+                types: ['establishment']
+            })
+
+        }
+        window.initMap = initMap;
+
+    </script>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly&libraries=places"
+            defer></script>
+
+
 </body>
+
 </html>

@@ -162,6 +162,29 @@
     </form>
 
 </section>
+
+
+<script>
+    let map;
+
+    function initMap() {
+
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById("country"), {
+
+            componentRestrictions : {'country': ['ie']},
+            fields: ['geometry', 'name'],
+            types: ['establishment']
+        })
+
+    }
+
+
+
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initMap&v=weekly"
+        defer></script>
 </body>
 
 </html>

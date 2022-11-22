@@ -1,6 +1,7 @@
 package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
+import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.models.EScooter;
@@ -9,6 +10,7 @@ import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.UserRepository;
 import com.troch.torchApplication.services.*;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +40,9 @@ public class UserController {
 
     @Autowired
     EScooterForm eScooterForm;
+
+    @Autowired
+    JSONConverter jsonConverter;
 
     @Autowired
     FileUploadUtil fileUploadUtil;
@@ -143,6 +150,18 @@ public class UserController {
         eScooter.setMake(escooterForm.getMake());
         eScooter.setTrips(0);
 
+        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+escooterForm.getCountry()+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestProperty("Accept", "application/json");
+
+        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+        http.disconnect();
+
+        JSONObject locationJson = jsonConverter.getJSON(http);
+
+        logger.info("This is the respoonse" +locationJson);
+
+
         fileUploadUtil.saveFile(file);
         eScooterService.save(eScooter);
 
@@ -190,7 +209,6 @@ public class UserController {
 
         return "redirect:/user/profileEdit/"+id;
     }
-
 
 
 }

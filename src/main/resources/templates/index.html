@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <link rel="icon"
           type="image/png"
@@ -10,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styleuser_trips.css" />
+
     <!-- CSS only -->
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
@@ -47,7 +48,7 @@
 
 
     <a class="navbar-brand" th:href = "@{/}">
-<!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
+        <!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
         <img src="/images/website/torch.png" width="80" height="auto" alt="" />
 
     </a>
@@ -62,13 +63,13 @@
         <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light rounded-0 text-dark">Sign up</a>
     </div>
 
-        <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
+    <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
 
-            <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
-            <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
-            <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
+        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+        <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
+        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
 
-        </div>
+    </div>
 
 
 
@@ -427,45 +428,41 @@
 </body>
 </html>
 
-<!--            <div class="col-md-12 mx-auto">-->
-<!--                <h2>Upload Image Example</h2>-->
-<!--                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>-->
-<!--                <form method="post" th:action="@{/upload}" enctype="multipart/form-data">-->
-<!--                    <div class="form-group">-->
-<!--                        <input type="file" name="image" accept="image/*" class="form-control-file">-->
-<!--                    </div>-->
-<!--                    <button type="submit" class="btn btn-primary">Upload image</button>-->
-<!--                </form>-->
-<!--                <span th:if="${msg != null}" th:text="${msg}"></span>-->
-
-<!--    <div class="col-4" th:each="escooter:${scooters}">-->
-<!--        <a th:href="@{/EScooterDetail/{id}(id = ${escooter.getId()})}">-->
-<!--        <div class="card" style="width: 350px">-->
-<!--            <img th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." width="350" height="200">-->
-<!--            <div class="card-body">-->
-<!--                <h5 th:text="${escooter.getModelName}" class="card-title">Card title<span th:text="${escooter.getTrips()}"></span></h5>-->
-<!--                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-
-<!--            </div>-->
-<!--        </a>-->
-<!--        </div>-->
 
 
 
-<!--</div>-->
-
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-
-<!--        </div>-->
-
-
+</div>
+<div class="row">
+    <div class="col-12">
 
     </div>
-    <div class="row">
-        <div class="col-12">
+</div>
 
-        </div>
-    </div>
 
+
+
+
+
+<script>
+    let map;
+
+    function initMap() {
+
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById("country"), {
+
+            componentRestrictions : {'country': ['ie']},
+            fields: ['geometry', 'name'],
+            types: ['establishment']
+        })
+
+    }
+
+
+
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initMap&v=weekly"
+        defer></script>
 </body>
 </html>
