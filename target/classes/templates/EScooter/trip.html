@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scooter Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <style>
+        * {
+            overflow-x: hidden;
+        }
+    </style>
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
+</head>
+
+<body class="bg-light">
+<nav style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem" class="d-flex justify-content-between"
+     id="navbarNavDropdown">
+
+    <a class="navbar-brand" href="#">
+        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
+    </a>
+
+    <div>
+        <button style="background-color: black" class="btn text-light">
+            Log in
+        </button>
+        <button style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;"
+                class="btn btn-light rounded-0 fw-bolder">Sign up</button>
+        <button type="button" class="btn btn-outline-light  rounded-0">Become a Host</button>
+
+    </div>
+
+</nav>
+
+
+
+<section class="container-fluid mt-5 mb-5 bg-light">
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+
+
+
+    <div class="row bg-light container mx-auto">
+
+        <h1 style="font-size: 4rem !important;" class="text-center fw-bold text-info"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+        </h1>
+        <h2 class="fw-bold text-center ">Thank you</h2>
+        <h1 class="fw-bold text-center ">Your trip has been successfuly booked</h1>
+
+
+
+        <div class="col-8 ">
+
+
+
+            <div class="p-4 border rounded mt-4 bg-white ">
+                <div>
+                    <div class="row">
+
+                        <div class="col-7 text-start">
+                            <div class="p-3">
+                                <h3 class="fw-bold">Trip ID: <span class="fw-bold">#<span class="fw-bold" th:text="${trip.getTripId()}">GW5625H</span></span></h3>
+                                <h5  th:text="${escooter.getModelName}" style="" class="text-secondary mb-5">Xiomi ultran pro</h5>
+
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+
+
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-tint my-auto" aria-hidden="true"></i>
+
+                                    </div>
+                                    <div class="col-11 my-auto">
+                                        <div th:if="${escooter.getWaterResistant()}">
+                                            <p class=" text-start   my-auto ">Water Resistant</p>
+
+                                        </div>
+                                        <div th:unless="${escooter.getWaterResistant()}">
+                                            <p class=" text-start   my-auto ">Not Water Resistant</p>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+
+
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-bolt my-auto" aria-hidden="true"></i>
+
+                                    </div>
+                                    <div class="col-11 my-auto">
+
+                                        <p class=" text-start  my-auto  "><span th:text="${escooter.getMaxSpeed()}"></span>km/h</p>
+                                    </div>
+
+
+                                </div>
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+
+
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-thumbs-up my-auto" aria-hidden="true"></i>
+
+                                    </div>
+                                    <div class="col-11 my-auto">
+
+                                        <p class=" text-start  my-auto  ">Free 24hr Cancellation</p>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-5 my-auto">
+                            <div class="mx-auto my-auto text-center">
+                                <img
+                                        class="rounded mx-auto text-center"
+                                        style="object-fit: cover; width: 14.2rem; height: 15.2rem"
+                                        th:src="@{${escooter.getImage()}}"
+                                        alt=""
+                                />
+                                <a style="width: 14.2rem;" class="btn btn-outline-danger mt-3 text-center mx-auto">Cancel Trip</a>
+
+                            </div>
+                        </div>
+
+                        <div class="row p-4 pt-5 border-top mt-4 ">
+
+                            <div class="col-4 fw-bold">
+                                Pick-Up
+                            </div>
+                            <div class="col-8">
+                                <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}">2022/06/06</p>
+                                <p th:text="${host.getCountry()}" style="width: 12rem;">45 Kingston Cross Avenue, portsomount ROAD, Vincent square avenue road</p>
+                                <p th:text="${host.getCountry()}" class="text-info">Ireland</p>
+                            </div>
+
+                        </div>
+                        <div class="row  p-4">
+                            <div class="col-4">
+                                <p class="fw-bold">Phone Number</p>
+                            </div>
+                            <div  class="col-8">
+                                <p th:text="${host.getPhoneNumber()}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="col-4 bg-light">
+
+
+            <div class="px-4 pt-4 border rounded mt-4  bg-white">
+
+                <div>
+                    <h3 class="fw-bold mt-2 text-info">Trip Cost</h3>
+                    <div class="p-2 mb-3">
+                        <div>
+                            <div class="card-body mx-0 shado">
+                                <!-- <h5 class="card-title">Card title</h5> -->
+
+                                <div class="row  py-2">
+                                    <div class="col-6 my-auto">
+                                        <p class="card-text my-auto text-secondary">
+                                            €<span th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}">€400.00</span> for
+                                            <span th:text="${days}">3 days</span> day(s) </p>
+                                    </div>
+                                    <div class="col-6 my-auto">
+                                        <p class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(normalCost, 0, 'COMMA', 2, 'POINT')}"></span></p>
+                                    </div>
+
+                                </div>
+                                <div class="row   py-2">
+                                    <div class="col-6 my-auto">
+                                        <p class="card-text  my-auto text-secondary">Processing free</p>
+                                    </div>
+                                    <div class="col-6 my-auto">
+                                        <p class=" text-info text-end my-auto fw-bold">€20.00</p>
+                                    </div>
+
+                                </div>
+                                <div class="row t d py-2">
+                                    <div class="col-6 my-auto">
+                                        <p class="card-text  my-auto text-secondary">Discount</p>
+                                    </div>
+                                    <div class="col-6 my-auto">
+                                        <p class=" text-info text-end my-auto fw-bold">€0.00</p>
+                                    </div>
+
+                                </div>
+                                <div class="row border-top   mt-3 pt-4">
+                                    <div class="col-6 my-auto">
+                                        <p class="card-text  my-auto text-dark fw-bold">Total cost</p>
+                                    </div>
+                                    <div class="col-6 my-auto">
+                                        <h3 class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></h3>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-4 pb-4  pt-4 border rounded mt-4 bg-white ">
+                <h3 class="fw-bold text-info pb-3">Trip information</h3>
+
+                <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light">
+
+
+                    <div style="padding-right: 0 !important" class="col-2 my-auto">
+                        <i style="font-size: 1.3rem; " class="fa fa-street-view my-auto" aria-hidden="true"></i>
+
+                    </div>
+                    <div class="col-10 my-auto">
+
+                        <p class=" text-start  my-auto  fw-bolder">Pick-up date</p>
+                        <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}" style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">2022/02/06</p>
+                    </div>
+
+
+                </div>
+                <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light mt-4">
+
+
+                    <div style="padding-right: 0 !important" class="col-2 my-auto">
+                        <i style="font-size: 1.3rem; " class="fa fa-map-pin my-auto" aria-hidden="true"></i>
+
+                    </div>
+                    <div class="col-10 my-auto">
+
+                        <p class=" text-start  my-auto  fw-bolder">Drop-of date</p>
+                        <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}" style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">2022/02/06</p>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <div class="p-4 border rounded mt-4 bg-white">
+
+                <p class="fw-bold">Insurance information</p>
+                <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
+                <div class="d-flex justify-content-between"> <p class="fw-bold">Insurance cost: </p> <p class="fw-bold">23.00</p></div>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+</section>
+
+
+
+
+</body>
+
+</html>
+</html>

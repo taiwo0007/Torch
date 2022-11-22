@@ -1,7 +1,6 @@
 package com.troch.torchApplication.models;
 
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,6 +3,7 @@ package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.ValidateUser;
+import com.troch.torchApplication.dto.Response;
 import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.forms.ScooterReviewForm;
 import com.troch.torchApplication.models.*;
@@ -10,6 +11,7 @@ import com.troch.torchApplication.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -53,6 +57,28 @@ public class EScooterController {
 
     @Autowired
     TripService tripService;
+
+    @Value("${stripe.keys.public}")
+    private String API_PUBLIC_KEY;
+
+    @Autowired
+    private StripeService stripeService;
+
+    @GetMapping("/checkout")
+    public String chargePage(Model model){
+
+        model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
+
+        return "checkout";
+    }
+
+    @GetMapping(value = "/stripe")
+    public String Stripe(ModelMap map, Model model) {
+
+        return "checkouttest";
+
+    }
+
 
     @GetMapping(value = "/")
     public String index(ModelMap map, Model model)  {
@@ -188,9 +214,15 @@ public class EScooterController {
     @GetMapping("/escooterBooking/{id}")
     public String escooterBooking(@PathVariable("id") Integer id, Model model, @ModelAttribute("trip") Trip trip) throws Exception {
 
+        String uniqueString = new SecureRandom().ints(0, 24)
+                .mapToObj(i -> Integer.toString(i, 24))
+                .map(String::toUpperCase).distinct().limit(12).collect(Collectors.joining())
+                .replaceAll("([A-Z0-9]{4})", "$1-").substring(0,14);
+
+
 
         Trip bookingTrip = new Trip();
-
+        model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
 
         if( SecurityContextHolder.getContext().getAuthentication() != null &&
                 SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
@@ -222,6 +254,7 @@ public class EScooterController {
             bookingTrip.setTripEnd(endingDate);
             bookingTrip.setUser_renter(currentUserObj);
             bookingTrip.setTrip_owner(eScooter.getHost());
+            bookingTrip.setTripId(uniqueString);
             eScooter.setTrips(eScooter.getTrips()+1);
 
             int days = Math.abs(startingDate.getDate() - endingDate.getDate());
@@ -247,8 +280,9 @@ public class EScooterController {
 
     }
 
-    @PostMapping("/processTrip/{tripId}")
-    public String escooterBookingTrip(@PathVariable("tripId") Integer tripId, Model model) throws Exception {
+    @GetMapping("/processTrip/")
+    public String escooterBookingTrip(@RequestParam Integer tripId, Model model) throws Exception {
+
 
         Trip trip = new Trip();
         Optional<Trip> optionalTrip = tripService.findTripById(tripId);

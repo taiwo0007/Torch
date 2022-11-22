@@ -43,6 +43,8 @@ public class Trip {
     )
     private Date tripEnd;
 
+    private String tripId;
+
     public Double tripCost;
 
 }

@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface EscooterReviewRepository extends JpaRepository<ScooterReview, Integer> {
 
-     List<ScooterReview> findScooterReviewsByeScooter_IdOrderByReviewDateAsc(int id);
+     List<ScooterReview> findScooterReviewsByeScooter_IdOrderByReviewDateDesc(int id);
 }

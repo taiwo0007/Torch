@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset = "ISO-8859-1" />
+    <link href = "css/styles.css" rel = "stylesheet"/>
+    <title>Spring Boot Application</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th> Title </th>
+        <th> Author </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${userList.empty}">
+        <td colspan="2"> No Books Available </td>
+        <img src="/static/images/uploads/COMPLETEDD.jpg" height="50" width="50">
+    </tr>
+    <tr th:each="user : ${userList}">
+
+        <td th:text="${user.getId()}"></td>
+      <img th:src="@{''+${user.getProfile()}+''}" alt="image" width="300" height="200">
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -27,6 +27,6 @@ public class EScooterReviewService {
 
     public List<ScooterReview> findAllReviewsByScooter(Integer id){
 
-        return escooterReviewRepository.findScooterReviewsByeScooter_IdOrderByReviewDateAsc(id);
+        return escooterReviewRepository.findScooterReviewsByeScooter_IdOrderByReviewDateDesc(id);
     }
 }
