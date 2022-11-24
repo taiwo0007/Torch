@@ -50,6 +50,12 @@ public class EScooter {
     private Double maxRange;
     private Boolean waterResistant;
     private String about;
+
+    private double longitude;
+    private double latitude;
+    private String address;
+
+
     private String country;
 
 

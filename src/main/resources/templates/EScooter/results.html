@@ -150,38 +150,31 @@
 
         </div>
     </div>
+</div>
 
 
 
-    <script>
-        let map;
+<!--    <script>-->
+<!--        let map;-->
 
-        function initMap() {
+<!--        function initMap() {-->
 
-            var location = { lat: -34.397, lng: 150.644 }
-            var options = {
+<!--            var location = { lat: -34.397, lng: 150.644 }-->
+<!--            var options = {-->
 
-                center: location,
-                zoom: 8
-            }
+<!--                center: location,-->
+<!--                zoom: 8-->
+<!--            }-->
 
-            map = new google.maps.Map(document.getElementById("map"), options)
+<!--            map = new google.maps.Map(document.getElementById("map"), options)-->
 
+<!--        }-->
+<!--        window.initMap = initMap;-->
 
-            autocomplete = new google.maps.places.Autocomplete(document.getElementById("location"), {
-
-                componentRestrictions : {'country': ['ie']},
-                fields: ['geometry', 'name'],
-                types: ['establishment']
-            })
-
-        }
-        window.initMap = initMap;
-
-    </script>
-    <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly&libraries=places"
-            defer></script>
+<!--    </script>-->
+<!--    <script-->
+<!--            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly"-->
+<!--            defer></script>-->
 
 
 </body>

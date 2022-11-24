@@ -140,6 +140,17 @@ public class EScooterController {
     @GetMapping("/findEscooters")
     public String findEscooters( Model model,@ModelAttribute("escootersearch") EScooterForm escooterSearch){
 
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated") == false){
+            model.addAttribute("isAuthenticated", false);
+
+        }
+        else{
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+            model.addAttribute("isAuthenticated", true);
+
+        }
+
         List<EScooter> eScooterList = eScooterService.findAllByTripDatesAndLocation(escooterSearch.getTripStart(), escooterSearch.getTripEnd(), escooterSearch.getCountry());
         model.addAttribute("escooterList", eScooterList);
         logger.info("hellow orld");
@@ -298,9 +309,12 @@ public class EScooterController {
         }
         int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
 
+        List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
+
         model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
         model.addAttribute("host", trip.getTrip_owner().getHostUser());
         model.addAttribute("escooter", trip.getEScooterOnTrip());
+        model.addAttribute("esccoterAddressFormatted", Arrays.asList(trip.getEScooterOnTrip().getAddress().split(",")));
         model.addAttribute("trip", trip);
         model.addAttribute("days", days);
 

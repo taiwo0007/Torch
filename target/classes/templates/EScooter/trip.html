@@ -17,11 +17,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <style>
-        * {
-            overflow-x: hidden;
-        }
-    </style>
     <link rel="icon"
           type="image/png"
           th:href="@{${@environment.getProperty('favicon.image')}}">
@@ -155,24 +150,48 @@
                             </div>
                         </div>
 
-                        <div class="row p-4 pt-5 border-top mt-4 ">
-
-                            <div class="col-4 fw-bold">
-                                Pick-Up
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="row p-4 pt-5 border-top mt-4 ">
+                                    <div class="col-3 fw-bold">
+                                        Pick-Up
+                                    </div>
+                                    <div class="col-9">
+                                        <div th:each="addressLine : ${esccoterAddressFormatted}"
+                                             style="width: 12rem;">
+                                            <p class="text-dark" th:text="${addressLine}"
+                                               style="margin: 0 !important;">Vincent square avenue road</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row p-4">
+                                        <div class="col-3  ">
+                                            <p class="fw-bold">Contact</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p th:text="${host.getPhoneNumber()}">hk</p>
+                                        </div>
+                                    </div>
+                                    <div class="row p-4">
+                                        <div class="col-3  ">
+                                            <p class="fw-bold">Ready</p>
+                                        </div>
+                                        <div class="col-9">
+                                            <p th:text="${host.getPhoneNumber()}">Not Ready</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}">2022/06/06</p>
-                                <p th:text="${host.getCountry()}" style="width: 12rem;">45 Kingston Cross Avenue, portsomount ROAD, Vincent square avenue road</p>
-                                <p th:text="${host.getCountry()}" class="text-info">Ireland</p>
-                            </div>
-
-                        </div>
-                        <div class="row  p-4">
-                            <div class="col-4">
-                                <p class="fw-bold">Phone Number</p>
-                            </div>
-                            <div  class="col-8">
-                                <p th:text="${host.getPhoneNumber()}"></p>
+                            <div class="col-5">
+                                <div class="row pt-5 border-top mt-4">
+                                    <div style="padding: 0 !important;" class="card">
+                                        <div class="card-img-top" style="height: 15rem" id="map"></div>
+                                        <div class="card-body">
+                                            <p class="text-info text-center fw-bold mb-1"> Pickup Location</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -288,25 +307,44 @@
                 <p class="fw-bold">Insurance information</p>
                 <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
                 <div class="d-flex justify-content-between"> <p class="fw-bold">Insurance cost: </p> <p class="fw-bold">23.00</p></div>
-
             </div>
-
-
-
-
-
-
         </div>
-
-
-
     </div>
-
 </section>
 
+<script th:inline="javascript" defer>
+    let map;
+
+    function initMap() {
+
+        var location = { lat:[[${escooter.getLatitude()}]], lng: [[${escooter.getLongitude()}]] }
+        console.log(location.lat);
+        console.log(location.lng);
+        var options = {
+
+            center: location,
+            zoom: 15        }
+
+        map = new google.maps.Map(document.getElementById("map"), options)
+
+        new google.maps.Marker({
+            position: location,
+            map,
+            title: "Hello World!",
+        });
+
+        console.log(location.lat);
+        console.log(location.lng);
 
 
 
+    }
+    window.initMap = initMap;
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly"
+        defer></script>
 </body>
 
 </html>

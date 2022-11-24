@@ -1,5 +1,7 @@
 package com.troch.torchApplication.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.jayway.jsonpath.JsonPath;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.dto.UserRegistrationDto;
@@ -31,6 +33,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import static com.jayway.jsonpath.JsonPath.*;
+
 
 @Controller
 @RequestMapping("/user")
@@ -130,8 +134,44 @@ public class UserController {
 
         User user = userServiceImpl.findUser(id);
 
+
+
+        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+escooterForm.getCountry().replaceAll(" ", "%20")+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestProperty("Accept", "application/json");
+
+        JsonNode json = jsonConverter.getJson(url);
+
+        JsonNode featuresKey  = json.get("features").get(0);
+        JsonNode propertiesKey  = featuresKey.get("properties");
+        JsonNode longitudeKey  = propertiesKey.get("lon");
+        JsonNode latitudeKey = propertiesKey.get("lat");
+        JsonNode countryKey = propertiesKey.get("country");
+
+        double longitudeFormatted = longitudeKey.asDouble();
+        double latitudeFormatted = latitudeKey.asDouble();
+        String addressFormatted = propertiesKey.get("formatted").asText();
+        String countryFormatted = countryKey.asText();
+
+
+
+        logger.info("longitudeFormatted" +longitudeFormatted);
+        logger.info("latitudeFormatted" +latitudeFormatted);
+        logger.info("addressFormated" +addressFormatted);
+        logger.info("countryFormatted" +countryFormatted);
+
+        http.disconnect();
+
         model.addAttribute("user", user);
         EScooter eScooter = new EScooter();
+
+        //Api Service handler
+        eScooter.setLatitude(latitudeFormatted);
+        eScooter.setLongitude(longitudeFormatted);
+        eScooter.setAddress(addressFormatted);
+        eScooter.setCountry(countryFormatted);
+
+        //Form handler
         eScooter.setAbout(escooterForm.getAbout());
         eScooter.setCost(escooterForm.getCost());
         eScooter.setScooterWeight(escooterForm.getScooterWeight());
@@ -146,20 +186,10 @@ public class UserController {
         eScooter.setMaxSpeed(escooterForm.getMaxSpeed());
         eScooter.setHost(user.getHost());
         eScooter.setModelName(escooterForm.getModelName());
-        eScooter.setCountry(escooterForm.getCountry());
         eScooter.setMake(escooterForm.getMake());
         eScooter.setTrips(0);
 
-        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+escooterForm.getCountry()+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        http.setRequestProperty("Accept", "application/json");
 
-        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
-        http.disconnect();
-
-        JSONObject locationJson = jsonConverter.getJSON(http);
-
-        logger.info("This is the respoonse" +locationJson);
 
 
         fileUploadUtil.saveFile(file);
