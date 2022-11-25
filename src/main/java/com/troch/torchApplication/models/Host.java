@@ -1,6 +1,9 @@
 package com.troch.torchApplication.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +25,12 @@ public class Host {
     @Id
     private Integer id;
 
+
     @OneToOne(mappedBy = "host")
     private User hostUser;
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<EScooter> eScooters = new ArrayList<>();
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)

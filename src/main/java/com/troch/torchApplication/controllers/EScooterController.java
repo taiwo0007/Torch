@@ -1,6 +1,7 @@
 package com.troch.torchApplication.controllers;
 
 
+import com.troch.torchApplication.Utilities.Counter;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.dto.Response;
@@ -153,7 +154,13 @@ public class EScooterController {
 
         List<EScooter> eScooterList = eScooterService.findAllByTripDatesAndLocation(escooterSearch.getTripStart(), escooterSearch.getTripEnd(), escooterSearch.getCountry());
         model.addAttribute("escooterList", eScooterList);
-        logger.info("hellow orld");
+        model.addAttribute("escooterListArr", eScooterList.toArray());
+        model.addAttribute("counter", new Counter());
+
+        logger.info("" +eScooterList.toArray());
+
+
+
         return "EScooter/results";
 
     }
@@ -207,6 +214,7 @@ public class EScooterController {
             eScooterService.save(escooter.get());
 
 
+            model.addAttribute("make", escooter.get().getMake());
             model.addAttribute("escooter", escooter.get());
             model.addAttribute("trip", newTrip);
             model.addAttribute("ScooterReviewForm", ScooterReviewForm);
@@ -217,6 +225,8 @@ public class EScooterController {
             return "error";        }
 
         List<User> scooterUser = userServiceimpl.findAllUsers();
+
+
 
         return "EScooter/EScooterDetail";
 
@@ -310,6 +320,7 @@ public class EScooterController {
         int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
 
         List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
+
 
         model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
         model.addAttribute("host", trip.getTrip_owner().getHostUser());

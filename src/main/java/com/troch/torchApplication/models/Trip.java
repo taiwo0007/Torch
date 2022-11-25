@@ -1,6 +1,7 @@
 package com.troch.torchApplication.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -24,14 +25,17 @@ public class Trip {
 
     @ManyToOne
     @JoinColumn(name = "escooter_id", referencedColumnName = "id")
+    @JsonBackReference
     private EScooter eScooterOnTrip;
 
     @ManyToOne
     @JoinColumn(name = "user_renter_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user_renter;
 
     @ManyToOne
     @JoinColumn(name = "host_id", referencedColumnName = "id")
+    @JsonBackReference
     private Host trip_owner;
 
     @DateTimeFormat(

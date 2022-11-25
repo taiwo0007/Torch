@@ -1,5 +1,6 @@
 package com.troch.torchApplication.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,9 @@ public class Make {
 
     private String name;
 
+    private String image;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<EScooter> eScooters = new ArrayList<>();
 }

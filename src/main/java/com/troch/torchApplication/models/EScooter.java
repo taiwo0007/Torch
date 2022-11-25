@@ -1,5 +1,9 @@
 package com.troch.torchApplication.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +30,12 @@ public class EScooter {
 
     @ManyToOne
     @JoinColumn(name="scooter_host_id", referencedColumnName = "id")
+    @JsonBackReference
     private Host host;
 
     @ManyToOne
     @JoinColumn(name = "make_id", referencedColumnName = "id")
+    @JsonBackReference
     private Make make;
 
     @Column(name = "model_name")
@@ -66,11 +72,13 @@ public class EScooter {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripEnd;
 
-    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<ScooterReview> escooterReviews = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "eScooterOnTrip", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<Trip> escooterTrips = new ArrayList<>();
 
 

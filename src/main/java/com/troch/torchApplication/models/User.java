@@ -1,6 +1,9 @@
 package com.troch.torchApplication.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,26 +39,15 @@ public class User {
     private Double rating = 0.0;
 
     private Integer phoneNumber;
-
     private String postCode;
-
     private String country;
-
     private String state;
-
     private String accountType;
-
-
-
-
-
 
     @Column(name = "profilePicture")
     private String profilePicture;
 
     private Integer userTrips = 0;
-
-
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = CascadeType.ALL)
@@ -69,22 +61,22 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "host_id", referencedColumnName = "id")
+    @JsonBackReference
     private Host host;
 
     @OneToMany(mappedBy = "user_reviewer", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
+    @JsonManagedReference
     List<ScooterReview> scooterReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
+    @JsonBackReference
     List<Trip> renterTrips = new ArrayList<>();
 
-
-
     private Boolean isVerified = false;
-
-
 
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles){
         this.firstName= firstName;
@@ -97,7 +89,6 @@ public class User {
 
         return this.profilePicture;
     }
-
 
 
 }

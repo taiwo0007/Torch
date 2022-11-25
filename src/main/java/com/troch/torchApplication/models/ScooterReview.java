@@ -1,6 +1,8 @@
 package com.troch.torchApplication.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +21,14 @@ public class ScooterReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "scooter_id", referencedColumnName = "id")
+    @JsonIgnore
     private EScooter eScooter;
 
     @ManyToOne
     @JoinColumn(name = "scooter_reviewer_id", referencedColumnName = "id")
+    @JsonBackReference
     private User scooter_reviewer;
 
 

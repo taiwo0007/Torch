@@ -54,25 +54,27 @@
 </nav>
 
 <section class="header container mt-5">
-    <h1 th:text="${escooter.getModelName()}" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
-        Xiomi vultron pro evolution.
-    </h1>
-    <div style="" class="d-flex  ">
+    <div class="row">
+        <div class="col-8">
+            <h1 th:text="${escooter.getModelName()}" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
+                Xiomi vultron pro evolution.
+            </h1>
 
-        <img style="border-radius: 50%; object-fit: cover" th:src="@{${escooter.getHost().getHostUser().getProfilePicture()}}" width="60" height="60" class="" alt="..." />
-        <p style="display:inline-block;" class="my-auto ms-3">Host, <span th:text="${escooter.getHost().getHostUser().getFirstName()+' '+escooter.getHost().getHostUser().getLastName()}" class="fw-bold">Taiwo Obadre</span></p>
+        </div>
+        <div class="col-4">
+            <div class="my-auto mx-auto text-center">
 
+                <img th:src="@{${make.getImage()}}" width="40%" class="my-auto rounded mx-auto text-center"  src="images/xiaomi.png" alt="" >
+            </div>
 
-        <i class="fa fa-star my-auto text-info ms-3 me-2"></i>
-        <p style="display:inline-block !important; margin-bottom: 0;" class="my-auto">
-
-            <span th:text="${escooter.getRating()}" class="my-auto">5.0</span> <span class="fw-light">(44)</span>
-        </p>
+        </div>
 
     </div>
+
 
     </div>
 </section>
+
 
 
 <section class="container">
