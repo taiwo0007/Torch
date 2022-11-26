@@ -60,8 +60,7 @@ public class EScooter {
     private double longitude;
     private double latitude;
     private String address;
-
-
+    private String county;
     private String country;
 
 

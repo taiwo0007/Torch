@@ -147,11 +147,13 @@ public class UserController {
         JsonNode longitudeKey  = propertiesKey.get("lon");
         JsonNode latitudeKey = propertiesKey.get("lat");
         JsonNode countryKey = propertiesKey.get("country");
+        JsonNode countyKey = propertiesKey.get("city");
 
         double longitudeFormatted = longitudeKey.asDouble();
         double latitudeFormatted = latitudeKey.asDouble();
         String addressFormatted = propertiesKey.get("formatted").asText();
         String countryFormatted = countryKey.asText();
+        String countyFormated = countyKey.asText();
 
 
 
@@ -170,6 +172,7 @@ public class UserController {
         eScooter.setLongitude(longitudeFormatted);
         eScooter.setAddress(addressFormatted);
         eScooter.setCountry(countryFormatted);
+        eScooter.setCounty(countyFormated);
 
         //Form handler
         eScooter.setAbout(escooterForm.getAbout());
