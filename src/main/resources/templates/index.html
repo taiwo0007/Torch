@@ -32,12 +32,12 @@
     />
 
     <style>
-        .make{
+        .browse-tile{
             transition: all .1s ease-in-out;
 
         }
 
-        .make:hover {
+        .browse-tile:hover {
             transform: scale(1.01);
             opacity: .9;
             overflow-y: hidden !important;
@@ -45,6 +45,8 @@
             /* https://getcssscan.com/css-box-shadow-examples */
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
+
+
 
     </style>
 
@@ -64,7 +66,7 @@
     </a>
 
     <div sec:authorize="isAnonymous()">
-        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+<!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
 
         <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
             Log in
@@ -75,9 +77,9 @@
 
     <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
 
-        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
+<!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
         <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
-        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
+        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><span class="text-info fw-bold" th:text="${user.getFirstName()}"></span></a>
 
     </div>
 
@@ -182,71 +184,55 @@
         <div class="row text-center mt-3">
             <div class="col-3">
                 <a href="">
-                    <img class="make" style="width:17rem" src="/images/website/Make/puretile.png" alt="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/puretile.png" alt="">
                 </a>
 
             </div>
             <div class="col-3">
                 <a href="">
-                    <img class="make" style="width:17rem" src="/images/website/Make/avovotile.png" alt="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/avovotile.png" alt="">
                 </a>
             </div>
             <div class="col-3">
                 <a href="">
-                    <img class="make" style="width:17rem" src="/images/website/Make/xiaomitile.png" alt="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/xiaomitile.png" alt="">
                 </a>
             </div>
             <div class="col-3">
                 <a href="">
-                    <img class="make" style="width:17rem" src="/images/website/Make/segwaytile.png" alt="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/segwaytile.png" alt="">
                 </a>
             </div>
         </div>
     </section>
 
 
-    <section class="row py-4 mx-4 my-1">
+    <section class="row py-5 mx-4 my-1 mx-auto ">
         <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
-            Browse by location
+            Browse by Location
         </h4>
-        <div class="col-2 mx-auto">
-            <div class="card" style="width: 12rem">
-                <img src="/images/website/DUBLINE.png" class="card-img-top" alt="..." />
-                <div class="card-body p-3">
-                    <h5 class="card-text text-center fw-bold">Dublin</h5>
-                </div>
+
+        <div class="row text-center mt-3">
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/dublintile.png" alt="">
+                </a>
+
             </div>
-        </div>
-        <div class="col-2 mx-auto">
-            <div class="card" style="width: 12rem">
-                <img src="/images/website/DUBLINE.png" class="card-img-top" alt="..." />
-                <div class="card-body p-3">
-                    <h5 class="card-text text-center fw-bold">Meath</h5>
-                </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/corktile.png" alt="">
+                </a>
             </div>
-        </div>
-        <div class="col-2 mx-auto">
-            <div class="card" style="width: 12rem">
-                <img src="/images/website/DUBLINE.png" class="card-img-top" alt="..." />
-                <div class="card-body p-3">
-                    <h5 class="card-text text-center fw-bold">Galway</h5>
-                </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/galwaytile.png" alt="">
+                </a>
             </div>
-        </div>
-        <div class="col-2 mx-auto">
-            <div class="card" style="width: 12rem">
-                <img src="/images/website/DUBLINE.png" class="card-img-top" alt="..." />
-                <div class="card-body p-3">
-                    <h5 class="card-text text-center fw-bold">Sligo</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-2 mx-auto">
-            <div class="card" style="width: 12rem">
-                <img src="/images/website/DUBLINE.png" class="card-img-top" alt="..." />
-                <div class="card-body p-3">
-                    <h5 class="card-text text-center fw-bold">Cork</h5>
-                </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/meathtile.png" alt="">
+                </a>
             </div>
         </div>
     </section>
