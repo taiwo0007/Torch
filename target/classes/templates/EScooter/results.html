@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="geoxml3.js"></script>
 
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -28,14 +29,197 @@
 
     <title>Torch Scooter Rental Service</title>
     <style>
-        #scooter-card {
+
+        :root {
+            --building-color: #FF9800;
+            --house-color: #0288D1;
+            --shop-color: #7B1FA2;
+            --warehouse-color: #558B2F;
+        }
+
+        /*
+         * Property styles in unhighlighted state.
+         */
+        .property {
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            color: #263238;
+            display: flex;
+            font-size: 14px;
+            gap: 15px;
+            height: 30px;
+            justify-content: center;
+            padding: 4px;
+            position: relative;
+            position: relative;
+            transition: all 0.3s ease-out;
+            width: 30px;
+        }
+
+        .property::after {
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-top: 9px solid #FFFFFF;
+            content: "";
+            height: 0;
+            left: 50%;
+            position: absolute;
+            top: 95%;
+            transform: translate(-50%, 0);
+            transition: all 0.3s ease-out;
+            width: 0;
+            z-index: 1;
+        }
+
+        .property .icon {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            color: #FFFFFF;
+        }
+
+        .property .icon svg {
+            height: 20px;
+            width: auto;
+        }
+
+        .property .details {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .property .address {
+            color: #9E9E9E;
+            font-size: 10px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        .property .features {
+            align-items: flex-end;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .property .features > div {
+            align-items: center;
+            background: #F5F5F5;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            display: flex;
+            font-size: 10px;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        /*
+         * Property styles in highlighted state.
+         */
+        .property.highlight {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+            height: 80px;
+            padding: 8px 15px;
+            width: auto;
+        }
+
+        .property.highlight::after {
+            border-top: 9px solid #FFFFFF;
+        }
+
+        .property.highlight .details {
+            display: flex;
+        }
+
+        .property.highlight .icon svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .property .bed {
+            color: #FFA000;
+        }
+
+        .property .bath {
+            color: #03A9F4;
+        }
+
+        .property .size {
+            color: #388E3C;
+        }
+
+        /*
+         * House icon colors.
+         */
+        .property.highlight:has(.fa-house) .icon {
+            color: var(--house-color);
+        }
+
+        .property:not(.highlight):has(.fa-house) {
+            background-color: var(--house-color);
+        }
+
+        .property:not(.highlight):has(.fa-house)::after {
+            border-top: 9px solid var(--house-color);
+        }
+
+        /*
+         * Building icon colors.
+         */
+        .property.highlight:has(.fa-building) .icon {
+            color: var(--building-color);
+        }
+
+        .property:not(.highlight):has(.fa-building) {
+            background-color: var(--building-color);
+        }
+
+        .property:not(.highlight):has(.fa-building)::after {
+            border-top: 9px solid var(--building-color);
+        }
+
+        /*
+         * Warehouse icon colors.
+         */
+        .property.highlight:has(.fa-warehouse) .icon {
+            color: var(--warehouse-color);
+        }
+
+        .property:not(.highlight):has(.fa-warehouse) {
+            background-color: var(--warehouse-color);
+        }
+
+        .property:not(.highlight):has(.fa-warehouse)::after {
+            border-top: 9px solid var(--warehouse-color);
+        }
+
+        /*
+         * Shop icon colors.
+         */
+        .property.highlight:has(.fa-shop) .icon {
+            color: var(--shop-color);
+        }
+
+        .property:not(.highlight):has(.fa-shop) {
+            background-color: var(--shop-color);
+        }
+
+        .property:not(.highlight):has(.fa-shop)::after {
+            border-top: 9px solid var(--shop-color);
+        }
+
+        .scooter-card {
             transition: all .1s ease-in-out;
             width: 95%;
             height: 110%;
             overflow-y: hidden !important;
         }
 
-        #scooter-card:hover {
+        .scooter-card:hover {
             transform: scale(1.01);
             opacity: .9;
             overflow-y: hidden !important;
@@ -47,6 +231,15 @@
         input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: rgba(97, 97, 97, 0.513);
             opacity: 1; /* Firefox */
+        }
+
+        .highlight {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+            height: 80px;
+            padding: 8px 15px;
+            width: auto;
         }
     </style>
 </head>
@@ -166,7 +359,7 @@
                         Search
                     </button>
                 </form>
-                <a th:each="escooter : ${escooterList}" style="text-decoration: none" class="text-dark" id="scooter-card"
+                <a th:each="escooter : ${escooterList}" th:id="${escooter.getModelName()}" style="text-decoration: none" class="text-dark scooter-card" id="scooter-card"
                    th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
                     <div class="col-12">
                         <div class="row  p-4 rounded mx-auto">
@@ -232,8 +425,6 @@
 
     </div>
 
-
-
     <script th:inline="javascript">
 
         let map;
@@ -252,44 +443,101 @@
             }
 
             map = new google.maps.Map(document.getElementById("map"), options);
-            const infoWindow = new google.maps.InfoWindow();
+
+
+
 
             let eList = [[${escooterList}]];
 
-            console.log(eList[0].latitude);
-            var u = 0;
+            var escooters = document.querySelectorAll(".scooter-card");
 
+            let markers = [];
 
+            function changeIcon(markerId) {
+                markers.forEach(function(marker) {
+                    if (marker.id === markerId) {
+                        marker.setIcon("/images/website/icons/markerChanged.png");
+                    }
+                });
+            }
 
+            function resetIcon(markerId) {
+                markers.forEach(function(marker) {
+                    if (marker.id === markerId) {
+                        marker.setIcon("/images/website/icons/marker.png");
+                    }
+                });
+            }
 
             for (var i = 0; i < eList.length; i++) {
+                console.log("i" +i)
 
-                position =
-                {
-                    lat: eList[i].latitude,
-                    lng: eList[i].longitude
-                }
+                let tempMarker = new google.maps.Marker({ map: map, id: eList[i].modelName , position: {
+                        lat: eList[i].latitude,
+                        lng: eList[i].longitude
+                    }, icon: "/images/website/icons/marker.png" });
 
-                const marker = new google.maps.marker.AdvancedMarkerView({
-                    position,
-                    map,
-                    title: `${eList[i].modelName}. ${eList[i].cost}`
-
-                });
-                marker.addListener("click", ({ domEvent, latLng }) => {
-                    const { target } = domEvent;
-
-                    infoWindow.close();
-                    infoWindow.setContent(marker.title);
-                    infoWindow.open(marker.map, marker);
-                });
-
+                markers.push(tempMarker);
             }
+
+            eList.forEach((escooter) => {
+
+                console.log(escooter)
+
+                var myContent = ` <a href="EScooterDetail/${escooter.id}"><div  class="card" style="width: 6rem; padding: 0.3rem 0rem 0rem 0.3rem"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> `;
+
+
+                markers.forEach((elem) => {
+
+                    if(escooter.modelName == elem.id){
+
+                        let infowindow = new google.maps.InfoWindow({
+                            content: myContent,
+                            ariaLabel: "Uluru",
+                        });
+
+                        elem.addListener("click", () => {
+                            infowindow.open({
+                                anchor: elem,
+                                map,
+                            });
+
+                            console.log(elem)
+                        });
+
+                    }
+
+
+
+                })
+
+
+            })
+
+
+
+            var escooters = document.querySelectorAll(".scooter-card");
+
+            escooters.forEach((elem) => {
+
+                elem.addEventListener("mouseover", () => {
+                    changeIcon(elem.id);
+                });
+
+                elem.addEventListener("mouseout", () => {
+                    resetIcon(elem.id);
+                });
+
+
+            })
+
+
+
         }
-
-
-
         window.initMap = initMap;
+
+
+
 
     </script>
     <script
