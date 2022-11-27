@@ -46,39 +46,11 @@ public class PaymentController {
         this.stripeService = stripeService;
     }
 
-
-
-    @PostMapping("/create-checkout-session")
-    public String checkoutPage(Model model) throws StripeException {
-
-
-        String YOUR_DOMAIN = "http://localhost:8080";
-        SessionCreateParams params =
-                SessionCreateParams.builder()
-                        .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setSuccessUrl(YOUR_DOMAIN + "/success.html")
-                        .setCancelUrl(YOUR_DOMAIN + "/cancel.html")
-                        .addLineItem(
-                                SessionCreateParams.LineItem.builder()
-                                        .setQuantity(1L)
-                                        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                                        .setPrice("{{PRICE_ID}}")
-                                        .build())
-                        .build();
-        Session session = Session.create(params);
-
-
-        return "checkout";
-    }
-
-
-
     @PostMapping("/create-payment-intent")
     public CreatePaymentResponse createPaymentIntent(@RequestBody String responseb, CreatePayment createPayment) throws StripeException {
 
         JSONObject json = new JSONObject(responseb);
         double cost = json.getDouble("cost");
-
 
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()

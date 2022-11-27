@@ -27,25 +27,11 @@
 </head>
 
 <body>
-<nav style=" padding: 1.2rem 10rem 1.2rem 10rem" class="d-flex justify-content-between bg-light"
-     id="navbarNavDropdown">
-
-    <a class="navbar-brand" href="#">
-        <img style="filter: invert(98%)" src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-
-    <div>
-        <!-- <button type="button" class="btn btn-outline-light  rounded-0" >Log out</button> -->
-
-        <button type="button" class="btn btn-outline-dark  rounded-0">Become a Host</button>
-
-    </div>
-
-</nav>
+<nav th:insert="fragments/nav :: nav" ></nav>
 
 
 
-<section style="max-width: 67% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter mb-5 pb-5">
+<section style="max-width: 67% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter mb-5 pb-5 mt-5 pt-3">
     <h2 class="fw-bold p-4">Add new Electric Scooter</h2>
     <form class="p-4" th:object="${escooterForm}" th:action="@{/user/process-add-scooter/{id}(id=${user.getId()})}" method="post" enctype="multipart/form-data">
 
@@ -136,20 +122,13 @@
                 <label for="country" class="form-label fw-bold">Location:</label>
                 <input required th:field="*{country}" type="text" class="form-control" id="country"  />
             </div>
-
-
         </div>
-
-
-
 
         <div class="my-3">
             <label class="form-label fw-bold mb-3">About Scooter</label>
             <textarea th:field="*{about}" class="form-control" id="validationTextarea"
                       placeholder="Tell us more about the scooter here...." required></textarea>
-
         </div>
-
 
 
         <div id="emailHelp" class="form-text py-4 ">

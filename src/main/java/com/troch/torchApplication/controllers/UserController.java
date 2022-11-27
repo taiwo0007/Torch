@@ -155,13 +155,6 @@ public class UserController {
         String countryFormatted = countryKey.asText();
         String countyFormated = countyKey.asText();
 
-
-
-        logger.info("longitudeFormatted" +longitudeFormatted);
-        logger.info("latitudeFormatted" +latitudeFormatted);
-        logger.info("addressFormated" +addressFormatted);
-        logger.info("countryFormatted" +countryFormatted);
-
         http.disconnect();
 
         model.addAttribute("user", user);

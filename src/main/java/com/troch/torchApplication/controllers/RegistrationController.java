@@ -33,9 +33,7 @@ public class RegistrationController {
     @GetMapping
     public String singUp()  {
 
-
         return "authentication/signup";
-
     }
 
 
@@ -48,12 +46,7 @@ public class RegistrationController {
         String formatLastName = registrationDto.getLastName().replaceAll(",", "");
         registrationDto.setLastName(formatLastName);
 
-
-
-
         model.addAttribute("success", "You've been successfully registred.");
-
-
 
         if(userServiceimpl.findUserByEmail(registrationDto.getEmail()) != null){
 
@@ -63,8 +56,6 @@ public class RegistrationController {
 
             userService.save(registrationDto);
             return "redirect:/user/signin?success";
-
-
 
     }
 }

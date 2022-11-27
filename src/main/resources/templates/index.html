@@ -54,38 +54,8 @@
 </head>
 <body>
 <!-- Just an image -->
-<nav
-        style="background-color: black !important;  padding: 0.8rem 10rem; "
-        class="d-flex justify-content-between sticky fixed-top my-auto " id="navbarNavDropdown">
 
-
-    <a class="navbar-brand" th:href = "@{/}">
-        <!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
-        <img src="/images/website/torch.png" width="80" height="auto" alt="" />
-
-    </a>
-
-    <div sec:authorize="isAnonymous()">
-<!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
-
-        <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
-            Log in
-        </a>
-
-        <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light rounded-0 text-dark">Sign up</a>
-    </div>
-
-    <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
-
-<!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
-        <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
-        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><span class="text-info fw-bold" th:text="${user.getFirstName()}"></span></a>
-
-    </div>
-
-
-
-</nav>
+<nav th:insert="fragments/nav :: nav" ></nav>
 <section style="overflow-x: hidden;"  class="hero-header pt-5 mt-2 ">
     <div
             style="
@@ -105,11 +75,11 @@
 
                 </div>
                 <div class="mb-3">
-                    <label for="tripStart" class="form-label fw-bold">From date</label>
-                    <input th:field="*{tripStart}" type="date" class="form-control " id="tripStart" >
+                    <label for="tripStart" class="form-label fw-bold">Trip start</label>
+                    <input th:field="*{tripStart}" value="12/12/2022" type="date" class="form-control " id="tripStart" >
                 </div>
                 <div class="mb-3">
-                    <label for="tripEnd" class="form-label fw-bold">To date</label>
+                    <label for="tripEnd" class="form-label fw-bold">Trip end</label>
                     <input th:field="*{tripEnd}" type="date" class="form-control " id="tripEnd" >
                 </div>
 
@@ -117,19 +87,15 @@
                 <button style="width: 100%;  background-color: black !important;" type="submit" class="btn  text-light p-2 mt-4 fw-bold ">Search</button>
             </form>
         </div>
-
-
     </div>
 </section>
 
 
 <section class="container pb-5 mb-3">
-    <div class="row py-5">
+    <div class="row py-5 ">
         <div class="header-bottom py-5">
-            <h1
-                    style="font-size: 3.8rem !important"
-                    class="h1 text-center fw-bold"
-            >
+            <h1 style="font-size: 3.8rem !important"
+                class="h1 text-center fw-bold" >
                 Rent or Rent Out
             </h1>
         </div>
@@ -148,8 +114,8 @@
                     <h3 class="fw-bold">
                         Rent a Scooter today
                         <span class="text-info">
-            and enjoy a great riding experience on torch.com
-          </span>
+                        and enjoy a great riding experience on torch.com
+                      </span>
                     </h3>
                     <p>
                         Go prepared in a rugged 4x4 to take on winter roads with ease, or
@@ -176,7 +142,7 @@
 </section>
 
 <div class="container">
-    <section class="row py-5 mx-4 my-1 mx-auto ">
+    <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded">
         <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
             Browse by make
         </h4>
@@ -212,7 +178,7 @@
             Browse by Location
         </h4>
 
-        <div class="row text-center mt-3">
+        <div class="row text-center mt-3 ">
             <div class="col-3">
                 <a href="">
                     <img class="browse-tile" style="width:17rem" src="/images/website/County/dublintile.png" alt="">
@@ -237,8 +203,38 @@
         </div>
     </section>
 
-    <section class="container my-3 py-5">
-        <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
+    <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded my-5">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by Location
+        </h4>
+
+        <div class="row text-center mt-3">
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/speedtile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/rangetile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/costtile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/weighttile.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section style=" border-radius: 40px;" class="container my-3 py-5 bg-dark mt-5">
+        <h1 style="font-size: 3.8rem !important" class="h1 text-center text-white fw-bold mb-5 pt-4">
             How It Works
         </h1>
         <div class="row">
@@ -247,7 +243,7 @@
                     <div class="col-2"></div>
                     <div class="col-4 text-center my-auto">
                         <h3 class="fw-bold text-info">Verify account</h3>
-                        <p style="text-align: center" class="">
+                        <p style="text-align: center text-light" class="text-light">
                             Sign up to the application to access a wide
                             catalogue of electric scooters
                         </p>
@@ -268,7 +264,7 @@
                     </div>
                     <div class="col-4 text-center my-auto">
                         <h3 class="fw-bold text-info">Become a host</h3>
-                        <p style="text-align: center" class="">
+                        <p style="text-align: center" class="text-light">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>
@@ -284,7 +280,7 @@
                     <div class="col-2"></div>
                     <div class="col-4 text-center my-auto">
                         <h3 class="fw-bold text-info">Rent out your scooter</h3>
-                        <p style="text-align: center" class="">
+                        <p style="text-align: center" class="text-light">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>
@@ -296,7 +292,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row pb-5">
             <div class="col-12">
                 <div class="row">
                     <div class="col-2"></div>
@@ -305,7 +301,7 @@
                     </div>
                     <div class="col-4 text-center my-auto">
                         <h3 class="fw-bold text-info">Get Paid</h3>
-                        <p style="text-align: center" class="">
+                        <p style="text-align: center" class="text-light">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>
@@ -320,7 +316,7 @@
     <section class="row py-4 mx-4 my-1">
         <h1
                 style="font-size: 3.8rem !important"
-                class="h1 text-center fw-bold pb-5"
+                class="h1 text-center fw-bold pb-5 mt-5"
         >
             Torch <span class="text-info">Hosts</span>
         </h1>

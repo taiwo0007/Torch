@@ -23,37 +23,9 @@
 </head>
 
 <body>
-<nav
-        style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem"
-        class="d-flex justify-content-between"
->
+<nav th:insert="fragments/nav :: nav" ></nav>
 
-
-
-    <a class="navbar-brand" th:href = "@{/}">
-        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-
-    <div sec:authorize="isAnonymous()">
-        <a th:href = "@{/user/signin}" style="background-color: black" class="btn text-light">
-            Log in
-        </a>
-        <!--        <a th:href = "@{/registration}" class="btn btn-light">Sign up</a>-->
-        <a th:href = "@{/registration}" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;" class="btn btn-light rounded-0 fw-bolder">Sign up</a>
-        <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
-    </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <a class=" btn text-light" th:href="@{/logout}">Log out</a>
-        <a th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-light  rounded-0" >Become a Host</a>
-        <!--        <a th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn btn-outline-light  rounded-0" >Profile</a>-->
-    </div>
-
-
-
-</nav>
-
-<section class="header container mt-5">
+<section class="header container mt-5 pt-5">
     <div class="row">
         <div class="col-8">
             <h1 th:text="${escooter.getModelName()}" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">

@@ -27,26 +27,11 @@
 </head>
 
 <body>
-<nav
-        style=" padding: 1.2rem 10rem 1.2rem 10rem"
-        class="d-flex justify-content-between bg-light" id="navbarNavDropdown">
-
-    <a class="navbar-brand"  th:href = "@{/}">
-        <img style="filter: invert(98%)" src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-
-    <div>
-        <!-- <button type="button" class="btn btn-outline-light  rounded-0" >Log out</button> -->
-
-        <a  th:href="@{/host/hostinfo}" type="button" class="btn btn-outline-dark  rounded-0" >Become a Host</a>
-
-    </div>
-
-</nav>
+<nav th:insert="fragments/nav :: nav" ></nav>
 
 
 <!--Add scooter section-->
-<section style="max-width: 79% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter">
+<section style="max-width: 79% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter pt-5 mt-5">
     <div class="row pt-3 mb-3">
         <div style="width: auto;" class="col-4">
             <div class="card " style="width: 21rem;">
@@ -195,7 +180,7 @@
 
                     </div>
 
-                    <div style="" class="mb-3 d-flex justify-content-between pt-3 form-group">
+                    <div style="" class="mb-3 d-flex justify-content-between form-group">
                         <div style="width: 47% !important;">
                             <label for="country" class="form-label fw-bold">Country:</label>
                             <input id="country" class="form-control" th:field="*{country}"
@@ -212,6 +197,8 @@
 
                         <!-- IF CUSTOMER IS ANONYMOUS -->
                         <div id="emailHelp" class="form-text py-4 " th:if="${user.getIsVerified()}">
+
+                            Update your contact information and click update to submit.
 
                         </div>
                         <!-- ELSE -->

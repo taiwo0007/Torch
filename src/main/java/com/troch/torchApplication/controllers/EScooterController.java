@@ -168,14 +168,11 @@ public class EScooterController {
     public String EScooterDetail(@PathVariable("id") Integer id, Model model) throws Exception {
 
         HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
-        if((Boolean)validatorObj.get("authenticated") == false){
-            model.addAttribute("isAuthenticated", false);
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
 
         }
-        else{
-            model.addAttribute("isAuthenticated", true);
 
-        }
 
         List<ScooterReview> allScootersReview = eScooterReviewService.findAllReviewsByScooter(id);
         double averageRating = 0.0;
@@ -234,6 +231,13 @@ public class EScooterController {
 
     @GetMapping("/escooterBooking/{id}")
     public String escooterBooking(@PathVariable("id") Integer id, Model model, @ModelAttribute("trip") Trip trip) throws Exception {
+
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+
+        }
+
 
         String uniqueString = new SecureRandom().ints(0, 24)
                 .mapToObj(i -> Integer.toString(i, 24))
@@ -304,6 +308,13 @@ public class EScooterController {
     @GetMapping("/processTrip/")
     public String escooterBookingTrip(@RequestParam Integer tripId, Model model) throws Exception {
 
+        //Validator
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+
+        }
+
 
         Trip trip = new Trip();
         Optional<Trip> optionalTrip = tripService.findTripById(tripId);
@@ -334,6 +345,7 @@ public class EScooterController {
 
     @PostMapping("/reviewScooter/{scooterId}")
     public String reviewScooter(@PathVariable("scooterId") Integer scooterId, @ModelAttribute("ScooterReviewForm") ScooterReviewForm scooterReviewForm, Model model) throws Exception {
+
 
 
         HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();

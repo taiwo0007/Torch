@@ -1,6 +1,7 @@
 package com.troch.torchApplication.controllers;
 
 
+import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.services.HostService;
@@ -16,6 +17,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -28,11 +30,19 @@ public class HostController {
     @Autowired
     HostService hostService;
 
+    @Autowired
+    ValidateUser validateUserutil;
+
 
     @GetMapping(value = "/hostinfo")
-    public String becomeHost(ModelMap map)  {
+    public String becomeHost(Model model)  {
 
+        //Validator
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
 
+        }
 
 
         return "host/becomeHost";
@@ -41,6 +51,8 @@ public class HostController {
 
     @GetMapping(value = "/createHost")
     public String processHost(Model model) throws Exception {
+
+
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

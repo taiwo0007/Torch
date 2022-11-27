@@ -63,38 +63,7 @@
 </head>
 
 <body>
-<nav
-        style="background-color: black !important;  padding: 0.8rem 10rem; "
-        class="d-flex justify-content-between sticky fixed-top my-auto " id="navbarNavDropdown">
-
-
-    <a class="navbar-brand" th:href = "@{/}">
-        <!--        <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />-->
-        <img src="/images/website/torch.png" width="80" height="auto" alt="" />
-
-    </a>
-
-    <div sec:authorize="isAnonymous()">
-        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
-
-        <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
-            Log in
-        </a>
-
-        <a th:href = "@{/registration}" style=" border-radius: 2.3rem !important; font-size: .8rem !important" class="btn btn-light rounded-0 text-dark">Sign up</a>
-    </div>
-
-    <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
-
-        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
-        <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
-        <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><i class="fa fa-user-circle-o pe-1 my-auto" aria-hidden="true"></i><span th:text="${user.getFirstName()}"></span></a>
-
-    </div>
-
-
-
-</nav>
+<nav th:insert="fragments/nav :: nav" ></nav>
 
 
 <div class="container-fluid pt-5 mt-3">
