@@ -23,29 +23,11 @@
 </head>
 
 <body class="bg-light">
-<nav style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem" class="d-flex justify-content-between"
-     id="navbarNavDropdown">
-
-    <a class="navbar-brand" href="#">
-        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-
-    <div>
-        <button style="background-color: black" class="btn text-light">
-            Log in
-        </button>
-        <button style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;"
-                class="btn btn-light rounded-0 fw-bolder">Sign up</button>
-        <button type="button" class="btn btn-outline-light  rounded-0">Become a Host</button>
-
-    </div>
-
-</nav>
+<nav th:insert="fragments/nav :: nav" ></nav>
 
 
 
-<section class="container-fluid mt-5 mb-5 bg-light">
-
+<section class="container-fluid mt-5 mb-5 bg-light pt-5">
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -67,12 +49,7 @@
         <h2 class="fw-bold text-center ">Thank you</h2>
         <h1 class="fw-bold text-center ">Your trip has been successfuly booked</h1>
 
-
-
         <div class="col-8 ">
-
-
-
             <div class="p-4 border rounded mt-4 bg-white ">
                 <div>
                     <div class="row">
@@ -81,27 +58,21 @@
                             <div class="p-3">
                                 <h3 class="fw-bold">Trip #: <span class="fw-bold"><span class="fw-bold" th:text="${trip.getTripId()}">GW5625H</span></span></h3>
                                 <h5  th:text="${escooter.getModelName}" style="" class="text-secondary mb-5">Xiomi ultran pro</h5>
-
                                 <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
-
-
                                     <div style="padding-right: 0 !important" class="col-1 my-auto">
                                         <i style="font-size: 1.3rem; " class="fa fa-tint my-auto" aria-hidden="true"></i>
-
                                     </div>
                                     <div class="col-11 my-auto">
                                         <div th:if="${escooter.getWaterResistant()}">
                                             <p class=" text-start   my-auto ">Water Resistant</p>
-
                                         </div>
                                         <div th:unless="${escooter.getWaterResistant()}">
                                             <p class=" text-start   my-auto ">Not Water Resistant</p>
 
                                         </div>
                                     </div>
-
-
                                 </div>
+
                                 <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
 
 
@@ -127,12 +98,7 @@
 
                                         <p class=" text-start  my-auto  ">Free 24hr Cancellation</p>
                                     </div>
-
-
                                 </div>
-
-
-
                             </div>
 
 
@@ -253,15 +219,9 @@
                                     <div class="col-6 my-auto">
                                         <h3 class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></h3>
                                     </div>
-
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -270,14 +230,10 @@
                 <h3 class="fw-bold text-info pb-3">Trip information</h3>
 
                 <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light">
-
-
                     <div style="padding-right: 0 !important" class="col-2 my-auto">
                         <i style="font-size: 1.3rem; " class="fa fa-street-view my-auto" aria-hidden="true"></i>
-
                     </div>
                     <div class="col-10 my-auto">
-
                         <p class=" text-start  my-auto  fw-bolder">Pick-up date</p>
                         <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}" style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">2022/02/06</p>
                     </div>
@@ -285,25 +241,19 @@
 
                 </div>
                 <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light mt-4">
-
-
                     <div style="padding-right: 0 !important" class="col-2 my-auto">
                         <i style="font-size: 1.3rem; " class="fa fa-map-pin my-auto" aria-hidden="true"></i>
-
                     </div>
                     <div class="col-10 my-auto">
 
                         <p class=" text-start  my-auto  fw-bolder">Drop-of date</p>
                         <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}" style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">2022/02/06</p>
                     </div>
-
-
                 </div>
 
 
             </div>
             <div class="p-4 border rounded mt-4 bg-white">
-
                 <p class="fw-bold">Insurance information</p>
                 <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
                 <div class="d-flex justify-content-between"> <p class="fw-bold">Insurance cost: </p> <p class="fw-bold">23.00</p></div>
@@ -331,6 +281,7 @@
             position: location,
             map,
             title: "Hello World!",
+            icon: "/images/website/icons/markerChanged.png"
         });
 
         console.log(location.lat);

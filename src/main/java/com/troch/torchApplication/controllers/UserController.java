@@ -185,9 +185,7 @@ public class UserController {
         eScooter.setMake(escooterForm.getMake());
         eScooter.setTrips(0);
 
-
-
-
+        //Save operation
         fileUploadUtil.saveFile(file);
         eScooterService.save(eScooter);
 
@@ -220,6 +218,7 @@ public class UserController {
         }
 
         User currentUsr = userServiceImpl.findUser(id);
+
         currentUsr.setIsVerified(true);
         currentUsr.setProfilePicture(user.getProfilePicture());
         currentUsr.setCountry(user.getCountry());

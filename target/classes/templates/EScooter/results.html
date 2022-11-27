@@ -147,7 +147,7 @@
                     </button>
                 </form>
 
-                <a th:each="escooter : ${escooterList}" th:id="${escooter.getModelName()}" style="text-decoration: none; width: 23vw" class="card mx-auto m-3 text-dark scooter-card col-6  mx-auto pt-3 pb-4" id="scooter-card"
+                <a th:each="escooter : ${escooterList}" th:id="${escooter.getModelName()}" style="text-decoration: none; width: 23vw" class="card mx-auto m-3 text-dark scooter-card col-6  mx-auto pt-3 pb-3" id="scooter-card"
                    th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
 
                     <img style="object-fit:cover !important; width: 100% !important; height: 25rem !important;"  th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." />
@@ -155,30 +155,23 @@
                         <div class=" pb-3 border-bottom">
                             <h5 th:text="${escooter.getModelName()}" class="card-text  fw-bold">Xiaomi 6 pro edition</h5>
                             <div class="d-flex justify-content-between">
-                                <div >
-
-                                    <p class="fw-bold">$10/day</p>
+                                <div>
+                                    <p  class=""><span th:text="${escooter.getTrips()}"></span> Trips</p>
                                 </div>
-
                                 <div>
                                     <span th:text="${escooter.getRating()}">4.0</span> <i class="fa fa-star"></i>
                                 </div>
                             </div>
 
-
                         </div>
                         <div class="d-flex justify-content-between">
-                            <p class="text-end fw-bolder  my-auto text-success pt-3"><span class="fw-light" th:text="${escooter.getTrips()}">21</span>
-                                <span class="fw-light">Trips</span> </p>
+                            <h3 class="text-end fw-bolder  my-auto fw-bold pt-3 ">€<span class="fw-bold" th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}">21</span>
+                                </h3>
                             <p class="text-end  my-auto pt-3"><span th:text="${escooter.getCounty()}"></span>, <span th:text="${escooter.getCountry()}"></span></p>
                         </div>
                     </div>
 
                 </a>
-
-
-
-
             </div>
         </div>
 
@@ -246,10 +239,7 @@
 
             eList.forEach((escooter) => {
 
-                console.log(escooter)
-
                 var myContent = ` <a href="EScooterDetail/${escooter.id}"><div  class="card" style="width: 6rem; padding: 0.3rem 0rem 0rem 0.3rem"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> `;
-
 
                 markers.forEach((elem) => {
 
@@ -268,22 +258,14 @@
 
                             console.log(elem)
                         });
-
                     }
-
-
-
                 })
-
-
             })
-
 
 
             var escooters = document.querySelectorAll(".scooter-card");
 
             escooters.forEach((elem) => {
-
                 elem.addEventListener("mouseover", () => {
                     changeIcon(elem.id);
                 });
@@ -291,12 +273,7 @@
                 elem.addEventListener("mouseout", () => {
                     resetIcon(elem.id);
                 });
-
-
             })
-
-
-
         }
         window.initMap = initMap;
 

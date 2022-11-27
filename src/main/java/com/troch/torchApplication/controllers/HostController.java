@@ -52,8 +52,6 @@ public class HostController {
     @GetMapping(value = "/createHost")
     public String processHost(Model model) throws Exception {
 
-
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUserName = authentication.getName();

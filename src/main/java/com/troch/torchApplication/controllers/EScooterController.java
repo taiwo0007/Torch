@@ -65,23 +65,7 @@ public class EScooterController {
     @Autowired
     private StripeService stripeService;
 
-    @GetMapping("/checkout")
-    public String chargePage(Model model){
-
-        model.addAttribute("stripePublicKey", API_PUBLIC_KEY);
-
-        return "checkout";
-    }
-
-    @GetMapping(value = "/stripe")
-    public String Stripe(ModelMap map, Model model) {
-
-        return "checkouttest";
-
-    }
-
-
-    @GetMapping(value = "/")
+     @GetMapping(value = "/")
     public String index(ModelMap map, Model model)  {
 
         List<EScooter> scooters = eScooterService.findAllEScooters();
@@ -93,26 +77,10 @@ public class EScooterController {
         map.addAttribute("scooters", scooters);
         map.addAttribute("makeList", makeList);
 
-        if( SecurityContextHolder.getContext().getAuthentication() != null &&
-                SecurityContextHolder.getContext().getAuthentication().isAuthenticated() &&
-                //when Anonymous Authentication is enabled
-                !(SecurityContextHolder.getContext().getAuthentication()
-                        instanceof AnonymousAuthenticationToken) ){
-
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String username;
-
-            if (principal instanceof UserDetails) {
-                username = ((UserDetails)principal).getUsername();
-            } else {
-                username = principal.toString();
-            }
-
-
-            User currentUserObj = userServiceImpl.findUserByEmail(username);
-
-            model.addAttribute("user", currentUserObj);
-        }
+         HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+         if((Boolean)validatorObj.get("authenticated")){
+             model.addAttribute("user",validatorObj.get("currentUserObj"));
+         }
         else{
             model.addAttribute("user", null);
         }
@@ -122,44 +90,22 @@ public class EScooterController {
 
     }
 
-
-
-
-
-    @PostMapping("/upload")
-    public String uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
-
-
-        fileUploadUtil.saveFile(file);
-        User savedUser = userServiceimpl.findUser(2);
-        savedUser.setProfilePicture("/images/uploads/"+file.getOriginalFilename().toLowerCase());
-        userServiceimpl.saveUser(savedUser);
-        model.addAttribute("msg", "Uploaded images: " + file.getOriginalFilename().toString());
-        return "index";
-    }
-
     @GetMapping("/findEscooters")
     public String findEscooters( Model model,@ModelAttribute("escootersearch") EScooterForm escooterSearch){
 
         HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
-        if((Boolean)validatorObj.get("authenticated") == false){
+        if(!((Boolean) validatorObj.get("authenticated"))){
             model.addAttribute("isAuthenticated", false);
-
         }
         else{
             model.addAttribute("user",validatorObj.get("currentUserObj"));
             model.addAttribute("isAuthenticated", true);
-
         }
 
         List<EScooter> eScooterList = eScooterService.findAllByTripDatesAndLocation(escooterSearch.getTripStart(), escooterSearch.getTripEnd(), escooterSearch.getCountry());
         model.addAttribute("escooterList", eScooterList);
         model.addAttribute("escooterListArr", eScooterList.toArray());
         model.addAttribute("counter", new Counter());
-
-        logger.info("" +eScooterList.toArray());
-
-
 
         return "EScooter/results";
 
@@ -210,11 +156,12 @@ public class EScooterController {
             escooter.get().setRating(averageRating);
             eScooterService.save(escooter.get());
 
-
             model.addAttribute("make", escooter.get().getMake());
             model.addAttribute("escooter", escooter.get());
             model.addAttribute("trip", newTrip);
             model.addAttribute("ScooterReviewForm", ScooterReviewForm);
+            model.addAttribute("isAuthenticated",validatorObj.get("authenticated"));
+
 
         }
         else {
@@ -235,10 +182,11 @@ public class EScooterController {
         HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
         if((Boolean)validatorObj.get("authenticated")){
             model.addAttribute("user",validatorObj.get("currentUserObj"));
+            model.addAttribute("isAuthenticated",validatorObj.get("authenticated"));
 
         }
 
-
+        //Generate unique trip ID
         String uniqueString = new SecureRandom().ints(0, 24)
                 .mapToObj(i -> Integer.toString(i, 24))
                 .map(String::toUpperCase).distinct().limit(12).collect(Collectors.joining())
