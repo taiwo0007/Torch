@@ -280,7 +280,6 @@ public class EScooterController {
 
         List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
 
-
         model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
         model.addAttribute("host", trip.getTrip_owner().getHostUser());
         model.addAttribute("escooter", trip.getEScooterOnTrip());
