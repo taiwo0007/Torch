@@ -31,28 +31,10 @@
 
 </head>
 <body>
-<nav
-        style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem"
-        class="d-flex justify-content-between"
->
+<nav th:insert="fragments/nav :: nav" ></nav>
 
 
-
-    <a class="navbar-brand" th:href = "@{/}">
-        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-    <div sec:authorize="isAnonymous()">
-        <a th:href = "@{/user/signin}" style="background-color: black" class="btn text-light">
-            Log in
-        </a>
-        <!--        <a th:href = "@{/registration}" class="btn btn-light">Sign up</a>-->
-        <a th:href = "@{/registration}" style="--bs-btn-padding-y: .35rem; --bs-btn-padding-x: .95rem; --bs-btn-font-size: .85rem;" class="btn btn-light rounded-0 fw-bolder">Sign up</a>
-
-    </div>
-
-</nav>
-
-<div class="container">
+<div class="container mt-5 pt-3">
     <div th:if="${error}">
         <div class="alert alert-primary d-flex align-items-center mt-4" role="alert">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">

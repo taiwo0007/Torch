@@ -12,7 +12,7 @@
     </a>
 
     <div sec:authorize="isAnonymous()">
-        <!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
+                <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
 
         <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
             Log in
@@ -23,7 +23,7 @@
 
     <div sec:authorize="isAuthenticated()" th:if="${user.getId()}">
 
-        <!--        <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>-->
+                <a th:href="@{/host/hostinfo}" style=" font-size: .8rem !important ;" type="button" class="btn btn-outline-light  rounded-0 my-auto" >Become a Host</a>
         <a style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn text-light rounded-0 fw-bold fw-bold" th:href="@{/logout}">Log out</a>
         <a style="font-size: 1.0rem; border-radius: 2.3rem !important; text-decoration: none; margin-top: -.1rem !important; background-color: black;" th:href="@{/user/profileEdit/{id}(id=${user.getId()})}" type="button" class="btn text-light rounded-0 my-auto " ><span class="text-info fw-bold" th:text="${user.getFirstName()}"></span></a>
 

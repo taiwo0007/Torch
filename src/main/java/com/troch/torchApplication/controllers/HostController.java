@@ -45,7 +45,7 @@ public class HostController {
         }
 
 
-        return "host/becomeHost";
+        return "host/becomehost";
 
     }
 
@@ -99,7 +99,7 @@ public class HostController {
         }
 
 
-        return "/host/becomeHost";
+        return "/host/becomehost";
 
     }
 

@@ -107,7 +107,7 @@ public class EScooterController {
         model.addAttribute("escooterListArr", eScooterList.toArray());
         model.addAttribute("counter", new Counter());
 
-        return "EScooter/results";
+        return "escooter/results";
 
     }
     @GetMapping("/EScooterDetail/{id}")
@@ -172,7 +172,7 @@ public class EScooterController {
 
 
 
-        return "EScooter/EScooterDetail";
+        return "escooter/escooterdetail";
 
     }
 
@@ -243,7 +243,7 @@ public class EScooterController {
             model.addAttribute("escooter", eScooter);
             model.addAttribute("normalCost", eScooter.getCost()*days);
             model.addAttribute("trip", bookingTrip);
-            return "Escooter/EscooterBooking";
+            return "escooter/escooterbooking";
 
         }
         else{
@@ -287,7 +287,7 @@ public class EScooterController {
         model.addAttribute("trip", trip);
         model.addAttribute("days", days);
 
-        return "Escooter/trip";
+        return "escooter/trip";
     }
 
     @PostMapping("/reviewScooter/{scooterId}")

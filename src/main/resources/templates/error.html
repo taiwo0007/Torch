@@ -29,16 +29,8 @@
     </style>
 </head>
 <body>
-<nav
-        style="background-color: black; padding: 1.2rem 10rem 1.2rem 10rem"
-        class="d-flex justify-content-between" id="navbarNavDropdown">
+<nav th:insert="fragments/nav :: nav" ></nav>
 
-    <a class="navbar-brand" th:href="@{/}">
-        <img src="/images/website/torch.png" width="90" height="auto" alt="" />
-    </a>
-
-
-</nav>
 <div style="font-family: Helvetica" class="container text-center mx-auto">
 
     <div style="height: 80vh;" class="row text-center mx-auto">

@@ -31,7 +31,7 @@ public class HostService {
         return hostRepository.findById(id);
     }
 
-//    public List<EScooter> findEscootersByHost(Host host){
+//    public List<escooter> findEscootersByHost(Host host){
 //
 //        hostRepository.fin
 //    }
