@@ -1,13 +1,15 @@
 
--- DELETE FROM scooter_review;
--- DELETE FROM users_roles;
--- DELETE from host_review;
--- DELETE FROM make;
---
--- DELETE FROM user;
---
--- DELETE FROM escooter;
--- DELETE from host;
+DELETE FROM scooter_review;
+DELETE FROM users_roles;
+DELETE from host_review;
+DELETE FROM escooter;
+
+DELETE FROM make;
+
+DELETE FROM user;
+
+
+DELETE from host;
 
 
 DELETE FROM role;
