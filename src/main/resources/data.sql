@@ -1,20 +1,20 @@
 
-DELETE FROM scooter_review;
-DELETE FROM users_roles;
-DELETE from host_review;
-DELETE FROM escooter;
-
-DELETE FROM make;
-
-DELETE FROM user;
-
-
-DELETE from host;
-
-
-DELETE FROM role;
-
-DELETE FROM trip;
+-- DELETE FROM scooter_review;
+-- DELETE FROM users_roles;
+-- DELETE from host_review;
+-- DELETE FROM escooter;
+--
+-- DELETE FROM make;
+--
+-- DELETE FROM user;
+--
+--
+-- DELETE from host;
+--
+--
+-- DELETE FROM role;
+--
+-- DELETE FROM trip;
 
 
 
