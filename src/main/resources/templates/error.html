@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=
     , initial-scale=1.0">
-    <title>Error!</title>
+    <title>Error</title>
     <link rel="icon"
           type="image/png"
           th:href="@{${@environment.getProperty('favicon.image')}}">
@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-<nav th:insert="fragments/nav :: nav" ></nav>
+<nav th:insert="fragments/nav :: nav"></nav>
 
 <div style="font-family: Helvetica" class="container text-center mx-auto mt-5 pt-3">
 
@@ -45,7 +45,7 @@
             <p  style="font-size: 3rem !important;"  class="badge-info fw-bold text-center text-dark text-center">
                 Something went wrong.
             </p>
-            <h5 th:text="${error}">Try refreshing this page or coming back later.</h5>
+            <h5>Try refreshing this page or coming back later.</h5>
         </div>
     </div>
 

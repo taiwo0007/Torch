@@ -46,8 +46,9 @@
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         }
 
-
-
+        input, select, textarea{
+            color: rgba(0, 0, 0, 0.502) !important;
+        }
     </style>
 
     <title>Torch Scooter Rental Service</title>
@@ -68,12 +69,15 @@
             class="hero-container my-auto mx-auto">
 
         <div  class="container pt-5">
-            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2 shadow" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
-                <h2 class="fw-bold text-center">Make your <span class="text-info">trip</span> </h2>
-                <div id="emailHelp" class="form-text py-4 text-center fw-bold text-dark">Search for Electric scooters across Ireland.</div>
+            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2 rounded shadow-lg" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+                <div class="mx-auto text-center ">
+                    <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info">trip</span> </h1>
+                    <!-- <img style="width: 22rem; margin-top: -1rem;" src="./images/scooterstring.gif" class="mx-auto text-center" alt=""> -->
+
+                </div>
                 <div class="mb-3">
                     <label for="country" class="form-label fw-bold">Pickup location</label>
-                    <input placeholder="Enter scooter location here" th:field="*{country}" type="text" class="form-control " id="country" aria-describedby="emailHelp" >
+                    <input style="color: black !important;" placeholder="Scooter location" th:field="*{country}" type="text" class="form-control " id="country" aria-describedby="emailHelp" >
 
                 </div>
                 <div class="mb-3">
@@ -87,52 +91,54 @@
 
 
                 <button style="width: 100%;  background-color: black !important;" type="submit" class="btn  text-light p-2 mt-4 fw-bold ">Search</button>
+                <div id="emailHelp" class="form-text py-4 text-center text-dark">Find out more about Torch <u class="text-info">here</u></div>
+
             </form>
         </div>
     </div>
 </section>
 
 
-<section class="container pb-5 mb-3">
-    <div class="row py-5 ">
-        <div class="header-bottom py-5">
-            <h1 style="font-size: 3.8rem !important"
-                class="h1 text-center fw-bold" >
-                Rent or Rent Out
-            </h1>
-        </div>
-        <div class="row">
-            <div class="col-6 text-center">
-                <img
-                        src="/images/website/sectionThree.png"
-                        width="395"
-                        height="auto"
-                        class=""
-                        alt="..."
-                />
-            </div>
-            <div class="col-6 pt-4 my-auto">
-                <div class="my-auto">
-                    <h3 class="fw-bold">
-                        Rent a Scooter today
-                        <span class="text-info">
-                        and enjoy a great riding experience on torch.com
-                      </span>
-                    </h3>
-                    <p>
-                        Go prepared in a rugged 4x4 to take on winter roads with ease, or
-                        a camper van to take you to the trees.
-                    </p>
-                    <button class="btn btn-info text-light">Browse Scooters</button>
-                </div>
+<!--<section class="container pb-5 mb-3">-->
+<!--    <div class="row py-5 ">-->
+<!--        <div class="header-bottom py-5">-->
+<!--            <h1 style="font-size: 3.8rem !important"-->
+<!--                class="h1 text-center fw-bold" >-->
+<!--                Rent or Rent Out-->
+<!--            </h1>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-6 text-center">-->
+<!--                <img-->
+<!--                        src="/images/website/sectionThree.png"-->
+<!--                        width="395"-->
+<!--                        height="auto"-->
+<!--                        class=""-->
+<!--                        alt="..."-->
+<!--                />-->
+<!--            </div>-->
+<!--&lt;!&ndash;            <div class="col-6 pt-4 my-auto">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="my-auto">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <h3 class="fw-bold">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Rent a Scooter today&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span class="text-info">&ndash;&gt;-->
+<!--&lt;!&ndash;                        and enjoy a great riding experience on torch.com&ndash;&gt;-->
+<!--&lt;!&ndash;                      </span>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        Go prepared in a rugged 4x4 to take on winter roads with ease, or&ndash;&gt;-->
+<!--&lt;!&ndash;                        a camper van to take you to the trees.&ndash;&gt;-->
+<!--&lt;!&ndash;                    </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button class="btn btn-info text-light">Browse Scooters</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
 
-            </div>
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
 
-        </div>
+<!--        </div>-->
 
 
-    </div>
-</section>
+<!--    </div>-->
+<!--</section>-->
 
 <section class="header-bottom py-5">
     <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
@@ -207,7 +213,7 @@
 
     <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded my-5">
         <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
-            Browse by Location
+            Browse by Feature
         </h4>
 
         <div class="row text-center mt-3">

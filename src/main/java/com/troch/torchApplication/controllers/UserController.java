@@ -79,9 +79,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
-
-
     @GetMapping(value = "/signin")
     public String singIn(Model model)  {
 
@@ -89,10 +86,6 @@ public class UserController {
         return "authentication/signin";
 
     }
-
-
-
-
 
     @GetMapping("/scooter-list/{id}")
     public String scooterList(@PathVariable("id") Integer id, Model model) throws Exception {
