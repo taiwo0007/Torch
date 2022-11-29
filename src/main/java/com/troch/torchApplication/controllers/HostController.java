@@ -33,7 +33,6 @@ public class HostController {
     @Autowired
     ValidateUser validateUserutil;
 
-
     @GetMapping(value = "/hostinfo")
     public String becomeHost(Model model)  {
 
@@ -43,10 +42,7 @@ public class HostController {
             model.addAttribute("user",validatorObj.get("currentUserObj"));
 
         }
-
-
         return "host/becomehost";
-
     }
 
     @GetMapping(value = "/createHost")
@@ -84,25 +80,15 @@ public class HostController {
             }
             else if(currentUser.getHost() != null ){
                 model.addAttribute("error", "You are already a Host User");
-
             }
             else{
                 model.addAttribute("error", "You must be verified to become a host");
-
             }
-
-
-
         }
         else{
             model.addAttribute("error", "You must have a user account to become a host");
         }
-
-
-        return "/host/becomehost";
-
+        return "host/becomehost";
     }
-
-
 
 }
