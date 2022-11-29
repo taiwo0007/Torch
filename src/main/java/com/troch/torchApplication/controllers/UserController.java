@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jayway.jsonpath.JsonPath;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.JSONConverter;
+import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.models.EScooter;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import static com.jayway.jsonpath.JsonPath.*;
@@ -41,6 +43,9 @@ import static com.jayway.jsonpath.JsonPath.*;
 public class UserController {
 
     private UserService userService;
+
+    @Autowired
+    ValidateUser validateUserutil;
 
     @Autowired
     EScooterForm eScooterForm;
@@ -92,19 +97,30 @@ public class UserController {
     @GetMapping("/scooter-list/{id}")
     public String scooterList(@PathVariable("id") Integer id, Model model) throws Exception {
 
-        User user = userServiceImpl.findUser(id);
+
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+
+        }
+        else{
+            throw new Exception("Not authorised");
+        }
+
+        User user =  userServiceImpl.findUser(id);
+
+        if(user.getHost() == null){
+
+            throw new Exception("You must be a host to view Escooters");
+        }
 
         Integer host_id = user.getHost().getId();
-
 
         Host host = hostService.findById(host_id).get();
 
         List<EScooter> eScooterList = eScooterService.findAllEscootersByHost(host.getId());
 
-        model.addAttribute("user", user);
         model.addAttribute("eScooterList", eScooterList);
-
-
 
         return "user/view_scooters";
 
@@ -113,17 +129,13 @@ public class UserController {
     @GetMapping("/scooter-add/{id}")
     public String scooterAdd(@PathVariable("id") Integer id, Model model) throws Exception {
 
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+        }
 
         model.addAttribute("escooterForm", new EScooterForm());
         model.addAttribute("makes", makeService.findAllMake());
-
-        User user  = userServiceImpl.findUser(id);
-        model.addAttribute("user", user);
-
-
-
-
-
 
         return "user/add_scooter";
 
@@ -133,8 +145,6 @@ public class UserController {
     public String scooterAdd(@RequestParam("image") MultipartFile file, @PathVariable("id") Integer id, @ModelAttribute("escooterForm")  EScooterForm escooterForm , Model model) throws Exception {
 
         User user = userServiceImpl.findUser(id);
-
-
 
         URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+escooterForm.getCountry().replaceAll(" ", "%20")+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -201,9 +211,24 @@ public class UserController {
     @GetMapping("/profileEdit/{id}")
     public String profileEdit(@PathVariable("id") Integer id, Model model) throws Exception {
 
-        User user = userServiceImpl.findUser(id);
+        HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();
+        User user = null;
+        if ((Boolean) validatorObj.get("authenticated")) {
+            model.addAttribute("user", validatorObj.get("currentUserObj"));
+            user = (User) validatorObj.get("currentUserObj");
+        }
 
-        model.addAttribute("user", user);
+        if (user == null) {
+            throw new Exception("Unauthorised access");
+        }
+
+        if (user.getHost() != null) {
+            model.addAttribute("isHost", true);
+        }
+        else{
+            model.addAttribute("isHost", false);
+
+        }
 
         return "user/user_edit_profile";
 

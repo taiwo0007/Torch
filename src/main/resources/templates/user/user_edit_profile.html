@@ -20,14 +20,12 @@
           type="image/png"
           th:href="@{${@environment.getProperty('favicon.image')}}">
     <style>
-        * {
-            overflow-x: hidden;
-        }
+
     </style>
 </head>
 
 <body>
-<nav th:insert="fragments/nav :: nav" ></nav>
+<nav th:insert="fragments/nav :: nav"></nav>
 
 
 <!--Add scooter section-->
@@ -115,7 +113,7 @@
                 <form th:action="@{/user/update/{id}(id=${user.getId()})}"  th:object="${user}" class="p-4" method="post">
                     <div  class="d-flex justify-content-between mb-4">
                         <h2 class="fw-bold ">Profile</h2>
-                        <a  th:href="@{/user/scooter-list/{id}(id=${user.getId()})}" style="width: 24%"class="btn btn-outline-info p-2 rounded-0">
+                        <a th:if="${isHost}"  th:href="@{/user/scooter-list/{id}(id=${user.getId()})}" style="width: 24%" class="btn btn-outline-info p-2 rounded-0">
                             View Scooters
                         </a>
                     </div>

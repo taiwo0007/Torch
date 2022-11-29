@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8" />
@@ -18,78 +20,97 @@
           type="image/png"
           th:href="@{${@environment.getProperty('favicon.image')}}">
     <style>
-        * {
-            overflow: hidden;
-        }
+
     </style>
 </head>
 
 <body>
-<div class="">
-    <div class="row">
 
-        <div class="hero-container col-6">
-            <img style="height: 100vh; width: 50vw" src="/images/website/signup.png" width="" alt="" />
+<nav
+     style="  padding: 0.8rem 10rem; "
+     class="d-flex justify-content-between sticky fixed-top my-auto bg-light" id="navbarNavDropdown" th:fragment="nav">
+
+
+    <a class="navbar-brand" th:href = "@{/}">
+                <img style="filter: invert(98%)" src="/images/website/torch.png" width="80" height="auto" alt="" />
+<!--        <img src="/images/website/torchLogo.png" width="80" height="auto" alt="" />-->
+
+    </a>
+</nav>
+
+
+<div style="overflow-y: hidden;" class="mt-2">
+    <div style="height: 100vh !important;" class="row my-auto">
+        <div style="overflow-y: hidden;" class="col-6 mx-auto text-end">
+            <img style="width: 50rem; height: 100%;" class=" text-end"  src="/images/website/signup.gif" alt="" />
         </div>
 
         <div class="col-6 ">
+            <div class=" pt-5 ">
+                <div class="p-5" style="
+                width: 35.9rem !important;
+                /* height: 55rem !important; */
+                background-color: white;
+           margin: auto !important;
 
+              ">
+                    <form th:action="@{/registration}" th:method="POST" method="POST" th:object="${user}">
 
-            <div class="container pt-5 ">
-                <form th:action="@{/registration}" method="post" th:object="${user}" class="p-5" style="width: 35.9rem !important;height: 55rem !important; margin: auto !important;">
-
-
-                    <div th:if="${error}" class="alert alert-danger d-flex align-items-center fade show">
-                        <i class="bi-exclamation-octagon-fill"></i>
-                        <strong class="mx-2">Error!</strong> <span th:text="${error}"></span>
-                    </div>
-
-                    <h2 class="fw-bold ">Sign Up</h2>
-                    <div id="emailHelp" class="form-text py-4 ">
-                        Alread have an account? <a th:href = "@{/user/signin}" class="link text-info">Sign In</a>
-                    </div>
-                    <div style="" class="mb-3 d-flex justify-content-between form-group">
-                        <div class="form-group" style="width: 14rem !important;">
-                            <label class="form-label fw-bold" for="firstName"> First Name </label>
-                            <input id="firstName" class="form-control" th:field="*{firstName}"
-                                   required autofocus="autofocus" />
-
+                        <div th:if="${error}" class="alert alert-danger d-flex align-items-center fade show">
+                            <i class="bi-exclamation-octagon-fill"></i>
+                            <strong class="mx-2">Error!</strong> <span th:text="${error}">error</span>
                         </div>
-                        <div class="form-group" style="width: 14rem !important;">
-                            <label class="form-label fw-bold" for="lastName"> Last Name </label>
-                            <input id="lastName" class="form-control" th:field="*{lastName}"
-                                   required autofocus="autofocus" />
+
+                        <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info">Sign up</span> to make an account on Torch </h1>
+
+                        <div style="" class="mb-3 d-flex justify-content-between form-group">
+                            <div class="form-group" style="width: 14.5rem !important;">
+                                <label class="form-label fw-bold" for="firstName"> First Name </label>
+                                <input id="firstName" class="form-control" th:field="*{firstName}"
+                                       required autofocus="autofocus" placeholder="John"/>
+
+                            </div>
+                            <div class="form-group" style="width: 14.5rem !important;">
+                                <label class="form-label fw-bold" for="lastName"> Last Name </label>
+                                <input id="lastName" class="form-control" placeholder="doe" th:field="*{lastName}"
+                                       required autofocus="autofocus" />
+                            </div>
                         </div>
-                    </div>
-                    <div style="display: none !important;"  class=" form-group">
-                        <label type="hidden" class="control-label" for="firstName"> </label>
-                        <input type="hidden" id="firstName" class="form-control" th:field="*{firstName}"
-                               required autofocus="autofocus" />
-                    </div>
-                    <div style="display: none !important;" class=" form-group">
-                        <label type="hidden" class="control-label" for="lastName"> </label> <input
-                            type="hidden" id="lastName" class="form-control" th:field="*{lastName}"
-                            required autofocus="autofocus" />
-                    </div>
-                    <div class="mb-3 form-group">
-                        <label for="email" class="form-label fw-bold">Email</label>
-                        <input th:field="*{email}" type="email" class="form-control" id="email" />
-                        <small id="emailHelp" class="form-text text-muted mx-auato text-center">We'll never share your email with anyone else.</small>
-                    </div>
+<!--                        <div style="display: none !important;"  class=" form-group">-->
+<!--                            <label type="hidden" class="control-label" for="firstName"> </label>-->
+<!--                            <input type="hidden" id="firstName" class="form-control" th:field="*{firstName}"-->
+<!--                                   required autofocus="autofocus" />-->
+<!--                        </div>-->
+<!--                        <div style="display: none !important;" class=" form-group">-->
+<!--                            <label type="hidden" class="control-label" for="lastName"> </label> <input-->
+<!--                                type="hidden" id="lastName" class="form-control" th:field="*{lastName}"-->
+<!--                                required autofocus="autofocus" />-->
+<!--                        </div>-->
+                        <div class="mb-3 form-group">
+                            <label for="email" class="form-label fw-bold">Email</label>
+                            <input th:field="*{email}" placeholder="john@gmail.com" type="email" class="form-control" id="email" />
+                            <small id="emailHelp" class="form-text text-muted mx-auato text-center">We'll never share your email with anyone else.</small>
+                        </div>
 
+                        <div class="mb-3 form-group">
+                            <label for="password" class=" form-label fw-bold">Password</label>
+                            <input th:field="*{password}" placeholder="*******" type="password" class="form-control" id="password" />
+                        </div>
 
-                    <div class="mb-3 form-group">
-                        <label for="password" class=" form-label fw-bold">Password</label>
-                        <input th:field="*{password}" type="password" class="form-control" id="password" />
-                    </div>
+                        <div class="form-group">
+                            <button style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-4">Create Account</button>
+                        </div>
 
-<div class="form-group">
-    <button style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-4">Create Account</button>
-</div>
-
-                </form>
+                        <div id="emailHelp" class="form-text py-4 text-center pt-4">
+                            Alread have an account? <a th:href = "@{/user/signin}" class="link text-info">Sign In</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 </body>

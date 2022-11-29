@@ -46,6 +46,8 @@ public class ValidateUser {
             validateMap.put("currentUserObj", currentUserObj);
 
         } else {
+            validateMap.put("currentUserObj", null);
+
             validateMap.put("authenticated", false);
         }
         return validateMap;
