@@ -60,13 +60,15 @@
     <div
             style="
           background-image: url('/images/website/header.png');
+          background-repeat: no-repeat;
+          background-position: center;
           height: 43rem;
           width: 100vw;
         "
             class="hero-container my-auto mx-auto">
 
-        <div  class="container pt-5 ">
-            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+        <div  class="container pt-5">
+            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2 shadow" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
                 <h2 class="fw-bold text-center">Make your <span class="text-info">trip</span> </h2>
                 <div id="emailHelp" class="form-text py-4 text-center fw-bold text-dark">Search for Electric scooters across Ireland.</div>
                 <div class="mb-3">
