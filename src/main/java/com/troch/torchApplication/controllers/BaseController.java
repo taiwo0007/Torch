@@ -23,7 +23,6 @@ public class BaseController {
         HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
         if((Boolean)validatorObj.get("authenticated")){
             model.addAttribute("user",validatorObj.get("currentUserObj"));
-
         }
 
         return "error";
