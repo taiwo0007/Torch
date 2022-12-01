@@ -156,7 +156,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="p-4 border rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
                 <h5
@@ -169,15 +168,11 @@
                             alt=""
                     />
                 </div>
-
-
             </div>
 
 
             <div class="px-4  pt-4 border rounded mt-4 bg-white">
                 <h3 class="fw-bold text-info ">Booking Information</h3>
-
-
                 <div class="row  py-2 px-3">
                     <div class="col-6 my-auto">
                         <p class="card-text fw-bold  my-auto ">Pick up</p>
@@ -200,11 +195,7 @@
                 <div class="pt-3 mt-4 pb-2 border-top">
                     <div class="row">
                         <div class="col-2 my-auto">
-
                             <h1 class="text-end text-info"><i class="fa fa-map-marker " aria-hidden="true"></i></h1>
-
-
-
                         </div>
                         <div class="col-10">
                             <p class="pt-3 px-3 text-secondary text-center"><span>195 Crecentmount View, Donegal, rushmound road, Ireland</span> </p>
@@ -271,7 +262,7 @@
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: `https://torchapp.azurewebsites.net//processTrip/?tripId=${[[${trip.getId()}]]}`
+                return_url: `https://torchapp.azurewebsites.net/processTrip/?tripId=${[[${trip.getId()}]]}`
             },
         });
 
