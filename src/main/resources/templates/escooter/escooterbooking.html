@@ -22,17 +22,17 @@
           type="image/png"
           th:href="@{${@environment.getProperty('favicon.image')}}">
     <style>
-        .__PrivateStripeElement {
-            overflow-y: hidden !important;
+        /*.__PrivateStripeElement {*/
+        /*    overflow-y: hidden !important;*/
 
-        }
-        * {
-            overflow-x: hidden;
-        }
+        /*}*/
+        /** {*/
+        /*    overflow-x: hidden;*/
+        /*}*/
 
-        #payment-form{
+        /*#payment-form{*/
 
-        }
+        /*}*/
 
 
 
@@ -142,7 +142,6 @@
                                     <div class="col-6 my-auto">
                                         <p class=" text-info text-end  my-auto fw-bold">FREE</p>
                                     </div>
-
                                 </div>
                                 <div class="row border-top   mt-3 pt-4">
                                     <div class="col-6 my-auto">
@@ -151,21 +150,13 @@
                                     <div class="col-6 my-auto">
                                         <h3  class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></h3>
                                     </div>
-
                                 </div>
-
-
                             </div>
-
-
                         </div>
-
                     </div>
                 </div>
-
-
-
             </div>
+
             <div class="p-4 border rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
                 <h5
@@ -280,7 +271,7 @@
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: `http://localhost:8080/processTrip/?tripId=${[[${trip.getId()}]]}`
+                return_url: `https://torchapp.azurewebsites.net//processTrip/?tripId=${[[${trip.getId()}]]}`
             },
         });
 
