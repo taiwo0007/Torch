@@ -1,6 +1,6 @@
 <nav xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-     xmlns="http://www.w3.org/1999/xhtml"  style="background-color: black !important; padding: 0.5rem 12rem !important" id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top">
+     xmlns="http://www.w3.org/1999/xhtml"  style="background-color: black !important; padding: 0.5rem 12rem !important" id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top shadow-lg">
     <a class="navbar-brand" th:href="@{/}">  <img  src="/images/website/torchlogo.png" width="80" height="auto" alt="" /></a>
     <ul  class="nav nav-pills">
         <li sec:authorize="isAnonymous()" class="nav-item  my-auto">
