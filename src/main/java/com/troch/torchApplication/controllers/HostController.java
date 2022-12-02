@@ -48,6 +48,8 @@ public class HostController {
     @GetMapping(value = "/createHost")
     public String processHost(Model model) throws Exception {
 
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUserName = authentication.getName();
@@ -86,8 +88,21 @@ public class HostController {
             }
         }
         else{
+
+            //Validator
+            HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+            if((Boolean)validatorObj.get("authenticated")){
+                model.addAttribute("user",validatorObj.get("currentUserObj"));
+
+            }
+
+
+
             model.addAttribute("error", "You must have a user account to become a host");
         }
+
+
+
         return "host/becomehost";
     }
 

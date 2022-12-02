@@ -29,7 +29,14 @@
     </style>
 </head>
 <body>
-<nav th:insert="fragments/nav :: nav"></nav>
+<nav
+        style="background-color: black!important;  padding: 0.5rem 12rem !important "
+        class="d-flex justify-content-between sticky fixed-top my-auto" id="navbarNavDropdown" th:fragment="nav">
+    <a class="navbar-brand" th:href = "@{/}">
+<!--        <img style="filter: invert(98%)" src="/images/website/torchlogo.png" width="80" height="auto" alt="" />-->
+                <img src="/images/website/torchlogo.png" width="80" height="auto" alt="" />
+    </a>
+</nav>
 
 <div style="font-family: Helvetica" class="container text-center mx-auto mt-5 pt-3">
 
