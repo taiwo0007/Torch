@@ -6,6 +6,7 @@ import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.dto.UserRegistrationDto;
+import com.troch.torchApplication.enums.TripStatus;
 import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
@@ -268,11 +269,15 @@ public class UserController {
         }
 
         model.addAttribute("userTrips", user.getRenterTrips());
-        model.addAttribute("totalTrips", user.getUserTrips());
+        model.addAttribute("totalTrips", user.getRenterTrips().size());
 
-        model.addAttribute("inUse", user.getInUseDetails());
+        model.addAttribute("onGoingTrips", user.getUserTripDetails().get("ACTIVE"));
+        model.addAttribute("completedTrips", user.getUserTripDetails().get("COMPLETED"));
+        model.addAttribute("cancelledTrips", user.getUserTripDetails().get("CANCELLED"));
+        model.addAttribute("cancelledRecentlyTrips", user.getUserTripDetails().get("CANCELLED"));
+        model.addAttribute("daysLeft", user.getLastTripDaysLeft());
 
-        logger.info("inUse Details"+user.getInUseDetails());
+
 
         return "user/view_trips";
     }

@@ -239,12 +239,12 @@ public class EScooterController {
             tripService.saveTrip(bookingTrip);
             eScooter.getEscooterTrips().add(bookingTrip);
 
-
             model.addAttribute("days", days);
             model.addAttribute("user", currentUserObj);
             model.addAttribute("escooter", eScooter);
             model.addAttribute("normalCost", eScooter.getCost()*days);
             model.addAttribute("trip", bookingTrip);
+
             return "escooter/escooterbooking";
 
         }

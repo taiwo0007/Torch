@@ -14,7 +14,7 @@
 <nav th:insert="fragments/nav :: nav" ></nav>
 
 <div class="row g-5 pt-5 mt-5 pb-5 mx-auto container">
-    <h1 class="fw-bold">Trip Information</h1>
+    <h1 class="fw-bold">Your Trips Information</h1>
     <div class="col-12">
         <div class="row">
             <div class="col-sm-12 col-md-2">
@@ -22,7 +22,7 @@
                     <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Trip ratios</p></div>
                     <div class="d-flex justify-content-center">
                         <div class="text-center">
-                            <h2>5</h2>
+                            <h2 th:text="${totalTrips}">5</h2>
                             <p class="font-smaller">Total Trips</p>
                         </div>
                     </div>
@@ -33,12 +33,12 @@
                     <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Current Trips</p></div>
                     <div class="d-flex justify-content-around my-auto">
                         <div class="text-center px-3">
-                            <h2>8</h2>
-                            <p class="font-smaller">In use</p>
+                            <h2 th:text="${onGoingTrips}">8</h2>
+                            <p class="font-smaller">Ongoing</p>
                         </div>
                         <div class="text-center ">
-                            <h2>2</h2>
-                            <p class="font-smaller">Not in use</p>
+                            <h2 th:text="${completedTrips}">2</h2>
+                            <p class="font-smaller">Completed</p>
                         </div>
                     </div>
                 </div>
@@ -46,11 +46,11 @@
             </div>
             <div class="col-sm-12 col-md-2">
                 <div class="bg-white p-3  rounded">
-                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Income</p></div>
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Current Trip</p></div>
                     <div class="d-flex justify-content-center">
                         <div class="text-center px-3">
-                            <h2 class="text-center">€ <span>50.00</span> </h2>
-                            <p class="font-smaller">Earned</p>
+                            <h2 class="text-center"> <span th:text="${daysLeft}">3</span> </h2>
+                            <p class="font-smaller">days left</p>
                         </div>
                     </div>
                 </div>
@@ -61,11 +61,11 @@
                     <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
                     <div class="d-flex justify-content-around my-auto">
                         <div class="text-center px-3">
-                            <h2>8</h2>
+                            <h2 th:text="${cancelledTrips}">8</h2>
                             <p class="font-smaller">Total</p>
                         </div>
                         <div class="text-center ">
-                            <h2>2</h2>
+                            <h2 th:text="${cancelledRecentlyTrips}">2</h2>
                             <p class="font-smaller">recently</p>
                         </div>
                     </div>
@@ -93,46 +93,10 @@
     </div>
 
     <!-- https://www.codeply.com/go/S6MgKWqFvj -->
-    <div class="col-sm-9">
-        <div class="bg-white p-4 rounded ">
-            <h4 class="text-uppercase font-small fw-bold">Active Host Trips</h4>
-            <div class="table-responsive">
-                <table style="max-height: 10rem !important;" class="table mb-0 rounded font-small  bg-white table-borderless ">
-                    <thead class="">
-                    <tr class="text-muted text-uppercase font-small text-custom-grey">
-                        <th scope="col">Trip #</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Scooter</th>
 
-                        <th scope="col">Trip sTART</th>
-                        <th scope="col">Trip End</th>
-                        <th scope="col">Renter</th>
-                        <th scope="col">trip cost</th>
+    <!-- <div style="height: 100% !important;" class="col-sm-3 h-100">
 
-                    </tr>
-                    </thead>
-                    <tbody >
-                    <tr class="hover-row">
-                        <th scope="row"><a href="">345634563461</a> </th>
-                        <td class="badge rounded-pill text-bg-primary">Active</td>
-                        <td class="fw-bolder">Xiaomi Ultra Scooter</td>
-                        <td>12/12/12</td>
-                        <td>12/12/12</td>
-                        <td class=" fw-bold">Jen Benu</td>
-                        <td>€23.00</td>
-
-                    </tr>
-
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
-    </div>
-    <div style="height: 100% !important;" class="col-sm-3 h-100">
-
-    </div>
+    </div> -->
 
     <div class="col-sm-12">
         <div class="bg-white p-4 rounded ">
@@ -153,8 +117,8 @@
                     </tr>
                     </thead>
                     <tbody >
-                    <tr class="">
-                        <th scope="row">345634563461</th>
+                    <tr th:each="trip: ${userTrips}" class="">
+                        <th scope="row"> 345634563461</th>
                         <td class="badge rounded-pill text-bg-primary">Active</td>
                         <td class="fw-bolder">Xiaomi Ultra Scooter</td>
                         <td>12/12/12</td>

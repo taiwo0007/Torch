@@ -14,10 +14,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -92,25 +90,62 @@ public class User {
         return this.profilePicture;
     }
 
-    public HashMap<TripStatus, Integer> getInUseDetails(){
+    public HashMap<String, Integer> getUserTripDetails(){
 
-        HashMap<TripStatus, Integer> inUseDetailsMap = new HashMap<>();
+        Calendar cal = Calendar.getInstance();
+        HashMap<String, Integer> inUseDetailsMap = new HashMap<>();
+
         int inUseCount = 0;
         int notInUseCount = 0;
+        int cancelledCount = 0;
+        int cancelledRecentlyCount = 0;
+
         for (Trip trip: this.renterTrips) {
 
             if(trip.status == TripStatus.ACTIVE){
                 inUseCount++;
             }
-            if(trip.status == TripStatus.INACTIVE){
+            if(trip.status == TripStatus.COMPLETED){
                 notInUseCount++;
+            }
+            if(trip.status == TripStatus.CANCELLED){
+                cancelledCount++;
+                if(Math.abs(trip.getTripEnd().getDate() - Calendar.getInstance().getTime().getDate()) < 7){
+
+                    cancelledRecentlyCount++;
+                }
+
             }
 
         }
-        inUseDetailsMap.put(TripStatus.ACTIVE, inUseCount);
-        inUseDetailsMap.put(TripStatus.INACTIVE, notInUseCount);
+        inUseDetailsMap.put("ACTIVE", inUseCount);
+        inUseDetailsMap.put("COMPLETED", notInUseCount);
+        inUseDetailsMap.put("CANCELLED", cancelledCount);
+        inUseDetailsMap.put("CANCELLED-RECENTLY", cancelledRecentlyCount);
 
         return inUseDetailsMap;
+    }
+
+        public int getLastTripDaysLeft(){
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, 1988);
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+
+        Trip recentTrip = new Trip();
+        recentTrip.setTripEnd(cal.getTime());
+
+        for (Trip trip: this.renterTrips) {
+            if(trip.status == TripStatus.ACTIVE){
+                if (trip.getTripEnd().compareTo(recentTrip.getTripEnd()) > 0){
+                    recentTrip = trip;
+                }
+            }
+        }
+
+        return Math.abs(Calendar.getInstance().getTime().getDate() - recentTrip.getTripEnd().getDate());
+
     }
 
 
