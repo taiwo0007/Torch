@@ -10,19 +10,19 @@
 </head>
 
 
-<body class="bg-black  text-dark font-helvetica">
+<body class="bg-light  text-dark font-helvetica">
 <nav th:insert="fragments/nav :: nav" ></nav>
 
-<div class="row container mx-auto mt-5 g-5 pt-5 pb-5">
-    <h1 class="fw-bold text-light">Host Trips Dashbaord</h1>
+<div class="row container mt-4 mx-auto g-5 pt-5 pb-5">
+    <h1 class="fw-bold ">Host Trips</h1>
     <div class="col-12">
         <div class="row">
             <div class="col-sm-12 col-md-2">
                 <div class="bg-dark text-light p-3   rounded">
-                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Trip information</p></div>
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Host Trips</p></div>
                     <div class="d-flex justify-content-center">
                         <div class="text-center">
-                            <h2>5</h2>
+                            <h2 th:text="${totalHostTrips}">5</h2>
                             <p class="font-smaller">Host Trips</p>
                         </div>
                     </div>
@@ -30,14 +30,14 @@
             </div>
             <div class="col-sm-12 col-md-2">
                 <div class="bg-dark text-light p-3   rounded">
-                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Current Trips</p></div>
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Escooter USE</p></div>
                     <div class="d-flex justify-content-around my-auto">
                         <div class="text-center px-3">
-                            <h2>8</h2>
+                            <h2 th:text="${escootersInUse}">8</h2>
                             <p class="font-smaller">In use</p>
                         </div>
                         <div class="text-center ">
-                            <h2>2</h2>
+                            <h2 th:text="${escootersNotInUse}">2</h2>
                             <p class="font-smaller">Not in use</p>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Income</p></div>
                     <div class="d-flex justify-content-center">
                         <div class="text-center px-3">
-                            <h2 class="text-center">€ <span>50.00</span> </h2>
+                            <h2 class="text-center">€<span th:text="${#numbers.formatDecimal(earned, 0, 'COMMA', 0, 'POINT')}">50.00</span> </h2>
                             <p class="font-smaller">Earned</p>
                         </div>
                     </div>
@@ -60,11 +60,11 @@
                     <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
                     <div class="d-flex justify-content-around my-auto">
                         <div class="text-center px-3">
-                            <h2>8</h2>
+                            <h2 th:text="${cancelled}">8</h2>
                             <p class="font-smaller">Total</p>
                         </div>
                         <div class="text-center ">
-                            <h2>2</h2>
+                            <h2 th:text="${cancelledRecently}">2</h2>
                             <p class="font-smaller">recently</p>
                         </div>
                     </div>
@@ -109,14 +109,18 @@
                     </tr>
                     </thead>
                     <tbody >
-                    <tr class="hover-row">
-                        <th scope="row"> <a href="">9345634563461</a> </th>
-                        <td class="badge rounded-pill text-bg-primary">Active</td>
-                        <td class="fw-bolder">Xiaomi Ultra Scooter</td>
-                        <td>12/12/12</td>
-                        <td>12/12/12</td>
-                        <td class=" fw-bold">Jen Benu</td>
-                        <td>€23.00</td>
+                    <tr th:each="trip: ${hostTrips}" class="hover-row">
+                        <th scope="row"><a th:href="@{/trip/trip-detail/{tripId}(tripId=${trip.getId()})}" th:text="${trip.getTripId()}">345634563461</a> </th>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).ACTIVE}" class="badge rounded-pill text-bg-primary">Active</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).COMPLETED}" class="badge rounded-pill text-bg-success">Completed</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).INACTIVE}" class="badge rounded-pill text-bg-secondary">Inactive</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).CANCELLED}" class="badge rounded-pill text-bg-danger">Cancelled</td>
+
+                        <td th:text="${trip.getEScooterOnTrip().getModelName()}" class="fw-bolder">Xiaomi Ultra Scooter</td>
+                        <td th:text="${#dates.format(trip.getTripStart(), 'dd/MM/yyyy')}">12/12/12</td>
+                        <td th:text="${#dates.format(trip.getTripEnd(), 'dd/MM/yyyy')}">12/12/12</td>
+                        <td th:text="${trip.getUser_renter().getFirstName() +' ' +trip.getUser_renter().getLastName()}" class=" fw-bold">Jen Benu</td>
+                        <td > €<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></td>
                     </tr>
                     </tbody>
 

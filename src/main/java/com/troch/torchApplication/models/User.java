@@ -136,6 +136,10 @@ public class User {
         Trip recentTrip = new Trip();
         recentTrip.setTripEnd(cal.getTime());
 
+        if(this.renterTrips.size() == 0){
+            return 0;
+        }
+
         for (Trip trip: this.renterTrips) {
             if(trip.status == TripStatus.ACTIVE){
                 if (trip.getTripEnd().compareTo(recentTrip.getTripEnd()) > 0){

@@ -6,6 +6,8 @@ import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.services.HostService;
 import com.troch.torchApplication.services.UserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +34,9 @@ public class HostController {
 
     @Autowired
     ValidateUser validateUserutil;
+
+    Logger logger = LoggerFactory.getLogger(EScooterController.class);
+
 
     @GetMapping(value = "/hostinfo")
     public String becomeHost(Model model)  {
@@ -106,15 +111,14 @@ public class HostController {
             model.addAttribute("error", "You must have a user account to become a host");
         }
 
-
-
         return "host/becomehost";
     }
 
 
 
+
     @GetMapping("/view-host-trips")
-    public String viewTrips(Model model) throws Exception {
+    public String viewHostTrips(Model model) throws Exception {
 
         HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();
         User user = null;
@@ -126,17 +130,22 @@ public class HostController {
         if (user == null){
             throw new Exception("You're not logged in");
         }
+
         if(user.getHost() == null){
-            throw new Exception("You must be a host");
+            throw new Exception("You must be a host to access this page");
         }
 
-
         model.addAttribute("hostTrips", user.getHost().getHostTrips());
+        model.addAttribute("totalHostTrips", user.getHost().getHostTrips().size());
 
-        model.addAttribute("userTrips", user.getRenterTrips());
-        model.addAttribute("totalTrips", user.getRenterTrips().size());
+        model.addAttribute("escootersInUse", user.getHost().getScooterUseDetail().get("ESCOOTER-IN-USE"));
+        model.addAttribute("escootersNotInUse", user.getHost().getScooterUseDetail().get("ESCOOTER-NOT-IN-USE"));
+        model.addAttribute("earned", user.getHost().getScooterUseDetail().get("EARNED"));
+        model.addAttribute("cancelled", user.getHost().getScooterUseDetail().get("CANCELLED"));
+        model.addAttribute("cancelledRecently", user.getHost().getScooterUseDetail().get("CANCELLED-RECENTLY"));
 
         return "host/view_host_trips";
     }
+
 
 }

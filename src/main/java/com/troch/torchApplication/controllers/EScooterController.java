@@ -296,6 +296,8 @@ public class EScooterController {
         return "escooter/trip";
     }
 
+
+
     @PostMapping("/reviewScooter/{scooterId}")
     public String reviewScooter(@PathVariable("scooterId") Integer scooterId, @ModelAttribute("ScooterReviewForm") ScooterReviewForm scooterReviewForm, Model model) throws Exception {
 

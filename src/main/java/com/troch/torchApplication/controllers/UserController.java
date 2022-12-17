@@ -279,6 +279,7 @@ public class UserController {
 
 
 
+
         return "user/view_trips";
     }
 

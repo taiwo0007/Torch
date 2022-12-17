@@ -97,14 +97,7 @@
                 <form th:action="@{/user/update/{id}(id=${user.getId()})}"  th:object="${user}" class="p-4" method="post">
                     <div  class="d-flex justify-content-between mb-4">
                         <h2 class="fw-bold ">Profile</h2>
-                        <div>
-                            <a th:if="${isHost}"  th:href="@{/user/scooter-list/{id}(id=${user.getId()})}"  class="btn btn-dark p-2 px-4 rounded-0">
-                                View Scooters
-                            </a>
-                            <a th:href="@{/user/view-trips}"  class="btn btn-dark p-2 text-light rounded-0 px-5"> Your Trips</a>
-                            <a th:if="${isHost}" th:href="@{/host/view-host-trips}"  class="btn btn-dark p-2 text-light rounded-0 px-5"> Host Trips</a>
 
-                        </div>
                     </div>
 
                     <!-- IF CUSTOMER IS ANONYMOUS -->
@@ -115,7 +108,7 @@
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                 </symbol>
                             </svg>
-                            <strong class="mx-2">Status: </strong> You've successfully been verified.
+                            You've successfully been verified.
                         </div>
 
                     </div>
@@ -194,6 +187,7 @@
                         Update
                     </button>
                 </form>
+
             </div>
         </div>
     </div>
