@@ -57,6 +57,10 @@ public class EScooter {
     private Boolean waterResistant;
     private String about;
 
+    private Boolean inUse = false;
+
+    private Boolean Active = false;
+
     private double longitude;
     private double latitude;
     private String address;

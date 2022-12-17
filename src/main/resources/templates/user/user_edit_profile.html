@@ -97,9 +97,14 @@
                 <form th:action="@{/user/update/{id}(id=${user.getId()})}"  th:object="${user}" class="p-4" method="post">
                     <div  class="d-flex justify-content-between mb-4">
                         <h2 class="fw-bold ">Profile</h2>
-                        <a th:if="${isHost}"  th:href="@{/user/scooter-list/{id}(id=${user.getId()})}" style="width: 24%" class="btn btn-outline-info p-2 rounded-0">
-                            View Scooters
-                        </a>
+                        <div>
+                            <a th:if="${isHost}"  th:href="@{/user/scooter-list/{id}(id=${user.getId()})}"  class="btn btn-dark p-2 px-4 rounded-0">
+                                View Scooters
+                            </a>
+                            <a th:href="@{/user/view-trips}"  class="btn btn-dark p-2 text-light rounded-0 px-5"> Your Trips</a>
+                            <a th:if="${isHost}" th:href="@{/host/view-host-trips}"  class="btn btn-dark p-2 text-light rounded-0 px-5"> Host Trips</a>
+
+                        </div>
                     </div>
 
                     <!-- IF CUSTOMER IS ANONYMOUS -->

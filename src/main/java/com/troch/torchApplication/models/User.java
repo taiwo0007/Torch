@@ -4,6 +4,7 @@ package com.troch.torchApplication.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.troch.torchApplication.enums.TripStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 @Getter
 @Setter
@@ -88,6 +90,27 @@ public class User {
     public String getProfile(){
 
         return this.profilePicture;
+    }
+
+    public HashMap<TripStatus, Integer> getInUseDetails(){
+
+        HashMap<TripStatus, Integer> inUseDetailsMap = new HashMap<>();
+        int inUseCount = 0;
+        int notInUseCount = 0;
+        for (Trip trip: this.renterTrips) {
+
+            if(trip.status == TripStatus.ACTIVE){
+                inUseCount++;
+            }
+            if(trip.status == TripStatus.INACTIVE){
+                notInUseCount++;
+            }
+
+        }
+        inUseDetailsMap.put(TripStatus.ACTIVE, inUseCount);
+        inUseDetailsMap.put(TripStatus.INACTIVE, notInUseCount);
+
+        return inUseDetailsMap;
     }
 
 

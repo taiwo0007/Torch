@@ -48,6 +48,12 @@ public class HostController {
     @GetMapping(value = "/createHost")
     public String processHost(Model model) throws Exception {
 
+        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
+        if((Boolean)validatorObj.get("authenticated")){
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
+
+        }
+
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -81,29 +87,56 @@ public class HostController {
                 return "host/hostCreated";
             }
             else if(currentUser.getHost() != null ){
+                model.addAttribute("user",validatorObj.get("currentUserObj"));
                 model.addAttribute("error", "You are already a Host User");
             }
             else{
+                model.addAttribute("user",validatorObj.get("currentUserObj"));
                 model.addAttribute("error", "You must be verified to become a host");
             }
         }
         else{
 
             //Validator
-            HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
             if((Boolean)validatorObj.get("authenticated")){
                 model.addAttribute("user",validatorObj.get("currentUserObj"));
 
             }
-
-
-
+            model.addAttribute("user",validatorObj.get("currentUserObj"));
             model.addAttribute("error", "You must have a user account to become a host");
         }
 
 
 
         return "host/becomehost";
+    }
+
+
+
+    @GetMapping("/view-host-trips")
+    public String viewTrips(Model model) throws Exception {
+
+        HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();
+        User user = null;
+        if ((Boolean) validatorObj.get("authenticated")) {
+            model.addAttribute("user", validatorObj.get("currentUserObj"));
+            user = (User) validatorObj.get("currentUserObj");
+        }
+
+        if (user == null){
+            throw new Exception("You're not logged in");
+        }
+        if(user.getHost() == null){
+            throw new Exception("You must be a host");
+        }
+
+
+        model.addAttribute("hostTrips", user.getHost().getHostTrips());
+
+        model.addAttribute("userTrips", user.getRenterTrips());
+        model.addAttribute("totalTrips", user.getRenterTrips().size());
+
+        return "host/view_host_trips";
     }
 
 }

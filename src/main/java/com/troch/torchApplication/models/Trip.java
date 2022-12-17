@@ -2,6 +2,7 @@ package com.troch.torchApplication.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.troch.torchApplication.enums.TripStatus;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -50,5 +51,8 @@ public class Trip {
     private String tripId;
 
     public Double tripCost;
+
+    @Enumerated(EnumType.STRING)
+    public TripStatus status;
 
 }

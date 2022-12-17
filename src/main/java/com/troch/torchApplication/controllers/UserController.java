@@ -253,5 +253,29 @@ public class UserController {
         return "redirect:/user/profileEdit/"+id;
     }
 
+    @GetMapping("/view-trips")
+    public String viewTrips(Model model) throws Exception {
+
+        HashMap<String, Object> validatorObj = validateUserutil.isUserAuthenticated();
+        User user = null;
+        if ((Boolean) validatorObj.get("authenticated")) {
+            model.addAttribute("user", validatorObj.get("currentUserObj"));
+            user = (User) validatorObj.get("currentUserObj");
+        }
+
+        if (user == null){
+            throw new Exception("You're not logged in");
+        }
+
+        model.addAttribute("userTrips", user.getRenterTrips());
+        model.addAttribute("totalTrips", user.getUserTrips());
+
+        model.addAttribute("inUse", user.getInUseDetails());
+
+        logger.info("inUse Details"+user.getInUseDetails());
+
+        return "user/view_trips";
+    }
+
 
 }

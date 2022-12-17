@@ -5,6 +5,7 @@ import com.troch.torchApplication.Utilities.Counter;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.ValidateUser;
 import com.troch.torchApplication.dto.Response;
+import com.troch.torchApplication.enums.TripStatus;
 import com.troch.torchApplication.forms.EScooterForm;
 import com.troch.torchApplication.forms.ScooterReviewForm;
 import com.troch.torchApplication.models.*;
@@ -223,6 +224,7 @@ public class EScooterController {
             Date startingDate = trip.getTripStart();
             Date endingDate = trip.getTripEnd();
 
+            bookingTrip.setStatus(TripStatus.INACTIVE);
             bookingTrip.setTripStart(startingDate);
             bookingTrip.setTripEnd(endingDate);
             bookingTrip.setUser_renter(currentUserObj);
@@ -277,6 +279,10 @@ public class EScooterController {
             trip = tripService.findTripByIdCertain(tripId);
         }
         int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
+
+        //Activate the trip
+        trip.setStatus(TripStatus.ACTIVE);
+        tripService.saveTrip(trip);
 
         List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
 
