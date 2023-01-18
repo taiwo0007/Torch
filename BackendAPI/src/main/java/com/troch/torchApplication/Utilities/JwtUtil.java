@@ -20,6 +20,14 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractUsernameFromRawToken(String token){
+        if (token != null && token.startsWith("Bearer ")) {
+            String newToken = token.substring(7);
+            return extractUsername(newToken);
+        }
+        return null;
+    }
+
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
