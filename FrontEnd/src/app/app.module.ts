@@ -12,7 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {BsDropdownConfig, BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {BsDropdownConfig, BsDropdownDirective, BsDropdownModule} from "ngx-bootstrap/dropdown";
 import { NavbarAuthComponent } from './shared/components/navbar-auth/navbar-auth.component';
 import { UserProfileComponent } from './user/components/user-profile/user-profile.component';
 import { ProfileDetailsCardComponent } from './user/components/profile-details-card/profile-details-card.component';
@@ -42,7 +42,7 @@ import {AuthInterceptorService} from "./auth/services/auth-interceptor.service";
     BsDropdownModule
 
   ],
-  providers: [BsDropdownConfig, {
+  providers: [BsDropdownDirective, BsDropdownConfig, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true
