@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from "../../models/user.model";
+import {UserData} from "../../models/user-data.Model";
 
 @Component({
   selector: 'app-profile-form-card',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-form-card.component.css']
 })
 export class ProfileFormCardComponent implements OnInit {
+
+  @Input() InitialUserDetails?: UserData;
 
   constructor() { }
 

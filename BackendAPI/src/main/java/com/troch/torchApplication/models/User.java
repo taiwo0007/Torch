@@ -40,6 +40,8 @@ public class User {
 
     private Integer phoneNumber;
     private String postCode;
+
+    private Boolean isHost;
     private String country;
     private String state;
     private String accountType;

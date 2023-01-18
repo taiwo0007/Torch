@@ -25,6 +25,6 @@ export class UserService implements OnInit{
 
   fetchUserDetails(){
 
-    this.http.get(environment.appUrl + '/user/profile')
+    return this.http.get(environment.appUrl + '/api/user/profile')
   }
 }

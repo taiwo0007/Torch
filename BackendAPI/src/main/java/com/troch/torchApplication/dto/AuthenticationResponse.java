@@ -17,4 +17,6 @@ public class AuthenticationResponse {
     private String authToken;
     private Instant expiresAt;
     private String email;
+
+
 }

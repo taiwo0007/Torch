@@ -1,11 +1,11 @@
 <section style="max-width: 79% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter pt-5 mt-5">
   <div class="row pt-3 mb-3">
     <div style="width: auto;" class="col-4">
-      <app-profile-details-card></app-profile-details-card>
+      <app-profile-details-card [userDetails]="userData"></app-profile-details-card>
     </div>
     <div class="col-8">
 
-      <app-profile-form-card></app-profile-form-card>
+      <app-profile-form-card [InitialUserDetails]="userData"></app-profile-form-card>
     </div>
   </div>
 </section>

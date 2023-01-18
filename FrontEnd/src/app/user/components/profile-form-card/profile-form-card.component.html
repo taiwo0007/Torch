@@ -13,7 +13,7 @@
     </div>
 
     <!-- IF CUSTOMER IS ANONYMOUS -->
-    <div th:if="${user.getIsVerified()}">
+    <div *ngIf="InitialUserDetails?.isVerified">
       <div class="alert alert-success d-flex align-items-center" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -25,7 +25,7 @@
 
     </div>
     <!-- ELSE -->
-    <div th:unless="${user.getIsVerified()}">
+    <div *ngIf="!InitialUserDetails?.isVerified" >
       <div class="alert alert-primary d-flex align-items-center" role="alert">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
           <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -41,15 +41,15 @@
     <div style="" class="mb-3 d-flex justify-content-between form-group">
       <div style="width: 47% !important;">
         <label class="form-label fw-bold" for="firstName"> First Name </label>
-        <input id="firstName" class="form-control" th:field="*{firstName}"
+        <input id="firstName" name="firstName" [value]="InitialUserDetails?.firstName" class="form-control" ngModel
                required autofocus="autofocus" />
         <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
       </div>
       <div style="width: 47% !important;">
         <label class="form-label fw-bold" for="lastName"> Last Name </label>
-        <input id="lastName" class="form-control" th:field="*{lastName}"
+        <input id="lastName" class="form-control" ngModel [value]="InitialUserDetails?.lastName" name="lastName"
                required autofocus="autofocus" />
-        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        <span th:if="${#fields.hasErrors('lastName')}"></span>
 
       </div>
     </div>
@@ -57,15 +57,15 @@
     <div style="" class="form-group mb-3 d-flex justify-content-between ">
       <div style="width: 47% !important;">
         <label class="form-label fw-bold" for="phoneNumber"> Phone Number </label>
-        <input type="tel" id="phoneNumber" class="form-control" th:field="*{phoneNumber}"
-               required autofocus="autofocus" />
+        <input type="tel" id="phoneNumber" class="form-control"
+               required autofocus="autofocus" name="phoneNumber" ngModel [value]="InitialUserDetails?.phoneNumber"/>
         <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
       </div>
 
       <div style="width: 47% !important;">
         <label for="postCode" class="form-label fw-bold">Post Code:</label>
-        <input id="postCode" class="form-control" th:field="*{postCode}"
-               required autofocus="autofocus" />
+        <input id="postCode" class="form-control" name="postCode" [value]="InitialUserDetails?.postCode"
+               required autofocus="autofocus" ngModel/>
         <span th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}"></span>
       </div>
 
@@ -75,27 +75,27 @@
     <div style="" class="mb-3 d-flex justify-content-between form-group">
       <div style="width: 47% !important;">
         <label for="country" class="form-label fw-bold">Country:</label>
-        <input id="country" class="form-control" th:field="*{country}"
-               required autofocus="autofocus" />
+        <input id="country" name="country" [value]="InitialUserDetails?.country" class="form-control"
+               required ngModel autofocus="autofocus" />
         <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
       </div>
       <div style="width: 47% !important;">
-        <label for="state" class="form-label fw-bold">State/County:</label>
-        <input id="state" class="form-control" th:field="*{state}"
+        <label for="state" class="form-label fw-bold">Email</label>
+        <input disabled ngModel [value]="InitialUserDetails?.email"  id="state" class="form-control"
                required autofocus="autofocus" />
         <span th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
       </div>
     </div>
 
     <!-- IF CUSTOMER IS ANONYMOUS -->
-    <div id="emailHelp" class="form-text py-4 " th:if="${user.getIsVerified()}">
+    <div id="emailHelp" class="form-text py-4 " *ngIf="InitialUserDetails?.isVerified">
       Update your contact information and click update to submit.
     </div>
     <!-- ELSE -->
-    <div id="emailHelp" class="form-text py-4 " th:unless="${user.getIsVerified()}">
+    <div id="emailHelp" class="form-text py-4 " *ngIf="!InitialUserDetails?.isVerified">
       Please fill out all the information and click verify, to verify account.
     </div>
-    <button style="width: 24%" type="submit" class="btn btn-info text-light p-2 mt-1 rounded-0">
+    <button style="width: 24%" type="submit" class="btn btn-info text-light p-2 mt-1 ">
       Update
     </button>
   </form>
