@@ -1,9 +1,30 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../../auth/services/auth.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit{
 
-  constructor() { }
+  userData: any;
+
+
+  constructor(
+      private http: HttpClient,
+      private authService: AuthService
+  ) { }
+
+
+
+  ngOnInit() {
+
+
+  }
+
+  fetchUserDetails(){
+
+    this.http.get(environment.appUrl + '/user/profile')
+  }
 }
