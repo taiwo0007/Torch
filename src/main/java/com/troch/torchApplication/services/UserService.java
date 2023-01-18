@@ -1,6 +1,7 @@
 package com.troch.torchApplication.services;
 
 
+import com.troch.torchApplication.dto.RegisterRequest;
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.EScooterRepository;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends UserDetailsService {
 
-    User save(UserRegistrationDto userRegistrationDto);
+//    User save(RegisterRequest registerRequest);
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;

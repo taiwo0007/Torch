@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="torchApplication" />
+        <module name="code-and-docs-taiwo0007" />
       </profile>
     </annotationProcessing>
   </component>

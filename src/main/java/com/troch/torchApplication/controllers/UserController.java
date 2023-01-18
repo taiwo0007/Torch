@@ -136,7 +136,10 @@ public class UserController {
     }
 
     @PostMapping("/process-add-scooter/{id}")
-    public String scooterAdd(@RequestParam("image") MultipartFile file, @PathVariable("id") Integer id, @ModelAttribute("escooterForm")  EScooterForm escooterForm , Model model) throws Exception {
+    public String scooterAdd(@RequestParam("image") MultipartFile file,
+                                @PathVariable("id") Integer id,
+                                    @ModelAttribute("escooterForm") EScooterForm escooterForm ,
+                                            Model model) throws Exception {
 
         User user = userServiceImpl.findUser(id);
 

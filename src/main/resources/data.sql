@@ -1,25 +1,6 @@
 
--- DELETE FROM scooter_review;
--- DELETE FROM users_roles;
--- DELETE from host_review;
--- DELETE FROM escooter;
---
--- DELETE FROM make;
---
--- DELETE FROM user;
---
---
--- DELETE from host;
---
---
--- DELETE FROM role;
---
--- DELETE FROM trip;
 
-
-
-
-INSERT INTO user (id, email, password, first_name, last_name) VALUES (1, "x00167646@mytudublin.ie", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre");
+INSERT INTO user (id, email, password, first_name, last_name) VALUES (1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre');
 
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
 
@@ -39,10 +20,10 @@ INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_
 INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id, trips) VALUES ("Dublin",-6.274931400000001,53.3618599,"Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 21.0, 51.0, 11.0, 19.0, 14.0, "/images/uploads/4.png" ,34.65, 5, "about", 920386034,"Readme 11 horseshot",2, 3);
 
 
-INSERT INTO escooter (county,longitude, latitude,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.272079460031218,53.37234705,"Ireland", '2000-01-01','2200-01-01', 31.0, 17.0, 67.0, 25.0, 23.0, "/images/uploads/electric1.jpeg" ,23.70, 6, "This scooter is an amaxing scooter trust me", 920386034,"Xiaomi Bever we pro",2);
-INSERT INTO escooter (county,longitude, latitude,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.332905492347467,53.32483445, "Ireland", '2000-01-01','2200-01-01', 15.0, 51.0, 43.0, 25.0, 65.0, "/images/uploads/electric7.jpeg" ,54.65, 7, "about", 920386034,"Vovo plexer blad runner",1);
-INSERT INTO escooter (county,longitude, latitude,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.330710473854637,53.3589378,"Ireland", '2000-01-01','2200-01-01', 31.0, 31.0, 34.0, 19.0, 23.0, "/images/uploads/electric9.jpeg" ,56.99, 8, "about", 920386034,"Viltron xeon pro",1);
-INSERT INTO escooter (county,longitude, latitude,country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id, trips) VALUES ("Dublin",-6.271484416353246,53.339504649999995,"Ireland", '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "/images/uploads/electric8.jpeg" ,34.65, 9, "about", 920386034,"Biner 11 34",2, 3);
+INSERT INTO escooter (county,longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.272079460031218,53.37234705, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 31.0, 17.0, 67.0, 25.0, 23.0, "/images/uploads/electric1.jpeg" ,23.70, 6, "This scooter is an amaxing scooter trust me", 920386034,"Xiaomi Bever we pro",2);
+INSERT INTO escooter (county,longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.332905492347467,53.32483445, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 15.0, 51.0, 43.0, 25.0, 65.0, "/images/uploads/electric7.jpeg" ,54.65, 7, "about", 920386034,"Vovo plexer blad runner",1);
+INSERT INTO escooter (county,longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.330710473854637,53.3589378, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 31.0, 31.0, 34.0, 19.0, 23.0, "/images/uploads/electric9.jpeg" ,56.99, 8, "about", 920386034,"Viltron xeon pro",1);
+INSERT INTO escooter (county,longitude, latitude,address, country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id, trips) VALUES ("Dublin",-6.271484416353246,53.339504649999995, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia", "Ireland", '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "/images/uploads/electric8.jpeg" ,34.65, 9, "about", 920386034,"Biner 11 34",2, 3);
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (1, "This electric scooter was amazing and i had the best time using it, would recommend, This electric scooter was amazing and i had the best time using it, would recommend", '2000-01-01', 4, 2, 2);
 
@@ -70,3 +51,30 @@ VALUES (8, "This electric scooter was amazing and i had the best time using it, 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (9, "This electric scooter was amazing and i had the best time using it, would recommend, This electric scooter was amazing and i had the best time using it, would recommend", '2000-01-11', 3, 5, 2);
 
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 00:00:00', 7,920386034, 2);
+
+
+
+    INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2, "CANCELLED", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 2);
+
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(3, "INACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,920386034, 2);
+
+
+
+
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(4, "COMPLETED", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-17 00:00:00', 5,920386034, 2);
+
+
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 8,920386034, 2);
+
+
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(6, "COMPLETED", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,920386034, 2);
+
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+ VALUES(7, "COMPLETED", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,920386034, 2);

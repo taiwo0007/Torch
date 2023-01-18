@@ -68,7 +68,6 @@ public class EScooter {
     private String country;
 
 
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripStart;
 

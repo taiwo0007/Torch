@@ -7,9 +7,9 @@
     <div th:replace="fragments/head :: head"></div>
     <title th:text="${user.getFirstName() +' '+user.getLastName()}">Add Electric scooter</title>
     <style>
-        * {
-            overflow-x: hidden;
-        }
+        /** {*/
+        /*    overflow-x: hidden;*/
+        /*}*/
     </style>
 </head>
 
@@ -19,11 +19,11 @@
 
 <section style="" class="container escooter pt-5 mt-3 pb-5 mb-4">
 
-    <div  class="row ">
+    <div style=" overflow-x: hidden; !important"  class="row ">
 
         <div class="col-12">
 
-            <div class="container card "
+            <div class="container card mt-3"
                  style="
 
             background-color: white;
@@ -47,12 +47,12 @@
 
                     </div>
 
-                    <div th:if="${eScooterList}" class="row pb-5">
-                        <div th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-4 mx-auto pt-3 pb-4">
-                            <div class="card" style="width: 22rem">
-                                <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;"   th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." />
-                                <div class="card-body pt-3">
-                                    <div class=" pb-3 border-bottom">
+                    <div style=" overflow-x: hidden; !important" th:if="${eScooterList}" class="row pb-5">
+                        <div style=" overflow-x: hidden; !important" th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-4 mx-auto pt-3 pb-4">
+                            <div class="card" style="width: 22rem; overflow-x: hidden; !important">
+                                <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;  overflow-x: hidden; !important"   th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." />
+                                <div style=" overflow-x: hidden; !important" class="card-body pt-3">
+                                    <div style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
                                         <div class="d-flex justify-content-between">
                                             <h5 th:text="${escooter.getModelName()}" class="card-text  fw-bold">Xiaomi 6 pro edition</h5>
                                             <p  th:text="'€'+${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}+'/day'" class="fw-bold">$10/day</p>
