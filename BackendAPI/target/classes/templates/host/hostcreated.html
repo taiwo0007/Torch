@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/head :: head"></div>
+    <title >You are now a host!</title>
+    <style>
+        *{
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+<nav th:insert="fragments/nav :: nav" ></nav>
+
+<div class="container mt-5 pt-3">
+
+    <div style="height: 100vh !important;" class="row">
+
+        <div class="col-6 mx-auto my-auto pb-5">
+            <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
+                Host Created
+            </h1>
+            <h3 class="badge-info fw-bold text-center text-info pb-1 mb-2">
+                Your Host ID: #<span th:text="${host.getId()}"></span>
+            </h3>
+
+            <h5 class="badge-info text-center text-dark pt-3">
+                As a new member of the host team you can list out scooters
+                and earn money as soon as possible. Head over to the dashbaord and
+                list out an electric scooter today.
+            </h5>
+            <div class="mx-aut text-center mt-5">
+                <img style="width: 25%; height: auto;" class=" mx-auto" src="/images/website/handshake.png" alt=""/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="fragments/footer :: footer" ></footer>
+
+</body>
+</html>

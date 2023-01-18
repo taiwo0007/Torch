@@ -1,0 +1,65 @@
+<div style="overflow-y: hidden;" class="mt-2">
+  <div style="height: 100vh !important;" class="row my-auto">
+    <div style="overflow-y: hidden;" class="col-6 mx-auto text-end">
+      <img style="width: 50rem; height: 100%;" class=" text-end"  src="assets/images/website/signup.gif" alt="" />
+    </div>
+
+    <div class="col-6 my-auto">
+      <div class=" pt-5 my-auto">
+        <div class="p-5 my-auto" style="
+                width: 35.9rem !important;
+                /* height: 55rem !important; */
+                background-color: white;
+           margin: auto !important;
+
+              ">
+          <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
+
+            <div th:if="${error}" class="alert alert-danger d-flex align-items-center fade show">
+              <i class="bi-exclamation-octagon-fill"></i>
+              <strong class="mx-2">Error!</strong> <span th:text="${error}">error</span>
+            </div>
+
+            <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info">Sign up</span> to make an account on Torch </h1>
+
+            <div style="" class="mb-3 d-flex justify-content-between form-group">
+              <div class="form-group" style="width: 14.5rem !important;">
+                <label class="form-label fw-bold" for="firstName"> First Name </label>
+                <input id="firstName" ngModel name="firstName" class="form-control" th:field="*{firstName}"
+                       required autofocus="autofocus" placeholder="John"/>
+
+              </div>
+              <div class="form-group" style="width: 14.5rem !important;">
+                <label class="form-label fw-bold" for="lastName"> Last Name </label>
+                <input id="lastName" ngModel name="lastName" class="form-control" placeholder="doe"
+                       required autofocus="autofocus" />
+              </div>
+            </div>
+            <div class="mb-3 form-group">
+              <label for="email" class="form-label fw-bold">Email</label>
+              <input email required placeholder="john@gmail.com" name="email" ngModel type="email" class="form-control" id="email" />
+              <small id="emailHelp" class="form-text text-muted mx-auato text-center">We'll never share your email with anyone else.</small>
+            </div>
+
+            <div class="mb-3 form-group">
+              <label for="password" class=" form-label fw-bold">Password</label>
+              <input  placeholder="*******" [minLength]="5" name="password" ngModel type="password" class="form-control" id="password" />
+
+            </div>
+
+            <div class="form-group">
+              <button [disabled]="!signupForm.valid" style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-4">Create Account</button>
+            </div>
+
+            <div id="emailHelp" class="form-text py-4 text-center pt-4">
+              Alread yhave an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

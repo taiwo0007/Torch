@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <div th:replace="fragments/head :: head"></div>
+    <title>View Trips</title>
+    <link rel="stylesheet" href="/css/view_trips.css">
+</head>
+
+
+<body class="bg-light  text-dark font-helvetica">
+<nav th:insert="fragments/nav :: nav" ></nav>
+
+<div class="row g-5 pt-5 mt-4 pb-5 mx-auto container">
+    <h1 class="fw-bold">Your Trips</h1>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-2">
+                <div class="bg-white p-3  rounded">
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Trip ratios</p></div>
+                    <div class="d-flex justify-content-center">
+                        <div class="text-center">
+                            <h2 th:text="${totalTrips}">5</h2>
+                            <p class="font-smaller">Total Trips</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-2">
+                <div class="bg-white p-3   rounded">
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Current Trips</p></div>
+                    <div class="d-flex justify-content-around my-auto">
+                        <div class="text-center px-3">
+                            <h2 th:text="${onGoingTrips}">8</h2>
+                            <p class="font-smaller">Ongoing</p>
+                        </div>
+                        <div class="text-center ">
+                            <h2 th:text="${completedTrips}">2</h2>
+                            <p class="font-smaller">Completed</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-12 col-md-2">
+                <div class="bg-white p-3  rounded">
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Current Trip</p></div>
+                    <div class="d-flex justify-content-center">
+                        <div class="text-center px-3">
+                            <h2 class="text-center"> <span th:text="${daysLeft}">3</span> </h2>
+                            <p class="font-smaller">days left</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-2">
+
+                <div class="bg-white p-3   rounded">
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
+                    <div class="d-flex justify-content-around my-auto">
+                        <div class="text-center px-3">
+                            <h2 th:text="${cancelledTrips}">8</h2>
+                            <p class="font-smaller">Total</p>
+                        </div>
+                        <div class="text-center ">
+                            <h2 th:text="${cancelledRecentlyTrips}">2</h2>
+                            <p class="font-smaller">recently</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-12 col-md-4">
+
+                <div class="bg-white p-3 rounded">
+                    <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
+                    <div class="d-flex justify-content-around my-auto">
+                        <div class="text-center px-3">
+                            <h2>8</h2>
+                            <p class="font-smaller">In use</p>
+                        </div>
+                        <div class="text-center ">
+                            <h2>2</h2>
+                            <p class="font-smaller">Not in use</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- https://www.codeply.com/go/S6MgKWqFvj -->
+
+    <!-- <div style="height: 100% !important;" class="col-sm-3 h-100">
+
+    </div> -->
+
+    <div class="col-sm-12">
+        <div class="bg-white p-4 rounded ">
+            <h4 class="text-uppercase font-small fw-bold">Your Trips History</h4>
+            <div class="table-responsive">
+                <table style="max-height: 10rem !important;" class="table font-small mb-0 rounded font-helvetica bg-white table-borderless ">
+                    <thead class="">
+                    <tr class="text-muted text-uppercase font-small text-custom-grey">
+                        <th scope="col">Trip #</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Scooter</th>
+
+                        <th scope="col">Trip sTART</th>
+                        <th scope="col">Trip End</th>
+                        <th scope="col">Host</th>
+                        <th scope="col">trip cost</th>
+
+                    </tr>
+                    </thead>
+                    <tbody >
+                    <tr th:each="trip: ${userTrips}" class="hover-row">
+                        <th scope="row"><a th:href="@{/trip/trip-detail/{tripId}(tripId=${trip.getId()})}" th:text="${trip.getTripId()}">345634563461</a> </th>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).ACTIVE}" class="badge rounded-pill text-bg-primary">Active</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).COMPLETED}" class="badge rounded-pill text-bg-success">Completed</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).INACTIVE}" class="badge rounded-pill text-bg-secondary">Inactive</td>
+                        <td th:if="${trip.getStatus() == T(com.troch.torchApplication.enums.TripStatus).CANCELLED}" class="badge rounded-pill text-bg-danger">Cancelled</td>
+
+                        <td th:text="${trip.getEScooterOnTrip().getModelName()}" class="fw-bolder">Xiaomi Ultra Scooter</td>
+                        <td th:text="${#dates.format(trip.getTripStart(), 'dd/MM/yyyy')}">12/12/12</td>
+                        <td th:text="${#dates.format(trip.getTripEnd(), 'dd/MM/yyyy')}">12/12/12</td>
+                        <td th:text="${trip.getTrip_owner().getHostUser().getFirstName() +' ' +trip.getTrip_owner().getHostUser().getLastName()}" class=" fw-bold">Jen Benu</td>
+                        <td > €<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer th:insert="fragments/footer :: footer" ></footer>
+
+</body>
+
+</html>

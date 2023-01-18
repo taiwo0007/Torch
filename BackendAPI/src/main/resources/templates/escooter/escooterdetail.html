@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <div th:replace="fragments/head :: head"></div>
+    <title th:text="${escooter.getModelName()}"></title>
+</head>
+
+<body>
+<nav th:insert="fragments/nav :: nav" ></nav>
+
+
+
+<section class="header container mt-5 pt-5">
+    <div class="row">
+        <div class="col-8">
+            <h1 th:text="${escooter.getModelName()}" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
+                Xiomi vultron pro evolution.
+            </h1>
+
+        </div>
+        <div class="col-4">
+            <div class="my-auto mx-auto text-center">
+
+                <img th:src="@{${make.getImage()}}" width="40%" class="my-auto rounded mx-auto text-center"  src="images/xiaomi.png" alt="" >
+            </div>
+
+        </div>
+
+    </div>
+
+
+    </div>
+</section>
+
+
+
+<section class="container">
+    <div class="row">
+        <div class="col-8">
+            <img th:src="@{${escooter.getImage()}}" style="width:100%; height:33vw !important; object-fit: cover;" class="rounded my-4 shadow-sm" alt="..." />
+            <div class="row">
+
+                <div class="col-12 border-bottom pb-2">
+                    <div class="d-flex py-5 my-auto">
+                        <span style="width: .1%;" class="btn btn-info my-auto py-3"></span>
+                        <h4 class="my-auto ms-3"> Overview</h4>
+                    </div>
+
+                    <p th:text="${escooter.getAbout()}" class="text-secondary">Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                        unknown
+                        printer took a galley of type and scrambled it to make a type specimen book. It has survived
+                        not only five centuries, but also the leap into electronic typesetting, remaining
+                        essentially
+
+                    </p>
+                    <p class="text-info">Read more</p>
+                </div>
+
+                <div class="col-12">
+
+                    <div class="d-flex py-5 my-auto">
+                        <span style="width: .1%;" class="btn btn-info my-auto py-3"></span>
+                        <h4 class="my-auto ms-3"> Ratings & Reviews</h4>
+                    </div>
+                    <p class="fw-bold">Xiomi vultron pro evolution. </p>
+
+                </div>
+                <div class="col-12 text-center mx-auto">
+                    <h1 th:text="${escooter.getRating()}" style="font-size: 2.8rem !important" class="h1 text-center fw-bold">
+                        4.9
+                    </h1>
+                    <div>
+                        <div>
+                            <i class="fa fa-star  text-info"></i>
+                            <i class="fa fa-star  text-info"></i>
+                            <i class="fa fa-star  text-info"></i>
+                            <i class="fa fa-star  text-info"></i>
+                            <i class="fa fa-star  text-info"></i>
+
+                        </div>
+                        <p><span th:if="${not #lists.isEmpty(reviews)}" th:text="${reviews.size()}"></span> ratings</p>
+                    </div>
+
+                </div>
+                <div class="col-12 d-flex justify-content-between ">
+                    <div class="d-flex">
+                        <button th:if="${not #lists.isEmpty(reviews)}" th:text="${reviews.size()}" disabled class="btn btn-info text-light">
+                            10
+                        </button>
+                        <h4 class="my-auto ms-3">Comments</h4>
+                    </div>
+
+                    <p class="btn btn-outline-info my-auto disabled">All comments</p>
+                </div>
+
+                <div class="col-12 mt-5 mb-5">
+                    <form th:object="${ScooterReviewForm}" th:action="@{/reviewScooter/{scooterId}(scooterId=${escooter.getId()})}" method="post">
+                        <div class="form-group">
+                            <label for="comment" class="fw-bold">Review this scooter</label>
+                            <textarea th:field="*{comment}" class="form-control bg-light shadow" rows="5" id="comment"></textarea>
+                            <input th:field="*{starRating}" type="number" class="form-control" id="starRating" />
+
+                        </div>
+
+
+
+
+                        <button th:if="${isAuthenticated}" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
+                            Review
+                        </button>
+                        <p th:unless="${isAuthenticated}" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
+                            Book a Trip to review.
+                        </p>
+                    </form>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row border-bottom my-2 pb-4 pt-3">
+                    <div class="col-1">
+                        <img style="object-fit: cover; border-radius: 50% !important" th:src="@{${review.getScooter_reviewer().getProfilePicture()}}" width="60" height="60" class="rounded"
+                             alt="..." />
+                    </div>
+                    <div   class="col-11">
+                        <div   class="row">
+                            <div class="col-10">
+                                <p ><span th:text="${review.getScooter_reviewer().getFirstName() +' ' +review.getScooter_reviewer().getLastName()}"></span> <br> <span th:text="${review.getScooter_reviewer().getCountry()}" class="text-secondary">Ireland</span> </p>
+
+
+                            </div>
+                            <div class="col-2 d-flex justify-content-between">
+                                <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">12/04</p>
+                                <div class="d-flex">
+                                    <p th:text="${review.getStarRating()}" class="me-2">5.0</p>
+                                    <i class="fa fa-star  text-info pt-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p th:text="${review.getComment()}" class="text-secondary">Lorem Ipsum is simply dummy text of the printing and
+                                typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
+                                an unknown
+
+
+                            </p>
+                        </div>
+                    </div>
+
+                    <div th:unless="${reviews}" class="col-11">
+                        No reviews
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-4 ">
+            <div class="p-4 pt-2 border rounded mt-4">
+
+                <div>
+                    <p class="fw-bold mt-3">Trip Start Time</p>
+                    <form th:object="${trip}" class="mt-2" th:action="@{/escooterBooking/{id}(id=${escooter.getId()})}" method="get">
+                        <div class="p-2">
+
+                            <input th:field="*{tripStart}" for="tripStart" class="form-control form-control-lg mb-2 bg-light" type="date"
+                                   placeholder="Trip start" required aria-label=".form-control-lg example">
+                            <input for="tripEnd" required  th:field="*{tripEnd}" class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
+                                   aria-label=".form-control-lg example">
+
+
+                            <button th:if="${isAuthenticated}" style="width: 100%;" type="submit"
+                                    class="btn btn-dark text-light p-2 mt-4 ">Submit</button>
+
+                            <button disabled th:unless="${isAuthenticated}" style="width: 100%;" type="submit"
+                                    class="btn btn-outline-dark disabled text-dark p-2 mt-4 ">Login to Book</button>
+
+                        </div>
+                        <div class="d-flex my-auto justify-content-between pt-4 mb-3">
+                            <p class="my-auto fw-bold">Cost per day:</p>
+                            <h3 th:text="'€'+${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}" class="text-end fw-bolder text-info my-auto">$32.00</h3>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div>
+                    <div class="border-top ">
+                        <div class="mt-4">
+                            <h7 class="fw-bold">Trip Pickup location</h7>
+                        </div>
+
+                        <div class="p-2">
+                            <div  class="card mt-3">
+                                <div style="height: 15rem" id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="p-4 border rounded mt-4">
+                <p class="fw-bold">Insurance information</p>
+                <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
+            </div>
+            <div class="p-4 border rounded mt-4">
+                <p class="fw-bold">More about the Host</p>
+                <div class="d-flex">
+                    <div>
+                        <img style="border-radius: 50%; object-fit: cover" th:src="@{${escooter.getHost().getHostUser().getProfilePicture()}}" width="100" height="100" class="" alt="..." />
+                    </div>
+                    <div class="my-auto ps-3">
+                        <p th:text="${escooter.getHost().getHostUser().getFirstName()+' '+escooter.getHost().getHostUser().getLastName()}" style="margin-bottom: 0" class="fw-bold">Brian H.</p>
+                        <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+                            Elite Host
+                        </p>
+                        <p style="margin-bottom: 0; font-size: 0.7rem">
+                            1209 trips <span>- Joined August 20202</span>
+                            1209 trips <span>- Joined August 20202</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    let map;
+
+    function initMap() {
+
+      var location = { lat: 53.410980, lng: -6.400090 }
+      var options = {
+
+        center: location,
+        zoom: 15
+      }
+
+        map = new google.maps.Map(document.getElementById("map"), options)
+
+        new google.maps.Marker({
+            position: location,
+            map,
+            title: "Hello World!",
+            icon: "/images/website/icons/markerChanged.png"
+            });
+    }
+
+    window.initMap = initMap;
+
+  </script>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly&libraries=places"
+    defer></script>
+
+<footer th:insert="fragments/footer :: footer" ></footer>
+
+</body>
+
+</html>

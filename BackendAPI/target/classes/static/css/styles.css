@@ -1,0 +1,13 @@
+.browse-tile{
+    transition: all .1s ease-in-out;
+
+}
+
+.browse-tile:hover {
+    transform: scale(1.01);
+    opacity: .9;
+    overflow-y: hidden !important;
+    cursor: pointer;
+    /* https://getcssscan.com/css-box-shadow-examples */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

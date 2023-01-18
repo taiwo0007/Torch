@@ -1,0 +1,38 @@
+<nav xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+     xmlns="http://www.w3.org/1999/xhtml"  style="background-color: black !important; padding: 0.5rem 12rem !important" id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top shadow-lg">
+    <a class="navbar-brand" th:href="@{/}">  <img  src="/images/website/torchlogo.png" width="80" height="auto" alt="" /></a>
+    <ul  class="nav nav-pills">
+        <li sec:authorize="isAnonymous()" class="nav-item  my-auto">
+            <a th:href = "@{/user/signin}" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
+                Log in
+            </a>
+        </li>
+        <li sec:authorize="isAnonymous()" class="nav-item  my-auto">
+            <a  th:href = "@{/registration}" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
+
+        </li>
+        <li sec:authorize="isAuthenticated()" class="nav-item my-auto">
+            <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  th:href="@{/logout}">Sign out</a>
+
+        </li>
+
+        <li style="background-color: black !important " class="nav-item dropdown bg-dark m-auto ">
+            <a style="background-color: black !important" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false"><i class="fa fa-th fw-light" aria-hidden="true"></i>
+            </a>
+            <ul style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info ">
+                <li class="" sec:authorize="isAuthenticated()"><a class="dropdown-item " th:href="@{/user/profileEdit/{id}(id=${user.getId()})}">Profile</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="dropdown-item " th:href="@{/user/view-trips/}">Trips</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="dropdown-item " th:href="@{/host/view-host-trips/}">Host Trips</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="dropdown-item " th:href="@{/user/scooter-list/{id}(id=${user.getId()})}">EScooters</a></li>
+                <li><hr class="dropdown-divider bg-dark"></li>
+                <li><a class="dropdown-item text-info border-top-dark fw-bold" th:href="@{/host/hostinfo}">Become a host</a></li>
+                <li><hr class="dropdown-divider bg-dark"></li>
+                <li><a class="dropdown-item " href="#scrollspyHeading3">Legal & Insurance</a></li>
+                <li><a class="dropdown-item " href="#scrollspyHeading4">Privacy Policies</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+</nav>

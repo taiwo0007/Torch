@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="icon"
+          type="image/png"
+          th:href="@{${@environment.getProperty('favicon.image')}}">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS only -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+    />
+    <!-- JavaScript Bundle with Popper -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"
+    ></script>
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <style>
+        .browse-tile{
+            transition: all .1s ease-in-out;
+
+        }
+
+        .browse-tile:hover {
+            transform: scale(1.01);
+            opacity: .9;
+            overflow-y: hidden !important;
+            cursor: pointer;
+            /* https://getcssscan.com/css-box-shadow-examples */
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        }
+
+        input, select, textarea{
+            color: rgba(0, 0, 0, 0.502) !important;
+        }
+    </style>
+
+    <title>Torch Scooter Rental Service</title>
+</head>
+<body>
+<!-- Just an image -->
+
+<nav th:insert="fragments/nav :: nav" ></nav>
+<section style="overflow-x: hidden;"  class="hero-header pt-5 mt-2 ">
+    <div
+            style="
+          background-image: url('/images/website/header.png');
+          background-repeat: no-repeat;
+          background-position: center;
+          height: 43rem;
+          width: 100vw;
+        "
+            class="hero-container my-auto mx-auto">
+
+        <div  class="container pt-5">
+            <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2 rounded shadow-lg" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+                <div class="mx-auto text-center ">
+                    <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info">trip</span> </h1>
+                    <!-- <img style="width: 22rem; margin-top: -1rem;" src="./images/scooterstring.gif" class="mx-auto text-center" alt=""> -->
+
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label fw-bold">Pickup location</label>
+                    <input style="color: black !important;" placeholder="Scooter location" th:field="*{country}" type="text" class="form-control " id="country" aria-describedby="emailHelp" >
+
+                </div>
+                <div class="mb-3">
+                    <label for="tripStart" class="form-label fw-bold">Trip start</label>
+                    <input th:field="*{tripStart}" value="12/12/2022" type="date" class="form-control " id="tripStart" >
+                </div>
+                <div class="mb-3">
+                    <label for="tripEnd" class="form-label fw-bold">Trip end</label>
+                    <input th:field="*{tripEnd}" type="date" class="form-control " id="tripEnd" >
+                </div>
+
+
+                <button style="width: 100%;  background-color: black !important;" type="submit" class="btn  text-light p-2 mt-4 fw-bold ">Search</button>
+                <div id="emailHelp" class="form-text py-4 text-center text-dark">Find out more about Torch <u class="text-info">here</u></div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="header-bottom py-5">
+    <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
+        Browse scooter models.
+    </h1>
+    <h3 class="badge-info fw-bold text-center text-info">
+        View our catalogue of scooters for an amazing expereince
+    </h3>
+</section>
+
+<div class="container">
+    <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by make
+        </h4>
+
+        <div class="row text-center mt-3">
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/puretile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/avovotile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/xiaomitile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Make/segwaytile.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="row py-5 mx-4 my-1 mx-auto ">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by Location
+        </h4>
+
+        <div class="row text-center mt-3 ">
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/dublintile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/corktile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/galwaytile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/County/meathtile.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded my-5">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by Feature
+        </h4>
+
+        <div class="row text-center mt-3">
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/speedtile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/rangetile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/costtile.png" alt="">
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="">
+                    <img class="browse-tile" style="width:17rem" src="/images/website/Feature/weighttile.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section style=" border-radius: 40px;" class="container my-3 py-5 bg-dark mt-5">
+        <h1 style="font-size: 3.8rem !important" class="h1 text-center text-white fw-bold mb-5 pt-4">
+            How It Works
+        </h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4 text-center my-auto">
+                        <h3 class="fw-bold text-info">Verify account</h3>
+                        <p style="text-align: center text-light" class="text-light">
+                            Sign up to the application to access a wide
+                            catalogue of electric scooters
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <img src="/images/website/5.png" width="300" class="" alt="..." />
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <img src="/images/website/4.png" width="300" class="" alt="..." />
+                    </div>
+                    <div class="col-4 text-center my-auto">
+                        <h3 class="fw-bold text-info">Become a host</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4 text-center my-auto">
+                        <h3 class="fw-bold text-info">Rent out your scooter</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <img src="/images/website/5.png" width="300" class="" alt="..." />
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-5">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <img src="/images/website/4.png" width="300" class="" alt="..." />
+                    </div>
+                    <div class="col-4 text-center my-auto">
+                        <h3 class="fw-bold text-info">Get Paid</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row py-4 mx-4 my-1">
+        <h1
+                style="font-size: 3.8rem !important"
+                class="h1 text-center fw-bold pb-5 mt-5"
+        >
+            Torch <span class="text-info">Hosts</span>
+        </h1>
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
+            Feauterd Hosts
+        </h4>
+
+        <div class="col-4 mx-auto">
+            <div style="width: 23rem" class="border rounded">
+                <div style="padding: 1rem" class="d-flex">
+                    <div>
+                        <img src="/images/website/4.png" width="100" class="" alt="..." />
+                    </div>
+                    <div class="">
+                        <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
+                        <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+                            Elite Host
+                        </p>
+                        <p style="margin-bottom: 0; font-size: 0.7rem">
+                            1209 trips <span>- Joined August 20202</span>
+                        </p>
+                    </div>
+                </div>
+                <div style="padding: 0 1.8rem 0 1.8rem" class="">
+                    <div class="">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <p class="pt-3" style="width: fit-content">
+                            Amazing car ride, would highly be happy to recommend to anyone
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem 1.8rem 2rem 1.8rem">
+                    <p style="margin-bottom: 0; font-size: 0.7rem">
+                        Barry Simmons <span>August 20202</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div style="width: 23rem" class="border rounded">
+                <div style="padding: 1rem" class="d-flex">
+                    <div>
+                        <img src="/images/website/4.png" width="100" class="" alt="..." />
+                    </div>
+                    <div class="">
+                        <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
+                        <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+                            Elite Host
+                        </p>
+                        <p style="margin-bottom: 0; font-size: 0.7rem">
+                            1209 trips <span>- Joined August 20202</span>
+                        </p>
+                    </div>
+                </div>
+                <div style="padding: 0 1.8rem 0 1.8rem" class="">
+                    <div class="">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <p class="pt-3" style="width: fit-content">
+                            Amazing car ride, would highly be happy to recommend to anyone
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem 1.8rem 2rem 1.8rem">
+                    <p style="margin-bottom: 0; font-size: 0.7rem">
+                        Barry Simmons <span>August 20202</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mx-auto">
+            <div style="width: 23rem" class="border rounded">
+                <div style="padding: 1rem" class="d-flex">
+                    <div>
+                        <img src="/images/website/4.png" width="100" class="" alt="..." />
+                    </div>
+                    <div class="">
+                        <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
+                        <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+                            Elite Host
+                        </p>
+                        <p style="margin-bottom: 0; font-size: 0.7rem">
+                            1209 trips <span>- Joined August 20202</span>
+                        </p>
+                    </div>
+                </div>
+                <div style="padding: 0 1.8rem 0 1.8rem" class="">
+                    <div class="">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <p class="pt-3" style="width: fit-content">
+                            Amazing car ride, would highly be happy to recommend to anyone
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem 1.8rem 2rem 1.8rem">
+                    <p style="margin-bottom: 0; font-size: 0.7rem">
+                        Barry Simmons <span>August 20202</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer th:insert="fragments/footer :: footer" ></footer>
+
+</body>
+</html>
+
+</div>
+<div class="row">
+    <div class="col-12">
+
+    </div>
+</div>
+
+<script>
+    let map;
+
+    function initMap() {
+
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById("country"), {
+
+            componentRestrictions : {'country': ['ie']},
+            fields: ['geometry', 'name'],
+            types: ['establishment']
+        })
+
+    }
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initMap&v=weekly"
+        defer></script>
+</body>
+</html>
