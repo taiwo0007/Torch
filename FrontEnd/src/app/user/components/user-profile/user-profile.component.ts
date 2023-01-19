@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
        phoneNumber: data.phoneNumber,
         postCode: data.postCode,
        country: data.country,
-         county: data.county,
+         state: data.state,
          email: data.email,
          isVerified: data.isVerified,
          userTrips: data.userTrips,

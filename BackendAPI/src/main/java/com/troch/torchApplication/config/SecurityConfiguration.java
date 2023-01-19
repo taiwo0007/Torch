@@ -180,6 +180,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
+                .antMatchers("/api/escooter/findescooters/**")
+                .permitAll()
                 .antMatchers("/api/user/**")
                 .authenticated()
                 .antMatchers("/v2/api-docs",

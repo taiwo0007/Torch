@@ -1,19 +1,36 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../models/user.model";
 import {UserData} from "../../models/user-data.Model";
+import {NgForm} from "@angular/forms";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-profile-form-card',
   templateUrl: './profile-form-card.component.html',
   styleUrls: ['./profile-form-card.component.css']
 })
-export class ProfileFormCardComponent implements OnInit {
+export class ProfileFormCardComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('UserDetailsForm', { static: false }) UserDetailsForm: NgForm;
   @Input() InitialUserDetails?: UserData;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+
+
+
   }
 
+  ngAfterViewInit() {
+
+
+  }
+
+  onSubmit(UserDetailsForm: NgForm) {
+        this.userService.fetchUserDetails().subscribe(data => {
+          console.log(data)
+        })
+
+    }
 }

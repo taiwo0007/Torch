@@ -1,4 +1,6 @@
 package com.troch.torchApplication.models;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
+@JsonIgnoreProperties
 public class Role {
 
     @Id

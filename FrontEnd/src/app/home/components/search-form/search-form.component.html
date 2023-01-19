@@ -1,0 +1,25 @@
+<form #searchForm = "ngForm" (ngSubmit)="onSubmit(searchForm)" class="p-5 mt-2 rounded shadow-lg" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
+    <div class="mx-auto text-center ">
+        <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info">trip</span> </h1>
+        <!-- <img style="width: 22rem; margin-top: -1rem;" src="./images/scooterstring.gif" class="mx-auto text-center" alt=""> -->
+
+    </div>
+    <div class="mb-3">
+        <label for="location" class="form-label fw-bold">Pickup location</label>
+        <input style="color: black !important;" ngModel placeholder="Scooter location" name="location" type="text" class="form-control " id="location" aria-describedby="emailHelp" >
+
+    </div>
+    <div class="mb-3">
+        <label for="tripStart" class="form-label fw-bold">Trip start</label>
+        <input name="tripStart" ngModel value="12/12/2022" type="date" class="form-control " id="tripStart" >
+    </div>
+    <div class="mb-3">
+        <label for="tripEnd" class="form-label fw-bold">Trip end</label>
+        <input name="tripEnd" ngModel type="date" class="form-control " id="tripEnd" >
+    </div>
+
+
+    <button style="width: 100%;  background-color: black !important;" type="submit" class="btn  text-light p-2 mt-4 fw-bold ">Search</button>
+    <div id="emailHelp" class="form-text py-4 text-center text-dark">Find out more about Torch <u class="text-info">here</u></div>
+
+</form>

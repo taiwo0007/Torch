@@ -3,6 +3,8 @@ package com.troch.torchApplication.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties
 public class ScooterReview {
 
     @Id
@@ -23,12 +26,13 @@ public class ScooterReview {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "scooter_id", referencedColumnName = "id")
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonManagedReference
     private EScooter eScooter;
 
     @ManyToOne
     @JoinColumn(name = "scooter_reviewer_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     private User scooter_reviewer;
 
 

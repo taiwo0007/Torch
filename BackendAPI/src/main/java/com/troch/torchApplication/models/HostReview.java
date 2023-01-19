@@ -1,6 +1,10 @@
 package com.troch.torchApplication.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Host_Review")
+@JsonIgnoreProperties
 public class HostReview {
 
 
@@ -17,10 +22,12 @@ public class HostReview {
 
     @ManyToOne
     @JoinColumn(name = "host_id", referencedColumnName = "id")
+    @JsonManagedReference
     private Host host;
 
     @ManyToOne
     @JoinColumn(name = "user_reviewer_id", referencedColumnName = "id")
+    @JsonManagedReference
     private User user_reviewer;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

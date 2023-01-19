@@ -1,5 +1,8 @@
 package com.troch.torchApplication.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties
 public class Make {
 
     @Id
@@ -25,6 +29,7 @@ public class Make {
     private String image;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
+    @JsonIgnore
     List<EScooter> eScooters = new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package com.troch.torchApplication.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.troch.torchApplication.enums.TripStatus;
@@ -22,6 +23,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@JsonIgnoreProperties
 public class User {
 
     @Id
@@ -33,6 +35,8 @@ public class User {
     private String lastName;
 
     private String email;
+
+    @JsonIgnore
     @Column(name = "password")
     private String password;
     @Column(name = "rating")
@@ -40,8 +44,6 @@ public class User {
 
     private Integer phoneNumber;
     private String postCode;
-
-    private Boolean isHost;
     private String country;
     private String state;
     private String accountType;
@@ -51,6 +53,8 @@ public class User {
 
     private Integer userTrips = 0;
 
+    @JsonBackReference
+    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = CascadeType.ALL)
     @JoinTable(
@@ -63,22 +67,27 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "host_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     private Host host;
 
     @OneToMany(mappedBy = "user_reviewer", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
+    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
+    @JsonIgnore
     List<ScooterReview> scooterReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
     @JsonBackReference
+    @JsonIgnore
     List<Trip> renterTrips = new ArrayList<>();
 
     private Boolean isVerified = false;
+
+    private Boolean isHost;
 
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles){
         this.firstName= firstName;

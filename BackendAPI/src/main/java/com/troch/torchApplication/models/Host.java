@@ -1,9 +1,7 @@
 package com.troch.torchApplication.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.troch.torchApplication.enums.TripStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +16,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,7 +29,8 @@ public class Host {
     private Integer id;
 
 
-    @OneToOne(mappedBy = "host")
+    @OneToOne(mappedBy = "host", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private User hostUser;
 
 //    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
@@ -37,15 +38,21 @@ public class Host {
 //    List<EScooter> eScooters = new ArrayList<>();
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "host", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "host", cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
+//    @Fetch(value = FetchMode.JOIN)
+//    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private List<EScooter> hostEScooters = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "trip_owner", cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
+    @JsonBackReference
+    @JsonIgnore
     private List<Trip> hostTrips = new ArrayList<>();
 
     public HashMap<String, Object> getScooterUseDetail(){
@@ -75,7 +82,7 @@ public class Host {
             earned += trip.getTripCost();
 
         }
-        escooterNotInUse = this.hostEScooters.size() - escooterInUseCount;
+//        escooterNotInUse = this.hostEScooters.size() - escooterInUseCount;
 
         scooterUseMap.put("ESCOOTER-IN-USE",escooterInUseCount );
         scooterUseMap.put("ESCOOTER-NOT-IN-USE", escooterNotInUse);

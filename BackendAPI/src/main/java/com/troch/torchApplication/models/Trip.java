@@ -2,6 +2,9 @@ package com.troch.torchApplication.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.troch.torchApplication.enums.TripStatus;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -17,6 +20,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
+@JsonIgnoreProperties
 public class Trip {
 
     @Id
@@ -26,17 +30,17 @@ public class Trip {
 
     @ManyToOne
     @JoinColumn(name = "escooter_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     private EScooter eScooterOnTrip;
 
     @ManyToOne
     @JoinColumn(name = "user_renter_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     private User user_renter;
 
     @ManyToOne
     @JoinColumn(name = "host_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonManagedReference
     private Host trip_owner;
 
     @DateTimeFormat(

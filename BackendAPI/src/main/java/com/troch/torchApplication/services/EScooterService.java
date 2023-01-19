@@ -6,6 +6,10 @@ import com.troch.torchApplication.repositories.EScooterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -41,15 +45,30 @@ public class EScooterService {
         return eScooterRepository.save(eScooter);
     }
 
-    public Host findUser(Integer id){
+//    public Host findUser(Integer id){
+//
+//
+//        return eScooterRepository.findById(id).get().getHost();
+//
+//    }
+
+    public List<EScooter> findAllByTripDatesAndLocation(String tripStart, String tripEnd, String country) throws ParseException {
+
+        Date tripStartDate = null;
+        Date tripEndDate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 
-        return eScooterRepository.findById(id).get().getHost();
+        if(!tripStart.isEmpty()){
+             tripStartDate = formatter.parse(tripStart);
 
-    }
+        }
+        if(!tripEnd.isEmpty()){
+             tripEndDate = formatter.parse(tripEnd);
 
-    public List<EScooter> findAllByTripDatesAndLocation(Date tripStart, Date tripEnd, String country){
-        return eScooterRepository.findAllByTripDatesAndLocation(tripStart, tripEnd, country);
+        }
+
+        return eScooterRepository.findAllByTripDatesAndLocation(tripStartDate, tripEndDate, country);
     }
 
 
