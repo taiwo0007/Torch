@@ -3,7 +3,7 @@
 
   <div
     style="
-          background-image: url('assets/images/website/header.png');
+          background-image: url('../../../../assets/images/website/header.png');
           background-repeat: no-repeat;
           background-position: center;
           height: 43rem;
@@ -12,31 +12,7 @@
     class="hero-container my-auto mx-auto">
 
     <div  class="container pt-5">
-      <form th:object="${escooterSearch}" th:action="@{/findEscooters}" class="p-5 mt-2 rounded shadow-lg" method="get" style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
-        <div class="mx-auto text-center ">
-          <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info">trip</span> </h1>
-          <!-- <img style="width: 22rem; margin-top: -1rem;" src="./images/scooterstring.gif" class="mx-auto text-center" alt=""> -->
-
-        </div>
-        <div class="mb-3">
-          <label for="country" class="form-label fw-bold">Pickup location</label>
-          <input style="color: black !important;" placeholder="Scooter location" th:field="*{country}" type="text" class="form-control " id="country" aria-describedby="emailHelp" >
-
-        </div>
-        <div class="mb-3">
-          <label for="tripStart" class="form-label fw-bold">Trip start</label>
-          <input th:field="*{tripStart}" value="12/12/2022" type="date" class="form-control " id="tripStart" >
-        </div>
-        <div class="mb-3">
-          <label for="tripEnd" class="form-label fw-bold">Trip end</label>
-          <input th:field="*{tripEnd}" type="date" class="form-control " id="tripEnd" >
-        </div>
-
-
-        <button style="width: 100%;  background-color: black !important;" type="submit" class="btn  text-light p-2 mt-4 fw-bold ">Search</button>
-        <div id="emailHelp" class="form-text py-4 text-center text-dark">Find out more about Torch <u class="text-info">here</u></div>
-
-      </form>
+      <app-search-form></app-search-form>
     </div>
   </div>
 </section>
@@ -59,23 +35,23 @@
     <div class="row text-center mt-3">
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Make/puretile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/puretile.png" alt="">
         </a>
 
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Make/avovotile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/avovotile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Make/xiaomitile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Make/segwaytile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/segwaytile.png" alt="">
         </a>
       </div>
     </div>
@@ -90,23 +66,23 @@
     <div class="row text-center mt-3 ">
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/County/dublintile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/dublintile.png" alt="">
         </a>
 
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/County/corktile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/corktile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/County/galwaytile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/galwaytile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/County/meathtile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/meathtile.png" alt="">
         </a>
       </div>
     </div>
@@ -120,23 +96,23 @@
     <div class="row text-center mt-3">
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Feature/speedtile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/speedtile.png" alt="">
         </a>
 
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Feature/rangetile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/rangetile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Feature/costtile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/costtile.png" alt="">
         </a>
       </div>
       <div class="col-3">
         <a href="">
-          <img class="browse-tile" style="width:17rem" src="assets/images/website/Feature/weighttile.png" alt="">
+          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/weighttile.png" alt="">
         </a>
       </div>
     </div>
@@ -158,7 +134,7 @@
             </p>
           </div>
           <div class="col-4">
-            <img src="assets/images/website/5.png" width="300" class="" alt="..." />
+            <img src="../../../../assets/images/website/5.png" width="300" class="" alt="..." />
           </div>
           <div class="col-2"></div>
         </div>
@@ -169,7 +145,7 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-4">
-            <img src="assets/images/website/4.png" width="300" class="" alt="..." />
+            <img src="../../../../assets/images/website/4.png" width="300" class="" alt="..." />
           </div>
           <div class="col-4 text-center my-auto">
             <h3 class="fw-bold text-info">Become a host</h3>
@@ -195,7 +171,7 @@
             </p>
           </div>
           <div class="col-4">
-            <img src="assets/images/website/5.png" width="300" class="" alt="..." />
+            <img src="../../../../assets/images/website/5.png" width="300" class="" alt="..." />
           </div>
           <div class="col-2"></div>
         </div>
@@ -206,7 +182,7 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-4">
-            <img src="assets/images/website/4.png" width="300" class="" alt="..." />
+            <img src="../../../../assets/images/website/4.png" width="300" class="" alt="..." />
           </div>
           <div class="col-4 text-center my-auto">
             <h3 class="fw-bold text-info">Get Paid</h3>
@@ -237,7 +213,7 @@
       <div style="width: 23rem" class="border rounded">
         <div style="padding: 1rem" class="d-flex">
           <div>
-            <img src="assets/images/website/4.png" width="100" class="" alt="..." />
+            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
           </div>
           <div class="">
             <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
@@ -273,7 +249,7 @@
       <div style="width: 23rem" class="border rounded">
         <div style="padding: 1rem" class="d-flex">
           <div>
-            <img src="assets/images/website/4.png" width="100" class="" alt="..." />
+            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
           </div>
           <div class="">
             <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
@@ -309,7 +285,7 @@
       <div style="width: 23rem" class="border rounded">
         <div style="padding: 1rem" class="d-flex">
           <div>
-            <img src="assets/images/website/4.png" width="100" class="" alt="..." />
+            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
           </div>
           <div class="">
             <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
