@@ -1,0 +1,36 @@
+<a [routerLink]="['../escooter-detail', escooter.id]" style="text-decoration: none; width: 23vw; padding: 0 !important;"
+   class="card mx-auto  text-dark scooter-card  mt-1 mx-auto mb-1"
+   id="scooter-card"
+   >
+
+    <img
+            src="assets{{escooter.image}}"
+            style="object-fit:cover !important; width: 100% !important; height: 25rem !important;"
+            class="card-img-top" alt="..." />
+    <div style="padding-bottom: 0px !important; margin-bottom: 0 !important;" class="card-body pt-3 ">
+        <div class=" pb-2 border-bottom">
+            <h5 th:text="${escooter.getModelName()}" class="card-text fw-bold"> {{ escooter.modelName }}</h5>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p  class="">{{ escooter.trips }} Trips</p>
+                </div>
+                <div>
+                    <span th:text="${escooter.getRating()}">{{ escooter.rating | number : '1.2-2' }} </span> <i class="fa fa-star text-info"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3 class="text-end fw-bolder  my-auto fw-bold pt-3 "><span class="fw-bold"> {{ escooter.cost | currency:'EUR' }} </span>
+                    <span style="margin-top: -0.1rem !important;" class="fw-light text-muted h6 text-small ms-auto text-end">/day</span>
+                </h3>
+
+            </div>
+
+            <p class="text-end pt-3"><span th:text="${escooter.getCounty()}">{{ escooter.county }}</span>, <span class="fw-bold">{{ escooter.country }}</span></p>
+        </div>
+    </div>
+
+</a>
+

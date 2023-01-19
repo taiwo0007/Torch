@@ -5,6 +5,7 @@ import {LoginComponent} from "./auth/components/login/login.component";
 import {SignupComponent} from "./auth/components/signup/signup.component";
 import {UserProfileComponent} from "./user/components/user-profile/user-profile.component";
 import {EscooterResultsComponent} from "./escooter/components/escooter-results/escooter-results.component";
+import {EscooterDetailComponent} from "./escooter/components/escooter-detail/escooter-detail.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
 
   {path: 'profile', component: UserProfileComponent},
-  {path: 'results', component: EscooterResultsComponent}
+  {path: 'results', component: EscooterResultsComponent},
+  {path: 'escooter-detail/:id', component: EscooterDetailComponent}
 
 
 ];

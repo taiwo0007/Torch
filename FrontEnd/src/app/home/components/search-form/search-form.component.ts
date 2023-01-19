@@ -21,22 +21,16 @@ export class SearchFormComponent implements OnInit {
 
     onSubmit(searchForm: NgForm) {
 
-
-
-
-
     this.tripStart = searchForm.value.tripStart
       this.tripEnd = searchForm.value.tripEnd
       this.location = searchForm.value.location
 
-      console.log(this.tripStart)
+      const queryParams = { tripStart: this.tripStart,
+        tripEnd: this.tripEnd,
+        location: this.location}
 
-      this.escooterService.searchEscooter(this.tripStart, this.tripEnd, this.location)
-          .subscribe(data => {
-            console.log(data)
-          } )
-
-      this.router.navigate(['results'])
+      this.router.navigate(['results'],
+          { queryParams})
 
 
     }

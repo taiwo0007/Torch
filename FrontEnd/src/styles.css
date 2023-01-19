@@ -6,3 +6,16 @@
 /*input.ng-touched.ng-valid{*/
 /*  border: 2px solid #17a2b7;*/
 /*}*/
+
+*{
+    padding: 0 ;
+    margin: 0 ;
+    box-sizing: border-box ;
+}
+
+p-0{
+    padding: 0 !important;
+}
+pt-0{
+    padding-top: 0 !important;
+}

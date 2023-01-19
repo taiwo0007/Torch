@@ -20,6 +20,8 @@ import { ProfileFormCardComponent } from './user/components/profile-form-card/pr
 import {AuthInterceptorService} from "./auth/services/auth-interceptor.service";
 import { SearchFormComponent } from './home/components/search-form/search-form.component';
 import { EscooterResultsComponent } from './escooter/components/escooter-results/escooter-results.component';
+import { EscooterCardComponent } from './escooter/components/escooter-card/escooter-card.component';
+import { EscooterDetailComponent } from './escooter/components/escooter-detail/escooter-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { EscooterResultsComponent } from './escooter/components/escooter-results
     ProfileDetailsCardComponent,
     ProfileFormCardComponent,
     SearchFormComponent,
-    EscooterResultsComponent
+    EscooterResultsComponent,
+    EscooterCardComponent,
+    EscooterDetailComponent
   ],
   imports: [
     BrowserModule,

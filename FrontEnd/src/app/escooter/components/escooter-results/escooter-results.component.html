@@ -1,10 +1,10 @@
-<!--<div th:if="${#lists.isEmpty(escooterList)}" style="height: 100vh !important; width: 100% !important; overflow-y: hidden !important;" class="container-fluid pt-5 mt-3 mx-auto">-->
-<!--    <div class="text-center pt-5 mt-3">-->
-<!--        <img style="display: block; width: 50rem; height: auto;" src="/images/website/Pages/no-scooters-found-img.png" class="  my-auto mx-auto text-center" alt="">-->
-<!--        <p>You search did not mach any scooters please <a th:href="@{/}" style="display: inline-block;" class=" text-underline" href="">search again </a></p>-->
-<!--    </div>-->
-<!--</div>-->
-<div th:if="${not #lists.isEmpty(escooterList)}" class="container-fluid pt-5 mt-3">
+<div *ngIf="!escooterResults" style="height: 100vh !important; width: 100% !important; overflow-y: hidden !important;" class="container-fluid pt-5 mt-3 mx-auto">
+    <div class="text-center pt-5 mt-3">
+        <img style="display: block; width: 50rem; height: auto;" src="assets/images/website/Pages/no-scooters-found-img.png" class="  my-auto mx-auto text-center" alt="">
+        <p>You search did not mach any scooters please <a [routerLink]="['']" style="display: inline-block;" class=" text-underline" href="">search again </a></p>
+    </div>
+</div>
+<div *ngIf="escooterResults" class="container-fluid pt-5 mt-3">
     <div class="row ">
         <div class="col-2">
 
@@ -71,8 +71,8 @@
 
         </div>
         <div  class="col-6">
-            <div  th:if="${escooterList}" class="row mt-3">
-                <form class="col-12 d-flex flex-row justify-content-center align-items-center border-bottom pb-3">
+            <div  *ngIf="escooterResults" class="row mt-3">
+                <div class="col-12 d-flex flex-row justify-content-center align-items-center border-bottom pb-3">
 
                     <i class="fa fa-search " aria-hidden="true"></i>
                     <input style="width: 80% ; border-top-style: hidden;
@@ -83,37 +83,13 @@
                     <button class="btn btn-outline-secondary">
                         Search
                     </button>
-                </form>
+                </div>
+                <div class="row">
+                    <div *ngFor="let escooterItem of escooterResults" class="col-xs-12 col-md-6 my-5">
+                        <app-escooter-card  [escooter]="escooterItem"></app-escooter-card>
 
-                <a th:each="escooter : ${escooterList}" th:id="${escooter.getModelName()}" style="text-decoration: none; width: 23vw" class="card mx-auto m-3 text-dark scooter-card col-6  mx-auto pt-3 pb-3" id="scooter-card"
-                   th:href="@{/EScooterDetail/{id}(id=${escooter.getId()})}">
-
-                    <img style="object-fit:cover !important; width: 100% !important; height: 25rem !important;"  th:src="@{${escooter.getImage()}}" class="card-img-top" alt="..." />
-                    <div class="card-body pt-3">
-                        <div class=" pb-3 border-bottom">
-                            <h5 th:text="${escooter.getModelName()}" class="card-text  fw-bold">Xiaomi 6 pro edition</h5>
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <p  class=""><span th:text="${escooter.getTrips()}"></span> Trips</p>
-                                </div>
-                                <div>
-                                    <span th:text="${escooter.getRating()}">4.0</span> <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="text-end fw-bolder  my-auto fw-bold pt-3 ">€<span class="fw-bold" th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}">21</span>
-                                </h3>
-                                <span style="margin-top: -0.7rem !important;" class="fw-light ms-auto text-end">per day</span>
-                            </div>
-
-                            <p class="text-end  my-auto pt-3"><span th:text="${escooter.getCounty()}"></span>, <span th:text="${escooter.getCountry()}"></span></p>
-                        </div>
                     </div>
-
-                </a>
+                </div>
             </div>
         </div>
 
@@ -123,97 +99,5 @@
 
 
     </div>
-
-    <script th:inline="javascript">
-
-        let map;
-
-        function initMap() {
-
-            var location = {
-                lat: 53.358888300000004,
-                lng: -6.308530354714592
-            }
-            var options = {
-
-                center: location,
-                zoom: 12,
-                mapId: 'wearetorchvinividivici'
-            }
-
-            map = new google.maps.Map(document.getElementById("map"), options);
-
-
-
-
-            let eList = [[${escooterList}]];
-
-            var escooters = document.querySelectorAll(".scooter-card");
-
-            let markers = [];
-
-            function changeIcon(markerId) {
-                markers.forEach(function(marker) {
-                    if (marker.id === markerId) {
-                        marker.setIcon("/images/website/icons/markerChanged.png");
-                    }
-                });
-            }
-
-            function resetIcon(markerId) {
-                markers.forEach(function(marker) {
-                    if (marker.id === markerId) {
-                        marker.setIcon("/images/website/icons/marker.png");
-                    }
-                });
-            }
-
-            for (var i = 0; i < eList.length; i++) {
-
-                let tempMarker = new google.maps.Marker({ map: map, id: eList[i].modelName , position: {
-                        lat: eList[i].latitude,
-                        lng: eList[i].longitude
-                    }, icon: "/images/website/icons/marker.png" });
-
-                markers.push(tempMarker);
-            }
-
-            eList.forEach((escooter) => {
-
-                var myContent = ` <a href="EScooterDetail/${escooter.id}"><div  class="card" style="width: 6rem; padding: 0.3rem 0rem 0rem 0.3rem"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> `;
-
-                markers.forEach((elem) => {
-                    if(escooter.modelName == elem.id){
-
-                        let infowindow = new google.maps.InfoWindow({
-                            content: myContent,
-                            ariaLabel: "Uluru",
-                        });
-
-                        elem.addListener("click", () => {
-                            infowindow.open({
-                                anchor: elem,
-                                map,
-                            });
-                        });
-                    }
-                })
-            })
-
-            escooters.forEach((elem) => {
-                elem.addEventListener("mouseover", () => {
-                    changeIcon(elem.id);
-                });
-
-                elem.addEventListener("mouseout", () => {
-                    resetIcon(elem.id);
-                });
-            })
-        }
-        window.initMap = initMap;
-    </script>
-    <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly&v=beta&libraries=marker"
-            defer></script>
 
 </div>

@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
       this.isSuccessLogOut = params['success'];
 
       console.log(this.isSuccessLogOut)
+    }, error1 => {
+      console.log("error", error1)
     })
   }
 
