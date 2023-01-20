@@ -1,10 +1,8 @@
 package com.troch.torchApplication.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +11,7 @@ import lombok.Setter;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.json.JSONPropertyIgnore;
 
 import javax.persistence.*;
 import java.util.*;
@@ -22,12 +21,14 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-@JsonIgnoreProperties
 public class User {
 
     @Id
+    @JsonView(Views.Id.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Integer id;
     @Column(name = "firstName")
     private String firstName;
@@ -54,7 +55,6 @@ public class User {
     private Integer userTrips = 0;
 
     @JsonBackReference
-    @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = CascadeType.ALL)
     @JoinTable(
@@ -76,8 +76,9 @@ public class User {
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JsonIgnore
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIgnore
+    @JsonManagedReference
     List<ScooterReview> scooterReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
@@ -162,6 +163,4 @@ public class User {
         return Math.abs(Calendar.getInstance().getTime().getDate() - recentTrip.getTripEnd().getDate());
 
     }
-
-
 }

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../models/user.model";
-import {UserData} from "../../models/user-data.Model";
+import {UserData} from "../../models/user-data.model";
 import {NgForm} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 

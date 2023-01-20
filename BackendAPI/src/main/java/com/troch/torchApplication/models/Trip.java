@@ -1,10 +1,8 @@
 package com.troch.torchApplication.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -23,14 +21,20 @@ import java.util.Date;
 @JsonIgnoreProperties
 public class Trip {
 
+    public static class FullView {};
+    public static class IdView {};
+    public static class SummaryView {};
+
     @Id
+    @JsonView(Views.Id.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
     @ManyToOne
     @JoinColumn(name = "escooter_id", referencedColumnName = "id")
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonView(IdView.class)
     private EScooter eScooterOnTrip;
 
     @ManyToOne

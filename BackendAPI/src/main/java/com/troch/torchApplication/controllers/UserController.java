@@ -29,8 +29,6 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<User> getUserProfileData(@RequestHeader("Authorization") String jwt){
 
-        logger.info(jwt);
-
         User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
 
         logger.info(""+user);

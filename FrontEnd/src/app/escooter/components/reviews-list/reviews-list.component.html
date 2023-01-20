@@ -1,0 +1,8 @@
+<div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" >
+   <app-review *ngFor="let review of ReviewList" [Review]="review"></app-review>
+
+    <div th:unless="${reviews}" class="col-11">
+        No reviews
+    </div>
+
+</div>

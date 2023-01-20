@@ -1,10 +1,9 @@
 package com.troch.torchApplication.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.troch.torchApplication.Views.Views;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,22 +16,21 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@JsonIgnoreProperties
 public class ScooterReview {
 
     @Id
+    @JsonView(Views.Id.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "scooter_id", referencedColumnName = "id")
-//    @JsonIgnore
-    @JsonManagedReference
+    @JsonIgnore
     private EScooter eScooter;
 
     @ManyToOne
     @JoinColumn(name = "scooter_reviewer_id", referencedColumnName = "id")
-    @JsonManagedReference
+//    @JsonBackReference
     private User scooter_reviewer;
 
 

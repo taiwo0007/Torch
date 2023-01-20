@@ -2,6 +2,7 @@ package com.troch.torchApplication.models;
 
 
 import com.fasterxml.jackson.annotation.*;
+import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,11 +27,13 @@ import java.util.List;
 public class Host {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.Id.class)
     private Integer id;
 
 
     @OneToOne(mappedBy = "host", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIdentityReference(alwaysAsId = true)
     private User hostUser;
 
 //    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)

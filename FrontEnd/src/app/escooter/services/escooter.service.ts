@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {Escooter} from "../models/escooter.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,10 @@ export class EscooterService {
         }
         )
   }
+
+    getEscooterById(id:number){
+        return this.http.get<Escooter>(environment.appUrl +'/api/escooter/escooter-detail/'+id)
+    }
+
+
 }

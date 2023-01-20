@@ -1,0 +1,24 @@
+<div class="">
+    <p class="fw-bold mt-3">Trip Start Time</p>
+    <form th:object="${trip}" class="mt-2" th:action="@{/escooterBooking/{id}(id=${escooter.getId()})}" method="get">
+        <div class="p-2">
+
+            <input th:field="*{tripStart}" for="tripStart" class="form-control form-control-lg mb-2 bg-light" type="date"
+                   placeholder="Trip start" required aria-label=".form-control-lg example">
+            <input for="tripEnd" required  th:field="*{tripEnd}" class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
+                   aria-label=".form-control-lg example">
+
+
+            <button *ngIf="isAuthenticated" style="width: 100%;" type="submit"
+                    class="btn btn-dark text-light p-2 mt-4 ">Submit</button>
+
+            <button disabled *ngIf="!isAuthenticated" style="width: 100%;" type="submit"
+                    class="btn btn-outline-dark disabled text-dark p-2 mt-4 ">Login to Book</button>
+
+        </div>
+        <div class="d-flex my-auto justify-content-between pt-4 mb-3">
+            <p class="my-auto fw-bold">Cost per day:</p>
+            <h3 class="text-end fw-bolder text-info my-auto">{{cost | currency:'EUR'}}</h3>
+        </div>
+    </form>
+</div>

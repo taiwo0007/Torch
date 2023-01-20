@@ -1,6 +1,7 @@
 package com.troch.torchApplication.models;
 
 import com.fasterxml.jackson.annotation.*;
+import com.troch.torchApplication.Views.Views;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,21 +22,22 @@ import java.util.List;
 @Entity
 public class EScooter {
 
+
+
     @Id
+    @JsonView(Views.Id.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
     @JoinColumn(name="scooter_host_id", referencedColumnName = "id")
-//    @JsonManagedReference
-//    @JsonIgnore
-
+    @JsonIdentityReference(alwaysAsId = true)
     private Host host;
 
     @ManyToOne
     @JoinColumn(name = "make_id", referencedColumnName = "id")
-    @JsonManagedReference
-    @JsonIgnore
+    @JsonIdentityReference(alwaysAsId = true)
     private Make make;
 
     @Column(name = "model_name")
@@ -74,14 +76,12 @@ public class EScooter {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripEnd;
 
-    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonBackReference
-    @JsonIgnore
+    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
     List<ScooterReview> escooterReviews = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "eScooterOnTrip", cascade = CascadeType.ALL)
-    @JsonBackReference
     @JsonIgnore
     List<Trip> escooterTrips = new ArrayList<>();
 

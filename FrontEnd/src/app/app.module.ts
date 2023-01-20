@@ -22,6 +22,10 @@ import { SearchFormComponent } from './home/components/search-form/search-form.c
 import { EscooterResultsComponent } from './escooter/components/escooter-results/escooter-results.component';
 import { EscooterCardComponent } from './escooter/components/escooter-card/escooter-card.component';
 import { EscooterDetailComponent } from './escooter/components/escooter-detail/escooter-detail.component';
+import { StartTripFormComponent } from './escooter/components/start-trip-form/start-trip-form.component';
+import { ReviewsListComponent } from './escooter/components/reviews-list/reviews-list.component';
+import { ReviewComponent } from './escooter/components/review/review.component';
+import { MiniHostCardComponent } from './escooter/components/mini-host-card/mini-host-card.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,11 @@ import { EscooterDetailComponent } from './escooter/components/escooter-detail/e
     SearchFormComponent,
     EscooterResultsComponent,
     EscooterCardComponent,
-    EscooterDetailComponent
+    EscooterDetailComponent,
+    StartTripFormComponent,
+    ReviewsListComponent,
+    ReviewComponent,
+    MiniHostCardComponent
   ],
   imports: [
     BrowserModule,
