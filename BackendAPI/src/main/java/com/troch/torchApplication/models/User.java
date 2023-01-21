@@ -35,6 +35,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
+    private Date joined = new Date();
+
     private String email;
 
     @JsonIgnore

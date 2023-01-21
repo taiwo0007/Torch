@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Escooter} from "../models/escooter.interface";
+import {Subject, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EscooterService {
-  tripStartParam: Date = new Date();
-  tripEndParam: Date = new Date();
+export class EscooterService implements OnDestroy{
+
+   hostDetailsEmitter = new Subject();
 
 
 
 
-  constructor(private http: HttpClient) {}
+
+    constructor(private http: HttpClient) {}
 
 
   searchEscooter(tripStart:any, tripEnd:any, location: any){
@@ -30,6 +32,12 @@ export class EscooterService {
 
     getEscooterById(id:number){
         return this.http.get<Escooter>(environment.appUrl +'/api/escooter/escooter-detail/'+id)
+    }
+
+
+    ngOnDestroy() {
+
+        this.hostDetailsEmitter.unsubscribe();
     }
 
 

@@ -64,15 +64,15 @@ public class EScooterController {
     }
 
     @GetMapping("/escooter-detail/{id}")
-    public ResponseEntity<EScooter> getEscooterDetailById(@PathVariable("id") Integer id) throws Exception {
+    public EScooter getEscooterDetailById(@PathVariable("id") Integer id) throws Exception {
 
         Optional<EScooter> escooter = eScooterService.findEScooter(id);
 
         if(escooter.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new Exception("No Escooter found");
         }
 
-        return new ResponseEntity<>(escooter.get(), HttpStatus.OK);
+        return escooter.get();
 
 
     }

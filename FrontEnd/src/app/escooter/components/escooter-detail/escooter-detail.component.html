@@ -78,10 +78,10 @@
 
 
 
-                        <button th:if="${isAuthenticated}" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
+                        <button  *ngIf="isAuthenticated" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
                             Review
                         </button>
-                        <p th:unless="${isAuthenticated}" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
+                        <p *ngIf="!isAuthenticated" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
                             Book a Trip to review.
                         </p>
                     </form>
@@ -115,7 +115,7 @@
                 <p class="fw-bold">Insurance information</p>
                 <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
             </div>
-            <app-mini-host-card></app-mini-host-card>
+            <app-mini-host-card *ngIf="escooter" [HostId]="escooter?.host"></app-mini-host-card>
         </div>
     </div>
 </section>

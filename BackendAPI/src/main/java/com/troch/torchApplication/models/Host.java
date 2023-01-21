@@ -32,13 +32,14 @@ public class Host {
     private Integer id;
 
 
-    @OneToOne(mappedBy = "host", fetch = FetchType.LAZY)
-    @JsonIdentityReference(alwaysAsId = true)
+    @OneToOne(mappedBy = "host", fetch = FetchType.EAGER)
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonBackReference
     private User hostUser;
 
-//    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    List<EScooter> eScooters = new ArrayList<>();
+    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    List<EScooter> eScooters = new ArrayList<>();
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
     @JsonBackReference
