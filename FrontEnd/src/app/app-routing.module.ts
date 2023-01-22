@@ -16,7 +16,8 @@ const routes: Routes = [
   {path: 'profile', component: UserProfileComponent},
   {path: 'results', component: EscooterResultsComponent},
   {path: 'escooter-detail/:id', component: EscooterDetailComponent},
-  {path: 'escooter-booking/:id', component: EscoooterBookingComponent}
+  {path: 'escooter-booking/:id', component: EscoooterBookingComponent},
+
 
 
 ];

@@ -8,7 +8,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HomeComponent } from './home/components/home/home.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { SignupComponent } from './auth/components/signup/signup.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,15 @@ import { ReviewComponent } from './escooter/components/review/review.component';
 import { MiniHostCardComponent } from './escooter/components/mini-host-card/mini-host-card.component';
 import { ReviewFormComponent } from './escooter/components/review-form/review-form.component';
 import { EscoooterBookingComponent } from './escooter/components/escoooter-booking/escoooter-booking.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {NgxStripeModule} from "ngx-stripe";
+import {MatInputModule} from "@angular/material/input";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatCardModule} from "@angular/material/card";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import { TripComponent } from './escooter/components/trip/trip.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +60,8 @@ import { EscoooterBookingComponent } from './escooter/components/escoooter-booki
     ReviewComponent,
     MiniHostCardComponent,
     ReviewFormComponent,
-    EscoooterBookingComponent
+    EscoooterBookingComponent,
+    TripComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +69,17 @@ import { EscoooterBookingComponent } from './escooter/components/escoooter-booki
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    BsDropdownModule
+    BsDropdownModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    NgxStripeModule.forRoot('pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul'),
+    MatInputModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatDividerModule,
+    MatDialogModule,
+    MatButtonModule,
+
 
   ],
   providers: [BsDropdownDirective, BsDropdownConfig, {

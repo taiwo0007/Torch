@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TorchFrontEnd</title>
+  <title>Torch</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline';">
+  <link rel="icon" type="image/x-icon" href="assets/images/website/tablogo.png">
   <link rel="icon"
         type="image/png"
         href="assets/images/website/tablogo.png">
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!--    <link rel="stylesheet" href="/css/style.css">-->
   <!-- CSS only -->
@@ -37,8 +36,24 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<!--<script src="https://js.stripe.com/v3"></script>-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--    <meta http-equiv="Content-Security-Policy"-->
+<!--          content="default-src * 'self' 'unsafe-inline';-->
+<!--          script-src * https://*.stripe.network https://*.stripe.com 'unsafe-inline';-->
+<!--           style-src * https://*.stripe.network 'unsafe-inline';-->
+<!--           style-src-elem 'self' * 'unsafe-inline';-->
+<!--           img-src 'self' * 'unsafe-inline';-->
+<!--          font-src 'self' * 'unsafe-inline';-->
+<!--          frame-src 'self' * https://*.stripe.com 'unsafe-inline';-->
+<!--          connect-src 'self' * 'unsafe-inline';">-->
+
+<!--    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline';">-->
 </head>
-<body>
+
+<body class="mat-typography">
   <app-root></app-root>
 </body>
 </html>

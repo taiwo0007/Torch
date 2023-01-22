@@ -31,7 +31,9 @@ export class EscooterDetailComponent implements OnInit {
     })
 
 
-    this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
+
+
+      this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
       this.escooter = escooterData;
       this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
       console.log("Escooter Data"+escooterData)

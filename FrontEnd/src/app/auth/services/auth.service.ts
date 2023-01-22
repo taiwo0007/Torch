@@ -14,6 +14,7 @@ import {SignupRequestPayload} from "../payloads/signup-request.payload";
 export class AuthService {
   user = new BehaviorSubject<any>(null);
 
+
   constructor(private http: HttpClient,
             private router:Router) {
   }

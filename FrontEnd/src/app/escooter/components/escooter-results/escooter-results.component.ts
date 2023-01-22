@@ -27,6 +27,8 @@ export class EscooterResultsComponent implements OnInit {
           .subscribe((data: any[]) => {
             this.escooterResults = data
             console.log(this.escooterResults)
+          }, error => {
+              this.escooterResults = null;
           })
     })
 

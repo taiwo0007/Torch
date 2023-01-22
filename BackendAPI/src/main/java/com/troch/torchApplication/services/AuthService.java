@@ -48,7 +48,7 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             String token = jwtUtil.generateToken(loginRequest.getEmail());
             Date expiresDate = jwtUtil.extractExpiration(token);
-            
+
             return AuthenticationResponse.builder()
                     .authToken(token)
                     .email(loginRequest.getEmail())

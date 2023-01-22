@@ -1,49 +1,64 @@
-<section class="container mt-5 mb-5">
+<section class="container mt-5 mb-5 pt-5">
     <div class="row ">
-        <div class="col-8 ">
-            <h1 style="font-size: 2.8rem !important" class="h1 text-center fw-bold mb-3">
-                Trip Payment
-            </h1>
+        <div style="color:black !important;" class="col-md-8 col-sm-12 ">
+<!--            <h1 style="font-size: 2.8rem !important" class="h1 text-center fw-bold mb-3">-->
+<!--                Trip Payment-->
+<!--            </h1>-->
+            <mat-card class="mx-auto"  style=" width: 80%; margin: 25px; background-color: white;">
+                <mat-card-title
+                        style="margin-top: -16px; margin-left: -16px; margin-right: -16px; margin-bottom: 32px; color:black !important;"
+                >
+                    <mat-toolbar
+                            class="bg-info"
+                            color="primary"
+                            style=" border-top-right-radius: 4px; border-top-left-radius: 4px;"
+                    >
+                        Trip Payment
+                    </mat-toolbar>
+                </mat-card-title>
+                <div class="p-4" [formGroup]="checkoutForm">
 
-            <!--            <form th:action="@{/processTrip/{tripId}(tripId=${trip.getId()})}" style="padding: 0 10rem  0rem 10rem !important;" class="p-5 my-5" method="post">-->
-            <form id="payment-form" class=" mx-auto " method="post">
+                    <ng-container *ngIf="elementsOptions?.clientSecret">
+                        <ngx-stripe-payment
+                                [appearance]="appearance"
+                                [clientSecret]="elementsOptions?.clientSecret"
+                        ></ngx-stripe-payment>
+                    </ng-container>
+                    <div style="margin-bottom: 40px"></div>
+                    <mat-divider></mat-divider>
+                    <div style="margin-bottom: 60px"></div>
+                    <div style="text-align: right">
 
-                <h3 style="font-size: 1.8rem !important" class="h1 text-start fw-bold text-info pb-3">
-                    Credit card
-                </h3>
-                <div style="
-                            padding-bottom: 0.7rem !important;
-                            margin-bottom: 0.01rem !important;
-                            padding-top: 1.1rem !important;
+                        <button
 
-
-                            " id="payment-element">
-                    <!--Stripe.js injects the Payment Element-->
+                                class="btn btn-info bg-info text-light"
+                                [disabled]="paying"
+                                (click)="collectPayment()"
+                        >
+        <span *ngIf="!paying">
+          PAY NOW
+        </span>
+                            <span *ngIf="paying">PROCESSING...</span>
+                        </button>
+                    </div>
                 </div>
-                <button id="submit">
-                    <div class="spinner hidden" id="spinner"></div>
-                    <span id="button-text">Pay now</span>
-                </button>
-                <div id="payment-message" class="hidden"></div>
+            </mat-card>
 
-            </form>
+
+
             <div  class="d-flex justify-content-evenly">
                 <div style="width: 18rem;" class="p-4 border rounded mt-4 bg-white">
                     <p class="fw-bold">Insurance information</p>
                     <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
                 </div>
                 <div style="width: 23rem;" class="p-4 border rounded mt-4 bg-white">
-
                     <p class="fw-bold">Cancellation Policy</p>
                     <p>You can cancell this booking withing 24 hours at <span class="text-info">no extra cost.</span> </p>
                 </div>
-
             </div>
-
-
-
         </div>
-        <div class="col-4 bg-light">
+
+        <div class="col-md-4 col-sm-12 bg-light">
             <div class="px-4 pt-4 border rounded mt-4  bg-white">
                 <div>
                     <h3 class="fw-bold mt-2 text-info">Pay now</h3>
@@ -51,15 +66,13 @@
                         <div>
                             <div class="card-body mx-0 shado">
                                 <!-- <h5 class="card-title">Card title</h5> -->
-
                                 <div class="row  py-2">
                                     <div class="col-6 my-auto">
-                                        <p class="card-text my-auto text-secondary">€<span th:text="${#numbers.formatDecimal(escooter.getCost(), 0, 'COMMA', 2, 'POINT')}">€400.00</span> for  <span th:text="${days}">3 days</span> day(s) </p>
+                                        <p class="card-text my-auto text-secondary"><span >{{escooter?.cost | currency: 'EUR'}}</span> for  <span>{{tripDays}}</span> day(s) </p>
                                     </div>
                                     <div class="col-6 my-auto">
-                                        <p  class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(normalCost, 0, 'COMMA', 2, 'POINT')}"></span></p>
+                                        <p  class=" text-info text-end my-auto fw-bold">{{initialCost | currency:'EUR'}}</p>
                                     </div>
-
                                 </div>
                                 <div class="row   py-2">
                                     <div class="col-6 my-auto">
@@ -68,7 +81,6 @@
                                     <div class="col-6 my-auto">
                                         <p class=" text-info text-end my-auto fw-bold">€20.00</p>
                                     </div>
-
                                 </div>
                                 <div class="row t d py-2">
                                     <div class="col-6 my-auto">
@@ -77,7 +89,6 @@
                                     <div class="col-6 my-auto">
                                         <p class=" text-info text-end my-auto fw-bold">€0.00</p>
                                     </div>
-
                                 </div>
                                 <div class="row t d py-2">
                                     <div class="col-6 my-auto">
@@ -87,12 +98,20 @@
                                         <p class=" text-info text-end  my-auto fw-bold">FREE</p>
                                     </div>
                                 </div>
+                                <div class="row t d py-2">
+                                    <div class="col-6 my-auto">
+                                        <p class="card-text  my-auto text-secondary">VAT @ 20%</p>
+                                    </div>
+                                    <div class="col-6 my-auto">
+                                        <p class=" text-info text-end  my-auto fw-bold">{{vatCost | currency:'EUR'}}</p>
+                                    </div>
+                                </div>
                                 <div class="row border-top   mt-3 pt-4">
                                     <div class="col-6 my-auto">
                                         <p  class="card-text  my-auto text-dark fw-bold">Total cost</p>
                                     </div>
                                     <div class="col-6 my-auto">
-                                        <h3  class=" text-info text-end my-auto fw-bold">€<span th:text="${#numbers.formatDecimal(trip.getTripCost(), 0, 'COMMA', 2, 'POINT')}"></span></h3>
+                                        <h3  class=" text-info text-end my-auto fw-bold">{{totalCost | currency:'EUR'}}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -109,11 +128,9 @@
                             class="rounded mx-auto text-center"
                             style="object-fit: cover; width: 15.2rem; height: 15.2rem"
                             th:src="@{${escooter.getImage()}}"
-                            alt=""
-                    />
+                            alt=""/>
                 </div>
             </div>
-
 
             <div class="px-4  pt-4 border rounded mt-4 bg-white">
                 <h3 class="fw-bold text-info ">Booking Information</h3>
@@ -124,7 +141,6 @@
                     <div class="col-6 my-auto">
                         <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}" class=" text-end my-auto  fw-bolder">2022/02/06</p>
                     </div>
-
                 </div>
                 <div class="row  py-2 px-3">
                     <div class="col-6 my-auto">
@@ -133,7 +149,6 @@
                     <div class="col-6 my-auto">
                         <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}" class=" text-end my-auto fw-bold">2022/04/03</p>
                     </div>
-
                 </div>
 
                 <div class="pt-3 mt-4 pb-2 border-top">
@@ -151,123 +166,4 @@
     </div>
 </section>
 
-<script th:inline="javascript">
-    // This is your test publishable API key.
-    const stripe = Stripe("pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul");
 
-    // The items the customer wants to buy
-    const items = { cost: 23.32 };
-
-    let elements;
-
-    initialize();
-    checkStatus();
-
-    document
-        .querySelector("#payment-form")
-        .addEventListener("submit", handleSubmit);
-
-    // Fetches a payment intent and captures the client secret
-    async function initialize() {
-        const response = await fetch("/create-payment-intent", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({  cost: [[${trip.getTripCost()}]]}),
-        });
-        const { clientSecret } = await response.json();
-
-        const appearance = {
-            theme: 'stripe',
-        };
-        elements = stripe.elements({ appearance, clientSecret });
-
-        const paymentElementOptions = {
-            layout: "tabs",
-        };
-
-        const paymentElement = elements.create("payment", paymentElementOptions);
-        paymentElement.mount("#payment-element");
-    }
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setLoading(true);
-
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                // Make sure to change this to your payment completion page
-                return_url: `http://localhost:8080/processTrip/?tripId=${[[${trip.getId()}]]}`
-            },
-        });
-
-        // This point will only be reached if there is an immediate error when
-        // confirming the payment. Otherwise, your customer will be redirected to
-        // your `return_url`. For some payment methods like iDEAL, your customer will
-        // be redirected to an intermediate site first to authorize the payment, then
-        // redirected to the `return_url`.
-        if (error.type === "card_error" || error.type === "validation_error") {
-            showMessage(error.message);
-        } else {
-            showMessage("An unexpected error occurred.");
-        }
-
-        setLoading(false);
-    }
-
-    // Fetches the payment intent status after payment submission
-    async function checkStatus() {
-        const clientSecret = new URLSearchParams(window.location.search).get(
-            "payment_intent_client_secret"
-        );
-
-        if (!clientSecret) {
-            return;
-        }
-
-        const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-        switch (paymentIntent.status) {
-            case "succeeded":
-                showMessage("Payment succeeded!");
-                break;
-            case "processing":
-                showMessage("Your payment is processing.");
-                break;
-            case "requires_payment_method":
-                showMessage("Your payment was not successful, please try again.");
-                break;
-            default:
-                showMessage("Something went wrong.");
-                break;
-        }
-    }
-
-    // ------- UI helpers -------
-
-    function showMessage(messageText) {
-        const messageContainer = document.querySelector("#payment-message");
-
-        messageContainer.classList.remove("hidden");
-        messageContainer.textContent = messageText;
-
-        setTimeout(function () {
-            messageContainer.classList.add("hidden");
-            messageText.textContent = "";
-        }, 4000);
-    }
-
-    // Show a spinner on payment submission
-    function setLoading(isLoading) {
-        if (isLoading) {
-            // Disable the button and show a spinner
-            document.querySelector("#submit").disabled = true;
-            document.querySelector("#spinner").classList.remove("hidden");
-            document.querySelector("#button-text").classList.add("hidden");
-        } else {
-            document.querySelector("#submit").disabled = false;
-            document.querySelector("#spinner").classList.add("hidden");
-            document.querySelector("#button-text").classList.remove("hidden");
-        }
-    }
-</script>

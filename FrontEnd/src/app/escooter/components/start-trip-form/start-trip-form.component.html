@@ -9,7 +9,7 @@
                    aria-label=".form-control-lg example">
 
 
-            <button *ngIf="isAuthenticated" style="width: 100%;" type="submit"
+            <button [disabled]="!StartTipForm.valid" *ngIf="isAuthenticated" style="width: 100%;" type="submit"
                     class="btn btn-dark text-light p-2 mt-4 ">Submit</button>
 
             <button disabled *ngIf="!isAuthenticated" style="width: 100%;" type="submit"
