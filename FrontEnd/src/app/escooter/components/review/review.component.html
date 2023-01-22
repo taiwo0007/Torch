@@ -3,29 +3,27 @@
 <div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row border-bottom my-2 pb-4 pt-3">
 
 <div class="col-1">
-    <img style="object-fit: cover; border-radius: 50% !important" th:src="@{${review.getScooter_reviewer().getProfilePicture()}}" width="60" height="60" class="rounded"
+    <img style="object-fit: cover; border-radius: 50% !important" src="assets/{{reviewUser?.profilePicture}}" width="60" height="60" class="rounded"
          alt="..." />
 </div>
 <div   class="col-11">
     <div   class="row">
         <div class="col-10">
-            <p ><span th:text="${review.getScooter_reviewer().getFirstName() +' ' +review.getScooter_reviewer().getLastName()}"></span> <br> <span th:text="${review.getScooter_reviewer().getCountry()}" class="text-secondary">Ireland</span> </p>
+            <p ><span>{{reviewUser?.firstName}} {{reviewUser?.lastName}}</span> <br>
+                <span class="badge badge-info bg-info">{{reviewUser?.country}}</span> </p>
 
 
         </div>
         <div class="col-2 d-flex justify-content-between">
-            <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">12/04</p>
+            <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">{{Review?.reviewDate | date}}</p>
             <div class="d-flex">
-                <p th:text="${review.getStarRating()}" class="me-2">5.0</p>
+                <p th:text="${review.getStarRating()}" class="me-2">{{Review?.starRating}}</p>
                 <i class="fa fa-star  text-info pt-1"></i>
             </div>
         </div>
     </div>
     <div class="row">
-        <p th:text="${review.getComment()}" class="text-secondary">Lorem Ipsum is simply dummy text of the printing and
-            typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-            an unknown
+        <p style="max-width: 45rem" th:text="${review.getComment()}" class="text-secondary">{{Review?.comment}}
 
 
         </p>

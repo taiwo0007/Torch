@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,8 +16,9 @@ import java.time.Instant;
 public class AuthenticationResponse {
 
     private String authToken;
-    private Instant expiresAt;
+    private Date expiresAt;
     private String email;
+
 
 
 }

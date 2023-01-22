@@ -67,33 +67,16 @@
                 </div>
 
                 <div class="col-12 mt-5 mb-5">
-                    <form th:object="${ScooterReviewForm}" th:action="@{/reviewScooter/{scooterId}(scooterId=${escooter.getId()})}" method="post">
-                        <div class="form-group">
-                            <label for="comment" class="fw-bold">Review this scooter</label>
-                            <textarea th:field="*{comment}" class="form-control bg-light shadow" rows="5" id="comment"></textarea>
-                            <input th:field="*{starRating}" type="number" class="form-control" id="starRating" />
-
-                        </div>
-
-
-
-
-                        <button  *ngIf="isAuthenticated" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
-                            Review
-                        </button>
-                        <p *ngIf="!isAuthenticated" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
-                            Book a Trip to review.
-                        </p>
-                    </form>
+                    <app-review-form *ngIf="escooter" [escooterId]="escooter.id"></app-review-form>
                 </div>
 
-             <app-review-list [ReviewList]="escooter?.escooterReviews"></app-review-list>
+             <app-review-list *ngIf="escooter" [ReviewList]="escooter?.escooterReviews"></app-review-list>
             </div>
         </div>
         <div class="col-4 ">
             <div class="p-4 pt-2 border rounded mt-4">
 
-               <app-start-trip-form [cost]="escooter?.cost"></app-start-trip-form>
+               <app-start-trip-form *ngIf="escooter" [cost]="escooter?.cost" [escooterId]="escooter?.id"></app-start-trip-form>
 
 
                 <div>

@@ -1,5 +1,6 @@
 package com.troch.torchApplication.services;
 
+import com.troch.torchApplication.dto.BasicUserResponse;
 import com.troch.torchApplication.dto.RegisterRequest;
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.models.Role;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,18 @@ public class UserServiceImpl implements UserService{
 
     public User findUserByEmail(String email){
         return userRepository.findByEmail(email);
+    }
+
+    public BasicUserResponse findBasicUser(Integer id){
+
+        Optional<User> user = userRepository.findById(id);
+        if(user == null) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        User newUser = user.get();
+
+        return new BasicUserResponse(newUser.getFirstName(), newUser.getLastName(), newUser.getCountry(), newUser.getProfilePicture());
+
     }
 
 

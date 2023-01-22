@@ -54,6 +54,7 @@ export class AuthService {
     const loadedUser = new User(
       userData.email,
       userData._token,
+
     );
 
     if (loadedUser.token) {

@@ -28,7 +28,7 @@ public class User {
     @Id
     @JsonView(Views.Id.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Integer id;
     @Column(name = "firstName")
     private String firstName;
@@ -69,7 +69,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "host_id", referencedColumnName = "id")
-    @JsonManagedReference
+    @JsonIdentityReference(alwaysAsId = true)
     private Host host;
 
     @OneToMany(mappedBy = "user_reviewer", cascade = CascadeType.ALL)
@@ -78,14 +78,11 @@ public class User {
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonIgnore
-    @JsonManagedReference
+    @JsonBackReference
     List<ScooterReview> scooterReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
     @JsonBackReference
-    @JsonIgnore
     List<Trip> renterTrips = new ArrayList<>();
 
     private Boolean isVerified = false;

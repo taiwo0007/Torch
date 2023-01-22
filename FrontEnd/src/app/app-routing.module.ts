@@ -6,6 +6,7 @@ import {SignupComponent} from "./auth/components/signup/signup.component";
 import {UserProfileComponent} from "./user/components/user-profile/user-profile.component";
 import {EscooterResultsComponent} from "./escooter/components/escooter-results/escooter-results.component";
 import {EscooterDetailComponent} from "./escooter/components/escooter-detail/escooter-detail.component";
+import {EscoooterBookingComponent} from "./escooter/components/escoooter-booking/escoooter-booking.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
 
   {path: 'profile', component: UserProfileComponent},
   {path: 'results', component: EscooterResultsComponent},
-  {path: 'escooter-detail/:id', component: EscooterDetailComponent}
+  {path: 'escooter-detail/:id', component: EscooterDetailComponent},
+  {path: 'escooter-booking/:id', component: EscoooterBookingComponent}
 
 
 ];

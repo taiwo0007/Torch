@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
@@ -46,10 +47,12 @@ public class AuthService {
 
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             String token = jwtUtil.generateToken(loginRequest.getEmail());
-
+            Date expiresDate = jwtUtil.extractExpiration(token);
+            
             return AuthenticationResponse.builder()
                     .authToken(token)
                     .email(loginRequest.getEmail())
+                    .expiresAt(expiresDate)
                     .build();
         } catch (BadCredentialsException e){
             throw new BadCredentialsException(" Invalid email or password", e);

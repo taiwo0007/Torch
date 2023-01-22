@@ -1,6 +1,7 @@
 package com.troch.torchApplication.services;
 
 
+import com.troch.torchApplication.dto.BasicUserResponse;
 import com.troch.torchApplication.dto.RegisterRequest;
 import com.troch.torchApplication.dto.UserRegistrationDto;
 import com.troch.torchApplication.models.User;
@@ -20,4 +21,7 @@ public interface UserService extends UserDetailsService {
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+
+     BasicUserResponse findBasicUser(Integer id) throws UsernameNotFoundException;
 }

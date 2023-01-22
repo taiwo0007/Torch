@@ -1,0 +1,22 @@
+<div *ngIf="isSubmitted" class="alert alert-success " role="alert">
+    You review has been submitted
+</div>
+
+<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)">
+<!--    <div class="form-group">-->
+        <label for="comment" class="fw-bold">Review this scooter</label>
+        <textarea ngModel name="comment" class="form-control bg-light shadow" rows="5" id="comment"></textarea>
+        <input ngModel name="starRating"  type="number" class="form-control" id="starRating" />
+
+<!--    </div>-->
+
+
+
+
+    <button *ngIf="isAuthenticated" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
+        Review
+    </button>
+    <p *ngIf="!isAuthenticated" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
+        Book a Trip to review.
+    </p>
+</form>

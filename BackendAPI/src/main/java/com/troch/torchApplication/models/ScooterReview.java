@@ -28,9 +28,9 @@ public class ScooterReview {
     @JsonIgnore
     private EScooter eScooter;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "scooter_reviewer_id", referencedColumnName = "id")
-//    @JsonBackReference
+    @JsonIdentityReference(alwaysAsId = true)
     private User scooter_reviewer;
 
 
@@ -38,5 +38,5 @@ public class ScooterReview {
 
     private String comment;
 
-    private Integer starRating;
+    private double starRating;
 }

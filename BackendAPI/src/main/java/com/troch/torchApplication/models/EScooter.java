@@ -26,7 +26,7 @@ public class EScooter {
 
     @Id
     @JsonView(Views.Id.class)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -76,8 +76,9 @@ public class EScooter {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripEnd;
 
-    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JsonIgnore
+    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonBackReference
     List<ScooterReview> escooterReviews = new ArrayList<>();
 
 

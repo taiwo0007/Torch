@@ -37,9 +37,9 @@ public class Host {
 //    @JsonBackReference
     private User hostUser;
 
-    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    List<EScooter> eScooters = new ArrayList<>();
+//    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//    List<EScooter> eScooters = new ArrayList<>();
 
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
     @JsonBackReference
@@ -47,10 +47,10 @@ public class Host {
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "host", cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
+//    @Fetch(value = FetchMode.SUBSELECT)
 //    @Fetch(value = FetchMode.JOIN)
-//    @JsonIgnore
-    @JsonIdentityReference(alwaysAsId = true)
+    //    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     private List<EScooter> hostEScooters = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "trip_owner", cascade = CascadeType.ALL)

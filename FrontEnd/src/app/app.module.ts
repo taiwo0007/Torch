@@ -26,6 +26,8 @@ import { StartTripFormComponent } from './escooter/components/start-trip-form/st
 import { ReviewsListComponent } from './escooter/components/reviews-list/reviews-list.component';
 import { ReviewComponent } from './escooter/components/review/review.component';
 import { MiniHostCardComponent } from './escooter/components/mini-host-card/mini-host-card.component';
+import { ReviewFormComponent } from './escooter/components/review-form/review-form.component';
+import { EscoooterBookingComponent } from './escooter/components/escoooter-booking/escoooter-booking.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { MiniHostCardComponent } from './escooter/components/mini-host-card/mini
     StartTripFormComponent,
     ReviewsListComponent,
     ReviewComponent,
-    MiniHostCardComponent
+    MiniHostCardComponent,
+    ReviewFormComponent,
+    EscoooterBookingComponent
   ],
   imports: [
     BrowserModule,

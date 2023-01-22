@@ -1,5 +1,12 @@
---
---
+use torchdb;
+
+DELETE from scooter_review;
+DELETE FROM trip;
+DELETE FROM user;
+DELETE FROM Escooter;
+DELETE FROM make;
+DELETE FROM host;
+
 INSERT INTO user (id, email, password, first_name, last_name) VALUES (1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre');
 --
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
@@ -56,11 +63,13 @@ VALUES(1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 
 
 
 
-    INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
 VALUES(2, "CANCELLED", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 2);
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
 VALUES(3, "INACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,920386034, 2);
+
+
 
 
 
@@ -77,4 +86,7 @@ INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter
 VALUES(6, "COMPLETED", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,920386034, 2);
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
- VALUES(7, "COMPLETED", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,920386034, 2);
+VALUES(7, "COMPLETED", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,920386034, 2);
+
+
+SELECT * FROM user;
