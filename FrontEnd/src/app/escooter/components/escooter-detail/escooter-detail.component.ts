@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
 import {Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
@@ -21,7 +21,8 @@ export class EscooterDetailComponent implements OnInit {
 
   constructor(private escooterService: EscooterService,
               private route:ActivatedRoute,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private router:Router) { }
 
   ngOnInit(): void {
 
@@ -37,7 +38,9 @@ export class EscooterDetailComponent implements OnInit {
       this.escooter = escooterData;
       this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
       console.log("Escooter Data"+escooterData)
-    })
+    }, error => {
+        this.router.navigate(['../error'])
+      })
 
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
 

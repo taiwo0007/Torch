@@ -49,6 +49,8 @@ public class PaymentController {
     @PostMapping("/create-payment-intent")
     public CreatePaymentResponse createPaymentIntent(@RequestBody String responseb, CreatePayment createPayment) throws StripeException {
 
+        logger.info(""+responseb);
+
         JSONObject json = new JSONObject(responseb);
         double cost = json.getDouble("cost");
 
@@ -68,6 +70,8 @@ public class PaymentController {
         long amount = (long) cost * 100L;
         // Create a PaymentIntent with the order amount and currency
         PaymentIntent paymentIntent = PaymentIntent.create(params);
+
+        logger.info(""+paymentIntent.getClientSecret());
 
         return new CreatePaymentResponse(paymentIntent.getClientSecret());
     }

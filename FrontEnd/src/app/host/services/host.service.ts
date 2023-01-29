@@ -9,10 +9,6 @@ export class HostService {
 
   constructor(private http: HttpClient) { }
 
-
-
-
-
   getHostById(id:number){
     return this.http.get(environment.appUrl+'/api/host/'+id)
   }

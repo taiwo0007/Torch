@@ -319,3 +319,42 @@
     </div>
   </section>
 </div>
+<div class="card-img-top" style="height: 15rem" id="map"></div>
+
+
+
+<script>
+  let map;
+
+  function initMap() {
+
+      var location = { lat:1, lng: 1 }
+      console.log(location.lat);
+      console.log(location.lng);
+      var options = {
+
+          center: location,
+          zoom: 15        }
+
+      map = new google.maps.Map(document.getElementById("map"), options)
+
+      new google.maps.Marker({
+          position: location,
+          map,
+          title: "Hello World!",
+          icon: "/images/website/icons/markerChanged.png"
+      });
+
+      console.log(location.lat);
+      console.log(location.lng);
+
+
+
+  }
+  initMap()
+  window.initMap = initMap;
+
+</script>
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly"
+      defer></script>

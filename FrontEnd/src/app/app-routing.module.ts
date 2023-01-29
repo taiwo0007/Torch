@@ -7,16 +7,22 @@ import {UserProfileComponent} from "./user/components/user-profile/user-profile.
 import {EscooterResultsComponent} from "./escooter/components/escooter-results/escooter-results.component";
 import {EscooterDetailComponent} from "./escooter/components/escooter-detail/escooter-detail.component";
 import {EscoooterBookingComponent} from "./escooter/components/escoooter-booking/escoooter-booking.component";
+import {ErrorComponent} from "./shared/components/error/error.component";
+import {TripComponent} from "./trip/components/trip/trip.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'error', component: ErrorComponent},
 
   {path: 'profile', component: UserProfileComponent},
   {path: 'results', component: EscooterResultsComponent},
   {path: 'escooter-detail/:id', component: EscooterDetailComponent},
   {path: 'escooter-booking/:id', component: EscoooterBookingComponent},
+
+  {path: 'trip-detail/:id', component: TripComponent},
+
 
 
 

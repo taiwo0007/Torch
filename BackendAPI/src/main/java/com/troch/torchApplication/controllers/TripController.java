@@ -1,80 +1,68 @@
 package com.troch.torchApplication.controllers;
 
-
-import com.troch.torchApplication.Utilities.ValidateUser;
-import com.troch.torchApplication.enums.TripStatus;
+import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.dto.TripCreateRequest;
+import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Trip;
 import com.troch.torchApplication.models.User;
+import com.troch.torchApplication.repositories.TripRepository;
+import com.troch.torchApplication.services.EScooterService;
 import com.troch.torchApplication.services.TripService;
 import com.troch.torchApplication.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/trip")
+@RequestMapping("/api/trips")
+@RestController
 public class TripController {
-
-
-    @Autowired
-    UserServiceImpl userServiceImpl;
 
     @Autowired
     TripService tripService;
 
     @Autowired
-    ValidateUser validateUserutil;
+    JwtUtil jwtUtil;
 
-    @GetMapping("/trip-detail/{tripId}")
-    public String tripDetail(@PathVariable("tripId") Integer tripId, Model model) throws Exception {
+    @Autowired
+    EScooterService eScooterService;
 
-        //Validator
-        HashMap<String, Object> validatorObj =  validateUserutil.isUserAuthenticated();
-        if((Boolean)validatorObj.get("authenticated")){
-            model.addAttribute("user",validatorObj.get("currentUserObj"));
+    @Autowired
+    UserServiceImpl userService;
 
-        }
-        User user = (User)validatorObj.get("currentUserObj");
+    @PostMapping("/create-new-trip")
+    public Trip createNewTrip(@RequestHeader("Authorization") String jwt,
+                              @RequestBody TripCreateRequest tripCreateRequest) throws Exception {
 
-        if(user == null){
-            throw new Exception("User is not logged in");
-        }
+        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
 
-        Trip trip;
-        Optional<Trip> optionalTrip = tripService.findTripById(tripId);
+        Optional<EScooter> eScooter = eScooterService.findEScooter(tripCreateRequest.getEid());
 
-        if(!optionalTrip.isPresent()){
-            throw new Exception("No trip with this id found");
+
+        if(eScooter.isEmpty()){
+            throw new Exception("Escooter not found ");
         }
 
-        trip = tripService.findTripByIdCertain(tripId);
 
-        if(user != trip.getUser_renter()){
-            throw new Exception("You are not the designated User of this trip");
+        return tripService.createNewTrip(tripCreateRequest, eScooter.get(), user);
+
+
+    }
+
+    @GetMapping("/trip-detail/{id}")
+    public ResponseEntity<Trip> getTripDetail(@RequestHeader("Authorization") String jwt,
+                                        @PathVariable("id") Integer id) throws Exception {
+        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
+
+        Trip retrievedTrip = tripService.findTripByIdCertain(id);
+
+        if(retrievedTrip.getTrip_owner().getHostUser() != user
+                || retrievedTrip.getUser_renter() != user){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        int days = Math.abs(trip.getTripStart().getDate() - trip.getTripEnd().getDate());
-
-        model.addAttribute("normalCost", trip.getEScooterOnTrip().getCost()*days);
-        model.addAttribute("host", trip.getTrip_owner().getHostUser());
-        model.addAttribute("escooter", trip.getEScooterOnTrip());
-        model.addAttribute("esccoterAddressFormatted", Arrays.asList(trip.getEScooterOnTrip().getAddress().split(",")));
-        model.addAttribute("trip", trip);
-        model.addAttribute("days", days);
-
-        return "escooter/trip";
-
-
-
+        return new ResponseEntity<>(retrievedTrip, HttpStatus.OK);
     }
 
 

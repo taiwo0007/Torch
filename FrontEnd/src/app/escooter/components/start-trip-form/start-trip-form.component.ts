@@ -26,7 +26,6 @@ export class StartTripFormComponent implements OnInit {
   }
 
     onSubmit(StartTipForm: NgForm) {
-
       if(!StartTipForm.valid){
         return
       }
@@ -38,7 +37,9 @@ export class StartTripFormComponent implements OnInit {
         console.log(daysBetween)
 
       const queryParams = {
-          tripDays: daysBetween
+          tripDays: daysBetween,
+        tripStart: StartTipForm.value.tripStart,
+        tripEnd: StartTipForm.value.tripEnd
       }
 
         this.router.navigate(['../escooter-booking',this.escooterId],

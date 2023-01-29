@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
 import {Trip} from "../../models/trip.interface";
 import {TripService} from "../../../trip/services/trip.service";
+import {TripCreateRequestPayload} from "../../../trip/models/trip-create-request.payload";
 
 
 @Component({
@@ -29,6 +30,9 @@ export class EscoooterBookingComponent implements OnInit{
   initialCost:number;
   totalCost:number;
   vatCost:number;
+  tripStart:Date;
+  tripEnd:Date;
+  tripCreateRequestPayload:TripCreateRequestPayload
 
   checkoutForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -64,8 +68,6 @@ export class EscoooterBookingComponent implements OnInit{
     return Number(amount) / 100;
   }
 
-
-
   constructor(
       private fb: FormBuilder,
       public dialog: MatDialog,
@@ -79,7 +81,9 @@ export class EscoooterBookingComponent implements OnInit{
 
   ngOnInit() {
     this.route.queryParams.subscribe(paramValue => {
-      this.tripDays = +paramValue['tripDays']
+      this.tripDays = +paramValue['tripDays'];
+      this.tripStart = paramValue['tripStart'];
+      this.tripEnd = paramValue['tripEnd'];
     })
 
 
@@ -87,9 +91,15 @@ export class EscoooterBookingComponent implements OnInit{
 
       this.escooterService.getEscooterById(params['id']).subscribe(data => {
         this.escooter = data;
+        console.log(data.id)
+        if(data.id){
+          console.log(data.id)
+        }
+        console.log("escooter data loaded", this.escooter)
         this.totalTripCost()
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
+
               this.elementsOptions.clientSecret = paymentIntent.clientSecret;
             });
       })
@@ -117,6 +127,18 @@ export class EscoooterBookingComponent implements OnInit{
     //   return;
     // }
 
+    this.tripCreateRequestPayload = {
+      tripCost: this.totalCost,
+      tripStart: this.tripStart,
+      tripEnd: this.tripEnd,
+      eid: this.escooter.id,
+      tripDays: this.tripDays
+
+    }
+
+
+    console.log("TripRequest Data", this.tripCreateRequestPayload)
+
     this.paying = true;
     this.stripeService
         .confirmPayment({
@@ -130,10 +152,14 @@ export class EscoooterBookingComponent implements OnInit{
 
             } else if (result.paymentIntent.status === 'succeeded') {
 
-              this.tripService.createNewTrip(this.escooter.id).subscribe((tripId) => {
+              console.log(this.tripCreateRequestPayload)
 
-                this.router.navigate(['../trip', tripId],{ queryParams: { success: true } })
-              })
+              this.tripService.createNewTrip(this.tripCreateRequestPayload).subscribe(((tripData:any) => {
+                console.log(tripData.id);
+                console.log(tripData);
+
+                this.router.navigate(['../trip-detail', tripData?.id],{ queryParams: { success: true } })
+              }))
             }
           },
           error: (err) => {

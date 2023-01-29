@@ -36,7 +36,9 @@ import {MatCardModule} from "@angular/material/card";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
-import { TripComponent } from './escooter/components/trip/trip.component';
+import { TripComponent } from './trip/components/trip/trip.component';
+import { ErrorComponent } from './shared/components/error/error.component';
+import { HostDetailsCardComponent } from './trip/components/host-details-card/host-details-card.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { TripComponent } from './escooter/components/trip/trip.component';
     MiniHostCardComponent,
     ReviewFormComponent,
     EscoooterBookingComponent,
-    TripComponent
+    TripComponent,
+    ErrorComponent,
+    HostDetailsCardComponent
   ],
   imports: [
     BrowserModule,
