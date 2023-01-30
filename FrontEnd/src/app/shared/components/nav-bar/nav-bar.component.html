@@ -23,7 +23,7 @@
       </a>
       <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info ">
         <li role="menuitem" class="" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item" [routerLink]="['profile']">Profile</a></li>
-        <li role="menuitem" *ngIf="isAuthenticated"><a class="dropdown-item " th:href="@{/user/view-trips/}">Trips</a></li>
+        <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['user-trips']">Trips</a></li>
         <li role="menuitem" *ngIf="isAuthenticated"><a class="dropdown-item " th:href="@{/host/view-host-trips/}">Host Trips</a></li>
         <li role="menuitem"  *ngIf="isAuthenticated"><a class="dropdown-item " th:href="@{/user/scooter-list/{id}(id=${user.getId()})}">EScooters</a></li>
         <li><hr class="dropdown-divider bg-dark"></li>

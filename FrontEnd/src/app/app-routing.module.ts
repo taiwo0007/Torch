@@ -9,6 +9,7 @@ import {EscooterDetailComponent} from "./escooter/components/escooter-detail/esc
 import {EscoooterBookingComponent} from "./escooter/components/escoooter-booking/escoooter-booking.component";
 import {ErrorComponent} from "./shared/components/error/error.component";
 import {TripComponent} from "./trip/components/trip/trip.component";
+import {UserTripsComponent} from "./trip/components/user-trips/user-trips.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'escooter-booking/:id', component: EscoooterBookingComponent},
 
   {path: 'trip-detail/:id', component: TripComponent},
+  {path: 'user-trips', component: UserTripsComponent},
 
 
 

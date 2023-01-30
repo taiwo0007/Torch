@@ -41,6 +41,9 @@ import { ErrorComponent } from './shared/components/error/error.component';
 import { HostDetailsCardComponent } from './trip/components/host-details-card/host-details-card.component';
 import { AddressSplitPipe } from './shared/pipes/address-split.pipe';
 import { CostInfoCardComponent } from './escooter/components/cost-info-card/cost-info-card.component';
+import { UserTripsComponent } from './trip/components/user-trips/user-trips.component';
+import { TripStatsHeaderComponent } from './trip/components/trip-stats-header/trip-stats-header.component';
+import { TripHistoryCardComponent } from './trip/components/trip-history-card/trip-history-card.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,10 @@ import { CostInfoCardComponent } from './escooter/components/cost-info-card/cost
     ErrorComponent,
     HostDetailsCardComponent,
     AddressSplitPipe,
-    CostInfoCardComponent
+    CostInfoCardComponent,
+    UserTripsComponent,
+    TripStatsHeaderComponent,
+    TripHistoryCardComponent
   ],
   imports: [
     BrowserModule,

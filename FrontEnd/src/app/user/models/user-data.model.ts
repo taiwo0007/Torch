@@ -1,3 +1,5 @@
+import {UserTripDetails} from "../../trip/models/user-trip-details";
+
 export class UserData {
     constructor(
 
@@ -22,7 +24,7 @@ export class UserData {
     public isVerified?: boolean,
     public isHost?: boolean,
     public profile?: string,
-    public userTripDetails?: any,
+    public userTripDetails?: UserTripDetails,
     public lastTripDaysLeft?: number
 
 
