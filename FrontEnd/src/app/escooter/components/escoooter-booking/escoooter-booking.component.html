@@ -9,9 +9,9 @@
                         style="margin-top: -16px; margin-left: -16px; margin-right: -16px; margin-bottom: 32px; color:black !important;"
                 >
                     <mat-toolbar
-                            class="bg-info"
+
                             color="primary"
-                            style=" border-top-right-radius: 4px; border-top-left-radius: 4px;"
+                            style=" background-color: black!important; border-top-right-radius: 4px; border-top-left-radius: 4px;"
                     >
                         Trip Payment
                     </mat-toolbar>
@@ -30,8 +30,8 @@
                     <div style="text-align: right">
 
                         <button
-
-                                class="btn btn-info bg-info text-light"
+                                style="background-color: black"
+                                class="btn btn-dark  text-light"
                                 [disabled]="paying"
                                 (click)="collectPayment()"
                         >
@@ -59,66 +59,13 @@
         </div>
 
         <div class="col-md-4 col-sm-12 bg-light">
-            <div class="px-4 pt-4 border rounded mt-4  bg-white">
-                <div>
-                    <h3 class="fw-bold mt-2 text-info">Pay now</h3>
-                    <div class="p-2 mb-3">
-                        <div>
-                            <div class="card-body mx-0 shado">
-                                <!-- <h5 class="card-title">Card title</h5> -->
-                                <div class="row  py-2">
-                                    <div class="col-6 my-auto">
-                                        <p class="card-text my-auto text-secondary"><span >{{escooter?.cost | currency: 'EUR'}}</span> for  <span>{{tripDays}}</span> day(s) </p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <p  class=" text-info text-end my-auto fw-bold">{{initialCost | currency:'EUR'}}</p>
-                                    </div>
-                                </div>
-                                <div class="row   py-2">
-                                    <div class="col-6 my-auto">
-                                        <p class="card-text  my-auto text-secondary">Processing free</p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <p class=" text-info text-end my-auto fw-bold">€20.00</p>
-                                    </div>
-                                </div>
-                                <div class="row t d py-2">
-                                    <div class="col-6 my-auto">
-                                        <p class="card-text  my-auto text-secondary">Discount</p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <p class=" text-info text-end my-auto fw-bold">€0.00</p>
-                                    </div>
-                                </div>
-                                <div class="row t d py-2">
-                                    <div class="col-6 my-auto">
-                                        <p class="card-text  my-auto text-secondary">Insurance</p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <p class=" text-info text-end  my-auto fw-bold">FREE</p>
-                                    </div>
-                                </div>
-                                <div class="row t d py-2">
-                                    <div class="col-6 my-auto">
-                                        <p class="card-text  my-auto text-secondary">VAT @ 20%</p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <p class=" text-info text-end  my-auto fw-bold">{{vatCost | currency:'EUR'}}</p>
-                                    </div>
-                                </div>
-                                <div class="row border-top   mt-3 pt-4">
-                                    <div class="col-6 my-auto">
-                                        <p  class="card-text  my-auto text-dark fw-bold">Total cost</p>
-                                    </div>
-                                    <div class="col-6 my-auto">
-                                        <h3  class=" text-info text-end my-auto fw-bold">{{totalCost | currency:'EUR'}}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <cost-info-card *ngIf="escooter"
+              [escooterCost]="escooter?.cost"
+              [initialCost]="initialCost"
+              [tripDays]="tripDays"
+              [vatCost]="vatCost"
+              [totalCost]="totalCost"
+            ></cost-info-card>
             <div class="p-4 border rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
                 <h5

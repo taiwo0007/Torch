@@ -95,7 +95,6 @@ export class EscoooterBookingComponent implements OnInit{
         if(data.id){
           console.log(data.id)
         }
-        console.log("escooter data loaded", this.escooter)
         this.totalTripCost()
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {

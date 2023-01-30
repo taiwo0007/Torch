@@ -39,6 +39,8 @@ import {MatButtonModule} from "@angular/material/button";
 import { TripComponent } from './trip/components/trip/trip.component';
 import { ErrorComponent } from './shared/components/error/error.component';
 import { HostDetailsCardComponent } from './trip/components/host-details-card/host-details-card.component';
+import { AddressSplitPipe } from './shared/pipes/address-split.pipe';
+import { CostInfoCardComponent } from './escooter/components/cost-info-card/cost-info-card.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { HostDetailsCardComponent } from './trip/components/host-details-card/ho
     EscoooterBookingComponent,
     TripComponent,
     ErrorComponent,
-    HostDetailsCardComponent
+    HostDetailsCardComponent,
+    AddressSplitPipe,
+    CostInfoCardComponent
   ],
   imports: [
     BrowserModule,
