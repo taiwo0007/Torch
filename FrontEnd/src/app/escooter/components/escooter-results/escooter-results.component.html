@@ -80,7 +80,7 @@
               border-left-style: hidden;
               border-bottom-style:hidden; color: black;
               " class="border-none  ps-2 border-none" placeholder="Search scooters" type="text">
-                    <button class="btn btn-outline-secondary">
+                    <button (click)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'" class="btn btn-outline-secondary">
                         Search
                     </button>
                 </div>
@@ -95,6 +95,20 @@
 
         <div style=" position: fixed !important; overflow: hidden; right:0 !important; margin: 0 !important; padding: 0 !important;" class="col-4">
             <div class="border " style="height: 92vh; position: fixed !important; overflow: hidden; ;" id="map"></div>
+
+<!--            <google-map *ngIf="escooterResults"-->
+<!--                    [options]="options"-->
+<!--                    style="height: 93vh; position: fixed !important; overflow: hidden; ;"-->
+<!--                    class="mx-auto img-responsive" width="33vw" height="92vh">-->
+<!--                <map-marker-->
+<!--                        (mapMouseover)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'"-->
+<!--                        (mapMouseout)="this.markerStatus = 'assets/images/website/icons/marker.png'"-->
+<!--                        (click)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'"-->
+<!--                        [icon]="markerStatus"-->
+<!--                            *ngFor="let markerPosition of markerPositions; let i = index"-->
+<!--                            [position]="markerPosition"-->
+<!--                            [options]="markerOptions"></map-marker>-->
+<!--            </google-map>-->
         </div>
 
 

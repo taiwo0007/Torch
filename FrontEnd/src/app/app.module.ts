@@ -44,6 +44,10 @@ import { CostInfoCardComponent } from './escooter/components/cost-info-card/cost
 import { UserTripsComponent } from './trip/components/user-trips/user-trips.component';
 import { TripStatsHeaderComponent } from './trip/components/trip-stats-header/trip-stats-header.component';
 import { TripHistoryCardComponent } from './trip/components/trip-history-card/trip-history-card.component';
+import { TripHistoryItemComponent } from './trip/components/trip-history-item/trip-history-item.component';
+import { UserNamePlaceholderComponent } from './user/components/user-name-placeholder/user-name-placeholder.component';
+import { HostNamePlaceholderComponent } from './host/components/host-name-placeholder/host-name-placeholder.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -75,27 +79,31 @@ import { TripHistoryCardComponent } from './trip/components/trip-history-card/tr
     CostInfoCardComponent,
     UserTripsComponent,
     TripStatsHeaderComponent,
-    TripHistoryCardComponent
+    TripHistoryCardComponent,
+    TripHistoryItemComponent,
+    UserNamePlaceholderComponent,
+    HostNamePlaceholderComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    BsDropdownModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    NgxStripeModule.forRoot('pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul'),
-    MatInputModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatButtonModule,
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        BsDropdownModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        NgxStripeModule.forRoot('pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul'),
+        MatInputModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatButtonModule,
+        GoogleMapsModule,
 
 
-  ],
+    ],
   providers: [BsDropdownDirective, BsDropdownConfig, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,

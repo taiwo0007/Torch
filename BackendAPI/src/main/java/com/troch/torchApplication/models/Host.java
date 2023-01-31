@@ -92,7 +92,7 @@ public class Host {
         scooterUseMap.put("ESCOOTER-NOT-IN-USE", escooterNotInUse);
         scooterUseMap.put("EARNED", earned);
         scooterUseMap.put("CANCELLED", cancelledCount);
-        scooterUseMap.put("CANCELLED-RECENTLY", cancelledRecentlyCount);
+        scooterUseMap.put("CANCELLED_RECENTLY", cancelledRecentlyCount);
 
         return scooterUseMap;
     }

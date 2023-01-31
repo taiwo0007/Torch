@@ -84,7 +84,6 @@
                         <div class="mt-4">
                             <h6 class="fw-bold">Trip Pickup location</h6>
                         </div>
-
                         <div class="p-2">
                             <div  class="card mt-3">
                                 <div style="height: 15rem" id="map"></div>
@@ -104,32 +103,3 @@
 </section>
 
 
-
-<script>
-    let map;
-
-    function initMap() {
-
-        var location = { lat: 53.410980, lng: -6.400090 }
-        var options = {
-
-            center: location,
-            zoom: 15
-        }
-
-        map = new google.maps.Map(document.getElementById("map"), options)
-
-        new google.maps.Marker({
-            position: location,
-            map,
-            title: "Hello World!",
-            icon: "/images/website/icons/markerChanged.png"
-        });
-    }
-
-    window.initMap = initMap;
-
-</script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1og5zIMbuLiQ7fLh5GKwAUweRXzmGHXc&callback=initMap&v=weekly&libraries=places"
-        defer></script>

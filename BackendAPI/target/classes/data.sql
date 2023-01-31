@@ -1,11 +1,13 @@
 use torchdb;
 
+DELETE FROM users_roles;
 DELETE from scooter_review;
 DELETE FROM trip;
 DELETE FROM user;
 DELETE FROM Escooter;
 DELETE FROM make;
 DELETE FROM host;
+
 
 INSERT INTO user (id, email, password, first_name, last_name) VALUES (1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre');
 --

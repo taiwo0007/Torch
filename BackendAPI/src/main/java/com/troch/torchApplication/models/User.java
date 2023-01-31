@@ -82,7 +82,7 @@ public class User {
     List<ScooterReview> scooterReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user_renter", cascade = CascadeType.ALL)
-    @JsonBackReference
+//    @JsonBackReference
     List<Trip> renterTrips = new ArrayList<>();
 
     private Boolean isVerified = false;
@@ -132,7 +132,7 @@ public class User {
         inUseDetailsMap.put("ACTIVE", inUseCount);
         inUseDetailsMap.put("COMPLETED", notInUseCount);
         inUseDetailsMap.put("CANCELLED", cancelledCount);
-        inUseDetailsMap.put("CANCELLED-RECENTLY", cancelledRecentlyCount);
+        inUseDetailsMap.put("CANCELLED_RECENTLY", cancelledRecentlyCount);
 
         return inUseDetailsMap;
     }
