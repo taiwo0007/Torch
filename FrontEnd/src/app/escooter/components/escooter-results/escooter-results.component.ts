@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute} from "@angular/router";
 
@@ -7,13 +7,14 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './escooter-results.component.html',
   styleUrls: ['./escooter-results.component.css']
 })
-export class EscooterResultsComponent implements OnInit {
+export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
   escooterResults:any[] = [];
   options:google.maps.MapOptions;
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
   markerStatus: string = "assets/images/website/icons/marker.png";
+  @ViewChildren("scootercard") cards:QueryList<ElementRef>;
 
   constructor(private escooterService: EscooterService,
               private route: ActivatedRoute) { }
@@ -22,7 +23,6 @@ export class EscooterResultsComponent implements OnInit {
 
 
     this.route.queryParams.subscribe(paramValue => {
-      console.log(paramValue[''])
 
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
@@ -30,18 +30,24 @@ export class EscooterResultsComponent implements OnInit {
           paramValue['location'])
           .subscribe((data: any[]) => {
             this.escooterResults = data
-            console.log(this.escooterResults);
             this.configureMapOptions();
             this.configureAllMarkers()
 
           }, error => {
               this.escooterResults = null;
-          })
+          },
+              () => {
+                  this.initMap();
+                  this.markerEventInit();
+              })
     })
   }
 
+  ngAfterViewInit() {
+
+  }
+
     configureMapOptions(){
-        console.log(+this.escooterResults[0].longitude)
         this.options = {
             center: {lat: +this.escooterResults[0].latitude, lng: +this.escooterResults[0].longitude},
             zoom: 12
@@ -61,15 +67,132 @@ export class EscooterResultsComponent implements OnInit {
     }
 
     addHighlight() {
-      console.log("highlighintg")
 
       this.markerStatus = 'assets/images/website/icons/markerChanged.png'
 
     }
 
     removeHighlight() {
-        console.log("not highlighintg")
 
         this.markerStatus = 'assets/images/website/icons/marker.png'
+    }
+
+     initMap() {
+
+        var location = {
+            lat: 53.358888300000004,
+            lng: -6.308530354714592
+        }
+        var options = {
+
+            center: location,
+            zoom: 12,
+            mapId: 'wearetorchvinividivici'
+        }
+
+        const map = new google.maps.Map(document.getElementById("map"), options);
+
+        let eList = this.escooterResults;
+
+        let escooters = document.getElementsByClassName("scooter-card");
+        console.log(escooters)
+
+        let markers = [];
+
+        function changeIcon(markerId) {
+            markers.forEach(function(marker) {
+                if (marker.id === markerId) {
+                    marker.setIcon("assets/images/website/icons/markerChanged.png");
+                }
+            });
+        }
+
+        function resetIcon(markerId) {
+            markers.forEach(function(marker) {
+
+                if (marker.id === markerId) {
+                    marker.setIcon("assets/images/website/icons/marker.png");
+                }
+            });
+        }
+        console.log(markers)
+
+        for (var i = 0; i < eList.length; i++) {
+
+            // @ts-ignore
+            let tempMarker = new google.maps.Marker({ map: map, id: eList[i].modelName , position: {
+                    lat: eList[i].latitude,
+                    lng: eList[i].longitude
+                }, icon: "assets/images/website/icons/marker.png" });
+
+            markers.push(tempMarker);
+
+        }
+
+        eList.forEach((escooter) => {
+
+            var myContent = "";
+            markers.forEach((elem) => {
+
+                if(escooter.modelName == elem.id){
+
+                    let infowindow = new google.maps.InfoWindow({
+                        content: myContent,
+                        ariaLabel: "Uluru",
+                    });
+
+                    elem.addListener("click", () => {
+                        infowindow.open({
+                            anchor: elem,
+                            map,
+                        });
+                    });
+                }
+            })
+        })
+
+
+
+         setTimeout(()=>{
+             Array.from(escooters).forEach(element => {
+
+
+                 element.addEventListener("mouseover", () => {
+                     console.log(element.id)
+                     changeIcon(element.id);
+                 });
+
+                 element.addEventListener("mouseout", () => {
+                     resetIcon(element.id);
+                 });
+
+
+             });
+         },0)
+
+
+
+
+        //
+        //  escooters.forEach((elem) => {
+        //     console.log("hi")
+        //     elem.addEventListener("mouseover", () => {
+        //         changeIcon(elem.id);
+        //     });
+        //
+        //     elem.addEventListener("mouseout", () => {
+        //         resetIcon(elem.id);
+        //     });
+        // })
+    }
+
+
+    markerEventInit(){
+
+      console.log(this.cards.length)
+
+        this.cards.forEach(element => {
+            console.log(element.nativeElement)
+        })
     }
 }

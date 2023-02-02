@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./escooter-card.component.css']
 })
 export class EscooterCardComponent implements OnInit {
-  @Input() escooter: any;
+  @Input() escooterItem: any;
 
   constructor() { }
 
