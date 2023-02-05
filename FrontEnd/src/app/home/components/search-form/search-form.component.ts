@@ -17,6 +17,8 @@ export class SearchFormComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+
+    this.initMap();
   }
 
     onSubmit(searchForm: NgForm) {
@@ -34,4 +36,16 @@ export class SearchFormComponent implements OnInit {
 
 
     }
+
+   initMap() {
+
+    // @ts-ignore
+     const autocomplete = new google.maps.places.Autocomplete(document.getElementById("country"), {
+
+      componentRestrictions : {'country': ['ie']},
+      fields: ['geometry', 'name'],
+      types: ['establishment']
+    })
+
+  }
 }

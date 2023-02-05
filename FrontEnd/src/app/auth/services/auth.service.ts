@@ -21,12 +21,10 @@ export class AuthService {
 
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean>{
-
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/login',
       loginRequestPayload).pipe( map(data => {
-
+        console.log(data);
       this.user.next(this.storeLocalData(data));
-
       return true;
     }))
 
@@ -35,7 +33,6 @@ export class AuthService {
 
 
   signup(signupRequestPayload:SignupRequestPayload){
-
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/signup', signupRequestPayload).pipe( map(data => {
       this.user.next(this.storeLocalData(data));
       return true;
@@ -46,7 +43,7 @@ export class AuthService {
 
   autoLogin(){
     let data:string = 'userData'
-      const userData: {email:string, _token:string} = JSON.parse(localStorage.getItem(data) || '{}');
+      const userData: {email:string, _token:string, _isHost:boolean} = JSON.parse(localStorage.getItem(data) || '{}');
 
     if(!userData){
       return
@@ -55,8 +52,11 @@ export class AuthService {
     const loadedUser = new User(
       userData.email,
       userData._token,
+        userData._isHost
 
     );
+
+    console.log(loadedUser)
 
     if (loadedUser.token) {
         this.user.next(loadedUser);
@@ -91,7 +91,8 @@ export class AuthService {
   // }
 
   storeLocalData(loginResponsePayload: LoginResponsePayload){
-    const user = new User( loginResponsePayload.email, loginResponsePayload.authToken);
+    const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost);
+
     localStorage.setItem('userData', JSON.stringify(user));
     return user;
   }

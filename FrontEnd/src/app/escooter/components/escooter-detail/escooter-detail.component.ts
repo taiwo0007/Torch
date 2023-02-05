@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
@@ -11,7 +11,7 @@ import {AuthService} from "../../../auth/services/auth.service";
   templateUrl: './escooter-detail.component.html',
   styleUrls: ['./escooter-detail.component.css']
 })
-export class EscooterDetailComponent implements OnInit, AfterViewInit {
+export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   paramId: number;
   escooter: Escooter;
@@ -19,7 +19,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit {
   markerPosition:google.maps.LatLngLiteral;
   isAuthenticated = false;
   options:google.maps.MapOptions;
-  markerOptions: google.maps.MarkerOptions = {draggable: false};
+  markerOptions: google.maps.MarkerOptions = {draggable: false, icon: 'assets/images/website/icons/markerChanged.png'};
 
 
   constructor(private escooterService: EscooterService,
@@ -55,6 +55,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit {
 
       this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
         this.escooter = escooterData;
+
         this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
       })
 
@@ -62,7 +63,12 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.initMap();
+
+  }
+
+  ngAfterContentInit() {
+    this.initMap()
+
   }
 
   initMap() {
@@ -93,6 +99,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit {
 
   configureMarker(){
     console.log(+this.escooter?.longitude)
+
 
     this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
   }

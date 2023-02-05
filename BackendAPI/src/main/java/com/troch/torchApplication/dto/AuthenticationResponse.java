@@ -18,6 +18,7 @@ public class AuthenticationResponse {
     private String authToken;
     private Date expiresAt;
     private String email;
+    private Boolean isHost;
 
 
 

@@ -10,6 +10,7 @@ import {EscoooterBookingComponent} from "./escooter/components/escoooter-booking
 import {ErrorComponent} from "./shared/components/error/error.component";
 import {TripComponent} from "./trip/components/trip/trip.component";
 import {UserTripsComponent} from "./trip/components/user-trips/user-trips.component";
+import {TripHostsComponent} from "./trip/components/trip-hosts/trip-hosts.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
 
   {path: 'trip-detail/:id', component: TripComponent},
   {path: 'user-trips', component: UserTripsComponent},
+  {path: 'host-trips', component: TripHostsComponent},
 
 
 

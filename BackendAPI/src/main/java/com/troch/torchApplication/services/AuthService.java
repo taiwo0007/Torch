@@ -35,6 +35,9 @@ public class AuthService {
     UserService userService;
 
     @Autowired
+    UserServiceImpl userServiceimpl;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -44,6 +47,7 @@ public class AuthService {
         try{
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
                     loginRequest.getPassword()));
+            User user = userServiceimpl.findUserByEmail(loginRequest.getEmail());
 
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             String token = jwtUtil.generateToken(loginRequest.getEmail());
@@ -53,9 +57,10 @@ public class AuthService {
                     .authToken(token)
                     .email(loginRequest.getEmail())
                     .expiresAt(expiresDate)
+                    .isHost(user.getHost()!= null)
                     .build();
         } catch (BadCredentialsException e){
-            throw new BadCredentialsException(" Invalid email or password", e);
+            throw new BadCredentialsException("Invalid email or password", e);
         }
         catch (Exception e){
             throw new InternalError("An error has occured while processing your request");
@@ -76,6 +81,7 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .authToken(token)
                 .email(registerRequest.getEmail())
+                .isHost(false)
                 .build();
     }
 

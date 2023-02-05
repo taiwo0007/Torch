@@ -12,4 +12,7 @@ export class HostService {
   getHostById(id:number){
     return this.http.get(environment.appUrl+'/api/host/'+id)
   }
+  fetchHostDataByUserToken(){
+    return this.http.get(environment.appUrl+'/api/host/host-data');
+  }
 }

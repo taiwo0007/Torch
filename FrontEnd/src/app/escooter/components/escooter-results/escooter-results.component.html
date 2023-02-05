@@ -87,9 +87,6 @@
                 <div class="row" *ngIf="escooterResults">
                     <div *ngFor="let escooterItem of escooterResults" class="col-xs-12 col-sm-12 col-md-6 my-5">
                         <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card"  [escooterItem]="escooterItem"></app-escooter-card>
-
-
-
                     </div>
                 </div>
             </div>
@@ -97,20 +94,6 @@
 
         <div style=" position: fixed !important; overflow: hidden; right:0 !important; margin: 0 !important; padding: 0 !important;" class="col-4">
             <div *ngIf="escooterResults" class="border " style="height: 92vh; position: fixed !important; overflow: hidden;" id="map"></div>
-
-<!--            <google-map *ngIf="escooterResults"-->
-<!--                    [options]="options"-->
-<!--                    style="height: 93vh; position: fixed !important; overflow: hidden; ;"-->
-<!--                    class="mx-auto img-responsive" width="33vw" height="92vh">-->
-<!--                <map-marker-->
-<!--                        (mapMouseover)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'"-->
-<!--                        (mapMouseout)="this.markerStatus = 'assets/images/website/icons/marker.png'"-->
-<!--                        (click)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'"-->
-<!--                        [icon]="markerStatus"-->
-<!--                            *ngFor="let markerPosition of markerPositions; let i = index"-->
-<!--                            [position]="markerPosition"-->
-<!--                            [options]="markerOptions"></map-marker>-->
-<!--            </google-map>-->
         </div>
 
 

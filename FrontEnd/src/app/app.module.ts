@@ -48,6 +48,8 @@ import { TripHistoryItemComponent } from './trip/components/trip-history-item/tr
 import { UserNamePlaceholderComponent } from './user/components/user-name-placeholder/user-name-placeholder.component';
 import { HostNamePlaceholderComponent } from './host/components/host-name-placeholder/host-name-placeholder.component';
 import {GoogleMapsModule} from "@angular/google-maps";
+import { TripHostsComponent } from './trip/components/trip-hosts/trip-hosts.component';
+import { TripHostStatsHeaderComponent } from './trip/components/trip-host-stats-header/trip-host-stats-header.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import {GoogleMapsModule} from "@angular/google-maps";
     TripHistoryCardComponent,
     TripHistoryItemComponent,
     UserNamePlaceholderComponent,
-    HostNamePlaceholderComponent
+    HostNamePlaceholderComponent,
+    TripHostsComponent,
+    TripHostStatsHeaderComponent,
   ],
     imports: [
         BrowserModule,

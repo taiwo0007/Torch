@@ -88,8 +88,8 @@ public class Host {
         }
 //        escooterNotInUse = this.hostEScooters.size() - escooterInUseCount;
 
-        scooterUseMap.put("ESCOOTER-IN-USE",escooterInUseCount );
-        scooterUseMap.put("ESCOOTER-NOT-IN-USE", escooterNotInUse);
+        scooterUseMap.put("ESCOOTER_IN_USE",escooterInUseCount );
+        scooterUseMap.put("ESCOOTER_NOT_IN_USE", escooterNotInUse);
         scooterUseMap.put("EARNED", earned);
         scooterUseMap.put("CANCELLED", cancelledCount);
         scooterUseMap.put("CANCELLED_RECENTLY", cancelledRecentlyCount);
