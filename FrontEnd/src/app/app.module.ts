@@ -53,6 +53,8 @@ import { TripHostStatsHeaderComponent } from './trip/components/trip-host-stats-
 import {GooglePlaceModule} from "ngx-google-places-autocomplete";
 import { HostEscootersComponent } from './host/components/host-escooters/host-escooters.component';
 import { HostEscooterCardComponent } from './host/components/host-escooter-card/host-escooter-card.component';
+import { HostEscooterAddComponent } from './host/components/host-escooter-add/host-escooter-add.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -92,6 +94,7 @@ import { HostEscooterCardComponent } from './host/components/host-escooter-card/
     TripHostStatsHeaderComponent,
     HostEscootersComponent,
     HostEscooterCardComponent,
+    HostEscooterAddComponent,
   ],
     imports: [
         BrowserModule,
@@ -110,7 +113,8 @@ import { HostEscooterCardComponent } from './host/components/host-escooter-card/
         MatDialogModule,
         MatButtonModule,
         GoogleMapsModule,
-        GooglePlaceModule
+        GooglePlaceModule,
+        MatDatepickerModule
 
 
     ],

@@ -183,7 +183,7 @@
 .scooter-card {
     transition: all .1s ease-in-out;
     width: 95%;
-    height: 110%;
+    /*height: 110%;*/
     overflow-y: hidden !important;
 }
 

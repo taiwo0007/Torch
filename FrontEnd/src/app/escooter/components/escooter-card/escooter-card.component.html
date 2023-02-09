@@ -1,5 +1,5 @@
-<a #scootercard [routerLink]="['../escooter-detail', escooterItem.id]" style="text-decoration: none; width: 23vw; padding: 0 !important;"
-   class="card mx-auto col-xs-12 col-sm-12 col-md-6 my-5 text-dark scooter-card  mt-1 mx-auto mb-1"
+<a  #scootercard [routerLink]="['../escooter-detail', escooterItem.id]" style="text-decoration: none; width: 21vw;"
+   class="card mx-auto pb-3 col-xs-12 col-sm-12 col-md-6 my-5 text-dark  scooter-card  mt-1 mx-auto mb-1"
    id="{{escooterItem.modelName}}"
 >
 
@@ -20,11 +20,11 @@
             </div>
 
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between my-auto">
             <div>
-                <h3 class="text-end fw-bolder  my-auto fw-bold pt-3 "><span class="fw-bold"> {{ escooterItem.cost | currency:'EUR' }} </span>
-                    <span style="margin-top: -0.1rem !important;" class="fw-light text-muted h6 text-small ms-auto text-end">/day</span>
-                </h3>
+                <h5 class="text-end fw-bolder  my-auto fw-bold pt-3 "><span class="fw-bold"> {{ escooterItem.cost | currency:'EUR' }}/day</span>
+                    <span style="margin-top: -0.1rem !important;" class="fw-light text-muted h6 text-small ms-auto text-end"></span>
+                </h5>
 
             </div>
 

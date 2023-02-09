@@ -13,6 +13,7 @@ import {UserTripsComponent} from "./trip/components/user-trips/user-trips.compon
 import {TripHostsComponent} from "./trip/components/trip-hosts/trip-hosts.component";
 import { AuthGuardService } from './auth/services/auth-guard.service';
 import {HostEscootersComponent} from "./host/components/host-escooters/host-escooters.component";
+import {HostEscooterAddComponent} from "./host/components/host-escooter-add/host-escooter-add.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'user-trips', component: UserTripsComponent, canActivate: [AuthGuardService]},
   {path: 'host-trips', component: TripHostsComponent, canActivate: [AuthGuardService]},
   {path: 'host-escooters', component: HostEscootersComponent, canActivate: [AuthGuardService]},
+  {path: 'add-escooter', component: HostEscooterAddComponent, canActivate: [AuthGuardService]},
 
 
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Escooter} from "../../escooter/models/escooter.interface";
+import {Make} from "../../escooter/models/make.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class HostService {
   }
   fetchHostEscooters(){
     return this.http.get<Escooter[]>(environment.appUrl+'/api/host/scooter-list');
+  }
+
+  fetchAllMakes(){
+    return this.http.get<Make[]>(environment.appUrl+'/api/host/makes');
   }
 }
