@@ -1,16 +1,19 @@
+import {Make} from "../../escooter/models/make.interface";
+
 export interface ScooterAddRequestPayload{
-   make:string;
+   make:Make;
    modelName:string;
    cost:number;
     maxSpeed:number;
     maxWeight:number;
     scooterWeight:number;
     motorPower:number;
-    maxRange:string;
+    maxRange:number;
     tripStart:Date;
     tripEnd:Date;
     waterResistant:boolean;
-    image:File;
+    image:any;
     country:string;
     about:string;
+    fileName:string
 }

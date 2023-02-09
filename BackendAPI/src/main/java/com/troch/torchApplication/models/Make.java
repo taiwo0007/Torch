@@ -32,4 +32,8 @@ public class Make {
     @JsonBackReference
     @JsonIgnore
     List<EScooter> eScooters = new ArrayList<>();
+
+    public Make(String stringMake){
+        this.name = stringMake;
+    }
 }
