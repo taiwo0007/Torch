@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   };
   error = null;
   isLoading = false;
+isForbiddenNotice: false;
 
 
   constructor(private authService: AuthService,
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.isSuccessLogOut = params['success'];
+      this.isForbiddenNotice = params['loginNotice'];
 
       console.log(this.isSuccessLogOut)
     }, error1 => {

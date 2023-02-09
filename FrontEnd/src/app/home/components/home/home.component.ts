@@ -14,7 +14,23 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
+    this.initMap();
+
+  }
+
+  initMap() {
+
+    // @ts-ignore
+    const autocomplete = new google.maps.places.Autocomplete(document.getElementById("country"), {
+
+      componentRestrictions : {'country': ['ie']},
+      fields: ['geometry', 'name'],
+      types: ['establishment']
+    })
+
+    console.log(autocomplete)
 
   }
 

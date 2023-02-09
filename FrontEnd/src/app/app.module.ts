@@ -50,6 +50,9 @@ import { HostNamePlaceholderComponent } from './host/components/host-name-placeh
 import {GoogleMapsModule} from "@angular/google-maps";
 import { TripHostsComponent } from './trip/components/trip-hosts/trip-hosts.component';
 import { TripHostStatsHeaderComponent } from './trip/components/trip-host-stats-header/trip-host-stats-header.component';
+import {GooglePlaceModule} from "ngx-google-places-autocomplete";
+import { HostEscootersComponent } from './host/components/host-escooters/host-escooters.component';
+import { HostEscooterCardComponent } from './host/components/host-escooter-card/host-escooter-card.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +90,8 @@ import { TripHostStatsHeaderComponent } from './trip/components/trip-host-stats-
     HostNamePlaceholderComponent,
     TripHostsComponent,
     TripHostStatsHeaderComponent,
+    HostEscootersComponent,
+    HostEscooterCardComponent,
   ],
     imports: [
         BrowserModule,
@@ -105,6 +110,7 @@ import { TripHostStatsHeaderComponent } from './trip/components/trip-host-stats-
         MatDialogModule,
         MatButtonModule,
         GoogleMapsModule,
+        GooglePlaceModule
 
 
     ],

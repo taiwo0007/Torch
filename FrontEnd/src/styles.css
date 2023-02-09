@@ -7,10 +7,16 @@
 /*  border: 2px solid #17a2b7;*/
 /*}*/
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
 *{
     padding: 0 ;
     margin: 0 ;
     box-sizing: border-box ;
+}
+
+p{
+    font-family: 'Poppins', sans-serif;
+
 }
 
 p-0{
@@ -19,6 +25,7 @@ p-0{
 pt-0{
     padding-top: 0 !important;
 }
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

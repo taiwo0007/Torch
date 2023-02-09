@@ -17,6 +17,9 @@
         <div class="alert alert-info d-flex align-items-center fade show" *ngIf="isSuccessLogOut">
           <strong class="mx-2">Success:</strong> <span>You've successfuly logged out.</span>
         </div>
+        <div class="alert alert-info d-flex align-items-center fade show" *ngIf="isForbiddenNotice">
+          <strong class="mx-2">Unauthorized:</strong> <span>Login to visit this page</span>
+        </div>
 
         <div class="alert alert-danger d-flex align-items-center fade show" *ngIf="error">
           <strong class="mx-2">Error!</strong> <span>Incorrect email address or password.</span>

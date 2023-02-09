@@ -25,7 +25,7 @@
         <li role="menuitem" class="" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item" [routerLink]="['profile']">Profile</a></li>
         <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['user-trips']">Trips</a></li>
         <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
-        <li role="menuitem"  *ngIf="isAuthenticated"><a class="dropdown-item " >EScooters</a></li>
+        <li role="menuitem"  *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters']" class="dropdown-item " >EScooters</a></li>
         <li><hr class="dropdown-divider bg-dark"></li>
         <li role="menuitem"><a class="dropdown-item text-info border-top-dark fw-bold" th:href="@{/host/hostinfo}">Become a host</a></li>
         <li role="menuitem"><hr class="dropdown-divider bg-dark"></li>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {Router} from "@angular/router";
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
+import {Address} from "ngx-google-places-autocomplete/objects/address";
 
 @Component({
   selector: 'app-search-form',
@@ -12,6 +14,14 @@ export class SearchFormComponent implements OnInit {
   tripStart:any;
   tripEnd:any;
   location:any;
+  isGooglePlaceSelected:boolean = false;
+  googlePlaceLocation:any;
+  options:Options = new Options({
+    bounds: undefined, fields: ['geometry', 'name'], strictBounds: false,
+    types: ['establishment'],
+    componentRestrictions: {country: 'ie'}
+  });
+
 
   constructor(private escooterService: EscooterService,
               private router: Router) { }
@@ -23,9 +33,16 @@ export class SearchFormComponent implements OnInit {
 
     onSubmit(searchForm: NgForm) {
 
-    this.tripStart = searchForm.value.tripStart
+      this.tripStart = searchForm.value.tripStart
       this.tripEnd = searchForm.value.tripEnd
       this.location = searchForm.value.location
+
+      if(this.googlePlaceLocation){
+        this.location = this.googlePlaceLocation;
+      }
+
+
+      console.log(this.location)
 
       const queryParams = { tripStart: this.tripStart,
         tripEnd: this.tripEnd,
@@ -46,6 +63,14 @@ export class SearchFormComponent implements OnInit {
       fields: ['geometry', 'name'],
       types: ['establishment']
     })
+
+  }
+
+  handleAddressChange(locationData: Address) {
+
+    this.googlePlaceLocation = locationData.name;
+    this.isGooglePlaceSelected = true;
+    console.log(locationData)
 
   }
 }

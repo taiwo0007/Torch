@@ -11,6 +11,8 @@ import {ErrorComponent} from "./shared/components/error/error.component";
 import {TripComponent} from "./trip/components/trip/trip.component";
 import {UserTripsComponent} from "./trip/components/user-trips/user-trips.component";
 import {TripHostsComponent} from "./trip/components/trip-hosts/trip-hosts.component";
+import { AuthGuardService } from './auth/services/auth-guard.service';
+import {HostEscootersComponent} from "./host/components/host-escooters/host-escooters.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,14 +20,15 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'error', component: ErrorComponent},
 
-  {path: 'profile', component: UserProfileComponent},
+  {path: 'profile', component: UserProfileComponent, canActivate: [AuthGuardService]},
   {path: 'results', component: EscooterResultsComponent},
   {path: 'escooter-detail/:id', component: EscooterDetailComponent},
-  {path: 'escooter-booking/:id', component: EscoooterBookingComponent},
+  {path: 'escooter-booking/:id', component: EscoooterBookingComponent, canActivate: [AuthGuardService]},
 
-  {path: 'trip-detail/:id', component: TripComponent},
-  {path: 'user-trips', component: UserTripsComponent},
-  {path: 'host-trips', component: TripHostsComponent},
+  {path: 'trip-detail/:id', component: TripComponent, canActivate: [AuthGuardService]},
+  {path: 'user-trips', component: UserTripsComponent, canActivate: [AuthGuardService]},
+  {path: 'host-trips', component: TripHostsComponent, canActivate: [AuthGuardService]},
+  {path: 'host-escooters', component: HostEscootersComponent, canActivate: [AuthGuardService]},
 
 
 
