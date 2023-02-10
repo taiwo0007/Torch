@@ -1,10 +1,7 @@
 package com.troch.torchApplication.Utilities;
 import com.google.api.services.storage.StorageScopes;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import com.troch.torchApplication.controllers.HostController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +15,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 @Component
@@ -29,24 +28,20 @@ public class GCPUtil {
 
     static Logger logger = LoggerFactory.getLogger(GCPUtil.class);
 
-    public void uploadObject(MultipartFile file) throws IOException {
-
-
-
-
+    public String uploadObject(Path filePath, String contentType) throws IOException {
 
 
         GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/static/credentials/application_default_credentials.json"))
                 .createScoped(StorageScopes.all());
 
-        Path filePath = fileUploadUtil.saveFile(file);
 
         String projectId = "school-376315";
         String bucketName = "torch-gcp-bucket";
-        String objectName = file.getName().toLowerCase();
+        String objectName = filePath.getFileName().toString().toLowerCase();
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(projectId).build().getService();
+
         BlobId blobId = BlobId.of(bucketName, objectName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
 
         Storage.BlobWriteOption precondition;
         if (storage.get(bucketName, objectName) == null) {
@@ -63,7 +58,11 @@ public class GCPUtil {
         logger.info("iN here");
         storage.createFrom(blobInfo, Paths.get(filePath.toString()), precondition);
 
+        Blob blob = storage.get(blobId);
+        String publicUrl = blob.getMediaLink();
         logger.info(
-                "File " + file + " uploaded to bucket " + bucketName + " as " + objectName);
+                " uploaded to bucket " + bucketName + " as " + objectName +" public url " + publicUrl);
+
+        return publicUrl;
     }
 }

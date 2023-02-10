@@ -16,4 +16,5 @@ export interface ScooterAddRequestPayload{
     country:string;
     about:string;
     fileName:string
+    contentType:string;
 }

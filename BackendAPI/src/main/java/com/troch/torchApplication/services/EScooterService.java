@@ -2,6 +2,7 @@ package com.troch.torchApplication.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
+import com.troch.torchApplication.Utilities.GCPUtil;
 import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.Utilities.JwtUtil;
 import com.troch.torchApplication.dto.EsccoterAddRequest;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,6 +26,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.awt.*;
+import java.io.*;
+import java.nio.file.*;
+import java.util.Base64;
 
 @Service
 public class EScooterService {
@@ -43,6 +49,9 @@ public class EScooterService {
     @Autowired
     JSONConverter jsonConverter;
 
+    @Autowired
+    GCPUtil gcpUtil;
+
     public List<EScooter> findAllEScooters(){
         return eScooterRepository.findAll();
     }
@@ -56,16 +65,27 @@ public class EScooterService {
         return eScooterRepository.findById(id);
     }
 
-    public EscooterAddResponse addEscooterFromForm(EsccoterAddRequest esccoterAddRequest, String jwt) throws IOException {
+    @Transactional
+    public EScooter addEscooterFromForm(EsccoterAddRequest esccoterAddRequest, String jwt) throws IOException {
 
+        Path filePath = fileUploadUtil.writeBase64FileToSystem(esccoterAddRequest.getImage(),
+                esccoterAddRequest.getFileName());
+
+        String gcpPublicImageUrlgcpUtil = gcpUtil.uploadObject(filePath, esccoterAddRequest.getContentType());
 
         User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
+        JsonNode json;
+        HttpURLConnection http;
 
-        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+esccoterAddRequest.getCountry().replaceAll(" ", "%20")+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        http.setRequestProperty("Accept", "application/json");
-
-        JsonNode json = jsonConverter.getJson(url);
+        try{
+            URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+esccoterAddRequest.getCountry().replaceAll(" ", "%20")+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
+            http = (HttpURLConnection)url.openConnection();
+            http.setRequestProperty("Accept", "application/json");
+            json = jsonConverter.getJson(url);
+        }
+        catch (Exception ex){
+            throw new IOException();
+        }
 
         JsonNode featuresKey  = json.get("features").get(0);
         JsonNode propertiesKey  = featuresKey.get("properties");
@@ -95,7 +115,7 @@ public class EScooterService {
         eScooter.setAbout(esccoterAddRequest.getAbout());
         eScooter.setCost(esccoterAddRequest.getCost());
         eScooter.setScooterWeight(esccoterAddRequest.getScooterWeight());
-        eScooter.setImage("/images/uploads/"+esccoterAddRequest.getImage());
+        eScooter.setImage(gcpPublicImageUrlgcpUtil);
         eScooter.setWaterResistant(esccoterAddRequest.getWaterResistant());
         eScooter.setTripStart(esccoterAddRequest.getTripStart());
         eScooter.setTripEnd(esccoterAddRequest.getTripEnd());
@@ -109,11 +129,7 @@ public class EScooterService {
 //        eScooter.setMake(esccoterAddRequest.getMake());
         eScooter.setTrips(0);
 
-        //Save operation
-//        fileUploadUtil.saveFile(esccoterAddRequest.getImage());
-        eScooterRepository.save(eScooter);
-
-        return new EscooterAddResponse();
+        return eScooterRepository.save(eScooter);
 
     }
 

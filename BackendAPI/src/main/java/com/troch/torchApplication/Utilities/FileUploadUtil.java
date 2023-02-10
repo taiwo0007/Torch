@@ -34,11 +34,29 @@ public class FileUploadUtil {
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
         logger.info("fileNameAndPath"+fileNameAndPath);
         fileNames.append(file.getOriginalFilename());
-        logger.info("fileNameAndPathappend"+fileNameAndPath);
+        logger.info("file.getBytes())"+file.getBytes());
+
+
         Files.write(fileNameAndPath, file.getBytes());
 
         return fileNameAndPath;
 
+    }
+
+    public Path writeBase64FileToSystem(String base64EncodedImageUrl, String fileName) throws IOException {
+
+        int commanIndex = base64EncodedImageUrl.indexOf(",");
+        String base64EncodedString = base64EncodedImageUrl.substring(commanIndex +1);
+
+
+        byte[] decodedImg = Base64.getMimeDecoder()
+                .decode(base64EncodedString);
+        Path destinationFile = Paths.get("src/main/resources/static/images/uploads", fileName);
+        Files.write(destinationFile, decodedImg);
+
+
+
+        return destinationFile;
     }
 
 

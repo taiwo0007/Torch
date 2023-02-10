@@ -30,9 +30,13 @@
     "ngx-bootstrap": "^8.0.0",
     "ngx-google-places-autocomplete": "^2.0.5",
     "ngx-stripe": "13.1",
+    "path-browserify": "^1.0.1",
     "popper.js": "^1.16.1",
+    "querystring-es3": "^0.2.1",
     "rxjs": "~7.5.0",
+    "stream-http": "^3.2.0",
     "tslib": "^2.3.0",
+    "url": "^0.11.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

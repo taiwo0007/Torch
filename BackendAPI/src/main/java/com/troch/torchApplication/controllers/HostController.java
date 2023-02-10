@@ -25,9 +25,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -118,23 +121,8 @@ public class HostController {
     }
 
     @PostMapping("/add-escooter")
-    @ResponseStatus(HttpStatus.CREATED)
-    public EscooterAddResponse scooterAdd(@RequestBody EsccoterAddRequest esccoterAddRequest, @RequestHeader("Authorization") String jwt) throws Exception {
+    public EScooter scooterAdd(@RequestBody EsccoterAddRequest esccoterAddRequest, @RequestHeader("Authorization") String jwt) throws Exception {
 
-
-//        byte[] imgBytes = Base64.getDecoder().decode(esccoterAddRequest.getImage().getBytes());
-        logger.info(esccoterAddRequest.getImage());
-
-        int commanIndex = esccoterAddRequest.getImage().indexOf(",");
-        String base64EncodedString = esccoterAddRequest.getImage().substring(commanIndex +1);
-
-        logger.info(base64EncodedString);
-        byte[] imgBytes = Base64.getDecoder().decode(base64EncodedString);
-
-        CustomMultipartFile customMultipartFile = new CustomMultipartFile(imgBytes,esccoterAddRequest.getFileName() );
-
-        logger.info("" +esccoterAddRequest.getImage());
-        gcpUtil.uploadObject(customMultipartFile);
         return eScooterService.addEscooterFromForm(esccoterAddRequest, jwt);
     }
 

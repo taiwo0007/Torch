@@ -47,4 +47,6 @@ public class EsccoterAddRequest {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripEnd;
+
+    private String contentType;
 }
