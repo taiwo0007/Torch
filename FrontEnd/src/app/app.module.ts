@@ -55,6 +55,8 @@ import { HostEscootersComponent } from './host/components/host-escooters/host-es
 import { HostEscooterCardComponent } from './host/components/host-escooter-card/host-escooter-card.component';
 import { HostEscooterAddComponent } from './host/components/host-escooter-add/host-escooter-add.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import { BecomeHostComponent } from './host/components/become-host/become-host.component';
+import { AlertMessageComponent } from './shared/components/alert-message/alert-message.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     HostEscootersComponent,
     HostEscooterCardComponent,
     HostEscooterAddComponent,
+    BecomeHostComponent,
+    AlertMessageComponent,
   ],
     imports: [
         BrowserModule,

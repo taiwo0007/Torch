@@ -69,7 +69,7 @@ public class HostController {
     Logger logger = LoggerFactory.getLogger(HostController.class);
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/host-details/{id}")
     public Host getHostDetails(@PathVariable("id") Integer id) throws Exception {
 
         Optional<Host> host = hostService.findById(id);
@@ -95,21 +95,15 @@ public class HostController {
 
     }
 
+    @PostMapping("/make-user-host")
+    public ResponseEntity makeUserHost(@RequestHeader("Authorization") String jwt){
+        return hostService.makeUserHost(jwt);
+    }
+
     @GetMapping("/scooter-list")
     public ResponseEntity<List<EScooter>> scooterList(@RequestHeader("Authorization") String jwt) throws Exception {
 
-        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
-        if (user.getHost() == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
-        Integer host_id = user.getHost().getId();
-
-        Host host = hostService.findById(host_id).get();
-
-        List<EScooter> eScooterList = eScooterService.findAllEscootersByHost(host.getId());
-
-        return new ResponseEntity<>(eScooterList, HttpStatus.OK);
+        return hostService.getHostEscooters(jwt);
 
     }
 

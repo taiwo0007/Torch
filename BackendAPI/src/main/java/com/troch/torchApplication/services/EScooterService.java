@@ -9,6 +9,7 @@ import com.troch.torchApplication.dto.EsccoterAddRequest;
 import com.troch.torchApplication.dto.EscooterAddResponse;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
+import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.EScooterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,7 @@ public class EScooterService {
         http.disconnect();
 
         EScooter eScooter = new EScooter();
+        Make requestMake = new Make(esccoterAddRequest.getMake().toString());
 
         //Api Service handler
         eScooter.setLatitude(latitudeFormatted);
@@ -126,8 +128,9 @@ public class EScooterService {
         eScooter.setMaxSpeed(esccoterAddRequest.getMaxSpeed());
         eScooter.setHost(user.getHost());
         eScooter.setModelName(esccoterAddRequest.getModelName());
-//        eScooter.setMake(esccoterAddRequest.getMake());
+        eScooter.setMake(requestMake);
         eScooter.setTrips(0);
+        eScooter.setRating(0.0);
 
         return eScooterRepository.save(eScooter);
 
