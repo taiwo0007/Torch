@@ -1,7 +1,7 @@
 import {Make} from "../../escooter/models/make.interface";
 
 export interface ScooterAddRequestPayload{
-   make:Make;
+   make:string;
    modelName:string;
    cost:number;
     maxSpeed:number;
