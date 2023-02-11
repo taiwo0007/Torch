@@ -18,5 +18,9 @@ public class MakeService {
        return makeRepository.findAll();
     }
 
+    public Make findMakeByMakeString(String makeName){
+        return  makeRepository.findMakeByName(makeName);
+    }
+
 
 }

@@ -9,6 +9,8 @@ import com.troch.torchApplication.repositories.TripRepository;
 import com.troch.torchApplication.services.EScooterService;
 import com.troch.torchApplication.services.TripService;
 import com.troch.torchApplication.services.UserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,9 @@ public class TripController {
 
     @Autowired
     UserServiceImpl userService;
+
+    Logger logger = LoggerFactory.getLogger(TripController.class);
+
 
     @PostMapping("/create-new-trip")
     public Trip createNewTrip(@RequestHeader("Authorization") String jwt,
@@ -58,12 +63,11 @@ public class TripController {
 
         Trip retrievedTrip = tripService.findTripByIdCertain(id);
 
-        if(retrievedTrip.getTrip_owner().getHostUser() != user
-                || retrievedTrip.getUser_renter() != user){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if(retrievedTrip.getTrip_owner().getHostUser() == user || retrievedTrip.getUser_renter() == user){
+            return new ResponseEntity<>(retrievedTrip, HttpStatus.OK);
         }
-        return new ResponseEntity<>(retrievedTrip, HttpStatus.OK);
+
+         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
     }
-
-
 }

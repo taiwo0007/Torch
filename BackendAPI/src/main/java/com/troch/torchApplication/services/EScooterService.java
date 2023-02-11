@@ -53,6 +53,9 @@ public class EScooterService {
     @Autowired
     GCPUtil gcpUtil;
 
+    @Autowired
+    MakeService makeService;
+
     public List<EScooter> findAllEScooters(){
         return eScooterRepository.findAll();
     }
@@ -104,7 +107,6 @@ public class EScooterService {
         http.disconnect();
 
         EScooter eScooter = new EScooter();
-        Make requestMake = new Make(esccoterAddRequest.getMake().toString());
 
         //Api Service handler
         eScooter.setLatitude(latitudeFormatted);
@@ -128,7 +130,7 @@ public class EScooterService {
         eScooter.setMaxSpeed(esccoterAddRequest.getMaxSpeed());
         eScooter.setHost(user.getHost());
         eScooter.setModelName(esccoterAddRequest.getModelName());
-        eScooter.setMake(requestMake);
+        eScooter.setMake(makeService.findMakeByMakeString(esccoterAddRequest.getMake()));
         eScooter.setTrips(0);
         eScooter.setRating(0.0);
 

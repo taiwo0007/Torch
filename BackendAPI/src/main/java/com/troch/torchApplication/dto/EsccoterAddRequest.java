@@ -19,7 +19,7 @@ import java.util.Date;
 public class EsccoterAddRequest {
 
     @JsonProperty("make")
-    private Make make;
+    private String make;
 
     private String modelName;
 
