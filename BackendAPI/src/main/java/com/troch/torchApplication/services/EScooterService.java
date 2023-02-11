@@ -66,7 +66,7 @@ public class EScooterService {
     }
 
     @Transactional
-    public EScooter addEscooterFromForm(EsccoterAddRequest esccoterAddRequest, String jwt) throws IOException {
+    public EScooter addEscooterFromForm(EsccoterAddRequest esccoterAddRequest, String jwt) throws Exception {
 
         Path filePath = fileUploadUtil.writeBase64FileToSystem(esccoterAddRequest.getImage(),
                 esccoterAddRequest.getFileName());

@@ -28,7 +28,7 @@ public class GCPUtil {
 
     static Logger logger = LoggerFactory.getLogger(GCPUtil.class);
 
-    public String uploadObject(Path filePath, String contentType) throws IOException {
+    public String uploadObject(Path filePath, String contentType) throws Exception {
 
 
         GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/static/credentials/application_default_credentials.json"))
@@ -53,15 +53,21 @@ public class GCPUtil {
                     Storage.BlobWriteOption.generationMatch(
                             storage.get(bucketName, objectName).getGeneration());
         }
-        logger.info("asdfasf");
 
-        logger.info("iN here");
         storage.createFrom(blobInfo, Paths.get(filePath.toString()), precondition);
 
         Blob blob = storage.get(blobId);
         String publicUrl = blob.getMediaLink();
         logger.info(
                 " uploaded to bucket " + bucketName + " as " + objectName +" public url " + publicUrl);
+
+        File retriveFile = new File("src/main/resources/static/images/uploads"+filePath.getFileName().toString());
+        try{
+            retriveFile.delete();
+        }
+        catch (Exception ex){
+            throw new Exception("File not deleted");
+        }
 
         return publicUrl;
     }
