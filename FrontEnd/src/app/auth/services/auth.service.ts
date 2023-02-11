@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LoginRequestPayload} from "../payloads/login-request.payload";
 import {BehaviorSubject, catchError, map, Observable, throwError} from "rxjs";
 import {LoginResponsePayload} from "../payloads/login-response.payload";
@@ -21,8 +21,9 @@ export class AuthService {
 
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean>{
-    return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/login',
-      loginRequestPayload).pipe( map(data => {
+    return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/login',loginRequestPayload)
+        .pipe(catchError(this.handleError),
+            map((data:any) => {
         console.log(data);
       this.user.next(this.storeLocalData(data));
       return true;
@@ -37,6 +38,11 @@ export class AuthService {
       this.user.next(this.storeLocalData(data));
       return true;
     }))
+  }
+
+  handleError(errorRes:HttpErrorResponse){
+
+    return throwError(errorRes);
   }
 
 

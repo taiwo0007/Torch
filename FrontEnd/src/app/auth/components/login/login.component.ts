@@ -37,6 +37,7 @@ isForbiddenNotice: false;
 
   onSubmit(authForm: NgForm) {
 
+    this.error = null;
     this.isLoading = true;
     if(!authForm.valid){
       return
@@ -53,11 +54,11 @@ isForbiddenNotice: false;
 
       this.router.navigate(['/'])
     },
-      error1 => {
-
+      error => {
+        console.log(error)
       this.isLoading = false;
+      this.error = error.error.message;
 
-      console.log(error1)
       })
   }
 

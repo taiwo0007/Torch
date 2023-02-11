@@ -32,7 +32,7 @@ public class AuthenticationController {
     @CrossOrigin(origins = "http://localhost:4200")
 
     @PostMapping("/login")
-    private AuthenticationResponse logIn(@RequestBody LoginRequest loginRequest) throws Exception {
+    private ResponseEntity logIn(@RequestBody LoginRequest loginRequest) throws Exception {
         return authService.login(loginRequest);
     }
 
