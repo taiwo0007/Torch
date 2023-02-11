@@ -2,7 +2,7 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Escooter} from "../models/escooter.interface";
-import {Subject, tap} from "rxjs";
+import {map, Subject, tap} from "rxjs";
 import {ScooterReviewRequestPayload} from "../payloads/scooter-review.payload";
 import {ScooterReviewer} from "../models/scooter-reviewer.interface";
 
@@ -27,7 +27,16 @@ export class EscooterService implements OnDestroy{
   }
 
     getEscooterById(id:number){
-        return this.http.get<Escooter>(environment.appUrl +'/api/escooter/escooter-detail/'+id)
+        return this.http.get<Escooter>(environment.appUrl +'/api/escooter/escooter-detail/'+id).pipe(map(escoterData => {
+            escoterData.escooterReviews.sort((a, b) => {
+                let dateA = new Date(a.reviewDate)
+                let dateB = new Date(b.reviewDate)
+                return dateB.getTime() - dateA.getTime();
+            })
+
+            console.log(escoterData.escooterReviews)
+            return escoterData
+        }))
     }
 
     createReview(scooterReviewRequestPayload: ScooterReviewRequestPayload){

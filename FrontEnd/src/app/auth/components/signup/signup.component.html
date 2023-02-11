@@ -14,6 +14,7 @@
 
               ">
           <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
+            <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
             <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info">Sign up</span> to make an account on Torch </h1>
 
             <div style="" class="mb-3 d-flex justify-content-between form-group">
@@ -31,22 +32,30 @@
             </div>
             <div class="mb-3 form-group">
               <label for="email" class="form-label fw-bold">Email</label>
-              <input email required placeholder="john@gmail.com" name="email" ngModel type="email" class="form-control" id="email" />
-              <small id="emailHelp" class="form-text text-muted mx-auato text-center">We'll never share your email with anyone else.</small>
+              <input  #emailInput email required placeholder="john@gmail.com" name="email" ngModel type="email" class="form-control" id="email" />
+<!--              <small *ngIf="emailInput.dirty && !error" id="emailHelp" class="form-text text-success fw-bold mx-auato text-center">We'll never share your email with anyone else.</small>-->
+              <small *ngIf="error" id="emailHelp" class="form-text text-danger mx-auto text-center">Try another email address</small>
             </div>
 
             <div class="mb-3 form-group">
               <label for="password" class=" form-label fw-bold">Password</label>
-              <input  placeholder="*******" [minLength]="5" name="password" ngModel type="password" class="form-control" id="password" />
+              <input #password #passwordNG="ngModel" ngModel [minLength]="5" required  placeholder="*******"  name="password"  type="password" class="form-control mb-3" id="password" />
 
+              <label for="passwordAgain" class=" form-label fw-bold">Enter Password again</label>
+              <input #passwordAgainNG="ngModel" #passwordAgain ngModel [minLength]="5" required placeholder="*******"  name="passwordAgain"  type="password" class="form-control" id="passwordAgain" />
             </div>
+            <small *ngIf="isNoMatch"  class="form-text text-danger mx-auto text-center fw-bold">Passwords do not match</small>
 
             <div class="form-group">
-              <button [disabled]="!signupForm.valid" style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-4">Create Account</button>
+              <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch" style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3">Create Account</button>
+              <button *ngIf="isLoading"  style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3" disabled>
+                Create Account
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              </button>
             </div>
 
-            <div id="emailHelp" class="form-text py-4 text-center pt-4">
-              Alread yhave an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
+            <div  class="form-text py-4 text-center pt-4">
+              Already have an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
             </div>
           </form>
         </div>

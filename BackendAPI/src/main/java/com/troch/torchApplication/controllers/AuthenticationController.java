@@ -39,7 +39,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/signup")
-    private AuthenticationResponse SignUp(@RequestBody RegisterRequest registerRequest) throws Exception {
+    private ResponseEntity SignUp(@RequestBody RegisterRequest registerRequest) throws Exception {
         return authService.signup(registerRequest);
     }
 }

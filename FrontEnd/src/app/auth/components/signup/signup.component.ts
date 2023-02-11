@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {Component, ElementRef, DoCheck, OnInit, SimpleChanges, ViewChild, AfterViewInit} from '@angular/core';
+import {NgForm, FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SignupRequestPayload} from "../../payloads/signup-request.payload";
 import {AuthService} from "../../services/auth.service";
@@ -9,20 +9,51 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
   isLoading = false;
   error = null;
+  @ViewChild("emailInput", {static: true}) emailInput:ElementRef;
+  @ViewChild("password", {static: true}) password:ElementRef;
+  @ViewChild("passwordAgain", {static: true}) passwordAgain:ElementRef;
+
   signupRequestPayload: SignupRequestPayload = {
     email: '',
     password: '',
     firstName: '',
     lastName: ''
   };
+  emailModelInput: any;
+  isNoMatch:boolean;
 
   constructor(private router: Router,
               private authService: AuthService) { }
 
   ngOnInit(): void {
+
+    if(this.emailModelInput != ''){
+      console.log("hello")
+    }
+
+  }
+
+  ngAfterViewInit() {
+    // console.log(this.password.nativeElement)
+    console.log(this.emailInput.nativeElement)
+
+  }
+
+  ngDoCheck() {
+      if(this.password.nativeElement.value){
+        if(this.passwordAgain.nativeElement.value){
+          this.isNoMatch = true;
+          this.passwordAgain.nativeElement.style.border = '2px solid red';
+          if(this.passwordAgain.nativeElement.value == this.password.nativeElement.value){
+            this.passwordAgain.nativeElement.style.border = '2px solid green';
+            this.isNoMatch = false;
+          }
+        }
+      }
+
   }
 
 
@@ -31,6 +62,7 @@ export class SignupComponent implements OnInit {
     if(!signupForm.valid){
       return
     }
+    this.error = null;
 
     this.signupRequestPayload.email = signupForm.value.email;
     this.signupRequestPayload.password = signupForm.value.password;
@@ -41,9 +73,14 @@ export class SignupComponent implements OnInit {
         this.isLoading = false;
         this.router.navigate(['/'])
       },
-      error1 => {
+      error => {
         this.isLoading = false;
-        console.log(error1)
+        this.error = error.error.message;
+
+
+        this.emailInput.nativeElement.style.border = '2px solid red'
+        console.log(this.emailInput.nativeElement)
+        console.log(error)
       })
   }
 }

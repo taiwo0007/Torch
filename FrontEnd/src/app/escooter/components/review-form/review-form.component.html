@@ -2,21 +2,31 @@
     You review has been submitted
 </div>
 
-<form #ReviewForm="ngForm" (ngSubmit)="onSubmit(ReviewForm)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 <!--    <div class="form-group">-->
+
+    <ngx-star-rating style="display: block !important; position: relative !important;" ngModel  formControlName="starRating" [id]="'rating'"></ngx-star-rating>
+
         <label for="comment" class="fw-bold">Review this scooter</label>
-        <textarea ngModel name="comment" class="form-control bg-light shadow" rows="5" id="comment"></textarea>
-        <input ngModel name="starRating"  type="number" class="form-control" id="starRating" />
+        <textarea ngModel formControlName="comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>
+    <div *ngIf="isAuthenticated">
+        <button style="background-color: black !important;"  [disabled]="form.invalid" *ngIf="!isLoading" type="submit" class="btn btn-dark text-light p-2 mt-4 px-3">
+            Submit Review
+        </button>
+        <button *ngIf="isLoading" style="background-color: black !important;" type="submit" class="btn btn-dark text-light p-2 mt-4 px-3" disabled>
+            Submit Review
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
+    </div>
 
-<!--    </div>-->
 
 
+<!--        <input ngModel name="starRating"  type="number" class="form-control" id="starRating" />-->
+
+    <!--    </div>-->
 
 
-    <button *ngIf="isAuthenticated" style="width: 10%" type="submit" class="btn btn-info text-light p-2 mt-4">
-        Review
-    </button>
-    <p *ngIf="!isAuthenticated" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
+    <p  *ngIf="!isAuthenticated" style="width: 50%" type="submit" class="btn btn-outline-dark text-dark disabled p-2 mt-4">
         Book a Trip to review.
     </p>
 </form>

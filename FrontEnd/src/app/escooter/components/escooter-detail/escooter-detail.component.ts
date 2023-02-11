@@ -2,7 +2,7 @@ import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core'
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
-import {Subject} from "rxjs";
+import {map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 
 
@@ -53,7 +53,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     this.escooterService.EscooterChangeEmitter.subscribe(() => {
 
-      this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
+      this.escooterService.getEscooterById(this.paramId)
+          .subscribe( escooterData => {
         this.escooter = escooterData;
 
         this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)

@@ -1,6 +1,7 @@
 package com.troch.torchApplication.services;
 
 
+import com.google.api.Http;
 import com.troch.torchApplication.Utilities.JwtUtil;
 import com.troch.torchApplication.dto.AuthenticationResponse;
 import com.troch.torchApplication.dto.ErrorResponse;
@@ -20,6 +21,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.*;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -81,20 +84,34 @@ public class AuthService {
     }
 
 
-    public AuthenticationResponse signup(RegisterRequest registerRequest){
-        User user = new User(registerRequest.getFirstName(),
-                registerRequest.getLastName(), registerRequest.getEmail(),
-                passwordEncoder.encode(registerRequest.getPassword()), Arrays.asList(new Role("ROLE_USER")));
+    @Transactional
+    public ResponseEntity signup(RegisterRequest registerRequest){
+
+        try{
+            if(userServiceimpl.isAlreadyCreated(registerRequest.getEmail())){
+                throw new Exception("There is a Username already with this email");
+            };
+            User user = new User(registerRequest.getFirstName(),
+                    registerRequest.getLastName(), registerRequest.getEmail(),
+                    passwordEncoder.encode(registerRequest.getPassword()), Arrays.asList(new Role("ROLE_USER")));
 
             userRepository.save(user);
 
-        String token = jwtUtil.generateToken(registerRequest.getEmail());
+            String token = jwtUtil.generateToken(registerRequest.getEmail());
 
-        return AuthenticationResponse.builder()
-                .authToken(token)
-                .email(registerRequest.getEmail())
-                .isHost(false)
-                .build();
+            return new ResponseEntity(AuthenticationResponse.builder()
+                    .authToken(token)
+                    .email(registerRequest.getEmail())
+                    .isHost(false)
+                    .build(), HttpStatus.OK) ;
+
+        }
+        catch (Exception e){
+            return new ResponseEntity(new ErrorResponse("User with this email already exists"), HttpStatus.UNAUTHORIZED);
+        }
+
+
+
     }
 
 }

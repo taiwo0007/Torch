@@ -14,7 +14,7 @@
                 max-width: 50;
               ">
 
-        <div class="alert alert-info d-flex align-items-center fade show alert-dismissible" *ngIf="isSuccessLogOut">
+        <div  [@showHide]="isSuccessLogOut" class="alert alert-info d-flex align-items-center fade show alert-dismissible" *ngIf="isSuccessLogOut">
           <strong class="mx-2">Success:</strong> <span>You've successfuly logged out.</span>
         </div>
         <div class="alert alert-info d-flex align-items-center fade show" *ngIf="isForbiddenNotice">

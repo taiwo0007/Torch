@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
-import {NgForm} from "@angular/forms";
+import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {EscooterService} from "../../services/escooter.service";
 import {ScooterReviewRequestPayload} from "../../payloads/scooter-review.payload";
 
@@ -13,6 +13,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   @Input() escooterId:number;
   isSubmitted = false;
+  public form: FormGroup;
 
   scooterReviewRequestPayload:ScooterReviewRequestPayload = {
       comment: '',
@@ -20,9 +21,19 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
       escooterId: null
 
   };
+    isLoading: boolean = false;
 
   constructor(private authService:AuthService,
-              private escooterService:EscooterService) { }
+              private escooterService:EscooterService,
+              private fb: FormBuilder) {
+
+
+      this.form = this.fb.group({
+          starRating: ['', Validators.required],
+          comment: ['', Validators.required]
+
+      })
+  }
 
   ngOnInit(): void {
     console.log(this.escooterId)
@@ -36,11 +47,18 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
       this.isSubmitted = false;
   }
 
-    onSubmit(ReviewForm: NgForm) {
+
+
+    onSubmit() {
+      this.isLoading = true;
+
+      if(this.form.invalid){
+          return
+      }
 
       this.scooterReviewRequestPayload.escooterId = this.escooterId;
-        this.scooterReviewRequestPayload.comment = ReviewForm.value.comment;
-        this.scooterReviewRequestPayload.starRating = ReviewForm.value.starRating;
+        this.scooterReviewRequestPayload.comment = this.form.value.comment;
+        this.scooterReviewRequestPayload.starRating = this.form.value.starRating;
 
         console.log(this.scooterReviewRequestPayload)
 
@@ -49,11 +67,12 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
 
         this.escooterService.EscooterChangeEmitter.next(true);
 
-            ReviewForm.resetForm();
+            this.form.reset();
             this.isSubmitted = true;
+            this.isLoading = false;
     })
 
-      setTimeout(()=> this.isSubmitted = false,5000)
+      // setTimeout(()=> this.isSubmitted = false,5000)
 
 
   }

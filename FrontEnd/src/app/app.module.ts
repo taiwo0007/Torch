@@ -57,6 +57,7 @@ import { HostEscooterAddComponent } from './host/components/host-escooter-add/ho
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { BecomeHostComponent } from './host/components/become-host/become-host.component';
 import { AlertMessageComponent } from './shared/components/alert-message/alert-message.component';
+import {NgxStarRatingModule} from "ngx-star-rating";
 
 @NgModule({
   declarations: [
@@ -118,7 +119,9 @@ import { AlertMessageComponent } from './shared/components/alert-message/alert-m
         MatButtonModule,
         GoogleMapsModule,
         GooglePlaceModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        NgxStarRatingModule
+
 
 
     ],

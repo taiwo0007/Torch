@@ -3,11 +3,25 @@ import {NgForm} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {LoginRequestPayload} from "../../payloads/login-request.payload";
 import {ActivatedRoute, Router} from "@angular/router";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    trigger('showHide', [
+      state('show', style({
+        opacity: 1,
+      })),
+      state('hide', style({
+        opacity: 0,
+      })),
+      transition('show => hide', animate('1600ms ease-out')),
+      transition('hide => show', animate('1600ms ease-in')),
+
+    ])
+  ]
 })
 export class LoginComponent implements OnInit {
   isSuccessLogOut = false;
