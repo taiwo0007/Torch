@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -48,9 +49,10 @@ public class AuthService {
 
     public ResponseEntity login(LoginRequest loginRequest){
         try{
+            User user = userServiceimpl.findUserByEmail(loginRequest.getEmail());
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
                     loginRequest.getPassword()));
-            User user = userServiceimpl.findUserByEmail(loginRequest.getEmail());
+
 
             SecurityContextHolder.getContext().setAuthentication(authenticate);
             String token = jwtUtil.generateToken(loginRequest.getEmail());
@@ -62,12 +64,18 @@ public class AuthService {
                     .expiresAt(expiresDate)
                     .isHost(user.getHost()!= null)
                     .build(), HttpStatus.OK);
-        } catch (BadCredentialsException e){
+        }
+        catch (UsernameNotFoundException e){
+            return new ResponseEntity(new ErrorResponse("Username not found"), HttpStatus.UNAUTHORIZED);
+
+        }
+        catch (BadCredentialsException e){
 
             return new ResponseEntity(new ErrorResponse("Invalid username or password"), HttpStatus.UNAUTHORIZED);
         }
+
         catch (Exception e){
-            return new ResponseEntity(new ErrorResponse("An error has occured while processing your request"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(new ErrorResponse("An error has occurred while processing your request"), HttpStatus.UNAUTHORIZED);
         }
 
     }

@@ -38,7 +38,12 @@ public class UserServiceImpl implements UserService{
     }
 
     public User findUserByEmail(String email){
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        if(user == null) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+
+        return user;
     }
 
     public BasicUserResponse findBasicUser(Integer id){
