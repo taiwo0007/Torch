@@ -1,11 +1,15 @@
-<div class="p-4 border rounded mt-4">
+<div  style="text-decoration: none" class="p-4 border rounded mt-4">
     <p class="fw-bold">More about the Host</p>
     <div class="d-flex">
         <div>
-            <img src="assets/{{host?.hostUser?.profilePicture}}" style="border-radius: 50%; object-fit: cover" width="100" height="100" class="" alt="..." />
+            <a [routerLink]="['/host-profile', HostId]" >
+                <img src="assets/{{host?.hostUser?.profilePicture}}" style="border-radius: 50%; object-fit: cover" width="100" height="100" class="" alt="..." />
+            </a>
         </div>
         <div class="my-auto ps-3">
-            <p style="margin-bottom: 0" class="fw-bold">{{host?.hostUser?.firstName}} {{host?.hostUser?.lastName}}</p>
+            <a class=" link-dark" [routerLink]="['/host-profile', HostId]" style="text-decoration: none">
+                <p style="margin-bottom: 0" class="fw-bold">{{host?.hostUser?.firstName}} {{host?.hostUser?.lastName}}</p>
+            </a>
             <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
                 <span class="badge badge-secondary bg-dark">Popular Host</span>
             </p>

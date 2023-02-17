@@ -35,7 +35,8 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    private Date joined = new Date();
+    @Column(name = "joined", nullable = false, updatable = false)
+    private Date joined;
 
     private String email;
 

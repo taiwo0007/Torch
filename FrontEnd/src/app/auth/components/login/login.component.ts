@@ -70,10 +70,17 @@ isForbiddenNotice: false;
     },
       error => {
         console.log(error)
-      this.isLoading = false;
-      this.error = error.error.message;
+        this.isLoading = false;
+        if(error.error.message){
+          this.error = error.error.message;
+        }
+        this.error = "An unexpected Error has occurred"
 
-      })
+      },
+        ()=>{
+          this.isLoading = false;
+
+        })
   }
 
 

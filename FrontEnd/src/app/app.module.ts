@@ -58,6 +58,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { BecomeHostComponent } from './host/components/become-host/become-host.component';
 import { AlertMessageComponent } from './shared/components/alert-message/alert-message.component';
 import {NgxStarRatingModule} from "ngx-star-rating";
+import { HostProfileComponent } from './host/components/host-profile/host-profile.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import {NgxStarRatingModule} from "ngx-star-rating";
     HostEscooterAddComponent,
     BecomeHostComponent,
     AlertMessageComponent,
+    HostProfileComponent,
   ],
     imports: [
         BrowserModule,
