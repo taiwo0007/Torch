@@ -46,6 +46,7 @@ public class User {
     @Column(name = "rating")
     private Double rating = 0.0;
 
+    private boolean isTorchTrusted;
     private Integer phoneNumber;
 
     private String about;

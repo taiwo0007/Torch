@@ -1,4 +1,5 @@
 use torchdb;
+DELETE FROM host_review;
 
 DELETE FROM users_roles;
 DELETE from scooter_review;
@@ -6,10 +7,11 @@ DELETE FROM trip;
 DELETE FROM user;
 DELETE FROM Escooter;
 DELETE FROM make;
+
 DELETE FROM host;
 
 
-INSERT INTO user (location, about, joined, id, email, password, first_name, last_name) VALUES ('Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre');
+INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name) VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre');
 --
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
 
@@ -22,10 +24,11 @@ INSERT INTO make(id, name, image) VALUES (4, "Segway", "/images/website/Make/seg
 INSERT INTO make(id, name, image) VALUES (6, "Edisson", "/images/website/Make/segway.png");
 INSERT INTO host(id) VALUES (920386034);
 
+
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 
 
-INSERT INTO user (location, about, joined, country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ('Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01', "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
+INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01', "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id) VALUES ("Dublin",-6.308530354714592,53.358888300000004, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/1.png" ,23.00, 2, "about","Xiaomi Ultrol 40 pro",920386034);
 INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.257509754873317,53.356601299999994,"Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland","Ireland", '2000-01-01','2200-01-01', 61.0, 31.0, 21.0, 51.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/2.png" ,34.65, 3, "about", 920386034,"Segway Rider blad runner",1);
 INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.2705497,53.3284532,"Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 31.0, 41.0, 61.0, 16.0, 17.0, "https://storage.cloud.google.com/torch-gcp-bucket/3.png" ,89.99, 4, "about", 920386034,"Readme xeon pro",1);
@@ -92,4 +95,8 @@ INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter
 VALUES(7, "COMPLETED", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,920386034, 2);
 
 
-SELECT * FROM user;
+
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (1, 'This is a good host and has a very good relationship with the reviewwer, i subscribe to this host. ', '2020-10-10', 3, 920386034, 1);
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (2, 'This is a good host and has a very good relationship with the reviewwer, i subscribe to this host. ', '2020-10-10', 5, 920386034, 1);
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (3, 'This is a good host and has a very good relationship with the reviewwer, i subscribe to this host. ', '2020-10-10', 2, 920386034, 1);
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (4, 'This is a good host and has a very good relationship with the reviewwer, i subscribe to this host. ', '2020-10-10', 4, 920386034, 1);
