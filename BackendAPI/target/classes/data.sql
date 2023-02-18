@@ -11,8 +11,7 @@ DELETE FROM make;
 DELETE FROM host;
 
 
-INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name, profile_picture) VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',1, 'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Taiwo', 'Obadre', 'https://storage.googleapis.com/torch-gcp-bucket/pic4.jpeg');
---
+
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
 
 INSERT INTO make(id, name,image) VALUES (1, "Xioami", "/images/website/Make/xiaomi.png");
@@ -25,11 +24,27 @@ INSERT INTO make(id, name, image) VALUES (6, "Edisson", "/images/website/Make/se
 INSERT INTO host(id) VALUES (920386034);
 INSERT INTO host(id) VALUES (333);
 
+INSERT INTO user (country, is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name, profile_picture, host_id, is_host,
+                  phone_number)
+VALUES ('ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s ' ||
+        'standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ' ||
+        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',1,
+        'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Layla', 'Obadre',
+        'https://storage.googleapis.com/torch-gcp-bucket/pic4.jpeg', 333, true, 843568932);
+--
+
 
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 
 
-INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01', "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "https://storage.googleapis.com/torch-gcp-bucket/pic1.jpeg", 08764532, true);
+INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, country, is_verified,
+                  id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host)
+VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard ' ||
+        'dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ' ||
+        'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',
+        "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "https://storage.googleapis.com/torch-gcp-bucket/pic1.jpeg", 08764532, true);
 INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id) VALUES ("Dublin",-6.308530354714592,53.358888300000004, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/1.png" ,23.00, 2, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Xiaomi Ultrol 40 pro",333);
 INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.257509754873317,53.356601299999994,"Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland","Ireland", '2000-01-01','2200-01-01', 61.0, 31.0, 21.0, 51.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/2.png" ,34.65, 3, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su", 920386034,"Segway Rider blad runner",1);
 INSERT INTO escooter (county,longitude, latitude,address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, scooter_host_id, model_name, make_id) VALUES ("Dublin",-6.2705497,53.3284532,"Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01', 31.0, 41.0, 61.0, 16.0, 17.0, "https://storage.cloud.google.com/torch-gcp-bucket/3.png" ,89.99, 4, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su", 333,"Readme xeon pro",1);
