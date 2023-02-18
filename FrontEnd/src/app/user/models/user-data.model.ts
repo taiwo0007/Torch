@@ -29,6 +29,7 @@ export class UserData {
     public joined?:Date,
     public about?:string,
     public location?:string,
+    public torchTrusted?:boolean,
 
 
     ) {

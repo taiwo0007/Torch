@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,9 +13,12 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Host_Review")
-@JsonIgnoreProperties
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class HostReview {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +31,7 @@ public class HostReview {
 
     @ManyToOne
     @JoinColumn(name = "user_reviewer_id", referencedColumnName = "id")
-    @JsonManagedReference
+//    @JsonManagedReference
     private User user_reviewer;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

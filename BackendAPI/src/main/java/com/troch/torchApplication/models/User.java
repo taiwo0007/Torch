@@ -78,8 +78,8 @@ public class User {
     private Host host;
 
     @OneToMany(mappedBy = "user_reviewer", cascade = CascadeType.ALL)
-    @JsonBackReference
-    @JsonIgnore
+//    @JsonBackReference
+//    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
@@ -94,6 +94,33 @@ public class User {
 
     private Boolean isHost;
 
+    public double getRating() {
+        List<HostReview> allHostReviews = this.hostReviews;
+        double averageRating = 0.0;
+
+        int one = 0, two = 0, three = 0, four = 0, five = 0;
+        for (HostReview scoot : allHostReviews) {
+            if (scoot.getStarRating() == 1) {
+                one++;
+            }
+            if (scoot.getStarRating() == 2) {
+                two++;
+            }
+            if (scoot.getStarRating() == 3) {
+                three++;
+            }
+            if (scoot.getStarRating() == 4) {
+                four++;
+            }
+            if (scoot.getStarRating() == 5) {
+                five++;
+            }
+
+            averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five + four + three + two + one);
+
+        }
+        return averageRating;
+    }
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles){
         this.firstName= firstName;
         this.lastName = lastName;
