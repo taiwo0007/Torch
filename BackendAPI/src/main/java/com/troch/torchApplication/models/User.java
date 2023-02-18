@@ -47,6 +47,9 @@ public class User {
     private Double rating = 0.0;
 
     private Integer phoneNumber;
+
+    private String about;
+    private String location;
     private String postCode;
     private String country;
     private String state;

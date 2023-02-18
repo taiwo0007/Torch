@@ -25,7 +25,10 @@ export class UserData {
     public isHost?: boolean,
     public profile?: string,
     public userTripDetails?: UserTripDetails,
-    public lastTripDaysLeft?: number
+    public lastTripDaysLeft?: number,
+    public joined?:Date,
+    public about?:string,
+    public location?:string,
 
 
     ) {
