@@ -49,8 +49,8 @@ public class TripService {
         trip.setTrip_owner(eScooter.getHost());
         trip.setTripCost(tripCreateRequest.getTripCost());
         trip.setEScooterOnTrip(eScooter);
-        trip.setTripStart(eScooter.getTripStart());
-        trip.setTripEnd(eScooter.getTripEnd());
+        trip.setTripStart(tripCreateRequest.getTripStart());
+        trip.setTripEnd(tripCreateRequest.getTripEnd());
         trip.setUser_renter(user);
         trip.setDays(tripCreateRequest.getTripDays());
 

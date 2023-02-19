@@ -3,7 +3,7 @@
 <div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row border-bottom my-2 pb-4 pt-3">
 
 <div class="col-1">
-    <img style="object-fit: cover; border-radius: 50% !important" src="assets/{{reviewUser?.profilePicture}}" width="60" height="60" class="rounded"
+    <img style="object-fit: cover; border-radius: 50% !important" src="{{reviewUser?.profilePicture}}" width="60" height="60" class="rounded"
          alt="..." />
 </div>
 <div   class="col-11">

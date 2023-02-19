@@ -1,6 +1,6 @@
 import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
 import {map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
@@ -32,6 +32,12 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     this.route.params.subscribe( params => {
       this.paramId = params['id'];
 
+    })
+
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        window.scrollTo(0,0);
+      }
     })
 
       this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
