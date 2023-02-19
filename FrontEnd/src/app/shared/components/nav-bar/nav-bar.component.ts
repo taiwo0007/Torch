@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
+import {User} from "../../../user/models/user.model";
 
 
 @Component({
@@ -13,6 +14,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
   @ViewChild(BsDropdownDirective, { static: false }) dropdown: BsDropdownDirective;
   isAuthenticated = false;
   isSuccessLogOut = false;
+  isHost:boolean = false;
+  isVerified:boolean = false;
+  hostID:number;
 
   constructor(private authService: AuthService,
               private router:Router,
@@ -23,7 +27,17 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
+    this.authService.user.subscribe((data:User) => {
+      console.log(data)
+      this.isVerified = data.isVerified;
+      this.isHost = data.isHost
+      this.isAuthenticated = !!data;
+      this.hostID = data.hostID;
+      console.log(data)
+      console.log(!data)
+      console.log(!!data)
+
+    })
 
 
 

@@ -3,7 +3,9 @@ export class User{
     public email: string,
     private _token: string,
     private _isHost: boolean,
-    private _tokenExpirationDate: Date
+    private _tokenExpirationDate: Date,
+    private _isVerified: boolean,
+    private _hostID: number,
   ) {}
 
   get token() {
@@ -16,6 +18,16 @@ export class User{
   get isHost() {
     return this._isHost;
   }
+
+  get isVerified(){
+    return this._isVerified;
+  }
+
+  get hostID(){
+
+    return this._hostID;
+  }
+
 
   get tokenExpireDate() {
     return this._tokenExpirationDate;

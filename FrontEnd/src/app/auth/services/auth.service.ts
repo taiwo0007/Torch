@@ -58,7 +58,9 @@ export class AuthService {
 
   autoLogin(){
     let data:string = 'userData'
-      const userData: {email:string, _token:string, _isHost:boolean, _tokenExpirationDate} = JSON.parse(localStorage.getItem(data) || '{}');
+      const userData: {email:string, _token:string, _isHost:boolean, _tokenExpirationDate,
+                      _isVerified:boolean, _hostID:number
+      } = JSON.parse(localStorage.getItem(data) || '{}');
 
     if(!userData){
       return
@@ -68,7 +70,9 @@ export class AuthService {
       userData.email,
       userData._token,
         userData._isHost,
-        userData._tokenExpirationDate
+        userData._tokenExpirationDate,
+        userData._isVerified,
+        userData._hostID
     );
 
     console.log(loadedUser)
@@ -98,9 +102,10 @@ export class AuthService {
 
 
   storeLocalData(loginResponsePayload: LoginResponsePayload){
+    console.log(loginResponsePayload);
 
     const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost,
-        new Date(loginResponsePayload.expiresAt));
+        new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified, loginResponsePayload.hostID);
 
     localStorage.setItem('userData', JSON.stringify(user));
     return user;

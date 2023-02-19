@@ -9,14 +9,10 @@ import {ScooterReviewer} from "../../models/scooter-reviewer.interface";
 export class ReviewsListComponent implements OnInit {
 
   @Input() ReviewList:ScooterReviewer[];
-  sortedList: ScooterReviewer[];
   constructor() { }
 
   ngOnInit(): void {
-
-
-
-    console.log(this.sortedList)
+    console.log(this.ReviewList)
 
   }
 

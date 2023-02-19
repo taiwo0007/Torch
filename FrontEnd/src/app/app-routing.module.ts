@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: 'trip-detail/:id', component: TripComponent, canActivate: [AuthGuardService]},
   {path: 'user-trips', component: UserTripsComponent, canActivate: [AuthGuardService]},
   {path: 'host-trips', component: TripHostsComponent, canActivate: [AuthGuardService]},
-  {path: 'host-escooters', component: HostEscootersComponent},
+  {path: 'host-escooters/:id', component: HostEscootersComponent},
   {path: 'add-escooter', component: HostEscooterAddComponent, canActivate: [AuthGuardService]},
   {path: 'become-host', component: BecomeHostComponent},
   {path: 'host-profile/:id', component: HostProfileComponent},

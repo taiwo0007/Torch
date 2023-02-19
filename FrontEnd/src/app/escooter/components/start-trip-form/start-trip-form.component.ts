@@ -12,6 +12,8 @@ export class StartTripFormComponent implements OnInit {
   isAuthenticated = false;
   @Input() cost;
   @Input() escooterId;
+  todaysDate = new Date();
+  tommorwsDate = new Date(this.todaysDate.getDate()+1)
 
   constructor(private authService: AuthService,
               private router:Router) { }

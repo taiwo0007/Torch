@@ -20,8 +20,8 @@ export class HostService {
   fetchHostDataByUserToken(){
     return this.http.get(environment.appUrl+'/api/host/host-data');
   }
-  fetchHostEscooters(){
-    return this.http.get<Escooter[]>(environment.appUrl+'/api/host/scooter-list');
+  fetchHostEscooters(id:number){
+    return this.http.get<Escooter[]>(environment.appUrl+'/api/host/scooter-list/'+id);
   }
 
   fetchAllMakes(){
