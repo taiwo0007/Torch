@@ -3,9 +3,12 @@
     <form #StartTipForm="ngForm" (ngSubmit)="onSubmit(StartTipForm)" class="mt-2">
         <div class="p-2">
 
-            <input  for="tripStart" class="form-control form-control-lg mb-2 bg-light" type="date"
-                   placeholder="Trip start" ngModel name="tripStart" required aria-label=".form-control-lg example">
-            <input for="tripEnd" required ngModel name="tripEnd" class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
+            <input  for="tripStart"
+                    class="form-control form-control-lg mb-2 bg-light" type="date"
+                    placeholder="Trip start" [value]="todaysDate" ngModel
+                    name="tripStart"
+                    id="location-input" required aria-label=".form-control-lg example">
+            <input for="tripEnd" [value]="tommorwsDate" required ngModel name="tripEnd" class="form-control form-control-lg bg-light" type="date" placeholder="Trip end"
                    aria-label=".form-control-lg example">
 
 

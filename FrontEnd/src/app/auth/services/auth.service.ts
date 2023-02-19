@@ -13,7 +13,7 @@ import {SignupRequestPayload} from "../payloads/signup-request.payload";
 })
 export class AuthService {
   user = new BehaviorSubject<any>(null);
-
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient,
             private router:Router) {
@@ -35,6 +35,7 @@ export class AuthService {
 
   signup(signupRequestPayload:SignupRequestPayload){
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/signup', signupRequestPayload).pipe( map(data => {
+      console.log(data)
       this.user.next(this.storeLocalData(data));
       return true;
     }))
@@ -46,10 +47,18 @@ export class AuthService {
   }
 
 
+  autoLogout(expirationDuration:number){
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration)
+
+    console.log(this.tokenExpirationTimer)
+
+  }
 
   autoLogin(){
     let data:string = 'userData'
-      const userData: {email:string, _token:string, _isHost:boolean} = JSON.parse(localStorage.getItem(data) || '{}');
+      const userData: {email:string, _token:string, _isHost:boolean, _tokenExpirationDate} = JSON.parse(localStorage.getItem(data) || '{}');
 
     if(!userData){
       return
@@ -58,46 +67,40 @@ export class AuthService {
     const loadedUser = new User(
       userData.email,
       userData._token,
-        userData._isHost
-
+        userData._isHost,
+        userData._tokenExpirationDate
     );
 
     console.log(loadedUser)
-
     if (loadedUser.token) {
         this.user.next(loadedUser);
-
-        }
+        const expirationDuration = new Date(loadedUser.tokenExpireDate).getTime() - new Date().getTime();
+        console.log('token Expire Date',new Date(loadedUser.tokenExpireDate))
+      console.log('todays date', new Date())
+        console.log(expirationDuration)
+      this.autoLogout(expirationDuration);
+    }
     }
 
   logout() {
     this.user.next(null);
-
     localStorage.removeItem('userData');
 
+    if(this.tokenExpirationTimer){
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+
+
+    this.router.navigate(['login'], { queryParams: { success: true } });
+
   }
-  //
-  // private handleError(errorRes: HttpErrorResponse) {
-  //   let errorMessage = 'An unknown error occurred!';
-  //   if (!errorRes.error || !errorRes.error.error) {
-  //     return throwError(errorMessage);
-  //   }
-  //   switch (errorRes.error.error.message) {
-  //     case 'EMAIL_EXISTS':
-  //       errorMessage = 'This email exists already';
-  //       break;
-  //     case 'EMAIL_NOT_FOUND':
-  //       errorMessage = 'This email does not exist.';
-  //       break;
-  //     case 'INVALID_PASSWORD':
-  //       errorMessage = 'This password is not correct.';
-  //       break;
-  //   }
-  //   return throwError(errorMessage);
-  // }
+
 
   storeLocalData(loginResponsePayload: LoginResponsePayload){
-    const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost);
+
+    const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost,
+        new Date(loginResponsePayload.expiresAt));
 
     localStorage.setItem('userData', JSON.stringify(user));
     return user;

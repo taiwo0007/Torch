@@ -199,7 +199,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/host/add-escooter")
                 .authenticated()
                 .antMatchers("/api/user/**")
-                .authenticated()
+                .permitAll()
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",

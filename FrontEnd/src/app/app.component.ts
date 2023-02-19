@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./auth/services/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,12 @@ export class AppComponent {
 
   ngOnInit() {
     this.authService.autoLogin();
+
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        window.scrollTo(0,0);
+      }
+    })
 
     this.route.params.subscribe((params) => {
       console.log(params, this.router.url)

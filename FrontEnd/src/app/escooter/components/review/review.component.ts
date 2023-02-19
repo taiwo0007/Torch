@@ -16,7 +16,6 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("Reviewer id",this.Review.scooter_reviewer)
     this.userService.fetchBasicUser(this.Review.scooter_reviewer).subscribe((data:BasicUserResponsePayload) => {
 
       this.reviewUser = data;

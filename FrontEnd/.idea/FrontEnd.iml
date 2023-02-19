@@ -13,5 +13,6 @@
     <orderEntry type="library" name="checkout" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="uicons-solid-rounded" level="application" />
+    <orderEntry type="library" name="uicons-regular-rounded" level="application" />
   </component>
 </module>

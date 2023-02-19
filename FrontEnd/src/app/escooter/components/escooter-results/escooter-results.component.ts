@@ -131,7 +131,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
         eList.forEach((escooter) => {
 
-            var myContent = `<a [routerLink]="['../escooter-detail', ${escooter.id}]"><div  class="card" style="width: 6rem; padding: 0.3rem 0 0 0.3rem"> <img style="" src="assets/${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> \`;`;
+            var myContent = `<a [routerLink]="['../escooter-detail', ${escooter.id}]"><div  class="card" style="width: 6rem; padding: 0.3rem 0 0 0.3rem"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> \`;`;
             markers.forEach((elem) => {
 
                 if(escooter.modelName == elem.id){

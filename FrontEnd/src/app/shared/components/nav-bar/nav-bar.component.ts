@@ -34,7 +34,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.logout();
 
-    this.router.navigate(['login'], { queryParams: { success: true } });
   }
 
   closeDropdown(event: any) {
