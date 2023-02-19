@@ -59,6 +59,9 @@ import { BecomeHostComponent } from './host/components/become-host/become-host.c
 import { AlertMessageComponent } from './shared/components/alert-message/alert-message.component';
 import {NgxStarRatingModule} from "ngx-star-rating";
 import { HostProfileComponent } from './host/components/host-profile/host-profile.component';
+import { VerificationComponent } from './auth/components/verification/verification.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -102,6 +105,7 @@ import { HostProfileComponent } from './host/components/host-profile/host-profil
     BecomeHostComponent,
     AlertMessageComponent,
     HostProfileComponent,
+    VerificationComponent,
   ],
     imports: [
         BrowserModule,
@@ -122,8 +126,9 @@ import { HostProfileComponent } from './host/components/host-profile/host-profil
         GoogleMapsModule,
         GooglePlaceModule,
         MatDatepickerModule,
-        NgxStarRatingModule
-
+        NgxStarRatingModule,
+        MatStepperModule,
+        MatSelectModule
 
 
     ],

@@ -100,10 +100,12 @@ public class HostController {
         return hostService.makeUserHost(jwt);
     }
 
-    @GetMapping("/scooter-list")
-    public ResponseEntity<List<EScooter>> scooterList(@RequestHeader("Authorization") String jwt) throws Exception {
+    @GetMapping("/scooter-list/{id}")
+    public ResponseEntity<List<EScooter>> scooterList(@PathVariable Integer id) throws Exception {
 
-        return hostService.getHostEscooters(jwt);
+        logger.info(id.toString());
+
+        return hostService.getHostEscooters(id);
 
     }
 

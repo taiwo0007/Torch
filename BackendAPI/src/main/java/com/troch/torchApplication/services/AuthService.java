@@ -66,6 +66,8 @@ public class AuthService {
                     .email(loginRequest.getEmail())
                     .expiresAt(expiresDate)
                     .isHost(user.getHost()!= null)
+                    .isVerified(user.getIsVerified())
+                    .hostID(user.getHost().getId())
                     .build(), HttpStatus.OK);
         }
         catch (UsernameNotFoundException e){
@@ -103,6 +105,8 @@ public class AuthService {
                     .authToken(token)
                     .email(registerRequest.getEmail())
                     .isHost(false)
+                    .isVerified(false)
+                    .hostID(null)
                     .build(), HttpStatus.OK) ;
 
         }

@@ -16,6 +16,7 @@ import {HostEscootersComponent} from "./host/components/host-escooters/host-esco
 import {HostEscooterAddComponent} from "./host/components/host-escooter-add/host-escooter-add.component";
 import {BecomeHostComponent} from "./host/components/become-host/become-host.component";
 import {HostProfileComponent} from "./host/components/host-profile/host-profile.component";
+import {VerificationComponent} from "./auth/components/verification/verification.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,6 +36,8 @@ const routes: Routes = [
   {path: 'add-escooter', component: HostEscooterAddComponent, canActivate: [AuthGuardService]},
   {path: 'become-host', component: BecomeHostComponent},
   {path: 'host-profile/:id', component: HostProfileComponent},
+
+  {path: 'verify', component: VerificationComponent},
 
 
 

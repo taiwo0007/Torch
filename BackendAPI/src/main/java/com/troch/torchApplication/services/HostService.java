@@ -1,11 +1,14 @@
 package com.troch.torchApplication.services;
 
 import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.controllers.HostController;
 import com.troch.torchApplication.dto.ErrorResponse;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.HostRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,7 @@ public class HostService {
     @Autowired
     JwtUtil jwtUtil;
 
+    Logger logger = LoggerFactory.getLogger(HostService.class);
 
 
     public Host save(Host host){
@@ -47,18 +51,22 @@ public class HostService {
         return hostRepository.findById(id);
     }
 
-    public ResponseEntity<List<EScooter>> getHostEscooters(String jwt){
+    public ResponseEntity<List<EScooter>> getHostEscooters(Integer id){
 
-        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
-        if (user.getHost() == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+//        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
+//        if (user.getHost() == null){
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//
+//        Integer host_id = user.getHost().getId();
 
-        Integer host_id = user.getHost().getId();
+        Host host = hostRepository.findById(id).get();
 
-        Host host = hostRepository.findById(host_id).get();
+        logger.info("Host objec"+host);
 
         List<EScooter> eScooterList = eScooterService.findAllEscootersByHost(host.getId());
+
+        logger.info("Host Escooters"+eScooterList);
 
         return new ResponseEntity<>(eScooterList, HttpStatus.OK);
     }

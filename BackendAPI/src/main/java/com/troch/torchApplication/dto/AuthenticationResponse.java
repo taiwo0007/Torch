@@ -19,6 +19,8 @@ public class AuthenticationResponse {
     private Date expiresAt;
     private String email;
     private Boolean isHost;
+    private Boolean isVerified;
+    private Integer hostID;
 
 
 
