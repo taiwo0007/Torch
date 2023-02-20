@@ -45,7 +45,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.configureMapOptions();
         this.configureMarker();
       console.log(escooterData)
-      this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
+      this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x,i)=>i)
+
       console.log("Escooter Data"+this.escooter)
 
 
@@ -53,7 +54,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     }, error => {
         this.router.navigate(['../error'])
       })
-
+    console.log(this.ratingArray)
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
 
 
