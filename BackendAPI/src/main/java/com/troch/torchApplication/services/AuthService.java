@@ -100,12 +100,14 @@ public class AuthService {
             userRepository.save(user);
 
             String token = jwtUtil.generateToken(registerRequest.getEmail());
+            Date expiresDate = jwtUtil.extractExpiration(token);
 
             return new ResponseEntity(AuthenticationResponse.builder()
                     .authToken(token)
                     .email(registerRequest.getEmail())
                     .isHost(false)
                     .isVerified(false)
+                    .expiresAt(expiresDate)
                     .hostID(null)
                     .build(), HttpStatus.OK) ;
 
