@@ -109,6 +109,7 @@ export class AuthService {
         new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified, loginResponsePayload.hostID);
 
     localStorage.setItem('userData', JSON.stringify(user));
+    console.log(user)
     return user;
   }
 

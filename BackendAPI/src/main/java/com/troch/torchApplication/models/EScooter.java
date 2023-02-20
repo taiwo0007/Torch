@@ -94,7 +94,33 @@ public class EScooter {
     }
 
 
+    public double getRating(){
+        List<ScooterReview> allHostReviews = this.escooterReviews;
+        double averageRating = 0.0;
 
+        int one = 0, two = 0, three = 0, four = 0, five = 0;
+        for (ScooterReview scoot : allHostReviews) {
+            if (scoot.getStarRating() == 1) {
+                one++;
+            }
+            if (scoot.getStarRating() == 2) {
+                two++;
+            }
+            if (scoot.getStarRating() == 3) {
+                three++;
+            }
+            if (scoot.getStarRating() == 4) {
+                four++;
+            }
+            if (scoot.getStarRating() == 5) {
+                five++;
+            }
+
+            averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five + four + three + two + one);
+
+        }
+        return averageRating;
+    }
 
 
 

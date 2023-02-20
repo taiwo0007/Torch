@@ -74,7 +74,10 @@ isForbiddenNotice: false;
         if(error.error.message){
           this.error = error.error.message;
         }
-        this.error = "An unexpected Error has occurred"
+        else{
+          this.error = "An unexpected Error has occurred"
+
+        }
 
       },
         ()=>{
