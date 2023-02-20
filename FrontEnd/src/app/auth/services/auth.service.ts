@@ -7,6 +7,7 @@ import {environment} from "../../../environments/environment";
 import {User} from "../../user/models/user.model";
 import {Router} from "@angular/router";
 import {SignupRequestPayload} from "../payloads/signup-request.payload";
+import {VerifyRequestPayload} from "../payloads/verify-request.payload";
 
 @Injectable({
   providedIn: 'root'
@@ -96,7 +97,7 @@ export class AuthService {
     this.tokenExpirationTimer = null;
 
 
-    this.router.navigate(['login'], { queryParams: { success: true } });
+
 
   }
 
@@ -109,6 +110,10 @@ export class AuthService {
 
     localStorage.setItem('userData', JSON.stringify(user));
     return user;
+  }
+
+  verfyUserViaAPI(verifyRequestPayload: VerifyRequestPayload){
+    return this.http.post(environment.appUrl + '/api/auth/verify', verifyRequestPayload);
   }
 
 

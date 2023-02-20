@@ -4,10 +4,7 @@ package com.troch.torchApplication.models;
 import com.fasterxml.jackson.annotation.*;
 import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -81,6 +78,9 @@ public class User {
 //    @JsonBackReference
 //    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
+
+    private double longitude;
+    private double latitude;
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
     @JsonBackReference
