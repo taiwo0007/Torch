@@ -98,7 +98,7 @@ public class EScooter {
         List<ScooterReview> allHostReviews = this.escooterReviews;
         double averageRating = 0.0;
 
-        int one = 0, two = 0, three = 0, four = 0, five = 0;
+        double one = 0.0, two = 0.0, three = 0.0, four = 0.0, five = 0.0;
         for (ScooterReview scoot : allHostReviews) {
             if (scoot.getStarRating() == 1) {
                 one++;
@@ -116,7 +116,7 @@ public class EScooter {
                 five++;
             }
 
-            averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five + four + three + two + one);
+            averageRating = (five * 5.0 + four * 4.0 + three * 3.0 + two * 2.0+  one * 1.0) / (five + four + three + two + one);
 
         }
         return averageRating;
