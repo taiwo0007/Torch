@@ -39,9 +39,6 @@ const routes: Routes = [
 
   {path: 'verify', component: VerificationComponent},
 
-
-
-
 ];
 
 @NgModule({

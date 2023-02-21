@@ -62,6 +62,7 @@ import { HostProfileComponent } from './host/components/host-profile/host-profil
 import { VerificationComponent } from './auth/components/verification/verification.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatSelectModule} from "@angular/material/select";
+import { VerificationDialogComponent } from './shared/components/verification-dialog/verification-dialog.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import {MatSelectModule} from "@angular/material/select";
     AlertMessageComponent,
     HostProfileComponent,
     VerificationComponent,
+    VerificationDialogComponent,
   ],
     imports: [
         BrowserModule,

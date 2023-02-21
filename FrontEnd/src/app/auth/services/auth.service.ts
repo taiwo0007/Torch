@@ -14,10 +14,22 @@ import {VerifyRequestPayload} from "../payloads/verify-request.payload";
 })
 export class AuthService {
   user = new BehaviorSubject<any>(null);
+  isVerifiedConsent = new BehaviorSubject<any>(false);
   private tokenExpirationTimer: any;
+  isLogin:boolean;
 
   constructor(private http: HttpClient,
             private router:Router) {
+  }
+
+  onVerifyConsent(){
+    this.isVerifiedConsent.next(true);
+    let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
+
+    tempUserData.isVerifiedConsent = true;
+
+    localStorage.setItem('userData', JSON.stringify(tempUserData));
+    this.user.next(tempUserData)
   }
 
 
@@ -25,8 +37,10 @@ export class AuthService {
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/login',loginRequestPayload)
         .pipe(catchError(this.handleError),
             map((data:any) => {
-        console.log(data);
+      console.log(data);
+      this.isLogin = true;
       this.user.next(this.storeLocalData(data));
+
       return true;
     }))
 
@@ -37,7 +51,9 @@ export class AuthService {
   signup(signupRequestPayload:SignupRequestPayload){
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/signup', signupRequestPayload).pipe( map(data => {
       console.log(data)
+      this.isLogin = false;
       this.user.next(this.storeLocalData(data));
+
       return true;
     }))
   }
@@ -60,8 +76,10 @@ export class AuthService {
   autoLogin(){
     let data:string = 'userData'
       const userData: {email:string, _token:string, _isHost:boolean, _tokenExpirationDate,
-                      _isVerified:boolean, _hostID:number
+                      _isVerified:boolean, _hostID:number, isVerifiedConsent:boolean
       } = JSON.parse(localStorage.getItem(data) || '{}');
+
+    console.log(userData)
 
     if(!userData){
       return
@@ -73,16 +91,14 @@ export class AuthService {
         userData._isHost,
         userData._tokenExpirationDate,
         userData._isVerified,
-        userData._hostID
+        userData._hostID,
+        userData.isVerifiedConsent
     );
 
     console.log(loadedUser)
     if (loadedUser.token) {
         this.user.next(loadedUser);
         const expirationDuration = new Date(loadedUser.tokenExpireDate).getTime() - new Date().getTime();
-        console.log('token Expire Date',new Date(loadedUser.tokenExpireDate))
-      console.log('todays date', new Date())
-        console.log(expirationDuration)
       this.autoLogout(expirationDuration);
     }
     }
@@ -95,18 +111,13 @@ export class AuthService {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
-
-
-
-
   }
 
+    storeLocalData(loginResponsePayload: LoginResponsePayload){
 
-  storeLocalData(loginResponsePayload: LoginResponsePayload){
-    console.log(loginResponsePayload);
 
     const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost,
-        new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified, loginResponsePayload.hostID);
+        new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified, loginResponsePayload.hostID, false);
 
     localStorage.setItem('userData', JSON.stringify(user));
     console.log(user)

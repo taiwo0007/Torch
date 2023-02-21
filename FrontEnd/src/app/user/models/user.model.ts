@@ -6,7 +6,10 @@ export class User{
     private _tokenExpirationDate: Date,
     private _isVerified: boolean,
     private _hostID: number,
+    public isVerifiedConsent:boolean,
   ) {}
+
+
 
   get token() {
     if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
