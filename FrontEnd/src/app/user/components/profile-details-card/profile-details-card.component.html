@@ -1,8 +1,14 @@
 <div class="card " style="width: 21rem;">
 
-  <img  style="border-radius: 50% !important; width: 14.7rem; height: auto;"  [src]="userDetails?.profilePicture" class="card-img-top p-4 m-auto" alt="...">
+
+  <img *ngIf="userDetails?.profilePicture else avatar"  style="object-fit: cover; border-radius: 100% !important; width: 14.7rem; height: 14.7rem;"  [src]="userDetails?.profilePicture" class="rounded-circle p-4 m-auto" alt="...">
 <!--  <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"-->
 <!--       [src]="userDetails?.profilePicture" alt="">-->
+  <ng-template #avatar>
+    <img style="border-radius: 50% !important; width: 14.7rem; height: 14.7rem; object-fit: cover"
+         src="assets/images/website/avatar.png" class="card-img-top p-4 m-auto" alt="...">
+
+  </ng-template>
 
   <div class="text-center pb-4">
 
@@ -42,7 +48,7 @@
     </div>
 
     <div class="text-center p-4">
-      <a href="#" class="btn btn-outline-info text-center mx-auto">Update profile image</a>
+<!--      <a href="#" class="btn btn-outline-info text-center mx-auto">Update profile image</a>-->
 
     </div>
   </div>
