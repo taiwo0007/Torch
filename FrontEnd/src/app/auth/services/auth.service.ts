@@ -25,11 +25,18 @@ export class AuthService {
   onVerifyConsent(){
     this.isVerifiedConsent.next(true);
     let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
-
     tempUserData.isVerifiedConsent = true;
-
     localStorage.setItem('userData', JSON.stringify(tempUserData));
     this.user.next(tempUserData)
+  }
+
+  saveLocalVerifyInfo(){
+    this.isVerifiedConsent.next(true);
+    let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
+    tempUserData._isVerified = true;
+    localStorage.setItem('userData', JSON.stringify(tempUserData));
+    this.user.next(tempUserData)
+
   }
 
 

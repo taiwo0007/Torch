@@ -1,47 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {UserData} from "../../models/user-data.model";
 import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../../auth/services/auth.service";
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, AfterContentInit {
   userData?:UserData;
   isCreatedVerified;
 
-  constructor(private userService: UserService,private route:ActivatedRoute) { }
+  constructor(private userService: UserService,private route:ActivatedRoute,
+              private authService: AuthService) { }
 
-  ngOnInit(): void {
+    ngAfterContentInit() {
+        this.userService.fetchUserDetails().subscribe( (data: any) => {
+            this.userData = data;
+            this.route.queryParams.subscribe(data => {
+                if(data['success'] && this.userData.isVerified){
+                    this.authService.saveLocalVerifyInfo()
+                }
+            })
+        })
+    }
 
-    this.userService.fetchUserDetails().subscribe( (data: any) => {
-     // this.userData = {
-     //   firstName :data.firstName,
-     //   lastName: data.lastName,
-     //   phoneNumber: data.phoneNumber,
-     //    postCode: data.postCode,
-     //   country: data.country,
-     //     state: data.state,
-     //     email: data.email,
-     //     isVerified: data.isVerified,
-     //     userTrips: data.userTrips,
-     //     rating: data.rating,
-     //     id: data.id,
-     //     isHost: data.isHost
-     // }
-        this.userData = data
+    ngOnInit(): void {
 
 
-
-        this.route.queryParams.subscribe(data => {
-       console.log(data['success'])
-     })
-
-      console.log(this.userData)
-
-    })
 
 
 

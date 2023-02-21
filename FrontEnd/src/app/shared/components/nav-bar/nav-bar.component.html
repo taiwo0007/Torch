@@ -1,6 +1,8 @@
 
 
-<nav style="background-color: black !important; padding: 0.5rem 12rem !important" id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top ">
+<nav
+        style="background-color: black !important; padding: 0.5rem 12rem !important"
+        id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top ">
   <a class="navbar-brand" [routerLink]="['']">
     <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo" /></a>
   <ul  class="nav nav-pills">
@@ -23,7 +25,7 @@
       </a>
       <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info ">
         <li role="menuitem" class="" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item" [routerLink]="['profile']">Profile</a></li>
-        <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['user-trips']">Your Trips</a></li>
+        <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Your Trips</a></li>
         <li role="menuitem" *ngIf="!isVerified && isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item text-info" [routerLink]="['verify']">Verify Now</a></li>
         <li role="menuitem" *ngIf="isHost" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
         <li role="menuitem"  *ngIf="isHost" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters', hostID]" class="dropdown-item " >EScooters</a></li>
