@@ -63,6 +63,9 @@ import { VerificationComponent } from './auth/components/verification/verificati
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatSelectModule} from "@angular/material/select";
 import { VerificationDialogComponent } from './shared/components/verification-dialog/verification-dialog.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import { CustomSkeletonLoaderComponent } from './escooter/components/custom-skeleton-loader/custom-skeleton-loader.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +111,7 @@ import { VerificationDialogComponent } from './shared/components/verification-di
     HostProfileComponent,
     VerificationComponent,
     VerificationDialogComponent,
+    CustomSkeletonLoaderComponent,
   ],
     imports: [
         BrowserModule,
@@ -130,7 +134,9 @@ import { VerificationDialogComponent } from './shared/components/verification-di
         MatDatepickerModule,
         NgxStarRatingModule,
         MatStepperModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        NgxSkeletonLoaderModule,
 
 
     ],

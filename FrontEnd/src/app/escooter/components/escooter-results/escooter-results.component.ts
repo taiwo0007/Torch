@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute} from "@angular/router";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-escooter-results',
@@ -15,6 +16,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
   markerPositions: google.maps.LatLngLiteral[] = [];
   markerStatus: string = "assets/images/website/icons/marker.png";
   @ViewChildren("scootercard") cards:QueryList<ElementRef>;
+    isLoading: boolean = true;
 
   constructor(private escooterService: EscooterService,
               private route: ActivatedRoute) { }
@@ -27,14 +29,16 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
           paramValue['tripEnd'],
-          paramValue['location'])
+          paramValue['location']).pipe(delay(3000))
           .subscribe((data: any[]) => {
+              this.isLoading = false;
             this.escooterResults = data
             this.configureMapOptions();
             this.configureAllMarkers()
 
           }, error => {
               this.escooterResults = null;
+              this.isLoading = false;
           },
               () => {
                   this.initMap();

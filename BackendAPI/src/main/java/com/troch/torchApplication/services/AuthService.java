@@ -67,7 +67,7 @@ public class AuthService {
                     .expiresAt(expiresDate)
                     .isHost(user.getHost()!= null)
                     .isVerified(user.getIsVerified())
-                    .hostID(user.getHost().getId())
+                    .hostID(user.getHost() != null ? user.getHost().getId() : null)
                     .build(), HttpStatus.OK);
         }
         catch (UsernameNotFoundException e){
