@@ -8,6 +8,8 @@ import {User} from "../../user/models/user.model";
 import {Router} from "@angular/router";
 import {SignupRequestPayload} from "../payloads/signup-request.payload";
 import {VerifyRequestPayload} from "../payloads/verify-request.payload";
+import {VerificationDialogComponent} from "../../shared/components/verification-dialog/verification-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class AuthService {
   isLogin:boolean;
 
   constructor(private http: HttpClient,
-            private router:Router) {
+            private router:Router, public dialog: MatDialog) {
   }
 
   onVerifyConsent(){
@@ -135,6 +137,12 @@ export class AuthService {
     return this.http.post(environment.appUrl + '/api/auth/verify', verifyRequestPayload);
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(VerificationDialogComponent, {
+      height: '630px',
+      width: '600px',
+    });
+  }
 
 
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
+import {User} from "../../../user/models/user.model";
 
 @Component({
   selector: 'app-start-trip-form',
@@ -12,16 +13,22 @@ export class StartTripFormComponent implements OnInit {
   isAuthenticated = false;
   @Input() cost;
   @Input() escooterId;
-  todaysDate = new Date();
-  tommorwsDate = new Date(this.todaysDate.getDate()+1)
+  todaysDate = new Date().toISOString().split('T')[0];
+  tommorwsDate = new Date();
+  user:any;
+
 
   constructor(private authService: AuthService,
-              private router:Router) { }
+              private router:Router) {
+
+  }
 
   ngOnInit(): void {
+    console.log(this.todaysDate)
 
-    this.authService.user.subscribe((data:boolean) => {
+    this.authService.user.subscribe((data:any) => {
 
+      this.user = data;
       this.isAuthenticated = data;
     })
 
@@ -31,6 +38,13 @@ export class StartTripFormComponent implements OnInit {
       if(!StartTipForm.valid){
         return
       }
+      if(this.user._isVerified == false || this.user == undefined){
+
+        this.authService.openDialog();
+        return;
+      }
+
+      console.log(this.user)
 
         let tripStart = new Date(StartTipForm.value.tripStart)
         let tripEnd = new Date(StartTipForm.value.tripEnd)

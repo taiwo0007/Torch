@@ -18,14 +18,11 @@ export class AppComponent {
               private router: Router,
               public dialog: MatDialog) {}
 
+
   openDialog() {
     const dialogRef = this.dialog.open(VerificationDialogComponent, {
       height: '630px',
       width: '600px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 
@@ -37,7 +34,8 @@ export class AppComponent {
           console.log("in here")
           console.log(userData.isVerified)
           console.log(userData.isVerifiedConsent)
-          this.openDialog()
+          this.authService.openDialog();
+
 
         }
 

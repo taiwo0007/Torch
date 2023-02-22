@@ -41,11 +41,21 @@
         <div class="form-group mb-3">
           <div class="row">
             <div class="col-12 col-sm-12 col-sm-offset-12">
-              <button [disabled]="!loginForm.valid" style="width: 100% !important;" type="submit" name="login-submit" id="login-submit"
+              <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="width: 100% !important;" type="submit" name="login-submit" id="login-submit"
                       class="form-control btn btn-dark p-2 mt-4" value="Log In">
-                <app-spinner *ngIf="isLoading"></app-spinner>
-                <ng-container *ngIf="!isLoading">Log In</ng-container>
+             Log In
               </button>
+
+              <button *ngIf="isLoading" disabled style="width: 100% !important;" type="submit" name="login-submit" id="login-submit"
+                      class="form-control btn btn-dark p-2 mt-4" value="Log In">
+
+                Log In
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+
+              </button>
+
+
               <div class="bg-dark">
 
               </div>
