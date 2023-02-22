@@ -27,7 +27,6 @@ import java.util.List;
 public class Host {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(Views.Id.class)
     private Integer id;
 

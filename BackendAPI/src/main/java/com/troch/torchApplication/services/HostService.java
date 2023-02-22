@@ -86,6 +86,8 @@ public class HostService {
             userService.saveUser(currentUser);
             hostRepository.save(formNewHost);
 
+            logger.info("New host careated with ID "+formNewHost);
+
             return new ResponseEntity<>(formNewHost, HttpStatus.CREATED);
         } else if (currentUser.getHost() != null) {
 

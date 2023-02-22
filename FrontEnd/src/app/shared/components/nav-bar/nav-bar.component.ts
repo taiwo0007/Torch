@@ -27,9 +27,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((data:User) => {
+    this.authService.user.subscribe((data:any) => {
       console.log(data)
-      this.isVerified = data.isVerified;
+      this.isVerified = data._isVerified;
       this.isHost = data.isHost
       if(data == null){
         this.isAuthenticated = false;
@@ -39,9 +39,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
       }
 
       this.hostID = data.hostID;
-      console.log(data)
-      console.log(!data)
-      console.log(!!data)
+      console.log(data._isVerified)
+
 
     })
 
