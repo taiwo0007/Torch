@@ -29,16 +29,23 @@
       <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
 
     </li>
+    
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
 
     </li>
-
-    <li bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class="nav-item dropdown bg-dark m-auto ">
-      <a  dropdownToggle style="background-color: black !important" class="nav-link dropdown-toggle text-white open" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false"><i class="fa fa-th fw-light" aria-hidden="true"></i>
+    <li  class="nav-item my-auto">
+      <a  *ngIf="isAuthenticated" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn rounded-0 text-dark fw-bold  my-auto"  [routerLink]="['profile']">
+        <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"  class="rounded-circle " src="./assets/images/website/avatar.png" alt="">
+        <img *ngIf="profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover" class="rounded-circle " [src]="profileImage" alt="">
       </a>
-      <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info py-2">
-        <li role="menuitem" class="" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item" [routerLink]="['profile']">Profile</a></li>
+    </li>
+
+    <li *ngIf="isAuthenticated" bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class="nav-item dropdown bg-dark m-auto nav-link">
+      <a  dropdownToggle style="background-color: black !important" class=" dropdown-toggle text-white open" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false">
+        <i class="fa fa-th fw-light" aria-hidden="true"></i>
+      </a>
+      <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info py-2 ">
         <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Your Trips</a></li>
         <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="dropdown-item text-info" [routerLink]="['verify']">Verify Now</a></li>
         <li role="menuitem" *ngIf="isHost" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
