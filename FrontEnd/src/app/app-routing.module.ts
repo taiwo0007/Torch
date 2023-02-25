@@ -18,6 +18,7 @@ import {BecomeHostComponent} from "./host/components/become-host/become-host.com
 import {HostProfileComponent} from "./host/components/host-profile/host-profile.component";
 import {VerificationComponent} from "./auth/components/verification/verification.component";
 import {TripCompletedComponent} from "./trip/components/trip-completed/trip-completed.component";
+import {CancelTripComponent} from "./trip/components/cancel-trip/cancel-trip.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'user-trips', component: UserTripsComponent, canActivate: [AuthGuardService]},
   {path: 'host-trips', component: TripHostsComponent, canActivate: [AuthGuardService]},
   {path: 'trip-complete', component: TripCompletedComponent, canActivate: [AuthGuardService]},
+  {path: 'trip-cancel', component: CancelTripComponent, canActivate: [AuthGuardService]},
 
   {path: 'host-escooters/:id', component: HostEscootersComponent},
   {path: 'add-escooter', component: HostEscooterAddComponent, canActivate: [AuthGuardService]},
