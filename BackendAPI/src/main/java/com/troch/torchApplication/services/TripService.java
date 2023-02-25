@@ -1,5 +1,7 @@
 package com.troch.torchApplication.services;
 
+import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.dto.ErrorResponse;
 import com.troch.torchApplication.dto.TripCreateRequest;
 import com.troch.torchApplication.enums.TripStatus;
 import com.troch.torchApplication.models.EScooter;
@@ -7,6 +9,8 @@ import com.troch.torchApplication.models.Trip;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -22,7 +26,11 @@ public class TripService {
     @Autowired
     TripRepository tripRepository;
 
+    @Autowired
+    JwtUtil jwtUtil;
 
+    @Autowired
+    UserServiceImpl userService;
 
     public Optional<Trip> findTripById(int id){
 
@@ -62,6 +70,32 @@ public class TripService {
 
     public Trip saveTrip(Trip trip){
         return tripRepository.save(trip);
+
+    }
+
+    public ResponseEntity completeTrip(Integer id, String jwt) {
+
+        try{
+            User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
+
+            Optional<Trip> retrivedTrip = tripRepository.findById(id);
+            if(retrivedTrip.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            if(retrivedTrip.get().getUser_renter() != user){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            retrivedTrip.get().setStatus(TripStatus.COMPLETED);
+
+            return new ResponseEntity(this.tripRepository.save(retrivedTrip.get()), HttpStatus.ACCEPTED);
+
+        }
+        catch (Exception ex){
+            return new ResponseEntity<>(new ErrorResponse("An Error has occuRred"), HttpStatus.BAD_REQUEST);
+        }
+
+
 
     }
 }

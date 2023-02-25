@@ -70,4 +70,13 @@ public class TripController {
          return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
     }
+
+
+    @PostMapping("/complete-trip/{id}")
+    public ResponseEntity<Trip> completeTrip(@RequestHeader("Authorization") String jwt,
+                                              @PathVariable("id") Integer id) throws Exception {
+        return tripService.completeTrip(id, jwt);
+
+
+    }
 }
