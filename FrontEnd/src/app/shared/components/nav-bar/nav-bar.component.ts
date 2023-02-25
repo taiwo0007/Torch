@@ -3,6 +3,8 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import {User} from "../../../user/models/user.model";
+import {UserService} from "../../../user/services/user.service";
+import {UserData} from "../../../user/models/user-data.model";
 
 
 @Component({
@@ -17,18 +19,26 @@ export class NavBarComponent implements OnInit, OnDestroy {
   isHost:boolean = false;
   isVerified:boolean = false;
   hostID:number;
+  profileImage:string;
 
   constructor(private authService: AuthService,
               private router:Router,
               private route: ActivatedRoute,
-              private dropdownService: BsDropdownDirective) {
+              private dropdownService: BsDropdownDirective,
+              private userService:UserService) {
     this.dropdown = dropdownService;
 
   }
 
   ngOnInit(): void {
     this.authService.user.subscribe((data:any) => {
-      console.log(data)
+
+      this.userService.fetchUserDetails().subscribe((userData:UserData) => {
+        this.profileImage = userData.profilePicture;
+        console.log(userData)
+      })
+
+
       this.isVerified = data._isVerified;
       this.isHost = data.isHost
       if(data == null){

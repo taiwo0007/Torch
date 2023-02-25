@@ -66,6 +66,12 @@ import { VerificationDialogComponent } from './shared/components/verification-di
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 import { CustomSkeletonLoaderComponent } from './escooter/components/custom-skeleton-loader/custom-skeleton-loader.component';
+import {ImageModule} from "primeng/image";
+import { AreYouSureDialogComponent } from './shared/components/are-you-sure-dialog/are-you-sure-dialog.component';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ToastModule} from "primeng/toast";
+import {ConfirmationService, MessageService} from "primeng/api";
+import { TripCompletedComponent } from './trip/components/trip-completed/trip-completed.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +118,8 @@ import { CustomSkeletonLoaderComponent } from './escooter/components/custom-skel
     VerificationComponent,
     VerificationDialogComponent,
     CustomSkeletonLoaderComponent,
+    AreYouSureDialogComponent,
+    TripCompletedComponent,
   ],
     imports: [
         BrowserModule,
@@ -137,10 +145,13 @@ import { CustomSkeletonLoaderComponent } from './escooter/components/custom-skel
         MatSelectModule,
         MatProgressSpinnerModule,
         NgxSkeletonLoaderModule,
+        ImageModule,
+        ConfirmDialogModule,
+        ToastModule,
 
 
     ],
-  providers: [BsDropdownDirective, BsDropdownConfig, {
+  providers: [MessageService, ConfirmationService, BsDropdownDirective, BsDropdownConfig, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi: true

@@ -4,6 +4,8 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
 import {map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
+import {ImageModule} from 'primeng/image';
+
 
 
 @Component({

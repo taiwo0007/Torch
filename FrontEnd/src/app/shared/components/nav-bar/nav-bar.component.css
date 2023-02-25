@@ -2,3 +2,7 @@
     background-color: #9E9E9E;
 
 }
+.a-img-dropdown:hover{
+    opacity: 0.4;
+    background-color: transparent;
+}
