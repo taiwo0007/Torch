@@ -72,10 +72,18 @@ public class TripController {
     }
 
 
-    @PostMapping("/complete-trip/{id}")
+    @PutMapping("/complete-trip/{id}")
     public ResponseEntity<Trip> completeTrip(@RequestHeader("Authorization") String jwt,
                                               @PathVariable("id") Integer id) throws Exception {
-        return tripService.completeTrip(id, jwt);
+        return tripService.updateTrip(true, id, jwt);
+
+
+    }
+
+    @PutMapping("/cancel-trip/{id}")
+    public ResponseEntity<Trip> cancelTrip(@RequestHeader("Authorization") String jwt,
+                                             @PathVariable("id") Integer id) throws Exception {
+        return tripService.updateTrip(false, id, jwt);
 
 
     }

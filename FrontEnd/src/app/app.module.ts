@@ -72,6 +72,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
 import {ConfirmationService, MessageService} from "primeng/api";
 import { TripCompletedComponent } from './trip/components/trip-completed/trip-completed.component';
+import { AreYouSureDialogCancelComponent } from './shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,7 @@ import { TripCompletedComponent } from './trip/components/trip-completed/trip-co
     CustomSkeletonLoaderComponent,
     AreYouSureDialogComponent,
     TripCompletedComponent,
+    AreYouSureDialogCancelComponent,
   ],
     imports: [
         BrowserModule,

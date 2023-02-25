@@ -73,7 +73,7 @@ public class TripService {
 
     }
 
-    public ResponseEntity completeTrip(Integer id, String jwt) {
+    public ResponseEntity updateTrip(boolean isComplete, Integer id, String jwt) {
 
         try{
             User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
@@ -86,7 +86,13 @@ public class TripService {
             if(retrivedTrip.get().getUser_renter() != user){
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-            retrivedTrip.get().setStatus(TripStatus.COMPLETED);
+            if(isComplete){
+                retrivedTrip.get().setStatus(TripStatus.COMPLETED);
+            }
+            else {
+                retrivedTrip.get().setStatus(TripStatus.CANCELLED);
+
+            }
 
             return new ResponseEntity(this.tripRepository.save(retrivedTrip.get()), HttpStatus.ACCEPTED);
 

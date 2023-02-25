@@ -119,14 +119,14 @@ VALUES(1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 
 
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2, "CANCELLED", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
+VALUES(2, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(3, "INACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
+VALUES(3, "ACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
 
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(4, "COMPLETED", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-17 00:00:00', 5,333, 2);
+VALUES(4, "ACTIVE", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-17 00:00:00', 5,333, 2);
 
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
@@ -134,10 +134,10 @@ VALUES(5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12
 
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(6, "COMPLETED", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,333, 2);
+VALUES(6, "ACTIVE", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,333, 2);
 
 INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(7, "COMPLETED", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,444, 10);
+VALUES(7, "ACTIVE", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,444, 10);
 
 
 
