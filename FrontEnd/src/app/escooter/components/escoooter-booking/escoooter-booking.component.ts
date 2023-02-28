@@ -15,6 +15,7 @@ import {Escooter} from "../../models/escooter.interface";
 import {Trip} from "../../models/trip.interface";
 import {TripService} from "../../../trip/services/trip.service";
 import {TripCreateRequestPayload} from "../../../trip/models/trip-create-request.payload";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 
 @Component({
@@ -76,7 +77,9 @@ export class EscoooterBookingComponent implements OnInit{
       private escooterService: EscooterService,
       private route: ActivatedRoute,
       private tripService: TripService,
-      private router: Router
+      private router: Router,
+      private loadingService:LoadingService
+
   ) {}
 
   ngOnInit() {
@@ -96,11 +99,18 @@ export class EscoooterBookingComponent implements OnInit{
           console.log(data.id)
         }
         this.totalTripCost()
+        this.loadingService.isLoading.next(true);
+
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
+              this.loadingService.isLoading.next(false);
 
               this.elementsOptions.clientSecret = paymentIntent.clientSecret;
-            });
+            },
+                ()=> {
+                  this.loadingService.isLoading.next(false);
+
+                });
       })
     })
   }
@@ -121,6 +131,8 @@ export class EscoooterBookingComponent implements OnInit{
   }
 
   collectPayment() {
+    this.loadingService.isLoading.next(true);
+
     if (this.paying) return;
     // if (this.checkoutForm.invalid) {
     //   return;
@@ -156,12 +168,15 @@ export class EscoooterBookingComponent implements OnInit{
               this.tripService.createNewTrip(this.tripCreateRequestPayload).subscribe(((tripData:any) => {
                 console.log(tripData.id);
                 console.log(tripData);
+                this.loadingService.isLoading.next(false);
 
                 this.router.navigate(['../trip-detail', tripData?.id],{ queryParams: { success: true } })
               }))
             }
           },
           error: (err) => {
+            this.loadingService.isLoading.next(false);
+
             this.paying = false;
 
           },

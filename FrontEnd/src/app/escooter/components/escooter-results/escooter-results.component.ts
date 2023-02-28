@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, View
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute} from "@angular/router";
 import {delay} from "rxjs";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-escooter-results',
@@ -19,26 +20,31 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
     isLoading: boolean = true;
 
   constructor(private escooterService: EscooterService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private loadingService:LoadingService) { }
 
   ngOnInit(): void {
 
 
     this.route.queryParams.subscribe(paramValue => {
+        this.loadingService.isLoading.next(true);
 
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
           paramValue['tripEnd'],
-          paramValue['location']).pipe(delay(1000))
+          paramValue['location']).pipe(delay(3000))
           .subscribe((data: any[]) => {
-              this.isLoading = false;
+                  this.loadingService.isLoading.next(false);
+
+                  this.isLoading = false;
             this.escooterResults = data
             this.configureMapOptions();
             this.configureAllMarkers()
 
           }, error => {
               this.escooterResults = null;
-              this.isLoading = false;
+                  this.loadingService.isLoading.next(false);
+
+                  this.isLoading = false;
           },
               () => {
                   this.initMap();

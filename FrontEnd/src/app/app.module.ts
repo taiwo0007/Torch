@@ -74,6 +74,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import { TripCompletedComponent } from './trip/components/trip-completed/trip-completed.component';
 import { AreYouSureDialogCancelComponent } from './shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component';
 import { CancelTripComponent } from './trip/components/cancel-trip/cancel-trip.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -152,6 +153,7 @@ import { CancelTripComponent } from './trip/components/cancel-trip/cancel-trip.c
         ImageModule,
         ConfirmDialogModule,
         ToastModule,
+        MatProgressBarModule,
 
 
     ],

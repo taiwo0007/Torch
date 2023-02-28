@@ -4,6 +4,7 @@ import {AuthService} from "../../services/auth.service";
 import {LoginRequestPayload} from "../../payloads/login-request.payload";
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ isForbiddenNotice: false;
 
   constructor(private authService: AuthService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private loadingService:LoadingService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -50,6 +52,7 @@ isForbiddenNotice: false;
   }
 
   onSubmit(authForm: NgForm) {
+    this.loadingService.isLoading.next(true);
 
     this.error = null;
     this.isLoading = true;
@@ -64,12 +67,16 @@ isForbiddenNotice: false;
     console.log(this.loginRequestPayload.password)
 
     this.authService.login(this.loginRequestPayload).subscribe((data:boolean) => {
-      this.isLoading = false;
+          this.loadingService.isLoading.next(false);
+
+          this.isLoading = false;
 
       this.router.navigate(['/'])
     },
       error => {
         console.log(error)
+        this.loadingService.isLoading.next(false);
+
         this.isLoading = false;
         if(error.error.message){
           this.error = error.error.message;
@@ -81,6 +88,8 @@ isForbiddenNotice: false;
 
       },
         ()=>{
+          this.loadingService.isLoading.next(false);
+
           this.isLoading = false;
 
         })

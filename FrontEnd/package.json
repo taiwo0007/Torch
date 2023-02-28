@@ -34,6 +34,7 @@
     "ngx-stripe": "13.1",
     "path-browserify": "^1.0.1",
     "popper.js": "^1.16.1",
+    "primeicons": "^6.0.1",
     "primeng": "^15.2.0",
     "querystring-es3": "^0.2.1",
     "rxjs": "~7.5.0",

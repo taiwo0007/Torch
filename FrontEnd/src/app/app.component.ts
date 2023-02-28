@@ -4,6 +4,7 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {MatDialog} from '@angular/material/dialog';
 import {VerificationComponent} from "./auth/components/verification/verification.component";
 import {VerificationDialogComponent} from "./shared/components/verification-dialog/verification-dialog.component";
+import {LoadingService} from "./shared/services/loading.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,11 +13,13 @@ import {VerificationDialogComponent} from "./shared/components/verification-dial
 export class AppComponent {
   title = 'torch-front-end';
   isAuthUrl = false;
+  isLoading = false;
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private loadingService: LoadingService) {}
 
 
   openDialog() {
@@ -27,6 +30,8 @@ export class AppComponent {
   }
 
   ngOnInit() {
+
+
     this.authService.autoLogin();
 
     this.authService.user.subscribe(userData => {

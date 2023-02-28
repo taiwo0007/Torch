@@ -3,6 +3,7 @@ import {NgForm, FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SignupRequestPayload} from "../../payloads/signup-request.payload";
 import {AuthService} from "../../services/auth.service";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +27,8 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
   isNoMatch:boolean;
 
   constructor(private router: Router,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private loadingService:LoadingService) { }
 
   ngOnInit(): void {
 
@@ -58,8 +60,12 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
 
 
   onSubmit(signupForm: NgForm) {
+    this.loadingService.isLoading.next(true);
+
     this.isLoading = true;
     if(!signupForm.valid){
+      this.loadingService.isLoading.next(false);
+
       return
     }
     this.error = null;
@@ -71,10 +77,14 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.authService.signup( this.signupRequestPayload).subscribe((data:boolean) => {
         this.isLoading = false;
-        this.router.navigate(['/'])
+          this.loadingService.isLoading.next(false);
+
+          this.router.navigate(['/'])
       },
       error => {
         this.isLoading = false;
+        this.loadingService.isLoading.next(false);
+
         this.error = error.error.message;
 
 

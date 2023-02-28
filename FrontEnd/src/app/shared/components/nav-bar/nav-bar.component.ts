@@ -5,6 +5,7 @@ import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
 import {User} from "../../../user/models/user.model";
 import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
+import {LoadingService} from "../../services/loading.service";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   isSuccessLogOut = false;
   isHost:boolean = false;
   isVerified:boolean = false;
+  isLoading = false;
   hostID:number;
   profileImage:string;
 
@@ -25,12 +27,18 @@ export class NavBarComponent implements OnInit, OnDestroy {
               private router:Router,
               private route: ActivatedRoute,
               private dropdownService: BsDropdownDirective,
-              private userService:UserService) {
+              private userService:UserService,
+              private loadingService:LoadingService) {
     this.dropdown = dropdownService;
 
   }
 
   ngOnInit(): void {
+
+    this.loadingService.isLoading.subscribe(value => {
+      this.isLoading = value;
+    })
+
     this.authService.user.subscribe((data:any) => {
 
       this.userService.fetchUserDetails().subscribe((userData:UserData) => {

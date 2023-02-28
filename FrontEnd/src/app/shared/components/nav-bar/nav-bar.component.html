@@ -2,7 +2,7 @@
 
 <nav
         style="background-color: black !important; padding: 0.6rem 7rem !important"
-        id="navbar-example2" class="navbar bg-dark navbar-dark sticky fixed-top py-2">
+        id="navbar-example2" class="navbar bg-dark navbar-dark  sticky fixed-top py-2">
   <div>
     <a class="navbar-brand me-3" [routerLink]="['']">
       <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo" />
@@ -67,6 +67,7 @@
 
 
 
+  <mat-progress-bar *ngIf="isLoading" class="position-absolute mt-" style="left: 0; bottom:0" mode="indeterminate"></mat-progress-bar>
 
 </nav>
 
