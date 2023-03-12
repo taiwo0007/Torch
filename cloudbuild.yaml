@@ -1,11 +1,6 @@
 steps:
   - name: "gcr.io/cloud-builders/mvn"
-    entrypoint: bash
-    env:
-      - "JAVA_HOME=/Library/Java/JavaVirtualMachines/microsoft-11.jdk"
-    args:
-      - "-c"
-      - "mvn clean install -DskipTests"
+    args: ["clean", "install", "-DskipTests"]
     dir: "./BackendAPI/"
 
   - name: "gcr.io/cloud-builders/docker"
