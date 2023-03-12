@@ -1,11 +1,11 @@
 steps:
   - name: "gcr.io/cloud-builders/mvn"
     entrypoint: bash
+    env:
+      - "JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk"
     args:
       - "-c"
-      - |
-        export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre/bin/java
-        mvn clean install -DskipTests
+      - "mvn clean install -DskipTests"
     dir: "./BackendAPI/"
 
   - name: "gcr.io/cloud-builders/docker"
