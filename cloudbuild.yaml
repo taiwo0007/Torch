@@ -29,6 +29,11 @@ steps:
       - "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA"
       - "--region"
       - "$_DEPLOY_REGION"
+      - "--port",
+      - "8080",
+      - "--update-env-vars",
+      - "SPRING_PROFILES_ACTIVE=cloud",
+      - "--allow-unauthenticated"
 options:
   logging: CLOUD_LOGGING_ONLY
 
