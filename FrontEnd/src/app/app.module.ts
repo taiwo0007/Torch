@@ -76,6 +76,8 @@ import { AreYouSureDialogCancelComponent } from './shared/components/are-you-sur
 import { CancelTripComponent } from './trip/components/cancel-trip/cancel-trip.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 
+import { ReviewTripDialogComponent } from './shared/components/review-trip-dialog/review-trip-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,6 +127,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     TripCompletedComponent,
     AreYouSureDialogCancelComponent,
     CancelTripComponent,
+    ReviewTripDialogComponent,
   ],
     imports: [
         BrowserModule,

@@ -7,12 +7,17 @@ import {ScooterAddRequestPayload} from "../payload/scooter-add-request.payload";
 import {catchError, map, throwError} from "rxjs";
 import {Host} from "../models/host.interface";
 
+import {AuthService} from "../../auth/services/auth.service";
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class HostService {
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient,
+              private authService:AuthService) { }
 
   getHostById(id:number){
     return this.http.get(environment.appUrl+'/api/host/host-details/'+id)
@@ -34,9 +39,14 @@ export class HostService {
     return this.http.post(environment.appUrl+'/api/host/make-user-host', null)
         .pipe(catchError(this.handleError),
             map((data:Host) => {
-          return data.id;
+
+                console.log(data)
+                this.authService.saveHostDetailsLocaly(data.id);
+                return data.id;
         }))
   }
+
+
 
    handleError(errorRes:HttpErrorResponse) {
     if(errorRes.status == 403){

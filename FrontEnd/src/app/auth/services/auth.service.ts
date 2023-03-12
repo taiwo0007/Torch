@@ -42,6 +42,18 @@ export class AuthService {
   }
 
 
+  saveHostDetailsLocaly(id:number){
+    let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
+    tempUserData._hostID = id;
+    tempUserData._isHost = true;
+    localStorage.setItem('userData', JSON.stringify(tempUserData));
+    this.user.next(tempUserData)
+
+    console.log(tempUserData);
+  }
+
+
+
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean>{
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/login',loginRequestPayload)
         .pipe(catchError(this.handleError),

@@ -17,7 +17,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
   @ViewChild(BsDropdownDirective, { static: false }) dropdown: BsDropdownDirective;
   isAuthenticated = false;
   isSuccessLogOut = false;
-  isHost:boolean = false;
+  isHost:boolean;
+
   isVerified:boolean = false;
   isLoading = false;
   hostID:number;
@@ -58,6 +59,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
       this.hostID = data.hostID;
       console.log(data._isVerified)
+
 
 
     })

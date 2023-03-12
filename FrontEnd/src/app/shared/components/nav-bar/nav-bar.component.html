@@ -1,6 +1,7 @@
 
 
 <nav
+
         style="background-color: black !important; padding: 0.6rem 7rem !important"
         id="navbar-example2" class="navbar bg-dark navbar-dark  sticky fixed-top py-2">
   <div>
@@ -12,6 +13,7 @@
         Safety
       </a>
     <a  style="border-radius: 2.3rem !important; font-size: .9rem !important; background-color: black !important;" class="btn fs-4 text-light rounded-0 fw-bold my-auto align-self-center mt-1 btn-hover">
+
       Help
     </a>
 
@@ -22,6 +24,7 @@
   <ul  class="nav nav-pills">
     <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
       <a [routerLink]="['login']" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
+
         Log in
       </a>
     </li>
@@ -29,7 +32,7 @@
       <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
 
     </li>
-    
+
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
 
@@ -41,6 +44,7 @@
 <!--      </a>-->
 <!--    </li>-->
 
+
     <li *ngIf="isAuthenticated" bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class="nav-item dropdown bg-dark m-auto nav-link">
       <a  dropdownToggle style="background-color: black !important" class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false">
 <!--        <i class="fa fa-th fw-light" aria-hidden="true"></i>-->
@@ -50,6 +54,7 @@
 
       </a>
       <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info py-2 ">
+
         <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Your Trips</a></li>
         <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/profile']">Your Profile</a></li>
         <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="dropdown-item text-info" [routerLink]="['verify']">Verify Now</a></li>
@@ -58,6 +63,7 @@
         <li><hr class="dropdown-divider bg-dark"></li>
         <li class="my-2" role="menuitem" *ngIf="isHost == false || isVerified == true" (click)="closeDropdown($event)"><a [routerLink]="['become-host']" class="dropdown-item text-info border-top-dark fw-bold py-2" >Become a host</a></li>
         <li role="menuitem"><hr class="dropdown-divider bg-dark"></li>
+
         <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading3">Legal & Insurance</a></li>
         <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading4">Privacy Policies</a></li>
       </ul>
