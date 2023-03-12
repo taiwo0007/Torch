@@ -1,25 +1,27 @@
 steps:
-  - name: 'maven'
-    entrypoint: 'mvn'
-    args: ['-f', './BackendAPI/pom.xml', 'clean', 'install', '-DskipTests']
+  # Build with Maven
+  - name: "gcr.io/cloud-builders/mvn"
+    args: ["clean", "install", "-DskipTests"]
+    dir: "./BackendAPI"
+
   #https://cloud.google.com/build/docs/cloud-builders
   # Build the container image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA', '.']
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA", "."]
   # Push the container image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA"]
   # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
-      - 'run'
-      - 'deploy'
-      - '$_SERVICE_NAME'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
-      - '--region'
-      - '$_DEPLOY_REGION'
+      - "run"
+      - "deploy"
+      - "$_SERVICE_NAME"
+      - "--image"
+      - "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA"
+      - "--region"
+      - "$_DEPLOY_REGION"
 options:
   logging: CLOUD_LOGGING_ONLY
 
