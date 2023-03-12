@@ -1,4 +1,10 @@
 /target/
+/BackendAPI/target/
+./BackendAPI/target/
+./FrontEnd/.angular/cache/
+/FrontEnd/.angular/cache/
+FrontEnd/.angular/cache/
+/.angular/cache/
 # Default ignored files
 /shelf/
 /workspace.xml
