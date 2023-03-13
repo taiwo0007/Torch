@@ -1,5 +1,5 @@
 steps:
-  - name: "gcr.io/cloud-builders/cloud-sql-proxy:v1"
+  - name: "gcr.io/cloud-sql-connectors/cloud-sql-proxy"
     args:
       [
         "--credentials-file",
