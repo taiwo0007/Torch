@@ -1,0 +1,5 @@
+.mat-dialog-actions{
+    align-items: flex-end !important;
+    align-content: end !important;
+    justify-content: end !important;
+}

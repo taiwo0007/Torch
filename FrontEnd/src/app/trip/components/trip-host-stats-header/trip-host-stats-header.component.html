@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-sm-12 col-md-2">
+        <div class="bg-dark text-light p-3   rounded">
+            <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Host Trips</p></div>
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h2 th:text="${totalHostTrips}">{{totalHostTrips}}</h2>
+                    <p class="font-smaller">Host Trips</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-2">
+        <div class="bg-dark text-light p-3   rounded">
+            <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Escooter USE</p></div>
+            <div class="d-flex justify-content-around my-auto">
+                <div class="text-center px-3">
+                    <h2 th:text="${escootersInUse}">{{escootersInUse}}</h2>
+                    <p class="font-smaller">In use</p>
+                </div>
+                <div class="text-center ">
+                    <h2 th:text="${escootersNotInUse}">{{escootersNotInUse}}</h2>
+                    <p class="font-smaller">Not in use</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-2">
+        <div class="bg-dark text-light p-3   rounded">
+            <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Income</p></div>
+            <div class="d-flex justify-content-center">
+                <div class="text-center px-3">
+                    <h2 class="text-center"> {{earned | currency: 'EUR'}} </h2>
+                    <p class="font-smaller">Earned</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-2">
+
+        <div class="bg-dark text-light p-3   rounded">
+            <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
+            <div class="d-flex justify-content-around my-auto">
+                <div class="text-center px-3">
+                    <h2 th:text="${cancelled}">{{cancelled}}</h2>
+                    <p class="font-smaller">Total</p>
+                </div>
+                <div class="text-center ">
+                    <h2 th:text="${cancelledRecently}">{{cancelledRecently}}</h2>
+                    <p class="font-smaller">recently</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-12 col-md-4">
+
+        <div class="bg-dark text-light p-3   rounded">
+            <div class="title"><p class="text-muted text-uppercase font-small text-custom-grey">Cancelled Trips</p></div>
+            <div class="d-flex justify-content-around my-auto">
+                <div class="text-center px-3">
+                    <h2>8</h2>
+                    <p class="font-smaller">In use</p>
+                </div>
+                <div class="text-center ">
+                    <h2>2</h2>
+                    <p class="font-smaller">Not in use</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

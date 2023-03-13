@@ -1,0 +1,20 @@
+
+<div class="">
+    <mat-dialog-content class=" d-flex flex-column justify-content-center">
+        <img class="align-content-center align-self-center " style="width: 20rem; height: auto" src="assets/images/website/fingerprint.gif" alt="">
+        <h1 class=" fw-bold fs-2 mx-auto text-center" mat-dialog-title>Verify Now</h1>
+
+
+        <p class="w-75 text-center mx-auto mt-2"> Verify your account on torch to sign into our Host program. Hosts get the ability to rent out
+        there electric scooters and receive payments. </p>
+
+
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center" class="d-flex mt-2 flex-column">
+        <button (click)="onVerifyConsented()" style="padding: 5px 7rem !important;" class="rounded btn btn-primary px-5" [routerLink]="['/verify']" mat-button [mat-dialog-close]="true" cdkFocusInitial>Verify</button>
+        <button (click)="onVerifyConsented()" class="pt-1 mx-auto tect-center" mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+
+</div>
+

@@ -1,7 +1,6 @@
 
 
 <nav
-
         style="background-color: black !important; padding: 0.6rem 7rem !important"
         id="navbar-example2" class="navbar bg-dark navbar-dark  sticky fixed-top py-2">
   <div>
@@ -29,9 +28,11 @@
       </a>
     </li>
     <li  *ngIf="!isAuthenticated" class="nav-item  my-auto">
+
       <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
 
     </li>
+    
 
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
@@ -47,6 +48,7 @@
 
     <li *ngIf="isAuthenticated" bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class="nav-item dropdown bg-dark m-auto nav-link">
       <a  dropdownToggle style="background-color: black !important" class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false">
+
 <!--        <i class="fa fa-th fw-light" aria-hidden="true"></i>-->
         <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"  class="rounded-circle " src="./assets/images/website/avatar.png" alt="">
 

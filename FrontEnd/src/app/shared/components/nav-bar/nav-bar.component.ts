@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   @ViewChild(BsDropdownDirective, { static: false }) dropdown: BsDropdownDirective;
   isAuthenticated = false;
   isSuccessLogOut = false;
+
   isHost:boolean;
 
   isVerified:boolean = false;
@@ -46,6 +47,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
         this.profileImage = userData.profilePicture;
         console.log(userData)
       })
+
 
 
       this.isVerified = data._isVerified;

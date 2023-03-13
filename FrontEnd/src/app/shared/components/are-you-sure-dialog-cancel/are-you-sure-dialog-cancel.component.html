@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Cancellation </h1>
+<div mat-dialog-content style="height: calc(100% - 96px);">
+    <p>Are you sure you want to cancel your Trip before it is complete?</p>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button >No Thanks</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="cancelTrip()">Confirm</button>
+</div>

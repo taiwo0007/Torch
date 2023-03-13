@@ -1,0 +1,45 @@
+.font-small{
+
+    font-size: 0.81rem !important;
+
+}
+.font-smaller{
+
+    font-size: 0.85rem !important;
+
+}
+.text-custom-grey{
+    color: rgb(143, 143, 143) !important;
+}
+.font-helvetica{
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+.bg-lighter{
+    background-color: #e9f0f6 !important;
+}
+
+.table-responsive {
+    max-height:300px !important;
+    overflow-x: hidden !important;
+
+}
+
+.hover-row{
+    transition: all .1s ease-in-out !important;
+
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+.hover-row:hover {
+    transform: scale(1.01) !important;
+    opacity: .9 !important;
+    overflow-x: hidden !important;
+    /* https://getcssscan.com/css-box-shadow-examples */
+    box-shadow: rgba(100, 100, 111, 0.092) 0px 7px 29px 0px !important;
+}

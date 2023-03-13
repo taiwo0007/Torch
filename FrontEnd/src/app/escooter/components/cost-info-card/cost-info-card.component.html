@@ -1,0 +1,59 @@
+<div class="px-4 pt-4 border rounded mt-4  bg-white">
+    <div>
+        <h3 class="fw-bold mt-2 text-info">Cost Info</h3>
+        <div class="p-2 mb-3">
+            <div>
+                <div class="card-body mx-0">
+                    <div class="row  py-2">
+                        <div class="col-6 my-auto">
+                            <p class="card-text my-auto text-secondary"><span >{{escooterCost | currency: 'EUR'}}</span> for  <span>{{tripDays}}</span> day(s) </p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <p  class=" text-info text-end my-auto fw-bold">{{initialCost | currency:'EUR'}}</p>
+                        </div>
+                    </div>
+                    <div class="row   py-2">
+                        <div class="col-6 my-auto">
+                            <p class="card-text  my-auto text-secondary">Processing free</p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <p class=" text-info text-end my-auto fw-bold">€20.00</p>
+                        </div>
+                    </div>
+                    <div class="row t d py-2">
+                        <div class="col-6 my-auto">
+                            <p class="card-text  my-auto text-secondary">Discount</p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <p class=" text-info text-end my-auto fw-bold">€0.00</p>
+                        </div>
+                    </div>
+                    <div class="row t d py-2">
+                        <div class="col-6 my-auto">
+                            <p class="card-text  my-auto text-secondary">Insurance</p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <p class=" text-info text-end  my-auto fw-bold">FREE</p>
+                        </div>
+                    </div>
+                    <div class="row t d py-2">
+                        <div class="col-6 my-auto">
+                            <p class="card-text  my-auto text-secondary">VAT @ 20%</p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <p class=" text-info text-end  my-auto fw-bold">{{vatCost | currency:'EUR'}}</p>
+                        </div>
+                    </div>
+                    <div class="row border-top   mt-3 pt-4">
+                        <div class="col-6 my-auto">
+                            <p  class="card-text  my-auto text-dark fw-bold">Total cost</p>
+                        </div>
+                        <div class="col-6 my-auto">
+                            <h3  class=" text-info text-end my-auto fw-bold">{{totalCost | currency:'EUR'}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="bg-light  text-dark font-helvetica">
+<div class="row g-5 pt-5 mt-4 pb-5 mx-auto container">
+    <h1 *ngIf="trips" class="fw-bold">Trips Stats</h1>
+    <h1 *ngIf="!trips" class="fw-bold">No Trips Booked</h1>
+    <div class="col-12">
+<trip-stats-header *ngIf="tripUser"
+                   [totalTrips]="tripUser?.renterTrips.length"
+                   [onGoingTrips]="tripUser?.userTripDetails.ACTIVE"
+                   [completedTrips]="tripUser?.userTripDetails.COMPLETED"
+                   [daysLeft]="tripUser?.lastTripDaysLeft"
+                   [cancelledTrips]="tripUser?.userTripDetails.CANCELLED"
+                   [cancelledRecentlyTrips]="tripUser?.userTripDetails.CANCELLED_RECENTLY"
+                    ></trip-stats-header>
+    </div>
+
+    <!-- https://www.codeply.com/go/S6MgKWqFvj -->
+
+    <!-- <div style="height: 100% !important;" class="col-sm-3 h-100">
+
+    </div> -->
+
+    <div class="col-sm-12" *ngIf="trips">
+       <trip-history-card [isHost]="false" [trips]="trips"></trip-history-card>
+    </div>
+
+</div>
+</div>

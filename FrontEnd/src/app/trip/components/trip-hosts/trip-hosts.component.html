@@ -1,0 +1,23 @@
+<body class="bg-light  text-dark font-helvetica">
+<div class="row container mt-4 mx-auto g-5 pt-5 pb-5">
+    <h1 class="fw-bold ">Host Trips</h1>
+    <div class="col-12">
+      <trip-host-stats-header *ngIf="hostDetails"
+        [totalHostTrips]="hostDetails?.hostTrips?.length"
+        [escootersInUse]="hostDetails?.scooterUseDetail?.ESCOOTER_IN_USE"
+         [escootersNotInUse]="hostDetails?.scooterUseDetail.ESCOOTER_NOT_IN_USE"
+        [earned]="hostDetails?.scooterUseDetail?.EARNED"
+         [cancelled]="hostDetails?.scooterUseDetail?.CANCELLED"
+         [cancelledRecently]="hostDetails?.scooterUseDetail?.CANCELLED_RECENTLY"
+      ></trip-host-stats-header>
+    </div>
+
+    <!-- https://www.codeply.com/go/S6MgKWqFvj -->
+    <div class="col-sm-12">
+        <trip-history-card [isHost]="true" *ngIf="hostDetails" [trips]="hostDetails.hostTrips"></trip-history-card>
+
+    </div>
+</div>
+
+
+</body>

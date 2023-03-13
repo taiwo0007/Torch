@@ -6,7 +6,6 @@ import {Make} from "../../escooter/models/make.interface";
 import {ScooterAddRequestPayload} from "../payload/scooter-add-request.payload";
 import {catchError, map, throwError} from "rxjs";
 import {Host} from "../models/host.interface";
-
 import {AuthService} from "../../auth/services/auth.service";
 
 
@@ -18,6 +17,7 @@ export class HostService {
 
   constructor(private http: HttpClient,
               private authService:AuthService) { }
+
 
   getHostById(id:number){
     return this.http.get(environment.appUrl+'/api/host/host-details/'+id)
@@ -41,10 +41,12 @@ export class HostService {
             map((data:Host) => {
 
                 console.log(data)
+
                 this.authService.saveHostDetailsLocaly(data.id);
                 return data.id;
         }))
   }
+
 
 
 

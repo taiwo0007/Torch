@@ -41,7 +41,6 @@ export class AuthService {
 
   }
 
-
   saveHostDetailsLocaly(id:number){
     let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
     tempUserData._hostID = id;

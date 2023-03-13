@@ -1,0 +1,50 @@
+
+<div class="">
+    <mat-dialog-content class=" d-flex flex-column justify-content-center">
+        <mat-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Rate your trip</ng-template>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+                <form [formGroup]="secondFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                               required>
+                    </mat-form-field>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step class="mb-auto">
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+
+
+
+
+    </mat-dialog-content>
+<!--    <mat-dialog-actions align="center" class="d-flex mt-2 flex-column">-->
+<!--        <button (click)="onVerifyConsented()" style="padding: 5px 7rem !important;" class="rounded btn btn-primary px-5" [routerLink]="['/verify']" mat-button [mat-dialog-close]="true" cdkFocusInitial>Verify</button>-->
+<!--        <button (click)="onVerifyConsented()" class="pt-1 mx-auto tect-center" mat-button mat-dialog-close>Cancel</button>-->
+<!--    </mat-dialog-actions>-->
+
+</div>
+

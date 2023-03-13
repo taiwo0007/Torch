@@ -1,0 +1,150 @@
+<section class="container-fluid mt-5 mb-5 bg-light pt-5">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </symbol>
+    </svg>
+
+    <div class="row bg-light container mx-auto">
+        <div *ngIf="isNewlyBooked">
+            <h1 style="font-size: 4rem !important;" class="text-center fw-bold text-info"><i class="fa fa-check-circle-o" aria-hidden="true"></i>
+            </h1>
+            <h2 class="fw-bold text-center ">Thank you </h2>
+            <h1 class="fw-bold text-center ">Your trip has been successfuly booked</h1>
+        </div>
+        <div class="col-8 ">
+            <div class="p-4 border rounded mt-4 bg-white ">
+                <div>
+                    <div class="row">
+                        <div class="col-7 text-start">
+                            <div class="p-3">
+                                <h3 class="fw-bold">Trip #: <span class="text-info">{{trip?.tripId}}</span></h3>
+                                <h5  th:text="${escooter.getModelName}" style="" class="text-secondary mb-5"> {{ trip.eScooterOnTrip.modelName }} </h5>
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-tint my-auto" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-11 my-auto">
+                                        <div *ngIf="trip.eScooterOnTrip.waterResistant">
+                                            <p class=" text-start   my-auto ">Water Resistant</p>
+                                        </div>
+                                        <div *ngIf="!trip.eScooterOnTrip.waterResistant">
+                                            <p class=" text-start   my-auto ">Not Water Resistant</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+
+
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-bolt my-auto" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-11 my-auto">
+                                        <p class=" text-start  my-auto  "> {{trip?.eScooterOnTrip.maxSpeed}} km/h</p>
+                                    </div>
+
+
+                                </div>
+                                <div style="border-left: 4px solid black !important ; font-size: 1rem;" class="row py-2 px-3 bg-light mt-4">
+                                    <div style="padding-right: 0 !important" class="col-1 my-auto">
+                                        <i style="font-size: 1.3rem; " class="fa fa-thumbs-up my-auto" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-11 my-auto">
+                                        <p class=" text-start  my-auto  ">Free 24hr Cancellation</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-5 my-auto">
+                            <div class="mx-auto my-auto text-center">
+                                <img
+                                        class="rounded mx-auto text-center"
+                                        style="object-fit: cover; width: 14.2rem; height: 15.2rem"
+                                        src="{{trip?.eScooterOnTrip.image}}"
+                                        alt=""
+                                />
+                                <a *ngIf="tripEndFormattedDate > todaysDate && trip.status == 'ACTIVE'" (click)="onCancelTrip()" style="width: 14.2rem;" class="btn btn-danger mt-3 text-center mx-auto">Cancel Trip</a>
+                                <a *ngIf="tripEndFormattedDate < todaysDate && trip.status == 'ACTIVE'" (click)="onCompleteTrip()" style="width: 14.2rem;" class="btn btn-primary mt-3 text-center mx-auto text-white">Complete Trip</a>
+                                <a *ngIf="trip.status == 'COMPLETED'" style="width: 14.2rem;" class="btn btn-success mt-3 text-center mx-auto text-white disabled" disabled>Completed</a>
+                                <a *ngIf="trip.status == 'CANCELLED'" style="width: 14.2rem;" class="btn btn-danger mt-3 text-center mx-auto text-white disabled" disabled>Cancelled</a>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-7">
+                               <host-details-card *ngIf="trip.trip_owner" [escooter]="trip.eScooterOnTrip" [hostId]="trip.trip_owner"></host-details-card>
+                            </div>
+                            <div class="col-5">
+                                <div class="row pt-5 border-top mt-4">
+                                    <div style="padding: 0 !important;" class="card">
+                                        <div class="card-img-top" style="height: 19rem" id="map"></div>
+                                        <div class="card-body">
+                                            <p class="text-info text-center fw-bold mb-1"> Pickup Location</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 bg-light">
+
+            <cost-info-card *ngIf="trip"
+                            [escooterCost]="trip.eScooterOnTrip.cost"
+                            [initialCost]="initialCost"
+                            [tripDays]="trip.days"
+                            [vatCost]="vatCost"
+                            [totalCost]="totalCost"
+            ></cost-info-card>
+            <div class="px-4 pb-4  pt-4 border rounded mt-4 bg-white ">
+                <h3 class="fw-bold text-info pb-3">Trip information</h3>
+
+                <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light">
+                    <div style="padding-right: 0 !important" class="col-2 my-auto">
+                        <i style="font-size: 1.3rem; " class="fa fa-street-view my-auto" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-10 my-auto">
+                        <p class=" text-start  my-auto  fw-bolder">Pick-up date</p>
+                        <p style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">{{trip.tripStart | date}}</p>
+                    </div>
+
+
+                </div>
+                <div style="border-left: 4px solid black !important ;" class="row py-2 px-3 bg-light mt-4">
+                    <div style="padding-right: 0 !important" class="col-2 my-auto">
+                        <i style="font-size: 1.3rem; " class="fa fa-map-pin my-auto" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-10 my-auto">
+
+                        <p class=" text-start  my-auto  fw-bolder">Drop-of date</p>
+                        <p  style="font-family: Helvetica;" class="text-secondary text-start  my-auto ">{{trip.tripEnd | date}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="p-4 border rounded mt-4 bg-white">
+                <p class="fw-bold">Insurance information</p>
+                <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
+                <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Insurance cost: </p>
+                    <div>
+                        <p class="fw-bold">€23.00</p></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

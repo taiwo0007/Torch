@@ -1,0 +1,113 @@
+
+
+<section style="max-width: 67% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter mb-5 pb-5 mt-5 pt-5">
+
+    <alert-message *ngIf="isHostCreated " [boldText]="hostID" [message]="'Host account successfully created. Your Host ID: '" [isSuccess]="true"></alert-message>
+    <h2 class="fw-bold p-4">Add new Electric Scooter</h2>
+    <form #addForm = "ngForm" (ngSubmit)="onSubmit(addForm)" class="p-4">
+
+        <div style="" class="mb-3 d-flex justify-content-between ">
+            <div style="width: 47% !important;">
+                <label class="form-label fw-bold">Make</label>
+
+                <select required ngModel name="make" class="form-select form-select-md mb-3" aria-label=".form-select-md example" th:field="*{make}">
+                    <option *ngFor="let thisMake of makes" [value]="thisMake.name">{{thisMake.name}}
+                    </option>
+                </select>
+            </div>
+            <div style="width: 47% !important;">
+                <label for="modelName" class="form-label fw-bold">Model Name</label>
+                <input ngModel required name="modelName" type="text" class="form-control" id="modelName"  />
+            </div>
+        </div>
+
+        <div style="" class="mb-3 d-flex justify-content-between ">
+            <div style="width: 47% !important;">
+                <label for="cost" class="form-label fw-bold">Cost per day €:</label>
+                <input ngModel required th:field="*{cost}" pattern="^[1-9]+[0-9]*$" name="cost" type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="cost" />
+            </div>
+            <div style="width: 47% !important;">
+                <label for="maxSpeed" class="form-label fw-bold">Max Speed (mp/h):</label>
+                <input name="maxSpeed" ngModel required th:field="*{maxSpeed}" type="number" class="form-control" id="maxSpeed"
+                />
+            </div>
+        </div>
+
+        <div style="" class="mb-3 d-flex justify-content-between pt-3">
+            <div style="width: 47% !important;">
+                <label for="maxWeight" class="form-label fw-bold">Max user weight (Kg):</label>
+                <input required ngModel name="maxWeight" th:field="*{maxWeight}" type="number" class="form-control" id="maxWeight"  />
+            </div>
+            <div style="width: 47% !important;">
+                <label for="scooterWeight" class="form-label fw-bold">Scooter weight (Kg):</label>
+                <input required ngModel name="scooterWeight"  th:field="*{scooterWeight}" type="number" class="form-control" id="scooterWeight"
+                        placeholder="" />
+            </div>
+        </div>
+        <div style="" class="mb-3 d-flex justify-content-between form-group">
+            <div style="width: 47% !important;">
+                <label for="motorPower" class="form-label fw-bold">Motor power (Watts):</label>
+                <input required ngModel name="motorPower" th:field="*{motorPower}" type="number" class="form-control" id="motorPower"  />
+            </div>
+            <div style="width: 47% !important;">
+                <label for="maxRange" class="form-label fw-bold">Max range (Km/h):</label>
+                <input required ngModel name="maxRange" th:field="*{maxRange}" type="text" class="form-control" id="maxRange"
+                       placeholder="" />
+            </div>
+
+        </div>
+        <div style="" class="mb-3 d-flex justify-content-between ">
+            <div style="width: 47% !important;">
+                <label for="tripStart" class="form-label fw-bold">Trip Start:</label>
+                <input required ngModel name="tripStart" th:field="*{tripStart}"  type="date" class="form-control" id="tripStart"  />
+            </div>
+            <div style="width: 47% !important;">
+                <label for="tripEnd" class="form-label fw-bold">Trip End:</label>
+                <input required ngModel name="tripEnd" th:field="*{tripEnd}"  type="date" class="form-control" id="tripEnd"
+                       placeholder="" />
+            </div>
+
+        </div>
+
+        <div style="" class="mb-3 d-flex justify-content-between ">
+            <div style="width: 47% !important;" class="form-group">
+                <label for="waterResistant" class="form-label fw-bold mb-2">Water Rating</label>
+                <select ngModel required name="waterResistant" id="waterResistant" th:field="*{waterResistant}" class="form-select form-select-md ">
+                    <option [value]="true">Water Resistant</option>
+                    <option [value]="false">Not Water Resistant</option>
+
+                </select>
+
+            </div>
+            <div style="flex-direction: column; width: 47% !important; " class="form-group ">
+                <label class="form-label fw-bold ">Scooter image</label>
+                <div class="">
+                    <input (change)="onUploadChange($event)" ngModel th:field="*{image}" name="image" type="file" accept=".png, .jpg, .jpeg, .pdf" class="form-control" aria-label="file example" required>
+                </div>
+            </div>
+
+        </div>
+        <div style="" class="mb-3 d-flex justify-content-between ">
+            <div style="width: 47% !important;">
+                <label for="country" class="form-label fw-bold">Location:</label>
+                <input [options]="options" ngx-google-places-autocomplete  (onAddressChange)="handleAddressChange($event)" required ngModel name="country" th:field="*{country}" type="text" class="form-control" id="country"  />
+            </div>
+        </div>
+
+        <div class="my-3">
+            <label class="form-label fw-bold mb-3">About Scooter</label>
+            <textarea ngModel name="about" th:field="*{about}" class="form-control" id="validationTextarea"
+                      placeholder="Tell us more about the scooter here...." required></textarea>
+        </div>
+
+        <button *ngIf="!isLoading" style="width: 24%" type="submit" class="btn btn-dark text-light p-2 mt-4 rounded-0" [disabled]="!addForm.valid || isLoading">
+            Create
+        </button>
+        <button *ngIf="isLoading" style="width: 24%" type="submit" class="btn btn-dark text-light p-2 mt-4 rounded-0" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Create
+        </button>
+
+    </form>
+
+</section>
