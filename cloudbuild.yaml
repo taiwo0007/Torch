@@ -1,7 +1,18 @@
 steps:
+  - name: "gcr.io/cloud-builders/cloud-sql-proxy"
+    args:
+      [
+        "--credentials-file",
+        "school-376315-bb5d9cc71a72.json",
+        "school-376315:europe-west2:torchdb",
+        "&",
+      ]
+
   - name: "gcr.io/cloud-builders/mvn"
     args: ["clean", "install", "-DskipTests"]
     dir: "./BackendAPI/"
+    env:
+      - "SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/torchdb?useSSL=false"
 
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: docker

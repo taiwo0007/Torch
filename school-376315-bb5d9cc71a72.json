@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "school-376315",
+  "private_key_id": "bb5d9cc71a72f0466f7c968f45beca442aeee930",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCmYJWaMgD+GRv+\n167Zle8kd0jimW4+SsgV75H/w2jLf8Xj8wPyDT/YKcfjbHb8GkpFmB3rnauTJzxW\nqJEd+IKuNbji6dRyiVMQoOzJ5sub/DPoNMITcjhJfMTV6J2kgGBX1IB3cYEI5lht\nsEa1gX9O67yjSDGIAbgG0yTHdg8bESmrR/WBbv0KBq3cVTz5eDqEWiKGJfmXCJOO\nTZf0U8lS118KYPTbdLegW9/yBwxY/AOmKd1vTiThaK/BjQmq+Kk8Awqo4IFSJD5o\nb+4r3+NbwzvOgS9EM8T81Mr9flS2wNIx8SmbmIFyRHzaZy1TXNM2DJBquunaXTdv\nSpiwx2EbAgMBAAECggEABmSrEFbK5Pi6s6s+uSENecg/pmgg7VyFncTWm7kQO374\ncA70NYaUJSP4iLZanXYL0+rJfjamfiwWzHmubIlnyXafrnsvwmBL2dVlOUjuGrCx\nSe36Zdw7aiTU53yzJLwYzPyJxzfhrnbeKluItrbNg+SDxikjBh09dhMCVHZ76XKf\n2LQTvIbW+gAzT93SpRHu+OxJEjEZqFjiJv3KARR6dptuY03miBJdA0KbngWNgixV\nMhi2BH/5NTnbc7zF2iZnEht0j51wrpclr0e1y8TLD+48o++32RSruTZAyDRprTj1\noCkOcNfD3ja8Lqnn7Z0Vybkr1EMP4k3hzLy7xTbawQKBgQDWsbApT8HTwzeeni71\ncWoQXpEkYWHunoLNu0cKEmuvDn6s5ATZ8h7Se3kuGEJzATXTEKSv9RqD4lmzN70i\nhnInxg+M6WK4c4B+Q5jIhSgIiXJqYoHay9vAZatdPA0/kXQupuf+9puXkUtWiajL\nI5ZGDb+oCJCIamaRiKTgXuK44QKBgQDGYybqmFtP4zy2hoOL2qzx2He0H950V0+s\n9y/K43M/DqZTmqg6J/ck/M3vjwjbYN8Xboc7p1ZSomB6djQtDhFX5mU1ZY+T8D5F\neKGimo+36hKMJMTVL2ef9uOPDUGWjhu5fQGD6EvTr7YNId85vjnjcp0xSyKJ0yJi\nACRufXktewKBgQChqCvP/3kf/ZdsvQj40QwfBUXekeEOrpYpWQGVqOciahSiFBM/\nFFt2+3f0aFnohJnFsnt+7lynv5DxLGAilf9wyWa+IKGv53ByIm3xVqodO3lGd6P1\nXpi6FxPgYS5MljZYRl7bkU744nNK1t6dDs/BMesFGGXUAeH3ZV9YfrnSoQKBgA6v\nOis1OdUQ+eZ80HHirth78GhZz4qHB/PCnDwFV/t75x3bHcaoPKf1On0X9kzev8Sp\nPsNQoJgfQsrtwvDu0KPT/vvT16vYpZNY2YYCsM6pOdQ7yIILLz1s9e0ZyxgMzsqN\nETalVC+IGw6fyjko9nn6et4yNI1FHo9oeUngab7PAoGAARZJctMFBrICJItXXnSA\nKNTMDMBsWH+mdFXvjxM8wQUWws3ak592MyTTczxw6oNphPxkoGGyWg4lnVqni/eo\nFKbtdVOYq4gZhDoT4UxuQ54ihbt6cJAwz18yz5aY1ZbNam70DC7Uz/DnbfpuN0TY\nZIzCIbLF7MsaeROVDB323jo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloudsql-proxy@school-376315.iam.gserviceaccount.com",
+  "client_id": "105402818283455944847",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudsql-proxy%40school-376315.iam.gserviceaccount.com"
+}
