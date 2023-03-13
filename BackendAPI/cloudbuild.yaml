@@ -38,7 +38,7 @@ steps:
         "linux/amd64",
         "-t",
         "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA",
-        ".",
+        "./BackendAPI/",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
