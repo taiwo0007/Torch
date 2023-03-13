@@ -1,10 +1,17 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: docker
     args:
-      - build
-      - '-t'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
-      - './FrontEnd/'
+      [
+        "buildx",
+        "build",
+        "--platform",
+        "linux/amd64",
+        "-t",
+        "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA",
+        "./FrontEnd/",
+      ]
+
   - name: gcr.io/cloud-builders/docker
     args:
       - push
