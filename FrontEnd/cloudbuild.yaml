@@ -8,7 +8,7 @@ steps:
         "--platform",
         "linux/amd64",
         "-t",
-        "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA",
+        "$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA",
         "./FrontEnd/",
       ]
 
