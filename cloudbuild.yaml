@@ -4,14 +4,14 @@ steps:
     args:
       - "-c"
       - |
-        docker pull gcr.io/cloudsql-docker/gce-proxy:1.19.1
+        docker pull gcr.io/cloudsql-docker/cloudsql-proxy:1.24.0
 
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
     args:
       - "-c"
       - |
-        docker run -d -p 127.0.0.1:3306:3306 gcr.io/cloud-builders/cloud-sql-proxy:1.19.1  \
+        docker run -d -p 127.0.0.1:3306:3306 gcr.io/cloudsql-docker/cloudsql-proxy:1.24.0  \
           --credentials-file /workspace/school-376315-bb5d9cc71a72.json school-376315:europe-west2:torchdb &
 
   # - name: "gcr.io/cloud-sql-connectors/cloud-sql-proxy"
