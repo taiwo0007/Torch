@@ -5,7 +5,6 @@ steps:
         "--credentials-file",
         "school-376315-bb5d9cc71a72.json",
         "school-376315:europe-west2:torchdb",
-        "&",
       ]
 
   - name: "gcr.io/cloud-builders/mvn"
