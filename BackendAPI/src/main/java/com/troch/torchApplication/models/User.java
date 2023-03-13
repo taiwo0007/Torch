@@ -46,6 +46,7 @@ public class User {
     private boolean isTorchTrusted;
     private Integer phoneNumber;
 
+    @Column(name = "about", length = 1000)
     private String about;
     private String location;
     private String postCode;
@@ -79,8 +80,8 @@ public class User {
 //    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
 
-    private double longitude;
-    private double latitude;
+    private Double longitude;
+    private Double latitude;
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
     @JsonBackReference

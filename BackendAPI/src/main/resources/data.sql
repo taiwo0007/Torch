@@ -11,6 +11,8 @@ DELETE FROM make;
 
 DELETE FROM host;
 
+ALTER TABLE escooter MODIFY about VARCHAR(1000);
+
 
 
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
@@ -26,21 +28,19 @@ INSERT INTO host(id) VALUES (920386034);
 INSERT INTO host(id) VALUES (333);
 INSERT INTO host(id) VALUES (444);
 
-INSERT INTO user (country, is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name, profile_picture, host_id, is_host,
+INSERT INTO user (latitude, longitude, country, is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name, profile_picture, host_id, is_host,
                   phone_number)
-VALUES ('ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',1,
+VALUES (-6.308530354714592,53.358888300000004,'ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+        'Lorem Ipsum is simply dummy text','2000-01-01',1,
         'x00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Layla', 'Obadre',
         'https://storage.googleapis.com/torch-gcp-bucket/pic4.jpeg', 333, true, 843568932);
 
-INSERT INTO user (country, is_Torch_Trusted, rating, location, about, joined, id, email, password, first_name, last_name, profile_picture, host_id, is_host,
+INSERT INTO user (latitude, longitude, country, is_Torch_Trusted, rating, location,
+                  about, joined, id, email, password, first_name, last_name, profile_picture, host_id, is_host,
                   phone_number)
-VALUES ('ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',10,
+VALUES (-6.308530354714592,53.358888300000004, 'ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+        'Lorem Ipsum is simply dummy text of the
+        ','2000-01-01',10,
         '00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Tori', 'Cardon',
         'https://cdn-ajggd.nitrocdn.com/kMoOFpDlsOVtlYJLrnSRNCQXaUFHZPTY/assets/images/optimized/rev-208c8fc/wp-content/uploads/bb-plugin/cache/cool-profile-pic-matheus-ferrero-landscape.jpeg', 444, true, 843568932);
 --
@@ -49,14 +49,14 @@ VALUES ('ireland', true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, D
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 
 
-INSERT INTO user (is_Torch_Trusted, rating, location, about, joined, country, is_verified,
+INSERT INTO user (latitude, longitude, is_Torch_Trusted, rating, location, about, joined, country, is_verified,
                   id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host)
-VALUES (true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard
-        dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially','2000-01-01',
+VALUES (-6.308530354714592,53.358888300000004, true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+        'Lorem Ipsum is simply dummy text of the printing and ','2000-01-01',
         "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "https://storage.googleapis.com/torch-gcp-bucket/pic1.jpeg", 08764532, true);
-INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id, trips, rating) VALUES ("Dublin",-6.308530354714592,53.358888300000004, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/15.jpeg" ,23.00, 2, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Xiaomi Ultrol 40 pro",333, 39,2);
+INSERT INTO escooter ( county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,
+                      max_range, imageurl, cost, id, about, model_name,scooter_host_id, trips, rating)
+VALUES ("Dublin",-6.308530354714592,53.358888300000004, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/15.jpeg" ,23.00, 2, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Xiaomi Ultrol 40 pro",333, 39,2);
 INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id, trips, rating) VALUES ("Dublin",-6.259398,53.326007, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/12.jpeg" ,23.00, 10, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Vector H48G Model 4",920386034,12,5);
 INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id, trips, rating) VALUES ("Dublin", -6.357966,53.338961, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/13.webp" ,23.00, 11, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Vultor 9R5NT",444, 102,5);
 INSERT INTO escooter (county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost, id, about, model_name,scooter_host_id, trips, rating) VALUES ("Dublin", -6.267456,53.367980, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia","Ireland", '2000-01-01','2200-01-01' , 71.0, 41.0, 31.0, 41.0, 14.0, "https://storage.cloud.google.com/torch-gcp-bucket/14.jpeg" ,23.00, 12, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su","Vultor v2 BFJJF",333, 91,3);
@@ -114,31 +114,31 @@ VALUES (133, "This electric scooter was amazing and i had the best time using it
 
 
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 00:00:00', 7,333, 1);
+INSERT INTO trip (days, id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2, 1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 00:00:00', 7,333, 1);
 
 
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,2, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(3, "ACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
-
-
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(4, "ACTIVE", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-17 00:00:00', 5,333, 2);
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,3, "ACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
 
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 8,920386034, 10);
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,4, "ACTIVE", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-17 00:00:00', 5,333, 2);
 
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(6, "ACTIVE", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,333, 2);
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 8,920386034, 10);
 
-INSERT INTO trip (id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(7, "ACTIVE", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,444, 10);
+
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,6, "ACTIVE", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,333, 2);
+
+INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
+VALUES(2,7, "ACTIVE", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,444, 10);
 
 
 

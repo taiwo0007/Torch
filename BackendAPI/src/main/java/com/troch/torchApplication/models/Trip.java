@@ -60,7 +60,7 @@ public class Trip {
 
     public Double tripCost;
 
-    private int days;
+    private int days = 0;
 
     @Enumerated(EnumType.STRING)
     public TripStatus status;
