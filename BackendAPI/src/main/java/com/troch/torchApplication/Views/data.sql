@@ -1,11 +1,12 @@
-use torchdb;
+-- use torchdb;
+-- use freedb_torchdb;
 DELETE FROM host_review;
 
 DELETE FROM users_roles;
 DELETE from scooter_review;
 DELETE FROM trip;
 DELETE FROM user;
-DELETE FROM Escooter;
+DELETE FROM escooter;
 DELETE FROM make;
 
 DELETE FROM host;

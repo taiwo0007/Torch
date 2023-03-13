@@ -57,6 +57,8 @@ public class EScooter {
     private Double motorPower;
     private Double maxRange;
     private Boolean waterResistant;
+
+//    @Column(length = 500)
     private String about;
 
     private Boolean inUse = false;
