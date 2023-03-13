@@ -25,9 +25,9 @@ steps:
 
   - name: "gcr.io/cloud-builders/mvn"
     args: ["clean", "install", "-DskipTests"]
-    dir: "./BackendAPI/"
-    env:
-      - "SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/torchdb?useSSL=false"
+    dir: "./"
+    # env:
+    #   - "SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/torchdb?useSSL=false"
 
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: docker

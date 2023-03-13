@@ -97,6 +97,7 @@ public class AuthService {
                     registerRequest.getLastName(), registerRequest.getEmail(),
                     passwordEncoder.encode(registerRequest.getPassword()), Arrays.asList(new Role("ROLE_USER")));
 
+            user.setJoined(new Date());
             userRepository.save(user);
 
             String token = jwtUtil.generateToken(registerRequest.getEmail());
