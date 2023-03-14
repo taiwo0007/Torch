@@ -31,7 +31,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
           paramValue['tripEnd'],
-          paramValue['location']).pipe(delay(3000))
+          paramValue['location'])
           .subscribe((data: any[]) => {
                   this.loadingService.isLoading.next(false);
 
