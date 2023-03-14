@@ -159,8 +159,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200");
-        config.addAllowedOrigin("https://torch-wfurmbodqa-uc.a.run.app");
+//         config.addAllowedOrigin("http://localhost:4200");
+        config.setAllowedOrigins(Arrays.asList("https://torch-wfurmbodqa-uc.a.run.app","http://torch-wfurmbodqa-uc.a.run.app", "https://torch-wfurmbodqa-uc.a.run.app/", "http://localhost:4200", "1.1.1.1","https://0.0.0.0", "http://0.0.0.0",  "127.0.0.1", "http://localhost:8080"));
+
+
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
