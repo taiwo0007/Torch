@@ -11,7 +11,30 @@ import {LoadingService} from "../../../shared/services/loading.service";
 })
 export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
+  //Filter Variables
+  is1to10 = false;
+  is11to20 = false;
+    is21to30 = false
+    is31toEnd = false;
+    isSegway = false;
+    isXioami = false;
+    isAvovo = false;
+    isPureAir = false;
+    isEdisson = false;
+    is1to70 = false;
+    is71to140 = false;
+    is141toEnd = false;
+
+  priceFilterCriteria:any[] = [];
+  makeFilterCriteria:any[] = [];
+  maxWeightFilterCriteria:any[] = [];
+
   escooterResults:any[] = [];
+  escooterResultsFilterCopy:any[] = [];
+  escooterFilterResults:any[] = [];
+
+  escooterPriceResults:any[] = [];
+
   options:google.maps.MapOptions;
   markerOptions: google.maps.MarkerOptions = {draggable: false};
   markerPositions: google.maps.LatLngLiteral[] = [];
@@ -24,7 +47,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-
     this.route.queryParams.subscribe(paramValue => {
         this.loadingService.isLoading.next(true);
 
@@ -36,9 +58,11 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
                   this.loadingService.isLoading.next(false);
 
                   this.isLoading = false;
-            this.escooterResults = data
+            this.escooterResults = data;
+            this.escooterResultsFilterCopy = data;
             this.configureMapOptions();
-            this.configureAllMarkers()
+            this.configureAllMarkers();
+
 
           }, error => {
               this.escooterResults = null;
@@ -51,9 +75,11 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
                   this.markerEventInit();
               })
     })
+
   }
 
   ngAfterViewInit() {
+
 
   }
 
@@ -105,7 +131,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
         let eList = this.escooterResults;
 
         let escooters = document.getElementsByClassName("scooter-card");
-        console.log(escooters)
 
         let markers = [];
 
@@ -204,5 +229,239 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
         this.cards.forEach(element => {
             console.log(element.nativeElement)
         })
+    }
+
+    //Filter Methods
+
+
+
+
+    toggleFilter(filterValue:string){
+
+      //PRICES
+
+
+      if(filterValue == '1to10'){
+
+          this.is1to10 = !this.is1to10;
+          this.is1to10 ? this.priceFilterCriteria.push(filterValue) : this.priceFilterCriteria.splice(this.priceFilterCriteria.indexOf(filterValue),1) ;
+
+      }
+
+        if(filterValue == '11to20'){
+
+            this.is11to20 = !this.is11to20;
+            this.is11to20 ? this.priceFilterCriteria.push(filterValue) : this.priceFilterCriteria.splice(this.priceFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        if(filterValue == '21to30'){
+
+            this.is21to30 = !this.is21to30;
+            this.is21to30 ? this.priceFilterCriteria.push(filterValue) : this.priceFilterCriteria.splice(this.priceFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        if(filterValue == '31toEnd'){
+
+            this.is31toEnd = !this.is31toEnd;
+            this.is31toEnd ? this.priceFilterCriteria.push(filterValue) : this.priceFilterCriteria.splice(this.priceFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        // BRANDS - MAKES
+
+        if(filterValue == 'xioami'){
+
+            this.isXioami = !this.isXioami;
+            this.isXioami ? this.makeFilterCriteria.push(filterValue) : this.makeFilterCriteria.splice(this.makeFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+        if(filterValue == 'segway'){
+
+            this.isSegway = !this.isSegway;
+            this.isSegway ? this.makeFilterCriteria.push(filterValue) : this.makeFilterCriteria.splice(this.makeFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        if(filterValue == 'avovo'){
+
+            this.isAvovo = !this.isAvovo;
+            this.isAvovo ? this.makeFilterCriteria.push(filterValue) : this.makeFilterCriteria.splice(this.makeFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        if(filterValue == 'pure'){
+
+            this.isPureAir = !this.isPureAir;
+            this.isPureAir ? this.makeFilterCriteria.push(filterValue) : this.makeFilterCriteria.splice(this.makeFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+        if(filterValue == 'edisson'){
+
+            this.isEdisson = !this.isEdisson;
+            this.isEdisson ? this.makeFilterCriteria.push(filterValue) : this.makeFilterCriteria.splice(this.makeFilterCriteria.indexOf(filterValue),1) ;
+
+        }
+
+        // MAX USER WEIGHT
+
+        if(filterValue == '1to70'){
+            this.is1to70 = !this.is1to70;
+            this.is1to70 ? this.maxWeightFilterCriteria.push(filterValue) : this.maxWeightFilterCriteria.splice(this.maxWeightFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+        if(filterValue == '71to140'){
+            this.is71to140 = !this.is71to140;
+            this.is71to140 ? this.maxWeightFilterCriteria.push(filterValue) : this.maxWeightFilterCriteria.splice(this.maxWeightFilterCriteria.indexOf(filterValue),1) ;
+        }
+        if(filterValue == '141toEnd'){
+            this.is141toEnd = !this.is141toEnd;
+            this.is141toEnd ? this.maxWeightFilterCriteria.push(filterValue) : this.maxWeightFilterCriteria.splice(this.maxWeightFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+
+      this.applyFilter();
+    }
+
+    applyFilter(){
+      this.isLoading = true;
+      setTimeout(()=>{},1000 )
+      this.escooterResults = [];
+      this.escooterFilterResults = [];
+      this.escooterPriceResults = [];
+      let escooterMakeResults = [];
+      let escooterMaxWeightResults = [];
+
+
+        //price filtering
+        this.escooterPriceResults = this.escooterResultsFilterCopy.filter((e) => {
+
+            if(this.priceFilterCriteria.length > 0) {
+
+                for (let priceFilter of this.priceFilterCriteria) {
+
+                    if (priceFilter == '1to10') {
+                        if (e.cost >= 1 && e.cost <= 10) {
+                            return true;
+                        }
+                    }
+                    if (priceFilter == '11to20') {
+                        if (e.cost >= 11 && e.cost <= 20) {
+                            return true
+                        }
+                    }
+                    if (priceFilter == '21to30') {
+                        if (e.cost >= 21 && e.cost <= 30) {
+                            return true
+                        }
+                    }
+                    if (priceFilter == '31toEnd') {
+                        if (e.cost >= 31) {
+                            return true
+                        }
+                    }
+                }
+                return false;
+            }
+            else {
+                return true;
+            }
+        })
+
+
+        //make filtering
+        escooterMakeResults = this.escooterPriceResults.filter((e) => {
+
+            console.log( e.maxWeight)
+            if(this.makeFilterCriteria.length > 0) {
+                console.log('true')
+                for (let makeFilter of this.makeFilterCriteria) {
+
+                    if (makeFilter == 'xioami') {
+                        if (e.make.name == 'Xioami') {
+
+                            return true;
+                        }
+                    }
+                    if (makeFilter == 'segway') {
+                        if (e.make.name == 'Segway') {
+
+                            return true;
+                        }
+                    }
+                    if (makeFilter == 'avovo') {
+                        if (e.make.name == 'Avovo') {
+
+                            return true;
+                        }
+                    }
+                    if (makeFilter == 'pure') {
+                        if (e.make.name == 'Pure Air') {
+
+                            return true;
+                        }
+                    }
+                    if (makeFilter == 'edisson') {
+                        if (e.make.name == 'Edisson') {
+
+                            return true;
+                        }
+                    }
+
+                }
+                console.log(false)
+                return false;
+            }
+            else {
+
+                return true;
+            }
+        })
+
+
+        escooterMaxWeightResults = escooterMakeResults.filter((e) => {
+
+            if(this.maxWeightFilterCriteria.length > 0) {
+                console.log(e.maxWeight)
+                for (let maxWeightFilter of this.maxWeightFilterCriteria) {
+
+                    if (maxWeightFilter == '1to70') {
+                        if (e.maxWeight >= 1 && e.maxWeight <= 70) {
+                            return true;
+                        }
+                    }
+                    if (maxWeightFilter == '71to140') {
+                        if (e.maxWeight >= 71 && e.maxWeight <= 140) {
+                            return true;
+                        }
+                    }
+                    if (maxWeightFilter == '141toEnd') {
+                        if (e.maxWeight >= 141) {
+                            return true;
+                        }
+                    }
+                }
+                console.log(false)
+                return false;
+            }
+            else {
+
+                return true;
+            }
+        })
+
+
+
+
+        //add all to final list
+        this.escooterFilterResults.push(...escooterMaxWeightResults)
+
+        this.isLoading = false;
+        this.escooterResults = this.escooterFilterResults;
+
+        //init the map
+        this.initMap();
+        this.markerEventInit();
     }
 }

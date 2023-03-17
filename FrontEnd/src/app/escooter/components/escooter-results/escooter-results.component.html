@@ -12,18 +12,17 @@
         <div class="col-2">
 
         </div>
-        <div style="text-decoration: none !important; position: fixed !important; overflow: hidden; left:0 !important;" class="col-2 bg-light ">
-            <div class="bg-light">
+        <div style="text-decoration: none !important; position: fixed !important; height: 100vh !important;" class="col-2 pb-5 bg-light ">
                 <h3 class="border-bottom p-3">Filter</h3>
-            </div>
 
-            <div class="border-bottom p-3">
+            <div class="border-bottom p-2 px-3">
                 <h5 class="text-info">Brand</h5>
                 <div>
-                    <button class="btn btn-white">Xiaomi</button>
-                    <button class="btn btn-white ">Segway</button>
-                    <button class="btn btn-white ">Pure</button>
-                    <button class="btn btn-white ">Avovo</button>
+                    <button (click)="toggleFilter('xioami')" [ngClass]="isXioami ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">Xiaomi</button>
+                    <button (click)="toggleFilter('segway')" [ngClass]="isSegway ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">Segway</button>
+                    <button (click)="toggleFilter('pure')" [ngClass]="isPureAir ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">Pure</button>
+                    <button (click)="toggleFilter('avovo')" [ngClass]="isAvovo ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">Avovo</button>
+                    <button (click)="toggleFilter('edisson')" [ngClass]="isEdisson ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">Edisson</button>
 
                 </div>
 
@@ -31,53 +30,53 @@
             <div class="border-bottom p-3 ">
                 <h5 class="text-info">Price</h5>
                 <div>
-                    <button class="btn btn-light">€1 - €10</button>
-                    <button class="btn btn-light">€10 - €20</button>
-                    <button class="btn btn-light">€20 - €30</button>
-                    <button class="btn btn-light">€40 - €50</button>
+                    <button (click)="toggleFilter('1to10')" [ngClass]="is1to10 ? 'btn-primary' : 'btn-light'" class="btn p-1 px-2 m-1">€1 - €10</button><br>
+                    <button (click)="toggleFilter('11to20')" [ngClass]="is11to20 ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">€11 - €20</button><br>
+                    <button (click)="toggleFilter('21to30')" [ngClass]="is21to30 ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">€21 - €30</button><br>
+                    <button (click)="toggleFilter('31toEnd')" [ngClass]="is31toEnd ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">€31+</button>
 
                 </div>
 
             </div>
-            <div class="border-bottom p-3">
+            <div class=" p-3">
                 <h5 class="text-info">Max User Weight</h5>
                 <div >
-                    <button class="btn btn-light">90kg - 100kg</button>
-                    <button class="btn btn-light">100kg - 150kg</button>
-                    <button class="btn btn-light">150kg +</button>
+                    <button (click)="toggleFilter('1to70')" [ngClass]="is1to70 ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">1kg - 70kg</button><br>
+                    <button (click)="toggleFilter('71to140')" [ngClass]="is71to140 ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">71kg - 140kg</button><br>
+                    <button (click)="toggleFilter('141toEnd')" [ngClass]="is141toEnd ? 'btn-primary' : 'btn-light'" class="btn  px-2 m-1">141kg+</button>
 
                 </div>
 
             </div>
 
-            <div class="border-bottom p-3">
-                <h5 class="text-info">Top Speed</h5>
-                <div>
-                    <button class="btn btn-light">10km/h - 15km/h</button>
-                    <button class="btn btn-light">15km/h - 20km/h</button>
-                    <button class="btn btn-light">20km/h - 25km/h</button>
-                    <button class="btn btn-light">25km/h +</button>
-                </div>
-            </div>
-            <div class="border-bottom p-3">
-                <h5 class="text-info">Range</h5>
-                <div>
-                    <button class="btn btn-light">10 miles - 15 miles</button>
-                    <button class="btn btn-light">15 miles - 20 miles</button>
-                    <button class="btn btn-light">20 miles - 25 miles</button>
-                    <button class="btn btn-light">25 miles +</button>
-                </div>
-            </div>
+<!--            <div class="border-bottom p-3">-->
+<!--                <h5 class="text-info">Top Speed</h5>-->
+<!--                <div>-->
+<!--                    <button class="btn btn-light">10km/h - 15km/h</button>-->
+<!--                    <button class="btn btn-light">15km/h - 20km/h</button>-->
+<!--                    <button class="btn btn-light">20km/h - 25km/h</button>-->
+<!--                    <button class="btn btn-light">25km/h +</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="border-bottom p-3">-->
+<!--                <h5 class="text-info">Range</h5>-->
+<!--                <div>-->
+<!--                    <button class="btn btn-light">10 miles - 15 miles</button>-->
+<!--                    <button class="btn btn-light">15 miles - 20 miles</button>-->
+<!--                    <button class="btn btn-light">20 miles - 25 miles</button>-->
+<!--                    <button class="btn btn-light">25 miles +</button>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
-        <div  class="col-6">
-            <div   class="row mx-auto mt-1">
+        <div  class="col-6 ">
+            <div   class="row mx-auto mt-3">
                 <div  class="col-12 d-flex flex-row justify-content-center align-items-center border-bottom pb-3">
                     <i class="fa fa-search " aria-hidden="true"></i>
                     <input style="width: 80% ; border-top-style: hidden;
               border-right-style: hidden;
               border-left-style: hidden;
               border-bottom-style:hidden; color: black;
-              " class="border-none  ps-2 border-none" placeholder="Search scooters" type="text">
+              " class="border-none py-2  ps-2 border-none" placeholder="Search scooters" type="text">
                     <button (click)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'" class="btn btn-outline-secondary">
                         Search
                     </button>
@@ -88,14 +87,13 @@
                 <div class="row" *ngIf="escooterResults">
                     <div *ngFor="let escooterItem of escooterResults" class="col-xs-12 col-sm-12 col-md-6 my-3">
                         <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card"  [escooterItem]="escooterItem"></app-escooter-card>
-
                     </div>
                 </div>
             </div>
         </div>
 
         <div style=" position: fixed !important; overflow: hidden; right:0 !important; margin: 0 !important; padding: 0 !important;" class="col-4">
-            <ngx-skeleton-loader class="border-0" style="height: 92vh; position: fixed !important; overflow: hidden;" *ngIf="isLoading" [theme]="{height: '92vh', width: '40vw'}"></ngx-skeleton-loader>
+            <ngx-skeleton-loader class="border-0" style="height: 93vh; position: fixed !important; overflow: hidden;" *ngIf="isLoading" [theme]="{height: '94vh', width: '40vw'}"></ngx-skeleton-loader>
             <div *ngIf="escooterResults" class="border "
 
                  style="height: 93vh; position: fixed !important; overflow: hidden;" id="map"></div>
