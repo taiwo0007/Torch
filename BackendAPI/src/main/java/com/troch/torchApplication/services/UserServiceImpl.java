@@ -137,9 +137,10 @@ public class UserServiceImpl implements UserService{
         String gcpPublicImageUrlgcpUtil = gcpUtil.uploadObject(filePath, verifyRequest.getContentType());
 
         User currentUsr = findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
-//        if(currentUsr.getIsVerified()){
-//            return new ResponseEntity(new ErrorResponse("User already Verified"), HttpStatus.BAD_REQUEST);
-//        }
+
+        if(currentUsr.getIsVerified()){
+            return new ResponseEntity(new ErrorResponse("User already Verified"), HttpStatus.BAD_REQUEST);
+        }
 
         JsonNode json;
         HttpURLConnection http;

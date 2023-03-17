@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Subscription;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -28,6 +29,9 @@ import org.springframework.web.bind.annotation.*;
 import com.stripe.model.PaymentIntent;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -46,10 +50,36 @@ public class PaymentController {
         this.stripeService = stripeService;
     }
 
+
+    @PostMapping("/create-subscription")
+    public ResponseEntity createSubscription() throws StripeException {
+
+        Stripe.apiKey = "sk_test_51M5pMwBapNSScoYvdfzlMbuNHXyDI1TXBwOxRJxtkuQjBOZDxbAsUv5326FY9RC04wr9sBlyHQp5FlDgCQKCdx4a00zY9p9JRT";
+
+
+        ArrayList<Object> items = new ArrayList<>();
+        Map<String, Object> item1 = new HashMap<>();
+        item1.put(
+                "price",
+                "price_1Mlhx9BapNSScoYvu765T22Y"
+        );
+        items.add(item1);
+        Map<String, Object> params = new HashMap<>();
+        params.put("customer", "cus_4QFOF3xrvBT2nU");
+        params.put("items", items);
+
+        Subscription subscription =
+                Subscription.create(params);
+
+        logger.info("subscription info"+subscription);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+
+    }
+
     @PostMapping("/create-payment-intent")
     public CreatePaymentResponse createPaymentIntent(@RequestBody String responseb, CreatePayment createPayment) throws StripeException {
 
-        logger.info(""+responseb);
 
         JSONObject json = new JSONObject(responseb);
         double cost = json.getDouble("cost");
@@ -57,7 +87,6 @@ public class PaymentController {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
                         .setAmount((long) cost * 100L)
-
                         .setCurrency("eur")
                         .setAutomaticPaymentMethods(
                                 PaymentIntentCreateParams.AutomaticPaymentMethods

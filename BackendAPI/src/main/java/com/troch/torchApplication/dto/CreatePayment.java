@@ -13,4 +13,9 @@ public class CreatePayment {
     Object[] items;
 
 
+    private String paymentMethodId;
+    private String email;
+
+
+
 }

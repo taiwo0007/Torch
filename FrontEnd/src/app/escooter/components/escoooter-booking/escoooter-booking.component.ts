@@ -103,6 +103,8 @@ export class EscoooterBookingComponent implements OnInit{
 
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
+
+              console.log(paymentIntent)
               this.loadingService.isLoading.next(false);
 
               this.elementsOptions.clientSecret = paymentIntent.clientSecret;
@@ -151,13 +153,17 @@ export class EscoooterBookingComponent implements OnInit{
     console.log("TripRequest Data", this.tripCreateRequestPayload)
 
     this.paying = true;
+
     this.stripeService
         .confirmPayment({
           elements: this.paymentElement.elements,
           redirect: 'if_required',
         })
         .subscribe({
+
           next: (result) => {
+
+            console.log(result)
             this.paying = false;
             if (result.error) {
 

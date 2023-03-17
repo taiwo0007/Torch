@@ -34,10 +34,10 @@
                                 class="btn btn-dark  text-light"
                                 [disabled]="paying"
                                 (click)="collectPayment()"
-                        >
-        <span *ngIf="!paying">
-          PAY NOW
-        </span>
+                                            >
+                                <span *ngIf="!paying">
+                                  PAY NOW
+                                </span>
                             <span *ngIf="paying">PROCESSING...</span>
                         </button>
                     </div>
