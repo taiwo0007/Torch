@@ -6,6 +6,10 @@ import {User} from "../../../user/models/user.model";
 import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
 import {LoadingService} from "../../services/loading.service";
+import {DialogService} from "../../services/dialog.service";
+import {VerificationDialogComponent} from "../verification-dialog/verification-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SubscriptionPlansComponent} from "../../../host/components/subscription-plans/subscription-plans.component";
 
 
 @Component({
@@ -30,7 +34,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private dropdownService: BsDropdownDirective,
               private userService:UserService,
-              private loadingService:LoadingService) {
+              private loadingService:LoadingService,
+              private dialog:MatDialog) {
     this.dropdown = dropdownService;
 
   }
@@ -87,4 +92,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     this.dropdown.isOpen = false;
   }
+
+    subscriptionModal() {
+        const dialogRef = this.dialog.open(SubscriptionPlansComponent, {
+          height: '620px',
+          width: '1200px',
+        });
+
+
+    }
 }

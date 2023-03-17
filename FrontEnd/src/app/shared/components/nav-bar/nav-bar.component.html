@@ -32,12 +32,17 @@
       <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
 
     </li>
-    
+
+    <li *ngIf="isAuthenticated" class="nav-item my-auto me-3">
+      <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-outline-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade Plan</a>
+
+    </li>
 
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
 
     </li>
+
 <!--    <li  class="nav-item my-auto">-->
 <!--      <a  *ngIf="isAuthenticated" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn rounded-0 text-dark fw-bold  my-auto"  [routerLink]="['profile']">-->
 <!--        <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"  class="rounded-circle " src="./assets/images/website/avatar.png" alt="">-->

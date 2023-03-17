@@ -10,6 +10,7 @@ import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.troch.torchApplication.dto.CreatePayment;
 import com.troch.torchApplication.dto.CreatePaymentResponse;
+import com.troch.torchApplication.dto.PriceIdRequest;
 import com.troch.torchApplication.dto.Response;
 import com.troch.torchApplication.services.StripeService;
 
@@ -74,6 +75,37 @@ public class PaymentController {
         logger.info("subscription info"+subscription);
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
+
+    }
+
+    @PostMapping("/create-checkout-session")
+    public String createCheckoutSession(@RequestBody PriceIdRequest priceIdRequest ) throws StripeException {
+
+        Stripe.apiKey = "sk_test_51M5pMwBapNSScoYvdfzlMbuNHXyDI1TXBwOxRJxtkuQjBOZDxbAsUv5326FY9RC04wr9sBlyHQp5FlDgCQKCdx4a00zY9p9JRT";
+
+        // The price ID passed from the client
+//   String priceId = request.queryParams("priceId");
+        String priceId = priceIdRequest.getPrice_id();
+
+        logger.info("url" +priceIdRequest.getUrl());
+
+        SessionCreateParams params = new SessionCreateParams.Builder()
+                .setSuccessUrl(priceIdRequest.getUrl())
+                .setCancelUrl(priceIdRequest.getUrl())
+                .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
+                .addLineItem(new SessionCreateParams.LineItem.Builder()
+                        // For metered billing, do not pass quantity
+                        .setQuantity(1L)
+                        .setPrice(priceId)
+                        .build()
+                )
+                .build();
+
+
+
+        return Session.create(params).toJson();
+
+
 
     }
 
