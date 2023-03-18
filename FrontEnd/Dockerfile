@@ -1,4 +1,4 @@
-FROM node:9.6.2-alpine as build
+FROM node:19-alpine as build
 WORKDIR /app
 COPY ./package*.json ./
 RUN npm ci --legacy-peer-deps

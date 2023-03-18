@@ -3,7 +3,6 @@ steps:
     entrypoint: docker
     args:
       [
-        "buildx",
         "build",
         "--platform",
         "linux/amd64",
