@@ -21,6 +21,7 @@ public class AuthenticationResponse {
     private Boolean isHost;
     private Boolean isVerified;
     private Integer hostID;
+    
 
 
 

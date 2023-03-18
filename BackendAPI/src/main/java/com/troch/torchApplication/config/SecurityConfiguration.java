@@ -185,6 +185,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
+                .antMatchers("/webhook/**")
+                .permitAll()
                 .antMatchers("/api/escooter/findescooters/**")
                 .permitAll()
                 .antMatchers("/api/escooter/escooter-detail/**")
