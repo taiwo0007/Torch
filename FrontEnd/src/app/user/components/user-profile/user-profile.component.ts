@@ -3,6 +3,7 @@ import {UserService} from "../../services/user.service";
 import {UserData} from "../../models/user-data.model";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../../auth/services/auth.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user-profile',
@@ -14,7 +15,8 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
   isCreatedVerified;
 
   constructor(private userService: UserService,private route:ActivatedRoute,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private toastr: ToastrService) { }
 
     ngAfterContentInit() {
         this.userService.fetchUserDetails().subscribe( (data: any) => {
@@ -23,10 +25,27 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
             this.route.queryParams.subscribe(data => {
                 if(data['success'] && this.userData.isVerified){
                     this.authService.saveLocalVerifyInfo()
+                    this.toastr.success(  ' Successfully Verified','', {
+                        positionClass: 'toast-top-center'
+                    });
                 }
                 console.log(data['subscriptionInitiated']);
                 console.log(this.userData)
                 this.authService.saveAccountType(this.userData.accountType)
+
+                if(data['subscriptionInitiated']) {
+                    if (this.userData.accountType) {
+                        this.toastr.success(this.userData.accountType + ' subscription activated','', {
+                          positionClass: 'toast-top-center'
+                        });
+                    }
+                    else {
+                        this.toastr.error('Subscription not added');
+
+                    }
+                }
+
+
             })
         })
     }

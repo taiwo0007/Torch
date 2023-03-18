@@ -10,6 +10,7 @@ import {
   AreYouSureDialogCancelComponent
 } from "../../../shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-trip',
@@ -35,7 +36,8 @@ export class TripComponent implements OnInit, AfterViewInit {
               private dialog: MatDialog,
               private dialogService:DialogService,
               private router:Router,
-              private loadingService:LoadingService) { }
+              private loadingService:LoadingService,
+              private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.intialiseSuccessStatus();
@@ -101,6 +103,9 @@ export class TripComponent implements OnInit, AfterViewInit {
   intialiseSuccessStatus(): void{
     this.route.queryParams.subscribe((queryParams) => {
       this.isNewlyBooked = queryParams['success'];
+      this.toastr.success(  'Trip Booked Successfully', '', {
+        positionClass: 'toast-top-center'
+      });
     }, error1 => {
       console.log("error", error1)
     })

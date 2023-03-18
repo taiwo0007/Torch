@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-cancel-trip',
@@ -9,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CancelTripComponent {
   tripID;
 
-  constructor(private route:ActivatedRoute, private router:Router) {
+  constructor(private route:ActivatedRoute, private router:Router, private toastr:ToastrService) {
   }
 
   ngOnInit() {
@@ -20,6 +21,9 @@ export class CancelTripComponent {
 
           }
           this.tripID = params['tripId'];
+            this.toastr.success(  'Trip Successfully Cancelled', '', {
+                positionClass: 'toast-top-center'
+            });
 
 
         },

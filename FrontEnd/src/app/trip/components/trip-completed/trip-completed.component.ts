@@ -6,6 +6,7 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
 import {ReviewFormComponent} from "../../../escooter/components/review-form/review-form.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-trip-completed',
@@ -15,7 +16,7 @@ import {ReviewFormComponent} from "../../../escooter/components/review-form/revi
 export class TripCompletedComponent implements OnInit{
   tripID;
 
-  constructor(private route:ActivatedRoute, private router:Router, private dialog:MatDialog) {
+  constructor(private route:ActivatedRoute, private router:Router, private dialog:MatDialog, private toastr:ToastrService) {
   }
 
   ngOnInit() {
@@ -26,6 +27,9 @@ export class TripCompletedComponent implements OnInit{
 
       }
       this.tripID = params['tripId'];
+          this.toastr.success(  'Trip Successfully Cancelled', '', {
+            positionClass: 'toast-top-center'
+          });
 
       setTimeout(() => {
         this.openDialog();

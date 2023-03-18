@@ -77,6 +77,7 @@ import { CancelTripComponent } from './trip/components/cancel-trip/cancel-trip.c
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { ReviewTripDialogComponent } from './shared/components/review-trip-dialog/review-trip-dialog.component';
 import { SubscriptionPlansComponent } from './host/components/subscription-plans/subscription-plans.component';
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -161,6 +162,8 @@ import { SubscriptionPlansComponent } from './host/components/subscription-plans
         ConfirmDialogModule,
         ToastModule,
         MatProgressBarModule,
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot(),
 
 
     ],
