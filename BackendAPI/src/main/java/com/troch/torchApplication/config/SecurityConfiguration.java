@@ -163,7 +163,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         config.setAllowedOrigins(Arrays.asList("https://torch-front-end-wfurmbodqa-nw.a.run.app/",
                 "https://torch-front-end-wfurmbodqa-nw.a.run.app", "http://torch-wfurmbodqa-uc.a.run.app",
                 "https://torch-wfurmbodqa-uc.a.run.app/", "http://localhost:4200", "1.1.1.1","https://0.0.0.0",
-                "http://0.0.0.0",  "127.0.0.1", "http://localhost:8080"));
+                "http://0.0.0.0",  "127.0.0.1", "http://localhost:8080", "https://stripe.com", "https://stripe.com/"));
 
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
