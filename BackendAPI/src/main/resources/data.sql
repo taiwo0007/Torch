@@ -49,9 +49,9 @@ VALUES (-6.308530354714592,53.358888300000004, 'ireland', true, 5.0, 'Dalymount 
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 
 
-INSERT INTO user (latitude, longitude, is_Torch_Trusted, rating, location, about, joined, country, is_verified,
+INSERT INTO user (account_type, latitude, longitude, is_Torch_Trusted, rating, location, about, joined, country, is_verified,
                   id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host)
-VALUES (-6.308530354714592,53.358888300000004, true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
+VALUES ('Pro', -6.308530354714592,53.358888300000004, true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
         'Lorem Ipsum is simply dummy text of the printing and ','2000-01-01',
         "Ireland", true, 2, "taiwo.obadare@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "https://storage.googleapis.com/torch-gcp-bucket/pic1.jpeg", 08764532, true);
 INSERT INTO escooter ( county, longitude, latitude, address,country,trip_end, trip_start, scooter_weight, motor_power, max_weight, max_speed,
