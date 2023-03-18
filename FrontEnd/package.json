@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.1.2",
+    "@angular/animations": "^15.2.3",
     "@angular/cdk": "^13.3.9",
     "@angular/common": "^15.1.2",
     "@angular/compiler": "^15.1.2",
@@ -33,6 +33,7 @@
     "ngx-skeleton-loader": "^7.0.0",
     "ngx-star-rating": "^2.1.0",
     "ngx-stripe": "13.1",
+    "ngx-toastr": "^16.1.0",
     "path-browserify": "^1.0.1",
     "popper.js": "^1.16.1",
     "primeicons": "^6.0.1",
