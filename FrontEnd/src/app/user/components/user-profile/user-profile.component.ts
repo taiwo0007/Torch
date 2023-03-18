@@ -19,10 +19,14 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
     ngAfterContentInit() {
         this.userService.fetchUserDetails().subscribe( (data: any) => {
             this.userData = data;
+
             this.route.queryParams.subscribe(data => {
                 if(data['success'] && this.userData.isVerified){
                     this.authService.saveLocalVerifyInfo()
                 }
+                console.log(data['subscriptionInitiated']);
+                console.log(this.userData)
+                this.authService.saveAccountType(this.userData.accountType)
             })
         })
     }

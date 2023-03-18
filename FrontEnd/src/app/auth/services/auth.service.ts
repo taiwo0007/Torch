@@ -157,4 +157,14 @@ export class AuthService {
   }
 
 
+  saveAccountType(accountType: any) {
+
+    let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
+    tempUserData._accountType = accountType;
+    localStorage.setItem('userData', JSON.stringify(tempUserData));
+    this.user.next(tempUserData)
+
+    console.log(tempUserData);
+
+  }
 }
