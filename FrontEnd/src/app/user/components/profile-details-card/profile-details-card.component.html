@@ -1,11 +1,16 @@
 <div class="card " style="width: 21rem;">
 
 
-  <img *ngIf="userDetails?.profilePicture else avatar"  style="object-fit: cover; border-radius: 100% !important; width: 14.7rem; height: 14.7rem;"  [src]="userDetails?.profilePicture" class="rounded-circle p-4 m-auto" alt="...">
-<!--  <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"-->
+  <div style="position: relative !important;" class="mx-auto ">
+    <img *ngIf="userDetails?.profilePicture else avatar"  style=" object-fit: cover; border-radius: 100% !important; width: 14.7rem; height: 14.7rem;"  [src]="userDetails?.profilePicture" class="rounded-circle p-4 m-auto" alt="...">
+    <p *ngIf="userDetails?.accountType" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:30%; z-index: 99999" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
+
+  </div>
+
+  <!--  <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"-->
 <!--       [src]="userDetails?.profilePicture" alt="">-->
-  <ng-template #avatar>
-    <img style="border-radius: 50% !important; width: 14.7rem; height: 14.7rem; object-fit: cover"
+  <ng-template style="position: relative" #avatar>
+    <img style="  !important;border-radius: 50% !important; width: 14.7rem; height: 14.7rem; object-fit: cover"
          src="assets/images/website/avatar.png" class="card-img-top p-4 m-auto" alt="...">
 
   </ng-template>
@@ -15,7 +20,6 @@
 
   </div>
   <h4 class="fw-bold text-center"> {{ userDetails?.firstName}} {{ userDetails?.lastName}}</h4>
-  <p *ngIf="userDetails?.accountType" style="width: max-content" class="rounded-pill bg-info mb-3 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}}</p>
 
   <span class="text-info text-center" style="font-size: 1rem;  ">{{ userDetails?.userTrips ? userDetails?.userTrips: 0 }} trips</span>
   <div class="card-body p-4 mx-0">
