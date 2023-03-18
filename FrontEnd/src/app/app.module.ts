@@ -76,8 +76,8 @@ import { AreYouSureDialogCancelComponent } from './shared/components/are-you-sur
 import { CancelTripComponent } from './trip/components/cancel-trip/cancel-trip.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { ReviewTripDialogComponent } from './shared/components/review-trip-dialog/review-trip-dialog.component';
-import { SubscriptionPlansComponent } from './host/components/subscription-plans/subscription-plans.component';
 import {ToastrModule} from "ngx-toastr";
+import { SubscriptionModalComponent } from './user/components/subscription-modal/subscription-modal.component';
 
 
 @NgModule({
@@ -131,7 +131,7 @@ import {ToastrModule} from "ngx-toastr";
     CancelTripComponent,
 
     ReviewTripDialogComponent,
-     SubscriptionPlansComponent,
+     SubscriptionModalComponent,
 
   ],
     imports: [

@@ -6,8 +6,6 @@ import {delay, map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
 
-
-
 @Component({
   selector: 'app-escooter-detail',
   templateUrl: './escooter-detail.component.html',

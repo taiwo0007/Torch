@@ -9,7 +9,7 @@ import {LoadingService} from "../../services/loading.service";
 import {DialogService} from "../../services/dialog.service";
 import {VerificationDialogComponent} from "../verification-dialog/verification-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {SubscriptionPlansComponent} from "../../../host/components/subscription-plans/subscription-plans.component";
+import {SubscriptionModalComponent} from "../../../user/components/subscription-modal/subscription-modal.component";
 
 
 @Component({
@@ -94,7 +94,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
     subscriptionModal() {
-        const dialogRef = this.dialog.open(SubscriptionPlansComponent, {
+        const dialogRef = this.dialog.open(SubscriptionModalComponent, {
           height: '620px',
           width: '1200px',
         });
