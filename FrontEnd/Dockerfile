@@ -2,6 +2,7 @@ FROM node:16-alpine3.16 as build
 WORKDIR /app
 COPY ./package*.json ./
 RUN npm ci --legacy-peer-deps
+RUN npm install -g @angular/cli@15.2.2 --legacy-peer-deps
 COPY ./ ./
 RUN npm run prod
 

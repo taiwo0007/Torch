@@ -6,6 +6,7 @@ steps:
         "buildx",
         "build",
         "--platform",
+        "--no-cache"
         "linux/amd64",
         "-t",
         "$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA",
