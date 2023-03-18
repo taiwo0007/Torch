@@ -21,7 +21,7 @@ export class CancelTripComponent {
 
           }
           this.tripID = params['tripId'];
-            this.toastr.success(  'Trip Successfully Cancelled', '', {
+            this.toastr.success(  'Successfully Cancelled', 'Trip: '+this.tripID, {
                 positionClass: 'toast-top-center'
             });
 

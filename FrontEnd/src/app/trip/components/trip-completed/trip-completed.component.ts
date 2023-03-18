@@ -27,7 +27,7 @@ export class TripCompletedComponent implements OnInit{
 
       }
       this.tripID = params['tripId'];
-          this.toastr.success(  'Trip Successfully Cancelled', '', {
+          this.toastr.success(  'Successfully Complete', "Trip: " +this.tripID, {
             positionClass: 'toast-top-center'
           });
 
