@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-TorchApplication<torchApplication>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.troch.torchApplication.TorchApplication",
+      "projectName": "torchApplication",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
