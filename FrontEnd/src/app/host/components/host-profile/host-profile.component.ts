@@ -44,26 +44,34 @@ export class HostProfileComponent implements OnInit{
         .subscribe((data:Host) => {
       console.log(data)
         this.host = data
+          console.log(this.host)
+          this.getHostEsccotersInitEscooters()
     })
   }
 
   getHostEsccotersInitEscooters(){
-    this.hostService.fetchHostEscooters(this.host.id).pipe(map(data => {
+    return this.hostService.fetchHostEscooters(this.host.id).pipe(map(data => {
+
       if(data.length > 4){
         this.isMore = true;
+        console.log("hell oworld")
         return data.slice(0,3);
       }
       return data;
     }))
-        .subscribe((data:Escooter[]) => {
+     .subscribe((data:Escooter[]) => {
+
       this.hostEsccoters = data
       console.log(data);
+
     })
   }
   getRouteParmasInitHost(){
     this.route.params.subscribe(params => {
+
       this.getHostData(params['id']);
-      this.getHostEsccotersInitEscooters();
+
+      console.log(this.hostEsccoters)
 
     })
   }

@@ -2,6 +2,11 @@
     <div class="row">
 
         <div class="col-8">
+            <div *ngIf="isLoading" >
+                <ngx-skeleton-loader [theme]="{height: '5rem', width: '42rem'}"></ngx-skeleton-loader>
+                <br>
+
+            </div>
             <h1 style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
                 {{escooter?.modelName}}
             </h1>
@@ -9,7 +14,12 @@
         </div>
         <div class="col-4">
             <div class="my-auto mx-auto text-center">
-                <img src="assets/{{escooter?.make?.image}}" width="40%" class="my-auto rounded mx-auto text-center" alt="" >
+                <div *ngIf="isLoading" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '3rem', width: '40%'}"></ngx-skeleton-loader>
+                    <br>
+
+                </div>
+                <img *ngIf="!isLoading" src="assets/{{escooter?.make?.image}}" width="40%" class="my-auto rounded mx-auto text-center" alt="" >
             </div>
         </div>
     </div>
@@ -18,8 +28,14 @@
 <section class="container">
     <div class="row">
         <div class="col-8">
+            <div *ngIf="isLoading" style="width: 100%" >
+                <ngx-skeleton-loader [theme]="{height: '34rem', width: '52rem'}"></ngx-skeleton-loader>
+                <br>
 
-            <p-image style="width:2rem !important; height:auto !important; object-fit: cover;" class="rounded my-4 shadow-sm" src="{{ escooter?.image }}" alt="Image" width="850" [preview]="true"></p-image>
+            </div>
+
+                <p-image style="width:2rem !important; height:auto !important; object-fit: cover;" class="rounded my-4 shadow-sm" src="{{ escooter?.image }}" alt="Image" width="850" [preview]="true"></p-image>
+
 
 
             <!-- <img src="{{ escooter?.image }}" style="width:100%; height:33vw !important; object-fit: cover;" class="rounded my-4 shadow-sm" alt="..." /> -->
@@ -30,9 +46,16 @@
                         <span style="width: .1%;" class="btn btn-info my-auto py-3"></span>
                         <h4 class="my-auto ms-3"> Overview</h4>
                     </div>
+                    <div *ngIf="isLoading" >
+                        <ngx-skeleton-loader [theme]="{height: '9rem', width: '100%'}"></ngx-skeleton-loader>
+                        <br>
 
-                    <p class="text-secondary">{{ escooter?.about }} </p>
-                    <p class="text-info">Read more</p>
+                    </div>
+                    <div *ngIf="!isLoading">
+                        <p class="text-secondary">{{ escooter?.about }} </p>
+                        <p class="text-info">Read more</p>
+                    </div>
+
 
 
                 </div>
@@ -47,9 +70,17 @@
 
                 </div>
                 <div class="col-12 text-center mx-auto">
-                    <h1 style="font-size: 2.8rem !important" class="h1 text-center fw-bold">
-                        {{escooter?.rating | number: '1.0'}}
-                    </h1>
+                    <div class="mx-auto text-center" *ngIf="isLoading" >
+                        <ngx-skeleton-loader [theme]="{height: '6rem', width: '10%'}"></ngx-skeleton-loader>
+                        <br>
+
+                    </div>
+                    <div *ngIf="!isLoading">
+                        <h1 style="font-size: 2.8rem !important" class="h1 text-center fw-bold">
+                            {{escooter?.rating | number: '1.0'}}
+                        </h1>
+                    </div>
+
                     <div>
                         <div>
                             <i *ngFor="let rating of ratingArray " class="fa fa-star text-info"></i>
@@ -75,18 +106,39 @@
                     <app-review-form *ngIf="escooter" [escooterId]="escooter.id"></app-review-form>
                 </div>
 
+                <div *ngIf="isLoading" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '7rem', width: '100%'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{height: '7rem', width: '100%'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{height: '7rem', width: '100%'}"></ngx-skeleton-loader>
+                    <br>
+
+                </div>
+
              <app-review-list *ngIf="escooter" [ReviewList]="escooter?.escooterReviews"></app-review-list>
             </div>
         </div>
         <div class="col-4 ">
+            <div *ngIf="isLoading" >
+                <ngx-skeleton-loader [theme]="{height: '12rem', width: '100%'}"></ngx-skeleton-loader>
+                <br>
+
+            </div>
             <app-mini-host-card *ngIf="escooter" [HostId]="escooter?.host"></app-mini-host-card>
 
-            <div class="p-4 pt-2 border rounded mt-4">
+            <div *ngIf="isLoading" >
+                <ngx-skeleton-loader [theme]="{height: '19rem', width: '100%'}"></ngx-skeleton-loader>
+                <br>
+
+            </div>
+            <div *ngIf="!isLoading" class="p-4 pt-2 border rounded mt-4">
 
                <app-start-trip-form *ngIf="escooter" [cost]="escooter?.cost" [escooterId]="escooter?.id"></app-start-trip-form>
 
 
-                <div>
+
+                <div *ngIf="!isLoading">
                     <div class="border-top ">
                         <div class="mt-4">
                             <h6 class="fw-bold">Trip Pickup location</h6>
@@ -108,7 +160,14 @@
                 </div>
 
             </div>
-            <div class="p-4 border rounded mt-4">
+
+            <div *ngIf="isLoading" >
+                <ngx-skeleton-loader [theme]="{height: '9rem', width: '100%'}"></ngx-skeleton-loader>
+                <br>
+
+            </div>
+
+            <div *ngIf="!isLoading" class="p-4 border rounded mt-4">
                 <p class="fw-bold">Insurance information</p>
                 <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
             </div>

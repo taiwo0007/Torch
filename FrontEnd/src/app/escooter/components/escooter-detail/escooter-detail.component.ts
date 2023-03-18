@@ -2,7 +2,7 @@ import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core'
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
-import {map, Subject} from "rxjs";
+import {delay, map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
 
@@ -16,6 +16,7 @@ import {ImageModule} from 'primeng/image';
 export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   paramId: number;
+  isLoading = false;
   escooter: Escooter;
   ratingArray:number[];
   markerPosition:google.maps.LatLngLiteral;
@@ -36,13 +37,10 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     })
 
-    this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd){
-        window.scrollTo(0,0);
-      }
-    })
 
-      this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
+    this.isLoading = true;
+      this.escooterService.getEscooterById(this.paramId).pipe(delay(3000)).subscribe( escooterData => {
+        this.isLoading = false;
       this.escooter = escooterData;
         this.configureMapOptions();
         this.configureMarker();
@@ -54,6 +52,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
 
     }, error => {
+        this.isLoading = false;
         this.router.navigate(['../error'])
       })
     console.log(this.ratingArray)
@@ -65,6 +64,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
       this.escooterService.getEscooterById(this.paramId)
           .subscribe( escooterData => {
         this.escooter = escooterData;
+            this.isLoading = false;
 
         this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
       })

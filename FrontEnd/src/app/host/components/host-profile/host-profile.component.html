@@ -1,11 +1,18 @@
 <header class="bg-green text-dark position-relative mt-5">
     <div class="container">
         <div class="row pt-5 pb-3 mw-25">
-            <div class="col-xs-12 col-md-3 text-center">
+            <div style="position: relative" class="col-xs-12 col-md-3 text-center">
                 <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"
                      [src]="host?.hostUser.profilePicture" alt="">
+                <p *ngIf="host?.hostUser?.accountType == 'Pro'"
+                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:23px; left:34%; z-index: 99999"
+                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}} Plan</p>
+                <p *ngIf="host?.hostUser?.accountType == 'Advanced'"
+                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:27%; z-index: 99999"
+                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}} Plan</p>
+
                 <div class=" fs-4 d-flex align-items-center my-auto text-center justify-content-center mt-2">
-                    <p class="text-center fw-bold align-self-center p-0 m-0">{{host?.hostUser.rating ? (host.hostUser.rating | number: '1.1-1') : 0.0}} </p>
+                    <p class="text-center fw-bold align-self-center ms-1 p-0 m-0">{{host?.hostUser.rating ? (host.hostUser.rating | number: '1.1-1') : 0.0}} </p>
                     <i class="fa fa-star fs-6 align-self-center me-1 p-0 m-0 text-info ms-1" aria-hidden="true"></i>
                 </div>
             </div>
@@ -61,14 +68,14 @@
                     </p>
                 </div>
 
-                <div class="col-sm-12 mt-3 pt-0 p-4  ">
-                    <p class="my-auto fw-bolder pb-1 text-info mx-auto text-center text-uppercase disabled">Host Badges (4)</p>
+                <div *ngIf="host?.hostTrips.length > 1 || host.hostTrips.length > 29 || host?.hostUser.torchTrusted || host?.hostUser.rating > 4 || (host?.hostUser.isVerified && host?.hostUser.rating > 4)" class="col-sm-12 mt-3 pt-0 p-4  ">
+                    <p class="my-auto fw-bolder pb-1 text-info mx-auto text-center text-uppercase disabled">Host Badges</p>
                     <div class="d-flex justify-content-between mt-5">
-                        <div *ngIf="host?.hostTrips" class="d-flex flex-column align-items-center mx-2">
+                        <div *ngIf="host?.hostTrips.length > 1" class="d-flex flex-column align-items-center mx-2">
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/new.png" alt="" srcset="">
                             <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Trips Starter</p>
                         </div>
-                        <div *ngIf="host.hostTrips.length > 99" class="d-flex flex-column align-items-center mx-2">
+                        <div *ngIf="host.hostTrips.length > 29" class="d-flex flex-column align-items-center mx-2">
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/100trips.png" alt="" srcset="">
                             <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Trip Master</p>
                         </div>
@@ -76,23 +83,23 @@
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/torchTrusted.png" alt="" srcset="">
                             <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Torch trusted</p>
                         </div>
-                        <div class="d-flex flex-column align-items-center mx-2">
+                        <div *ngIf="host?.hostUser.rating > 4" class="d-flex flex-column align-items-center mx-2">
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/topRated.png" alt="" srcset="">
                             <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Top Rated</p>
                         </div>
-                        <div class="d-flex flex-column align-items-center mx-2">
+                        <div *ngIf="host?.hostUser.isVerified && host?.hostUser.rating > 4" class="d-flex flex-column align-items-center mx-2">
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/safety.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Safety First</p>
+                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Safe Host</p>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="col-sm-12 p-4">
+                <div  class="col-sm-12 p-4">
                     <div class="  ">
                         <p class="my-auto fw-bolder text-upercase text-info text-uppercase"> Host Reviews</p>
                     </div>
-                    <div *ngFor="let hr of host.hostReviews"
+                    <div   *ngFor="let hr of host.hostReviews"
                          class="row border-bottom my-2 p-2 pt-3">
                         <div class="col-xs-12 col-sm-1">
                             <img style="object-fit: cover; border-radius: 50% !important"
@@ -127,6 +134,10 @@
                         <div *ngIf="!host.hostReviews" class="col-11">
                             No reviews
                         </div>
+                    </div>
+
+                    <div *ngIf="!host?.hostReviews.length ">
+                        <p class="text-center mt-5"> No Reviews</p>
                     </div>
                 </div>
             </div>
