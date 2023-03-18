@@ -51,16 +51,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
       this.userService.fetchUserDetails().subscribe((userData:UserData) => {
         this.profileImage = userData.profilePicture;
-        console.log(userData)
       })
 
-
-
       this.accountType =  data._accountType;
-      console.log(this.accountType)
+
       this.isVerified = data._isVerified;
       this.isHost = data.isHost
-      if(data == null){
+
+      if(!data){
         this.isAuthenticated = false;
       }
       else {
@@ -68,8 +66,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
       }
 
       this.hostID = data.hostID;
-      console.log(data._isVerified)
-
 
 
     })
@@ -85,6 +81,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.isHost = null;
     this.isVerified = null;
     this.hostID = null;
+    this.accountType = null;
     this.authService.logout();
     this.router.navigate(['login'], { queryParams: { success: true } });
 

@@ -3,26 +3,15 @@
 <nav
         style="background-color: black !important; padding: 0.6rem 7rem !important"
         id="navbar-example2" class="navbar bg-dark navbar-dark  sticky fixed-top py-2">
-  <div>
+  <div class="d-flex align-items-center">
     <a class="navbar-brand me-3" [routerLink]="['']">
       <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo" />
     </a>
-
-      <a  style="border-radius: 2.3rem !important; font-size: .9rem !important; background-color: black !important;" class="ms-3 btn fs-4 text-light rounded-0 fw-bold my-auto align-self-center mt-1 btn-hover">
-        Safety
-      </a>
-    <a  style="border-radius: 2.3rem !important; font-size: .9rem !important; background-color: black !important;" class="btn fs-4 text-light rounded-0 fw-bold my-auto align-self-center mt-1 btn-hover">
-
-      Help
-    </a>
-
-
-
   </div>
 
   <ul  class="nav nav-pills">
     <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
-      <a [routerLink]="['login']" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn  text-light rounded-0 fw-bold">
+      <a [routerLink]="['login']" style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;" class="btn my-auto text-light rounded-0 fw-bold">
 
         Log in
       </a>
@@ -35,7 +24,10 @@
 
     <li *ngIf="isAuthenticated && !accountType" class="nav-item my-auto me-3">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-outline-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade Plan</a>
+    </li>
 
+    <li *ngIf="accountType" class="nav-item my-auto me-3">
+      <p style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class=" rounded-0 text-info fw-bold  my-auto">{{accountType}}</p>
     </li>
 
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
@@ -63,8 +55,8 @@
       <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info py-2 ">
 
         <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Your Trips</a></li>
-        <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/profile']">Your Profile</a></li>
-        <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="dropdown-item text-info" [routerLink]="['verify']">Verify Now</a></li>
+        <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/profile']">Your Profile</a></li>
+        <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="w-100 btn btn-info rounded-0 text-light mt-1 px-4" [routerLink]="['verify']">Verify Now</a></li>
         <li role="menuitem" *ngIf="isHost" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
         <li role="menuitem"  *ngIf="isHost" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters', hostID]" class="dropdown-item " >EScooters</a></li>
         <li><hr class="dropdown-divider bg-dark"></li>
