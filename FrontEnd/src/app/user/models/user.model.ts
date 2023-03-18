@@ -7,6 +7,7 @@ export class User{
     private _isVerified: boolean,
     private _hostID: number,
     public isVerifiedConsent:boolean,
+    private _accountType: string,
   ) {}
 
 
@@ -20,6 +21,9 @@ export class User{
 
   get isHost() {
     return this._isHost;
+  }
+  get accountType() {
+    return this._accountType;
   }
 
   get isVerified(){

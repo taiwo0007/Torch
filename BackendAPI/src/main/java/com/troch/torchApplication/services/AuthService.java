@@ -67,6 +67,7 @@ public class AuthService {
                     .expiresAt(expiresDate)
                     .isHost(user.getHost()!= null)
                     .isVerified(user.getIsVerified())
+                    .accountType(user.getAccountType())
                     .hostID(user.getHost() != null ? user.getHost().getId() : null)
                     .build(), HttpStatus.OK);
         }
@@ -109,6 +110,7 @@ public class AuthService {
                     .isHost(false)
                     .isVerified(false)
                     .expiresAt(expiresDate)
+                    .accountType(user.getAccountType())
                     .hostID(null)
                     .build(), HttpStatus.OK) ;
 

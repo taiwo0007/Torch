@@ -28,6 +28,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   isLoading = false;
   hostID:number;
   profileImage:string;
+  accountType:string;
 
   constructor(private authService: AuthService,
               private router:Router,
@@ -55,6 +56,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
 
 
+      this.accountType =  data._accountType;
+      console.log(this.accountType)
       this.isVerified = data._isVerified;
       this.isHost = data.isHost
       if(data == null){

@@ -96,7 +96,7 @@ export class AuthService {
   autoLogin(){
     let data:string = 'userData'
       const userData: {email:string, _token:string, _isHost:boolean, _tokenExpirationDate,
-                      _isVerified:boolean, _hostID:number, isVerifiedConsent:boolean
+                      _isVerified:boolean, _hostID:number, isVerifiedConsent:boolean, _accountType:string
       } = JSON.parse(localStorage.getItem(data) || '{}');
 
     console.log(userData)
@@ -112,7 +112,8 @@ export class AuthService {
         userData._tokenExpirationDate,
         userData._isVerified,
         userData._hostID,
-        userData.isVerifiedConsent
+        userData.isVerifiedConsent,
+        userData._accountType
     );
 
     console.log(loadedUser)
@@ -137,7 +138,7 @@ export class AuthService {
 
 
     const user = new User( loginResponsePayload.email, loginResponsePayload.authToken, loginResponsePayload.isHost,
-        new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified, loginResponsePayload.hostID, false);
+        new Date(loginResponsePayload.expiresAt), loginResponsePayload.isVerified,  loginResponsePayload.hostID,  false, loginResponsePayload.accountType);
 
     localStorage.setItem('userData', JSON.stringify(user));
     console.log(user)

@@ -5,4 +5,5 @@ export interface LoginResponsePayload{
   isHost:boolean,
   isVerified:boolean,
   hostID:number
+  accountType:string;
 }
