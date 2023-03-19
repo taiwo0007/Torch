@@ -31,7 +31,7 @@ public class GCPUtil {
     public String uploadObject(Path filePath, String contentType) throws Exception {
 
 
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/static/credentials/application_default_credentials.json"))
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/static/credentials/application_default_credentials.json"))
                 .createScoped(StorageScopes.all());
 
 
