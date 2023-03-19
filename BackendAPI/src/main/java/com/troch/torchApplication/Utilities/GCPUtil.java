@@ -31,14 +31,14 @@ public class GCPUtil {
     public String uploadObject(Path filePath, String contentType) throws Exception {
 
 
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/static/credentials/application_default_credentials.json"))
-                .createScoped(StorageScopes.all());
+//        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/static/credentials/application_default_credentials.json"))
+//                .createScoped(StorageScopes.all());
 
 
         String projectId = "school-376315";
         String bucketName = "torch-gcp-bucket";
         String objectName = filePath.getFileName().toString().toLowerCase();
-        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(projectId).build().getService();
+        Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
 
         BlobId blobId = BlobId.of(bucketName, objectName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
