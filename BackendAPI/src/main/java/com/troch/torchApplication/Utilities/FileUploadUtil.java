@@ -23,7 +23,7 @@ public class FileUploadUtil {
     Logger logger = LoggerFactory.getLogger(FileUploadUtil.class);
 
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") +"/src/main/resources/static/images/uploads/";
+    public static String UPLOAD_DIRECTORY = System.getProperty("java.io.tmpdir");
 
     public Path saveFile(MultipartFile file) throws IOException {
 
@@ -51,7 +51,7 @@ public class FileUploadUtil {
 
         byte[] decodedImg = Base64.getMimeDecoder()
                 .decode(base64EncodedString);
-        Path destinationFile = Paths.get("src/main/resources/static/images/uploads", fileName);
+        Path destinationFile = Paths.get(System.getProperty("java.io.tmpdir"), fileName);
         Files.write(destinationFile, decodedImg);
 
 

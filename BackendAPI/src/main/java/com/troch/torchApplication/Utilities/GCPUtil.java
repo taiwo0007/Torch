@@ -61,7 +61,7 @@ public class GCPUtil {
         logger.info(
                 " uploaded to bucket " + bucketName + " as " + objectName +" public url " + publicUrl);
 
-        File retriveFile = new File("src/main/resources/static/images/uploads"+filePath.getFileName().toString());
+        File retriveFile = new File(System.getProperty("java.io.tmpdir")+filePath.getFileName().toString());
         try{
             retriveFile.delete();
         }
