@@ -5,77 +5,6 @@
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/Utilities/GCPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/Utilities/GCPUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/acorn" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/ansi-html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/autoprefixer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/browserslist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/browserslist-lint" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/color-support" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/cssesc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/errno" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esbuild" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esparse" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/esvalidate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/image-size" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/installed-package-contents" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/is-docker" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/js-yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/jsesc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/json5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/karma" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/lessc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/mime" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/mkdirp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/multicast-dns" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/nanoid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/needle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/ng" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/ng-xi18n" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/ngc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/ngcc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/node-gyp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/nopt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/pacote" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/parser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/regjsparser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/resolve" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/rimraf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/sass" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/terser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/tree-kill" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/tsc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/tsserver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/uuid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/webpack" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/webpack-dev-server" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.bin/which" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@babel/core/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@babel/helper-compilation-targets/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@babel/helper-define-polyfill-provider/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@babel/plugin-transform-runtime/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@babel/preset-env/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/@npmcli/git/node_modules/.bin/node-which" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/babel-plugin-polyfill-corejs2/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/cross-spawn/node_modules/.bin/node-which" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/istanbul-lib-instrument/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma-coverage/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma/node_modules/tmp/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma/node_modules/tmp/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma/node_modules/tmp/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma/node_modules/tmp/lib/tmp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/karma/node_modules/tmp/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/less/node_modules/.bin/mime" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/less/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/make-dir/node_modules/.bin/semver" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/node-gyp/node_modules/.bin/node-which" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/regjsparser/node_modules/.bin/jsesc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/send/node_modules/.bin/mime" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/tmp/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/tmp/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/tmp/lib/tmp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/tmp/package.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +92,7 @@
       <workItem from="1679942302787" duration="704000" />
       <workItem from="1680015679556" duration="1273000" />
       <workItem from="1680030358130" duration="6824000" />
+      <workItem from="1680041881548" duration="629000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -318,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680036602662</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Host Ads Front End UI implemented">
+      <created>1680041907436</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1680041907436</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

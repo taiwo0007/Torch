@@ -6,6 +6,7 @@ import com.troch.torchApplication.controllers.HostController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.spring4.processor.SpringOptionFieldTagProcessor;
@@ -13,6 +14,7 @@ import org.thymeleaf.spring4.processor.SpringOptionFieldTagProcessor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,14 +27,20 @@ public class GCPUtil {
     @Autowired
     FileUploadUtil fileUploadUtil;
 
+//    @Value("${spring.cloud.gcp.storage.credentials.location}")
+//    String credentialsLocation;
+
 
     static Logger logger = LoggerFactory.getLogger(GCPUtil.class);
 
     public String uploadObject(Path filePath, String contentType) throws Exception {
 
+//        InputStream inputStream = getClass().getResourceAsStream("/static/credentials/application_default_credentials.json");
 
-//        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/static/credentials/application_default_credentials.json"))
+
+//        GoogleCredentials credentials = GoogleCredentials.fromStream(inputStream)
 //                .createScoped(StorageScopes.all());
+
 
 
         String projectId = "school-376315";
