@@ -9,6 +9,7 @@ import {Escooter} from "../../../escooter/models/escooter.interface";
 import {UserService} from "../../../user/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-host-escooter-add',
@@ -55,7 +56,8 @@ export class HostEscooterAddComponent implements OnInit{
               private userService:UserService,
               private route:Router,
               private router:ActivatedRoute,
-              private loadingService:LoadingService) {
+              private loadingService:LoadingService,
+              private toastr:ToastrService) {
   }
 
   onSubmit(addForm: NgForm) {
@@ -147,6 +149,12 @@ export class HostEscooterAddComponent implements OnInit{
 
     this.router.queryParams.subscribe(params => {
       this.isHostCreated = params['hostCreated'];
+
+      if(this.isHostCreated){
+          this.toastr.success(  'Host Created', ": ", {
+              positionClass: 'toast-top-center'
+          });
+      }
       console.log(params['hostId'])
       this.hostID = params['hostId'];
     })

@@ -78,6 +78,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { ReviewTripDialogComponent } from './shared/components/review-trip-dialog/review-trip-dialog.component';
 import {ToastrModule} from "ngx-toastr";
 import { SubscriptionModalComponent } from './user/components/subscription-modal/subscription-modal.component';
+import { AdModalComponent } from './host/components/ad-modal/ad-modal.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
@@ -132,6 +135,7 @@ import { SubscriptionModalComponent } from './user/components/subscription-modal
 
     ReviewTripDialogComponent,
      SubscriptionModalComponent,
+     AdModalComponent,
 
   ],
     imports: [
@@ -164,6 +168,8 @@ import { SubscriptionModalComponent } from './user/components/subscription-modal
         MatProgressBarModule,
         BrowserAnimationsModule, // required animations module
         ToastrModule.forRoot(),
+        MatIconModule,
+        MatExpansionModule,
 
 
     ],

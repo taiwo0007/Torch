@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Escooter} from "../../../escooter/models/escooter.interface";
 
 @Component({
@@ -10,6 +10,11 @@ export class HostEscooterCardComponent {
 
   @Input() escooter:Escooter;
   @Input() isScooterOwner:boolean = false;
+  @Output() adClick: EventEmitter<Escooter> = new EventEmitter<Escooter>();
+
+  onAddClick(){
+    this.adClick.emit(this.escooter)
+  }
 
 
 }

@@ -6,6 +6,11 @@ import {ActivatedRoute} from "@angular/router";
 import {User} from "../../../user/models/user.model";
 import {UserService} from "../../../user/services/user.service";
 import {AuthService} from "../../../auth/services/auth.service";
+import {
+  VerificationDialogComponent
+} from "../../../shared/components/verification-dialog/verification-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {AdModalComponent} from "../ad-modal/ad-modal.component";
 
 @Component({
   selector: 'app-host-escooters',
@@ -19,7 +24,7 @@ export class HostEscootersComponent implements OnInit{
   isScooterOwner:boolean = false;
 
   constructor(private hostService: HostService, private route:ActivatedRoute,
-              private authService:AuthService) {
+              private authService:AuthService, private dialog:MatDialog) {
   }
 
   ngOnInit() {
@@ -34,6 +39,10 @@ export class HostEscootersComponent implements OnInit{
       this.hostEscooters = data
 
     })
+  }
+
+  openDialog() {
+
   }
 
   checkHostID(){
@@ -62,4 +71,18 @@ export class HostEscootersComponent implements OnInit{
     })
   }
 
+  onAdClick(escooter:Escooter) {
+    const dialogRef = this.dialog.open(AdModalComponent, {
+      data: {escooter:escooter},
+      height: 'auto',
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+    })
+    dialogRef.componentInstance.userChoice.subscribe(data => {
+      console.log(data)
+    })
+  }
 }
