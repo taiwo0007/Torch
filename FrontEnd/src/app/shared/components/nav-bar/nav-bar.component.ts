@@ -29,6 +29,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   hostID:number;
   profileImage:string;
   accountType:string;
+    isLoadingLine: boolean = false;
 
   constructor(private authService: AuthService,
               private router:Router,

@@ -21,15 +21,15 @@ export class BecomeHostComponent implements OnInit{
   }
 
   createHost() {
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoadingLine.next(true);
     this.hostService.createHostFromAPI().subscribe((data:any) => {
-      this.loadingService.isLoading.next(null);
+      this.loadingService.isLoadingLine.next(null);
 
       this.route.navigate(['../add-escooter'], {queryParams: {hostCreated: true, hostId: data}})
 
     }, error => {
       console.log(error)
-      this.loadingService.isLoading.next(null);
+      this.loadingService.isLoadingLine.next(null);
 
       if(error.error)
       {

@@ -31,6 +31,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
   ngOnInit(): void {
     this.loadService.isLoading.next(true);
+    this.isLoading = true;
     this.route.params.subscribe( params => {
       this.paramId = params['id'];
 
@@ -38,7 +39,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
 
     // this.isLoading = true;
-      this.escooterService.getEscooterById(this.paramId).pipe(delay(3000)).subscribe( escooterData => {
+      this.escooterService.getEscooterById(this.paramId).subscribe( escooterData => {
         // this.isLoading = false;
       this.escooter = escooterData;
         this.configureMapOptions();
@@ -47,16 +48,19 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
       this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x,i)=>i)
 
       console.log("Escooter Data"+this.escooter)
+            this.isLoading = false;
 
 
 
     }, error => {
         // this.isLoading = false;
+            this.isLoading = false;
 
         this.router.navigate(['../error'])
       },
           ()=> {
             this.loadService.isLoading.next(false);
+            this.isLoading = false;
 
           })
     console.log(this.ratingArray)

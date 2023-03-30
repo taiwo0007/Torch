@@ -51,6 +51,6 @@ export class AdModalComponent implements OnInit{
     console.log(myform.value)
     this.userChoice.emit({adDays: this.days, adDate: this.adDate, escooterId: this.data.escooter.id, hostId: this.data.escooter.host});
     console.log(this.days)
-    this.isLoading = false
+
   }
 }

@@ -25,16 +25,16 @@ export class SubscriptionModalComponent implements OnInit{
   }
 
     checkout(price_id:any) {
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoadingLine.next(true);
     // Check the server.js tab to see an example implementation
     this.userService.createCheckoutSessionFromAPI(price_id)
         .subscribe(result => {
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
           // If `redirectToCheckout` fails due to a browser or network
           // error, you should display the localized error message to your
           // customer using `error.message`.
           if (result.error) {
-            this.loadingService.isLoading.next(false);
+            this.loadingService.isLoadingLine.next(false);
             alert(result.error.message);
           }
         });

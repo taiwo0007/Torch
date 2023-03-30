@@ -49,14 +49,12 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.route.queryParams.subscribe(paramValue => {
-        this.loadingService.isLoading.next(true);
 
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
           paramValue['tripEnd'],
           paramValue['location'])
           .subscribe((data: any[]) => {
-                  this.loadingService.isLoading.next(false);
 
                   this.isLoading = false;
             this.escooterResults = data;
@@ -67,7 +65,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
           }, error => {
               this.escooterResults = null;
-                  this.loadingService.isLoading.next(false);
 
                   this.isLoading = false;
           },

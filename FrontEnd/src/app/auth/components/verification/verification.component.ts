@@ -94,7 +94,7 @@ export class VerificationComponent {
 
 
   onSubmit() {
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoadingLine.next(true);
 
     this.isLoading = true;
     console.log(this.secondFormGroup)
@@ -122,19 +122,19 @@ export class VerificationComponent {
     this.authService.verfyUserViaAPI(this.verifyRequestPayload).subscribe(data => {
     console.log(data)
       this.isLoading = false;
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
 
         },
         error => {
           this.error = "An unexpected Error has occurred"
           this.isLoading = false;
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
 
           return;
         },
         () => {
       if(!this.error){
-        this.loadingService.isLoading.next(false);
+        this.loadingService.isLoadingLine.next(false);
 
         this.router.navigate(['/profile'], { queryParams: { success: true } });
       }

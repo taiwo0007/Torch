@@ -18,6 +18,7 @@ export class HostProfileComponent implements OnInit{
   host?: Host;
   hostEsccoters:Escooter[];
   isMore:boolean;
+  isLoading = false;
 
   constructor(private hostService:HostService,
               private router:Router,
@@ -26,13 +27,15 @@ export class HostProfileComponent implements OnInit{
               private loadingService:LoadingService) {
 
 
+
   }
 
 
   ngOnInit() {
-    this.loadingService.isLoading.next(true);
 
+    this.loadingService.isLoading.next(true);
     console.log("loading")
+    this.isLoading = true;
 
     this.getRouteParmasInitHost();
 
@@ -56,9 +59,15 @@ export class HostProfileComponent implements OnInit{
           console.log(this.host)
 
           this.getHostEsccotersInitEscooters()
+          // this.loadingService.isLoading.next(false);
           this.loadingService.isLoading.next(false);
+          this.isLoading = false
 
-        })
+        },
+            ()=>{
+              this.loadingService.isLoading.next(false);
+              this.isLoading = false
+            })
   }
 
   getHostEsccotersInitEscooters(){
@@ -76,8 +85,16 @@ export class HostProfileComponent implements OnInit{
       this.hostEsccoters = data
       console.log(data);
 
+      this.isLoading = false;
+       this.loadingService.isLoading.next(false);
 
-     })
+
+
+     },
+         ()=> {
+           this.loadingService.isLoading.next(false);
+           this.isLoading = false
+         })
   }
   getRouteParmasInitHost(){
     this.route.params.subscribe(params => {

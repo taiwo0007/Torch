@@ -43,13 +43,13 @@ export class TripComponent implements OnInit, AfterViewInit {
     this.intialiseSuccessStatus();
     this.initTripId();
     console.log(this.todaysDate)
-
+    this.isLoading = true;
     this.confirmSubscription = this.dialogService.confirmTripComplete
         .pipe(
             switchMap((val:any) => {
               this.loadingService.isLoading.next(true);
 
-              this.isLoading = true;
+
               return this.tripService.completeTripFromApi(this.tripId)
             })
 

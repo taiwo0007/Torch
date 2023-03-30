@@ -14,6 +14,7 @@ import {LoadingService} from "../../../shared/services/loading.service";
 export class UserProfileComponent implements OnInit, AfterContentInit {
   userData?:UserData;
   isCreatedVerified;
+    isLoading: boolean =false;
 
   constructor(private userService: UserService,private route:ActivatedRoute,
               private authService: AuthService,
@@ -21,11 +22,12 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
               private loadingSerivce:LoadingService) { }
 
     ngAfterContentInit() {
+      this.isLoading = true;
         this.userService.fetchUserDetails().subscribe( (data: any) => {
             this.userData = data;
 
             this.loadingSerivce.isLoading.next(false);
-
+            this.isLoading = false;
 
             this.route.queryParams.subscribe(data => {
                 if(data['success'] && this.userData.isVerified){
@@ -33,9 +35,13 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
                     this.toastr.success(  ' Successfully Verified','', {
                         positionClass: 'toast-top-center'
                     });
+                    this.loadingSerivce.isLoading.next(false);
+                    this.isLoading = false;
                 }
                 console.log(data['subscriptionInitiated']);
                 console.log(this.userData)
+                this.loadingSerivce.isLoading.next(false);
+                this.isLoading = false;
                 this.authService.saveAccountType(this.userData.accountType)
 
                 if(data['subscriptionInitiated']) {
@@ -48,9 +54,12 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
                         this.toastr.error('Subscription not added');
 
                     }
+                    this.loadingSerivce.isLoading.next(false);
+                    this.isLoading = false;
                 }
 
-
+                this.loadingSerivce.isLoading.next(false);
+                this.isLoading = false;
             })
         })
     }
@@ -58,6 +67,7 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
     ngOnInit(): void {
 
         this.loadingSerivce.isLoading.next(true);
+        this.isLoading = true;
 
 
 

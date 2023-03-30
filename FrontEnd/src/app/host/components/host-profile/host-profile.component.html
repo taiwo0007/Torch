@@ -1,4 +1,4 @@
-<header class="bg-green text-dark position-relative mt-5">
+<header *ngIf="!isLoading" class="bg-green text-dark position-relative mt-5">
     <div class="container">
         <div class="row pt-5 pb-3 mw-25">
             <div style="position: relative" class="col-xs-12 col-md-3 text-center">
@@ -18,7 +18,7 @@
             </div>
             <div class="col-xs-12 col-md-9 my-auto">
                 <div class="d-flex justify-content-between">
-                    <h1 class="fw-bold">{{host?.hostUser.firstName +' ' +host?.hostUser.lastName}}</h1>
+                    <h1 class="fw-bold">{{host?.hostUser?.firstName +' ' +host?.hostUser?.lastName}}</h1>
                     <div class="socials fs-1">
                         <i class="fa fa-twitter-square btn  text-light rounded-circle"
                            aria-hidden="true"></i>
@@ -55,7 +55,7 @@
     </div>
 </header>
 
-<section class="container">
+<section *ngIf="!isLoading" class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8">
             <div class="row">

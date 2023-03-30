@@ -1,4 +1,6 @@
-<div class="bg-light  text-dark font-helvetica">
+
+<div *ngIf="!isLoading">
+<div [ngClass]="trips ? 'bg-light' : 'bg-white'" class="  text-dark font-helvetica">
 <div class="row g-5 pt-5 mt-4 pb-5 mx-auto container">
     <h1 *ngIf="trips" class="fw-bold">Trips Stats</h1>
     <h1 *ngIf="!trips" class="fw-bold">No Trips Booked</h1>
@@ -23,5 +25,6 @@
        <trip-history-card [isHost]="false" [trips]="trips"></trip-history-card>
     </div>
 
+</div>
 </div>
 </div>

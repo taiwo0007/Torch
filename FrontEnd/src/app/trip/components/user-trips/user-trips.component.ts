@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
 import {Trip} from "../../models/trip";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-user-trips',
@@ -11,13 +12,16 @@ import {Trip} from "../../models/trip";
 export class UserTripsComponent implements OnInit, AfterViewInit {
   tripUser:UserData | undefined;
   trips:Trip[];
-  constructor(private userService:UserService) { }
+    isLoading: boolean = false;
+  constructor(private userService:UserService, private loadingService:LoadingService) { }
 
   ngOnInit(): void {
 
   }
 
   ngAfterViewInit() {
+    this.loadingService.isLoading.next(true)
+    this.isLoading = true;
     this.getUserDetails();
   }
 
@@ -26,6 +30,11 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
       console.log(userResponseData.renterTrips[0].user)
       this.tripUser = userResponseData
       this.trips = userResponseData.renterTrips;
+      this.loadingService.isLoading.next(false)
+      this.isLoading = false;
+    }, ()=> {
+      this.loadingService.isLoading.next(false)
+      this.isLoading = false;
     })
   }
 
