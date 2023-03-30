@@ -2,6 +2,7 @@ package com.troch.torchApplication.controllers;
 import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.GCPUtil;
 import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.dto.CreateAdRequest;
 import com.troch.torchApplication.dto.EsccoterAddRequest;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +63,17 @@ public class HostController {
         }
 
         return host.get();
+
+    }
+
+    @PutMapping("/create-ad")
+    public ResponseEntity createAd(@RequestBody CreateAdRequest createAdRequest, Principal principal) throws ParseException {
+
+        logger.info("created"+createAdRequest.getAdDays() +principal.getName());
+
+
+
+        return hostService.createAd(createAdRequest, principal.getName());
 
     }
 

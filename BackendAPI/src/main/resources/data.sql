@@ -24,7 +24,7 @@ INSERT INTO make(id, name, image) VALUES (3, "Avovo", "/images/website/Make/avov
 INSERT INTO make(id, name, image) VALUES (4, "Segway", "/images/website/Make/segway.png");
 
 INSERT INTO make(id, name, image) VALUES (6, "Edisson", "/images/website/Make/segway.png");
-INSERT INTO host(id) VALUES (920386034);
+INSERT INTO host(id, total_ad_days) VALUES (920386034, 9);
 INSERT INTO host(id) VALUES (333);
 INSERT INTO host(id) VALUES (444);
 
@@ -49,7 +49,7 @@ VALUES (-6.308530354714592,53.358888300000004, 'ireland', true, 5.0, 'Dalymount 
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
 
 
-INSERT INTO user (account_type, latitude, longitude, is_Torch_Trusted, rating, location, about, joined, country, is_verified,
+INSERT INTO user ( account_type, latitude, longitude, is_Torch_Trusted, rating, location, about, joined, country, is_verified,
                   id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host)
 VALUES ('Pro', -6.308530354714592,53.358888300000004, true, 5.0, 'Dalymount Park, Connaught Street, Phibsborough, Dublin, Ireland',
         'Lorem Ipsum is simply dummy text of the printing and ','2000-01-01',

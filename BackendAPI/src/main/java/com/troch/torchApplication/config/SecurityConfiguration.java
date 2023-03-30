@@ -189,6 +189,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/escooter/findescooters/**")
                 .permitAll()
+                .antMatchers("/api/escooter/find-escooter-ads/**")
+                .permitAll()
                 .antMatchers("/api/escooter/escooter-detail/**")
                 .permitAll()
                 .antMatchers("/api/escooter/escooter-reviews/**")

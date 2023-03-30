@@ -58,6 +58,9 @@ public class EScooter {
     private Double maxRange;
     private Boolean waterResistant;
 
+    private Date adDate;
+    private int escooterAdDays;
+
     @Column(length = 1000)
     private String about;
 

@@ -26,4 +26,6 @@ export interface Escooter {
     tripEnd: Date;
     escooterReviews: any[];
     active?: any;
+    adDate?:Date;
+    escooterAdDays?:any;
 }

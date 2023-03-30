@@ -59,6 +59,14 @@ public class EScooterController {
 
 
     }
+    @GetMapping("/find-escooter-ads")
+    private ResponseEntity<List<EScooter>> findEscooterByParams() throws ParseException {
+
+        List<EScooter> eScooterList = eScooterService.findAllEscooterAds();
+        return new ResponseEntity<>(eScooterList, HttpStatus.OK);
+
+
+    }
 
 
     @CrossOrigin(origins = "http://localhost:4200")

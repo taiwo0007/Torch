@@ -7,6 +7,7 @@ import {ScooterAddRequestPayload} from "../payload/scooter-add-request.payload";
 import {catchError, map, throwError} from "rxjs";
 import {Host} from "../models/host.interface";
 import {AuthService} from "../../auth/services/auth.service";
+import {CreateAdRequestPayload} from "../payload/create-ad-request.payload";
 
 
 @Injectable({
@@ -45,6 +46,13 @@ export class HostService {
                 this.authService.saveHostDetailsLocaly(data.id);
                 return data.id;
         }))
+  }
+
+  createAd(createAdRequest:CreateAdRequestPayload){
+      return this.http.put(environment.appUrl+'/api/host/create-ad',
+          {
+              ...createAdRequest
+          })
   }
 
 

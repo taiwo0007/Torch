@@ -2,9 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/Utilities/GCPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/Utilities/GCPUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/dto/CreateAdRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/host/payload/create-ad-request.payload.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/EScooterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/EScooterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/EScooter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/EScooter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/Host.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/Host.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/repositories/EScooterRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/repositories/EScooterRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/EScooterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/EScooterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/FrontEnd.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FrontEnd.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-card/escooter-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-card/escooter-card.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/models/escooter.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/models/escooter.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/services/host.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/services/host.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +117,9 @@
       <workItem from="1679942302787" duration="704000" />
       <workItem from="1680015679556" duration="1273000" />
       <workItem from="1680030358130" duration="6824000" />
-      <workItem from="1680041881548" duration="629000" />
+      <workItem from="1680041881548" duration="1852000" />
+      <workItem from="1680081287431" duration="4000" />
+      <workItem from="1680126158681" duration="17710000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>

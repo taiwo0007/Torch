@@ -30,6 +30,8 @@ public class Host {
     @JsonView(Views.Id.class)
     private Integer id;
 
+    private int totalAdDays;
+
 
     @OneToOne(mappedBy = "host", fetch = FetchType.EAGER)
 //    @JsonIdentityReference(alwaysAsId = true)

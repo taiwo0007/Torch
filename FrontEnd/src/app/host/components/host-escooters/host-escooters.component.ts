@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HostService} from "../../services/host.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Escooter} from "../../../escooter/models/escooter.interface";
 import {ActivatedRoute} from "@angular/router";
 import {User} from "../../../user/models/user.model";
@@ -11,6 +11,10 @@ import {
 } from "../../../shared/components/verification-dialog/verification-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
+import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
+import {catchError, exhaustMap, mergeMap, of, switchMap} from "rxjs";
+import {data} from "autoprefixer";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-host-escooters',
@@ -22,9 +26,11 @@ export class HostEscootersComponent implements OnInit{
   addSuccess:boolean = false;
   hostID:number;
   isScooterOwner:boolean = false;
+  createAdRequest:CreateAdRequestPayload;
 
   constructor(private hostService: HostService, private route:ActivatedRoute,
-              private authService:AuthService, private dialog:MatDialog) {
+              private authService:AuthService, private dialog:MatDialog,
+              private toastr:ToastrService) {
   }
 
   ngOnInit() {
@@ -81,8 +87,42 @@ export class HostEscootersComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
     })
-    dialogRef.componentInstance.userChoice.subscribe(data => {
-      console.log(data)
-    })
+
+    //submition and handling of adform
+    //upon user choice entered call an api and display appropriate toaster meessage
+    dialogRef.componentInstance.userChoice.pipe(catchError((error:HttpErrorResponse) =>{
+
+      console.error(error.error.message)
+      return of("error");
+    }),
+        switchMap((data:any) => {
+          this.createAdRequest = {
+            adDays:data.adDays,
+            adDate:data.adDate,
+            escooterId:data.escooterId,
+            hostId:data.hostId
+          };
+          return this.hostService.createAd(this.createAdRequest)
+        }))
+        .subscribe(data => {
+          this.toastr.success(  'Ad Campaign Created', '', {
+            positionClass: 'toast-top-center'
+          });
+          dialogRef.close();
+          }, error => {
+
+          if(error.error.message){
+            this.toastr.error(  'Ad Campaign Not Created', error.error.message, {
+              positionClass: 'toast-top-center'
+            });
+          }
+          else {
+            this.toastr.error(  'Ad Campaign Not Created', 'An Unexpected Error Occured', {
+              positionClass: 'toast-top-center'
+            });
+          }
+
+          dialogRef.close();
+        })
   }
 }

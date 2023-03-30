@@ -84,6 +84,11 @@
                 <div *ngIf="isLoading" class="row mx-auto mt-3">
                    <app-custom-skeleton-loader></app-custom-skeleton-loader>
                 </div>
+                <div class="row" *ngIf="escooterAdsResult">
+                    <div *ngFor="let escooterItem of escooterAdsResult" class="col-xs-12 col-sm-12 col-md-6 my-3">
+                        <app-escooter-ad-card  id="{{escooterItem.modelName}}" class="scooter-card ad-card border-warning"  [escooterItem]="escooterItem"></app-escooter-ad-card>
+                    </div>
+                </div>
                 <div class="row" *ngIf="escooterResults">
                     <div *ngFor="let escooterItem of escooterResults" class="col-xs-12 col-sm-12 col-md-6 my-3">
                         <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card"  [escooterItem]="escooterItem"></app-escooter-card>
@@ -94,9 +99,8 @@
 
         <div style=" position: fixed !important; overflow: hidden; right:0 !important; margin: 0 !important; padding: 0 !important;" class="col-4">
             <ngx-skeleton-loader class="border-0" style="height: 93vh; position: fixed !important; overflow: hidden;" *ngIf="isLoading" [theme]="{height: '94vh', width: '40vw'}"></ngx-skeleton-loader>
-<!--            <div *ngIf="escooterResults" class="border "-->
-
-<!--                 style="height: 93vh; position: fixed !important; overflow: hidden;" id="map"></div>-->
+            <div *ngIf="escooterResults" class="border "
+                 style="height: 93vh; position: fixed !important; overflow: hidden;" id="map"></div>
 
 
      </div>

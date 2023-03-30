@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit, Output, EventEmitter} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Escooter} from "../../../escooter/models/escooter.interface";
+import {NgForm} from "@angular/forms";
+import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-ad-modal',
@@ -23,6 +25,8 @@ export class AdModalComponent implements OnInit{
   panelOpenState = true;
 
   step = 0;
+  days: number = 1;
+  adDate:any = new Date();
 
   setStep(index: number) {
     this.step = index;
@@ -30,7 +34,10 @@ export class AdModalComponent implements OnInit{
 
   nextStep() {
     this.step++;
-    this.userChoice.emit("User choice test data.");
+
+    // if(this.step == 2){}
+
+
 
   }
 
@@ -38,4 +45,9 @@ export class AdModalComponent implements OnInit{
     this.step--;
   }
 
+  onSumbit(myform: NgForm) {
+    console.log(myform.value)
+    this.userChoice.emit({adDays: this.days, adDate: this.adDate, escooterId: this.data.escooter.id, hostId: this.data.escooter.host});
+    console.log(this.days)
+  }
 }

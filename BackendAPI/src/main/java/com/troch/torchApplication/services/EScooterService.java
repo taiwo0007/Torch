@@ -12,7 +12,11 @@ import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.Make;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.EScooterRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -20,17 +24,16 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
-import java.util.Base64;
+import java.util.List;
 
 @Service
 public class EScooterService {
@@ -55,6 +58,9 @@ public class EScooterService {
 
     @Autowired
     MakeService makeService;
+
+    Logger logger = LoggerFactory.getLogger(EScooterService.class);
+
 
     public List<EScooter> findAllEScooters(){
         return eScooterRepository.findAll();
@@ -157,6 +163,64 @@ public class EScooterService {
              tripEndDate = formatter.parse(tripEnd);
         }
         return eScooterRepository.findAllByTripDatesAndLocation(tripStartDate, tripEndDate, country);
+    }
+
+    public List<EScooter> findAllEscooterAds() throws ParseException {
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date today = new Date();
+
+        Date todayWithZeroTime = formatter.parse(formatter.format(today));
+
+        //By Today's date subtract three days potential ad days
+        Date date = new Date();
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+
+
+
+        //QUERY 2 DAYS AGO AND TODAYS DATE
+        List<EScooter> eScootersEligible= eScooterRepository.findAllEscooterAds(new Date(todayWithZeroTime.getTime() - (2 * DAY_IN_MS)), todayWithZeroTime
+        );
+
+        Date zeroDaysAgo = new Date(todayWithZeroTime.getTime());
+        Date twoDaysAgo = new Date(todayWithZeroTime.getTime() - (2 * DAY_IN_MS));
+        Date oneDayAgo = new Date(todayWithZeroTime.getTime() - (1 * DAY_IN_MS));
+        Date tommorow = new Date(todayWithZeroTime.getTime() + (1 * DAY_IN_MS));
+
+        List<EScooter> adList = new ArrayList<>();
+
+        logger.info("twodays"+twoDaysAgo);
+        logger.info("onedayAgo"+oneDayAgo);
+        logger.info("tommorow"+tommorow);
+
+        //check if ads are eligible for today
+        for(EScooter e: eScootersEligible){
+
+            if(e.getAdDate().before(tommorow) && e.getAdDate().compareTo(zeroDaysAgo) == 0){
+                adList.add(e);
+            }
+            if(e.getAdDate().compareTo(oneDayAgo) == 0 && e.getEscooterAdDays() >=2 ){
+
+                adList.add(e);
+            }
+
+            if(e.getAdDate().compareTo(twoDaysAgo) == 0 && e.getEscooterAdDays() >=3 ){
+                adList.add(e);
+            }
+
+        }
+
+        //today 30 0:0:o
+
+        //^
+        //30 - 59    -> 1
+        //29  -> 2
+        //28   -> 3
+
+
+
+        return adList;
     }
 
 
