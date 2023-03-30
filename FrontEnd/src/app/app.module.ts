@@ -81,6 +81,7 @@ import { SubscriptionModalComponent } from './user/components/subscription-modal
 import { AdModalComponent } from './host/components/ad-modal/ad-modal.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
+import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/escooter-ad-card.component';
 
 
 @NgModule({
@@ -136,6 +137,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ReviewTripDialogComponent,
      SubscriptionModalComponent,
      AdModalComponent,
+     EscooterAdCardComponent,
 
   ],
     imports: [

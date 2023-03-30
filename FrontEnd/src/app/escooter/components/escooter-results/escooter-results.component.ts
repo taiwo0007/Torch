@@ -30,6 +30,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
   maxWeightFilterCriteria:any[] = [];
 
   escooterResults:any[] = [];
+  escooterAdsResult:any[] = []
   escooterResultsFilterCopy:any[] = [];
   escooterFilterResults:any[] = [];
 
@@ -76,6 +77,16 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
               })
     })
 
+      this.getEscooterAdsFromApi();
+  }
+
+  getEscooterAdsFromApi(){
+      this.escooterService.getAllEscooterAds()
+
+          .subscribe((data:any) => {
+          this.escooterAdsResult = data;
+          console.log("api data", this.escooterAdsResult);
+      })
   }
 
   ngAfterViewInit() {

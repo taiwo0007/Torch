@@ -186,6 +186,13 @@
     overflow-y: hidden !important;
 }
 
+.ad-card {
+    transition: all .1s ease-in-out;
+    width: 95%;
+    /*height: 110%;*/
+    overflow-y: hidden !important;
+}
+
 .scooter-card:hover {
     transform: scale(1.01);
     opacity: 1.9;

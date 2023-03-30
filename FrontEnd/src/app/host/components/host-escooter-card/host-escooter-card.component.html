@@ -25,7 +25,13 @@
 </a>
 <ng-template #hostEditLink>
     <div class="scooter-card card mx-auto" style="position:relative; overflow: hidden">
-        <button (click)="onAddClick()" style="position:absolute; z-index: 1; right: 0;" class="btn btn-warning rounded-0 fw-bold">Run ad</button>
+        <button *ngIf="!isAdRunning" (click)="onAddClick()" style="position:absolute; z-index: 1; right: 0;" class="btn btn-warning rounded-0 fw-bold">Run ad</button>
+        <button *ngIf="isAdRunning" style="position:absolute; z-index: 1; right: 0; cursor: initial !important; display: flex; align-items: center; justify-content: center" class="btn btn-success rounded-0 fw-bold">
+
+            Ad is Live
+            <div class="recording-circle ms-2"></div>
+        </button>
+
 
         <a class="nav-link  " [routerLink]="['/escooter-detail', escooter.id]">
             <div class="" style="width: 18rem; overflow-x: hidden; !important">

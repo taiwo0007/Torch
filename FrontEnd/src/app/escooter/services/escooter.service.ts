@@ -25,6 +25,29 @@ export class EscooterService implements OnDestroy{
         }
         )
   }
+    getAllEscooterAds(){
+        return this.http.get(environment.appUrl +'/api/escooter/find-escooter-ads'
+
+        ).pipe(map((escooters:any) => {
+
+            console.log(escooters)
+
+            let newList: any = [];
+
+            if(escooters.length == 1){
+                return escooters;
+            }
+
+            while(newList.length < 2 && escooters.length > 0){
+                let randomIndex = Math.floor(Math.random() * escooters.length);
+                let randomItem = escooters.splice(randomIndex, 1)[0];
+                newList.push(randomItem);
+            }
+            console.log(newList)
+
+            return newList
+        }))
+    }
 
     getEscooterById(id:number){
         return this.http.get<Escooter>(environment.appUrl +'/api/escooter/escooter-detail/'+id).pipe(map(escoterData => {

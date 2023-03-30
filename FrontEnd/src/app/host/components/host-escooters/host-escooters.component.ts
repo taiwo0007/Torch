@@ -108,6 +108,7 @@ export class HostEscootersComponent implements OnInit{
           this.toastr.success(  'Ad Campaign Created', '', {
             positionClass: 'toast-top-center'
           });
+          this.checkHostID()
           dialogRef.close();
           }, error => {
 
