@@ -88,11 +88,12 @@ public class PaymentController {
                 logger.info("CUSTOMER"+session.getCustomerDetails().getEmail());
                 logger.info("SUBSCRIPTION ID "+session.getSubscription());
                 logger.info("AMOUNT SUBTOTAL "+session.getAmountSubtotal());
+                User user = userService.findUserByEmail(session.getCustomerDetails().getEmail());
+                Host host = user.getHost();
 
-                if(!session.getSubscription().isBlank()){
+                if(!session.getSubscription().isBlank() && host != null){
 
-                    User user = userService.findUserByEmail(session.getCustomerDetails().getEmail());
-                    Host host = user.getHost();
+
                    if(session.getAmountSubtotal() == 1299){
 
                        user.setAccountType("Basic");

@@ -79,7 +79,10 @@
 
                 <mat-action-row>
                     <button mat-button color="warn" (click)="prevStep()">Previous</button>
-                    <button mat-button color="primary" [disabled]="!myform.valid" type="submit">Submit</button>
+                    <div *ngIf="isLoading" class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <button mat-button color="primary" *ngIf="!isLoading" [disabled]="!myform.valid" type="submit">Submit</button>
                 </mat-action-row>
             </mat-expansion-panel>
 

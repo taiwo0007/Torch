@@ -4,6 +4,7 @@ import {UserData} from "../../models/user-data.model";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ToastrService} from "ngx-toastr";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-user-profile',
@@ -16,11 +17,15 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
 
   constructor(private userService: UserService,private route:ActivatedRoute,
               private authService: AuthService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private loadingSerivce:LoadingService) { }
 
     ngAfterContentInit() {
         this.userService.fetchUserDetails().subscribe( (data: any) => {
             this.userData = data;
+
+            this.loadingSerivce.isLoading.next(false);
+
 
             this.route.queryParams.subscribe(data => {
                 if(data['success'] && this.userData.isVerified){
@@ -52,7 +57,7 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
 
     ngOnInit(): void {
 
-
+        this.loadingSerivce.isLoading.next(true);
 
 
 

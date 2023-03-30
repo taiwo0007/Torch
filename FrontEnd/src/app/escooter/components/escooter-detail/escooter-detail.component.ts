@@ -5,6 +5,7 @@ import {Escooter} from "../../models/escooter.interface";
 import {delay, map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-escooter-detail',
@@ -26,19 +27,19 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
   constructor(private escooterService: EscooterService,
               private route:ActivatedRoute,
               private authService: AuthService,
-              private router:Router) { }
+              private router:Router, private loadService:LoadingService) { }
 
   ngOnInit(): void {
-
+    this.loadService.isLoading.next(true);
     this.route.params.subscribe( params => {
       this.paramId = params['id'];
 
     })
 
 
-    this.isLoading = true;
+    // this.isLoading = true;
       this.escooterService.getEscooterById(this.paramId).pipe(delay(3000)).subscribe( escooterData => {
-        this.isLoading = false;
+        // this.isLoading = false;
       this.escooter = escooterData;
         this.configureMapOptions();
         this.configureMarker();
@@ -50,9 +51,14 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
 
     }, error => {
-        this.isLoading = false;
+        // this.isLoading = false;
+
         this.router.navigate(['../error'])
-      })
+      },
+          ()=> {
+            this.loadService.isLoading.next(false);
+
+          })
     console.log(this.ratingArray)
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
 
@@ -63,6 +69,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
           .subscribe( escooterData => {
         this.escooter = escooterData;
             this.isLoading = false;
+            this.loadService.isLoading.next(false);
 
         this.ratingArray = Array(escooterData.rating).fill(0).map((x,i)=>i)
       })

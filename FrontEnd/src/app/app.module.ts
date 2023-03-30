@@ -82,6 +82,7 @@ import { AdModalComponent } from './host/components/ad-modal/ad-modal.component'
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/escooter-ad-card.component';
+import { LoadScreenComponent } from './shared/components/load-screen/load-screen.component';
 
 
 @NgModule({
@@ -138,6 +139,7 @@ import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/
      SubscriptionModalComponent,
      AdModalComponent,
      EscooterAdCardComponent,
+     LoadScreenComponent,
 
   ],
     imports: [

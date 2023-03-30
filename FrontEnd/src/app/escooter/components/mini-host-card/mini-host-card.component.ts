@@ -2,6 +2,7 @@ import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
 import {HostService} from "../../../host/services/host.service";
 import {EscooterService} from "../../services/escooter.service";
 import {Host} from "../../../host/models/host.interface";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-mini-host-card',
@@ -16,7 +17,8 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
 
 
   constructor(private hostService:HostService,
-              private escooterService: EscooterService) { }
+              private escooterService: EscooterService,
+              ) { }
 
   ngOnInit(): void {
 
@@ -27,6 +29,12 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
 
         this.host = data;
         console.log("Api Host data",this.host)
+
+
+
+      }, ()=> {
+
+      }, () => {
 
       })
 

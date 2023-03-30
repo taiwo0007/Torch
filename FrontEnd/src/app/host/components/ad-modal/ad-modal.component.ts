@@ -27,6 +27,7 @@ export class AdModalComponent implements OnInit{
   step = 0;
   days: number = 1;
   adDate:any = new Date();
+  isLoading: boolean = false;
 
   setStep(index: number) {
     this.step = index;
@@ -46,8 +47,10 @@ export class AdModalComponent implements OnInit{
   }
 
   onSumbit(myform: NgForm) {
+    this.isLoading = true
     console.log(myform.value)
     this.userChoice.emit({adDays: this.days, adDate: this.adDate, escooterId: this.data.escooter.id, hostId: this.data.escooter.host});
     console.log(this.days)
+    this.isLoading = false
   }
 }

@@ -3,6 +3,7 @@ import {User} from "../../models/user.model";
 import {UserData} from "../../models/user-data.model";
 import {NgForm} from "@angular/forms";
 import {UserService} from "../../services/user.service";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-profile-form-card',
@@ -14,7 +15,8 @@ export class ProfileFormCardComponent implements OnInit, AfterViewInit {
   @ViewChild('UserDetailsForm', { static: false }) UserDetailsForm: NgForm;
   @Input() InitialUserDetails?: UserData;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private loadingService:LoadingService) { }
 
   ngOnInit(): void {
 
@@ -30,6 +32,9 @@ export class ProfileFormCardComponent implements OnInit, AfterViewInit {
   onSubmit(UserDetailsForm: NgForm) {
         this.userService.fetchUserDetails().subscribe(data => {
           console.log(data)
+
+        },() => {
+
         })
 
     }

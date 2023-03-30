@@ -59,7 +59,6 @@
         <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="w-100 dropdown-item rounded-0 text-light mt-1" [routerLink]="['verify']">Verify Now</a></li>
         <li role="menuitem" *ngIf="isHost" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
         <li role="menuitem"  *ngIf="isHost" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters', hostID]" class="dropdown-item " >EScooters</a></li>
-        <li><hr class="dropdown-divider bg-dark"></li>
         <li class="my-2" role="menuitem" *ngIf="isHost == false || isVerified == true" (click)="closeDropdown($event)"><a [routerLink]="['become-host']" class="dropdown-item text-info border-top-dark fw-bold py-2" >Become a host</a></li>
         <li role="menuitem"><hr class="dropdown-divider bg-dark"></li>
         <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading3">Legal & Insurance</a></li>
@@ -71,8 +70,9 @@
 
 
 
-  <mat-progress-bar *ngIf="isLoading" class="position-absolute mt-" style="left: 0; bottom:0" mode="indeterminate"></mat-progress-bar>
+<!--  <mat-progress-bar  class="position-absolute mt-" style="left: 0; bottom:0" mode="indeterminate"></mat-progress-bar>-->
+
 
 </nav>
-
+<app-load-screen *ngIf="isLoading" class="mx-auto"></app-load-screen>
 

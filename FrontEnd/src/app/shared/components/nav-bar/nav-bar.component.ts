@@ -49,6 +49,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
     this.authService.user.subscribe((data:any) => {
 
+      console.table(data)
+
       this.userService.fetchUserDetails().subscribe((userData:UserData) => {
         this.profileImage = userData.profilePicture;
       })
@@ -56,7 +58,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
       this.accountType =  data._accountType;
 
       this.isVerified = data._isVerified;
-      this.isHost = data.isHost
+      this.isHost = data._isHost
 
       if(!data){
         this.isAuthenticated = false;
@@ -65,9 +67,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
         this.isAuthenticated = true;
       }
 
-      this.hostID = data.hostID;
+      this.hostID = data._hostID;
 
-
+      console.log("hosted?"+this.hostID)
+      console.log("hosted??"+data._hostID)
+      console.log("hosted??"+data.hostID)
     })
 
 
