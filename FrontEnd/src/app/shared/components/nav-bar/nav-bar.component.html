@@ -22,7 +22,7 @@
 
     </li>
 
-    <li *ngIf="isAuthenticated && !accountType" class="nav-item my-auto me-3">
+    <li *ngIf="isAuthenticated && !accountType && isHost" class="nav-item my-auto me-3">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-outline-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade Plan</a>
     </li>
 

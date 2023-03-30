@@ -14,7 +14,7 @@ export class AdModalComponent implements OnInit{
   @Output() userChoice = new EventEmitter<any>;
 
   constructor(private dialogRef: MatDialogRef<AdModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {escooter:Escooter}) {
+              @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
 

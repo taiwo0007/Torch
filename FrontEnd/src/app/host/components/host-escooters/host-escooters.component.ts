@@ -15,6 +15,7 @@ import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
 import {catchError, exhaustMap, mergeMap, of, switchMap} from "rxjs";
 import {data} from "autoprefixer";
 import {ToastrService} from "ngx-toastr";
+import {Host} from "../../models/host.interface";
 
 @Component({
   selector: 'app-host-escooters',
@@ -26,6 +27,7 @@ export class HostEscootersComponent implements OnInit{
   addSuccess:boolean = false;
   hostID:number;
   isScooterOwner:boolean = false;
+  totalAdDays: number = 0;
   createAdRequest:CreateAdRequestPayload;
 
   constructor(private hostService: HostService, private route:ActivatedRoute,
@@ -36,6 +38,7 @@ export class HostEscootersComponent implements OnInit{
   ngOnInit() {
     this.checkHostID();
     this.checkSuccessUrl();
+    this.getHostDetails()
 
   }
 
@@ -44,6 +47,16 @@ export class HostEscootersComponent implements OnInit{
       console.log(data)
       this.hostEscooters = data
 
+    })
+  }
+
+  getHostDetails(){
+    console.log("id")
+    console.log(this.hostID)
+    this.hostService.getHostById(this.hostID).subscribe((hostData:Host) => {
+      console.log(hostData)
+
+      this.totalAdDays = hostData.totalAdDays;
     })
   }
 
@@ -63,6 +76,8 @@ export class HostEscootersComponent implements OnInit{
     this.authService.user.subscribe(thisUser => {
       console.log(thisUser)
 
+
+
       if(thisUser._hostID == this.hostID){
         this.isScooterOwner = true;
       }
@@ -79,7 +94,7 @@ export class HostEscootersComponent implements OnInit{
 
   onAdClick(escooter:Escooter) {
     const dialogRef = this.dialog.open(AdModalComponent, {
-      data: {escooter:escooter},
+      data: {escooter:escooter, totalAdDays:this.totalAdDays},
       height: 'auto',
       width: '600px',
     });
@@ -109,6 +124,7 @@ export class HostEscootersComponent implements OnInit{
             positionClass: 'toast-top-center'
           });
           this.checkHostID()
+          this.getHostDetails()
           dialogRef.close();
           }, error => {
 

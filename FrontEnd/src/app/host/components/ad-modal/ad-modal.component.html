@@ -4,13 +4,31 @@
 <div class="">
     <mat-dialog-content class=" d-flex flex-column justify-content-center">
 <!--        <img class="align-content-center align-self-center " style="width: 4rem; height: auto" src="assets/images/website/star-ad.gif" alt="">-->
-        <h1 class=" fw-bold fs-2 mx-auto text-center mt-3" mat-dialog-title>Create new Ad</h1>
+
+            <div class="row">
+                <div class="col-3">
+
+                </div>
+                <div class="col-6">
+                    <h1 class=" fw-bold fs-2 mx-auto text-center mt-3" mat-dialog-title>Create campaign </h1>
+
+                </div>
+                <div class="col-3 my-auto mx-auto text-center">
+                    <p class="my-auto mx-auto text-center btn btn-warning text-bold  disabled">{{data.totalAdDays}} days left</p>
+                </div>
+
+            </div>
+
+
 
         <mat-accordion>
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Electric Scooter
+                        <div>
+                            Electric Scooter
+                        </div>
+
                     </mat-panel-title>
                     <mat-panel-description>
                         {{data.escooter.modelName}}
@@ -29,7 +47,7 @@
                     </mat-panel-title>
                     <mat-panel-description>
                         Run ads for number of days
-                        <mat-icon>account_circle</mat-icon>
+                        <mat-icon>date_range</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 
@@ -53,7 +71,7 @@
                     </mat-panel-title>
                     <mat-panel-description>
                         Ad commence date
-                        <mat-icon>account_circle</mat-icon>
+                        <mat-icon>date_range</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
 

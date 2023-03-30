@@ -19,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
     @Id

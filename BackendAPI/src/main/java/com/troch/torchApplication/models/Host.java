@@ -30,7 +30,8 @@ public class Host {
     @JsonView(Views.Id.class)
     private Integer id;
 
-    private int totalAdDays;
+    @Column(name = "total_ad_days", columnDefinition = "integer default 0")
+    private Integer totalAdDays = 0;
 
 
     @OneToOne(mappedBy = "host", fetch = FetchType.EAGER)

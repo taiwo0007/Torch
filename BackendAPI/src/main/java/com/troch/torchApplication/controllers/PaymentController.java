@@ -13,14 +13,11 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.troch.torchApplication.dto.CreatePayment;
 import com.troch.torchApplication.dto.CreatePaymentResponse;
 import com.troch.torchApplication.dto.PriceIdRequest;
-import com.troch.torchApplication.dto.Response;
 import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.services.HostService;
 import com.troch.torchApplication.services.StripeService;
-
 import com.troch.torchApplication.services.UserServiceImpl;
-import io.grpc.LoadBalancer;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -67,6 +57,8 @@ public class PaymentController {
 
 
         String endpointSecret = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
+//        String endpointSecret = "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
+
 
         Event event = null;
 
@@ -100,7 +92,7 @@ public class PaymentController {
                 if(!session.getSubscription().isBlank()){
 
                     User user = userService.findUserByEmail(session.getCustomerDetails().getEmail());
-                    Host host = hostService.findHostByUser(user);
+                    Host host = user.getHost();
                    if(session.getAmountSubtotal() == 1299){
 
                        user.setAccountType("Basic");
@@ -125,7 +117,14 @@ public class PaymentController {
                 break;
             case "invoice.paid":
 
-                
+                logger.info("paid info", "invoice paid");
+
+                Invoice invoice = (Invoice) stripeObject;
+
+               logger.info("invoice padi"+invoice);
+
+
+
 
                 // Continue to provision the subscription as payments continue to be made.
                 // Store the status in your database and check when a user accesses your service.

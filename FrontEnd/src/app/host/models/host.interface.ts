@@ -11,4 +11,5 @@ export interface Host {
     hostEScooters: Escooter[];
     hostTrips?: any[];
     scooterUseDetail: ScooterUseDetails;
+    totalAdDays?:number;
 }
