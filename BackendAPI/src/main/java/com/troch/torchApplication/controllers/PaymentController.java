@@ -14,7 +14,9 @@ import com.troch.torchApplication.dto.CreatePayment;
 import com.troch.torchApplication.dto.CreatePaymentResponse;
 import com.troch.torchApplication.dto.PriceIdRequest;
 import com.troch.torchApplication.dto.Response;
+import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
+import com.troch.torchApplication.services.HostService;
 import com.troch.torchApplication.services.StripeService;
 
 import com.troch.torchApplication.services.UserServiceImpl;
@@ -47,6 +49,9 @@ public class PaymentController {
 
     @Autowired
     UserServiceImpl userService;
+
+    @Autowired
+    HostService hostService;
 
     @Value("${stripe.keys.public}")
     private String API_PUBLIC_KEY;
@@ -95,18 +100,23 @@ public class PaymentController {
                 if(!session.getSubscription().isBlank()){
 
                     User user = userService.findUserByEmail(session.getCustomerDetails().getEmail());
+                    Host host = hostService.findHostByUser(user);
                    if(session.getAmountSubtotal() == 1299){
 
                        user.setAccountType("Basic");
+                       host.setTotalAdDays(3);
 
                    }
                     if(session.getAmountSubtotal() == 2999){
                         user.setAccountType("Advanced");
+                        host.setTotalAdDays(7);
                     }
                     if(session.getAmountSubtotal() == 3999){
                         user.setAccountType("Pro");
+                        host.setTotalAdDays(10);
                     }
                     userService.saveUser(user);
+                    hostService.save(host);
 
                 }
 
@@ -114,6 +124,8 @@ public class PaymentController {
                 // You should provision the subscription and save the customer ID to your database.
                 break;
             case "invoice.paid":
+
+                
 
                 // Continue to provision the subscription as payments continue to be made.
                 // Store the status in your database and check when a user accesses your service.

@@ -1,0 +1,34 @@
+<a  #scootercard [routerLink]="['../escooter-detail', escooterItem.id]" style="position: relative; text-decoration:  none; width: 21vw;"
+    class="card mx-auto pb-3 col-xs-12 col-sm-12 col-md-6 my-5 text-dark border-warning scooter-card  mt-1 mx-auto mb-1"
+    id="{{escooterItem.modelName}}"
+>
+<span style="position: absolute" class="btn btn-warning">Promoted</span>
+    <img
+            src="{{escooterItem.image}}"
+            style="object-fit:cover !important; width: 100% !important; height: 25rem !important;"
+            class="card-img-top" alt="..." />
+
+    <div style="padding-bottom: 0px !important; margin-bottom: 0 !important;" class="card-body pt-3 ">
+        <div class=" pb-2 border-bottom">
+            <h5 th:text="${escooter.getModelName()}" class="card-text fw-bold"> {{ escooterItem.modelName }}</h5>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p  class="">{{ escooterItem.trips }} Trips</p>
+                </div>
+                <div>
+                    <span th:text="${escooter.getRating()}">{{ escooterItem.rating | number : '1.2-2' }} </span> <i class="fa fa-star text-info"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex justify-content-between my-auto">
+            <div>
+                <h5 class="text-end fw-bolder  my-auto fw-bold pt-3 "><span class="fw-bold"> {{ escooterItem.cost | currency:'EUR' }}/day</span>
+                    <span style="margin-top: -0.1rem !important;" class="fw-light text-muted h6 text-small ms-auto text-end"></span>
+                </h5>
+            </div>
+            <p class="text-end pt-3"><span th:text="${escooter.getCounty()}">{{ escooterItem.county }}</span>, <span class="fw-bold">{{ escooterItem.country }}</span></p>
+        </div>
+    </div>
+
+</a>
