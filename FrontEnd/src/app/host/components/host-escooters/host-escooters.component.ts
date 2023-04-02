@@ -12,10 +12,11 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
-import {catchError, exhaustMap, mergeMap, of, switchMap} from "rxjs";
+import {catchError, delay, exhaustMap, mergeMap, of, switchMap} from "rxjs";
 import {data} from "autoprefixer";
 import {ToastrService} from "ngx-toastr";
 import {Host} from "../../models/host.interface";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-host-escooters',
@@ -32,10 +33,11 @@ export class HostEscootersComponent implements OnInit{
 
   constructor(private hostService: HostService, private route:ActivatedRoute,
               private authService:AuthService, private dialog:MatDialog,
-              private toastr:ToastrService) {
+              private toastr:ToastrService, private loadingService:LoadingService) {
   }
 
   ngOnInit() {
+    this.loadingService.isLoading.next(true);
     this.checkHostID();
     this.checkSuccessUrl();
     this.getHostDetails()
@@ -43,9 +45,12 @@ export class HostEscootersComponent implements OnInit{
   }
 
   getHostEscooters(){
-    this.hostService.fetchHostEscooters(this.hostID).subscribe(data => {
+
+    this.hostService.fetchHostEscooters(this.hostID).pipe(delay(3000)).subscribe(data => {
       console.log(data)
       this.hostEscooters = data
+      this.loadingService.isLoading.next(false);
+
 
     })
   }
@@ -58,6 +63,8 @@ export class HostEscootersComponent implements OnInit{
 
       this.totalAdDays = hostData.totalAdDays;
     })
+
+
   }
 
   openDialog() {
@@ -69,6 +76,7 @@ export class HostEscootersComponent implements OnInit{
       this.hostID = params['id'];
       this.checkScooterOwner();
       this.getHostEscooters();
+
     })
   }
 
@@ -81,6 +89,7 @@ export class HostEscootersComponent implements OnInit{
       if(thisUser._hostID == this.hostID){
         this.isScooterOwner = true;
       }
+
     })
   }
 
@@ -89,6 +98,7 @@ export class HostEscootersComponent implements OnInit{
 
     this.route.queryParams.subscribe(params => {
       this.addSuccess = params['success'];
+
     })
   }
 
@@ -97,6 +107,7 @@ export class HostEscootersComponent implements OnInit{
       data: {escooter:escooter, totalAdDays:this.totalAdDays},
       height: 'auto',
       width: '600px',
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -108,7 +119,9 @@ export class HostEscootersComponent implements OnInit{
     dialogRef.componentInstance.userChoice.pipe(catchError((error:HttpErrorResponse) =>{
 
       console.error(error.error.message)
-      return of("error");
+          this.loadingService.isLoading.next(false);
+
+          return of("error");
     }),
         switchMap((data:any) => {
           this.createAdRequest = {
@@ -138,7 +151,7 @@ export class HostEscootersComponent implements OnInit{
               positionClass: 'toast-top-center'
             });
           }
-
+ 
           dialogRef.close();
         })
   }

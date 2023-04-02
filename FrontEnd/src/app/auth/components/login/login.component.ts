@@ -5,6 +5,7 @@ import {LoginRequestPayload} from "../../payloads/login-request.payload";
 import {ActivatedRoute, Router} from "@angular/router";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,7 @@ isForbiddenNotice: false;
   }
 
   onSubmit(authForm: NgForm) {
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoadingLine.next(true);
 
     this.error = null;
     this.isLoading = true;
@@ -67,7 +68,7 @@ isForbiddenNotice: false;
     console.log(this.loginRequestPayload.password)
 
     this.authService.login(this.loginRequestPayload).subscribe((data:boolean) => {
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
 
           this.isLoading = false;
 
@@ -75,7 +76,7 @@ isForbiddenNotice: false;
     },
       error => {
         console.log(error)
-        this.loadingService.isLoading.next(false);
+        this.loadingService.isLoadingLine.next(false);
 
         this.isLoading = false;
         if(error.error.message){
@@ -88,7 +89,7 @@ isForbiddenNotice: false;
 
       },
         ()=>{
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
 
           this.isLoading = false;
 

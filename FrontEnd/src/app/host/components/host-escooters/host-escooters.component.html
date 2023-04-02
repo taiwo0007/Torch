@@ -7,7 +7,7 @@
                  style=" background-color: white; margin: auto !important;">
                 <div class="p-4">
                     <div class="d-flex justify-content-between mb-3">
-                        <h2 class="fw-bold "> {{isScooterOwner ?  "Host's" : 'Your'}} Electric Scooters </h2>
+                        <h2 class="fw-bold "> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
                         <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"  class="btn btn-dark rounded-0 btn-lg fw-bold">+ Add scooter</a>
                     </div>
 

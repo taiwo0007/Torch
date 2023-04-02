@@ -47,6 +47,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.loadingService.isLoading.subscribe(value => {
       this.isLoading = value;
     })
+    this.loadingService.isLoadingLine.subscribe(value => {
+      this.isLoadingLine = value;
+    })
 
     this.authService.user.subscribe((data:any) => {
 

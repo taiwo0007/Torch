@@ -61,10 +61,10 @@ export class HostEscooterAddComponent implements OnInit{
   }
 
   onSubmit(addForm: NgForm) {
-      this.loadingService.isLoading.next(true);
+      this.loadingService.isLoadingLine.next(true);
 
     if(addForm.invalid){
-        this.loadingService.isLoading.next(false);
+        this.loadingService.isLoadingLine.next(false);
 
       return;
     }
@@ -104,21 +104,21 @@ export class HostEscooterAddComponent implements OnInit{
     this.hostService.createEscooter(this.scooterAddRequestPayload).subscribe((data:Escooter) => {
           console.log(data);
           this.isLoading = false;
-            this.loadingService.isLoading.next(false);
+            this.loadingService.isLoadingLine.next(false);
 
           console.log(this.hostID)
           this.route.navigate(['/host-escooters', data.host], {queryParams: {success: true}})
         },
         error => {
           this.error = error;
-            this.loadingService.isLoading.next(false);
+            this.loadingService.isLoadingLine.next(false);
 
             this.isLoading = false;
           console.log(error)
 
         },
         ()=> {
-            this.loadingService.isLoading.next(false);
+            this.loadingService.isLoadingLine.next(false);
 
             this.isLoading = false;
         })
