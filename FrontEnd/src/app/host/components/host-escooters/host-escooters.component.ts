@@ -151,7 +151,7 @@ export class HostEscootersComponent implements OnInit{
               positionClass: 'toast-top-center'
             });
           }
- 
+
           dialogRef.close();
         })
   }

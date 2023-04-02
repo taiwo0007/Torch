@@ -39,8 +39,11 @@ export class AppComponent {
           console.log("in here")
           console.log(userData.isVerified)
           console.log(userData.isVerifiedConsent)
-          this.authService.openDialog();
 
+
+          setTimeout(() => {
+            this.authService.openDialog();
+          }, 4000)
 
         }
 

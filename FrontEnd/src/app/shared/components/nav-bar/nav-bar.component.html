@@ -1,12 +1,14 @@
 
 
 <nav
-        style="background-color: black !important; padding: 0.6rem 7rem !important"
-        id="navbar-example2" class="navbar bg-dark navbar-dark  sticky fixed-top py-2">
+        style="background-color: black !important; padding: 0.6rem 3rem !important"
+        id="navbar-example2" class="navbar  bg-dark navbar-dark  sticky fixed-top py-2">
   <div class="d-flex align-items-center">
     <a class="navbar-brand me-3" [routerLink]="['']">
       <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo" />
     </a>
+
+ <app-nav-bar-search></app-nav-bar-search>
   </div>
 
   <ul  class="nav nav-pills">
@@ -27,7 +29,7 @@
     </li>
 
     <li *ngIf="accountType" class="nav-item my-auto me-3">
-      <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; " class=" btn btn-outline-info disabled rounded-0 text-info fw-bold  my-auto">{{accountType}} plan</p>
+      <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; " class=" btn btn-outline-light disabled rounded-0 text-light fw-bold  my-auto">{{accountType}} plan</p>
     </li>
 
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
@@ -53,12 +55,11 @@
 
       </a>
       <ul role="menu" *dropdownMenu style="background-color: black !important; " class="dropdown-menu dropdown-menu-dark border-bottom-info py-2 ">
-
-        <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Your Trips</a></li>
-        <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item w-100 " [routerLink]="['/profile']">Your Profile</a></li>
-        <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="w-100 dropdown-item rounded-0 text-light mt-1" [routerLink]="['verify']">Verify Now</a></li>
+        <li role="menuitem" *ngIf="isAuthenticated" (click)="closeDropdown($event)"><a class="dropdown-item w-100 " [routerLink]="['/profile']">Profile</a></li>
+        <li role="menuitem" *ngIf="isVerified" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['/user-trips']">Trips</a></li>
+        <li role="menuitem" *ngIf="isVerified == false && isAuthenticated == true" (click)="closeDropdown($event)"><a class="w-100 dropdown-item rounded-0 text-light mt-1 text-info" [routerLink]="['verify']">Verify Now</a></li>
         <li role="menuitem" *ngIf="isHost" (click)="closeDropdown($event)"><a class="dropdown-item " [routerLink]="['host-trips']">Host Trips</a></li>
-        <li role="menuitem"  *ngIf="isHost" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters', hostID]" class="dropdown-item " >EScooters</a></li>
+        <li role="menuitem"  *ngIf="isHost" (click)="closeDropdown($event)"><a [routerLink]="['host-escooters', hostID]" class="dropdown-item " >E-Scooters</a></li>
         <li class="my-2" role="menuitem" *ngIf="isHost == false || isVerified == true" (click)="closeDropdown($event)"><a [routerLink]="['become-host']" class="dropdown-item text-info border-top-dark fw-bold py-2" >Become a host</a></li>
         <li role="menuitem"><hr class="dropdown-divider bg-dark"></li>
         <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading3">Legal & Insurance</a></li>

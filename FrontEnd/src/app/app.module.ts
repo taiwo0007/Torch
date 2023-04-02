@@ -84,6 +84,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/escooter-ad-card.component';
 import { LoadScreenComponent } from './shared/components/load-screen/load-screen.component';
 import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
+import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-bar-search.component';
 
 
 @NgModule({
@@ -142,6 +143,7 @@ import { VerifyEmailComponent } from './auth/components/verify-email/verify-emai
      EscooterAdCardComponent,
      LoadScreenComponent,
      VerifyEmailComponent,
+     NavBarSearchComponent,
 
   ],
     imports: [

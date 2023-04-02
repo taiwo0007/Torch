@@ -1,0 +1,15 @@
+.input-custom:focus{
+
+
+    outline: none;
+    border-bottom: 3px !important;
+    border-color: white !important;
+
+
+}
+
+
+#location + .pac-container {
+    margin-top: 460px !important;
+}
+
