@@ -31,7 +31,7 @@ export class VerificationComponent {
     contentType: "",
     fileName: "",
     image: "",
-    url:environment.appUrl
+    url:environment.frontEndUrl
 
   };
   isLoading:boolean = false;
