@@ -83,6 +83,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/escooter-ad-card.component';
 import { LoadScreenComponent } from './shared/components/load-screen/load-screen.component';
+import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
 
 
 @NgModule({
@@ -140,6 +141,7 @@ import { LoadScreenComponent } from './shared/components/load-screen/load-screen
      AdModalComponent,
      EscooterAdCardComponent,
      LoadScreenComponent,
+     VerifyEmailComponent,
 
   ],
     imports: [

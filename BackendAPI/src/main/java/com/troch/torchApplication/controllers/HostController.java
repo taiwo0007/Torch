@@ -104,6 +104,13 @@ public class HostController {
 
     }
 
+    @GetMapping("/top")
+    public ResponseEntity topHosts() throws Exception {
+
+        return hostService.getTopHosts();
+
+    }
+
     @GetMapping("/makes")
     public ResponseEntity<List<Make>> getAllMakes(){
 

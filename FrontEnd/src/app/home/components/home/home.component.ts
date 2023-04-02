@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
+import {HostService} from "../../../host/services/host.service";
+import {TopHostsCardDto} from "../../../host/models/top-hosts-card.dto";
 
 @Component({
   selector: 'app-home',
@@ -9,14 +11,20 @@ import {AuthService} from "../../../auth/services/auth.service";
 export class HomeComponent implements OnInit {
 
   isAuthenticated = false;
+  topHostsInfo:TopHostsCardDto[];
+  ratingList:any[] = [];
 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private hostService:HostService) { }
 
   ngOnInit(): void {
 
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
     this.initMap();
+    this.getHostsFromApi();
+
+
+
 
   }
 
@@ -34,4 +42,36 @@ export class HomeComponent implements OnInit {
 
   }
 
+  getHostsFromApi(){
+
+    this.hostService.fetchAllHosts().subscribe((data:TopHostsCardDto[]) => {
+
+
+      this.topHostsInfo = data;
+      console.log(this.topHostsInfo)
+      this.initRatingList()
+    })
+
+
+
+  }
+
+   initRatingList() {
+
+    let tempList = []
+
+    for(let l of this.topHostsInfo){
+      for(let i = 0; i < l.rating; i++){
+        tempList.push(1)
+      }
+      this.ratingList.push(tempList)
+
+      console.log(this.ratingList)
+
+      tempList = []
+    }
+
+    console.log(this.ratingList)
+
+  }
 }

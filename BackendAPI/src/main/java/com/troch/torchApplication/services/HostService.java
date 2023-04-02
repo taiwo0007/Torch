@@ -4,6 +4,7 @@ import com.troch.torchApplication.Utilities.JwtUtil;
 import com.troch.torchApplication.controllers.HostController;
 import com.troch.torchApplication.dto.CreateAdRequest;
 import com.troch.torchApplication.dto.ErrorResponse;
+import com.troch.torchApplication.dto.TopHostsCardDto;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
@@ -20,6 +21,7 @@ import javax.swing.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -142,5 +144,37 @@ public class HostService {
 
 
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    public ResponseEntity getTopHosts() {
+
+        List<User> topHosts = hostRepository.findTopHosts();
+        List<TopHostsCardDto> topHostsCardDtos = new ArrayList<>();
+
+        for(User u: topHosts){
+
+            topHostsCardDtos.add(
+                    TopHostsCardDto.builder()
+                            .reviewer_comment(u.getHost().getHostReviews().get(0).getComment())
+                            .reviewer_date(u.getHost().getHostReviews().get(0).getReviewDate())
+                            .reviewer_name(u.getHost().getHostReviews().get(0).getUser_reviewer().getFirstName() +" "
+                                    +u.getHost().getHostReviews().get(0).getUser_reviewer().getLastName())
+                            .isTrusted(u.isTorchTrusted())
+                            .trips(u.getUserTrips() == null ? 0 : u.getUserTrips())
+                            .joined(u.getJoined())
+                            .firstName(u.getFirstName())
+                            .LastNameInitital(u.getLastName().substring(0,1))
+                            .profileImage(u.getProfilePicture())
+                            .rating(u.getRating())
+                            .host_id(u.getHost().getId())
+                            .build()
+            );
+        }
+
+        if(topHosts.isEmpty()){
+            return new ResponseEntity<>(new ErrorResponse("No hosts found"), HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(topHostsCardDtos, HttpStatus.OK);
     }
 }

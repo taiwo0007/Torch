@@ -22,7 +22,6 @@ public class RegistrationController {
 
     Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
-
     private UserService userService;
 
     @Autowired

@@ -183,6 +183,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
 
         http.authorizeRequests()
+                .antMatchers("/this/**")
+                .permitAll()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .antMatchers("/webhook/**")
@@ -200,6 +202,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/host/host-details/*")
                 .permitAll()
                 .antMatchers("/api/host/makes")
+                .permitAll()
+                .antMatchers("/api/host/top")
                 .permitAll()
                 .antMatchers("/api/host/host-data")
                 .authenticated()

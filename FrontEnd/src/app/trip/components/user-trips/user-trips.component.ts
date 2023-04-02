@@ -20,8 +20,8 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadingService.isLoading.next(true)
-    this.isLoading = true;
+    // this.loadingService.isLoading.next(true)
+    // this.isLoading = true;
     this.getUserDetails();
   }
 
@@ -35,7 +35,12 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
     }, ()=> {
       this.loadingService.isLoading.next(false)
       this.isLoading = false;
-    })
+    },
+        () => {
+          this.isLoading = false;
+
+          this.loadingService.isLoading.next(false)
+        } )
   }
 
 

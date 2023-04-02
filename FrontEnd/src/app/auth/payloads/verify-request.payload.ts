@@ -9,5 +9,6 @@ export interface VerifyRequestPayload{
     fileName:string,
     contentType:string,
     image:string,
+    url:string
 
 }

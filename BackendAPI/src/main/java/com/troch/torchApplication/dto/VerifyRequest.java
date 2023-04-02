@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 public class VerifyRequest {
 
+    private String url;
     private String firstName;
     private String lastName;
     private int phoneNumber;

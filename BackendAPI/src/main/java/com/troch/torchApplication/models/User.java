@@ -37,6 +37,8 @@ public class User {
 
     private String email;
 
+    private String user_verification_code;
+
     @JsonIgnore
     @Column(name = "password")
     private String password;

@@ -11,7 +11,7 @@ import {Trip} from "../../models/trip";
 export class TripHostsComponent implements OnInit{
 
   hostDetails:Host;
-  hostTrips:Trip[];
+  hostTrips;
 
   constructor(private hostService:HostService) {
   }
@@ -25,7 +25,9 @@ export class TripHostsComponent implements OnInit{
   getHostDetails(){
     this.hostService.fetchHostDataByUserToken().subscribe((apiData:Host) => {
       this.hostDetails = apiData;
-      this.hostTrips = apiData.hostTrips;
+      this.hostTrips = apiData.hostTrips.length == 0 ? null : apiData.hostTrips;
+
+      console.log(apiData)
       console.log(this.hostDetails);
     })
 

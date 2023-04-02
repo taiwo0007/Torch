@@ -21,6 +21,54 @@
   </div>
 </section>
 
+<section class="row container py-4 mx-auto my-1">
+  <h1
+          style="font-size: 3.8rem !important"
+          class="h1 text-center fw-bold pb-5 mt-5"
+  >
+    Torch <span class="text-info">Hosts</span>
+  </h1>
+  <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
+    Feauterd Hosts
+  </h4>
+
+  <div style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]" *ngFor="let t of topHostsInfo; let i = index" class="col-4 mx-auto pointer-event">
+    <div style="width: 23rem" class="border rounded">
+      <div style="padding: 1rem" class="d-flex">
+        <div class="me-2">
+
+          <img style="object-fit: cover; width: 5rem; height: 5rem" src="{{t.profileImage}}" width="100" class="rounded-circle " alt="..." />
+        </div>
+        <div class="">
+          <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}</p>
+          <p *ngIf="t.trusted" class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+            Torch trusted
+          </p>
+          <p style="margin-bottom: 0; font-size: 0.7rem">
+            {{t.trips}} trips <span>- Joined {{t.joined | date}}</span>
+          </p>
+        </div>
+      </div>
+      <div style="padding: 0 1.8rem 0 1.8rem" class="">
+        <div class="">
+          <i *ngFor="let g of ratingList[i]" class="fa text-info fa-star"></i>
+          <p class="pt-3" style="width: fit-content">
+            {{t.reviewer_comment}}
+          </p>
+        </div>
+      </div>
+
+      <div style="padding: 2rem 1.8rem 2rem 1.8rem">
+        <p style="margin-bottom: 0; font-size: 0.7rem">
+          {{t.reviewer_name}} - <span> {{t.reviewer_date | date}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
 <section class="header-bottom py-5">
   <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
     Browse scooter models.
@@ -202,126 +250,7 @@
     </div>
   </section>
 
-  <section class="row py-4 mx-4 my-1">
-    <h1
-      style="font-size: 3.8rem !important"
-      class="h1 text-center fw-bold pb-5 mt-5"
-    >
-      Torch <span class="text-info">Hosts</span>
-    </h1>
-    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
-      Feauterd Hosts
-    </h4>
 
-    <div class="col-4 mx-auto">
-      <div style="width: 23rem" class="border rounded">
-        <div style="padding: 1rem" class="d-flex">
-          <div>
-            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
-          </div>
-          <div class="">
-            <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
-            <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
-              Elite Host
-            </p>
-            <p style="margin-bottom: 0; font-size: 0.7rem">
-              1209 trips <span>- Joined August 20202</span>
-            </p>
-          </div>
-        </div>
-        <div style="padding: 0 1.8rem 0 1.8rem" class="">
-          <div class="">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <p class="pt-3" style="width: fit-content">
-              Amazing car ride, would highly be happy to recommend to anyone
-            </p>
-          </div>
-        </div>
-
-        <div style="padding: 2rem 1.8rem 2rem 1.8rem">
-          <p style="margin-bottom: 0; font-size: 0.7rem">
-            Barry Simmons <span>August 20202</span>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="col-4 mx-auto">
-      <div style="width: 23rem" class="border rounded">
-        <div style="padding: 1rem" class="d-flex">
-          <div>
-            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
-          </div>
-          <div class="">
-            <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
-            <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
-              Elite Host
-            </p>
-            <p style="margin-bottom: 0; font-size: 0.7rem">
-              1209 trips <span>- Joined August 20202</span>
-            </p>
-          </div>
-        </div>
-        <div style="padding: 0 1.8rem 0 1.8rem" class="">
-          <div class="">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <p class="pt-3" style="width: fit-content">
-              Amazing car ride, would highly be happy to recommend to anyone
-            </p>
-          </div>
-        </div>
-
-        <div style="padding: 2rem 1.8rem 2rem 1.8rem">
-          <p style="margin-bottom: 0; font-size: 0.7rem">
-            Barry Simmons <span>August 20202</span>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="col-4 mx-auto">
-      <div style="width: 23rem" class="border rounded">
-        <div style="padding: 1rem" class="d-flex">
-          <div>
-            <img src="../../../../assets/images/website/4.png" width="100" class="" alt="..." />
-          </div>
-          <div class="">
-            <p style="margin-bottom: 0" class="fw-bold">Brian H.</p>
-            <p class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
-              Elite Host
-            </p>
-            <p style="margin-bottom: 0; font-size: 0.7rem">
-              1209 trips <span>- Joined August 20202</span>
-            </p>
-          </div>
-        </div>
-        <div style="padding: 0 1.8rem 0 1.8rem" class="">
-          <div class="">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <p class="pt-3" style="width: fit-content">
-              Amazing car ride, would highly be happy to recommend to anyone
-            </p>
-          </div>
-        </div>
-
-        <div style="padding: 2rem 1.8rem 2rem 1.8rem">
-          <p style="margin-bottom: 0; font-size: 0.7rem">
-            Barry Simmons <span>August 20202</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
 <div class="card-img-top" style="height: 15rem" id="map"></div>
 

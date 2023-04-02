@@ -30,14 +30,17 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
             this.isLoading = false;
 
             this.route.queryParams.subscribe(data => {
-                if(data['success'] && this.userData.isVerified){
+                if(data['success']) {
                     this.authService.saveLocalVerifyInfo()
-                    this.toastr.success(  ' Successfully Verified','', {
+                    this.toastr.success('Check your email to finish verification', 'Email sent', {
                         positionClass: 'toast-top-center'
                     });
                     this.loadingSerivce.isLoading.next(false);
                     this.isLoading = false;
+
+
                 }
+
                 console.log(data['subscriptionInitiated']);
                 console.log(this.userData)
                 this.loadingSerivce.isLoading.next(false);

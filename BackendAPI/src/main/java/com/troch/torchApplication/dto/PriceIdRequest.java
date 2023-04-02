@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 public class PriceIdRequest {
 
+    String email;
     private String price_id;
     private String url;
 }

@@ -23,10 +23,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 
 
 @Service
@@ -49,6 +47,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     JwtUtil jwtUtil;
+
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     JSONConverter jsonConverter;
@@ -129,6 +130,17 @@ public class UserServiceImpl implements UserService{
         return userRepository.findAll();
     }
 
+    public ResponseEntity verifyEmail(String code){
+
+        User user = userRepository.findUserByVerificationCode(code);
+
+        user.setIsVerified(true);
+
+        return new ResponseEntity(userRepository.save(user), HttpStatus.CREATED);
+
+
+    }
+
     public ResponseEntity verifyUser(@NotNull VerifyRequest verifyRequest, String jwt) throws Exception {
 
         Path filePath = fileUploadUtil.writeBase64FileToSystem(verifyRequest.getProfilePicture(),
@@ -170,7 +182,7 @@ public class UserServiceImpl implements UserService{
         String countryFormatted = countryKey.asText();
         String countyFormated = countyKey.asText();
 
-        currentUsr.setIsVerified(true);
+//        currentUsr.setIsVerified(true);
         currentUsr.setProfilePicture(verifyRequest.getProfilePicture());
         currentUsr.setCountry(countryFormatted);
         currentUsr.setLocation(addressFormatted);
@@ -182,6 +194,19 @@ public class UserServiceImpl implements UserService{
         currentUsr.setLatitude(latitudeFormatted);
         currentUsr.setLongitude(longitudeFormatted);
         currentUsr.setProfilePicture(gcpPublicImageUrlgcpUtil);
+
+
+        //Send Email
+        Map<String, Object> model = new HashMap<>();
+        String randomCode = UUID.randomUUID().toString();
+        model.put("code", randomCode);
+        model.put("location", "Brian");
+        model.put("environment_url", verifyRequest.getUrl());
+        currentUsr.setUser_verification_code(randomCode);
+
+
+        MailRequest mailRequest = new MailRequest(currentUsr.getFirstName() +" " +currentUsr.getLastName(), currentUsr.getEmail(),"torch.noreply@gmail.com","Verify Account");
+        emailService.sendEmail(mailRequest, model);
 
 
         return new ResponseEntity(userRepository.save(currentUsr), HttpStatus.CREATED);

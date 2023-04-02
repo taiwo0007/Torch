@@ -151,7 +151,7 @@ export class HostEscooterAddComponent implements OnInit{
       this.isHostCreated = params['hostCreated'];
 
       if(this.isHostCreated){
-          this.toastr.success(  'Host Created', ": ", {
+          this.toastr.success(  'Host Created', "", {
               positionClass: 'toast-top-center'
           });
       }

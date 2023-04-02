@@ -19,6 +19,7 @@ import {HostProfileComponent} from "./host/components/host-profile/host-profile.
 import {VerificationComponent} from "./auth/components/verification/verification.component";
 import {TripCompletedComponent} from "./trip/components/trip-completed/trip-completed.component";
 import {CancelTripComponent} from "./trip/components/cancel-trip/cancel-trip.component";
+import {VerifyEmailComponent} from "./auth/components/verify-email/verify-email.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
 
 
   {path: 'verify', component: VerificationComponent},
+  {path: 'verify-email/:code', component: VerifyEmailComponent},
 
 ];
 

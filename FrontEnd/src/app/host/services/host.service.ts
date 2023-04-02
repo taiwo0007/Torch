@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Escooter} from "../../escooter/models/escooter.interface";
 import {Make} from "../../escooter/models/make.interface";
 import {ScooterAddRequestPayload} from "../payload/scooter-add-request.payload";
-import {catchError, map, throwError} from "rxjs";
+import {catchError, forkJoin, map, of, switchMap, throwError} from "rxjs";
 import {Host} from "../models/host.interface";
 import {AuthService} from "../../auth/services/auth.service";
 import {CreateAdRequestPayload} from "../payload/create-ad-request.payload";
+import {UserData} from "../../user/models/user-data.model";
+import {UserService} from "../../user/services/user.service";
+import {TopHostsCardDto} from "../models/top-hosts-card.dto";
 
 
 @Injectable({
@@ -17,7 +20,8 @@ export class HostService {
 
 
   constructor(private http: HttpClient,
-              private authService:AuthService) { }
+              private authService:AuthService,
+              private userService:UserService) { }
 
 
   getHostById(id:number){
@@ -33,6 +37,12 @@ export class HostService {
   fetchAllMakes(){
     return this.http.get<Make[]>(environment.appUrl+'/api/host/makes');
   }
+
+
+
+  fetchAllHosts() {
+      return this.http.get<TopHostsCardDto[]>(environment.appUrl+'/api/host/top')
+  }
   createEscooter(scooterAddRequestPayload:ScooterAddRequestPayload){
     return this.http.post(environment.appUrl+'/api/host/add-escooter',scooterAddRequestPayload);
   }
@@ -40,9 +50,7 @@ export class HostService {
     return this.http.post(environment.appUrl+'/api/host/make-user-host', null)
         .pipe(catchError(this.handleError),
             map((data:Host) => {
-
                 console.log(data)
-
                 this.authService.saveHostDetailsLocaly(data.id);
                 return data.id;
         }))

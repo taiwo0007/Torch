@@ -6,6 +6,7 @@ import {VerifyRequestPayload} from "../../payloads/verify-request.payload";
 import {AuthService} from "../../services/auth.service";
 import {Route, Router} from "@angular/router";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-verification',
@@ -29,7 +30,8 @@ export class VerificationComponent {
     location: "",
     contentType: "",
     fileName: "",
-    image: ""
+    image: "",
+    url:environment.appUrl
 
   };
   isLoading:boolean = false;

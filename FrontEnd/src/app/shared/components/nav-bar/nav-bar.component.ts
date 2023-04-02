@@ -70,9 +70,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
       this.hostID = data._hostID;
 
-      console.log("hosted?"+this.hostID)
-      console.log("hosted??"+data._hostID)
-      console.log("hosted??"+data.hostID)
     })
 
 

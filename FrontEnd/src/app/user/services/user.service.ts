@@ -32,8 +32,8 @@ export class UserService implements OnInit{
     return this.http.get(environment.appUrl + '/api/user/profile')
   }
 
-  createCheckoutSessionFromAPI(price_id:string){
-    return this.http.post(environment.appUrl +'/create-checkout-session', { price_id, url: environment.frontEndUrl+'/profile?subscriptionInitiated=true' })
+  createCheckoutSessionFromAPI({price_id, email}){
+    return this.http.post(environment.appUrl +'/create-checkout-session', { price_id, email, url: environment.frontEndUrl+'/profile?subscriptionInitiated=true' })
         .pipe(
             switchMap((session:any) => {
               console.log('session')

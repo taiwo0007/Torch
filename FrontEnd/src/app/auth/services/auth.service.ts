@@ -67,6 +67,11 @@ export class AuthService {
 
   }
 
+  verifyEmailCode(code:string){
+    return this.http.post(environment.appUrl +'/api/auth/verification-email/' +code,null);
+
+}
+
 
   signup(signupRequestPayload:SignupRequestPayload){
     return this.http.post<LoginResponsePayload>(environment.appUrl + '/api/auth/signup', signupRequestPayload).pipe( map(data => {

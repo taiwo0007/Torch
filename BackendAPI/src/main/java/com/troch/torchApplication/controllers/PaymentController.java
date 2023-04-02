@@ -189,6 +189,7 @@ public class PaymentController {
 
         SessionCreateParams params = new SessionCreateParams.Builder()
                 .setSuccessUrl(priceIdRequest.getUrl())
+                .setCustomerEmail(priceIdRequest.getEmail())
                 .setCancelUrl(priceIdRequest.getUrl())
                 .setMode(SessionCreateParams.Mode.SUBSCRIPTION)
                 .addLineItem(new SessionCreateParams.LineItem.Builder()

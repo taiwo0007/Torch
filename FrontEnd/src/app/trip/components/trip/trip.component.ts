@@ -48,7 +48,7 @@ export class TripComponent implements OnInit, AfterViewInit {
         .pipe(
             switchMap((val:any) => {
               this.loadingService.isLoading.next(true);
-
+this.isLoading = false
 
               return this.tripService.completeTripFromApi(this.tripId)
             })
@@ -57,7 +57,7 @@ export class TripComponent implements OnInit, AfterViewInit {
          (data:Trip) => {
           console.log(data)
            this.loadingService.isLoading.next(false);
-
+           this.isLoading = false
            this.router.navigate(['/trip-complete'], {queryParams: {tripId: data.tripId}})
         },()=>{
           this.isError = "An Error has occurred"
@@ -80,6 +80,7 @@ export class TripComponent implements OnInit, AfterViewInit {
             (data:Trip) => {
               console.log(data)
               this.loadingService.isLoading.next(false);
+              this.isLoading = false
 
               this.router.navigate(['/trip-cancel'], {queryParams: {tripId: data.tripId}})
             },()=>{
@@ -91,6 +92,9 @@ export class TripComponent implements OnInit, AfterViewInit {
 
               this.isLoading = false;
             })
+
+       this.isLoading = false
+
   }
 
   ngAfterViewInit() {
