@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {HostService} from "../../../host/services/host.service";
 import {TopHostsCardDto} from "../../../host/models/top-hosts-card.dto";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-home',

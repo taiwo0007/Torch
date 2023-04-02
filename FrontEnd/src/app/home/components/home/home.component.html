@@ -21,7 +21,7 @@
   </div>
 </section>
 
-<section class="row container py-4 mx-auto my-1">
+<section  class="row container py-4 mx-auto my-1">
   <h1
           style="font-size: 3.8rem !important"
           class="h1 text-center fw-bold pb-5 mt-5"
@@ -31,6 +31,20 @@
   <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
     Feauterd Hosts
   </h4>
+  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+
+  </div>
+  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+
+  </div>
+  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+
+  </div>
+<ng-container *ngIf="topHostsInfo">
+
 
   <div style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]" *ngFor="let t of topHostsInfo; let i = index" class="col-4 mx-auto pointer-event">
     <div style="width: 23rem" class="border rounded">
@@ -65,7 +79,7 @@
       </div>
     </div>
   </div>
-
+  </ng-container>
 
 </section>
 
