@@ -62,6 +62,9 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
             this.configureMapOptions();
             this.configureAllMarkers();
 
+            console.log(this.escooterResults)
+                  this.initMap();
+                  this.markerEventInit();
 
           }, error => {
               this.escooterResults = null;
@@ -69,8 +72,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
                   this.isLoading = false;
           },
               () => {
-                  this.initMap();
-                  this.markerEventInit();
+
               })
     })
 
@@ -82,7 +84,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
           .subscribe((data:any) => {
           this.escooterAdsResult = data;
-          console.log("api data", this.escooterAdsResult);
       })
   }
 

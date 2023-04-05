@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Address} from "ngx-google-places-autocomplete/objects/address";
 import {EscooterService} from "../../../escooter/services/escooter.service";
@@ -10,7 +10,7 @@ import {Options} from "ngx-google-places-autocomplete/objects/options/options";
   templateUrl: './nav-bar-search.component.html',
   styleUrls: ['./nav-bar-search.component.css']
 })
-export class NavBarSearchComponent {
+export class NavBarSearchComponent implements OnDestroy{
 
   @ViewChild("searchForm") searchForm;
   tripStart:any;
@@ -48,13 +48,13 @@ export class NavBarSearchComponent {
 
     const queryParams = { tripStart: '',
       tripEnd: '',
-      location: this.location}
+      location: this.location
+    }
 
-    this.searchForm.reset();
+ console.log(queryParams)
 
-    this.router.navigate(['results'],
+    this.router.navigate(['/results'],
         { queryParams})
-
 
   }
 
@@ -73,12 +73,17 @@ export class NavBarSearchComponent {
   handleAddressChange(locationData: Address) {
 
 
-
-    this.googlePlaceLocation = locationData.name;
-    this.isGooglePlaceSelected = true;
+    //
+    // this.googlePlaceLocation = locationData.name;
+    // this.isGooglePlaceSelected = true;
     console.log(locationData)
 
     this.onSubmit(this.searchForm);
+
+  }
+
+  ngOnDestroy() {
+    this.searchForm.reset();
 
   }
 }

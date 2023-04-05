@@ -153,6 +153,7 @@ public class HostService {
 
         for(User u: topHosts){
 
+
             topHostsCardDtos.add(
                     TopHostsCardDto.builder()
                             .reviewer_comment(u.getHost().getHostReviews().get(0).getComment())
@@ -160,7 +161,7 @@ public class HostService {
                             .reviewer_name(u.getHost().getHostReviews().get(0).getUser_reviewer().getFirstName() +" "
                                     +u.getHost().getHostReviews().get(0).getUser_reviewer().getLastName())
                             .isTrusted(u.isTorchTrusted())
-                            .trips(u.getUserTrips() == null ? 0 : u.getUserTrips())
+                            .trips(u.getHost().getHostTrips().size())
                             .joined(u.getJoined())
                             .firstName(u.getFirstName())
                             .LastNameInitital(u.getLastName().substring(0,1))

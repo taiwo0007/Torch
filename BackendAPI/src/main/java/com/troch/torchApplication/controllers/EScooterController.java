@@ -1,6 +1,7 @@
 package com.troch.torchApplication.controllers;
 
 import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.dto.HostScooterReviewRequest;
 import com.troch.torchApplication.dto.ScooterReviewRequest;
 import com.troch.torchApplication.forms.ScooterReviewForm;
 import com.troch.torchApplication.models.EScooter;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -101,5 +103,12 @@ public class EScooterController {
         logger.info("use"+user);
 
         return eScooterReviewService.saveCustom(user, scooterReviewRequest);
+    }
+
+    @PostMapping("/create-host-scooter-review")
+    public ResponseEntity postHostScooterReview(@RequestBody HostScooterReviewRequest hostScooterReviewRequest,
+                                               Principal principal) throws Exception {
+
+        return eScooterReviewService.saveReviews(hostScooterReviewRequest, principal.getName());
     }
 }

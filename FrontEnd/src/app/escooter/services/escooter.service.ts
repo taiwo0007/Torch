@@ -73,4 +73,7 @@ export class EscooterService implements OnDestroy{
     }
 
 
+    createHostScooterReview(choice: any) {
+        return this.http.post(environment.appUrl+'/api/escooter/create-host-scooter-review', choice)
+    }
 }

@@ -73,6 +73,11 @@ public class TripService {
 
     }
 
+    public Trip findByFormattedTripId(String trip_id){
+
+        return tripRepository.fingbyFormatedTripId(trip_id);
+    }
+
     public ResponseEntity updateTrip(boolean isComplete, Integer id, String jwt) {
 
         try{
