@@ -32,11 +32,11 @@
         </button>
 
 
-        <a class="nav-link  " [routerLink]="['/escooter-detail', escooter.id]">
+        <a >
             <div class="" style="width: 18rem; overflow-x: hidden; !important">
-                <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
+                <img [routerLink]="['/escooter-detail', escooter.id]" style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
                 <div style=" overflow-x: hidden; !important" class="card-body pt-3">
-                    <div style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
+                    <div   style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
                         <div class="d-flex justify-content-between">
                             <h6 class="card-text  fw-bold">{{escooter.modelName}}</h6>
                             <p  class="fw-bold">{{escooter.cost | currency:'EUR'}}/day</p>
@@ -51,7 +51,8 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <p [ngClass]="escooter.inUse ? 'text-danger' : 'text-success'" class="text-end fw-bolder  my-auto pt-3">{{escooter.inUse ? 'Active' :  'Inactive' }} </p>
-                        <p class="text-end  my-auto pt-3"><span>{{ escooter.county }}</span>, <span class="fw-bold">{{ escooter.country }}</span></p>
+                        <p (click)="onDelete(escooter.id)" class="text-end  my-auto pt-3 text-danger text-decoration-underline">Delete</p>
+<!--                        <p class="text-end  my-auto pt-3"><span>{{ escooter.county }}</span>, <span class="fw-bold">{{ escooter.country }}</span></p>-->
                     </div>
                 </div>
             </div>

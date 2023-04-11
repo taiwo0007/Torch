@@ -70,6 +70,12 @@ public class EScooterController {
 
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity ResponseEntitydeleteEscooter(@PathVariable("id") Integer id, Principal principal) {
+        return eScooterService.deleteEscooter(id, principal.getName());
+    }
+
+
 
     @CrossOrigin(origins = "http://localhost:4200")
 

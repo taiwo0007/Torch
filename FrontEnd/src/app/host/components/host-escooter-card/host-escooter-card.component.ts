@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {Escooter} from "../../../escooter/models/escooter.interface";
+import {EscooterService} from "../../../escooter/services/escooter.service";
 
 @Component({
   selector: 'host-escooter-card',
@@ -8,6 +9,7 @@ import {Escooter} from "../../../escooter/models/escooter.interface";
 })
 export class HostEscooterCardComponent implements OnInit{
 
+    @Output() deleteClick: EventEmitter<number> = new EventEmitter<number>();
   @Input() escooter:Escooter;
   @Input() isScooterOwner:boolean = false;
   isAdRunning:boolean;
@@ -56,12 +58,6 @@ export class HostEscooterCardComponent implements OnInit{
       if(this.dateDiffInDays(new Date(this.escooter.adDate), twoDaysAgo) == 0 && this.escooter.escooterAdDays >=3){
           this.isAdRunning = true;
       }
-
-
-
-
-
-
   }
 
    dateDiffInDays(a, b) {
@@ -75,10 +71,11 @@ export class HostEscooterCardComponent implements OnInit{
 
 
 
-  constructor() {
-
-
+  constructor(private esccooterService:EscooterService) {
   }
 
 
+    onDelete(id: number) {
+      this.deleteClick.emit(id)
+    }
 }

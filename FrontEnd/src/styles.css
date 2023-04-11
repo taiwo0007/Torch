@@ -13,6 +13,9 @@
 
 
 }
+.full-spinner{
+    overflow: hidden !important;
+}
 
 *{
     padding: 0 ;

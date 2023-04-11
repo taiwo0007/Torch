@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -97,5 +98,15 @@ public class EScooterReviewService {
 
 
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+
+    void deleteEscooterReview(EScooter eScooter){
+        escooterReviewRepository.deleteAllByeScooter(eScooter);
+    }
+
+    @Transactional
+    void deleteByEscooterId(Integer id){
+        escooterReviewRepository.deleteByEscooterId(id);
     }
 }

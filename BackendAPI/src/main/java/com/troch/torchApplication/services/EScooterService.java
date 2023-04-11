@@ -5,18 +5,19 @@ import com.troch.torchApplication.Utilities.FileUploadUtil;
 import com.troch.torchApplication.Utilities.GCPUtil;
 import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.Utilities.JwtUtil;
+import com.troch.torchApplication.dto.ErrorResponse;
 import com.troch.torchApplication.dto.EsccoterAddRequest;
 import com.troch.torchApplication.dto.EscooterAddResponse;
-import com.troch.torchApplication.models.EScooter;
-import com.troch.torchApplication.models.Host;
-import com.troch.torchApplication.models.Make;
-import com.troch.torchApplication.models.User;
+import com.troch.torchApplication.dto.Response;
+import com.troch.torchApplication.models.*;
 import com.troch.torchApplication.repositories.EScooterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -42,6 +43,9 @@ public class EScooterService {
     EScooterRepository eScooterRepository;
 
     @Autowired
+    TripService tripService;
+
+    @Autowired
     UserServiceImpl userService;
 
     @Autowired
@@ -58,6 +62,9 @@ public class EScooterService {
 
     @Autowired
     MakeService makeService;
+
+    @Autowired
+    EScooterReviewService eScooterReviewService;
 
     Logger logger = LoggerFactory.getLogger(EScooterService.class);
 
@@ -224,8 +231,24 @@ public class EScooterService {
     }
 
 
+    @Transactional
+    public ResponseEntity deleteEscooter(Integer id, String email) {
+
+        Optional<EScooter> eScooter = eScooterRepository.findById(id);
+        if(eScooter.isEmpty()){
+            return new ResponseEntity(new ErrorResponse("No Escooter Found"), HttpStatus.NOT_FOUND);
+        }
+
+        logger.info("ingo"+email +"escooter email"+eScooter.get().getHost().getHostUser().getEmail(), "info rmail"+email +"escooter email"+eScooter.get().getHost().getHostUser().getEmail());
+        if(!eScooter.get().getHost().getHostUser().getEmail().equals(email)){
+            return new ResponseEntity(new ErrorResponse("You are not authorized to delete this scooter"), HttpStatus.NOT_FOUND);
+        }
 
 
+        tripService.deleteByEscooterId(id);
+        eScooterReviewService.deleteByEscooterId(id);
+        eScooterRepository.deleteByEscooterId(id);
 
-
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

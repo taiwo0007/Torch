@@ -72,6 +72,10 @@ export class EscooterService implements OnDestroy{
     ngOnDestroy() {
     }
 
+    deleteEscooter(id:number){
+        return this.http.delete(environment.appUrl+'/api/escooter/delete/'+id)
+    }
+
 
     createHostScooterReview(choice: any) {
         return this.http.post(environment.appUrl+'/api/escooter/create-host-scooter-review', choice)

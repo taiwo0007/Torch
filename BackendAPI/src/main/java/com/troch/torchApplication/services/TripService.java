@@ -78,6 +78,10 @@ public class TripService {
         return tripRepository.fingbyFormatedTripId(trip_id);
     }
 
+    void deleteByEscooterId(Integer id){
+        tripRepository.deleteByEscooterId(id);
+    }
+
     public ResponseEntity updateTrip(boolean isComplete, Integer id, String jwt) {
 
         try{

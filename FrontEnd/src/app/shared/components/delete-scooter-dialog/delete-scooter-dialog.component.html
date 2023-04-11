@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Confirm delete </h1>
+<div mat-dialog-content style="height: calc(100% - 96px);">
+    <p>Are you sure you want to delete this Electric scooter?</p>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button  mat-dialog-close >No Thanks</button>
+    <button style="color: white !important;" mat-dialog-close cdkFocusInitial class="btn btn-danger" (click)="deleteScooter()">Confirm</button>
+</div>

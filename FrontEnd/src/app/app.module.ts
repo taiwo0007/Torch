@@ -89,6 +89,7 @@ import { VerifyEmailComponent } from './auth/components/verify-email/verify-emai
 import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-bar-search.component';
 import { NgbDatepickerConfigComponent } from './shared/components/ngb-datepicker-config/ngb-datepicker-config.component';
 import {CalendarModule} from "primeng/calendar";
+import { DeleteScooterDialogComponent } from './shared/components/delete-scooter-dialog/delete-scooter-dialog.component';
 
 
 @NgModule({
@@ -149,6 +150,7 @@ import {CalendarModule} from "primeng/calendar";
      VerifyEmailComponent,
      NavBarSearchComponent,
      NgbDatepickerConfigComponent,
+     DeleteScooterDialogComponent,
 
   ],
     imports: [

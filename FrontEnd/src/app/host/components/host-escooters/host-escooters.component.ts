@@ -12,11 +12,19 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
-import {catchError, delay, exhaustMap, mergeMap, of, switchMap} from "rxjs";
+import {catchError, delay, exhaustMap, mergeMap, of, switchMap, tap} from "rxjs";
 import {data} from "autoprefixer";
 import {ToastrService} from "ngx-toastr";
 import {Host} from "../../models/host.interface";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {EscooterService} from "../../../escooter/services/escooter.service";
+import {
+  AreYouSureDialogCancelComponent
+} from "../../../shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component";
+import {
+  DeleteScooterDialogComponent
+} from "../../../shared/components/delete-scooter-dialog/delete-scooter-dialog.component";
+import {DialogService} from "../../../shared/services/dialog.service";
 
 @Component({
   selector: 'app-host-escooters',
@@ -28,12 +36,15 @@ export class HostEscootersComponent implements OnInit{
   addSuccess:boolean = false;
   hostID:number;
   isScooterOwner:boolean = false;
+  isLoading:boolean = false;
   totalAdDays: number = 0;
   createAdRequest:CreateAdRequestPayload;
 
-  constructor(private hostService: HostService, private route:ActivatedRoute,
+  constructor( private hostService: HostService, private route:ActivatedRoute,
               private authService:AuthService, private dialog:MatDialog,
-              private toastr:ToastrService, private loadingService:LoadingService) {
+              private toastr:ToastrService, private loadingService:LoadingService,
+               private escooterService:EscooterService,
+               private dialogService:DialogService) {
   }
 
   ngOnInit() {
@@ -42,11 +53,13 @@ export class HostEscootersComponent implements OnInit{
     this.checkSuccessUrl();
     this.getHostDetails()
 
+
+
   }
 
   getHostEscooters(){
 
-    this.hostService.fetchHostEscooters(this.hostID).pipe().subscribe(data => {
+    this.hostService.fetchHostEscooters(this.hostID).subscribe(data => {
       console.log(data)
       this.hostEscooters = data
       this.loadingService.isLoading.next(false);
@@ -62,6 +75,7 @@ export class HostEscootersComponent implements OnInit{
       console.log(hostData)
 
       this.totalAdDays = hostData.totalAdDays;
+      this.isLoading = false
     })
 
 
@@ -114,8 +128,8 @@ export class HostEscootersComponent implements OnInit{
       console.log(result)
     })
 
-    //submition and handling of adform
-    //upon user choice entered call an api and display appropriate toaster meessage
+    //submit and handling of ad form
+    //upon user choice entered call an api and display appropriate toaster message
     dialogRef.componentInstance.userChoice.pipe(catchError((error:HttpErrorResponse) =>{
 
       console.error(error.error.message)
@@ -154,5 +168,53 @@ export class HostEscootersComponent implements OnInit{
 
           dialogRef.close();
         })
+  }
+
+  setupDeleteCheck(id:number){
+
+
+    this.dialogService.confirmDeleteScooter.pipe((data:any) => {
+      console.log("1")
+      this.loadingService.isLoadingLine.next(true);
+
+      //once the api returns scooter, we display success message
+      return this.escooterService.deleteEscooter(id).pipe(delay(3000))
+    }).subscribe(data => {
+
+          this.toastr.success(  'Electric scooter deleted', '', {
+            positionClass: 'toast-top-center'
+          });
+
+          console.log(data)
+          this.loadingService.isLoadingLine.next(false);
+          this.getHostEscooters();
+
+        },
+        ()=> {
+          this.loadingService.isLoadingLine.next(false);
+
+        })
+
+  }
+
+
+  onDeleteClick(id: number) {
+
+    const dialogRef = this.dialog.open(DeleteScooterDialogComponent,{
+      height: '200px',
+      width: '700px',
+
+    });
+
+    dialogRef.componentInstance.userChoice.subscribe(data=> {
+      this.loadingService.isLoadingLine.next(true);
+      this.setupDeleteCheck(id);
+
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+
+
   }
 }

@@ -81,9 +81,7 @@ public class EScooter {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tripEnd;
 
-    @OneToMany(mappedBy = "eScooter", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JsonIdentityReference(alwaysAsId = true)
-//    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eScooter",  fetch = FetchType.EAGER)
     List<ScooterReview> escooterReviews = new ArrayList<>();
 
 

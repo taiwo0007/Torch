@@ -2,6 +2,7 @@ package com.troch.torchApplication.repositories;
 
 import com.troch.torchApplication.models.EScooter;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +15,13 @@ import java.util.List;
 public interface EScooterRepository extends JpaRepository<EScooter, Integer> {
 
     List<EScooter> findEscootersByHostId(Integer id);
+
+    void deleteById(Integer id);
+
+    @Modifying
+    @Query("DELETE FROM EScooter WHERE id = :id")
+    void deleteByEscooterId(@Param("id") Integer id);
+
 
     @Query("SELECT e from EScooter e WHERE (:tripStart IS NULL OR e.tripStart >= :tripStart ) AND (:tripEnd IS NULL OR e.tripEnd <= :tripEnd) AND (:country IS NULL OR e.country LIKE %:country%)")
     List<EScooter> findAllByTripDatesAndLocation(@Param("tripStart") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tripStart,

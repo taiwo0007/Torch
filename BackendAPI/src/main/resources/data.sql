@@ -215,13 +215,13 @@ INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (18, 'Host is top notch! Highly recommended and down to Earth thx! ', '2020-10-10', 5, 920386034, 10);
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (19, 'Good guy. It’s was as if it never left! ', '2020-10-10', 2, 920386034, 6666);
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (110, 'Very clean, very honest, and very nice. ', '2020-10-10', 4, 920386034, 7777);
-INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (111, 'Great experience. The way it should be. Thanks 🙏 ', '2020-10-10', 4, 444, 8888);
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (111, 'Great experience. The way it should be. Thanks  ', '2020-10-10', 4, 444, 8888);
 
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (20, 'Excellent renter and followed instructions very well. scooter kept very clean also. Thx! ', '2020-10-10', 3, 333, 5555);
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (28, 'Host is top notch! Highly recommended and down to Earth thx! ', '2020-10-10', 5, 333, 10);
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (29, 'Good guy. It’s was as if it never left! ', '2020-10-10', 2, 333, 6666);
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (120, 'Very clean, very honest, and very nice. ', '2020-10-10', 4, 333, 7777);
-INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (121, 'Great experience. The way it should be. Thanks 🙏 ', '2020-10-10', 4, 333, 8888);
+INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (121, 'Great experience. The way it should be. Thanks  ', '2020-10-10', 4, 333, 8888);
 
 
 
@@ -435,7 +435,7 @@ VALUES (137,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (138,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 5, 15, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -456,7 +456,7 @@ VALUES (145,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (146,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 5, 16, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -497,7 +497,7 @@ VALUES (149,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (150,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 3, 2, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -538,7 +538,7 @@ VALUES (156,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (157,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 3, 2, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -574,7 +574,7 @@ VALUES (163,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (164,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 3, 4, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -625,7 +625,7 @@ VALUES (170,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (171,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 3, 27, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
@@ -661,7 +661,7 @@ VALUES (176,
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)
 VALUES (177,
-        "Tung and his colleague Gorge are the absolute best. I was so incredibly grateful to be renting from people whose customer service was above and beyond. I flew into and out of SFO alone with my 2 and 4 year old children and both Tung and Gorge went out of their way to make sure my experience was as easy and convenient as possible. The minivan was exactly what we needed for our trip and the three of us were very comfortable and safe while driving around the Bay Area to visit home and to see all our family and friends. I would absolutely rent from Tung again next time I return to the Bay Area in need of a rental car!",
+        "Tung and his colleague Gorge are the absolute best.",
         '2023-01-11', 3, 20, 9999);
 
 INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, scooter_reviewer_id)

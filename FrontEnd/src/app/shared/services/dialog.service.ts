@@ -7,6 +7,7 @@ import {BehaviorSubject, Subject, Subscription} from "rxjs";
 export class DialogService implements OnDestroy{
   confirmTripComplete = new Subject<boolean>()
   confirmTripCancel = new Subject<boolean>()
+  confirmDeleteScooter = new Subject<any>();
   constructor() {
   }
 
