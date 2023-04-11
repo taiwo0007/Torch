@@ -3,6 +3,7 @@ import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
 import {Trip} from "../../models/trip";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-user-trips',
@@ -16,7 +17,8 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
   constructor(private userService:UserService, private loadingService:LoadingService) { }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
+    this.loadingService.isLoading.next(true);
   }
 
   ngAfterViewInit() {
@@ -26,7 +28,7 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
   }
 
   getUserDetails(){
-    this.userService.fetchUserDetails().subscribe((userResponseData:UserData) => {
+    this.userService.fetchUserDetails().pipe(delay(3000)).subscribe((userResponseData:UserData) => {
       console.log(userResponseData.renterTrips[0].user)
       this.tripUser = userResponseData
       this.trips = userResponseData.renterTrips;

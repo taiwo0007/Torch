@@ -17,6 +17,7 @@ export class StartTripFormComponent implements OnInit {
   todaysDate = new Date().toISOString().split('T')[0];
   tommorwsDate = new Date();
   user:any;
+  rangeDates: any;
 
 
   constructor(private authService: AuthService,

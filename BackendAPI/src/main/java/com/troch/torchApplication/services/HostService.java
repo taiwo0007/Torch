@@ -148,7 +148,14 @@ public class HostService {
 
     public ResponseEntity getTopHosts() {
 
-        List<User> topHosts = hostRepository.findTopHosts();
+        User user = userService.findUser(10);
+        User user2 = userService.findUser(2);
+        User user3 = userService.findUser(1);
+        List<User> topHosts = new ArrayList<>();
+        topHosts.add(user);
+        topHosts.add(user2);
+        topHosts.add(user3);
+
         List<TopHostsCardDto> topHostsCardDtos = new ArrayList<>();
 
         for(User u: topHosts){

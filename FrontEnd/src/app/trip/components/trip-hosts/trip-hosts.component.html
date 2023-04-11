@@ -1,9 +1,14 @@
 
 
-<body class="bg-light  text-dark font-helvetica">
+<body *ngIf="!isLoading" class="bg-light  text-dark font-helvetica">
 <div class="row container mt-4 mx-auto g-5 pt-5 pb-5">
     <h1 class="fw-bold " *ngIf="hostTrips">Host Trips</h1>
-    <h1 class="fw-bold " *ngIf="!hostTrips">No Host Trips</h1>
+
+    <div *ngIf="!isLoading && !hostTrips" class="h-100 w-100 mx-auto text-center">
+        <h1 class="fw-bold " >No host trips</h1>
+        <img width="500" src="assets/images/website/no-host-trips.png" alt="">
+    </div>
+
     <div class="col-12">
       <trip-host-stats-header *ngIf="hostTrips"
         [totalHostTrips]="hostDetails?.hostTrips?.length"

@@ -46,10 +46,9 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end mt-n5 pt-n3 me-5">
-            <button class="btn btn-info text-light rounded-0 fs-4 px-5 my-auto">
-                <span class="fa fa-pencil" aria-hidden="true"></span>
-                Write a review
+        <div *ngIf="host?.hostUser?.accountType" class="d-flex justify-content-end mt-n5 pt-n3 me-5">
+            <button class="btn btn-dark text-light rounded-0 fs-4 px-5 my-auto">
+               {{host?.hostUser?.accountType}} user
             </button>
         </div>
     </div>
@@ -70,7 +69,7 @@
 
                 <div *ngIf="host?.hostTrips.length > 1 || host.hostTrips.length > 29 || host?.hostUser.torchTrusted || host?.hostUser.rating > 4 || (host?.hostUser.isVerified && host?.hostUser.rating > 4)" class="col-sm-12 mt-3 pt-0 p-4  ">
                     <p class="my-auto fw-bolder pb-1 text-info mx-auto text-center text-uppercase disabled">Host Badges</p>
-                    <div class="d-flex justify-content-between mt-5">
+                    <div class="d-flex justify-content-around mt-5">
                         <div *ngIf="host?.hostTrips.length > 1" class="d-flex flex-column align-items-center mx-2">
                             <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/new.png" alt="" srcset="">
                             <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Trips Starter</p>
@@ -114,12 +113,12 @@
                                     <p><span class="fw-bold">
                                         {{hr.user_reviewer.firstName +' ' +hr.user_reviewer.lastName}}
                                     </span>
-                                        <br> <span th:text="${review.getScooter_reviewer().getCountry()}"
-                                                   class="">{{hr.user_reviewer.country}}</span> </p>
+                                    <br> <span th:text="${review.getScooter_reviewer().getCountry()}"
+                                                   class="badge badge-dark bg-dark">{{hr.user_reviewer.country}}</span> </p>
                                 </div>
                                 <div class="col-2 d-flex justify-content-between">
                                     <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}"
-                                       class=" ">{{hr.reviewDate | date}}</p>
+                                       class=" ">{{hr.reviewDate | date : 'MM/yyyy'}}</p>
                                     <div class="d-flex">
                                         <p th:text="${review.getStarRating()}" class="me-2">{{hr.starRating}}</p>
                                         <i class="fa fa-star  text-info pt-1"></i>
@@ -131,12 +130,12 @@
                                 </p>
                             </div>
                         </div>
-                        <div *ngIf="!host.hostReviews" class="col-11">
+                        <div *ngIf="!host.hostReviews" class="col-11 mb-5 pb-5">
                             No reviews
                         </div>
                     </div>
 
-                    <div *ngIf="!host?.hostReviews.length ">
+                    <div class="mb-5 pb-5" *ngIf="!host?.hostReviews.length ">
                         <p class="text-center mt-5"> No Reviews</p>
                     </div>
                 </div>
@@ -148,7 +147,7 @@
                     <p class="fw-bolder mt-3 text-info text-uppercase">VERIFIED STATUS</p>
 
                     <div class="card-body px-2 mx-0">
-                        <div class="row  border-light fw-light ">
+                        <div class="row  border-light ">
                             <div class="col-xs-12 col-md-6 my-auto">
                                 <p class="card-text my-auto ">Verified </p>
                             </div>
@@ -186,7 +185,7 @@
                     This means that:</p>
 
                 <div class="card-body px-2 mx-0">
-                    <div class="row  border-light fw-light ">
+                    <div class="row  border-light ">
                         <div class="col-xs-12 col-md-6 my-auto">
                             <p class="card-text my-auto ">Breakdwon Coverage</p>
                         </div>
@@ -215,7 +214,7 @@
             </div>
 
             <div *ngIf="hostEsccoters" class="escooters-host p-4">
-                <p class="fw-bold text-info text-uppercase">Taiwo's Escooters</p>
+                <p class="fw-bold text-info text-uppercase">{{host?.hostUser.firstName}}'s Escooters</p>
                 <div *ngIf="hostEsccoters" class="row">
                     <a [routerLink]="['/escooter-detail', e.id]" *ngFor="let e of hostEsccoters" style="text-decoration: none; width: 46%; height: 100% !important;" class="card mx-auto p-0 mb-2 text-dark scooter-card col-6  mx-auto mx-2" id="scooter-card">
                         <img style="object-fit:cover !important; width: 100% !important; height: 8rem !important;" [src]="e.image" class="card-img-top mx-auto" alt="..." />
@@ -226,7 +225,7 @@
                                 </div>
                                 <div class="d-flex align-items-center border-top  justify-content-between mt-3 pt-3" >
                                     <div class="">
-                                        <span class="fw-bold">{{e.rating}}</span> <i class="fa fa-star text-info"></i>
+                                        <span class="fw-bold">{{e.rating | number : '1.2-2'}}</span> <i class="fa fa-star text-info"></i>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="fw-bold m-0 p-0">{{e.cost | currency: 'EUR'}}/day</p>
@@ -238,7 +237,7 @@
                         </div>
                     </a>
                     <div class="d-grid px-5 gap-2 col-12 pt-4 mx-auto">
-                        <button [routerLink]="['/host-escooters',host.id]" class="btn btn-info text-light fw-bold" *ngIf="isMore" type="button">View More</button>
+                        <button [routerLink]="['/host-escooters',host.id]" class="btn btn-dark text-light fw-bold" *ngIf="isMore" type="button">View More</button>
                     </div>
                 </div>
             </div>

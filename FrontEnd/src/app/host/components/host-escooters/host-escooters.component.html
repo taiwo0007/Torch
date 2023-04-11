@@ -1,4 +1,5 @@
 <section style="" class="container pt-5 mt-5 pb-5 mb-4">
+
     <div style=" overflow-x: hidden; !important"  class="row ">
 
         <div *ngIf="hostEscooters" class="col-12">
@@ -7,7 +8,8 @@
                  style=" background-color: white; margin: auto !important;">
                 <div class="p-4">
                     <div class="d-flex justify-content-between mb-3">
-                        <h2 class="fw-bold "> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
+                        <div *ngIf="hostEscooters.length == 0"> </div>
+                        <h2 class="fw-bold " *ngIf="hostEscooters.length > 0"> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
                         <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"  class="btn btn-dark rounded-0 btn-lg fw-bold">+ Add scooter</a>
                     </div>
 
@@ -19,6 +21,11 @@
                             Electric scooter added.
                         </div>
 
+                    </div>
+
+                    <div *ngIf="hostEscooters.length == 0" class=" w-100 mx-auto text-center">
+                        <h1 class="fw-bold " >No Electric scooters</h1>
+                        <img width="500" src="assets/images/website/host-scooter-unfound.png" alt="">
                     </div>
 
                     <div *ngIf="hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" class="row pb-5">

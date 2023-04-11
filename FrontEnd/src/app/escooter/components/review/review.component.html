@@ -10,12 +10,12 @@
     <div   class="row">
         <div class="col-10">
             <p ><span>{{reviewUser?.firstName}} {{reviewUser?.lastName}}</span> <br>
-                <span class="badge badge-info bg-info">{{reviewUser?.country}}</span> </p>
+                <span class="badge badge-dark bg-dark">{{reviewUser?.country}}</span> </p>
 
 
         </div>
         <div class="col-2 d-flex justify-content-between">
-            <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">{{Review?.reviewDate | date}}</p>
+            <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">{{Review?.reviewDate | date : 'MM/yyyy'}}</p>
             <div class="d-flex">
                 <p th:text="${review.getStarRating()}" class="me-2">{{Review?.starRating}}</p>
                 <i class="fa fa-star  text-info pt-1"></i>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="row">
-        <p style="max-width: 45rem" th:text="${review.getComment()}" class="text-secondary">{{Review?.comment}}
+        <p style="max-width: 45rem" th:text="${review.getComment()}" class="text-dark">{{Review?.comment}}
 
 
         </p>

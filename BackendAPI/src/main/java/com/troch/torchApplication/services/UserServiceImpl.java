@@ -182,7 +182,6 @@ public class UserServiceImpl implements UserService{
         String countryFormatted = countryKey.asText();
         String countyFormated = countyKey.asText();
 
-//        currentUsr.setIsVerified(true);
         currentUsr.setProfilePicture(verifyRequest.getProfilePicture());
         currentUsr.setCountry(countryFormatted);
         currentUsr.setLocation(addressFormatted);

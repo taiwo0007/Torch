@@ -73,10 +73,10 @@ export class HostProfileComponent implements OnInit{
   getHostEsccotersInitEscooters(){
     return this.hostService.fetchHostEscooters(this.host.id).pipe(map(data => {
 
-      if(data.length > 4){
+      if(data.length > 2){
         this.isMore = true;
         console.log("hell oworld")
-        return data.slice(0,3);
+        return data.slice(0,2);
       }
       return data;
     }))

@@ -46,7 +46,7 @@ export class HostEscootersComponent implements OnInit{
 
   getHostEscooters(){
 
-    this.hostService.fetchHostEscooters(this.hostID).pipe(delay(3000)).subscribe(data => {
+    this.hostService.fetchHostEscooters(this.hostID).pipe().subscribe(data => {
       console.log(data)
       this.hostEscooters = data
       this.loadingService.isLoading.next(false);

@@ -3,7 +3,11 @@
 <div [ngClass]="trips ? 'bg-light' : 'bg-white'" class="  text-dark font-helvetica">
 <div class="row g-5 pt-5 mt-4 pb-5 mx-auto container">
     <h1 *ngIf="trips" class="fw-bold">Trips Stats</h1>
-    <h1 *ngIf="!trips" class="fw-bold">No Trips Booked</h1>
+    <div *ngIf="!isLoading && !trips  " class="h-100 w-100 mx-auto text-center">
+        <h1  class="fw-bold">No trips booked</h1>
+        <img width="500" src="assets/images/website/notrips.png" alt="">
+    </div>
+
     <div class="col-12">
 <trip-stats-header *ngIf="tripUser"
                    [totalTrips]="tripUser?.renterTrips.length"

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -85,6 +87,8 @@ import { EscooterAdCardComponent } from './escooter/components/escooter-ad-card/
 import { LoadScreenComponent } from './shared/components/load-screen/load-screen.component';
 import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
 import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-bar-search.component';
+import { NgbDatepickerConfigComponent } from './shared/components/ngb-datepicker-config/ngb-datepicker-config.component';
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
@@ -144,9 +148,12 @@ import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-ba
      LoadScreenComponent,
      VerifyEmailComponent,
      NavBarSearchComponent,
+     NgbDatepickerConfigComponent,
 
   ],
     imports: [
+        MatNativeDateModule,
+        MatMomentDateModule,
         BrowserModule,
         AppRoutingModule,
         FormsModule,
@@ -178,6 +185,7 @@ import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-ba
         ToastrModule.forRoot(),
         MatIconModule,
         MatExpansionModule,
+        CalendarModule,
 
 
     ],
