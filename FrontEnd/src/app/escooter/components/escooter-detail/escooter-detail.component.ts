@@ -43,7 +43,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
 
         // this.isLoading = true;
-        this.escooterService.getEscooterById(this.paramId).pipe(delay(9000)).subscribe(escooterData => {
+        this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
                 // this.isLoading = false;
                 this.escooter = escooterData;
                 this.configureMapOptions();

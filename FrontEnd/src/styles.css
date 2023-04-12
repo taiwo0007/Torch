@@ -1,5 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap'); /* You can add global styles to this file, and also import other style files */
 
+
+
+
+@font-face {
+    font-family: "BasicGroRegular";
+    src: url("assets/fonts/BasisGrotesqueArabicPro-Regular.ttf") format("truetype");
+    font-weight: auto;
+    font-style: auto;
+}
+
+@font-face {
+    font-family: "BasicGroBold";
+    src: url("assets/fonts/BasisGrotesqueArabicPro-Bold.ttf") format("truetype");
+    font-weight: auto;
+    font-style: auto;
+}
+
+@font-face {
+    font-family: "BasicGroBlack";
+    src: url("assets/fonts/BasisGrotesqueArabicPro-Black.ttf") format("truetype");
+    font-weight: auto;
+    font-style: auto;
+}
+
+*{
+    padding: 0 ;
+    margin: 0 ;
+    box-sizing: border-box ;
+    scroll-behavior: auto !important;
+    font-family: 'BasicGroRegular', sans-serif;
+
+}
+
+
+
+
 /*input.ng-touched.ng-invalid{*/
 /*  border: 2px solid red;*/
 /*}*/
@@ -17,16 +53,10 @@
     overflow: hidden !important;
 }
 
-*{
-    padding: 0 ;
-    margin: 0 ;
-    box-sizing: border-box ;
-    scroll-behavior: auto !important;
 
-}
 
-p{
-    /*font-family: 'Poppins', sans-serif;*/
+li, p{
+    font-family: 'BasicGroRegular', sans-serif;
 
 }
 
@@ -40,6 +70,16 @@ pt-0{
 .icon {
     margin-bottom: 0.3rem !important;
     vertical-align: middle !important;
+}
+
+h1, h2, h3, h3, h5, h6, h7{
+    font-family: 'BasicGroBlack', sans-serif;
+
+}
+
+.font-gro-black{
+    font-family: 'BasicGroBlack', sans-serif !important;
+
 }
 
 

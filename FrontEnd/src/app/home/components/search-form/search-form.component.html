@@ -2,16 +2,16 @@
       class="p-5 mt-2 rounded shadow-lg"
       style="width: 35.9rem !important; height: 35rem !important; background-color: white; margin-left: 9rem !important;">
     <div class="mx-auto text-center ">
-        <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info">trip</span> </h1>
+        <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span class="text-info font-gro-black">trip</span> </h1>
         <!-- <img style="width: 22rem; margin-top: -1rem;" src="./images/scooterstring.gif" class="mx-auto text-center" alt=""> -->
 
     </div>
     <div class="mb-3">
         <label for="location" class="form-label fw-bold">Pickup location</label>
-        <input [value]="'Ireland' " [options]="options"
+        <input [value]="'Ireland.....' " [options]="options"
                ngx-google-places-autocomplete style="color: black !important;"
                ngModel
-               placeholder="Ireland"
+               placeholder="Ireland....."
                (onAddressChange)="handleAddressChange($event)"
                name="location" type="text" class="form-control " id="location" aria-describedby="emailHelp" >
 
