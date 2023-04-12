@@ -47,7 +47,7 @@ export class TripComponent implements OnInit, AfterViewInit {
     this.confirmSubscription = this.dialogService.confirmTripComplete
         .pipe(
             switchMap((val:any) => {
-              this.loadingService.isLoading.next(true);
+              this.loadingService.isLoadingLine.next(true);
 this.isLoading = false
 
               return this.tripService.completeTripFromApi(this.tripId)
@@ -56,13 +56,13 @@ this.isLoading = false
         ).subscribe(
          (data:Trip) => {
           console.log(data)
-           this.loadingService.isLoading.next(false);
+           this.loadingService.isLoadingLine.next(false);
            this.isLoading = false
            this.router.navigate(['/trip-complete'], {queryParams: {tripId: data.tripId}})
         },()=>{
           this.isError = "An Error has occurred"
         },()=>{
-              this.loadingService.isLoading.next(false);
+              this.loadingService.isLoadingLine.next(false);
 
               this.isLoading = false;
         })
@@ -70,7 +70,7 @@ this.isLoading = false
     this.cancelSubscription = this.dialogService.confirmTripCancel
         .pipe(
             switchMap((val:any) => {
-              this.loadingService.isLoading.next(true);
+              this.loadingService.isLoadingLine.next(true);
 
               this.isLoading = true;
               return this.tripService.cancelTripFromApi(this.tripId)
@@ -79,16 +79,16 @@ this.isLoading = false
         ).subscribe(
             (data:Trip) => {
               console.log(data)
-              this.loadingService.isLoading.next(false);
+              this.loadingService.isLoadingLine.next(false);
               this.isLoading = false
 
               this.router.navigate(['/trip-cancel'], {queryParams: {tripId: data.tripId}})
             },()=>{
-              this.loadingService.isLoading.next(false);
+              this.loadingService.isLoadingLine.next(false);
               this.isLoading = false;
               this.isError = "An Error has occurred"
             },()=>{
-              this.loadingService.isLoading.next(false);
+              this.loadingService.isLoadingLine.next(false);
 
               this.isLoading = false;
             })

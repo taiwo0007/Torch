@@ -60,11 +60,11 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
 
 
   onSubmit(signupForm: NgForm) {
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoadingLine.next(true);
 
     this.isLoading = true;
     if(!signupForm.valid){
-      this.loadingService.isLoading.next(false);
+      this.loadingService.isLoadingLine.next(false);
 
       return
     }
@@ -77,13 +77,13 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.authService.signup( this.signupRequestPayload).subscribe((data:boolean) => {
         this.isLoading = false;
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoadingLine.next(false);
 
           this.router.navigate(['/'])
       },
       error => {
         this.isLoading = false;
-        this.loadingService.isLoading.next(false);
+        this.loadingService.isLoadingLine.next(false);
 
         this.error = error.error.message;
 

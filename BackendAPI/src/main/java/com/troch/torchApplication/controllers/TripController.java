@@ -75,6 +75,8 @@ public class TripController {
     @PutMapping("/complete-trip/{id}")
     public ResponseEntity<Trip> completeTrip(@RequestHeader("Authorization") String jwt,
                                               @PathVariable("id") Integer id) throws Exception {
+        logger.info("asdfasf", "asfasdf");
+
         return tripService.updateTrip(true, id, jwt);
 
 
@@ -83,6 +85,9 @@ public class TripController {
     @PutMapping("/cancel-trip/{id}")
     public ResponseEntity<Trip> cancelTrip(@RequestHeader("Authorization") String jwt,
                                              @PathVariable("id") Integer id) throws Exception {
+
+        System.out.println("Cancel trip");
+        logger.info("asdfasf", "asfasdf");
         return tripService.updateTrip(false, id, jwt);
 
 

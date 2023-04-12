@@ -92,9 +92,12 @@ public class TripService {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            if(retrivedTrip.get().getUser_renter() != user){
+            if(retrivedTrip.get().getUser_renter() == user || retrivedTrip.get().getTrip_owner().getHostUser() == user){
+            }
+            else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
+
             if(isComplete){
                 retrivedTrip.get().setStatus(TripStatus.COMPLETED);
             }

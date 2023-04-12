@@ -25,15 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @RestController
 public class PaymentController {
-
 
     Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
@@ -48,17 +47,18 @@ public class PaymentController {
 
     private StripeService stripeService;
 
-    public PaymentController (StripeService stripeService) {
+    public PaymentController(StripeService stripeService) {
         this.stripeService = stripeService;
     }
 
+    @Transactional
     @PostMapping("/webhook")
-    public HttpStatus webhookFromStripe(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) throws StripeException {
-
+    public HttpStatus webhookFromStripe(@RequestBody String payload,
+            @RequestHeader("Stripe-Signature") String sigHeader) throws StripeException {
 
         String endpointSecret = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
-//        String endpointSecret = "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
-
+        // String endpointSecret =
+        // "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
 
         Event event = null;
 
@@ -77,63 +77,62 @@ public class PaymentController {
         } else {
 
         }
-
-
         switch (event.getType()) {
 
-
             case "checkout.session.completed":
-                Session session = (Session) stripeObject;
 
-                logger.info("CUSTOMER"+session.getCustomerDetails().getEmail());
-                logger.info("SUBSCRIPTION ID "+session.getSubscription());
-                logger.info("AMOUNT SUBTOTAL "+session.getAmountSubtotal());
-                User user = userService.findUserByEmail(session.getCustomerDetails().getEmail());
-                Host host = user.getHost();
+                // Payment is successful and the subscription is created.
+                // You should provision the subscription and save the customer ID to your
+                // database.
+                break;
+            case "invoice.paid":
+                Invoice invoice = (Invoice) stripeObject;
+                if (invoice.getSubscription() != null) {
 
-                if(!session.getSubscription().isBlank() && host != null){
+                    Subscription subscription = Subscription.retrieve(invoice.getSubscription());
 
+                    User userSub = userService.findUserByEmail(invoice.getCustomerEmail());
+                    Host hostSub = userSub.getHost();
 
-                   if(session.getAmountSubtotal() == 1299){
+                    logger.info("paid info", "invoice paid");
 
-                       user.setAccountType("Basic");
-                       host.setTotalAdDays(3);
+                    for (SubscriptionItem item : subscription.getItems().getData()) {
+                        System.out.println("plan" + item.getPlan());
+                        System.out.println("plan id" + item.getPlan().getId());
 
-                   }
-                    if(session.getAmountSubtotal() == 2999){
-                        user.setAccountType("Advanced");
-                        host.setTotalAdDays(7);
+                        // Pro Plan
+                        if (item.getPlan().getId().equals("price_1Mlhx9BapNSScoYvu765T22Y")) {
+                            userSub.setAccountType("Pro");
+                            hostSub.setTotalAdDays(10);
+                        }
+
+                        // Advanced Plan
+                        if (item.getPlan().getId().equals("price_1MlhwfBapNSScoYvnenMR1I0")) {
+                            userSub.setAccountType("Advanced");
+                            hostSub.setTotalAdDays(7);
+                        }
+
+                        // Basic Plan
+                        if (item.getPlan().getId().equals("price_1Mlhs9BapNSScoYv0wI6C4q9")) {
+                            userSub.setAccountType("Basic");
+                            hostSub.setTotalAdDays(3);
+                        }
+
+                        userService.saveUser(userSub);
+                        hostService.save(hostSub);
                     }
-                    if(session.getAmountSubtotal() == 3999){
-                        user.setAccountType("Pro");
-                        host.setTotalAdDays(10);
-                    }
-                    userService.saveUser(user);
-                    hostService.save(host);
 
                 }
 
-                // Payment is successful and the subscription is created.
-                // You should provision the subscription and save the customer ID to your database.
-                break;
-            case "invoice.paid":
-
-                logger.info("paid info", "invoice paid");
-
-                Invoice invoice = (Invoice) stripeObject;
-
-               logger.info("invoice padi"+invoice);
-
-
-
-
+                System.out.println();
                 // Continue to provision the subscription as payments continue to be made.
-                // Store the status in your database and check when a user accesses your service.
+                // Store the status in your database and check when a user accesses your
+                // service.
                 // This approach helps you avoid hitting rate limits.
                 break;
             case "invoice.payment_failed":
 
-                logger.info("failed info", "Custooerm did not pay");
+                logger.info("failed info", "Customer did not pay");
                 // The payment failed or the customer does not have a valid payment method.
                 // The subscription becomes past_due. Notify your customer and send them to the
                 // customer portal to update their payment information.
@@ -146,46 +145,39 @@ public class PaymentController {
 
     }
 
-
-
     @PostMapping("/create-subscription")
     public ResponseEntity createSubscription() throws StripeException {
 
         Stripe.apiKey = "sk_test_51M5pMwBapNSScoYvdfzlMbuNHXyDI1TXBwOxRJxtkuQjBOZDxbAsUv5326FY9RC04wr9sBlyHQp5FlDgCQKCdx4a00zY9p9JRT";
 
-
         ArrayList<Object> items = new ArrayList<>();
         Map<String, Object> item1 = new HashMap<>();
         item1.put(
                 "price",
-                "price_1Mlhx9BapNSScoYvu765T22Y"
-        );
+                "price_1Mlhx9BapNSScoYvu765T22Y");
         items.add(item1);
         Map<String, Object> params = new HashMap<>();
         params.put("customer", "cus_4QFOF3xrvBT2nU");
         params.put("items", items);
 
-        Subscription subscription =
-                Subscription.create(params);
+        Subscription subscription = Subscription.create(params);
 
-        logger.info("subscription info"+subscription);
+        logger.info("subscription info" + subscription);
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
 
     }
 
     @PostMapping("/create-checkout-session")
-    public String createCheckoutSession(@RequestBody PriceIdRequest priceIdRequest ) throws StripeException {
+    public String createCheckoutSession(@RequestBody PriceIdRequest priceIdRequest) throws StripeException {
 
         Stripe.apiKey = "sk_test_51M5pMwBapNSScoYvdfzlMbuNHXyDI1TXBwOxRJxtkuQjBOZDxbAsUv5326FY9RC04wr9sBlyHQp5FlDgCQKCdx4a00zY9p9JRT";
 
         // The price ID passed from the client
-//   String priceId = request.queryParams("priceId");
+        // String priceId = request.queryParams("priceId");
         String priceId = priceIdRequest.getPrice_id();
 
-        logger.info("priceId" +priceId);
-
-
+        logger.info("priceId" + priceId);
 
         SessionCreateParams params = new SessionCreateParams.Builder()
                 .setSuccessUrl(priceIdRequest.getUrl())
@@ -196,45 +188,36 @@ public class PaymentController {
                         // For metered billing, do not pass quantity
                         .setQuantity(1L)
                         .setPrice(priceId)
-                        .build()
-                )
+                        .build())
                 .build();
 
-
-
         return Session.create(params).toJson();
-
-
 
     }
 
     @PostMapping("/create-payment-intent")
-    public CreatePaymentResponse createPaymentIntent(@RequestBody String responseb, CreatePayment createPayment) throws StripeException {
-
+    public CreatePaymentResponse createPaymentIntent(@RequestBody String responseb, CreatePayment createPayment)
+            throws StripeException {
 
         JSONObject json = new JSONObject(responseb);
         double cost = json.getDouble("cost");
 
-        PaymentIntentCreateParams params =
-                PaymentIntentCreateParams.builder()
-                        .setAmount((long) cost * 100L)
-                        .setCurrency("eur")
-                        .setAutomaticPaymentMethods(
-                                PaymentIntentCreateParams.AutomaticPaymentMethods
-                                        .builder()
-                                        .setEnabled(true)
-                                        .build()
-                        )
-                        .build();
+        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                .setAmount((long) cost * 100L)
+                .setCurrency("eur")
+                .setAutomaticPaymentMethods(
+                        PaymentIntentCreateParams.AutomaticPaymentMethods
+                                .builder()
+                                .setEnabled(true)
+                                .build())
+                .build();
 
         long amount = (long) cost * 100L;
         // Create a PaymentIntent with the order amount and currency
         PaymentIntent paymentIntent = PaymentIntent.create(params);
 
-        logger.info(""+paymentIntent.getClientSecret());
+        logger.info("" + paymentIntent.getClientSecret());
 
         return new CreatePaymentResponse(paymentIntent.getClientSecret());
     }
 }
-
-

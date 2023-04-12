@@ -90,6 +90,7 @@ import { NavBarSearchComponent } from './shared/components/nav-bar-search/nav-ba
 import { NgbDatepickerConfigComponent } from './shared/components/ngb-datepicker-config/ngb-datepicker-config.component';
 import {CalendarModule} from "primeng/calendar";
 import { DeleteScooterDialogComponent } from './shared/components/delete-scooter-dialog/delete-scooter-dialog.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -154,6 +155,8 @@ import { DeleteScooterDialogComponent } from './shared/components/delete-scooter
 
   ],
     imports: [
+        MatIconModule,
+        MatChipsModule,
         MatNativeDateModule,
         MatMomentDateModule,
         BrowserModule,

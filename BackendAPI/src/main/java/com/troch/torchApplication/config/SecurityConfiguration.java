@@ -221,6 +221,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger/**",
                         "/webjars/**",
                         "/api/escooter/create-review",
+                        "/api/trips/cancel-trip/**",
                         "/swagger-ui.html"
                        )
                 .permitAll()

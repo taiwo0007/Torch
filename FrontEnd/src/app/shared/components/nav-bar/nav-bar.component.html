@@ -29,22 +29,14 @@
     </li>
 
     <li *ngIf="accountType" class="nav-item my-auto me-3">
-      <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; " class=" btn btn-outline-light disabled rounded-0 text-light fw-bold  my-auto">{{accountType}} plan</p>
+
+        <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; " class=" btn btn-outline-warning disabled rounded-0 text-light fw-bold  my-auto">{{accountType}} plan</p>
     </li>
 
     <li *ngIf="isAuthenticated" class="nav-item my-auto">
       <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
 
     </li>
-
-<!--    <li  class="nav-item my-auto">-->
-<!--      <a  *ngIf="isAuthenticated" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn rounded-0 text-dark fw-bold  my-auto"  [routerLink]="['profile']">-->
-<!--        <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"  class="rounded-circle " src="./assets/images/website/avatar.png" alt="">-->
-<!--        <img *ngIf="profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover" class="rounded-circle " [src]="profileImage" alt="">-->
-<!--      </a>-->
-<!--    </li>-->
-
-
     <li *ngIf="isAuthenticated" bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class=" nav-item dropdown bg-dark m-auto nav-link">
       <a  dropdownToggle style="background-color: black !important" class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false">
 

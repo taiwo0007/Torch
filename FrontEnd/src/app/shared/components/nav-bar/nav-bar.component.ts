@@ -10,12 +10,13 @@ import {DialogService} from "../../services/dialog.service";
 import {VerificationDialogComponent} from "../verification-dialog/verification-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {SubscriptionModalComponent} from "../../../user/components/subscription-modal/subscription-modal.component";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+  styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   @ViewChild(BsDropdownDirective, { static: false }) dropdown: BsDropdownDirective;

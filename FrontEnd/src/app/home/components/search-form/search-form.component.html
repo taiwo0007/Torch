@@ -8,10 +8,10 @@
     </div>
     <div class="mb-3">
         <label for="location" class="form-label fw-bold">Pickup location</label>
-        <input [options]="options"
+        <input [value]="'Ireland' " [options]="options"
                ngx-google-places-autocomplete style="color: black !important;"
                ngModel
-               placeholder="Scooter location"
+               placeholder="Ireland"
                (onAddressChange)="handleAddressChange($event)"
                name="location" type="text" class="form-control " id="location" aria-describedby="emailHelp" >
 
