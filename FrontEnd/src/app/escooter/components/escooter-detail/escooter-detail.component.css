@@ -1,0 +1,34 @@
+@media(max-width: 575.68px){
+
+
+    .scooter-card{
+
+        width: 90vw !important;
+    }
+    a{
+        width: 100% !important;
+
+    }
+
+    #map{
+        display: none !important;
+    }
+
+    .remove-mb{
+        display:none !important;
+    }
+    .show-mb{
+
+    }
+}
+@media(min-width: 580.68px){
+    .my-nav-m {
+        display: none !important;
+    }
+
+    .show-mb{
+        display:none !important;
+    }
+
+
+}

@@ -1,7 +1,8 @@
 
 <div *ngIf="!escooterResults" style="height: 100vh !important; width: 100% !important; overflow-y: hidden !important;" class="container-fluid pt-5 mt-3 mx-auto">
     <div class="text-center pt-5 mt-3">
-        <img style="display: block; width: 50rem; height: auto;" src="assets/images/website/Pages/no-scooters-found-img.png" class="  my-auto mx-auto text-center" alt="">
+        <img style="display: block; width: 100%; height: auto;" src="assets/images/website/Pages/no-scooters-found-img.png" class="show-mb  my-auto mx-auto text-center" alt="">
+        <img style="display: block; width: 50rem; height: auto;" src="assets/images/website/Pages/no-scooters-found-img.png" class="remove-mb  my-auto mx-auto text-center" alt="">
         <p>You search did not mach any scooters please <a [routerLink]="['']" style="display: inline-block;" class=" text-underline" href="">search again </a></p>
     </div>
 </div>
@@ -81,7 +82,9 @@
                     </button>
                 </div>
                 <div *ngIf="isLoading" class="row mx-auto mt-3">
-                   <app-custom-skeleton-loader></app-custom-skeleton-loader>
+                   <app-custom-skeleton-loader class="remove-mb"></app-custom-skeleton-loader>
+                    <app-load-screen class="mx-auto full-spinner"></app-load-screen>
+
                 </div>
                 <div class="row" *ngIf="escooterAdsResult">
                     <div *ngFor="let escooterItem of escooterAdsResult" class="col-xs-12 col-sm-12 col-md-6 my-3 ">
@@ -97,7 +100,7 @@
         </div>
 
         <div style=" position: fixed !important; overflow: hidden; right:0 !important; margin: 0 !important; padding: 0 !important;" class="col-md-4 col-sm-12">
-            <ngx-skeleton-loader class="border-0" style="height: 93vh; position: fixed !important; overflow: hidden;" *ngIf="isLoading" [theme]="{height: '94vh', width: '40vw'}"></ngx-skeleton-loader>
+            <ngx-skeleton-loader class="border-0 remove-mb" style="height: 93vh; position: fixed !important; overflow: hidden;" *ngIf="isLoading" [theme]="{height: '94vh', width: '40vw'}"></ngx-skeleton-loader>
             <div *ngIf="escooterResults" class="border"
                  style="height: 93vh; position: fixed !important; overflow: hidden;" id="map"></div>
 

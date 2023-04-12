@@ -60,24 +60,24 @@ public class EscooterServiceTest {
 
 
 
-    @Test
-    public void findAllByTripDatesAndLocationTest(){
-
-        String tripStart = "2000-10-10";
-        String tripEnd = "2000-11-11";
-        String country = "Ireland";
-
-        List<EScooter> escooterList = new ArrayList<EScooter>();
-        escooterList.add(new EScooter());
-        escooterList.get(0).set
-
-        when(eScooterRepository.findAllByTripDatesAndLocation(any(), any(), anyString()))
-                .thenReturn()
-
-
-
-
-    }
+//    @Test
+//    public void findAllByTripDatesAndLocationTest(){
+//
+//        String tripStart = "2000-10-10";
+//        String tripEnd = "2000-11-11";
+//        String country = "Ireland";
+//
+//        List<EScooter> escooterList = new ArrayList<EScooter>();
+//        escooterList.add(new EScooter());
+//        escooterList.get(0).set
+//
+//        when(eScooterRepository.findAllByTripDatesAndLocation(any(), any(), anyString()))
+//                .thenReturn()
+//
+//
+//
+//
+//    }
 
 
 

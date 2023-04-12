@@ -87,3 +87,28 @@ h1, h2, h3, h3, h5, h6, h7{
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media(max-width: 575.68px){
+
+
+
+
+    .remove-mb{
+        display:none !important;
+    }
+    .show-mb{
+
+    }
+}
+@media(min-width: 580.68px){
+    .my-nav-m {
+        display: none !important;
+    }
+
+    .show-mb{
+        display:none !important;
+    }
+
+
+}
+
