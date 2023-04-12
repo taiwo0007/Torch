@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,6 +113,7 @@
       <workItem from="1681147608919" duration="19258000" />
       <workItem from="1681251870637" duration="11000" />
       <workItem from="1681253505116" duration="3861000" />
+      <workItem from="1681292954656" duration="1897000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
