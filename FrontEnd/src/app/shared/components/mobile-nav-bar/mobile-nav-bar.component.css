@@ -8,12 +8,15 @@
 }
 @media(max-width: 575.68px){
 
-    .my-nav{
-        display: none !important;
-    }
 
+
+    .my-nav-m {
+        display: block !important;
+    }
 }
 @media(min-width: 580.68px){
-
+    .my-nav-m {
+        display: none !important;
+    }
 
 }

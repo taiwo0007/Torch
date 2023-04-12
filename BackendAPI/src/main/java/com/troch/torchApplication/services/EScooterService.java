@@ -172,7 +172,16 @@ public class EScooterService {
         return eScooterRepository.findAllByTripDatesAndLocation(tripStartDate, tripEndDate, country);
     }
 
+
     public List<EScooter> findAllEscooterAds() throws ParseException {
+
+        //today 30 00:00:00
+        //
+        //30 - 59    -> 1
+        //29  -> 2
+        //28   -> 3
+
+
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -218,12 +227,6 @@ public class EScooterService {
 
         }
 
-        //today 30 0:0:o
-
-        //^
-        //30 - 59    -> 1
-        //29  -> 2
-        //28   -> 3
 
 
 

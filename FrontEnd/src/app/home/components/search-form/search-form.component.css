@@ -3,3 +3,31 @@
     color: black !important; ;
     font-family: Helvetica, serif;
 }
+
+
+
+
+
+@media(max-width: 575.68px){
+    h1{
+        font-size: 2rem !important;
+    }
+    .form-search{
+
+        width: 100%;
+        margin-left: 0 !important;
+        height: max-content;
+        margin-top: 2rem !important;
+
+
+    }
+}
+@media(min-width: 580.68px){
+
+    .form-search{
+
+        width: 35.9rem ;
+        margin-left: 8px !important;
+        height: 35rem;
+    }
+}

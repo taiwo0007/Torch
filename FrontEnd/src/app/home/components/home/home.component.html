@@ -2,267 +2,267 @@
 <section style="overflow-x: hidden;"  class="hero-header pt-5 mt-1 ">
 
 
+    <div
+            style="
+                background-image: url('./assets/images/website/header.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 45rem;
+                width: 100vw;
+                max-width: 100vw;
+              "
+            class="hero-container my-auto mx-auto">
 
+        <div  class="container pt-5">
+            <app-search-form></app-search-form>
 
-  <div
-    style="
-          background-image: url('./assets/images/website/header.png');
-          background-repeat: no-repeat;
-          background-position: center;
-          height: 45rem;
-          width: 100vw;
-          max-width: 100vw;
-        "
-    class="hero-container my-auto mx-auto">
-
-    <div  class="container pt-5">
-      <app-search-form></app-search-form>
+        </div>
     </div>
-  </div>
 </section>
 
 <section  class="row container py-4 mx-auto my-1">
-  <h1
-          style="font-size: 3.8rem !important"
-          class="h1 text-center fw-bold pb-5 mt-5"
-  >
-    Torch <span class="text-info font-gro-black">Hosts</span>
-  </h1>
-  <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
-    Feauterd Hosts
-  </h4>
-  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
-    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+    <h1
+            style="font-size: 3.8rem !important"
+            class="h1 text-center fw-bold pb-5 mt-5"
+    >
+        Torch <span class="text-info font-gro-black">Hosts</span>
+    </h1>
+    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
+        Feauterd Hosts
+    </h4>
+    <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
 
-  </div>
-  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
-    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
-
-  </div>
-  <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
-    <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
-
-  </div>
-<ng-container *ngIf="topHostsInfo">
-
-
-  <div style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]" *ngFor="let t of topHostsInfo; let i = index" class="col-4 mx-auto pointer-event">
-    <div style="width: 23rem" class="border  rounded">
-      <div style="padding: 1rem" class="d-flex">
-        <div class="me-2">
-
-          <img style="object-fit: cover; width: 5rem; height: 5rem" src="{{t.profileImage}}" width="100" class="rounded-circle " alt="..." />
-        </div>
-        <div class="">
-          <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}</p>
-          <p *ngIf="t.trusted" class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
-            Torch trusted
-          </p>
-          <p style="margin-bottom: 0; font-size: 0.7rem">
-            {{t.trips}} trips <span>- Joined {{t.joined | date}}</span>
-          </p>
-        </div>
-      </div>
-      <div style="padding: 0 1.8rem 0 1.8rem" class="">
-        <div class="">
-          <i *ngFor="let g of ratingList[i]" class="fa text-info fa-star"></i>
-          <p class="pt-3" style="width: fit-content">
-            {{t.reviewer_comment}}
-          </p>
-        </div>
-      </div>
-
-      <div style="padding: 2rem 1.8rem 2rem 1.8rem">
-        <p style="margin-bottom: 0; font-size: 0.7rem">
-          {{t.reviewer_name}} - <span> {{t.reviewer_date | date}}</span>
-        </p>
-      </div>
     </div>
-  </div>
-  </ng-container>
+    <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+
+    </div>
+    <div *ngIf="!topHostsInfo" class="col-4 mx-auto pointer-event">
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+
+    </div>
+    <ng-container *ngIf="topHostsInfo">
+
+
+        <div style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]" *ngFor="let t of topHostsInfo; let i = index"
+             class="col-md-4 col-sm-12 mx-auto pointer-event">
+            <div style="width: 23rem" class="border mx-auto rounded">
+                <div style="padding: 1rem" class="d-flex">
+                    <div class="me-2">
+
+                        <img style="object-fit: cover; width: 5rem; height: 5rem" src="{{t.profileImage}}" width="100" class="rounded-circle " alt="..." />
+                    </div>
+                    <div class="">
+                        <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}</p>
+                        <p *ngIf="t.trusted" class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
+                            Torch trusted
+                        </p>
+                        <p style="margin-bottom: 0; font-size: 0.7rem">
+                            {{t.trips}} trips <span>- Joined {{t.joined | date}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div style="padding: 0 1.8rem 0 1.8rem" class="">
+                    <div class="">
+                        <i *ngFor="let g of ratingList[i]" class="fa text-info fa-star"></i>
+                        <p class="pt-3" style="width: fit-content">
+                            {{t.reviewer_comment}}
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem 1.8rem 2rem 1.8rem">
+                    <p style="margin-bottom: 0; font-size: 0.7rem">
+                        {{t.reviewer_name}} - <span> {{t.reviewer_date | date}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </ng-container>
 
 </section>
 
-<section class="header-bottom py-5">
-  <h1 style="font-size: 3.8rem !important" class="h1 text-center fw-bold">
-    Browse scooter models.
-  </h1>
-  <h3 class="badge-info fw-bold text-center text-info">
-    View our catalogue of scooters for an amazing expereince
-  </h3>
+<section class="header-bottom mx-auto text-center py-5">
+    <h1 style="font-size: 3.8rem !important" class="h1 text-center mx-auto fw-bold">
+        Browse scooter models.
+    </h1>
+    <h3 class="badge-info fw-bold mx-auto text-center text-info">
+        View our catalogue of scooters for an amazing expereince
+    </h3>
 </section>
 
 <div class="container">
-  <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded">
-    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
-      Browse by make
-    </h4>
+    <section class="row py-5 my-1 mx-auto bg-light rounded">
+        <h4 style="font-size: 1.4rem !important" class="h1 mx-auto fw-bold py-1 px-4 text-center">
+            Browse by make
+        </h4>
 
-    <div class="row text-center mt-3">
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/puretile.png" alt="">
-        </a>
+        <div class="row text-center mx-auto mt-3">
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/puretile.png" alt="">
+                </a>
 
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/avovotile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Make/segwaytile.png" alt="">
-        </a>
-      </div>
-    </div>
-  </section>
-
-
-  <section class="row py-5 mx-4 my-1 mx-auto ">
-    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
-      Browse by Location
-    </h4>
-
-    <div class="row text-center mt-3 ">
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/dublintile.png" alt="">
-        </a>
-
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/corktile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/galwaytile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/County/meathtile.png" alt="">
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded my-5">
-    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
-      Browse by Feature
-    </h4>
-
-    <div class="row text-center mt-3">
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/speedtile.png" alt="">
-        </a>
-
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/rangetile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/costtile.png" alt="">
-        </a>
-      </div>
-      <div class="col-3">
-        <a href="">
-          <img class="browse-tile" style="width:17rem" src="../../../../assets/images/website/Feature/weighttile.png" alt="">
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section style=" border-radius: 40px;" class="container my-3 py-5 bg-dark mt-5">
-    <h1 style="font-size: 3.8rem !important" class="h1 text-center text-white fw-bold mb-5 pt-4">
-      How It Works
-    </h1>
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-4 text-center my-auto">
-            <h3 class="fw-bold text-info">Verify account</h3>
-            <p style="text-align: center text-light" class="text-light">
-              Sign up to the application to access a wide
-              catalogue of electric scooters
-            </p>
-          </div>
-          <div class="col-4">
-            <img src="../../../../assets/images/website/5.png" width="300" class="" alt="..." />
-          </div>
-          <div class="col-2"></div>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/avovotile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/segwaytile.png" alt="">
+                </a>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-4">
-            <img src="../../../../assets/images/website/4.png" width="300" class="" alt="..." />
-          </div>
-          <div class="col-4 text-center my-auto">
-            <h3 class="fw-bold text-info">Become a host</h3>
-            <p style="text-align: center" class="text-light">
-              Down the street or across the country, find the perfect
-              vehicle for your next adventure.
-            </p>
-          </div>
+    </section>
 
-          <div class="col-2"></div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-4 text-center my-auto">
-            <h3 class="fw-bold text-info">Rent out your scooter</h3>
-            <p style="text-align: center" class="text-light">
-              Down the street or across the country, find the perfect
-              vehicle for your next adventure.
-            </p>
-          </div>
-          <div class="col-4">
-            <img src="../../../../assets/images/website/5.png" width="300" class="" alt="..." />
-          </div>
-          <div class="col-2"></div>
-        </div>
-      </div>
-    </div>
-    <div class="row pb-5">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-4">
-            <img src="../../../../assets/images/website/4.png" width="300" class="" alt="..." />
-          </div>
-          <div class="col-4 text-center my-auto">
-            <h3 class="fw-bold text-info">Get Paid</h3>
-            <p style="text-align: center" class="text-light">
-              Down the street or across the country, find the perfect
-              vehicle for your next adventure.
-            </p>
-          </div>
 
-          <div class="col-2"></div>
+    <section class="row py-5  my-1 mx-auto ">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by Location
+        </h4>
+
+        <div class="row text-center mx-auto mt-3 ">
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/dublintile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/corktile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/galwaytile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/meathtile.png" alt="">
+                </a>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="row py-5 mx-4 my-1 mx-auto bg-light rounded my-5">
+        <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4 text-center">
+            Browse by Feature
+        </h4>
+
+        <div class="row text-center mt-3">
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/speedtile.png" alt="">
+                </a>
+
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/rangetile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/costtile.png" alt="">
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-12">
+                <a href="">
+                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/weighttile.png" alt="">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section style=" border-radius: 40px;" class="container my-3 py-5 bg-dark mt-5">
+        <h1 style="font-size: 3.8rem !important" class="h1 text-center text-white fw-bold mb-5 pt-4">
+            How It Works
+        </h1>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-2 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                        <h3 class="fw-bold text-info">Verify account</h3>
+                        <p style="text-align: center" class="text-light">
+                            Sign up to the application to access a wide
+                            catalogue of electric scooters
+                        </p>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto" alt="..." />
+                    </div>
+                    <div class="col-md-2 col-sm-12"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-2 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12">
+                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto" alt="..." />
+                    </div>
+                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                        <h3 class="fw-bold text-info mt-sm-4">Become a host</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+
+                    <div class="col-md-2 col-sm-12"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-2 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                        <h3 class="fw-bold text-info">Rent out your scooter</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto" alt="..." />
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-5">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-2 col-sm-12"></div>
+                    <div class="col-md-4 col-sm-12">
+                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto" alt="..." />
+                    </div>
+                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                        <h3 class="fw-bold text-info">Get Paid</h3>
+                        <p style="text-align: center" class="text-light">
+                            Down the street or across the country, find the perfect
+                            vehicle for your next adventure.
+                        </p>
+                    </div>
+
+                    <div class="col-md-2 col-sm-12"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 </div>

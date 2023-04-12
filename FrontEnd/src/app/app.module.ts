@@ -91,6 +91,7 @@ import { NgbDatepickerConfigComponent } from './shared/components/ngb-datepicker
 import {CalendarModule} from "primeng/calendar";
 import { DeleteScooterDialogComponent } from './shared/components/delete-scooter-dialog/delete-scooter-dialog.component';
 import {MatChipsModule} from "@angular/material/chips";
+import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile-nav-bar.component';
 
 
 @NgModule({
@@ -152,6 +153,7 @@ import {MatChipsModule} from "@angular/material/chips";
      NavBarSearchComponent,
      NgbDatepickerConfigComponent,
      DeleteScooterDialogComponent,
+     MobileNavBarComponent,
 
   ],
     imports: [

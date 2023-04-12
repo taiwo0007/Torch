@@ -185,15 +185,15 @@ VALUES (133, "This electric scooter was amazing and i had the best time using it
 
 
 INSERT INTO trip (days, id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2, 1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D2FN-H9M3", '2022-12-17 00:00:00', 7,333, 1);
+VALUES(2, 1, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-D27N-49M3", '2022-12-17 00:00:00', 7,333, 1);
 
 
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2,2, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
+VALUES(2,2, "ACTIVE", 23.00, '2022-12-21 00:00:00', "06LB-N4NN-H9M3", '2022-12-17 00:00:00', 2,920386034, 10);
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2,3, "ACTIVE", 243.00, '2022-12-21 00:00:00', "06LB-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
+VALUES(2,3, "ACTIVE", 243.00, '2022-12-21 00:00:00', "064B-JJJJ-H9M3", '2022-12-17 00:00:00', 3,444, 2);
 
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
@@ -201,14 +201,14 @@ VALUES(2,4, "ACTIVE", 233.00, '2022-12-21 00:00:00', "06LB-7777-H9M3", '2022-12-
 
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2,5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "06LB-NNNN-H9M3", '2022-12-17 00:00:00', 8,920386034, 10);
+VALUES(2,5, "COMPLETED", 283.00, '2022-12-21 00:00:00', "066B-NNNN-H9M3", '2022-12-17 00:00:00', 8,920386034, 10);
 
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2,6, "ACTIVE", 143.00, '2022-12-21 00:00:00', "06LB-6666-H9M3", '2022-12-17 00:00:00', 9,333, 2);
+VALUES(2,6, "ACTIVE", 143.00, '2022-12-21 00:00:00', "06LB-6966-H9M3", '2022-12-17 00:00:00', 9,333, 2);
 
 INSERT INTO trip (days,id, status, trip_cost, trip_end, trip_id, trip_start, escooter_id, host_id, user_renter_id)
-VALUES(2,7, "ACTIVE", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H9M3", '2022-12-01 00:00:00', 4,444, 10);
+VALUES(2,7, "ACTIVE", 443.00, '2022-12-19 00:00:00', "06LB-FFFF-H8M3", '2022-12-01 00:00:00', 4,444, 10);
 
 
 INSERT INTO host_review (`id`, `comment`, `review_date`, `star_rating`, `host_id`, user_reviewer_id) VALUES (17, 'Excellent renter and followed instructions very well. scooter kept very clean also. Thx! ', '2020-10-10', 3, 920386034, 5555);

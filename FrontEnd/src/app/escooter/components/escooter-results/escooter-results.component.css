@@ -35,3 +35,23 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     padding: 8px 15px;
     width: auto;
 }
+
+@media(max-width: 575.68px){
+
+
+
+    #map{
+        display: none !important;
+    }
+
+    .remove-mb{
+        display:none !important;
+    }
+}
+@media(min-width: 580.68px){
+    .my-nav-m {
+        display: none !important;
+    }
+
+}
+

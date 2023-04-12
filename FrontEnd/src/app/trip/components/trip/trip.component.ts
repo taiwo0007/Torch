@@ -98,10 +98,11 @@ export class TripComponent implements OnInit, AfterViewInit {
 
 
 
+
     }
 
     ngAfterViewInit() {
-        this.calculateTripCost()
+
         console.log(this.trip)
 
     }
@@ -136,11 +137,13 @@ export class TripComponent implements OnInit, AfterViewInit {
         console.log("loading service placeholder")
         this.loadingService.isLoading.next(true)
         console.log(id)
-        this.tripService.fetchTripDetailsFromApi(id).pipe(delay(9000)).subscribe((tripData: any) => {
+        this.tripService.fetchTripDetailsFromApi(id).subscribe((tripData: any) => {
             this.tripEndFormattedDate = new Date(tripData.tripEnd);
             this.trip = tripData;
             this.loadingService.isLoading.next(false)
-            this.isLoading = false
+            this.isLoading = false;
+            this.calculateTripCost()
+
             setTimeout(()=>{
 
                 this.initMap()
