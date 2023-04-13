@@ -71,10 +71,12 @@ export class SearchFormComponent implements OnInit {
         }
         //if we get form values from moment js, then clean up
         if (this.tripEnd) {
-            this.tripEnd = `${this.tripEnd.year()}-${this.tripEnd.date()}-${this.tripEnd.month()}`;
+            let eMonth = this.tripEnd
+            this.tripEnd = `${this.tripEnd.year()}-${eMonth.format("MM")}-${this.tripEnd.date()}`;
         }
         if (this.tripStart) {
-            this.tripStart = `${this.tripStart.year()}-${this.tripStart.date()}-${this.tripStart.month()}`;
+            let sMonth = this.tripStart
+            this.tripStart = `${this.tripStart.year()}-${sMonth.format("MM")}-${this.tripStart.date()}`;
         }
         const queryParams = {
             tripStart: this.tripStart,
