@@ -10,8 +10,10 @@
                     </div>
 
                     <!--    <div class="form-group">-->
+<div style="font-size: 1rem !important;">
+    <ngx-star-rating style=" padding: 0px !important;; display: block !important; position: relative !important;" ngModel  formControlName="host_starRating" [id]="'rating'"></ngx-star-rating>
 
-                    <ngx-star-rating style="display: block !important; position: relative !important;" ngModel  formControlName="host_starRating" [id]="'rating'"></ngx-star-rating>
+</div>
 
                     <label for="comment" class="fw-bold">Review the host</label>
                     <textarea placeholder="Your trip with this host so far" ngModel formControlName="host_comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>

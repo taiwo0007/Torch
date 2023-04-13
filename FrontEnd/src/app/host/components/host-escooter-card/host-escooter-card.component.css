@@ -248,3 +248,8 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     }
 }
 
+element.style {
+    height: 100% !important;
+    width: 100% !important;
+}
+

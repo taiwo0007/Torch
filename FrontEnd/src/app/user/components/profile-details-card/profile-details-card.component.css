@@ -1,0 +1,38 @@
+@media(max-width: 575.68px){
+
+
+
+
+    .mt-sm{
+        margin-top: 2rem !important;
+    }
+    .remove-mb{
+        display:none !important;
+    }
+    .show-mb{
+
+    }
+
+    .mobile-arrange{
+        display:flex !important;
+
+        justify-content: center !important;
+    }
+
+    mr-b{
+        margin-left: -31rem !important;
+    }
+    .mb-wd{
+        width: calc(100%) !important;
+    }
+
+
+}
+
+@media(min-width: 580.68px){
+
+    .mb-wd{
+        width: calc(100% + 4rem) !important;
+    }
+
+}

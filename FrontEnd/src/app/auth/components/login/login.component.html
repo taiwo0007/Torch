@@ -6,12 +6,8 @@
 
 
     <div style=" height: 100%;" class="container col-sm-12 pt-5 col-md-6 my-auto">
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="p-5 mx-auto my-auto" style="
-                width: 35.9rem !important;
-                height: 35rem !important;
-                background-color: white;
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="p-5 mx-auto my-auto sign-in-form" style="
 
-                max-width: 50;
               ">
 
         <div  [@showHide]="isSuccessLogOut" class="alert alert-info d-flex align-items-center fade show alert-dismissible" *ngIf="isSuccessLogOut">
@@ -22,7 +18,7 @@
         </div>
         <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
 
-        <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info">Sign in</span> to your account to
+        <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info font-gro-black">Sign in</span> to your account to
           book an electric scooter. </h1>
 
 
@@ -69,7 +65,7 @@
       </form>
     </div>
 
-    <div style="overflow-x: hidden;" class="col-sm-12 col-md-6 mx-auto ">
+    <div style="overflow-x: hidden;" class="col-sm-12 col-md-6 mx-auto remove-mb">
       <img style="width: 100%; height: 100%; overflow-y: hidden;" class=" text-end me-5" src="../../../../assets/images/website/signin.gif" alt="" />
     </div>
 

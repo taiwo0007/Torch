@@ -54,7 +54,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
           paramValue['tripStart'],
           paramValue['tripEnd'],
           paramValue['location'])
-          .pipe(delay(100000))
           .subscribe((data: any[]) => {
 
                   this.isLoading = false;
@@ -82,7 +81,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
   getEscooterAdsFromApi(){
       this.escooterService.getAllEscooterAds()
-          .pipe(delay(100000))
+
           .subscribe((data:any) => {
           this.escooterAdsResult = data;
       })

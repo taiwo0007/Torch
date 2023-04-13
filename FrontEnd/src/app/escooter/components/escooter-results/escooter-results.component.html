@@ -83,7 +83,10 @@
                 </div>
                 <div *ngIf="isLoading" class="row mx-auto mt-3">
                    <app-custom-skeleton-loader class="remove-mb"></app-custom-skeleton-loader>
-                    <app-load-screen class="mx-auto full-spinner"></app-load-screen>
+                    <div class="d-flex show-mb align-items-center z-10 mx-auto text-center justify-content-center bg-white" style=" z-index: 9 !important; overflow: hidden !important; height: 60vh !important;">
+                        <mat-spinner size="6px"></mat-spinner>
+
+                    </div>
 
                 </div>
                 <div class="row" *ngIf="escooterAdsResult">

@@ -29,7 +29,7 @@
                     </div>
 
                     <div *ngIf="hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" class="row pb-5">
-                        <div *ngFor="let escooterItem of hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-3 pt-3 pb-4">
+                        <div *ngFor="let escooterItem of hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-md-3 col-sm-3 pt-3 pb-4">
 
                         <host-escooter-card (deleteClick)="onDeleteClick($event)" (adClick)="onAdClick($event)" [isScooterOwner]="isScooterOwner" [escooter]="escooterItem" ></host-escooter-card>
                         </div>

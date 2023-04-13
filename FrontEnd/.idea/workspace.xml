@@ -2,16 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/test/java/com/troch/torchApplication/Services/EscooterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/test/java/com/troch/torchApplication/Services/EscooterServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/review-trip-dialog/review-trip-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/review-trip-dialog/review-trip-dialog.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +139,7 @@
       <workItem from="1681253505116" duration="3861000" />
       <workItem from="1681292954656" duration="2632000" />
       <workItem from="1681299328182" duration="1846000" />
-      <workItem from="1681326337921" duration="8128000" />
+      <workItem from="1681326337921" duration="15217000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -295,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681300577584</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="mobile spinner fix">
+      <created>1681338346853</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1681338346853</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,6 +338,7 @@
     <MESSAGE value="changes Dockerfile" />
     <MESSAGE value="Host Ads Front End UI implemented" />
     <MESSAGE value="Added imrovement with new font" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added imrovement with new font" />
+    <MESSAGE value="mobile spinner fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="mobile spinner fix" />
   </component>
 </project>

@@ -1,7 +1,7 @@
 <a style="position: relative" *ngIf="!isScooterOwner; else hostEditLink" class="nav-link" [routerLink]="['/escooter-detail', escooter.id]">
 
     <div class="card mx-auto scooter-card" style="width: 18rem; overflow-x: hidden; !important">
-        <img style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
+        <img style="object-fit:cover !important; width: 100% !important; height: 27rem !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
         <div style=" overflow-x: hidden; !important" class="card-body pt-3">
             <div style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
                 <div class="d-flex justify-content-between">
@@ -34,7 +34,7 @@
 
         <a >
             <div class="" style="width: 18rem; overflow-x: hidden; !important">
-                <img [routerLink]="['/escooter-detail', escooter.id]" style="object-fit:cover !important; width: 27vw !important; height: 29vw !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
+                <img [routerLink]="['/escooter-detail', escooter.id]" style="object-fit:cover !important; width: 100% !important; height: 27rem !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
                 <div style=" overflow-x: hidden; !important" class="card-body pt-3">
                     <div   style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
                         <div class="d-flex justify-content-between">

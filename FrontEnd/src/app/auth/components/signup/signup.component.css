@@ -4,3 +4,34 @@ input.ng-touched.ng-invalid{
 input.ng-touched.ng-valid{
   border: 2px solid green;
 }
+
+@media(max-width: 575.68px){
+
+
+  .remove-mb{
+    display:none !important;
+  }
+  .show-mb{
+
+  }
+}
+
+@media(min-width: 580.68px){
+  .my-nav-m {
+    display: none !important;
+  }
+
+  .show-mb{
+    display:none !important;
+  }
+
+  .sign-up-form {
+    width: 35.9rem !important;
+    /* height: 55rem !important; */
+    background-color: white;
+    margin: auto !important;
+  }
+
+
+
+}

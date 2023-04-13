@@ -1,21 +1,18 @@
 <div style="overflow-y: hidden;" class="mt-2">
-  <div style="height: 100vh !important;" class="row my-auto">
-    <div style="overflow-y: hidden;" class="col-6 mx-auto text-end">
+  <div style="height: 100vh !important;" class="row my-auto ">
+    <div style="overflow-y: hidden;" class="col-md-6 col-sm-12 mx-auto text-end remove-mb">
       <img style="width: 50rem; height: 100%;" class=" text-end"  src="assets/images/website/signup.gif" alt="" />
     </div>
 
-    <div class="col-6 my-auto">
+    <div class="col-md-6 col-sm-12 my-auto">
       <div class=" pt-5 my-auto">
-        <div class="p-5 my-auto" style="
-                width: 35.9rem !important;
-                /* height: 55rem !important; */
-                background-color: white;
-           margin: auto !important;
+        <div class="p-5 my-auto sign-up-form" style="
+
 
               ">
           <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
             <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
-            <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info">Sign up</span> to make an account on Torch </h1>
+            <h1 class="fw-bold pt-4 mb-3 pb-4"><span class="text-info font-gro-black">Sign up</span> to make an account on Torch </h1>
 
             <div style="" class="mb-3 d-flex justify-content-between form-group">
               <div class="form-group" style="width: 14.5rem !important;">

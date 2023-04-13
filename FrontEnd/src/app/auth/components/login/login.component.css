@@ -1,0 +1,35 @@
+@media(max-width: 575.68px){
+
+
+
+    .mt-sm{
+        margin-top: 2rem !important;
+    }
+    .remove-mb{
+        display:none !important;
+    }
+    .show-mb{
+
+    }
+
+}
+@media(min-width: 580.68px){
+    .my-nav-m {
+        display: none !important;
+    }
+
+    .show-mb{
+        display:none !important;
+    }
+
+    .sign-in-form {
+        width: 35.9rem !important;
+        height: 35rem !important;
+        background-color: white;
+
+        max-width: 50;
+    }
+
+
+
+}

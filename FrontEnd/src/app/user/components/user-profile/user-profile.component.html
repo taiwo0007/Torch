@@ -1,9 +1,9 @@
-<section *ngIf="!isLoading" style="max-width: 79% !important; font-family: Arial, Helvetica, sans-serif" class="container fw-lighter pt-5 mt-5">
-  <div class="row pt-3 mb-3">
-    <div style="width: auto;" class="col-4">
-      <app-profile-details-card [userDetails]="userData"></app-profile-details-card>
+<section *ngIf="!isLoading" style="max-width: 89% !important; font-family: Arial, Helvetica, sans-serif" class="container mx-auto fw-lighter pt-5 mt-5">
+  <div class="row mobile-arrange mx-auto pt-3 mb-3">
+    <div style="width: auto;" class="col-md-4 col-sm-12  mx-auto mobile-arrange">
+      <app-profile-details-card class="mobile-arrange .mr-b" [userDetails]="userData"></app-profile-details-card>
     </div>
-    <div class="col-8">
+    <div class="col-md-8 col-sm-12 mt-sm mx-auto">
 
       <app-profile-form-card [InitialUserDetails]="userData"></app-profile-form-card>
     </div>
