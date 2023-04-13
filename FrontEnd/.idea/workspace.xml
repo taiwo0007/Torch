@@ -2,10 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/dto/TripCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/dto/TripCreateRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +129,7 @@
       <workItem from="1681253505116" duration="3861000" />
       <workItem from="1681292954656" duration="2632000" />
       <workItem from="1681299328182" duration="1846000" />
-      <workItem from="1681326337921" duration="34063000" />
+      <workItem from="1681326337921" duration="39585000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -330,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681399030385</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Date moment bug fixes">
+      <created>1681400410209</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1681400410209</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,6 +376,7 @@
     <MESSAGE value="Fully responsive" />
     <MESSAGE value="Main trip form ui enhancement with material ui" />
     <MESSAGE value="header image add" />
-    <option name="LAST_COMMIT_MESSAGE" value="header image add" />
+    <MESSAGE value="Date moment bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Date moment bug fixes" />
   </component>
 </project>

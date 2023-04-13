@@ -1,72 +1,74 @@
-<section class="container mt-5 mb-5 pt-5">
-    <div class="row ">
-        <div style="color:black !important;" class="col-md-8 col-sm-12 ">
-<!--            <h1 style="font-size: 2.8rem !important" class="h1 text-center fw-bold mb-3">-->
-<!--                Trip Payment-->
-<!--            </h1>-->
-            <mat-card class="mx-auto"  style=" width: 80%; margin: 25px; background-color: white;">
-                <mat-card-title
-                        style="margin-top: -16px; margin-left: -16px; margin-right: -16px; margin-bottom: 32px; color:black !important;"
-                >
-                    <mat-toolbar
+<section class=" mx-auto mt-5 mb-5 pt-5 bg-light">
+    <div class="row mx-auto container ">
 
-                            color="primary"
-                            style=" background-color: black!important; border-top-right-radius: 4px; border-top-left-radius: 4px;"
-                    >
-                        Trip Payment
-                    </mat-toolbar>
-                </mat-card-title>
-                <div class="p-4" [formGroup]="checkoutForm">
+        <div class="col-md-8 col-sm-12">
 
-                    <ng-container *ngIf="elementsOptions?.clientSecret">
-                        <ngx-stripe-payment
-                                [appearance]="appearance"
-                                [clientSecret]="elementsOptions?.clientSecret"
-                        ></ngx-stripe-payment>
-                    </ng-container>
-                    <div style="margin-bottom: 40px"></div>
-                    <mat-divider></mat-divider>
-                    <div style="margin-bottom: 60px"></div>
-                    <div style="text-align: right">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
 
-                        <button
-                                style="background-color: black"
-                                class="btn btn-dark  text-light"
-                                [disabled]="paying"
-                                (click)="collectPayment()"
-                                            >
+                </div>
+                <div class="col-md-8 col-sm-12 ">
+                    <div class="mx-auto pt-3 rounded shadow-sm" style=" width: 100%; margin: 25px; background-color: white;">
+                        <h1 class="text-dark text-center mx-auto pt-5 ">
+                            Trip Payment
+                        </h1>
+                        <div class="p-4" [formGroup]="checkoutForm">
+
+                            <mat-spinner class="text-center mx-auto" *ngIf="!elementsOptions?.clientSecret" size="6px"></mat-spinner>
+
+                            <ng-container *ngIf="elementsOptions?.clientSecret">
+                                <ngx-stripe-payment
+                                        [appearance]="appearance"
+                                        [clientSecret]="elementsOptions?.clientSecret"
+                                ></ngx-stripe-payment>
+                            </ng-container>
+                            <div style="margin-bottom: 40px"></div>
+                            <div style="margin-bottom: 6px"></div>
+                            <div style="text-align: center">
+
+                                <button *ngIf="elementsOptions?.clientSecret"
+                                        style="background-color: black; width: 80% !important; padding: 1rem 4rem !important;"
+                                        class="btn btn-dark text-center text-light "
+                                        [disabled]="paying"
+                                        (click)="collectPayment()"
+                                >
                                 <span *ngIf="!paying">
-                                  PAY NOW
+                                  Pay
                                 </span>
-                            <span *ngIf="paying">PROCESSING...</span>
-                        </button>
+                                    <span *ngIf="paying">PROCESSING...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class=" row">
+                        <div  class="p-4 border rounded mt-4 bg-white">
+                            <p class="fw-bold">Insurance information</p>
+                            <p>Insured under <span class="text-info">Maximum Insurance.</span></p>
+                        </div>
+                        <div  class="p-4 border rounded mt-4 bg-white">
+                            <p class="fw-bold">Cancellation Policy</p>
+                            <p>You can cancell this booking withing 24 hours at <span class="text-info">no extra cost.</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </mat-card>
+                <div class="col-md-2 col-sm-12">
 
-
-
-            <div  class="d-flex justify-content-evenly">
-                <div style="width: 18rem;" class="p-4 border rounded mt-4 bg-white">
-                    <p class="fw-bold">Insurance information</p>
-                    <p>Insured under <span class="text-info">Maximum Insurance.</span> </p>
-                </div>
-                <div style="width: 23rem;" class="p-4 border rounded mt-4 bg-white">
-                    <p class="fw-bold">Cancellation Policy</p>
-                    <p>You can cancell this booking withing 24 hours at <span class="text-info">no extra cost.</span> </p>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-12 bg-light">
-      <cost-info-card *ngIf="escooter"
-              [escooterCost]="escooter?.cost"
-              [initialCost]="initialCost"
-              [tripDays]="tripDays"
-              [vatCost]="vatCost"
-              [totalCost]="totalCost"
+            <cost-info-card *ngIf="escooter"
+                            [escooterCost]="escooter?.cost"
+                            [initialCost]="initialCost"
+                            [tripDays]="tripDays"
+                            [vatCost]="vatCost"
+                            [totalCost]="totalCost"
             ></cost-info-card>
-            <div class="p-4 border rounded mt-4 bg-white ">
+            <div class="p-4 shadow-sm rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
                 <h5
                         th:text="${escooter.getModelName}" class="fw-bold  px-3 pb-3 pt-3">Xiomi Modertan pro x6</h5>
@@ -79,14 +81,15 @@
                 </div>
             </div>
 
-            <div class="px-4  pt-4 border rounded mt-4 bg-white">
+            <div class="px-4  pt-4 shadow-sm rounded mt-4 bg-white mb-4">
                 <h3 class="fw-bold text-info ">Booking Information</h3>
                 <div class="row  py-2 px-3">
                     <div class="col-6 my-auto">
                         <p class="card-text fw-bold  my-auto ">Pick up</p>
                     </div>
                     <div class="col-6 my-auto">
-                        <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}" class=" text-end my-auto  fw-bolder">2022/02/06</p>
+                        <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}"
+                           class=" text-end my-auto  fw-bolder">{{tripStart | date: 'dd-MM-yyyy'}}</p>
                     </div>
                 </div>
                 <div class="row  py-2 px-3">
@@ -94,20 +97,22 @@
                         <p class="card-text fw-bold  my-auto ">Drop of</p>
                     </div>
                     <div class="col-6 my-auto">
-                        <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}" class=" text-end my-auto fw-bold">2022/04/03</p>
+                        <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}"
+                           class=" text-end my-auto fw-bold">{{tripEnd | date: 'dd-MM-yyyy'}}</p>
                     </div>
                 </div>
 
-                <div class="pt-3 mt-4 pb-2 border-top">
-                    <div class="row">
-                        <div class="col-2 my-auto">
-                            <h1 class="text-end text-info"><i class="fa fa-map-marker " aria-hidden="true"></i></h1>
-                        </div>
-                        <div class="col-10">
-                            <p class="pt-3 px-3 text-secondary text-center"><span>195 Crecentmount View, Donegal, rushmound road, Ireland</span> </p>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="pt-3 mt-4 pb-2 border-top">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-2 my-auto">-->
+<!--                            <h1 class="text-end text-info"><i class="fa fa-map-marker " aria-hidden="true"></i></h1>-->
+<!--                        </div>-->
+<!--                        <div class="col-10">-->
+<!--                            <p class="pt-3 px-3 text-secondary text-center"><span>195 Crecentmount View, Donegal, rushmound road, Ireland</span>-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </div>

@@ -157,6 +157,10 @@ import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile
 
   ],
     imports: [
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
         MatIconModule,
         MatChipsModule,
         MatNativeDateModule,
@@ -179,6 +183,7 @@ import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile
         GoogleMapsModule,
         GooglePlaceModule,
         MatDatepickerModule,
+        MatNativeDateModule,
         NgxStarRatingModule,
         MatStepperModule,
         MatSelectModule,

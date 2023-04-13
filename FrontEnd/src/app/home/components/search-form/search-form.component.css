@@ -30,11 +30,12 @@
 
 
 
+
     .form-search{
 
         width: 35.9rem ;
         height: max-content;
-padding-bottom: 13px !important;
+        padding-bottom: 13px !important;
         margin-left: 8rem !important;
     }
 }

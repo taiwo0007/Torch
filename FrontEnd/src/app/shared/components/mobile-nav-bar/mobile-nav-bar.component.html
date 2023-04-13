@@ -21,11 +21,6 @@
         </div>
 
         <ul  class="nav my-auto nav-pills">
-
-            <li *ngIf="isAuthenticated && !accountType && isHost" class="nav-item my-auto me-3">
-                <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; " class="btn btn-outline-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade Plan</a>
-            </li>
-
             <li *ngIf="isAuthenticated" bsDropdown  dropdown #dropdown="bs-dropdown" [autoClose]="false" style="background-color: black !important " class=" nav-item dropdown bg-dark nav-link">
                 <a  dropdownToggle style="background-color: black !important" class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#"  role="button" aria-expanded="false">
 
@@ -46,6 +41,8 @@
                     <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading3">Legal & Insurance</a></li>
                     <li role="menuitem"><a class="dropdown-item " href="#scrollspyHeading4">Privacy Policies</a></li>
                     <li role="menuitem" *ngIf="isAuthenticated"><a class="dropdown-item" (click)="onLogout()">Sign out</a></li>
+                    <li role="menuitem" *ngIf="isAuthenticated && !accountType && isHost"><a class="dropdown-item text-warning" (click)="subscriptionModal()">Upgrade Plan</a></li>
+
                 </ul>
             </li>
 

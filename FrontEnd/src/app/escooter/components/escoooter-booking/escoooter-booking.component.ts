@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {delay, Observable} from 'rxjs';
 import { StripeService, StripePaymentElementComponent } from 'ngx-stripe';
 import {
   StripeElementsOptions,
@@ -45,8 +45,9 @@ export class EscoooterBookingComponent implements OnInit{
   });
 
   appearance: Appearance = {
-    theme: 'stripe',
+    theme: 'flat',
     labels: 'floating',
+
     // variables: {
     //   colorPrimary: '#ffc7ee',
     // },

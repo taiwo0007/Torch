@@ -45,6 +45,8 @@ export class StartTripFormComponent implements OnInit {
 
     }
 
+
+
     onSubmit() {
         if (!this.startTripForm.valid) {
             return
