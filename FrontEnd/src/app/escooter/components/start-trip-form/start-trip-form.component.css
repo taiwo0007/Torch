@@ -8,3 +8,13 @@
 
 }
 
+.mat-form-field-wrapper {
+    padding-bottom: -0.65625em !important;
+}
+
+#trips{
+    top:0 !important;
+    margin-top: -4rem !important;
+    padding-top: -4rem !important;
+}
+

@@ -21,13 +21,36 @@
 
 
     }
+
+    .img-responsive{
+        width: 4rem !important;
+    }
 }
 @media(min-width: 580.68px){
+
+
 
     .form-search{
 
         width: 35.9rem ;
+        height: max-content;
+padding-bottom: 13px !important;
         margin-left: 8rem !important;
-        height: 35rem;
     }
+}
+
+.mat-input-underline {
+    background-color: #FF0000;    /* replace this color with your accent color hex code */
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    display: flex;
+    position: absolute;
+    top: 0.25em;
+    left: 0;
+    background-color: grey !important;
+    border-radius: 5px !important;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
 }

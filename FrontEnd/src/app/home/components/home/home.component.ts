@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit {
   getHostsFromApi(){
 
     this.hostService.fetchAllHosts()
-        .pipe(delay(3000))
         .subscribe((data:TopHostsCardDto[]) => {
 
 

@@ -1,36 +1,91 @@
-<form #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm)"
-      class="p-5 mt-2 form-search rounded shadow-lg  "
+<form [formGroup]="searchFormReactive" (ngSubmit)="onSubmit()"
+      class="p-5 mt-2 form-search rounded-3 shadow-lg  "
       style="  margin-left: 8rem ; background-color: white; ">
     <div class="mx-auto text-center ">
-        <h1 style="font-size: 3.8rem" class="fw-bold text-center  pb-4 pt-1 ">Make your <span
+        <h1 style="font-size: 3.8rem" class="fw-bold text-start   ">Make your <span
                 class="text-info font-gro-black">trip</span></h1>
-         <img style="width: 22rem; margin-top: -1rem;" src="assets/images/website/scooterstring.gif" class="mx-auto text-center" alt="">
+        <div id="emailHelp" class="form-text text-start text-dark mb-2">Brows a catalogue of scooters here at <u
+                class="text-info">Torch</u></div>
+    </div>
 
-    </div>
-    <div class="mb-3">
-        <label for="location" class="form-label fw-bold">Pickup location</label>
-        <input [value]="'Ireland.....' " [options]="options"
-               ngx-google-places-autocomplete style="color: black !important;"
-               ngModel
-               placeholder="Ireland....."
-               (onAddressChange)="handleAddressChange($event)"
-               name="location" type="text" class="form-control " id="location" aria-describedby="emailHelp">
 
-    </div>
-    <div class="mb-3">
-        <label for="tripStart" class="form-label fw-bold">Trip start</label>
-        <input name="tripStart" ngModel placeholder="trip date" value="12/12/2022" type="date" class="form-control " id="tripStart">
-    </div>
-    <div class="mb-3">
-        <label for="tripEnd" class="form-label fw-bold">Trip end</label>
-        <input name="tripEnd" ngModel type="date" class="form-control " id="tripEnd">
-    </div>
+<!--    <div class="mb-3">-->
+<!--        <label for="location" class="form-label fw-bold">Pickup location</label>-->
+<!--        <input [value]="'Ireland.....' " [options]="options"-->
+<!--               ngx-google-places-autocomplete style="color: black !important;"-->
+<!--               ngModel-->
+<!--               placeholder="Ireland....."-->
+<!--               (onAddressChange)="handleAddressChange($event)"-->
+<!--               name="location" type="text" class="form-control " id="location" aria-describedby="emailHelp">-->
+
+<!--    </div>-->
+
+    <mat-form-field style="width: 100% !important;" appearance="outline">
+        <mat-label>Pickup Location</mat-label>
+        <input
+                id="location"
+                name="location"
+                [options]="options"
+                ngx-google-places-autocomplete style="color: black !important;"
+                formControlName="location"
+                (onAddressChange)="handleAddressChange($event)"
+                matInput>
+    </mat-form-field>
+
+
+    <mat-form-field style="width: 100% !important; margin-top: -1rem !important;"  appearance="outline">
+        <mat-label>Trip Start & Trip End</mat-label>
+        <mat-date-range-input  (click)="picker.open()" [rangePicker]="picker">
+            <input formControlName="tripStart"  name="tripStart"  matStartDate >
+            <input formControlName="tripEnd"  name="tripEnd"   matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+<!--        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+<!--    <div class="mb-3">-->
+<!--        <label for="tripStart" class="form-label fw-bold">Trip start</label>-->
+<!--        <input name="tripStart" ngModel placeholder="trip date" value="12/12/2022" type="date" class="form-control " id="tripStart">-->
+<!--    </div>-->
+<!--    <div class="mb-3">-->
+<!--        <label for="tripEnd" class="form-label fw-bold">Trip end</label>-->
+<!--        <input name="tripEnd" ngModel type="date" class="form-control " id="tripEnd">-->
+<!--    </div>-->
 
 
     <button style="width: 100%;  background-color: black !important;" type="submit"
-            class="btn  text-light p-2 mt-4 fw-bold ">Search
+            class="btn  text-light p-3 mt-3 fw-bold rounded-3 ">Search
     </button>
-    <div id="emailHelp" class="form-text py-4 text-center text-dark">Find out more about Torch <u
-            class="text-info">here</u></div>
+
+    <div id="emailHelp" class="form-text text-start text-dark mt-3">Scooter models we host at <u
+            class="text-info">Torch</u></div>
+
+    <div class="row mt-3 mb-3">
+
+
+        <a style="cursor:pointer" class="col-3">
+            <img (click)="makeImageNavigateToResults()" style="width: 7rem ;" class="rounded img-responsive"
+                 src="../../../../assets/images/website/Make/pureelectric.png" alt="">
+        </a>
+
+        <a style="cursor:pointer" class="col-3">
+            <img (click)="makeImageNavigateToResults()" style="width: 7rem ;" class="rounded img-responsive"
+                 src="../../../../assets/images/website/Make/xiaomi.png" alt="">
+        </a>
+
+        <a style="cursor:pointer" class="col-3">
+            <img (click)="makeImageNavigateToResults()" style="width: 7rem ;" class="rounded img-responsive"
+                 src="../../../../assets/images/website/Make/avovo.png" alt="">
+        </a>
+
+        <a style="cursor:pointer" class="col-3">
+            <img (click)="makeImageNavigateToResults()" style="width: 7rem ;" class="border rounded img-responsive"
+                 src="../../../../assets/images/website/Make/segway.png" alt="">
+        </a>
+
+
+    </div>
+
 
 </form>

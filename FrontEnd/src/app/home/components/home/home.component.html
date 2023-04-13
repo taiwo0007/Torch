@@ -1,10 +1,9 @@
-
-<section style="overflow-x: hidden;"  class="hero-header pt-5 mt-1 ">
+<section style="overflow-x: hidden;" class="hero-header pt-5 mt-1 ">
 
 
     <div
             style="
-                background-image: url('./assets/images/website/header.png');
+                background-image: url('./assets/images/website/header5.png');
                 background-repeat: no-repeat;
                 background-position: center;
                 height: 45rem;
@@ -13,17 +12,17 @@
               "
             class="hero-container my-auto mx-auto">
 
-        <div  class="container pt-5">
+        <div class="container pt-5">
             <app-search-form></app-search-form>
 
         </div>
     </div>
 </section>
 
-<section  class="row container py-4 mx-auto my-1">
+<section class="row container py-4 mx-auto my-1">
     <h1 style="margin-left: 0 !important; margin-right: 0 !important;"
 
-            class=" text-center fw-bold pb-5 mt-5 mx-auto  hm-sm m-0 px-sm"
+        class=" text-center fw-bold pb-5 mt-5 mx-auto  hm-sm m-0 px-sm"
     >
         Torch <span class="text-info font-gro-black">Hosts</span>
     </h1>
@@ -43,15 +42,14 @@
 
     </div>
     <ng-container *ngIf="topHostsInfo">
-
-
-        <div  style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]" *ngFor="let t of topHostsInfo; let i = index"
+        <div style="cursor:pointer" [routerLink]="['/host-profile', t.host_id]"
+             *ngFor="let t of topHostsInfo; let i = index"
              class="col-md-4 col-sm-12 mx-auto pointer-event mt-sm">
             <div style="width: 100%" class="border mx-auto rounded">
                 <div style="padding: 1rem" class="d-flex">
                     <div class="me-2">
-
-                        <img style="object-fit: cover; width: 5rem; height: 5rem" src="{{t.profileImage}}" width="100" class="rounded-circle " alt="..." />
+                        <img style="object-fit: cover; width: 5rem; height: 5rem" src="{{t.profileImage}}" width="100"
+                             class="rounded-circle " alt="..."/>
                     </div>
                     <div class="">
                         <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}</p>
@@ -84,7 +82,7 @@
 </section>
 
 <section class="header-bottom mx-auto text-center py-5">
-    <h1  class="h1 hm-sm px-sm text-center mx-auto fw-bold">
+    <h1 class="h1 hm-sm px-sm text-center mx-auto fw-bold">
         Browse scooter models.
     </h1>
     <h3 class="badge-info fw-bold mx-auto text-center text-info  px-sm">
@@ -101,23 +99,27 @@
         <div class="row text-center mx-auto mt-3">
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/puretile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Make/puretile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/avovotile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Make/avovotile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/segwaytile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Make/segwaytile.png" alt="">
                 </a>
             </div>
         </div>
@@ -132,23 +134,27 @@
         <div class="row text-center mx-auto mt-3 ">
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/dublintile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/County/dublintile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/corktile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/County/corktile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/galwaytile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/County/galwaytile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/meathtile.png" alt="">
+                    <img class="browse-tile mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/County/meathtile.png" alt="">
                 </a>
             </div>
         </div>
@@ -162,23 +168,27 @@
         <div class="row text-center mt-3">
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/speedtile.png" alt="">
+                    <img class="browse-tile  mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Feature/speedtile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/rangetile.png" alt="">
+                    <img class="browse-tile  mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Feature/rangetile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/costtile.png" alt="">
+                    <img class="browse-tile  mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Feature/costtile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
                 <a (click)="navigateToScooterResults()">
-                    <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/weighttile.png" alt="">
+                    <img class="browse-tile  mx-auto" style="width:17rem"
+                         src="../../../../assets/images/website/Feature/weighttile.png" alt="">
                 </a>
             </div>
         </div>
@@ -200,7 +210,8 @@
                         </p>
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto remove-mb" alt="..." />
+                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto remove-mb"
+                             alt="..."/>
                     </div>
                     <div class="col-md-2 col-sm-12"></div>
                 </div>
@@ -211,7 +222,8 @@
                 <div class="row">
                     <div class="col-md-2 col-sm-12"></div>
                     <div class="col-md-4 col-sm-12">
-                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb" alt="..." />
+                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb"
+                             alt="..."/>
                     </div>
                     <div class="col-md-4 col-sm-12 text-center my-auto mt-sm">
                         <h3 class="fw-bold text-info mt-sm-4">Become a host</h3>
@@ -237,7 +249,8 @@
                         </p>
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto remove-mb" alt="..." />
+                        <img src="../../../../assets/images/website/5.png" width="300" class="mx-auto remove-mb"
+                             alt="..."/>
                     </div>
                     <div class="col-2"></div>
                 </div>
@@ -248,7 +261,8 @@
                 <div class="row">
                     <div class="col-md-2 col-sm-12"></div>
                     <div class="col-md-4 col-sm-12">
-                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb" alt="..." />
+                        <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb"
+                             alt="..."/>
                     </div>
                     <div class="col-md-4 col-sm-12 text-center my-auto mt-sm  ">
                         <h3 class="fw-bold text-info">Get Paid</h3>

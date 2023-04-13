@@ -3,14 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +121,7 @@
       <workItem from="1681253505116" duration="3861000" />
       <workItem from="1681292954656" duration="2632000" />
       <workItem from="1681299328182" duration="1846000" />
-      <workItem from="1681326337921" duration="21218000" />
+      <workItem from="1681326337921" duration="30761000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -314,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681381139965</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Fully responsive">
+      <created>1681384543404</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1681384543404</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,6 +344,7 @@
     <MESSAGE value="mobile spinner fix" />
     <MESSAGE value="Responsive mobile" />
     <MESSAGE value="Mobile reponseive improvments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mobile reponseive improvments" />
+    <MESSAGE value="Fully responsive" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fully responsive" />
   </component>
 </project>
