@@ -7,62 +7,68 @@
         <mat-step [stepControl]="firstFormGroup">
             <form class="mt-3" [formGroup]="firstFormGroup">
                 <ng-template matStepLabel>Tell us more about yourself</ng-template>
-                <div class="personalInfo mx-auto">
-                    <mat-form-field class="me-5" appearance="fill">
+                <div class="personalInfo w-50 row mx-auto">
+                    <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>First Name</mat-label>
                         <input matInput placeholder="Last name, First name" formControlName="firstName" required>
                     </mat-form-field>
-                    <mat-form-field class="me-5" appearance="fill">
+                    <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>Last Name</mat-label>
                         <input matInput placeholder="Last name, First name" formControlName="lastName" required>
                     </mat-form-field>
                 </div>
-                <div class="about">
-                <mat-form-field style="width: 28rem !important;"  appearance="fill">
+                <div class="personalInfo w-50 row mx-auto">
+                    <mat-form-field  appearance="outline">
                     <mat-label>About</mat-label>
                     <textarea matInput placeholder="About yourself" formControlName="about" required></textarea>
                 </mat-form-field>
 
                 </div>
-                <div class="about">
-                    <mat-form-field style="width: 28rem !important;"  appearance="fill">
+                <div class="personalInfo w-50 row mx-auto">
+                    <mat-form-field class="col-sm-12"  appearance="outline">
                         <mat-label>Phone Number</mat-label>
                         <input matInput placeholder="087 345 3456" type="number" formControlName="phoneNumber" required/>
                         </mat-form-field>
                 </div>
-                <div>
-                    <mat-form-field appearance="fill">
+                <div class="personalInfo w-50 row mx-auto">
+                    <mat-form-field class="col-sm-12 " appearance="outline">
                             <mat-label>Gender</mat-label>
                         <mat-select formControlName="gender">
                             <mat-option value="male">male</mat-option>
                             <mat-option value="female">female</mat-option>
                         </mat-select>
                     </mat-form-field>
-                        <div style="width: fit-content !important;" class="mb-3">
+                        <div class="col-sm-12 6">
                             <label for="formFile" class="form-label fw-bold">Profile Picture</label>
 <!--                            <button type="button" hidden mat-raised-button (click)="fileInput.click()">Profile Pciture</button>-->
 <!--                            <input  required formControlName="profilePicture" placeholder="Profile" class="form-control"  (change)="onFileSelected($event)" #fileInput type="file" id="formFile">-->
                             <input formControlName="profilePicture"  (change)="onFileSelected($event)"  name="image" type="file" accept=".png, .jpg, .jpeg, .pdf" class="form-control" aria-label="file example" required>
 
                         </div>
+                    <div class="mx-auto mt-5">
+                        <button mat-button type="submit" matStepperNext class="btn btn-primary px-5" >Next</button>
+                    </div>
                 </div>
-                <div>
-                    <button mat-button type="submit" matStepperNext class="btn btn-primary px-3" >Next</button>
-                </div>
+
             </form>
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" class="mb-5 pb-5" label="Fill out your address">
             <form class="mb-5 pb-5"  [formGroup]="secondFormGroup">
-                <mat-form-field style="width: auto !important;" appearance="outline">
+                <div class="personalInfo w-50 row mx-auto">
+
+                <mat-form-field class="col-sm-12 mt-4" appearance="outline">
                     <mat-label>Address</mat-label>
                     <input class="mx-auto" [options]="options"
                            (onAddressChange)="handleAddressChange($event)" ngx-google-places-autocomplete matInput formControlName="location" placeholder="Ex. 1 Main St, New York, NY"
                            required>
                 </mat-form-field>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button class="btn btn-primary px-3" type="submit"  matStepperNext>Next</button>
+
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button class="btn btn-primary px-3" type="submit"  matStepperNext>Next</button>
+                    </div>
                 </div>
+
             </form>
         </mat-step>
         <mat-step>

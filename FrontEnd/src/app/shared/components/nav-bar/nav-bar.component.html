@@ -27,14 +27,14 @@
 
         <li *ngIf="isAuthenticated && !accountType && isHost" class="nav-item my-auto me-3">
             <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn btn-outline-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade
+               class="btn btn-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade
                 Plan</a>
         </li>
 
         <li *ngIf="accountType" class="nav-item my-auto me-3">
 
             <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class=" btn btn-outline-warning disabled rounded-0 text-light fw-bold  my-auto">{{accountType}} plan</p>
+               class=" btn btn-outline-warning disabled rounded-0 text-warning fw-bold  my-auto">{{accountType}} plan</p>
         </li>
 
         <li *ngIf="isAuthenticated" class="nav-item my-auto">
@@ -64,59 +64,59 @@
                       mode="indeterminate"></mat-progress-bar>
 
     <div *ngIf="isOpen" #customMenu class="position-absolute mt-5 bg-black rounded-4 shadow-lg"
-         style="right: 1rem; bottom:-3rem; top:1.0rem; height: 25rem; width: 23rem">
+         style="right: 1rem; bottom:-3rem; top:1.0rem; height: max-content; width: 23rem">
         <ul role="menu" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false" class="text-light px-3 pt-3">
-            <li role="menuitem">
+            <li role="menuitem li">
                 <hr class="dropdown-divider bg-dark">
             </li>
-            <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/profile']">
                     <mat-icon class="my-auto me-2">person</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Account</p></a>
             </li>
-            <li *ngIf="isVerified" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isVerified" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/user-trips']" (click)="toggleDropdown()">
                     <mat-icon class="my-auto me-2">flight_takeoff</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Trips</p></a>
             </li>
 
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto"  [routerLink]="['host-escooters', hostID]">
                     <mat-icon class="my-auto me-2">swap_calls</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Electric scooters</p></a>
             </li>
             <hr class=" bg-light">
 
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
-                <a class="dropdown-item d-flex align-items-center my-auto">
+            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
+                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/legal-insurance']">
                     <mat-icon class="my-auto me-2">featured_play_list</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Legal & Instance</p></a>
+                    <p class="m-0 pt-1 my-auto ">Legal & Insurance</p></a>
             </li>
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
-                <a class="dropdown-item d-flex align-items-center my-auto">
+            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
+                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/privacy-policy']">
                     <mat-icon class="my-auto me-2">list_alt</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Privacy Policy</p></a>
             </li>
             <hr class=" bg-light">
-            <li *ngIf="isVerified == false && isAuthenticated == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 " [routerLink]="['verify']">
+            <li *ngIf="isVerified == false && isAuthenticated == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 bg-info text-light font-gro-bold li" [routerLink]="['verify']">
                 <a class="dropdown-item d-flex align-items-center my-auto">
-                    <mat-icon class="my-auto me-2">badge</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Verify</p></a>
+                    <mat-icon class="my-auto me-2">verified</mat-icon>
+                    <p class="m-0 pt-1 my-auto ">Verify now</p></a>
             </li>
 
 
 
-            <li *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="bg-warning text-dark rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['become-host']">
-                    <mat-icon class="my-auto me-2">person</mat-icon>
+                    <mat-icon class="my-auto me-2">badge</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Become a host</p></a>
             </li>
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/host-profile', hostID]">
                     <mat-icon class="my-auto me-2">art_track</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Host Profile</p></a>
             </li>
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 ">
+            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
                 <a class="dropdown-item d-flex align-items-center my-auto"  [routerLink]="['host-trips']">
                     <mat-icon class="my-auto me-2">rocket_launch</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Host Trips</p></a>

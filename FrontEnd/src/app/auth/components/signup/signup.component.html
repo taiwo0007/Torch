@@ -12,21 +12,21 @@
               ">
           <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
             <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
-            <h1 class="fw-bold pt-4 mb-3 pb-4 font-gro-bold"><span class="text-info font-gro-bold">Sign up</span> to make an account on Torch </h1>
+            <h1 class="fw-bold pt-2 mb-3 pb-2 font-gro-bold"><span class="text-info font-gro-bold">Sign up</span> to make an account on Torch </h1>
 
-            <div style="" class="mb-3 d-flex justify-content-between form-group">
-              <div class="form-group" style="width: 14.5rem !important;">
-                <label class="form-label fw-bold" for="firstName"> First Name </label>
-                <input id="firstName" ngModel name="firstName" class="form-control" th:field="*{firstName}"
-                       required autofocus="autofocus" placeholder="John"/>
+<!--            <div style="" class="mb-3 d-flex justify-content-between form-group">-->
+<!--              <div class="form-group" style="width: 14.5rem !important;">-->
+<!--                <label class="form-label fw-bold" for="firstName"> First Name </label>-->
+<!--                <input id="firstName" ngModel name="firstName" class="form-control" th:field="*{firstName}"-->
+<!--                       required autofocus="autofocus" placeholder="John"/>-->
 
-              </div>
-              <div class="form-group" style="width: 14.5rem !important;">
-                <label class="form-label fw-bold" for="lastName"> Last Name </label>
-                <input id="lastName" ngModel name="lastName" class="form-control" placeholder="doe"
-                       required autofocus="autofocus" />
-              </div>
-            </div>
+<!--              </div>-->
+<!--              <div class="form-group" style="width: 14.5rem !important;">-->
+<!--                <label class="form-label fw-bold" for="lastName"> Last Name </label>-->
+<!--                <input id="lastName" ngModel name="lastName" class="form-control" placeholder="doe"-->
+<!--                       required autofocus="autofocus" />-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="mb-3 form-group">
               <label for="email" class="form-label fw-bold">Email</label>
               <input  #emailInput email required placeholder="john@gmail.com" name="email" ngModel type="email" class="form-control" id="email" />

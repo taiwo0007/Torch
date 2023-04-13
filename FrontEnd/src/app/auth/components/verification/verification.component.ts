@@ -45,8 +45,8 @@ export class VerificationComponent {
 
   isLinear = true;
   firstFormGroup = this._formBuilder.group({
-    firstName: ['Taiwo', Validators.required],
-    lastName: ['Obadare', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
     about: ['', Validators.required],
     gender: ['male', Validators.required ],
     phoneNumber: [null, Validators.required ],

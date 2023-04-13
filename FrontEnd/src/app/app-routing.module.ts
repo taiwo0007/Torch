@@ -20,6 +20,8 @@ import {VerificationComponent} from "./auth/components/verification/verification
 import {TripCompletedComponent} from "./trip/components/trip-completed/trip-completed.component";
 import {CancelTripComponent} from "./trip/components/cancel-trip/cancel-trip.component";
 import {VerifyEmailComponent} from "./auth/components/verify-email/verify-email.component";
+import {PrivacyPolicyComponent} from "./shared/components/privacy-policy/privacy-policy.component";
+import {LegacyInsuranceComponent} from "./shared/components/legacy-insurance/legacy-insurance.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -43,7 +45,8 @@ const routes: Routes = [
   {path: 'become-host', component: BecomeHostComponent},
   {path: 'host-profile/:id', component: HostProfileComponent},
 
-
+  {path: 'legal-insurance', component: LegacyInsuranceComponent},
+  {path: 'privacy-policy', component: PrivacyPolicyComponent},
   {path: 'verify', component: VerificationComponent},
   {path: 'verify-email/:code', component: VerifyEmailComponent},
 

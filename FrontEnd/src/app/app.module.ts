@@ -92,6 +92,8 @@ import {CalendarModule} from "primeng/calendar";
 import { DeleteScooterDialogComponent } from './shared/components/delete-scooter-dialog/delete-scooter-dialog.component';
 import {MatChipsModule} from "@angular/material/chips";
 import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile-nav-bar.component';
+import { LegacyInsuranceComponent } from './shared/components/legacy-insurance/legacy-insurance.component';
+import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 
 
 @NgModule({
@@ -154,6 +156,8 @@ import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile
      NgbDatepickerConfigComponent,
      DeleteScooterDialogComponent,
      MobileNavBarComponent,
+     LegacyInsuranceComponent,
+     PrivacyPolicyComponent,
 
   ],
     imports: [

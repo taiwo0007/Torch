@@ -23,11 +23,11 @@ ul  {
     text-decoration: none;
 }
 
-li {
+.li {
 transition: 0.1s ease-in-out;
     transition-duration: 0.1s;
 }
 
-li:hover {
+.li:hover {
     background-color: #383838;
 }

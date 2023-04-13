@@ -11,6 +11,7 @@ import {VerificationDialogComponent} from "../verification-dialog/verification-d
 import {MatDialog} from "@angular/material/dialog";
 import {SubscriptionModalComponent} from "../../../user/components/subscription-modal/subscription-modal.component";
 import {MatChipsModule} from "@angular/material/chips";
+import {environment} from "../../../../environments/environment";
 
 
 @Component({
@@ -32,6 +33,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   accountType:string;
     isLoadingLine: boolean = false;
     isOpen: any= false;
+    isProd:boolean;
 
   constructor(private authService: AuthService,
               private router:Router,
@@ -45,6 +47,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.isProd = environment.frontEndUrl != 'http://localhost:4200';
+
 
     this.loadingService.isLoading.subscribe(value => {
       this.isLoading = value;
