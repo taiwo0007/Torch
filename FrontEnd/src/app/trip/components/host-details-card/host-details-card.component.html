@@ -1,9 +1,9 @@
 <div class="row p-4 pt-5 border-top mt-4 ">
-    <h3 class="fw-bold pb-2">Host Details</h3>
-    <div class="col-3 fw-bold">
+    <h3 class="fw-bold pb-2 ">Host Details</h3>
+    <div class="col-md-3 col-sm-12 fw-bold font-gro-bold">
         Pick-Up
     </div>
-    <div class="col-9">
+    <div class="col-md-9 col-sm-12 mt-sm-1">
         <div *ngFor="let addressLine of escooter?.address | addressSplit"
              style="width: 12rem;">
             <p class="text-dark"
@@ -13,16 +13,16 @@
 </div>
 <div class="col-12">
     <div class="row p-4">
-        <div class="col-3  ">
-            <p class="fw-bold">Contact</p>
+        <div class="col-md-3 col-sm-12 ">
+            <p class="fw-bold font-gro-bold">Contact</p>
         </div>
-        <div class="col-9">
+        <div class="col-md-9 col-sm-12">
             <p > +353 {{ host?.hostUser?.phoneNumber }} </p>
         </div>
     </div>
     <div class="row p-4">
-        <div class="col-3  ">
-            <p class="fw-bold">Email</p>
+        <div class="col-md-3 col-sm-12 ">
+            <p class="fw-bold font-gro-bold">Email</p>
         </div>
         <div class="col-9">
             <p> {{ host?.hostUser?.email }} </p>

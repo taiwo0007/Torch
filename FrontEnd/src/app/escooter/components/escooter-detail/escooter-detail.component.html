@@ -20,7 +20,7 @@
                         <br>
                     </div>
                     <img *ngIf="!isLoading" src="assets/{{escooter?.make?.image}}" width="40%"
-                         class="my-auto rounded mx-auto text-center" alt="">
+                         class="my-auto rounded mx-auto text-center remove-mb" alt="">
                 </div>
             </div>
         </div>
@@ -55,13 +55,13 @@
                             </div>
                             <div class="p-2">
                                 <div class=" mt-3 mx-auto text-center">
-                                    <!--                                <google-map class="mx-auto text-center" height="20rem"-->
-                                    <!--                                            width="22rem" [options]="options"-->
-                                    <!--                                            >-->
-                                    <!--                                    <map-marker-->
-                                    <!--                                                [position]="markerPosition"-->
-                                    <!--                                                [options]="markerOptions"></map-marker>-->
-                                    <!--                                </google-map>-->
+                                                                    <google-map class="mx-auto text-center" height="20rem"
+                                                                                width="100%" [options]="options"
+                                                                                >
+                                                                        <map-marker
+                                                                                    [position]="markerPosition"
+                                                                                    [options]="markerOptions"></map-marker>
+                                                                    </google-map>
 
 
                                 </div>
@@ -184,13 +184,13 @@
                             </div>
                             <div class="p-2">
                                 <div class=" mt-3 mx-auto text-center">
-                                    <!--                                <google-map class="mx-auto text-center" height="20rem"-->
-                                    <!--                                            width="22rem" [options]="options"-->
-                                    <!--                                            >-->
-                                    <!--                                    <map-marker-->
-                                    <!--                                                [position]="markerPosition"-->
-                                    <!--                                                [options]="markerOptions"></map-marker>-->
-                                    <!--                                </google-map>-->
+                                                                    <google-map class="mx-auto text-center" height="20rem"
+                                                                                width="22rem" [options]="options"
+                                                                                >
+                                                                        <map-marker
+                                                                                    [position]="markerPosition"
+                                                                                    [options]="markerOptions"></map-marker>
+                                                                    </google-map>
 
 
                                 </div>
