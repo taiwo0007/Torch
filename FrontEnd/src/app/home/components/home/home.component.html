@@ -21,25 +21,25 @@
 </section>
 
 <section  class="row container py-4 mx-auto my-1">
-    <h1
-            style="font-size: 3.8rem !important"
-            class="h1 text-center fw-bold pb-5 mt-5"
+    <h1 style="margin-left: 0 !important; margin-right: 0 !important;"
+
+            class=" text-center fw-bold pb-5 mt-5 mx-auto  hm-sm m-0 px-sm"
     >
         Torch <span class="text-info font-gro-black">Hosts</span>
     </h1>
-    <h4 style="font-size: 1.4rem !important" class="h1 fw-bold py-1 px-4">
+    <h4 style="font-size: 1.4rem !important" class=" fw-bold py-1 px-4">
         Feauterd Hosts
     </h4>
     <div *ngIf="!topHostsInfo" class="col-md-4 col-sm-12 mx-auto pointer-event">
-        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '100%'}"></ngx-skeleton-loader>
 
     </div>
     <div *ngIf="!topHostsInfo" class="col-md-4 col-sm-12 mx-auto pointer-event">
-        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '100%'}"></ngx-skeleton-loader>
 
     </div>
     <div *ngIf="!topHostsInfo" class="col-md-4 col-sm-12 mx-auto pointer-event">
-        <ngx-skeleton-loader [theme]="{height: '24rem', width: '23rem'}"></ngx-skeleton-loader>
+        <ngx-skeleton-loader [theme]="{height: '24rem', width: '100%'}"></ngx-skeleton-loader>
 
     </div>
     <ng-container *ngIf="topHostsInfo">
@@ -84,10 +84,10 @@
 </section>
 
 <section class="header-bottom mx-auto text-center py-5">
-    <h1 style="font-size: 3.8rem !important" class="h1 text-center mx-auto fw-bold">
+    <h1  class="h1 hm-sm px-sm text-center mx-auto fw-bold">
         Browse scooter models.
     </h1>
-    <h3 class="badge-info fw-bold mx-auto text-center text-info">
+    <h3 class="badge-info fw-bold mx-auto text-center text-info  px-sm">
         View our catalogue of scooters for an amazing expereince
     </h3>
 </section>
@@ -100,23 +100,23 @@
 
         <div class="row text-center mx-auto mt-3">
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/puretile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/avovotile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/xiaomitile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/Make/segwaytile.png" alt="">
                 </a>
             </div>
@@ -131,23 +131,23 @@
 
         <div class="row text-center mx-auto mt-3 ">
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/dublintile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/corktile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/galwaytile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile mx-auto" style="width:17rem" src="../../../../assets/images/website/County/meathtile.png" alt="">
                 </a>
             </div>
@@ -161,23 +161,23 @@
 
         <div class="row text-center mt-3">
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/speedtile.png" alt="">
                 </a>
 
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/rangetile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/costtile.png" alt="">
                 </a>
             </div>
             <div class="col-md-3 col-sm-12 mt-sm">
-                <a href="">
+                <a (click)="navigateToScooterResults()">
                     <img class="browse-tile  mx-auto" style="width:17rem" src="../../../../assets/images/website/Feature/weighttile.png" alt="">
                 </a>
             </div>
@@ -192,9 +192,9 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-2 col-sm-12"></div>
-                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                    <div class="col-md-4 col-sm-12 text-center my-auto mt-sm">
                         <h3 class="fw-bold text-info">Verify account</h3>
-                        <p style="text-align: center" class="text-light">
+                        <p style="text-align: center" class="text-light px-sm">
                             Sign up to the application to access a wide
                             catalogue of electric scooters
                         </p>
@@ -213,9 +213,9 @@
                     <div class="col-md-4 col-sm-12">
                         <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb" alt="..." />
                     </div>
-                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                    <div class="col-md-4 col-sm-12 text-center my-auto mt-sm">
                         <h3 class="fw-bold text-info mt-sm-4">Become a host</h3>
-                        <p style="text-align: center" class="text-light">
+                        <p style="text-align: center" class="text-light  px-sm">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>
@@ -229,9 +229,9 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-2 col-sm-12"></div>
-                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                    <div class="col-md-4 col-sm-12 text-center my-auto mt-sm">
                         <h3 class="fw-bold text-info">Rent out your scooter</h3>
-                        <p style="text-align: center" class="text-light">
+                        <p style="text-align: center" class="text-light  px-sm">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>
@@ -250,9 +250,9 @@
                     <div class="col-md-4 col-sm-12">
                         <img src="../../../../assets/images/website/4.png" width="300" class="mx-auto remove-mb" alt="..." />
                     </div>
-                    <div class="col-md-4 col-sm-12 text-center my-auto">
+                    <div class="col-md-4 col-sm-12 text-center my-auto mt-sm  ">
                         <h3 class="fw-bold text-info">Get Paid</h3>
-                        <p style="text-align: center" class="text-light">
+                        <p style="text-align: center" class="text-light px-sm">
                             Down the street or across the country, find the perfect
                             vehicle for your next adventure.
                         </p>

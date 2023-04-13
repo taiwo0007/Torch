@@ -1,15 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap'); /* You can add global styles to this file, and also import other style files */
 
 
-
-
 @font-face {
     font-family: "BasicGroRegular";
     src: url("assets/fonts/BasisGrotesqueArabicPro-Regular.ttf") format("truetype");
     font-weight: auto;
     font-style: auto;
 }
-
 
 
 @font-face {
@@ -33,16 +30,14 @@
     font-style: auto;
 }
 
-*{
-    padding: 0 ;
-    margin: 0 ;
-    box-sizing: border-box ;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     scroll-behavior: auto !important;
     font-family: 'BasicGroRegular', sans-serif;
 
 }
-
-
 
 
 /*input.ng-touched.ng-invalid{*/
@@ -51,28 +46,29 @@
 /*input.ng-touched.ng-valid{*/
 /*  border: 2px solid #17a2b7;*/
 /*}*/
-.toast-top-center{
+.toast-top-center {
     margin-top: 8px !important;
     /*align-self: center !important;*/
     /*left: 42vw !important;*/
 
 
 }
-.full-spinner{
+
+.full-spinner {
     overflow: hidden !important;
 }
 
 
-
-li, p{
+li, p {
     font-family: 'BasicGroRegular', sans-serif;
 
 }
 
-p-0{
+p-0 {
     padding: 0 !important;
 }
-pt-0{
+
+pt-0 {
     padding-top: 0 !important;
 }
 
@@ -81,57 +77,75 @@ pt-0{
     vertical-align: middle !important;
 }
 
-h1, h2, h3, h3, h5, h6, h7{
+h1, h2, h3, h4, h5, h6, h7 {
     font-family: 'BasicGroBlack', sans-serif;
 
 }
 
-.font-gro-black{
+.font-gro-black {
     font-family: 'BasicGroBlack', sans-serif !important;
 
 }
 
-.font-gro-medium{
+.font-gro-medium {
     font-family: 'BasicGroMedium', sans-serif !important;
 
 }
 
-.font-gro-bold{
+.font-gro-bold {
     font-family: 'BasicGroBold', sans-serif !important;
 
 }
 
 
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-@media(max-width: 575.68px){
-
-
-
-.mt-sm{
-    margin-top: 2rem !important;
+html, body {
+    height: 100%;
 }
 
-    .mt-sm-1{
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@media (max-width: 575.68px) {
+
+    .hm-sm{
+        font-size: 2rem !important;
+    }
+
+    .mt-sm {
+        margin-top: 2rem !important;
+    }
+
+    .px-sm {
+        margin-left: 1.7rem!important;
+        margin-right: 1.7rem!important;
+    }
+
+    .mt-sm-1 {
         margin-top: 1rem !important;;
     }
-    .remove-mb{
-        display:none !important;
+
+    .remove-mb {
+        display: none !important;
     }
-    .show-mb{
+
+    .show-mb {
 
     }
 }
-@media(min-width: 580.68px){
+
+@media (min-width: 580.68px) {
     .my-nav-m {
         display: none !important;
     }
 
-    .show-mb{
-        display:none !important;
+    .show-mb {
+        display: none !important;
+    }
+
+    .hm-sm{
+        font-size: 3.8rem !important;
     }
 
 

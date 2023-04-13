@@ -1,6 +1,7 @@
-.browse-tile{
-  transition: all .1s ease-in-out;
 
+
+.browse-m-tile{
+  font-size: 3.8rem !important;
 }
 
 .browse-tile:hover {
@@ -14,4 +15,21 @@
 
 input, select, textarea{
   color: rgba(0, 0, 0, 0.502) !important;
+}
+
+@media (max-width: 575.68px) {
+
+  .hm-sm{
+    font-size: 2rem !important;
+  }
+
+
+}
+
+@media (min-width: 580.68px) {
+
+  .hm-sm{
+    font-size: 3.8rem !important;
+  }
+
 }

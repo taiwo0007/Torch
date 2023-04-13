@@ -38,7 +38,7 @@
                             <mat-option value="female">female</mat-option>
                         </mat-select>
                     </mat-form-field>
-                        <div class="mb-3 w-25">
+                        <div style="width: fit-content !important;" class="mb-3">
                             <label for="formFile" class="form-label fw-bold">Profile Picture</label>
 <!--                            <button type="button" hidden mat-raised-button (click)="fileInput.click()">Profile Pciture</button>-->
 <!--                            <input  required formControlName="profilePicture" placeholder="Profile" class="form-control"  (change)="onFileSelected($event)" #fileInput type="file" id="formFile">-->
@@ -51,9 +51,9 @@
                 </div>
             </form>
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
-            <form  [formGroup]="secondFormGroup">
-                <mat-form-field style="width: 28rem !important;" appearance="outline">
+        <mat-step [stepControl]="secondFormGroup" class="mb-5 pb-5" label="Fill out your address">
+            <form class="mb-5 pb-5"  [formGroup]="secondFormGroup">
+                <mat-form-field style="width: auto !important;" appearance="outline">
                     <mat-label>Address</mat-label>
                     <input class="mx-auto" [options]="options"
                            (onAddressChange)="handleAddressChange($event)" ngx-google-places-autocomplete matInput formControlName="location" placeholder="Ex. 1 Main St, New York, NY"
@@ -67,35 +67,35 @@
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Verify</ng-template>
-            <h3>Verify Info</h3>
+            <h3 class="font-gro-bold">Verify Info</h3>
             <div class="mt-5">
 
                 <div class="row mt-3 fs-5">
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2">
+                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2 font-gro-bold">
                         Name
                     </div>
                     <div class="col-xs-12 col-sm-6 bg-light">
                         {{firstFormGroup.value.firstName}} {{firstFormGroup.value.lastName}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold my-2">
+                    <div class="col-xs-12 col-sm-6 fw-bold my-2 font-gro-bold">
                         Gender
                     </div>
                     <div class="col-xs-12 col-sm-6 my-2">
                         {{firstFormGroup.value.gender}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2">
+                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2 font-gro-bold">
                         About
                     </div>
                     <div class="col-xs-12 col-sm-6 bg-light">
                         {{firstFormGroup.value.about}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold">
+                    <div class="col-xs-12 col-sm-6 fw-bold font-gro-bold">
                         Location
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         {{secondFormGroup.value.location}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light">
+                    <div class="col-xs-12 col-sm-6 fw-bold bg-light font-gro-bold">
                         Phone Number
                     </div>
                     <div class="col-xs-12 col-sm-6 bg-light">

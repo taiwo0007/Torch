@@ -3,6 +3,7 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {HostService} from "../../../host/services/host.service";
 import {TopHostsCardDto} from "../../../host/models/top-hosts-card.dto";
 import {delay} from "rxjs";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,12 @@ export class HomeComponent implements OnInit {
   isAuthenticated = false;
   topHostsInfo:TopHostsCardDto[];
   ratingList:any[] = [];
+  private tripEnd: any;
+  private tripStart: any;
+  private location: any;
 
 
-  constructor(private authService: AuthService, private hostService:HostService) { }
+  constructor(private authService: AuthService, private hostService:HostService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -24,8 +28,15 @@ export class HomeComponent implements OnInit {
     this.initMap();
     this.getHostsFromApi();
 
+  }
 
+  navigateToScooterResults(){
+    const queryParams = { tripStart: '',
+      tripEnd: '',
+      location: ''
+    }
 
+    this.router.navigate(['/results'],{ queryParams});
 
   }
 
@@ -45,7 +56,9 @@ export class HomeComponent implements OnInit {
 
   getHostsFromApi(){
 
-    this.hostService.fetchAllHosts().subscribe((data:TopHostsCardDto[]) => {
+    this.hostService.fetchAllHosts()
+        .pipe(delay(3000))
+        .subscribe((data:TopHostsCardDto[]) => {
 
 
       this.topHostsInfo = data;
