@@ -10,6 +10,7 @@
 
     <mat-form-field style="width: 100% !important;" appearance="outline">
         <mat-label>Pickup Location</mat-label>
+        <mat-icon matPrefix>location_on</mat-icon>
         <input
                 id="location"
                 name="location"
@@ -23,6 +24,7 @@
 
     <mat-form-field style="width: 100% !important; margin-top: -1rem !important;"  appearance="outline">
         <mat-label>Trip Start & Trip End</mat-label>
+        <mat-icon matPrefix>date_range</mat-icon>
         <mat-date-range-input  (click)="picker.open()" [rangePicker]="picker">
             <input formControlName="tripStart"  name="tripStart"  matStartDate >
             <input formControlName="tripEnd"  name="tripEnd"   matEndDate placeholder="End date">

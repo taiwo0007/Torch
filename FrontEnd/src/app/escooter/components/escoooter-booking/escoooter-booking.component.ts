@@ -45,7 +45,7 @@ export class EscoooterBookingComponent implements OnInit{
   });
 
   appearance: Appearance = {
-    theme: 'flat',
+    theme:'flat',
     labels: 'floating',
 
     // variables: {
@@ -84,6 +84,8 @@ export class EscoooterBookingComponent implements OnInit{
   ) {}
 
   ngOnInit() {
+    this.loadingService.isLoading.next(true);
+
     this.route.queryParams.subscribe(paramValue => {
       this.tripDays = +paramValue['tripDays'];
       this.tripStart = paramValue['tripStart'];
@@ -100,7 +102,6 @@ export class EscoooterBookingComponent implements OnInit{
           console.log(data.id)
         }
         this.totalTripCost()
-        this.loadingService.isLoading.next(true);
 
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {

@@ -31,6 +31,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   profileImage:string;
   accountType:string;
     isLoadingLine: boolean = false;
+    isOpen: any= false;
 
   constructor(private authService: AuthService,
               private router:Router,
@@ -107,4 +108,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
 
     }
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
 }

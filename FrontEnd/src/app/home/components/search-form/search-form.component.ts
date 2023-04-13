@@ -52,7 +52,6 @@ export class SearchFormComponent implements OnInit {
 
             },
             1000)
-        console.log(this.searchForm)
 
         this.initMap();
     }
