@@ -30,4 +30,11 @@ public interface EScooterRepository extends JpaRepository<EScooter, Integer> {
     @Query("SELECT e FROM EScooter e WHERE e.adDate >= :adDate AND e.adDate <= :todayDate")
     List<EScooter> findAllEscooterAds(@Param("adDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date adDate,
                                       @Param("todayDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date todayDate);
+
+    //Within 15 kilometers
+    @Query("SELECT e FROM EScooter e WHERE (:tripStart IS NULL OR e.tripStart >= :tripStart ) AND (:tripEnd IS NULL OR e.tripEnd <= :tripEnd) AND ST_Distance_Sphere( point (:longitude, :latitude), point(e.longitude, e.latitude)) * .001 <= 15")
+    List<EScooter> findEscooterByCordsAndDate(@Param("tripStart") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tripStart,
+                                              @Param("tripEnd") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tripEnd,
+            @Param("longitude") Double longitude, @Param("latitude") Double latitude);
+
 }

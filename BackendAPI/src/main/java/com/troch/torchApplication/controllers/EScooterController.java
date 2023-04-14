@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -51,7 +52,7 @@ public class EScooterController {
     @GetMapping("/findescooters")
     private ResponseEntity<List<EScooter>> findEscooterByParams(@RequestParam String tripStart,
                                                                 @RequestParam String tripEnd,
-                                                                @RequestParam String location) throws ParseException {
+                                                                @RequestParam String location) throws ParseException, IOException {
 
         List<EScooter> eScooterList = eScooterService.findAllByTripDatesAndLocation(tripStart, tripEnd, location);
         if (eScooterList.isEmpty()){

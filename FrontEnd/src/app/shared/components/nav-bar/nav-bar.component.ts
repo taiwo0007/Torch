@@ -107,8 +107,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
     subscriptionModal() {
         const dialogRef = this.dialog.open(SubscriptionModalComponent, {
-          height: '620px',
-          width: '1200px',
+          height: 'max-content',
+          width: 'max-content',
+          hasBackdrop: true,
         });
 
 

@@ -6,6 +6,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class LoadingService {
 
+  isRemoveFooter = new BehaviorSubject(false);
   isLoading = new BehaviorSubject(false);
   isLoadingLine = new BehaviorSubject(false);
   constructor() { }

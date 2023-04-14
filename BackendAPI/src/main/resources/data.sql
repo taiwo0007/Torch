@@ -259,11 +259,11 @@ VALUES  (4.0, 0,"Dublin",-6.303572, 53.313219, "Starbucks, Federal Highway, Glen
 INSERT INTO escooter
 (rating,escooter_ad_days,county,longitude, latitude,address, country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost,
  id, about, scooter_host_id, model_name, make_id, trips)
-VALUES  (4.0, 0,"Dublin",-6.286239, 53.385989, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia", "Ireland",
+VALUES  (4.0, 0,"Dublin",-6.328278, 53.511675, "Starbucks, Federal Highway, Glenmarie, 40150 Shah Alam, Selangor, Malaysia", "Ireland",
          '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "https://storage.cloud.google.com/torch-gcp-bucket/escooter3.png" ,41.99,
          17,
          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su",
-         920386034,"Avivo Edge 5Y",2, 13);
+         920386034,"Test Avivo Edge 5Y",2, 13);
 
 INSERT INTO escooter
 (rating,escooter_ad_days,county,longitude, latitude,address, country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost,
@@ -390,7 +390,7 @@ VALUES  (4.0, 0,"Dublin",-6.326085, 53.380517, "Starbucks, Federal Highway, Glen
          '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "https://storage.cloud.google.com/torch-gcp-bucket/escooter15.png" ,7.99,
          31,
          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su",
-         920386034,"Pure air advanced",6, 178);
+         920386034,"Pure air advanced 2",6, 178);
 
 INSERT INTO escooter
 (rating,escooter_ad_days,county,longitude, latitude,address, country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost,
@@ -399,7 +399,7 @@ VALUES  (4.0, 0,"Dublin",-6.340505, 53.387070, "Starbucks, Federal Highway, Glen
          '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "https://storage.cloud.google.com/torch-gcp-bucket/escooter17.png" ,8.99,
          32,
          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su",
-         920386034,"Pure air advanced",6, 23);
+         920386034,"Pure air advanced YE",6, 23);
 
 INSERT INTO escooter
 (rating,escooter_ad_days,county,longitude, latitude,address, country,trip_end, trip_start , scooter_weight, motor_power, max_weight, max_speed,max_range, imageurl, cost,
@@ -408,7 +408,7 @@ VALUES  (4.0, 0,"Dublin",-6.3588719, 53.367614, "Starbucks, Federal Highway, Gle
          '2000-01-01','2200-01-01', 19.0, 28.0, 19.0, 45.0, 48.0, "https://storage.cloud.google.com/torch-gcp-bucket/escooter16.png" ,9.99,
          33,
          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has su",
-         920386034,"Pure air advanced",1, 76);
+         920386034,"Pure air advanced VR",1, 76);
 
 
 

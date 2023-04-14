@@ -28,7 +28,7 @@ export class SearchFormComponent implements OnInit {
         componentRestrictions: {country: 'ie'}
     });
     searchFormReactive = this._formBuilder.group({
-        location: ['Ireland'],
+        location: ['Blanchardstown, Dublin'],
         tripStart: [moment()],
         tripEnd: [moment().add(1, 'day')],
 
@@ -112,6 +112,8 @@ export class SearchFormComponent implements OnInit {
     }
 
     handleAddressChange(locationData: Address) {
+
+        console.log(location)
 
         this.googlePlaceLocation = locationData.name;
         this.isGooglePlaceSelected = true;

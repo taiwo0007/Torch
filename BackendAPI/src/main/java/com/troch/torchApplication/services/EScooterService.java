@@ -69,16 +69,16 @@ public class EScooterService {
     Logger logger = LoggerFactory.getLogger(EScooterService.class);
 
 
-    public List<EScooter> findAllEScooters(){
+    public List<EScooter> findAllEScooters() {
         return eScooterRepository.findAll();
     }
 
-    public List<EScooter> findAllEscootersByHost(Integer id){
+    public List<EScooter> findAllEscootersByHost(Integer id) {
         return eScooterRepository.findEscootersByHostId(id);
     }
 
 
-    public Optional<EScooter> findEScooter(Integer id){
+    public Optional<EScooter> findEScooter(Integer id) {
         return eScooterRepository.findById(id);
     }
 
@@ -94,19 +94,18 @@ public class EScooterService {
         JsonNode json;
         HttpURLConnection http;
 
-        try{
-            URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+esccoterAddRequest.getCountry().replaceAll(" ", "%20")+"&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
-            http = (HttpURLConnection)url.openConnection();
+        try {
+            URL url = new URL("https://api.geoapify.com/v1/geocode/search?text=" + esccoterAddRequest.getCountry().replaceAll(" ", "%20") + "&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
+            http = (HttpURLConnection) url.openConnection();
             http.setRequestProperty("Accept", "application/json");
             json = jsonConverter.getJson(url);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw new IOException();
         }
 
-        JsonNode featuresKey  = json.get("features").get(0);
-        JsonNode propertiesKey  = featuresKey.get("properties");
-        JsonNode longitudeKey  = propertiesKey.get("lon");
+        JsonNode featuresKey = json.get("features").get(0);
+        JsonNode propertiesKey = featuresKey.get("properties");
+        JsonNode longitudeKey = propertiesKey.get("lon");
         JsonNode latitudeKey = propertiesKey.get("lat");
         JsonNode countryKey = propertiesKey.get("country");
         JsonNode countyKey = propertiesKey.get("city");
@@ -152,23 +151,55 @@ public class EScooterService {
     }
 
 
-
-    public EScooter save(EScooter eScooter){
+    public EScooter save(EScooter eScooter) {
         return eScooterRepository.save(eScooter);
     }
 
-    public List<EScooter> findAllByTripDatesAndLocation(String tripStart, String tripEnd, String country) throws ParseException {
+    public List<EScooter> findAllByTripDatesAndLocation(String tripStart, String tripEnd, String country) throws ParseException, IOException {
+
 
         Date tripStartDate = null;
         Date tripEndDate = null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        if(!tripStart.isEmpty()){
-             tripStartDate = formatter.parse(tripStart);
+        logger.info("locationName" + country);
+
+        if (!tripStart.isEmpty()) {
+            tripStartDate = formatter.parse(tripStart);
         }
-        if(!tripEnd.isEmpty()){
-             tripEndDate = formatter.parse(tripEnd);
+        if (!tripEnd.isEmpty()) {
+            tripEndDate = formatter.parse(tripEnd);
         }
+
+        JsonNode json;
+        HttpURLConnection http;
+        if (!country.isEmpty()) {
+            try {
+                URL url = new URL("https://api.geoapify.com/v1/geocode/search?text=" + country.replaceAll(" ", "%20") + "&apiKey=0d1f31ae91154c4c8f9d6002deb16ca3");
+                http = (HttpURLConnection) url.openConnection();
+                http.setRequestProperty("Accept", "application/json");
+                json = jsonConverter.getJson(url);
+
+                JsonNode featuresKey = json.get("features").get(0);
+                JsonNode propertiesKey = featuresKey.get("properties");
+                JsonNode longitudeKey = propertiesKey.get("lon");
+                JsonNode latitudeKey = propertiesKey.get("lat");
+
+                double longitudeFormatted = longitudeKey.asDouble();
+                double latitudeFormatted = latitudeKey.asDouble();
+
+                logger.info("long" + longitudeFormatted);
+                logger.info("lat" + latitudeFormatted);
+
+                return eScooterRepository.findEscooterByCordsAndDate(tripStartDate, tripEndDate, longitudeFormatted, latitudeFormatted);
+            } catch (Exception ex) {
+
+                //if error getting right country name
+                ex.printStackTrace();
+            }
+
+        }
+
         return eScooterRepository.findAllByTripDatesAndLocation(tripStartDate, tripEndDate, country);
     }
 
@@ -182,7 +213,6 @@ public class EScooterService {
         //28   -> 3
 
 
-
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Date today = new Date();
@@ -194,9 +224,8 @@ public class EScooterService {
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 
-
         //QUERY 2 DAYS AGO AND TODAYS DATE
-        List<EScooter> eScootersEligible= eScooterRepository.findAllEscooterAds(new Date(todayWithZeroTime.getTime() - (2 * DAY_IN_MS)), todayWithZeroTime
+        List<EScooter> eScootersEligible = eScooterRepository.findAllEscooterAds(new Date(todayWithZeroTime.getTime() - (2 * DAY_IN_MS)), todayWithZeroTime
         );
 
         Date zeroDaysAgo = new Date(todayWithZeroTime.getTime());
@@ -206,28 +235,26 @@ public class EScooterService {
 
         List<EScooter> adList = new ArrayList<>();
 
-        logger.info("twodays"+twoDaysAgo);
-        logger.info("onedayAgo"+oneDayAgo);
-        logger.info("tommorow"+tommorow);
+        logger.info("twodays" + twoDaysAgo);
+        logger.info("onedayAgo" + oneDayAgo);
+        logger.info("tommorow" + tommorow);
 
         //check if ads are eligible for today
-        for(EScooter e: eScootersEligible){
+        for (EScooter e : eScootersEligible) {
 
-            if(e.getAdDate().before(tommorow) && e.getAdDate().compareTo(zeroDaysAgo) == 0){
+            if (e.getAdDate().before(tommorow) && e.getAdDate().compareTo(zeroDaysAgo) == 0) {
                 adList.add(e);
             }
-            if(e.getAdDate().compareTo(oneDayAgo) == 0 && e.getEscooterAdDays() >=2 ){
+            if (e.getAdDate().compareTo(oneDayAgo) == 0 && e.getEscooterAdDays() >= 2) {
 
                 adList.add(e);
             }
 
-            if(e.getAdDate().compareTo(twoDaysAgo) == 0 && e.getEscooterAdDays() >=3 ){
+            if (e.getAdDate().compareTo(twoDaysAgo) == 0 && e.getEscooterAdDays() >= 3) {
                 adList.add(e);
             }
 
         }
-
-
 
 
         return adList;
@@ -238,12 +265,12 @@ public class EScooterService {
     public ResponseEntity deleteEscooter(Integer id, String email) {
 
         Optional<EScooter> eScooter = eScooterRepository.findById(id);
-        if(eScooter.isEmpty()){
+        if (eScooter.isEmpty()) {
             return new ResponseEntity(new ErrorResponse("No Escooter Found"), HttpStatus.NOT_FOUND);
         }
 
-        logger.info("ingo"+email +"escooter email"+eScooter.get().getHost().getHostUser().getEmail(), "info rmail"+email +"escooter email"+eScooter.get().getHost().getHostUser().getEmail());
-        if(!eScooter.get().getHost().getHostUser().getEmail().equals(email)){
+        logger.info("ingo" + email + "escooter email" + eScooter.get().getHost().getHostUser().getEmail(), "info rmail" + email + "escooter email" + eScooter.get().getHost().getHostUser().getEmail());
+        if (!eScooter.get().getHost().getHostUser().getEmail().equals(email)) {
             return new ResponseEntity(new ErrorResponse("You are not authorized to delete this scooter"), HttpStatus.NOT_FOUND);
         }
 

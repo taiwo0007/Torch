@@ -159,3 +159,10 @@ label.star {
     transition: all .2s;
 }
 
+.mat-dialog-container {
+    display: block;
+
+    border-radius: 15px !important;
+    margin-top: 3rem !important;
+}
+

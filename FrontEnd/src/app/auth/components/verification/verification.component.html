@@ -10,29 +10,35 @@
                 <div class="personalInfo w-50 row mx-auto">
                     <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>First Name</mat-label>
+                        <mat-icon matPrefix>fingerprint</mat-icon>
                         <input matInput placeholder="Last name, First name" formControlName="firstName" required>
                     </mat-form-field>
                     <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>Last Name</mat-label>
+                        <mat-icon matPrefix>person</mat-icon>
                         <input matInput placeholder="Last name, First name" formControlName="lastName" required>
                     </mat-form-field>
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
                     <mat-form-field  appearance="outline">
                     <mat-label>About</mat-label>
-                    <textarea matInput placeholder="About yourself" formControlName="about" required></textarea>
+                        <mat-icon class="my-auto" matPrefix>face</mat-icon>
+                        <textarea style="height: 6rem !important;" matInput placeholder="About yourself" size="12rem" formControlName="about" required></textarea>
                 </mat-form-field>
 
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
                     <mat-form-field class="col-sm-12"  appearance="outline">
                         <mat-label>Phone Number</mat-label>
+                        <mat-icon matPrefix>phone</mat-icon>
+
                         <input matInput placeholder="087 345 3456" type="number" formControlName="phoneNumber" required/>
                         </mat-form-field>
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
                     <mat-form-field class="col-sm-12 " appearance="outline">
                             <mat-label>Gender</mat-label>
+
                         <mat-select formControlName="gender">
                             <mat-option value="male">male</mat-option>
                             <mat-option value="female">female</mat-option>

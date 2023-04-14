@@ -1,6 +1,6 @@
 <nav
-        style="background-color: black !important; padding: 0.6rem 5rem !important"
-        id="navbar-example2" class="navbar my-nav    bg-dark navbar-dark  sticky fixed-top py-2">
+        style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
+        id="navbar-example2" class="navbar my-nav    bg-light navbar-light sticky fixed-top py-2">
     <div class="d-md-flex  align-items-center">
         <a class="navbar-brand me-3" [routerLink]="['']">
             <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
@@ -25,11 +25,33 @@
 
         </li>
 
-        <li *ngIf="isAuthenticated && !accountType && isHost" class="nav-item my-auto me-3">
-            <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn btn-warning rounded-0  fw-bold  my-auto" (click)="subscriptionModal()">Upgrade
-                Plan</a>
+        <li *ngIf="isAuthenticated && !accountType && isHost"  class="nav-item my-auto me-3">
+            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+               class="btn d-flex align-items-center btn-warning rounded-0  fw-bold  my-auto text-dark font-gro-bold"(click)="subscriptionModal()" >
+                <mat-icon class="me-1">monetization_on</mat-icon>
+                <span class="pt-1 fw-bold font-gro-bold">Upgrade Plan</span>
+
+            </a>
         </li>
+
+        <li  *ngIf="isVerified == false && isAuthenticated == true"class="nav-item my-auto me-3">
+            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+               class="btn d-flex align-items-center btn-info rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['verify']">
+                <mat-icon class="me-1">verified</mat-icon>
+                <span class="pt-1 fw-bold font-gro-bold">Verify now</span>
+
+            </a>
+        </li>
+        <li  *ngIf="isHost == false && isVerified == true" class="nav-item my-auto me-3">
+            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+               class="btn d-flex align-items-center btn-primary rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['become-host']">
+                <mat-icon class="me-1">fingerprint</mat-icon>
+                <span class="pt-1 fw-bold font-gro-bold">Become a host</span>
+
+            </a>
+        </li>
+
+
 
         <li *ngIf="accountType" class="nav-item my-auto me-3">
 

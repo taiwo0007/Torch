@@ -48,6 +48,8 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
+      this.loadingService.isRemoveFooter.next(true);
+
     this.route.queryParams.subscribe(paramValue => {
 
       this.escooterService.searchEscooter(
