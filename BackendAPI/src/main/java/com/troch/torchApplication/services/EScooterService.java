@@ -220,7 +220,6 @@ public class EScooterService {
         Date todayWithZeroTime = formatter.parse(formatter.format(today));
 
         //By Today's date subtract three days potential ad days
-        Date date = new Date();
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 
@@ -262,16 +261,16 @@ public class EScooterService {
 
 
     @Transactional
-    public ResponseEntity deleteEscooter(Integer id, String email) {
+    public Boolean deleteEscooter(Integer id, String email) {
 
         Optional<EScooter> eScooter = eScooterRepository.findById(id);
         if (eScooter.isEmpty()) {
-            return new ResponseEntity(new ErrorResponse("No Escooter Found"), HttpStatus.NOT_FOUND);
+            return false;
         }
 
         logger.info("ingo" + email + "escooter email" + eScooter.get().getHost().getHostUser().getEmail(), "info rmail" + email + "escooter email" + eScooter.get().getHost().getHostUser().getEmail());
         if (!eScooter.get().getHost().getHostUser().getEmail().equals(email)) {
-            return new ResponseEntity(new ErrorResponse("You are not authorized to delete this scooter"), HttpStatus.NOT_FOUND);
+            return false;
         }
 
 
@@ -279,6 +278,6 @@ public class EScooterService {
         eScooterReviewService.deleteByEscooterId(id);
         eScooterRepository.deleteByEscooterId(id);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return true;
     }
 }

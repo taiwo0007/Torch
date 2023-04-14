@@ -82,8 +82,6 @@
     </ul>
 
 
-    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5" style="left: 0; bottom:0"
-                      mode="indeterminate"></mat-progress-bar>
 
     <div *ngIf="isOpen" #customMenu class="position-absolute mt-5 bg-black rounded-4 shadow-lg"
          style="right: 1rem; bottom:-3rem; top:1.0rem; height: max-content; width: 23rem">
@@ -146,7 +144,17 @@
 
         </ul>
     </div>
+
+    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5" style="left: 0; bottom:0"
+                      mode="indeterminate"></mat-progress-bar>
+
+    <alert-message *ngIf="isNotice" [isNotice]="true" [message]="'This is an alert'"
+                   class="position-absolute mt-5 mx-auto text-center"
+                   style="top: 40%; bottom:0%; left: 43%"></alert-message>
+
 </nav>
+
+
 
 <app-load-screen *ngIf="isLoading" class="mx-auto  full-spinner"></app-load-screen>
 

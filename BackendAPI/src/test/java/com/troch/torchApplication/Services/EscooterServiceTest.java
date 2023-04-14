@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -28,56 +29,28 @@ public class EscooterServiceTest {
 
 
     @Mock
-    EScooterService eScooterServiceMock;
+    EScooterService eScooterService;
 
 
     @InjectMocks
     EScooterRepository eScooterRepository;
 
-    @InjectMocks
-    TripService tripService;
-
-    @InjectMocks
-    UserServiceImpl userService;
-
-    @InjectMocks
-    FileUploadUtil fileUploadUtil;
-
-    @InjectMocks
-    JwtUtil jwtUtil;
-
-    @InjectMocks
-    JSONConverter jsonConverter;
-
-    @InjectMocks
-    GCPUtil gcpUtil;
-
-    @InjectMocks
-    MakeService makeService;
-
-    @InjectMocks
-    EScooterReviewService eScooterReviewService;
 
 
 
-//    @Test
-//    public void findAllByTripDatesAndLocationTest(){
-//
-//        String tripStart = "2000-10-10";
-//        String tripEnd = "2000-11-11";
-//        String country = "Ireland";
-//
-//        List<EScooter> escooterList = new ArrayList<EScooter>();
-//        escooterList.add(new EScooter());
-//        escooterList.get(0).set
-//
-//        when(eScooterRepository.findAllByTripDatesAndLocation(any(), any(), anyString()))
-//                .thenReturn()
-//
-//
-//
-//
-//    }
+
+    @Test
+    public void deleteEscooterTestReturnsTrue(){
+
+        Integer escooterId  = 3;
+
+        EScooter eScooter = EScooter.builder().id(3).build();
+
+        when(eScooterRepository.findById(escooterId)).thenReturn(Optional.ofNullable(eScooter));
+
+
+
+    }
 
 
 

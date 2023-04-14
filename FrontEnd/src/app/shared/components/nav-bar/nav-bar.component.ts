@@ -28,6 +28,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   isVerified:boolean = false;
   isLoading = false;
+  isNotice:boolean = false;
   hostID:number;
   profileImage:string;
   accountType:string;
@@ -47,6 +48,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.loadingService.isAlert.subscribe(data => {
+
+    })
+
 
     this.isProd = environment.frontEndUrl != 'http://localhost:4200';
 

@@ -73,7 +73,7 @@ public class EScooterController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity ResponseEntitydeleteEscooter(@PathVariable("id") Integer id, Principal principal) {
-        return eScooterService.deleteEscooter(id, principal.getName());
+        return eScooterService.deleteEscooter(id, principal.getName()) ? new ResponseEntity(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
