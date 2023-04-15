@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {
-  VerificationDialogComponent
+    VerificationDialogComponent
 } from "../../../shared/components/verification-dialog/verification-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
@@ -11,78 +11,71 @@ import {catchError, of, switchMap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {HostService} from "../../../host/services/host.service";
 import {EscooterService} from "../../../escooter/services/escooter.service";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
-  selector: 'app-trip-completed',
-  templateUrl: './trip-completed.component.html',
-  styleUrls: ['./trip-completed.component.css']
+    selector: 'app-trip-completed',
+    templateUrl: './trip-completed.component.html',
+    styleUrls: ['./trip-completed.component.css']
 })
-export class TripCompletedComponent implements OnInit{
-  tripID;
+export class TripCompletedComponent implements OnInit {
+    tripID;
 
-  constructor(private route:ActivatedRoute, private router:Router, private dialog:MatDialog, private toastr:ToastrService,
-              private escooterService:EscooterService) {
-  }
+    constructor(private route: ActivatedRoute, private router: Router, private dialog: MatDialog, private toastr: ToastrService,
+                private escooterService: EscooterService, private loadingService: LoadingService) {
+    }
 
-  ngOnInit() {
-
-
+    ngOnInit() {
 
 
-    this.route.queryParams.subscribe(params => {
+        this.route.queryParams.subscribe(params => {
 
-      if(!params['tripId']){
-        this.router.navigate(['/error'])
+                if (!params['tripId']) {
+                    this.router.navigate(['/error'])
 
-      }
-      this.tripID = params['tripId'];
-          this.toastr.success(  'Successfully Complete', "Trip: " +this.tripID, {
-            positionClass: 'toast-top-center'
-          });
+                }
+                this.tripID = params['tripId'];
+                this.loadingService.isSuccess.next({message: 'Successfully completed trip: ' + this.tripID})
 
-      setTimeout(() => {
-        this.openDialog();
-      }, 1000)
+                setTimeout(() => {
+                    this.openDialog();
+                }, 1000)
 
 
+            },
+            () => {
+                this.router.navigate(['/error'])
+            })
+    }
 
-    },
-        ()=> {
-          this.router.navigate(['/error'])
-        })
-  }
+    openDialog() {
+        const dialogRef = this.dialog.open(ReviewTripDialogComponent, {
+            height: '530px',
+            width: '600px',
+        });
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ReviewTripDialogComponent, {
-      height: '530px',
-      width: '600px',
-    });
+        dialogRef.componentInstance.userReview.pipe(switchMap(choice => {
 
-    dialogRef.componentInstance.userReview.pipe(switchMap(choice => {
+            choice.tripID = this.tripID;
 
-      choice.tripID = this.tripID;
+            console.log(choice)
 
-      console.log(choice)
+            return this.escooterService.createHostScooterReview(choice)
+        }))
 
-      return this.escooterService.createHostScooterReview(choice)
-    }))
+            .subscribe(choice => {
 
-        .subscribe(choice => {
+                console.log(choice);
+                dialogRef.close()
 
-      console.log(choice);
-      dialogRef.close()
+                this.loadingService.isSuccess.next({message: 'Your review has been submitted'})
 
-          this.toastr.success(  'Review Submitted', '', {
-            positionClass: 'toast-top-center'
-          });
+            }, () => {
+                this.loadingService.isError.next({message: 'An Error has occurred submitting your review'})
 
-    },()=>{
-          this.toastr.warning(  'Review not Submitted', '', {
-            positionClass: 'toast-top-center'
-          });
-        })
+            })
 
 
-  }
+    }
 
 }

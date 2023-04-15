@@ -185,6 +185,7 @@ public class UserServiceImpl implements UserService{
         currentUsr.setProfilePicture(verifyRequest.getProfilePicture());
         currentUsr.setCountry(countryFormatted);
         currentUsr.setLocation(addressFormatted);
+        currentUsr.setIsVerified(true);
         currentUsr.setAbout(verifyRequest.getAbout());
         currentUsr.setLastName(verifyRequest.getLastName());
         currentUsr.setFirstName(verifyRequest.getFirstName());
@@ -202,7 +203,6 @@ public class UserServiceImpl implements UserService{
         model.put("location", "Brian");
         model.put("environment_url", verifyRequest.getUrl());
         currentUsr.setUser_verification_code(randomCode);
-
 
         MailRequest mailRequest = new MailRequest(currentUsr.getFirstName() +" " +currentUsr.getLastName(), currentUsr.getEmail(),"torch.noreply@gmail.com","Verify Account");
         emailService.sendEmail(mailRequest, model);

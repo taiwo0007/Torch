@@ -106,7 +106,7 @@ public class EScooterReviewService {
     }
 
     @Transactional
-    void deleteByEscooterId(Integer id){
+  public   void deleteByEscooterId(Integer id){
         escooterReviewRepository.deleteByEscooterId(id);
     }
 }

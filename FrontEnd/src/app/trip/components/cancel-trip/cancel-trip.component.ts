@@ -5,6 +5,7 @@ import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-
 import {switchMap} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {EscooterService} from "../../../escooter/services/escooter.service";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-cancel-trip',
@@ -15,7 +16,7 @@ export class CancelTripComponent {
   tripID;
 
   constructor(private route:ActivatedRoute, private router:Router, private toastr:ToastrService,
-              private dialog:MatDialog, private escooterService:EscooterService) {
+              private dialog:MatDialog, private escooterService:EscooterService, private loadingService:LoadingService) {
   }
 
   ngOnInit() {
@@ -26,9 +27,7 @@ export class CancelTripComponent {
 
           }
           this.tripID = params['tripId'];
-            this.toastr.success(  'Successfully Cancelled', 'Trip: '+this.tripID, {
-                positionClass: 'toast-top-center'
-            });
+            this.loadingService.isSuccess.next({message:'Successfully cancelled trip: '+this.tripID})
 
             setTimeout(() => {
                 this.openDialog();
@@ -61,14 +60,12 @@ export class CancelTripComponent {
                 console.log(choice);
                 dialogRef.close()
 
-                this.toastr.success(  'Review Submitted', '', {
-                    positionClass: 'toast-top-center'
-                });
+                this.loadingService.isSuccess.next({message:'You\'re review has been submitted '})
+
 
             }, ()=>{
-                this.toastr.warning(  'Review not Submitted', '', {
-                    positionClass: 'toast-top-center'
-                });
+                this.loadingService.isError.next({message:'An Error has occurred please try again later '})
+
             })
 
 

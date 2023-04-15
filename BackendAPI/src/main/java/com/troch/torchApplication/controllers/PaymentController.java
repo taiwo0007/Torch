@@ -47,6 +47,13 @@ public class PaymentController {
 
     private StripeService stripeService;
 
+    //PROD KEY
+    private final static String ENDPOINT_SECRET = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
+
+    //DEV KEY
+//    private final static String ENDPOINT_SECRET = "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
+
+
     public PaymentController(StripeService stripeService) {
         this.stripeService = stripeService;
     }
@@ -56,14 +63,10 @@ public class PaymentController {
     public HttpStatus webhookFromStripe(@RequestBody String payload,
             @RequestHeader("Stripe-Signature") String sigHeader) throws StripeException {
 
-        String endpointSecret = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
-        // String endpointSecret =
-        // "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
-
         Event event = null;
 
         try {
-            event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
+            event = Webhook.constructEvent(payload, sigHeader, ENDPOINT_SECRET);
         } catch (SignatureVerificationException e) {
             // Invalid signature
             return HttpStatus.BAD_REQUEST;

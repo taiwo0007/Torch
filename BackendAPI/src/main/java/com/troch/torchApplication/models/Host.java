@@ -4,10 +4,7 @@ package com.troch.torchApplication.models;
 import com.fasterxml.jackson.annotation.*;
 import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -24,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Host {
 
     @Id

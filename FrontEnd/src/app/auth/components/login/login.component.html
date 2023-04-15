@@ -1,73 +1,65 @@
 <div style="overflow-x: hidden;" class="mt-3 ">
-  <div style="height: 100vh !important; overflow-y: hidden;" class="row my-auto">
-    <!-- <div style="background-color: #FFBD59; height: 100vh;" class="hero-container col-6 mx-auto text-center">
-        <img class="mx-auto text-center" style=" width: 90% !important; height: auto; margin: auto !important;" src="./images/login.png" width="" alt="" />
-    </div> -->
+    <div style="height: 100vh !important; overflow-y: hidden;" class="row my-auto">
+        <!-- <div style="background-color: #FFBD59; height: 100vh;" class="hero-container col-6 mx-auto text-center">
+            <img class="mx-auto text-center" style=" width: 90% !important; height: auto; margin: auto !important;" src="./images/login.png" width="" alt="" />
+        </div> -->
 
 
-    <div style=" height: 100%;" class="container col-sm-12 pt-5 col-md-6 my-auto">
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="p-5 mx-auto my-auto sign-in-form" style="
+        <div style=" height: 100%;" class="container col-sm-12 pt-5 col-md-6 my-auto">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="p-5 mx-auto my-auto sign-in-form" style="
 
               ">
 
-        <div  [@showHide]="isSuccessLogOut" class="alert alert-info d-flex align-items-center fade show alert-dismissible" *ngIf="isSuccessLogOut">
-          <strong class="mx-2">Success:</strong> <span>You've successfuly logged out.</span>
-        </div>
-        <div class="alert alert-info d-flex align-items-center fade show" *ngIf="isForbiddenNotice">
-          <strong class="mx-2">Unauthorized:</strong> <span>Login to visit this page</span>
-        </div>
-        <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
-
-        <h1 class="fw-bold pt-4 mb-3 pb-4 font-gro-bold"><span class="text-info font-gro-bold">Sign in</span> to your account to
-          book an electric scooter. </h1>
+                <h1 class="fw-bold pt-4 mb-3 pb-2 font-gro-bold"><span class="text-info font-gro-bold">Sign in</span> to
+                    your account to
+                    book an electric scooter. </h1>
 
 
-        <div  style="font-weight: bolder" class = "form-group mb-3">
-          <label class="form-label fw-bold" for ="email"> Email</label>
-          <input type="text" class = "form-control" id ="email" ngModel required name="email"
-                 placeholder="john@gmail.como" autofocus="autofocus">
-        </div>
+                <div style="font-weight: bolder" class="form-group mb-3">
+                    <label class="form-label font-gro-medium fw-bold" for="email"> Email</label>
+                    <input style="border:none !important; background-color: #f3f3f3; padding: 0.7rem" type="text"
+                           class="form-control  email "  id="email" ngModel required name="email"
+                           autofocus="autofocus">
+                </div>
 
 
-        <div class="form-group mb-3">
-          <label class="form-label fw-bold" style="font-weight: bolder" for="password">Password</label>
-          <input type="password" id="password" ngModel required name="password" class="form-control" placeholder="*******" />
-        </div>
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold font-gro-bold" style="font-weight: bolder"
+                           for="password">Password</label>
+                    <input style="border:none !important; background-color: #f3f3f3; padding: 0.7rem" type="password" id="password"
+                           ngModel required name="password" class=" password form-control"/>
+                </div>
 
-        <div class="form-group mb-3">
-          <div class="row">
-            <div class="col-12 col-sm-12 col-sm-offset-12">
-              <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="width: 100% !important;" type="submit" name="login-submit" id="login-submit"
-                      class="form-control btn btn-dark p-2 mt-4" value="Log In">
-             Log In
-              </button>
+                <div class="form-group mb-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-sm-offset-12 ">
+                            <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="width: 50% !important;"
+                                    type="submit" name="login-submit" id="login-submit"
+                                    class="form-control btn btn-dark p-2 mt-4 me-auto" value="Log In">
+                                Sign in
+                            </button>
 
-              <button *ngIf="isLoading" disabled style="width: 100% !important;" type="submit" name="login-submit" id="login-submit"
-                      class="form-control btn btn-dark p-2 mt-4" value="Log In">
+                            <button *ngIf="isLoading" disabled style="width: 50% !important;" type="submit"
+                                    name="login-submit" id="login-submit"
+                                    class="form-control btn btn-dark p-2 mt-4" value="Log In">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                            <div class="bg-dark">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                Log In
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-
-
-              </button>
-
-
-              <div class="bg-dark">
-
-              </div>
-            </div>
-          </div>
+                <div id="emailHelp" class="form-text py-4 text-start mt-2">
+                    Don't have an account? <a [routerLink]="['../signup']" class="link text-info">Sign Up</a>
+                </div>
+            </form>
         </div>
 
-        <div id="emailHelp" class="form-text py-4 text-center mt-2">
-          Don't have an account? <a [routerLink]="['../signup']" class="link text-info">Sign Up</a>
+        <div style="overflow-x: hidden;" class="col-sm-12 col-md-6 mx-auto remove-mb">
+            <img style="width: 100%; height: 100%; overflow-y: hidden;" class=" text-end me-5"
+                 src="../../../../assets/images/website/signin.gif" alt=""/>
         </div>
-      </form>
+
     </div>
-
-    <div style="overflow-x: hidden;" class="col-sm-12 col-md-6 mx-auto remove-mb">
-      <img style="width: 100%; height: 100%; overflow-y: hidden;" class=" text-end me-5" src="../../../../assets/images/website/signin.gif" alt="" />
-    </div>
-
-  </div>
 </div>

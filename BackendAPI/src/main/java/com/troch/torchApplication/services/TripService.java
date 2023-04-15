@@ -78,7 +78,7 @@ public class TripService {
         return tripRepository.fingbyFormatedTripId(trip_id);
     }
 
-    void deleteByEscooterId(Integer id){
+    public void deleteByEscooterId(Integer id){
         tripRepository.deleteByEscooterId(id);
     }
 

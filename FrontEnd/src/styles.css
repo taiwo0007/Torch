@@ -48,6 +48,7 @@
 /*}*/
 .toast-top-center {
     margin-top: 8px !important;
+    margin-right: 6px !important;
     /*align-self: center !important;*/
     /*left: 42vw !important;*/
 
@@ -95,6 +96,10 @@ h1, h2, h3, h4, h5, h6, h7 {
 .font-gro-bold {
     font-family: 'BasicGroBold', sans-serif !important;
 
+}
+
+.font-helvetica{
+    font-family: Helvetica, sans-serif !important;
 }
 
 
@@ -163,6 +168,6 @@ label.star {
     display: block;
 
     border-radius: 15px !important;
-    margin-top: 3rem !important;
+    margin-top: 1rem !important;
 }
 

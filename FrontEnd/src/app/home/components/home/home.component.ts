@@ -3,7 +3,8 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {HostService} from "../../../host/services/host.service";
 import {TopHostsCardDto} from "../../../host/models/top-hosts-card.dto";
 import {delay} from "rxjs";
-import {Route, Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
+import {LoadingService} from "../../../shared/services/loading.service";
 
 @Component({
   selector: 'app-home',
@@ -20,13 +21,30 @@ export class HomeComponent implements OnInit {
   private location: any;
 
 
-  constructor(private authService: AuthService, private hostService:HostService, private router:Router) { }
+  constructor(private authService: AuthService, private hostService:HostService, private router:Router, private route:ActivatedRoute,
+  private loadingSerivce:LoadingService) { }
 
   ngOnInit(): void {
 
     this.authService.user.subscribe((data:boolean) => this.isAuthenticated = data )
     this.initMap();
     this.getHostsFromApi();
+
+    this.route.queryParams.subscribe(data => {
+      if (data['isLoggedIn']) {
+        this.authService.saveLocalVerifyInfo()
+
+        this.loadingSerivce.isSuccess.next({message: 'You have successfully logged in'})
+
+        this.loadingSerivce.isLoading.next(false);
+
+
+
+      }
+    })
+
+
+
 
   }
 

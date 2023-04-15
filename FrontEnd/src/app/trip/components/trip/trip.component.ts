@@ -111,9 +111,8 @@ export class TripComponent implements OnInit, AfterViewInit {
         this.route.queryParams.subscribe((queryParams) => {
             this.isNewlyBooked = queryParams['success'];
             if (this.isNewlyBooked) {
-                this.toastr.success('Trip Booked Successfully', '', {
-                    positionClass: 'toast-top-center'
-                });
+
+                this.loadingService.isSuccess.next({message: 'Your Trip has been booked successfully'})
             }
 
         }, error1 => {

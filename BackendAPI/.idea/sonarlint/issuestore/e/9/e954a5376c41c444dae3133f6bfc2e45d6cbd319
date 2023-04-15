@@ -1,0 +1,25 @@
+
+`	java:S112_"FDefine and throw a dedicated exception instead of using a generic one.(°‰«ğúÿÿÿÿ
+J
+java:S37405"/Provide the parametrized type for this generic.(Éå’ªüÿÿÿÿ
+J
+java:S3740@"/Provide the parametrized type for this generic.(Á¯àıÿÿÿÿ
+J
+java:S3740K"/Provide the parametrized type for this generic.(‡¯˜Ûúÿÿÿÿ
+J
+java:S3740P"/Provide the parametrized type for this generic.(¦Á²øÿÿÿÿ
+J
+java:S3740T"/Provide the parametrized type for this generic.(‚í·»üÿÿÿÿ
+D
+java:S3740["/Provide the parametrized type for this generic.(Î±l
+J
+java:S3740k"/Provide the parametrized type for this generic.(Á¯àıÿÿÿÿ
+J
+java:S3740w"/Provide the parametrized type for this generic.(ãè­Ûüÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê
+7
+java:S1116`"Remove this empty statement.(ôŸìúÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'com.google.api.Http'.(î°Åùøÿÿÿÿ
+d
+java:S1128"NRemove this unused import 'java.sql.SQLIntegrityConstraintViolationException'.(¤¡†

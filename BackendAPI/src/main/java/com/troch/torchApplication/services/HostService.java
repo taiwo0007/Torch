@@ -1,7 +1,6 @@
 package com.troch.torchApplication.services;
 
 import com.troch.torchApplication.Utilities.JwtUtil;
-import com.troch.torchApplication.controllers.HostController;
 import com.troch.torchApplication.dto.CreateAdRequest;
 import com.troch.torchApplication.dto.ErrorResponse;
 import com.troch.torchApplication.dto.TopHostsCardDto;
@@ -10,14 +9,13 @@ import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.HostRepository;
 import com.troch.torchApplication.repositories.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.swing.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,16 +59,14 @@ public class HostService {
         return hostRepository.findById(id);
     }
 
-    public ResponseEntity<List<EScooter>> getHostEscooters(Integer id){
+    public ResponseEntity getHostEscooters(Integer id){
 
-//        User user = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
-//        if (user.getHost() == null){
-//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//
-//        Integer host_id = user.getHost().getId();
+        Optional<Host> hostOptional =  hostRepository.findById(id);
+        if(hostOptional.isEmpty()){
+            return new ResponseEntity<>(new ErrorResponse("Host Scooters not found"), HttpStatus.NOT_FOUND);
+        }
 
-        Host host = hostRepository.findById(id).get();
+        Host host = hostOptional.get();
 
         logger.info("Host objec"+host);
 
@@ -110,7 +106,7 @@ public class HostService {
         return new ResponseEntity<>(new ErrorResponse("You must be signed in & verified"), HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity createAd(CreateAdRequest createAdRequest, String email) throws ParseException {
+    public ResponseEntity createAd(@NotNull CreateAdRequest createAdRequest, String email) throws ParseException {
 
         Optional<Host> host = hostRepository.findById(createAdRequest.getHostId());
         Optional<EScooter> eScooter = eScooterService.findEScooter(createAdRequest.getEscooterId());
@@ -128,7 +124,7 @@ public class HostService {
         }
         logger.info("host"+host.get().getTotalAdDays());
 
-        logger.info("ewscooter"+createAdRequest.getAdDate());
+        logger.info(String.format("Created ad date %s", createAdRequest.getAdDate()));
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -159,7 +155,6 @@ public class HostService {
         List<TopHostsCardDto> topHostsCardDtos = new ArrayList<>();
 
         for(User u: topHosts){
-
 
             topHostsCardDtos.add(
                     TopHostsCardDto.builder()

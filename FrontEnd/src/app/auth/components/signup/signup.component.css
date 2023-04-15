@@ -1,8 +1,21 @@
 input.ng-touched.ng-invalid{
-  border: 2px solid red;
+  border: 2px solid red ;
 }
 input.ng-touched.ng-valid{
-  border: 2px solid green;
+  border: 2px solid green ;
+}
+
+.passwordAgain:focus, .email:focus, .password:focus{
+  background-color: white !important;
+}
+.passwordAgain:hover, .email:hover, .password:hover{
+
+}
+
+a{
+  text-decoration: none;
+  list-style-type: none;
+
 }
 
 @media(max-width: 575.68px){
@@ -15,6 +28,8 @@ input.ng-touched.ng-valid{
 
   }
 }
+
+
 
 @media(min-width: 580.68px){
   .my-nav-m {

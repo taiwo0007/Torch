@@ -48,9 +48,9 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
       if(this.password.nativeElement.value){
         if(this.passwordAgain.nativeElement.value){
           this.isNoMatch = true;
-          this.passwordAgain.nativeElement.style.border = '2px solid red';
+          this.passwordAgain.nativeElement.style.border = '2px solid red !important';
           if(this.passwordAgain.nativeElement.value == this.password.nativeElement.value){
-            this.passwordAgain.nativeElement.style.border = '2px solid green';
+            this.passwordAgain.nativeElement.style.border = '2px solid green !important';
             this.isNoMatch = false;
           }
         }
@@ -86,6 +86,9 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
         this.loadingService.isLoadingLine.next(false);
 
         this.error = error.error.message;
+
+        this.loadingService.isError.next({message:this.error})
+
 
 
         this.emailInput.nativeElement.style.border = '2px solid red'

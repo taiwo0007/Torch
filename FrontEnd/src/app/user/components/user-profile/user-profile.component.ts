@@ -32,9 +32,9 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
             this.route.queryParams.subscribe(data => {
                 if(data['success']) {
                     this.authService.saveLocalVerifyInfo()
-                    this.toastr.success('Check your email to finish verification', 'Email sent', {
-                        positionClass: 'toast-top-center'
-                    });
+
+                    this.loadingSerivce.isNotice.next({message:'Verification email has been sent'})
+
                     this.loadingSerivce.isLoading.next(false);
                     this.isLoading = false;
 
@@ -49,12 +49,10 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
 
                 if(data['subscriptionInitiated']) {
                     if (this.userData.accountType) {
-                        this.toastr.success(this.userData.accountType + ' subscription activated','', {
-                          positionClass: 'toast-top-center'
-                        });
+                        this.loadingSerivce.isSuccess.next({message:'Your Subscription is activated'})
                     }
                     else {
-                        this.toastr.error('Subscription not added');
+                        this.loadingSerivce.isError.next({message:'Your Subscription has not been activated'})
 
                     }
                     this.loadingSerivce.isLoading.next(false);

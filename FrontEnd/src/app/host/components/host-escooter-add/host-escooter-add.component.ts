@@ -151,9 +151,8 @@ export class HostEscooterAddComponent implements OnInit{
       this.isHostCreated = params['hostCreated'];
 
       if(this.isHostCreated){
-          this.toastr.success(  'Host Created', "", {
-              positionClass: 'toast-top-center'
-          });
+          this.loadingService.isSuccess.next({message:'Host account successfully created. Host ID: '+params['hostId']})
+
       }
       console.log(params['hostId'])
       this.hostID = params['hostId'];

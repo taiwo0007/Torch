@@ -33,11 +33,16 @@ export class BecomeHostComponent implements OnInit{
 
       if(error.error)
       {
+
         this.errorMessage = error.error.message
+        this.loadingService.isAlert.next({message:this.errorMessage})
+
         return;
       }
       else {
         this.errorMessage = error;
+        this.loadingService.isAlert.next({message:this.errorMessage})
+
         return;
       }})
 

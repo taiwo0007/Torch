@@ -72,7 +72,7 @@
 
                 <!--        <i class="fa fa-th fw-light" aria-hidden="true"></i>-->
                 <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
-                     class="rounded-circle " src="./assets/images/website/avatar.png" alt="">
+                     class="rounded-circle " src="https://api.dicebear.com/6.x/micah/svg?seed={{userEmail}}&backgroundColor=b6e3f4" alt="">
 
                 <img *ngIf="profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
                      class="rounded-circle " [src]="profileImage" alt="">
@@ -90,7 +90,7 @@
                 <hr class="dropdown-divider bg-dark">
             </li>
             <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/profile']">
+                <a style="width: 100%" class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/profile']">
                     <mat-icon class="my-auto me-2">person</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Account</p></a>
             </li>
@@ -148,10 +148,26 @@
     <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5" style="left: 0; bottom:0"
                       mode="indeterminate"></mat-progress-bar>
 
-    <alert-message *ngIf="isNotice" [isNotice]="true" [message]="'This is an alert'"
-                   class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 43%"></alert-message>
 
+    <alert-message [@showHided]="isNotice ? 'show' : 'hide'"  [isNotice]="isNotice" [message]="alertMessage"
+                    class="position-absolute mt-5 mx-auto text-center"
+                    style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+
+
+    <alert-message [@showHided]="isAlert ? 'show' : 'hide'"  [isAlert]="isAlert" [message]="alertMessage"
+                   class="position-absolute mt-5 mx-auto text-center"
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+
+
+
+    <alert-message [@showHided]="isSuccess ? 'show' : 'hide'"  [isSuccess]="isSuccess" [message]="alertMessage"
+                   class="position-absolute mt-5 mx-auto text-center"
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+
+
+    <alert-message [@showHided]="isError ? 'show' : 'hide'"  [isError]="isError" [message]="alertMessage"
+                   class="position-absolute mt-5 mx-auto text-center"
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
 </nav>
 
 

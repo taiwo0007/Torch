@@ -94,6 +94,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile-nav-bar.component';
 import { LegacyInsuranceComponent } from './shared/components/legacy-insurance/legacy-insurance.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
+import { CookieNoticeComponent } from './shared/components/cookie-notice/cookie-notice.component';
 
 
 @NgModule({
@@ -158,6 +159,7 @@ import { PrivacyPolicyComponent } from './shared/components/privacy-policy/priva
      MobileNavBarComponent,
      LegacyInsuranceComponent,
      PrivacyPolicyComponent,
+     CookieNoticeComponent,
 
   ],
     imports: [

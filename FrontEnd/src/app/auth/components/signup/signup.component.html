@@ -1,65 +1,66 @@
 <div style="overflow-y: hidden;" class="mt-2">
-  <div style="height: 100vh !important;" class="row my-auto ">
-    <div style="overflow-y: hidden;" class="col-md-6 col-sm-12 mx-auto text-end remove-mb">
-      <img style="width: 50rem; height: 100%;" class=" text-end"  src="assets/images/website/signup.gif" alt="" />
-    </div>
-
-    <div class="col-md-6 col-sm-12 my-auto">
-      <div class=" pt-5 my-auto">
-        <div class="p-5 my-auto sign-up-form" style="
-
-
-              ">
-          <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
-            <alert-message *ngIf="error" [isError]="true" [message]="error"></alert-message>
-            <h1 class="fw-bold pt-2 mb-3 pb-2 font-gro-bold"><span class="text-info font-gro-bold">Sign up</span> to make an account on Torch </h1>
-
-<!--            <div style="" class="mb-3 d-flex justify-content-between form-group">-->
-<!--              <div class="form-group" style="width: 14.5rem !important;">-->
-<!--                <label class="form-label fw-bold" for="firstName"> First Name </label>-->
-<!--                <input id="firstName" ngModel name="firstName" class="form-control" th:field="*{firstName}"-->
-<!--                       required autofocus="autofocus" placeholder="John"/>-->
-
-<!--              </div>-->
-<!--              <div class="form-group" style="width: 14.5rem !important;">-->
-<!--                <label class="form-label fw-bold" for="lastName"> Last Name </label>-->
-<!--                <input id="lastName" ngModel name="lastName" class="form-control" placeholder="doe"-->
-<!--                       required autofocus="autofocus" />-->
-<!--              </div>-->
-<!--            </div>-->
-            <div class="mb-3 form-group">
-              <label for="email" class="form-label fw-bold">Email</label>
-              <input  #emailInput email required placeholder="john@gmail.com" name="email" ngModel type="email" class="form-control" id="email" />
-<!--              <small *ngIf="emailInput.dirty && !error" id="emailHelp" class="form-text text-success fw-bold mx-auato text-center">We'll never share your email with anyone else.</small>-->
-              <small *ngIf="error" id="emailHelp" class="form-text text-danger mx-auto text-center">Try another email address</small>
-            </div>
-
-            <div class="mb-3 form-group">
-              <label for="password" class=" form-label fw-bold">Password</label>
-              <input #password #passwordNG="ngModel" ngModel [minLength]="5" required  placeholder="*******"  name="password"  type="password" class="form-control mb-3" id="password" />
-
-              <label for="passwordAgain" class=" form-label fw-bold">Enter Password again</label>
-              <input #passwordAgainNG="ngModel" #passwordAgain ngModel [minLength]="5" required placeholder="*******"  name="passwordAgain"  type="password" class="form-control" id="passwordAgain" />
-            </div>
-            <small *ngIf="isNoMatch"  class="form-text text-danger mx-auto text-center fw-bold">Passwords do not match</small>
-
-            <div class="form-group">
-              <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch" style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3">Create Account</button>
-              <button *ngIf="isLoading"  style="width: 100%" type="submit" class="btn btn-info text-light p-2 mt-3" disabled>
-                Create Account
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              </button>
-            </div>
-
-            <div  class="form-text py-4 text-center pt-4">
-              Already have an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
-            </div>
-          </form>
+    <div style="height: 100vh !important;" class="row my-auto ">
+        <div style="overflow-y: hidden;" class="col-md-6 col-sm-12 mx-auto text-end remove-mb">
+            <img style="width: 50rem; height: 100%;" class=" text-end" src="assets/images/website/signup.gif" alt=""/>
         </div>
-      </div>
+
+        <div class="col-md-6 col-sm-12 my-auto">
+            <div class=" pt-5 my-auto">
+                <div class="p-5 my-auto sign-up-form" style=" ">
+                    <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
+                        <h1 class="fw-bold  mb-3 pb-2 font-gro-bold"><span
+                                class="text-info font-gro-bold">Sign up</span> to make an account on Torch </h1>
+                        <div class="mb-3 form-group">
+                            <label for="email" class="form-label fw-bold">Email</label>
+                            <input style="border:none ; background-color: #f3f3f3; padding: 0.7rem" #emailInput email required name="email" ngModel
+                                   type="email" class="form-control email " id="email"/>
+                            <!--              <small *ngIf="emailInput.dirty && !error" id="emailHelp" class="form-text text-success fw-bold mx-auato text-center">We'll never share your email with anyone else.</small>-->
+                            <small *ngIf="error" id="emailHelp" class="form-text text-danger mx-auto text-center">Try
+                                another email address</small>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="password" class=" form-label fw-bold">Password</label>
+                            <input #password #passwordNG="ngModel" ngModel [minLength]="5" required
+                                   style="border:none ; background-color: #f3f3f3; padding: 0.7rem" name="password" type="password" class="form-control mb-3 password"
+                                   id="password"/>
+
+                            <label for="passwordAgain" class=" form-label fw-bold">Enter Password</label>
+                            <input #passwordAgainNG="ngModel" #passwordAgain ngModel placeholder="6+ charachters" [minLength]="5" required
+                                   style="border:none ; background-color: #f3f3f3; padding: 0.7rem" name="passwordAgain" type="password" class="form-control passwordAgain"
+                                   id="passwordAgain"/>
+
+                            <small *ngIf="isNoMatch" class="form-text text-danger mx-auto text-center fw-bold">Passwords do
+                                not match</small>
+                        </div>
+
+                        <div style="line-height: 1rem; padding-top: 0.4rem" class="form-check mb-2 w-100 text-secondary">
+                            <input class="form-check-input" ngModel #termsNG="ngModel" name="condition" type="checkbox" value="" id="invalidCheck" required>
+                            <small class="form-check-label " for="invalidCheck">
+                                Creating an account means you’re okay with our <a [routerLink]="['/privacy-policy']">Terms of Service</a> ,<a [routerLink]="['/privacy-policy']">Privacy Policy</a> , and our <a [routerLink]="['/legal-insurance']">Legal Information</a>  .
+                            </small>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch" style="width: 50%"
+                                    type="submit" class="btn btn-info text-light p-2 mt-3">Create Account
+                            </button>
+                            <button *ngIf="isLoading" style="width: 50%" type="submit"
+                                    class="btn btn-info text-light p-2 mt-3" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <div class="form-text py-4 text-start pt-4">
+                            Already have an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-
-
-
-  </div>
 </div>

@@ -10,6 +10,8 @@ import {SignupRequestPayload} from "../payloads/signup-request.payload";
 import {VerifyRequestPayload} from "../payloads/verify-request.payload";
 import {VerificationDialogComponent} from "../../shared/components/verification-dialog/verification-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {CookieConsent} from "../../user/models/cookie.mode";
+import {toUnicode} from "punycode";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,40 @@ export class AuthService {
     tempUserData.isVerifiedConsent = true;
     localStorage.setItem('userData', JSON.stringify(tempUserData));
     this.user.next(tempUserData)
+  }
+
+   hasShownCookie(): boolean{
+
+    // localStorage.setItem('cookieConsent', JSON.stringify(cookieConsent));
+    let cookieConsentRetrieved = JSON.parse(localStorage.getItem('cookieConsent' || undefined));
+
+    if(cookieConsentRetrieved.isConsent){
+      console.log("went in the consent for if statement")
+      return true;
+    }
+    let newCookieConsentRetrieved = new CookieConsent('yes', null);
+    localStorage.setItem('cookieConsent', JSON.stringify(newCookieConsentRetrieved));
+
+    return false;
+
+  }
+
+  saveCookieConsent(consent:boolean){
+    console.log(consent +"save cookie consent")
+
+    let newCookieConsentRetrieved = new CookieConsent('yes', consent);
+    localStorage.setItem('cookieConsent', JSON.stringify(newCookieConsentRetrieved));
+
+
+  }
+
+  saveLocalCookieConsent(){
+    this.isVerifiedConsent.next(true);
+    let tempUserData = JSON.parse(localStorage.getItem('userData' || '{}'))
+    tempUserData.isCookieConsent = true;
+    localStorage.setItem('userData', JSON.stringify(tempUserData));
+    this.user.next(tempUserData)
+
   }
 
   saveLocalVerifyInfo(){

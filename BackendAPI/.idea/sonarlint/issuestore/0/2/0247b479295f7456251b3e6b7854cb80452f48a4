@@ -1,0 +1,11 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê
+s	java:S116"YRename this field "API_SECRET_KEY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êë«›üÿÿÿÿ
+œ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ì¾ñ‹ûÿÿÿÿ
+Q
+java:S2696"6Make the enclosing method "static" or remove this set.(ñ»Ğ©ÿÿÿÿÿ
+Q
+java:S26967"6Make the enclosing method "static" or remove this set.(ñ»Ğ©ÿÿÿÿÿ
+N
+java:S1144"3Remove this unused private "createCustomer" method.(¯Ñâœÿÿÿÿÿ

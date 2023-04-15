@@ -7,6 +7,9 @@ import {BehaviorSubject, Subject} from "rxjs";
 export class LoadingService {
 
   isAlert = new Subject<any>();
+  isError= new Subject<any>();
+  isNotice= new Subject<any>();
+  isSuccess= new Subject<any>();
   isRemoveFooter = new BehaviorSubject(false);
   isLoading = new BehaviorSubject(false);
   isLoadingLine = new BehaviorSubject(false);

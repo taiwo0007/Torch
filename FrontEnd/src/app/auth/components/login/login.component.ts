@@ -43,8 +43,13 @@ isForbiddenNotice: false;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.isSuccessLogOut = params['success'];
-      this.isForbiddenNotice = params['loginNotice'];
+
+      if(params['success']){
+        this.loadingService.isSuccess.next({message: 'You have successfully logged out'})
+      }
+      if(params['loginNotice']){
+        this.loadingService.isAlert.next({message: 'You must login to visit this page'})
+      }
 
       console.log(this.isSuccessLogOut)
     }, error1 => {
@@ -72,7 +77,7 @@ isForbiddenNotice: false;
 
           this.isLoading = false;
 
-      this.router.navigate(['/'])
+      this.router.navigate(['/'],{queryParams: {isLoggedIn: true}})
     },
       error => {
         console.log(error)
@@ -81,9 +86,11 @@ isForbiddenNotice: false;
         this.isLoading = false;
         if(error.error.message){
           this.error = error.error.message;
+          this.loadingService.isError.next({message:'Error! '+ this.error})
+
         }
         else{
-          this.error = "An unexpected Error has occurred"
+          this.loadingService.isError.next({message: 'An unexpected Error has occurred'})
 
         }
 

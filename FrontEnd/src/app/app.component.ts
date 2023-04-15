@@ -14,6 +14,7 @@ export class AppComponent {
   title = 'torch-front-end';
   isAuthUrl = false;
   isLoading = false;
+  showCookie:boolean;
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
@@ -29,10 +30,25 @@ export class AppComponent {
     });
   }
 
+  onCookieAccept(consent:boolean){
+    console.log(consent)
+    this.authService.saveCookieConsent(consent);
+    this.showCookie = !this.showCookie;
+  }
+
   ngOnInit() {
+
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        window.scrollTo(0,0);
+      }
+    })
+
 
 
     this.authService.autoLogin();
+
+    this.showCookie = this.authService.hasShownCookie();
 
     this.authService.user.subscribe(userData => {
         if(userData.isVerified == false && userData.isVerifiedConsent == false) {
@@ -51,13 +67,6 @@ export class AppComponent {
         () => {
       console.log("not verified")
         })
-
-    this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd){
-        window.scrollTo(0,0);
-      }
-    })
-
     this.route.params.subscribe((params) => {
       console.log(params, this.router.url)
       this.router.url

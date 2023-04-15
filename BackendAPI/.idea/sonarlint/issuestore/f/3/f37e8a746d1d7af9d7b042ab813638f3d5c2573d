@@ -1,0 +1,11 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥‚‰
+f	java:S116C"QRename this field "Active" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è®Šå
+[
+java:S1659f"@Declare "two" and all following declarations on a separate line.(õ‚¡·ÿÿÿÿÿ
+[
+java:S1128"ERemove this unused import 'org.hibernate.annotations.LazyCollection'.(…÷äð
+f
+java:S1128"KRemove this unused import 'org.hibernate.annotations.LazyCollectionOption'.(ÿ÷ê˜ùÿÿÿÿ
+g
+java:S1128	"LRemove this unused import 'org.springframework.web.multipart.MultipartFile'.(ôŸœžÿÿÿÿÿ
