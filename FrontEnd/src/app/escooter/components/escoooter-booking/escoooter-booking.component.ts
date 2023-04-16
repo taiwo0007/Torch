@@ -8,7 +8,6 @@ import {
     Appearance, StripeError
 } from '@stripe/stripe-js';
 import {environment} from "../../../../environments/environment";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
@@ -19,6 +18,7 @@ import {Host} from "../../../host/models/host.interface";
 import {HostService} from "../../../host/services/host.service";
 import {AuthService} from "../../../auth/services/auth.service";
 import {Discount} from "../../models/discount.interface";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({

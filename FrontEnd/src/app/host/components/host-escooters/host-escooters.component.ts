@@ -1,30 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {HostService} from "../../services/host.service";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import { HttpErrorResponse} from "@angular/common/http";
 import {Escooter} from "../../../escooter/models/escooter.interface";
 import {ActivatedRoute} from "@angular/router";
-import {User} from "../../../user/models/user.model";
-import {UserService} from "../../../user/services/user.service";
 import {AuthService} from "../../../auth/services/auth.service";
-import {
-  VerificationDialogComponent
-} from "../../../shared/components/verification-dialog/verification-dialog.component";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
-import {catchError, delay, exhaustMap, mergeMap, of, switchMap, tap} from "rxjs";
-import {data} from "autoprefixer";
+import {catchError, delay, of, switchMap} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Host} from "../../models/host.interface";
 import {LoadingService} from "../../../shared/services/loading.service";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {
-  AreYouSureDialogCancelComponent
-} from "../../../shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component";
-import {
   DeleteScooterDialogComponent
 } from "../../../shared/components/delete-scooter-dialog/delete-scooter-dialog.component";
 import {DialogService} from "../../../shared/services/dialog.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-host-escooters',

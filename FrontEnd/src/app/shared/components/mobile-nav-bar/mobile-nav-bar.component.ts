@@ -2,15 +2,11 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import { BsDropdownDirective } from 'ngx-bootstrap/dropdown';
-import {User} from "../../../user/models/user.model";
 import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
 import {LoadingService} from "../../services/loading.service";
-import {DialogService} from "../../services/dialog.service";
-import {VerificationDialogComponent} from "../verification-dialog/verification-dialog.component";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {SubscriptionModalComponent} from "../../../user/components/subscription-modal/subscription-modal.component";
-import {MatLegacyChipsModule as MatChipsModule} from "@angular/material/legacy-chips";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-mobile-nav-bar',

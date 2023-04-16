@@ -3,9 +3,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
 import {switchMap} from "rxjs";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-cancel-trip',
@@ -46,7 +46,7 @@ export class CancelTripComponent {
             width: '600px',
         });
 
-        dialogRef.componentInstance.userReview.pipe(switchMap(choice => {
+        dialogRef.componentInstance.userReview.pipe(switchMap((choice:any) => {
 
             choice.tripID = this.tripID;
 

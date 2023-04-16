@@ -20,25 +20,11 @@ import {MatDatepickerInputEvent} from "@angular/material/datepicker";
     selector: 'app-start-trip-form',
     templateUrl: './start-trip-form.component.html',
     styleUrls: ['./start-trip-form.component.css'],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
 })
 export class StartTripFormComponent implements OnInit, AfterViewInit {
 
 
 
-    startDate: Date = new Date();
-    endDate: Date = new Date(this.startDate.getTime() + (24 * 60 * 60 * 1000));
-
-    // define a function to filter the selectable dates
-    dateFilter = (date: Date | null) => {
-        // return true if the date is between startDate and endDate
-        return date >= this.startDate && date <= this.endDate;
-    }
-
-    // update the end date when the start date changes
-    onStartDateChange(event: MatDatepickerInputEvent<Date>) {
-        this.endDate = new Date(event.value.getTime() + (24 * 60 * 60 * 1000));
-    }
 
 
     isAuthenticated = false;

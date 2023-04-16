@@ -31,3 +31,5 @@ i
 9src/main/java/com/troch/torchApplication/models/Trip.java,7/9/7925f272797339ba5e7e05ad02f439ce34342a09
 n
 >src/main/java/com/troch/torchApplication/models/Insurance.java,c/3/c314531df6ed3c7c0519a9e1fbfee3f8c37c1fe4
+i
+9src/main/java/com/troch/torchApplication/models/Host.java,a/8/a8a58233db32ae504d318728bf19a0502ecfa149

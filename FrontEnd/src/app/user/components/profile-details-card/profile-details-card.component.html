@@ -1,4 +1,4 @@
-<div class="card border-0 shadow mx-auto mobile-arrange mr-b mb-wd" style="height: 100%">
+<div class="card border-0 shadow-sm rounded-3  mx-auto mobile-arrange mr-b mb-wd pb-5" style="height: max-content">
 
 
   <div style="position: relative !important;" class="mx-auto mt-3">
@@ -20,37 +20,3 @@
 
 
   <span class="text-info text-center" style="font-size: 1rem;  ">{{ userDetails?.userTrips ? userDetails?.userTrips: 0 }} trips</span>
-  <div class="card-body p-4 mx-0">
-    <!-- <h5 class="card-title">Card title</h5> -->
-
-    <div *ngIf="userDetails?.isHost"   class="row border-top border-light  py-3">
-      <div  class="col-6 my-auto">
-        <p  class="card-text  my-auto ">{{userDetails?.host ? 'Host ID #' : 'User id'}}</p>
-      </div>
-      <div  class="col-6 my-auto">
-        <p th:text="${user.getHost().getId()}" class=" text-info text-end my-auto">{{userDetails?.host ? userDetails?.host : userDetails?.id}}</p>
-      </div>
-
-    </div>
-    <div class="row border-top border-light d py-3">
-      <div class="col-6 my-auto">
-        <p class="card-text  my-auto ">Your rating</p>
-      </div>
-      <div class="col-6 my-auto">
-        <p  th:text="${user.getRating()}"  class=" text-info text-end my-auto"> {{ userDetails?.rating ? userDetails?.rating : 0.0}}</p>
-      </div>
-
-    </div>
-    <div class="row border-top border-light  py-3">
-      <div class="col-6 my-auto">
-        <p class="card-text  my-auto ">Active Trips</p>
-      </div>
-      <div class="col-6 my-auto">
-        <p  th:text="${user.getUserTrips()}" class=" text-info text-end my-auto">0</p>
-      </div>
-
-    </div>
-  </div>
-
-
-</div>

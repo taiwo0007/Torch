@@ -9,9 +9,8 @@ import {Router} from "@angular/router";
 import {SignupRequestPayload} from "../payloads/signup-request.payload";
 import {VerifyRequestPayload} from "../payloads/verify-request.payload";
 import {VerificationDialogComponent} from "../../shared/components/verification-dialog/verification-dialog.component";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {CookieConsent} from "../../user/models/cookie.mode";
-import {toUnicode} from "punycode";
+import {MatDialog} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'

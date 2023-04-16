@@ -1,21 +1,5 @@
 
 
-
-<mat-form-field>
-    <input matInput [matDatepicker]="picker1" placeholder="Start date" [(ngModel)]="startDate"
-           (dateChange)="onStartDateChange($event)">
-    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-    <mat-datepicker #picker1 [matDatepickerFilter]="dateFilter"
-                   ></mat-datepicker>
-</mat-form-field>
-<mat-form-field>
-    <input matInput [matDatepicker]="picker2" placeholder="End date" [(ngModel)]="endDate">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker2 [matDatepickerFilter]="dateFilter"
-                    ></mat-datepicker>
-</mat-form-field>
-
-
 <div >
     <p class="fw-bold mt-3 text-capitalize text-uppercase font-gro-bold">Trip Start Times</p>
     <form [formGroup]="startTripForm" (ngSubmit)="onSubmit()" class="mt-2">

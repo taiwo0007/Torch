@@ -1,17 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {
-    VerificationDialogComponent
-} from "../../../shared/components/verification-dialog/verification-dialog.component";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
+
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
-import {ReviewFormComponent} from "../../../escooter/components/review-form/review-form.component";
 import {ToastrService} from "ngx-toastr";
-import {catchError, of, switchMap} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
-import {HostService} from "../../../host/services/host.service";
+import {switchMap} from "rxjs";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-trip-completed',
@@ -54,7 +49,7 @@ export class TripCompletedComponent implements OnInit {
             width: '600px',
         });
 
-        dialogRef.componentInstance.userReview.pipe(switchMap(choice => {
+        dialogRef.componentInstance.userReview.pipe(switchMap((choice:any) => {
 
             choice.tripID = this.tripID;
 

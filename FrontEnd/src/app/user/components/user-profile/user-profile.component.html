@@ -1,11 +1,11 @@
-<section *ngIf="!isLoading" style="max-width: 89% !important; font-family: Arial, Helvetica, sans-serif" class="container mx-auto fw-lighter pt-5 mt-5">
-  <div class="row mobile-arrange mx-auto pt-3 mb-3">
+<section *ngIf="!isLoading" style="margin-top: 7rem !important; height:80vh!important ;max-width: 89% !important; font-family: Arial, Helvetica, sans-serif" class="container my-auto mx-auto fw-lighter pt-5 mt-5">
+  <div class="row my-auto mobile-arrange mx-auto pt-3 mb-3">
     <div style="width: auto;" class="col-md-4 col-sm-12  mx-auto mobile-arrange">
-      <app-profile-details-card class="mobile-arrange .mr-b" [userDetails]="userData"></app-profile-details-card>
+      <app-profile-details-card class="mobile-arrange my-auto mr-b" [userDetails]="userData"></app-profile-details-card>
     </div>
     <div class="col-md-8 col-sm-12 mt-sm mx-auto">
 
-      <app-profile-form-card [host]="host" [InitialUserDetails]="userData"></app-profile-form-card>
+      <app-profile-form-card class="my-auto" [host]="host" [InitialUserDetails]="userData"></app-profile-form-card>
     </div>
   </div>
 </section>
