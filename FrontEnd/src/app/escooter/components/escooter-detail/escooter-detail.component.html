@@ -1,5 +1,5 @@
-<div *ngIf="!isLoading">
-    <section class="header container mt-5 pt-5">
+<div class="mx-auto" style="width: 78vw !important;" *ngIf="!isLoading">
+    <section  class="header container mt-5 pt-5">
         <div class="row">
 
             <div class="col-md-8 col-sm-12">
@@ -26,7 +26,7 @@
         </div>
     </section>
 
-    <section class="container">
+    <section  class="container">
         <div class="row">
             <div class="col-md-8 col-sm-12">
                 <div *ngIf="isLoading" style="width: 100%">
@@ -35,15 +35,17 @@
 
                 </div>
 
-<!--                <p-image style="width:2rem !important; height:auto !important; object-fit: cover;"-->
-<!--                         class="rounded my-4 shadow-sm" src="{{ escooter?.image }}" alt="Image" width="850"-->
-<!--                         [preview]="true"></p-image>-->
+                <!--                <p-image style="width:2rem !important; height:auto !important; object-fit: cover;"-->
+                <!--                         class="rounded my-4 shadow-sm" src="{{ escooter?.image }}" alt="Image" width="850"-->
+                <!--                         [preview]="true"></p-image>-->
 
 
-                 <img src="{{ escooter?.image }}" style="width:100%; height:auto !important; object-fit: cover;" class="rounded my-4 shadow-sm" alt="..." />
+                <img src="{{ escooter?.image }}" style="width:100%; height:auto !important; object-fit: cover;"
+                     class="rounded-3 my-4 shadow-sm" alt="..."/>
 
                 <div *ngIf="!isLoading" class="p-4 pt-2 border rounded mt-4 d-sm-none d-md-block show-mb">
 
+<!--                    mobile-->
                     <app-start-trip-form class="" *ngIf="escooter" [cost]="escooter?.cost"
                                          [escooterId]="escooter?.id"></app-start-trip-form>
 
@@ -55,14 +57,13 @@
                             </div>
                             <div class="p-2">
                                 <div class=" mt-3 mx-auto text-center">
-                                                                    <google-map class="mx-auto text-center" height="20rem"
-                                                                                width="100%" [options]="options"
-                                                                                >
-                                                                        <map-marker
-                                                                                    [position]="markerPosition"
-                                                                                    [options]="markerOptions"></map-marker>
-                                                                    </google-map>
-
+                                    <google-map class="mx-auto text-center" height="20rem"
+                                                width="100%" [options]="options"
+                                    >
+                                        <map-marker
+                                                [position]="markerPosition"
+                                                [options]="markerOptions"></map-marker>
+                                    </google-map>
 
                                 </div>
                             </div>
@@ -70,27 +71,53 @@
                     </div>
 
                 </div>
-                <app-mini-host-card *ngIf="escooter" [HostId]="escooter?.host" class="show-mb"></app-mini-host-card>
+
+<!--                mobile-->
+                <app-mini-host-card (onHostRetrieved)="setHostData($event)" *ngIf="escooter" [HostId]="escooter?.host"
+                                    class="show-mb"></app-mini-host-card>
                 <div *ngIf="!isLoading" class="p-4 border rounded mt-4 show-mb">
                     <p class="fw-bold">Insurance information</p>
-                    <p>Insured under <span class="text-info">Maximum Insurance.</span></p>
+                    <p>Insured under <span class="text-info">{{host?.insurance.name}}.</span></p>
                 </div>
 
                 <div class="row">
-
-                    <div class="col-12 border-bottom pb-2">
-                        <div class="d-flex py-5 my-auto">
-                            <span style="width: .1%;" class="btn btn-info my-auto py-3"></span>
-                            <h4 class="my-auto ms-3"> Overview</h4>
-                        </div>
-                        <div *ngIf="isLoading">
-                            <ngx-skeleton-loader [theme]="{height: '9rem', width: '100%'}"></ngx-skeleton-loader>
-                            <br>
-
-                        </div>
+                    <div class="col-12 border-bottom py-4">
+                            <h4 class="my-auto mb-3"> More about this scooter</h4>
                         <div *ngIf="!isLoading">
                             <p class="text-secondary">{{ escooter?.about }} </p>
                             <p class="text-info">Read more</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12 border-bottom pb-2">
+                        <div class="row py-5">
+                            <h4 class="my-auto pb-2">What this scooter has to offer</h4>
+
+                        <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                            <mat-icon class="fs-2 mb-1">speed</mat-icon>
+                            <p class="ms-4 my-auto pt-2 fs-6"> Max speed {{escooter?.maxSpeed}} km/h</p>
+                        </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">settings_accessibility</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6"> Max rider weight {{escooter?.maxWeight}} lbs</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">outbox</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6"> Total range {{escooter?.maxRange}} km/h</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">offline_bolt</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6"> Motor power {{escooter?.motorPower}} Wh</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">monitor_weight</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6"> Scooter weight {{escooter?.scooterWeight}} lbs</p>
+                            </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">water</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6">{{escooter?.waterResistant ? 'Water resistant' : 'Not water resistant'}} </p>
+                            </div>
+
                         </div>
 
 
@@ -99,11 +126,8 @@
                     <div class="col-12">
 
                         <div class="d-flex py-5 my-auto">
-                            <span style="width: .1%;" class="btn btn-info my-auto py-3"></span>
-                            <h4 class="my-auto ms-3"> Ratings & Reviews</h4>
+                            <h4 class="my-auto pb-2">Reviews</h4>
                         </div>
-                        <p class="fw-bold">{{escooter?.modelName}} </p>
-
                     </div>
                     <div class="col-12 text-center mx-auto">
                         <div class="mx-auto text-center" *ngIf="isLoading">
@@ -171,7 +195,7 @@
                     <br>
 
                 </div>
-                <div *ngIf="!isLoading" class="p-4 pt-2 border rounded mt-4 d-sm-none d-md-block remove-mb">
+                <div *ngIf="!isLoading" class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
 
                     <app-start-trip-form class="" *ngIf="escooter" [cost]="escooter?.cost"
                                          [escooterId]="escooter?.id"></app-start-trip-form>
@@ -184,13 +208,13 @@
                             </div>
                             <div class="p-2">
                                 <div class=" mt-3 mx-auto text-center">
-                                                                    <google-map class="mx-auto text-center" height="20rem"
-                                                                                width="22rem" [options]="options"
-                                                                                >
-                                                                        <map-marker
-                                                                                    [position]="markerPosition"
-                                                                                    [options]="markerOptions"></map-marker>
-                                                                    </google-map>
+                                    <google-map class="mx-auto text-center" height="20rem"
+                                                width="22rem" [options]="options"
+                                    >
+                                        <map-marker
+                                                [position]="markerPosition"
+                                                [options]="markerOptions"></map-marker>
+                                    </google-map>
 
 
                                 </div>
@@ -206,9 +230,9 @@
 
                 </div>
 
-                <div *ngIf="!isLoading" class="p-4 border rounded mt-4 remove-mb">
-                    <p class="fw-bold">Insurance information</p>
-                    <p>Insured under <span class="text-info">Maximum Insurance.</span></p>
+                <div *ngIf="!isLoading" class="p-4 border rounded mt-4 remove-mb font-gro-bold">
+                    <p class="fw-bold font-gro-bold">Insurance information</p>
+                    <p class="">Insured under <span class="text-info font-gro-bold">{{host?.insurance.name}}</span></p>
                 </div>
             </div>
         </div>

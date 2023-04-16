@@ -2,7 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Implemented formulae in trip location that searches withing a given radius and returns scooter withing said location with input date">
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/Insurance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/repositories/InsuranceRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/InsuranceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/escooter/models/discount.interface.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/host/models/insurance.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/jpa-buddy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/HostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/Host.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/Host.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/models/host.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/models/host.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/services/host.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/services/host.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/footer/footer.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/footer/footer.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/review-trip-dialog/review-trip-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/review-trip-dialog/review-trip-dialog.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/host-details-card/host-details-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/host-details-card/host-details-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-history-card/trip-history-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-history-card/trip-history-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-hosts/trip-hosts.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-hosts/trip-hosts.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,18 +80,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "js.last.introduce.type": "LET",
+    "last_opened_file_path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/fonts" />
@@ -117,7 +177,9 @@
       <workItem from="1681299328182" duration="1846000" />
       <workItem from="1681326337921" duration="61246000" />
       <workItem from="1681499384587" duration="4153000" />
-      <workItem from="1681545900994" duration="19149000" />
+      <workItem from="1681545900994" duration="35681000" />
+      <workItem from="1681647381009" duration="3049000" />
+      <workItem from="1681650627515" duration="18976000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>

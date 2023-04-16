@@ -27,9 +27,11 @@
                         <i class="fa fa-instagram btn  text-light rounded-circle" aria-hidden="true"></i>
                     </div>
                 </div>
-                <div class="tags my-auto">
-                    <span *ngIf="host?.hostUser.torchTrusted" class="badge text-bg-primary me-1"><i class="fi fi-ss-bolt"></i> Trusted Host</span>
-                    <span *ngIf="host?.hostUser.isVerified" class="badge text-bg-success me-1"><i class=" fi fi-sr-badge-check"></i> Verified </span>
+                <div style="width: max-content" class="tags my-auto d-flex align-items-center">
+
+                    <app-torch-trusted-badge *ngIf="host?.hostUser.torchTrusted"></app-torch-trusted-badge>
+                    <app-verified-badge *ngIf="host?.hostUser.isVerified"></app-verified-badge>
+
                 </div>
                 <div class="details pt-3 ">
                     <div class="fs-4 text-secondary fw-lighter">

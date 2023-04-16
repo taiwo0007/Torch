@@ -4,6 +4,7 @@ import {UserData} from "../../models/user-data.model";
 import {NgForm} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {Host} from "../../../host/models/host.interface";
 
 @Component({
   selector: 'app-profile-form-card',
@@ -14,6 +15,7 @@ export class ProfileFormCardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('UserDetailsForm', { static: false }) UserDetailsForm: NgForm;
   @Input() InitialUserDetails?: UserData;
+  @Input() host:Host;
 
   constructor(private userService: UserService,
               private loadingService:LoadingService) { }

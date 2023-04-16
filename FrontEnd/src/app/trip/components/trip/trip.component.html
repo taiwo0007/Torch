@@ -100,7 +100,7 @@
 
                             <div class="row mx-auto">
                                 <div class="col-md-7 col-sm-12">
-                                    <host-details-card *ngIf="trip.trip_owner" [escooter]="trip.eScooterOnTrip"
+                                    <host-details-card (onHostInit)="setInsuranceData($event)"  *ngIf="trip.trip_owner" [escooter]="trip.eScooterOnTrip"
                                                        [hostId]="trip.trip_owner"></host-details-card>
                                 </div>
                                 <div class="col-md-5 mx-auto col-sm-12">
@@ -121,12 +121,15 @@
             <div class="col-md-4 col-sm-12 bg-light">
 
                 <cost-info-card *ngIf="trip"
+                                [discountObj]="discountObject"
                                 [escooterCost]="trip.eScooterOnTrip.cost"
                                 [initialCost]="initialCost"
                                 [tripDays]="trip.days"
                                 [vatCost]="vatCost"
                                 [totalCost]="totalCost"
+                                [totalInsurance]="insurance"
                 ></cost-info-card>
+
                 <div class="px-4 pb-4  pt-4 shadow-sm rounded mt-4 bg-white ">
                     <h3 class="fw-bold text-info pb-3">Trip information</h3>
 
@@ -158,11 +161,11 @@
                 </div>
                 <div class="p-4 shadow-sm rounded mt-4 bg-white">
                     <p class="fw-bold">Insurance information</p>
-                    <p>Insured under <span class="text-info">Maximum Insurance.</span></p>
-                    <div class="d-flex justify-content-between">
+                    <p class="fw-bold">Insured under <span class="text-info ">{{host?.insurance.name}}.</span></p>
+                    <div class="d-flex">
                         <p class="fw-bold">Insurance cost: </p>
                         <div>
-                            <p class="fw-bold">€23.00</p></div>
+                            <p class=" ms-2">{{host?.insurance.cost | currency: 'EUR'}}</p></div>
                     </div>
 
                 </div>

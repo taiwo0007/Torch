@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, NgForm} from "@angular/forms";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {Router} from "@angular/router";
@@ -13,12 +13,13 @@ import * as moment from "moment";
 })
 export class SearchFormComponent implements OnInit {
     tripStart: any;
+    @ViewChild("arrow", {static: false}) arrow: ElementRef;
     tripEnd: any;
     location: any;
     @ViewChild("searchForm") searchForm: NgForm;
     today = new Date()
     todaysDate = new Date().toISOString().split('T')[0];
-    tommorowsDate : any = new Date(this.today.getTime() + (24 * 60 * 60 * 1000));
+    tommorowsDate: any = new Date(this.today.getTime() + (24 * 60 * 60 * 1000));
 
     isGooglePlaceSelected: boolean = false;
     googlePlaceLocation: any;
@@ -87,7 +88,7 @@ export class SearchFormComponent implements OnInit {
             {queryParams})
     }
 
-    makeImageNavigateToResults(){
+    makeImageNavigateToResults() {
         const queryParams = {
             tripStart: '',
             tripEnd: '',
@@ -108,6 +109,20 @@ export class SearchFormComponent implements OnInit {
             fields: ['geometry', 'name'],
             types: ['establishment']
         })
+
+    }
+
+    onMouseButton() {
+        console.log(this.arrow.nativeElement)
+
+        this.arrow.nativeElement.style.transform = 'translateX(10px)'
+
+    }
+
+    onMouseOutButton() {
+        console.log(this.arrow.nativeElement)
+
+        this.arrow.nativeElement.style.transform = 'translateX(0)'
 
     }
 

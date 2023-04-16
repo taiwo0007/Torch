@@ -34,8 +34,10 @@
         <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
 
-    <button style="width: 100%;  background-color: black !important;" type="submit"
+    <button (mouseover)="onMouseButton()" (mouseleave)="onMouseOutButton()"  style="width: 100%;  background-color: black !important;" type="submit"
             class="btn  text-light p-3 mt-3 fw-bold rounded-3 ">Search
+        <i #arrow class="fa fa-long-arrow-right ms-2 arrow" aria-hidden="true"></i>
+
     </button>
 
     <div id="emailHelp" class="form-text text-start text-dark mt-3">Scooter models we host at <u

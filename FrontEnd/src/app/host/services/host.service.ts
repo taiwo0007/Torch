@@ -11,6 +11,7 @@ import {CreateAdRequestPayload} from "../payload/create-ad-request.payload";
 import {UserData} from "../../user/models/user-data.model";
 import {UserService} from "../../user/services/user.service";
 import {TopHostsCardDto} from "../models/top-hosts-card.dto";
+import {Insurance} from "../models/insurance.interface";
 
 
 @Injectable({
@@ -43,11 +44,15 @@ export class HostService {
   fetchAllHosts() {
       return this.http.get<TopHostsCardDto[]>(environment.appUrl+'/api/host/top')
   }
+
+    fetchAllHostsInsurance() {
+        return this.http.get<Insurance[]>(environment.appUrl+'/api/host/insurance-list')
+    }
   createEscooter(scooterAddRequestPayload:ScooterAddRequestPayload){
     return this.http.post(environment.appUrl+'/api/host/add-escooter',scooterAddRequestPayload);
   }
-  createHostFromAPI(){
-    return this.http.post(environment.appUrl+'/api/host/make-user-host', null)
+  createHostFromAPI(insuranceId:number){
+    return this.http.post(environment.appUrl+'/api/host/make-user-host/'+insuranceId, null)
         .pipe(catchError(this.handleError),
             map((data:Host) => {
                 console.log(data)

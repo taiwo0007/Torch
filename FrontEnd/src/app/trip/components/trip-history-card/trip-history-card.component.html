@@ -1,5 +1,5 @@
 <div [ngClass]="isHost ? 'bg-dark' : 'bg-white' " class="p-4 rounded ">
-    <h4 class="text-uppercase font-small text-light fw-bold">Your Trips History</h4>
+    <h4 [ngClass]="isHost ? 'text-light' : 'text-dark' " class="text-uppercase font-small fw-bold">Your Trips History</h4>
     <div class="table-responsive">
         <table [ngClass]="isHost ? 'bg-dark text-light' : 'bg-white' " style="max-height: 10rem !important;" class="table table-responsive font-small mb-0 rounded font-helvetica table-borderless ">
             <thead class="">

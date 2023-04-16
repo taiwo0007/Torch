@@ -201,6 +201,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .antMatchers("/api/host/host-details/*")
                 .permitAll()
+                .antMatchers("/api/host/insurance-list/**")
+                .permitAll()
                 .antMatchers("/api/host/makes")
                 .permitAll()
                 .antMatchers("/api/host/top")

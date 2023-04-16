@@ -1,0 +1,41 @@
+
+[	java:S1124"FDefine and throw a dedicated exception instead of using a generic one.(áœßã
+[	java:S112D"FDefine and throw a dedicated exception instead of using a generic one.(ÜëÓŸ
+E
+java:S37404"/Provide the parametrized type for this generic.(áœßã
+J
+java:S37409"/Provide the parametrized type for this generic.(æüİ¡ûÿÿÿÿ
+E
+java:S3740D"/Provide the parametrized type for this generic.(ÜëÓŸ
+J
+java:S3740I"/Provide the parametrized type for this generic.(ìå„şÿÿÿÿ
+R
+java:S2629;"7Use the built-in formatting to construct this argument.(ÑÛ¥šùÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Í­Ó„
+‚
+java:S11304"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(áœßã
+5
+java:S37514"Make this method non "private".(áœßã
+\
+java:S3457;"AFormat specifiers should be used instead of string concatenation.(ÑÛ¥šùÿÿÿÿ
+c	java:S100D"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜëÓŸ
+‚
+java:S1130D"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(ÜëÓŸ
+5
+java:S3751D"Make this method non "private".(ÜëÓŸ
+:
+java:S3751I"Make this method non "private".(ìå„şÿÿÿÿ
+g
+java:S1128"LRemove this unused import 'org.apache.catalina.webresources.JarWarResource'.(•Ñµşÿÿÿÿ
+[
+java:S1128"@Remove this unused import 'org.springframework.http.HttpStatus'.(íŸ¤Šúÿÿÿÿ
+‡
+java:S1128"lRemove this unused import 'org.springframework.security.authentication.UsernamePasswordAuthenticationToken'.(ÖÆ„Ùüÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+F
+java:S1128"+Remove this unused import 'java.util.UUID'.(ÀãÄ£úÿÿÿÿ

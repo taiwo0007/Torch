@@ -1,6 +1,6 @@
 <nav
         style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
-        id="navbar-example2" class="navbar my-nav    bg-light navbar-light sticky fixed-top py-2">
+        id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
     <div class="d-md-flex  align-items-center">
         <a class="navbar-brand me-3" [routerLink]="['']">
             <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
@@ -89,8 +89,8 @@
             <li role="menuitem li">
                 <hr class="dropdown-divider bg-dark">
             </li>
-            <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a style="width: 100%" class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/profile']">
+            <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['/profile']" class="rounded py-2 px-2  li">
+                <a style="width: 100%" class="dropdown-item d-flex align-items-center my-auto" >
                     <mat-icon class="my-auto me-2">person</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Account</p></a>
             </li>
@@ -100,20 +100,20 @@
                     <p class="m-0 pt-1 my-auto ">Trips</p></a>
             </li>
 
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto"  [routerLink]="['host-escooters', hostID]">
+            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['host-escooters', hostID]">
+                <a class="dropdown-item d-flex align-items-center my-auto"  >
                     <mat-icon class="my-auto me-2">swap_calls</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Electric scooters</p></a>
             </li>
             <hr class=" bg-light">
 
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/legal-insurance']">
+            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/legal-insurance']">
+                <a class="dropdown-item d-flex align-items-center my-auto" >
                     <mat-icon class="my-auto me-2">featured_play_list</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Legal & Insurance</p></a>
             </li>
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/privacy-policy']">
+            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/privacy-policy']">
+                <a class="dropdown-item d-flex align-items-center my-auto" >
                     <mat-icon class="my-auto me-2">list_alt</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Privacy Policy</p></a>
             </li>
@@ -126,18 +126,18 @@
 
 
 
-            <li *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="bg-warning text-dark rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['become-host']">
+            <li [routerLink]="['become-host']" *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="bg-warning text-dark rounded py-2 px-2  li">
+                <a class="dropdown-item d-flex align-items-center my-auto" >
                     <mat-icon class="my-auto me-2">badge</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Become a host</p></a>
             </li>
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/host-profile', hostID]">
+            <li [routerLink]="['/host-profile', hostID]" *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
+                <a class="dropdown-item d-flex align-items-center my-auto" >
                     <mat-icon class="my-auto me-2">art_track</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Host Profile</p></a>
             </li>
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto"  [routerLink]="['host-trips']">
+            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['host-trips']" class="rounded py-2 px-2  li">
+                <a class="dropdown-item d-flex align-items-center my-auto"  >
                     <mat-icon class="my-auto me-2">rocket_launch</mat-icon>
                     <p class="m-0 pt-1 my-auto ">Host Trips</p></a>
             </li>
@@ -145,32 +145,32 @@
         </ul>
     </div>
 
-    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5" style="left: 0; bottom:0"
+    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute remove-mb mt-5" style="left: 0; bottom:0"
                       mode="indeterminate"></mat-progress-bar>
 
 
     <alert-message [@showHided]="isNotice ? 'show' : 'hide'"  [isNotice]="isNotice" [message]="alertMessage"
                     class="position-absolute mt-5 mx-auto text-center"
-                    style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+                    style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important; z-index: 9999999999 !important;"></alert-message>
 
 
     <alert-message [@showHided]="isAlert ? 'show' : 'hide'"  [isAlert]="isAlert" [message]="alertMessage"
                    class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
 
 
 
     <alert-message [@showHided]="isSuccess ? 'show' : 'hide'"  [isSuccess]="isSuccess" [message]="alertMessage"
                    class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
 
 
     <alert-message [@showHided]="isError ? 'show' : 'hide'"  [isError]="isError" [message]="alertMessage"
                    class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;"></alert-message>
+                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
 </nav>
 
 
 
-<app-load-screen *ngIf="isLoading" class="mx-auto  full-spinner"></app-load-screen>
+<app-load-screen *ngIf="isLoading" class="mx-auto remove-mb full-spinner"></app-load-screen>
 

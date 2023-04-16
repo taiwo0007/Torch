@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HostService} from "../../../host/services/host.service";
 import {EscooterService} from "../../services/escooter.service";
 import {Host} from "../../../host/models/host.interface";
@@ -15,6 +15,8 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
   host: Host;
   hostObserver;
 
+  @Output() onHostRetrieved:EventEmitter<Host> = new EventEmitter<Host>()
+
 
   constructor(private hostService:HostService,
               private escooterService: EscooterService,
@@ -28,6 +30,7 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
       this.hostObserver = this.hostService.getHostById(this.HostId).subscribe((data:Host) => {
 
         this.host = data;
+        this.onHostRetrieved.emit(data);
         console.log("Api Host data",this.host)
 
 

@@ -4,14 +4,8 @@ import com.troch.torchApplication.Utilities.GCPUtil;
 import com.troch.torchApplication.Utilities.JwtUtil;
 import com.troch.torchApplication.dto.CreateAdRequest;
 import com.troch.torchApplication.dto.EsccoterAddRequest;
-import com.troch.torchApplication.models.EScooter;
-import com.troch.torchApplication.models.Host;
-import com.troch.torchApplication.models.Make;
-import com.troch.torchApplication.models.User;
-import com.troch.torchApplication.services.EScooterService;
-import com.troch.torchApplication.services.HostService;
-import com.troch.torchApplication.services.MakeService;
-import com.troch.torchApplication.services.UserServiceImpl;
+import com.troch.torchApplication.models.*;
+import com.troch.torchApplication.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,9 @@ public class HostController {
 
     @Autowired
     UserServiceImpl userService;
+
+    @Autowired
+    InsuranceService insuranceService;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -90,9 +87,11 @@ public class HostController {
 
     }
 
-    @PostMapping("/make-user-host")
-    public ResponseEntity makeUserHost(@RequestHeader("Authorization") String jwt){
-        return hostService.makeUserHost(jwt);
+    @PostMapping("/make-user-host/{insuranceId}")
+    public ResponseEntity makeUserHost(@RequestHeader("Authorization") String jwt, @PathVariable("insuranceId") Integer insuranceId){
+        logger.info(String.format("Insurance id: %s", insuranceId) );
+
+        return hostService.makeUserHost(jwt, insuranceId);
     }
 
     @GetMapping("/scooter-list/{id}")
@@ -101,6 +100,12 @@ public class HostController {
         logger.info(id.toString());
 
         return hostService.getHostEscooters(id);
+
+    }
+
+    @GetMapping("/insurance-list")
+    public ResponseEntity<List<Insurance>> getAllInsurances() {
+        return new ResponseEntity<>(insuranceService.findAllInsurance(), HttpStatus.OK);
 
     }
 

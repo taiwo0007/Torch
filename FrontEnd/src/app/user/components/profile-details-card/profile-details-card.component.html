@@ -4,7 +4,7 @@
   <div style="position: relative !important;" class="mx-auto mt-3">
     <img *ngIf="userDetails?.profilePicture else avatar"  style=" object-fit: cover; border-radius: 100% !important; width: 14.7rem; height: 14.7rem;"  [src]="userDetails?.profilePicture" class="rounded-circle p-4 m-auto" alt="...">
     <p *ngIf="userDetails?.accountType == 'Advanced'" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:3rem; z-index: 99" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
-    <p *ngIf="userDetails?.accountType == 'Pro'" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:4rem; z-index: 99" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
+    <p *ngIf="userDetails?.accountType == 'Pro'" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:4.5rem; z-index: 99" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
 
   </div>
 
@@ -16,11 +16,8 @@
 
   </ng-template>
 
-  <div class="text-center pb-4">
+  <h4 class="fw-bold text-center"> {{ userDetails?.firstName}} {{ userDetails?.lastName}} </h4>
 
-
-  </div>
-  <h4 class="fw-bold text-center"> {{ userDetails?.firstName}} {{ userDetails?.lastName}}</h4>
 
   <span class="text-info text-center" style="font-size: 1rem;  ">{{ userDetails?.userTrips ? userDetails?.userTrips: 0 }} trips</span>
   <div class="card-body p-4 mx-0">

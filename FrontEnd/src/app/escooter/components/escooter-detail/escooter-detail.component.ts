@@ -6,6 +6,7 @@ import {delay, map, Subject} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
 import {LoadingService} from "../../../shared/services/loading.service";
+import {Host} from "../../../host/models/host.interface";
 
 @Component({
     selector: 'app-escooter-detail',
@@ -18,6 +19,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     isLoading = false;
     escooter: Escooter;
     ratingArray: number[];
+    host:Host;
     markerPosition: google.maps.LatLngLiteral;
     isAuthenticated = false;
     options: google.maps.MapOptions;
@@ -127,4 +129,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
     }
 
+    setHostData(host: Host) {
+        this.host = host;
+
+    }
 }

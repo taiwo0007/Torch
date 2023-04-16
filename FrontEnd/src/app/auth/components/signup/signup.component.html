@@ -6,7 +6,7 @@
 
         <div class="col-md-6 col-sm-12 my-auto">
             <div class=" pt-5 my-auto">
-                <div class="p-5 my-auto sign-up-form" style=" ">
+                <div class="p-5 my-auto sign-up-form">
                     <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
                         <h1 class="fw-bold  mb-3 pb-2 font-gro-bold"><span
                                 class="text-info font-gro-bold">Sign up</span> to make an account on Torch </h1>
@@ -14,7 +14,6 @@
                             <label for="email" class="form-label fw-bold">Email</label>
                             <input style="border:none ; background-color: #f3f3f3; padding: 0.7rem" #emailInput email required name="email" ngModel
                                    type="email" class="form-control email " id="email"/>
-                            <!--              <small *ngIf="emailInput.dirty && !error" id="emailHelp" class="form-text text-success fw-bold mx-auato text-center">We'll never share your email with anyone else.</small>-->
                             <small *ngIf="error" id="emailHelp" class="form-text text-danger mx-auto text-center">Try
                                 another email address</small>
                         </div>

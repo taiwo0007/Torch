@@ -18,3 +18,16 @@
     padding-top: -4rem !important;
 }
 
+.btn:hover + .arrow{
+    transform: translateX(20px);
+}
+
+button:hover{
+    background-color: black !important;
+}
+
+
+.arrow{
+    transition: 0.2s ease-in-out;
+}
+

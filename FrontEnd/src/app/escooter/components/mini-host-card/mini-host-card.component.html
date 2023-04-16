@@ -1,5 +1,5 @@
-<div  style="text-decoration: none" class="p-4 border rounded mt-4">
-    <p class="fw-bold">More about the Host</p>
+<div  style="text-decoration: none" class="p-4 border rounded-3 shadow-sm  mt-4">
+    <p class="fw-bold font-gro-bold">More about the Host</p>
     <div class="d-flex">
         <div>
             <a [routerLink]="['/host-profile', HostId]" class="nav-link">
@@ -10,14 +10,16 @@
             <a class=" nav-link" [routerLink]="['/host-profile', HostId]" style="text-decoration: none">
                 <p style="margin-bottom: 0" class="fw-bold">{{host?.hostUser?.firstName}} {{host?.hostUser?.lastName}}</p>
             </a>
-            <p class="fw-bold" style="margin-bottom: 0; font-size: 0.9rem">
-                <span *ngIf="host.hostUser.torchTrusted" class="badge badge-secondary bg-dark me-1">Torch Trusted</span>
-                <span *ngIf="host.hostUser.isVerified" class="badge badge-secondary bg-success">verified</span>
+            <div class="d-flex flex-column ">
+                <p class="fw-bold d-flex">
+                    <app-torch-trusted-badge *ngIf="host.hostUser.torchTrusted"/>
+                    <app-verified-badge/>
+                </p>
+                <p style="margin-top: -1.5rem; font-size: 0.7rem">
+                    {{ host?.hostTrips?.length  }} trips <span>- {{host?.hostUser.joined | date}}</span>
+                </p>
+            </div>
 
-            </p>
-            <p style="margin-bottom: 0; font-size: 0.7rem">
-                {{ host?.hostTrips?.length  }} trips <span>- {{host?.hostUser.joined | date}}</span>
-            </p>
         </div>
     </div>
 </div>

@@ -9,10 +9,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
@@ -96,6 +93,12 @@ public class Host {
 
         return scooterUseMap;
     }
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Insurance insurance;
+
+    private Date insuranced_date;
 
 
 

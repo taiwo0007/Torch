@@ -2,7 +2,7 @@
 
 <nav
         style="background-color: black !important; padding: 0.6rem 1rem !important"
-        id="navbar-example2" class="navbar my-nav-m  d-flex  bg-dark navbar-dark  sticky fixed-top py-2">
+        id="navbar-example2" class="navbar my-nav-m  d-flex show-mb bg-dark navbar-dark  sticky fixed-top py-2">
 
 
     <div *ngIf="isAuthenticated else notTemp;" style="display: flex" class="d-flex justify-content-between align-items-center">
@@ -70,7 +70,7 @@
 
     </ng-template>
 
-    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5" style="left: 0; bottom:0" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute mt-5 show-mb" style="left: 0; bottom:0" mode="indeterminate"></mat-progress-bar>
 </nav>
-<app-load-screen *ngIf="isLoading" class="mx-auto  full-spinner"></app-load-screen>
+<app-load-screen *ngIf="isLoading" class="mx-auto  full-spinner show-mb"></app-load-screen>
 

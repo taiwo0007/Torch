@@ -52,13 +52,13 @@
                              class="rounded-circle " alt="..."/>
                     </div>
                     <div class="">
-                        <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}</p>
-                        <p *ngIf="t.trusted" class="fw-bold" style="margin-bottom: 0; font-size: 0.7rem">
-                            Torch trusted
+                        <p style="margin-bottom: 0" class="fw-bold">{{t.firstName}} {{t.lastNameInitital}}.</p>
+                        <p *ngIf="t.trusted" class="fw-bold d-flex flex-column gap-0" style="margin-bottom: 0">
+                            <app-torch-trusted-badge class="pt-1 m-0"/>
+                           <span style="font-size: 0.7rem ; margin-top: -0.6rem !important;">{{t.trips}} trips <span>- Joined {{t.joined | date}}</span></span>
+
                         </p>
-                        <p style="margin-bottom: 0; font-size: 0.7rem">
-                            {{t.trips}} trips <span>- Joined {{t.joined | date}}</span>
-                        </p>
+
                     </div>
                 </div>
                 <div style="padding: 0 1.8rem 0 1.8rem" class="">

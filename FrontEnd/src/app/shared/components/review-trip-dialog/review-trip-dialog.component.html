@@ -5,9 +5,8 @@
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Rate the host</ng-template>
-                    <div  class="alert alert-info " role="alert">
-                        Tell us more about the Host
-                    </div>
+
+                    <h1 for="comment" class="fw-bold">Review the host</h1>
 
                     <!--    <div class="form-group">-->
 <div style="font-size: 1rem !important;">
@@ -15,8 +14,7 @@
 
 </div>
 
-                    <label for="comment" class="fw-bold">Review the host</label>
-                    <textarea placeholder="Your trip with this host so far" ngModel formControlName="host_comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>
+                    <textarea style="height: 13rem !important;" placeholder="Your trip with this host so far" ngModel formControlName="host_comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>
 
                     <div mat-dialog-actions>
                         <button mat-button matStepperNext style="background-color: black !important;"   type="submit" class="btn btn-dark text-light  mt-4 px-3">Next</button>
@@ -25,19 +23,17 @@
             </mat-step>
             <mat-step style="height: 100% !important" [stepControl]="secondFormGroup" label="Fill out your address">
                 <form  [formGroup]="secondFormGroup">
-                    <div  class="alert alert-info mb-4" role="alert">
-                      Tell us more about the Electric Scooter
-                    </div>
+                    <h1 for="comment" class="fw-bold">Review the Scooter</h1>
 
-                        <!--    <div class="form-group">-->
+
+                    <!--    <div class="form-group">-->
 
                         <ngx-star-rating style="display: block !important; position: relative !important;" ngModel  formControlName="escooter_starRating" [id]="'rating2'"></ngx-star-rating>
 
-                        <label for="comment" class="fw-bold">Review this scooter</label>
-                        <textarea placeholder="What did you like/dislike about this electric scooter....." ngModel formControlName="escooter_comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>
+                        <textarea style="height: 13rem!important;" placeholder="What did you like/dislike about this electric scooter....." ngModel formControlName="escooter_comment" class="form-control bg-light shadow-sm" rows="5" id="comment"></textarea>
 
                     </form>
-                    <div class="mb-auto" mat-dialog-actions>
+                    <div class="mt-auto" mat-dialog-actions>
                         <button mat-button matStepperPrevious>Back</button>
                         <button mat-button matStepperNext style="background-color: black !important;"   type="submit" class="btn btn-dark text-light  mt-4 px-3">Next</button>
                     </div>
@@ -46,7 +42,7 @@
                 <ng-template matStepLabel>Done</ng-template>
                 <p class="mt-5 pt-5 text-center fs-4">Do you want to submit this review?</p>
                 <div class="mx-auto my-auto text-center mt-2">
-                    <div *ngIf="isLoading" class="spinner-border text-dark mx-3 my-auto" role="status">
+                    <div *ngIf="isLoading" class="spinner-border text-dark mt-4 mx-3 my-auto" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <button *ngIf="!isLoading" mat-button matStepperNext style="background-color: black !important;"    type="submit" class="btn btn-dark text-light  mt-4 px-3" (click)="onSubmit()">Submit</button>

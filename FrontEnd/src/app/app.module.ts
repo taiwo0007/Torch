@@ -95,6 +95,8 @@ import { MobileNavBarComponent } from './shared/components/mobile-nav-bar/mobile
 import { LegacyInsuranceComponent } from './shared/components/legacy-insurance/legacy-insurance.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 import { CookieNoticeComponent } from './shared/components/cookie-notice/cookie-notice.component';
+import { VerifiedBadgeComponent } from './shared/components/verified-badge/verified-badge.component';
+import { TorchTrustedBadgeComponent } from './shared/components/torch-trusted-badge/torch-trusted-badge.component';
 
 
 @NgModule({
@@ -160,6 +162,8 @@ import { CookieNoticeComponent } from './shared/components/cookie-notice/cookie-
      LegacyInsuranceComponent,
      PrivacyPolicyComponent,
      CookieNoticeComponent,
+     VerifiedBadgeComponent,
+     TorchTrustedBadgeComponent,
 
   ],
     imports: [

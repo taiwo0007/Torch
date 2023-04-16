@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Discount} from "../../models/discount.interface";
 
 @Component({
   selector: 'cost-info-card',
@@ -12,10 +13,15 @@ export class CostInfoCardComponent implements OnInit {
   @Input() tripDays:number;
   @Input() vatCost:number;
   @Input() totalCost:number;
+  @Input() totalInsurance:number;
+  @Input() discountObj?:Discount;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+
+
+    console.log(this.discountObj)
   }
 
 }

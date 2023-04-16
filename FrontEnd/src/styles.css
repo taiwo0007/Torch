@@ -55,6 +55,21 @@
 
 }
 
+.fw-bold{
+
+    font-family: 'BasicGroBold', sans-serif !important;
+}
+
+.btn-dark{
+    background-color: black !important;
+}
+
+.bg-dark{
+
+    background-color: black !important;
+
+}
+
 .full-spinner {
     overflow: hidden !important;
 }
@@ -78,9 +93,12 @@ pt-0 {
     vertical-align: middle !important;
 }
 
-h1, h2, h3, h4, h5, h6, h7 {
+h1 {
     font-family: 'BasicGroBlack', sans-serif;
 
+}
+h2, h3, h4, h5, h6, h7{
+  font-family: 'BasicGroBold', sans-serif !important;
 }
 
 .font-gro-black {

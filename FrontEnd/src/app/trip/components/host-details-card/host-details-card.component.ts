@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HostService} from "../../../host/services/host.service";
 import {Host} from "../../../host/models/host.interface";
 import {Escooter} from "../../../escooter/models/escooter.interface";
@@ -12,6 +12,7 @@ export class HostDetailsCardComponent implements OnInit {
 
   @Input() hostId:any;
   @Input() escooter:Escooter;
+  @Output() onHostInit: EventEmitter<Host> = new EventEmitter<Host>();
   host: Host;
 
   constructor(private hostService:HostService) { }
@@ -32,6 +33,7 @@ export class HostDetailsCardComponent implements OnInit {
     this.hostService.getHostById(this.hostId).subscribe((hostData:any) => {
 
       this.host = hostData;
+      this.onHostInit.emit(hostData);
 
     })
   }

@@ -12,6 +12,13 @@ ALTER TABLE escooter MODIFY about VARCHAR(1000);
 SELECT * FROM escooter;
 DELETE FROM user;
 DELETE FROM host;
+DELETE FROM insurance;
+
+INSERT INTO insurance (id, cost, name) VALUES (1, 34.99, 'Axa Insurance');
+INSERT INTO insurance (id, cost, name) VALUES (2, 99.99, 'Liberty Insurance');
+INSERT INTO insurance (id, cost, name) VALUES (3, 99.99, 'KPC Insurance');
+
+
 
 INSERT INTO make(id, name, image) VALUES (2, "Pure Air", "/images/website/Make/pureelectric.png");
 
@@ -22,15 +29,15 @@ INSERT INTO make(id, name, image) VALUES (3, "Avovo", "/images/website/Make/avov
 INSERT INTO make(id, name, image) VALUES (4, "Segway", "/images/website/Make/segway.png");
 
 INSERT INTO make(id, name, image) VALUES (6, "Edisson", "/images/website/Make/segway.png");
-INSERT INTO host(id, total_ad_days) VALUES (920386034, 9);
-INSERT INTO host(id, total_ad_days) VALUES (333,9);
-INSERT INTO host(id, total_ad_days) VALUES (444,9);
-INSERT INTO host(id, total_ad_days) VALUES (5555, 9);
-INSERT INTO host(id, total_ad_days) VALUES (6666,9);
-INSERT INTO host(id, total_ad_days) VALUES (7777,9);
-INSERT INTO host(id, total_ad_days) VALUES (8888, 9);
-INSERT INTO host(id, total_ad_days) VALUES (9999,9);
-INSERT INTO host(id, total_ad_days) VALUES (10000,9);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (920386034, 9,3);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (333,9,1);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (444,9,1);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (5555, 9,2);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (6666,9,2);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (7777,1,3);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (8888, 1,2);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (9999,9,3);
+INSERT INTO host(id, total_ad_days, insurance_id) VALUES (10000,9, 2);
 
 INSERT INTO user (latitude, longitude, country, is_Torch_Trusted,
                   location, about, joined, id, email, password, first_name, last_name, profile_picture,

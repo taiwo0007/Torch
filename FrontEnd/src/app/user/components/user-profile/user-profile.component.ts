@@ -5,6 +5,8 @@ import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ToastrService} from "ngx-toastr";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {HostService} from "../../../host/services/host.service";
+import {Host} from "../../../host/models/host.interface";
 
 @Component({
   selector: 'app-user-profile',
@@ -14,17 +16,23 @@ import {LoadingService} from "../../../shared/services/loading.service";
 export class UserProfileComponent implements OnInit, AfterContentInit {
   userData?:UserData;
   isCreatedVerified;
-    isLoading: boolean =false;
+  host:Host;
+  isLoading: boolean =false;
 
   constructor(private userService: UserService,private route:ActivatedRoute,
               private authService: AuthService,
               private toastr: ToastrService,
-              private loadingSerivce:LoadingService) { }
+              private loadingSerivce:LoadingService,
+              private hostService:HostService) { }
 
     ngAfterContentInit() {
       this.isLoading = true;
         this.userService.fetchUserDetails().subscribe( (data: any) => {
             this.userData = data;
+
+            if(this.userData.host){
+                this.getHostDetails();
+            }
 
             this.loadingSerivce.isLoading.next(false);
             this.isLoading = false;
@@ -71,6 +79,16 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
         this.isLoading = true;
 
 
+
+
+  }
+
+  getHostDetails(){
+
+      this.hostService.getHostById(this.userData.host).subscribe((data:Host) => {
+          this.host = data;
+          console.log(data)
+      })
 
   }
 

@@ -6,8 +6,10 @@ import com.troch.torchApplication.dto.ErrorResponse;
 import com.troch.torchApplication.dto.TopHostsCardDto;
 import com.troch.torchApplication.models.EScooter;
 import com.troch.torchApplication.models.Host;
+import com.troch.torchApplication.models.Insurance;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.HostRepository;
+import com.troch.torchApplication.repositories.InsuranceRepository;
 import com.troch.torchApplication.repositories.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +47,8 @@ public class HostService {
     Logger logger = LoggerFactory.getLogger(HostService.class);
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private InsuranceService insuranceService;
 
 
     public Host save(Host host){
@@ -77,15 +83,23 @@ public class HostService {
         return new ResponseEntity<>(eScooterList, HttpStatus.OK);
     }
 
-    public ResponseEntity makeUserHost(String jwt) {
+    @Transactional
+    public ResponseEntity makeUserHost(String jwt, Integer insuranceId) {
 
         User currentUser = userService.findUserByEmail(jwtUtil.extractUsernameFromRawToken(jwt));
+        Optional<Insurance> insuranceOptional = insuranceService.findById(insuranceId);
+
+        if(insuranceOptional.isEmpty()){
+            return new ResponseEntity<>(new ErrorResponse("Insurance not found"), HttpStatus.BAD_REQUEST);
+        }
 
         if (currentUser.getHost() == null && currentUser.getIsVerified() != null && currentUser.getIsVerified()) {
 
             Host formNewHost = new Host();
             formNewHost.setId(currentUser.hashCode());
             formNewHost.setHostUser(currentUser);
+            formNewHost.setInsurance(insuranceOptional.get());
+            formNewHost.setInsuranced_date(new Date());
             currentUser.setHost(formNewHost);
             currentUser.setIsHost(true);
 

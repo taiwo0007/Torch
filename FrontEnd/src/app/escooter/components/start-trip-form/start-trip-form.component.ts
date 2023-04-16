@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {Router} from "@angular/router";
 import {FormBuilder, NgForm} from "@angular/forms";
@@ -11,9 +11,10 @@ import * as moment from "moment";
     templateUrl: './start-trip-form.component.html',
     styleUrls: ['./start-trip-form.component.css']
 })
-export class StartTripFormComponent implements OnInit {
+export class StartTripFormComponent implements OnInit, AfterViewInit {
     isAuthenticated = false;
     @Input() cost;
+    @ViewChild("arrow",{static: false}) arrow: ElementRef;
     @Input() escooterId;
     todaysDate = new Date().toISOString().split('T')[0];
     tommorwsDate = new Date();
@@ -32,6 +33,11 @@ export class StartTripFormComponent implements OnInit {
 
     }
 
+    ngAfterViewInit() {
+        console.log(this.arrow.nativeElement)
+
+    }
+
     ngOnInit(): void {
 
         this.authService.user.subscribe((data: any) => {
@@ -39,12 +45,7 @@ export class StartTripFormComponent implements OnInit {
             this.user = data;
             this.isAuthenticated = data;
         })
-
-        console.log("month "+this.startTripForm.value.tripStart.month())
-
-
     }
-
 
 
     onSubmit() {
@@ -67,11 +68,6 @@ export class StartTripFormComponent implements OnInit {
         let tripEnd = `${this.startTripForm.value.tripEnd.year()}-${eMonth.format("MM")}-${this.startTripForm.value.tripEnd.date()}`
 
         let daysBetween = this.startTripForm.value.tripEnd.diff(this.startTripForm.value.tripStart, 'days');
-        console.log(daysBetween)
-
-        console.log(tripStart)
-        console.log(tripEnd)
-
 
         const queryParams = {
             tripDays: daysBetween,
@@ -83,9 +79,19 @@ export class StartTripFormComponent implements OnInit {
             {
                 queryParams
             })
-
-
     }
 
 
+    onMouseButton() {
+        console.log(this.arrow.nativeElement)
+
+        this.arrow.nativeElement.style.transform = 'translateX(10px)'
+
+    }
+    onMouseOutButton() {
+        console.log(this.arrow.nativeElement)
+
+        this.arrow.nativeElement.style.transform = 'translateX(0)'
+
+    }
 }

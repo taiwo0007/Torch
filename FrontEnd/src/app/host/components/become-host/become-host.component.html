@@ -16,14 +16,33 @@
                     We are 100% theft safe and provide insurance cover on every scooter on our website.
                     Enjoy a hastle free way of making money online!
                 </h3>
-                <div class="">
-                    <a *ngIf="!isLoading" (click)="createHost()" class="btn btn-info text-light pt-2 px-3 mt-4 rounded-0 fw-bold"> Apply Now </a>
-                    <a *ngIf="isLoading" style="width: 24%" type="submit" class="btn btn-info text-light pt-2 px-3 mt-4 rounded-0 fw-bold" disabled>
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </a>
-                    <a href="" class="btn btn-outline-dark pt-2 px-3 mt-4 mx-3 rounded-0 fw-bold"> Learn more </a>
+                <div class=" d-flex align-items-center">
+
+                    <mat-form-field style="width: 22rem !important;" appearance="outline">
+                        <mat-label>Select your insurance (required)</mat-label>
+                        <mat-select  required [formControl]="selectFormControl">
+                            <mat-option *ngFor="let insurance of insurances" [value]="insurance.id">{{insurance?.name}} - {{insurance?.cost | currency: 'EUR'}}</mat-option>
+                        </mat-select >
+                        <mat-error *ngIf="selectFormControl.hasError('required')">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                    <div style="margin-top: -1.4rem !important; margin-left: 1rem !important;">
+                        <button [disabled]="!selectFormControl.valid"  *ngIf="!isLoading " (click)="createHost()" class="btn btn-info text-light  px-4 rounded-2 py-3  fw-bold "> Apply Now </button>
+                        <a *ngIf="isLoading" style="width: 24%" type="submit" class="btn btn-info text-light  px-3 rounded-0 fw-bold" disabled>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </a>
+
+                    </div>
+
+
+
+
                 </div>
+
+
+
             </div>
         </div>
         <div  class="col-md-6 col-sm-12 remove-mb">

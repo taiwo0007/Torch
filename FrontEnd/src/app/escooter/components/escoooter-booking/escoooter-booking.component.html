@@ -8,12 +8,14 @@
 
                 </div>
                 <div class="col-md-8 col-sm-12 ">
-                    <div class="mx-auto pt-5 p-md-5 rounded shadow-sm" style=" width: 100%; margin: 25px; background-color: white;">
+                    <div class="mx-auto pt-5 p-md-5 rounded shadow-sm"
+                         style=" width: 100%; margin: 25px; background-color: white;">
                         <h1 class="text-dark text-center mx-auto pt-2 ">
                             Trip Payment
                         </h1>
                         <div class="p-4" [formGroup]="checkoutForm">
-                            <mat-spinner class="text-center mx-auto" *ngIf="!elementsOptions?.clientSecret" size="6px"></mat-spinner>
+                            <mat-spinner class="text-center mx-auto" *ngIf="!elementsOptions?.clientSecret"
+                                         size="6px"></mat-spinner>
                             <ng-container *ngIf="elementsOptions?.clientSecret">
                                 <ngx-stripe-payment
                                         [appearance]="appearance"
@@ -25,7 +27,7 @@
                             <div style="text-align: center">
 
                                 <button *ngIf="elementsOptions?.clientSecret"
-                                        style="background-color: black; width: 80% !important; padding: 1rem 4rem !important;"
+                                        style="background-color: black; width: 100% !important; padding: 1rem 4rem !important;"
                                         class="btn btn-dark text-center text-light "
                                         [disabled]="paying"
                                         (click)="collectPayment()"
@@ -33,7 +35,11 @@
                                 <span *ngIf="!paying">
                                   Pay
                                 </span>
-                                    <span *ngIf="paying">PROCESSING...</span>
+                                    <span *ngIf="paying">
+                                        <div class="spinner-border text-light" role="status">
+                                          <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -41,13 +47,14 @@
 
 
                     <div class=" row">
-                        <div  class="p-4 shadow-sm rounded mt-4 bg-white">
+                        <div class="p-4 shadow-sm rounded mt-4 bg-white">
                             <p class="fw-bold">Insurance information</p>
-                            <p>Insured under <span class="text-info">Maximum Insurance.</span></p>
+                            <p>Insured under <span class="text-info">{{host?.insurance.name}}</span></p>
                         </div>
-                        <div  class="p-4 shadow-sm rounded mt-4 bg-white">
+                        <div class="p-4 shadow-sm rounded mt-4 bg-white">
                             <p class="fw-bold">Cancellation Policy</p>
-                            <p>You can cancell this booking withing 24 hours at <span class="text-info">no extra cost.</span>
+                            <p>You can cancell this booking withing 24 hours at <span
+                                    class="text-info">no extra cost.</span>
                             </p>
                         </div>
                     </div>
@@ -59,12 +66,14 @@
         </div>
 
         <div class="col-md-4 col-sm-12 bg-light">
-            <cost-info-card *ngIf="escooter"
+            <cost-info-card *ngIf="totalCost"
+                            [discountObj]="discountObject"
                             [escooterCost]="escooter?.cost"
                             [initialCost]="initialCost"
                             [tripDays]="tripDays"
                             [vatCost]="vatCost"
                             [totalCost]="totalCost"
+                            [totalInsurance]="insurance"
             ></cost-info-card>
             <div class="p-4 shadow-sm rounded mt-4 bg-white ">
                 <h3 class="fw-bold text-info ">E-Scooter</h3>
@@ -73,13 +82,13 @@
                 <div class="mx-auto text-center">
                     <img
                             class="rounded mx-auto text-center"
-                            style="object-fit: cover; width: 15.2rem; height: 15.2rem"
+                            style="object-fit: cover; width: 100%; height: 100%"
                             src="{{escooter?.image}}"
                             alt=""/>
                 </div>
             </div>
 
-            <div class="px-4  pt-4 shadow-sm rounded mt-4 bg-white mb-4">
+            <div class="px-4 pb-4  pt-4 shadow-sm rounded mt-4 bg-white mb-4">
                 <h3 class="fw-bold text-info ">Booking Information</h3>
                 <div class="row  py-2 px-3">
                     <div class="col-6 my-auto">
@@ -87,7 +96,7 @@
                     </div>
                     <div class="col-6 my-auto">
                         <p th:text="${#dates.format(trip.getTripStart(), 'dd-MMM-yyyy')}"
-                           class=" text-end my-auto  fw-bolder">{{tripStart | date: 'dd-MM-yyyy'}}</p>
+                           class=" text-end my-auto  ">{{tripStart | date: 'dd-MM-yyyy'}}</p>
                     </div>
                 </div>
                 <div class="row  py-2 px-3">
@@ -96,21 +105,11 @@
                     </div>
                     <div class="col-6 my-auto">
                         <p th:text="${#dates.format(trip.getTripEnd(), 'dd-MMM-yyyy')}"
-                           class=" text-end my-auto fw-bold">{{tripEnd | date: 'dd-MM-yyyy'}}</p>
+                           class=" text-end my-auto ">{{tripEnd | date: 'dd-MM-yyyy'}}</p>
                     </div>
                 </div>
 
-<!--                <div class="pt-3 mt-4 pb-2 border-top">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-2 my-auto">-->
-<!--                            <h1 class="text-end text-info"><i class="fa fa-map-marker " aria-hidden="true"></i></h1>-->
-<!--                        </div>-->
-<!--                        <div class="col-10">-->
-<!--                            <p class="pt-3 px-3 text-secondary text-center"><span>195 Crecentmount View, Donegal, rushmound road, Ireland</span>-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+
             </div>
         </div>
     </div>

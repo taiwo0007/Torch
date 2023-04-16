@@ -1,8 +1,6 @@
 
 t
 Dsrc/main/java/com/troch/torchApplication/services/StripeService.java,0/2/0247b479295f7456251b3e6b7854cb80452f48a4
-m
-=src/main/java/com/troch/torchApplication/models/EScooter.java,f/3/f37e8a746d1d7af9d7b042ab813638f3d5c2573d
 r
 Bsrc/main/java/com/troch/torchApplication/services/TripService.java,2/4/24ae71116bfa082e3c4aca494ea8640295e131e2
 i
@@ -17,3 +15,19 @@ Bsrc/main/java/com/troch/torchApplication/services/AuthService.java,e/9/e954a53
 Lsrc/main/java/com/troch/torchApplication/services/EScooterReviewService.java,1/5/155c137697b404f7b22f1bd015af10347133bffa
 r
 Bsrc/main/java/com/troch/torchApplication/services/UserService.java,4/6/469db8c499e3ec4eb9ef3326d3f4cf6d4de7b458
+|
+Lsrc/main/java/com/troch/torchApplication/controllers/EScooterController.java,f/c/fcbce069bc94accacc4227edcc7f61b6f586bc1c
+}
+Msrc/main/java/com/troch/torchApplication/repositories/EScooterRepository.java,a/7/a75b58e08508bd41507b961ac6f3a2bb9e14e6ea
+‚
+Rsrc/main/java/com/troch/torchApplication/controllers/AuthenticationController.java,b/5/b5eaf0255b57e3af03d0fbd3426ad28acccde2d9
+?
+cloudbuild.yaml,2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7
+m
+=src/main/java/com/troch/torchApplication/models/EScooter.java,f/3/f37e8a746d1d7af9d7b042ab813638f3d5c2573d
+o
+?src/main/java/com/troch/torchApplication/models/HostReview.java,c/b/cb616c1866c1c592c655acb1d97370062e3deacf
+i
+9src/main/java/com/troch/torchApplication/models/Trip.java,7/9/7925f272797339ba5e7e05ad02f439ce34342a09
+n
+>src/main/java/com/troch/torchApplication/models/Insurance.java,c/3/c314531df6ed3c7c0519a9e1fbfee3f8c37c1fe4

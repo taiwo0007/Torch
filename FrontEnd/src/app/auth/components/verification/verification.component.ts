@@ -128,7 +128,10 @@ export class VerificationComponent {
 
         },
         error => {
+
           this.error = "An unexpected Error has occurred"
+          console.log(error)
+          this.loadingService.isError.next({message:"An unexpected Error has occurred"})
           this.isLoading = false;
           this.loadingService.isLoadingLine.next(false);
 

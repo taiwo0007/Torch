@@ -1,0 +1,22 @@
+
+j
+java:S1104="TMake tripCost a static final constant or non-public and provide accessors if needed.(İù¯©
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥‚‰
+k	java:S116+"VRename this field "user_renter" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÛÕêæ
+o	java:S1160"URename this field "trip_owner" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×’†”ûÿÿÿÿ
+X
+java:S2094"BRemove this empty class, write its code or make it an "interface".(ô€ó
+2
+java:S1116"Remove this empty statement.(ô€ó
+]
+java:S2094"BRemove this empty class, write its code or make it an "interface".(ÎÖé„úÿÿÿÿ
+7
+java:S1116"Remove this empty statement.(ÎÖé„úÿÿÿÿ
+]
+java:S2094"BRemove this empty class, write its code or make it an "interface".(ÜÊæÄüÿÿÿÿ
+7
+java:S1116"Remove this empty statement.(ÜÊæÄüÿÿÿÿ
+[
+java:S1128"ERemove this unused import 'org.hibernate.annotations.LazyCollection'.(…÷äğ
+f
+java:S1128	"KRemove this unused import 'org.hibernate.annotations.LazyCollectionOption'.(ÿ÷ê˜ùÿÿÿÿ

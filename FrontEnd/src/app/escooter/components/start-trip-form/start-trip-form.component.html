@@ -1,12 +1,10 @@
 
 
 
-<div class="">
-    <p class="fw-bold mt-3 text-capitalize text-uppercase">Trip Start Times</p>
+<div >
+    <p class="fw-bold mt-3 text-capitalize text-uppercase font-gro-bold">Trip Start Times</p>
     <form [formGroup]="startTripForm" (ngSubmit)="onSubmit()" class="mt-2">
-
         <div class="p-2">
-
             <mat-form-field  style="width: 100% !important; margin-top: -1rem !important;"  appearance="outline">
                 <mat-label>Trip Start & Trip End</mat-label>
                 <mat-icon matPrefix>date_range</mat-icon>
@@ -15,18 +13,19 @@
                     <input formControlName="tripEnd" name="tripEnd"  matEndDate placeholder="End date">
                 </mat-date-range-input>
                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                <!--        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </mat-form-field>
-
-            <button [disabled]="!startTripForm.valid" *ngIf="isAuthenticated" style="width: 100%;" type="submit"
-                    class="btn btn-dark text-light p-2 mt-4 ">Submit</button>
+            <button (mouseover)="onMouseButton()" (mouseleave)="onMouseOutButton()" [disabled]="!startTripForm.valid" *ngIf="isAuthenticated" style="width: 100%;" type="submit"
+                    class="btn btn-dark justify-content-center rounded-3 text-light p-3 mt-2 d-flex align-items-center">
+                <span>Continue</span>
+                <i #arrow class="fa fa-long-arrow-right ms-2 arrow" aria-hidden="true"></i>
+            </button>
 
             <button disabled *ngIf="!isAuthenticated" style="width: 100%;" type="submit"
-                    class="btn btn-outline-dark disabled text-dark p-2 mt-4 ">Login to Book</button>
+                    class="btn btn-dark disabled text-light p-3 mt-2 ">Login to Book</button>
 
         </div>
-        <div class="d-flex my-auto justify-content-between pt-4 mb-3">
+        <div class="d-flex my-auto justify-content-between pt-4 mb-2">
             <p class="my-auto fw-bold">Cost per day:</p>
             <h3 class="text-end fw-bolder text-info my-auto">{{cost | currency:'EUR'}}</h3>
         </div>
