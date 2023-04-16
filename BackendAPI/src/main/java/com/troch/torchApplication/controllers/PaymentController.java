@@ -48,10 +48,10 @@ public class PaymentController {
     private StripeService stripeService;
 
     //PROD KEY
-//    private final static String ENDPOINT_SECRET = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
+   private final static String ENDPOINT_SECRET = "whsec_m8vmgtM5JzZvYhrtPu5IENJHRzj0sJhq";
 
     //DEV KEY
-    private final static String ENDPOINT_SECRET = "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
+    // private final static String ENDPOINT_SECRET = "whsec_d5739ee7ea5d6dd5832275132365e456b5fbbc226f6632c23d8008aedeb61373";
 
 
     public PaymentController(StripeService stripeService) {
