@@ -194,9 +194,11 @@ export class TripComponent implements OnInit, AfterViewInit {
                 this.loadingService.isLoading.next(false)
                 this.isLoading = false;
 
+                console.log(this.trip.eScooterOnTrip)
+
                 setTimeout(() => {
 
-                    this.initMap()
+                    this.initMap(this.trip.eScooterOnTrip.latitude, this.trip.eScooterOnTrip.longitude)
                 }, 1000)
             },
             () => {
@@ -215,12 +217,12 @@ export class TripComponent implements OnInit, AfterViewInit {
         this.totalCost = this.initialCost + this.processingFee + this.vatCost + this.insurance;
     }
 
-    initMap() {
-        const location = {lat: 53.410980, lng: -6.400090}
+    initMap(lat:number, lng:number) {
+        const location = {lat: lat, lng: lng}
         const options = {
 
             center: location,
-            zoom: 15
+            zoom: 11
         }
 
         const map = new google.maps.Map(document.getElementById("map"), options)

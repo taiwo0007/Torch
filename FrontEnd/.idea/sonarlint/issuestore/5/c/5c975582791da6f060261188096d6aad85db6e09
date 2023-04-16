@@ -1,0 +1,10 @@
+
+HWeb:AvoidCommentedOutCodeCheck"Remove this commented out code.(ÍëÉG
+NWeb:AvoidCommentedOutCodeCheck"Remove this commented out code.(â÷ÉÙıÿÿÿÿ
+IWeb:AvoidCommentedOutCodeCheck""Remove this commented out code.(¯î±
+NWeb:AvoidCommentedOutCodeCheck3"Remove this commented out code.(÷ÌÎ™ÿÿÿÿÿ
+IWeb:AvoidCommentedOutCodeCheck4"Remove this commented out code.(ìæ¨î
+HWeb:AvoidCommentedOutCodeCheck<"Remove this commented out code.(ÍëÉG
+Hsecrets:S6334"/Make sure this Google API Key is not disclosed.(Äì®Õ
+sjavascript:S2703-"WAdd the "let", "const" or "var" keyword to this declaration of "d" to make it explicit.(ËÑÆ 
+rjavascript:S2703."WAdd the "let", "const" or "var" keyword to this declaration of "s" to make it explicit.(Õ®§J

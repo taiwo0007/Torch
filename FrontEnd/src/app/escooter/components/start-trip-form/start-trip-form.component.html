@@ -1,6 +1,21 @@
 
 
 
+<mat-form-field>
+    <input matInput [matDatepicker]="picker1" placeholder="Start date" [(ngModel)]="startDate"
+           (dateChange)="onStartDateChange($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1 [matDatepickerFilter]="dateFilter"
+                   ></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+    <input matInput [matDatepicker]="picker2" placeholder="End date" [(ngModel)]="endDate">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2 [matDatepickerFilter]="dateFilter"
+                    ></mat-datepicker>
+</mat-form-field>
+
+
 <div >
     <p class="fw-bold mt-3 text-capitalize text-uppercase font-gro-bold">Trip Start Times</p>
     <form [formGroup]="startTripForm" (ngSubmit)="onSubmit()" class="mt-2">
@@ -8,8 +23,8 @@
             <mat-form-field  style="width: 100% !important; margin-top: -1rem !important;"  appearance="outline">
                 <mat-label>Trip Start & Trip End</mat-label>
                 <mat-icon matPrefix>date_range</mat-icon>
-                <mat-date-range-input  (click)="picker.open()" [rangePicker]="picker">
-                    <input  [min]="todaysDate" formControlName="tripStart"  name="tripStart"  matStartDate >
+                <mat-date-range-input (click)="picker.open()" [rangePicker]="picker">
+                    <input [min]="todaysDate" formControlName="tripStart"  name="tripStart"  matStartDate >
                     <input formControlName="tripEnd" name="tripEnd"  matEndDate placeholder="End date">
                 </mat-date-range-input>
                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>

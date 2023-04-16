@@ -119,6 +119,7 @@ import { TorchTrustedBadgeComponent } from './shared/components/torch-trusted-ba
     StartTripFormComponent,
     ReviewsListComponent,
     ReviewComponent,
+
     MiniHostCardComponent,
     ReviewFormComponent,
     EscoooterBookingComponent,
@@ -168,6 +169,7 @@ import { TorchTrustedBadgeComponent } from './shared/components/torch-trusted-ba
   ],
     imports: [
         MatDatepickerModule,
+        MatNativeDateModule,
         MatNativeDateModule,
         MatFormFieldModule,
         MatInputModule,
