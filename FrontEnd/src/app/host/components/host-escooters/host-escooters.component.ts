@@ -9,7 +9,7 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {
   VerificationDialogComponent
 } from "../../../shared/components/verification-dialog/verification-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
 import {catchError, delay, exhaustMap, mergeMap, of, switchMap, tap} from "rxjs";

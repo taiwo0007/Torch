@@ -8,7 +8,7 @@ import {
     Appearance, StripeError
 } from '@stripe/stripe-js';
 import {environment} from "../../../../environments/environment";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";

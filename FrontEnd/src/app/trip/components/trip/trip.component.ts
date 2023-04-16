@@ -3,7 +3,7 @@ import {ActivatedRoute, Event, Router} from "@angular/router";
 import {TripService} from "../../services/trip.service";
 import {Trip} from "../../models/trip";
 import {AreYouSureDialogComponent} from "../../../shared/components/are-you-sure-dialog/are-you-sure-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {DialogService} from "../../../shared/services/dialog.service";
 import {delay, filter, of, Subscription, switchMap} from "rxjs";
 import {

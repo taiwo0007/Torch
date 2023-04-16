@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./auth/services/auth.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import {VerificationComponent} from "./auth/components/verification/verification.component";
 import {VerificationDialogComponent} from "./shared/components/verification-dialog/verification-dialog.component";
 import {LoadingService} from "./shared/services/loading.service";

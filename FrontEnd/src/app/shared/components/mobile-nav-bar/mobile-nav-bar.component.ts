@@ -8,9 +8,9 @@ import {UserData} from "../../../user/models/user-data.model";
 import {LoadingService} from "../../services/loading.service";
 import {DialogService} from "../../services/dialog.service";
 import {VerificationDialogComponent} from "../verification-dialog/verification-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {SubscriptionModalComponent} from "../../../user/components/subscription-modal/subscription-modal.component";
-import {MatChipsModule} from "@angular/material/chips";
+import {MatLegacyChipsModule as MatChipsModule} from "@angular/material/legacy-chips";
 
 @Component({
   selector: 'app-mobile-nav-bar',

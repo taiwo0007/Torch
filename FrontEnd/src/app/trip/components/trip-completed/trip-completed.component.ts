@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
     VerificationDialogComponent
 } from "../../../shared/components/verification-dialog/verification-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
 import {ReviewFormComponent} from "../../../escooter/components/review-form/review-form.component";
 import {ToastrService} from "ngx-toastr";

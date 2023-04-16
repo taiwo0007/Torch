@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {ReviewTripDialogComponent} from "../../../shared/components/review-trip-dialog/review-trip-dialog.component";
 import {switchMap} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 import {LoadingService} from "../../../shared/services/loading.service";
 
