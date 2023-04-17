@@ -8,7 +8,7 @@ import {ScooterReviewer} from "../../models/scooter-reviewer.interface";
 })
 export class ReviewsListComponent implements OnInit {
 
-  @Input() ReviewList:ScooterReviewer[];
+  @Input() ReviewList:ScooterReviewer[] = [];
   tempList:ScooterReviewer[];
   isShown:boolean = false;
 
@@ -18,13 +18,18 @@ export class ReviewsListComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.ReviewList)
 
-    if(this.ReviewList.length > 3){
-      this.tempList = this.ReviewList;
-      this.ReviewList = this.ReviewList.slice(0, 3);
+    if(this.ReviewList){
 
-      console.log("Before review lsit"+this.tempList)
-      console.log("After review list"+this.ReviewList)
+      if(this.ReviewList.length > 3){
+        this.tempList = this.ReviewList;
+        this.ReviewList = this.ReviewList.slice(0, 3);
+
+        console.log("Before review lsit"+this.tempList)
+        console.log("After review list"+this.ReviewList)
+      }
     }
+
+
 
   }
 

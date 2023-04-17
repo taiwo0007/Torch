@@ -185,7 +185,7 @@ public class UserServiceImpl implements UserService{
         currentUsr.setProfilePicture(verifyRequest.getProfilePicture());
         currentUsr.setCountry(countryFormatted);
         currentUsr.setLocation(addressFormatted);
-        currentUsr.setIsVerified(true);
+        currentUsr.setIsVerified(false);
         currentUsr.setAbout(verifyRequest.getAbout());
         currentUsr.setLastName(verifyRequest.getLastName());
         currentUsr.setFirstName(verifyRequest.getFirstName());

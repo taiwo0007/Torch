@@ -1,0 +1,42 @@
+
+F
+java:S3740…"/Provide the parametrized type for this generic.(¶Äƒ²
+F
+java:S3740‹"/Provide the parametrized type for this generic.(²áÛ‹
+K
+java:S3740"/Provide the parametrized type for this generic.(—€»ışÿÿÿÿ
+K
+java:S3740š"/Provide the parametrized type for this generic.(ëŒÓ×øÿÿÿÿ
+K
+java:S3740Ó"/Provide the parametrized type for this generic.(„Î¯éøÿÿÿÿ
+N
+java:S2629¥"7Use the built-in formatting to construct this argument.(²úõ„
+D
+java:S5411™"(Use a primitive boolean expression here.(Ø®è‰ÿÿÿÿÿ
+\
+java:S2789Z"FEnsure this "Optional" could never be null and remove this null-check.(ºá
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê
+c
+java:S3655]"HCall "user.isPresent()" or "!user.isEmpty()" before accessing the value.(¬§ÉÊøÿÿÿÿ
+k
+java:S3655|"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜Ãùõúÿÿÿÿ
+Z
+java:S2583Z"DChange this condition so that it does not always evaluate to "false"(ºá
+W
+java:S1126Q"AReplace this if-then-else statement by a single return statement.(ºá
+h
+java:S6204p"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ÀÄ¿¥
+d
+java:S5361¡"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Ñ…¾”øÿÿÿÿ
+X
+java:S3457¥"AFormat specifiers should be used instead of string concatenation.(²úõ„
+K
+java:S1128"0Remove this unused import 'com.google.api.Http'.(î°Åùøÿÿÿÿ
+h
+java:S1128	"RRemove this unused import 'com.troch.torchApplication.controllers.TripController'.(•ÃŠı
+9
+java:S1128""Remove this duplicated import.(åÅÚ…ûÿÿÿÿ
+4
+java:S1128#"Remove this duplicated import.(¼º¡Ú
+Z
+java:S1128%"?Remove this unused import 'javax.validation.constraints.Email'.(¸àô¹üÿÿÿÿ

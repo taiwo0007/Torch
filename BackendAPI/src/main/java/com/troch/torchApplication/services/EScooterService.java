@@ -120,6 +120,19 @@ public class EScooterService {
 
         EScooter eScooter = new EScooter();
 
+        Date tripStartDate = null;
+        Date tripEndDate = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+
+
+
+            tripStartDate = formatter.parse(esccoterAddRequest.getTripStart().toString());
+
+
+            tripEndDate = formatter.parse(esccoterAddRequest.getTripEnd().toString());
+
+
         //Api Service handler
         eScooter.setLatitude(latitudeFormatted);
         eScooter.setLongitude(longitudeFormatted);
@@ -133,8 +146,8 @@ public class EScooterService {
         eScooter.setScooterWeight(esccoterAddRequest.getScooterWeight());
         eScooter.setImage(gcpPublicImageUrlgcpUtil);
         eScooter.setWaterResistant(esccoterAddRequest.getWaterResistant());
-        eScooter.setTripStart(esccoterAddRequest.getTripStart());
-        eScooter.setTripEnd(esccoterAddRequest.getTripEnd());
+        eScooter.setTripStart(tripStartDate);
+        eScooter.setTripEnd(tripEndDate);
         eScooter.setMotorPower(esccoterAddRequest.getMotorPower());
         eScooter.setMaxRange(esccoterAddRequest.getMaxRange());
         eScooter.setMaxWeight(esccoterAddRequest.getMaxWeight());

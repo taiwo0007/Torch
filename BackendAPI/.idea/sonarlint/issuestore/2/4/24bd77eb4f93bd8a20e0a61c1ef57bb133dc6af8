@@ -1,0 +1,48 @@
+
+F
+java:S3740˜"/Provide the parametrized type for this generic.(èâõÄ
+M
+java:S3740ª"/Provide the parametrized type for this generic.(¹ø›ğ8ø‘¸¤ø0
+Z
+java:S2629¨"7Use the built-in formatting to construct this argument.(¯‘›Ñøÿÿÿÿ8û‘¸¤ø0
+U
+java:S2629·"7Use the built-in formatting to construct this argument.(Ï¾©ş8û‘¸¤ø0
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Í­Ó„
+m
+java:S3655O"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ÆÉ—±8ú’¸¤ø0
+n	java:S116."YRename this field "API_PUBLIC_KEY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úµªô
+b
+java:S11246"EReorder the modifiers to comply with the Java Language Specification.(°– 8Ò‘¾Öø0
+X	java:S1253"<This block of commented-out lines of code should be removed.(üå£‘8Æ¹æÿø0
+m
+java:S3776?"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(éşÊÇùÿÿÿÿ
+E	java:S108P")Either remove or fill this block of code.(å¥‡8“¸¤ø0
+G
+java:S3457d"%String contains no format specifiers.(ÓËğ±øÿÿÿÿ8‚“¸¤ø0
+Z	java:S106g"9Replace this use of System.out or System.err by a logger.(ì…òàøÿÿÿÿ8ƒ“¸¤ø0
+U	java:S106h"9Replace this use of System.out or System.err by a logger.(ºÔô†8ƒ“¸¤ø0
+V	java:S106‚"9Replace this use of System.out or System.err by a logger.(àâ’Œ8„“¸¤ø0
+H
+java:S3457Š"%String contains no format specifiers.(¶ãµ…ÿÿÿÿÿ8„“¸¤ø0
+Y	java:S125"<This block of commented-out lines of code should be removed.(Éº §8…“¸¤ø0
+Y
+java:S2696š"6Make the enclosing method "static" or remove this set.(ù›Î©ùÿÿÿÿ8…“¸¤ø0
+d
+java:S3457¨"AFormat specifiers should be used instead of string concatenation.(¯‘›Ñøÿÿÿÿ8‡“¸¤ø0
+Y
+java:S2696±"6Make the enclosing method "static" or remove this set.(ù›Î©ùÿÿÿÿ8ˆ“¸¤ø0
+Y	java:S125´"<This block of commented-out lines of code should be removed.(öÊØÄ8ˆ“¸¤ø0
+_
+java:S3457·"AFormat specifiers should be used instead of string concatenation.(Ï¾©ş8ˆ“¸¤ø0
+]
+java:S1854Ú":Remove this useless assignment to local variable "amount".(áÔÂÌùÿÿÿÿ8‹“¸¤ø0
+N
+java:S1481Ú"+Remove this unused "amount" local variable.(áÔÂÌùÿÿÿÿ8“¸¤ø0
+^
+java:S3457Ş"AFormat specifiers should be used instead of string concatenation.(Ï„ÇR8“¸¤ø0
+N
+java:S1128"1Remove this unused import 'com.google.gson.Gson'.(–§8û¤¾Öø0
+d
+java:S1128"GRemove this unused import 'com.google.gson.annotations.SerializedName'.(äöúõ8û¤¾Öø0
+F
+java:S10680"1Remove this unused "stripeService" private field.(‚éÁ

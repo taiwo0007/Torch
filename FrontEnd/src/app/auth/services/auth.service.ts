@@ -192,7 +192,7 @@ export class AuthService {
 
   openDialog() {
     const dialogRef = this.dialog.open(VerificationDialogComponent, {
-      height: '630px',
+      height: 'max-content',
       width: '600px',
     });
   }

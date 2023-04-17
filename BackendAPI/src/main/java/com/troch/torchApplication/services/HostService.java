@@ -182,7 +182,7 @@ public class HostService {
                             .firstName(u.getFirstName())
                             .LastNameInitital(u.getLastName().substring(0,1))
                             .profileImage(u.getProfilePicture())
-                            .rating(u.getRating())
+                            .rating(u.getHost().getHostReviews().get(0).getStarRating())
                             .host_id(u.getHost().getId())
                             .build()
             );

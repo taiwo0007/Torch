@@ -86,7 +86,7 @@ public class EScooterReviewService {
         scooterReview.setComment(hostScooterReviewRequest.getEscooter_comment());
         scooterReview.setStarRating(hostScooterReviewRequest.getEscooter_starRating());
 
-        escooterReviewRepository.save(scooterReview);
+
 
         hostReview.setUser_reviewer(user);
         hostReview.setHost(host);
@@ -94,6 +94,8 @@ public class EScooterReviewService {
         hostReview.setStarRating(hostScooterReviewRequest.getHost_starRating());
         hostReview.setReviewDate(new Date());
 
+
+        escooterReviewRepository.save(scooterReview);
         hostReviewService.save(hostReview);
 
 

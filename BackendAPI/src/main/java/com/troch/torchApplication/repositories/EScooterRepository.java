@@ -32,7 +32,7 @@ public interface EScooterRepository extends JpaRepository<EScooter, Integer> {
                                       @Param("todayDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date todayDate);
 
     //Within 15 kilometers
-    @Query("SELECT e FROM EScooter e WHERE (:tripStart IS NULL OR e.tripStart >= :tripStart ) AND (:tripEnd IS NULL OR e.tripEnd <= :tripEnd) AND ( 6371 * acos( cos( radians(:latitude) ) * cos( radians( e.latitude ) ) * cos( radians( e.longitude ) - radians(:longitude) ) + sin( radians(:latitude) ) * sin(radians(e.latitude)) ) ) <= 15")
+    @Query("SELECT e FROM EScooter e WHERE (:tripStart IS NULL OR e.tripStart <= :tripStart ) AND (:tripEnd IS NULL OR e.tripEnd >= :tripEnd) AND ( 6371 * acos( cos( radians(:latitude) ) * cos( radians( e.latitude ) ) * cos( radians( e.longitude ) - radians(:longitude) ) + sin( radians(:latitude) ) * sin(radians(e.latitude)) ) ) <= 15")
     List<EScooter> findEscooterByCordsAndDate(@Param("tripStart") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tripStart,
                                               @Param("tripEnd") @DateTimeFormat(pattern = "yyyy-MM-dd") Date tripEnd,
             @Param("longitude") Double longitude, @Param("latitude") Double latitude);

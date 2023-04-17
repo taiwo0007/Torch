@@ -161,7 +161,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
     }
 
+
+
     toggleDropdown() {
         this.isOpen = !this.isOpen;
+    }
+
+    closeDropdownAny() {
+        this.dropdown.isOpen = false;
     }
 }

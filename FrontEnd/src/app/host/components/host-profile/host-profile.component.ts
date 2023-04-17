@@ -7,6 +7,7 @@ import {Escooter} from "../../../escooter/models/escooter.interface";
 import {delay, map} from "rxjs";
 import {UserService} from "../../../user/services/user.service";
 import {LoadingService} from "../../../shared/services/loading.service";
+import {CONSTRUCTOR} from "@angular/compiler-cli/ngcc/src/host/esm2015_host";
 
 @Component({
   selector: 'app-host-profile',
@@ -48,7 +49,7 @@ export class HostProfileComponent implements OnInit{
     this.hostService.getHostById(paramid).pipe( map((data:Host) => {
       data.hostReviews.map(hostReviewData => {
         this.userService.fetchBasicUser(hostReviewData.user_reviewer).subscribe(data => {
-          console.log(data)
+
           hostReviewData.user_reviewer = data;
         })
       })
@@ -57,6 +58,8 @@ export class HostProfileComponent implements OnInit{
         .subscribe((data:Host) => {
       console.log(data)
         this.host = data
+          this.host.hostUser.rating = this.calcHostRating();
+          console.log("HOST DATA:" +this.host.hostUser.rating)
 
           console.log(this.host)
 
@@ -108,6 +111,35 @@ export class HostProfileComponent implements OnInit{
       console.log(this.hostEsccoters)
 
     })
+  }
+
+  calcHostRating(){
+
+    let averageRating = 0.0;
+    let one = 0, two = 0, three = 0, four = 0, five = 0;
+
+      for (let hr of this.host?.hostReviews) {
+        if (hr.starRating == 1) {
+          one++;
+        }
+        if (hr.starRating == 2) {
+          two++;
+        }
+        if (hr.starRating == 3) {
+          three++;
+        }
+        if (hr.starRating == 4) {
+          four++;
+        }
+        if (hr.starRating == 5) {
+          five++;
+        }
+
+    }
+
+      averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five + four + three + two + one);
+      return averageRating;
+
   }
 
   initRatingList() {

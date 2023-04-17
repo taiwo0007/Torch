@@ -9,8 +9,8 @@ export interface ScooterAddRequestPayload{
     scooterWeight:number;
     motorPower:number;
     maxRange:number;
-    tripStart:Date;
-    tripEnd:Date;
+    tripStart:string;
+    tripEnd:string;
     waterResistant:boolean;
     image:any;
     country:string;

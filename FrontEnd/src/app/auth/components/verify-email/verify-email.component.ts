@@ -24,6 +24,8 @@ export class VerifyEmailComponent implements OnInit{
     this.loadingService.isLoading.next(true);
 
     this.route.params.pipe(switchMap(params => {
+      this.loadingService.isLoading.next(false);
+
       return this.authService.verifyEmailCode(params['code']);
     })).subscribe( params => {
       this.paramId = params['code'];
@@ -33,6 +35,9 @@ export class VerifyEmailComponent implements OnInit{
 
     },
         error => {
+          this.loadingService.isLoading.next(false);
+
+        }, ()=> {
           this.loadingService.isLoading.next(false);
 
         })

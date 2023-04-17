@@ -27,7 +27,7 @@
 
         <li *ngIf="isAuthenticated && !accountType && isHost"  class="nav-item my-auto me-3">
             <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn d-flex align-items-center btn-warning rounded-0  fw-bold  my-auto text-dark font-gro-bold"(click)="subscriptionModal()" >
+               class="btn d-flex align-items-center btn-outline-warning rounded-0  fw-bold  my-auto font-gro-bold" (click)="subscriptionModal()" >
                 <mat-icon class="me-1">monetization_on</mat-icon>
                 <span class="pt-1 fw-bold font-gro-bold">Upgrade Plan</span>
 
@@ -59,9 +59,9 @@
                class=" btn btn-outline-warning disabled rounded-0 text-warning fw-bold  my-auto">{{accountType}} plan</p>
         </li>
 
-        <li *ngIf="isAuthenticated" class="nav-item my-auto">
+        <li *ngIf="isAuthenticated" (click)="closeDropdownAny()" class="nav-item my-auto">
             <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn btn-light rounded-0 text-dark fw-bold  my-auto" (click)="onLogout()">Sign out</a>
+               class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
 
         </li>
         <li *ngIf="isAuthenticated" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false"
@@ -69,8 +69,6 @@
             <a dropdownToggle (click)="toggleDropdown()" style="background-color: black !important"
                class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#" role="button"
                aria-expanded="false">
-
-                <!--        <i class="fa fa-th fw-light" aria-hidden="true"></i>-->
                 <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
                      class="rounded-circle " src="https://api.dicebear.com/6.x/micah/svg?seed={{userEmail}}&backgroundColor=b6e3f4" alt="">
 

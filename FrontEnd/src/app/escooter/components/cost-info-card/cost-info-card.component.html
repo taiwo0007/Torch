@@ -16,18 +16,19 @@
                         </div>
                     </div>
                     <div class="row   py-2">
-                        <div class="col-8 my-auto">
+                        <div class="col-5 my-auto">
                             <p class="card-text  my-auto text-secondary d-flex align-items-center">  <span>Processing fee</span></p>
                         </div>
-                        <div class="col-4 my-auto">
-                            <p [ngClass]="discountObj ? 'strike-through' : 'fw-bold'" class=" text-info text-end my-auto ">€20.00</p>
+                        <div class="col-7 my-auto d-flex justify-content-end align-items-center">
+                            <p class="fw-bold my-auto" *ngIf="discountObj">€0.00</p>
+                            <p [ngClass]="discountObj ? 'strike-through ms-2' : 'fw-bold'" class=" text-info text-end my-auto ">€20.00</p>
                         </div>
                     </div>
                     <div class="row t d py-2">
-                        <div class="col-5 my-auto">
-                            <p class="card-text  my-auto text-secondary">Insurance {{'(-'+discountObj?.percentageDiscount+'' | percent }}</p>
+                        <div class="col-6 my-auto">
+                            <p class="card-text  my-auto text-secondary">Insurance <span class="text-success" *ngIf="discountObj">(-{{discountObj?.percentageDiscount | percent }})</span></p>
                         </div>
-                        <div class="col-7 my-auto d-flex justify-content-end align-items-center">
+                        <div class="col-6 my-auto d-flex justify-content-end align-items-center">
                             <p class="fw-bold my-auto" *ngIf="discountObj">{{(discountObj ? discountObj?.insuranceDiscount : '') | currency: 'EUR'}}</p>
                             <p [ngClass]="discountObj ? 'strike-through ms-2' : 'fw-bold'" class="my-auto text-info ">
                                 {{(discountObj ? discountObj?.insuranceOriginal : totalInsurance) | currency : 'EUR'}}</p>

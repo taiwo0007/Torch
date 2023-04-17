@@ -102,7 +102,9 @@ export class HostEscootersComponent implements OnInit{
   checkSuccessUrl(){
 
     this.route.queryParams.subscribe(params => {
-      this.addSuccess = params['success'];
+      if(params['success']){
+        this.loadingService.isSuccess.next({message: 'Electric scooter added successfully'});
+      }
 
     })
   }
@@ -138,23 +140,18 @@ export class HostEscootersComponent implements OnInit{
           return this.hostService.createAd(this.createAdRequest)
         }))
         .subscribe(data => {
-          this.toastr.success(  'Ad Campaign Created', '', {
-            positionClass: 'toast-top-center'
-          });
+          this.loadingService.isSuccess.next({message: 'Successfully created ad campaign!'});
           this.checkHostID()
           this.getHostDetails()
           dialogRef.close();
           }, error => {
 
           if(error.error.message){
-            this.toastr.error(  'Ad Campaign Not Created', error.error.message, {
-              positionClass: 'toast-top-center'
-            });
+            this.loadingService.isError.next({message:'Unsuccessful: ' +error.error.message});
           }
           else {
-            this.toastr.error(  'Ad Campaign Not Created', 'An Unexpected Error Occured', {
-              positionClass: 'toast-top-center'
-            });
+            this.loadingService.isError.next({message:'Opps! An Unexpected Error Occurred'});
+
           }
 
           dialogRef.close();

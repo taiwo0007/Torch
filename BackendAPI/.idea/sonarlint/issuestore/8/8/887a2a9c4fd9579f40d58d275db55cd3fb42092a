@@ -1,0 +1,28 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ú ù¼
+V	java:S125!"<This block of commented-out lines of code should be removed.(óºØ„üÿÿÿÿ
+Z
+java:S1874r"DRemove this use of "WebSecurityConfigurerAdapter"; it is deprecated.(»Œü
+T
+java:S5344|">Don't use the default "PasswordEncoder" relying on plain-text.(Ö˜ÔÚ
+R	java:S125…"<This block of commented-out lines of code should be removed.(âž±½
+R	java:S125‘"<This block of commented-out lines of code should be removed.(âž±½
+W	java:S125¢"<This block of commented-out lines of code should be removed.(ÃÈÜýÿÿÿÿ
+?
+java:S1116ï"Remove this empty statement.(Ðö€Ûøÿÿÿÿ8Ž ²²ø0
+^	java:S125ô"<This block of commented-out lines of code should be removed.(½Ô™ÿýÿÿÿÿ8Ž ²²ø0
+^	java:S125“"<This block of commented-out lines of code should be removed.(¸¢˜Ïøÿÿÿÿ8Ž ²²ø0
+n
+java:S1128"LRemove this unused import 'com.troch.torchApplication.services.UserService'.(ý‚ùÔøÿÿÿÿ8 ²²ø0
+u
+java:S1128"XRemove this unused import 'org.springframework.boot.web.servlet.FilterRegistrationBean'.(×±Ñ¡8 ²²ø0
+Z
+java:S1128"=Remove this unused import 'org.springframework.core.Ordered'.(ˆ‹ˆƒ8 ²²ø0
+b
+java:S1128"@Remove this unused import 'org.springframework.http.HttpMethod'.(Ê¨Ä¡øÿÿÿÿ8 ²²ø0
+ˆ
+java:S1128"fRemove this unused import 'org.springframework.security.authentication.dao.DaoAuthenticationProvider'.(Ã‚öþÿÿÿÿ8 ²²ø0
+}
+java:S1128"`Remove this unused import 'org.springframework.security.web.util.matcher.AntPathRequestMatcher'.(¼¸öŽ8 ²²ø0
+s
+java:S1128"QRemove this unused import 'org.springframework.web.cors.CorsConfigurationSource'.(ŒºÏøþÿÿÿÿ8 ²²ø0

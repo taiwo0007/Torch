@@ -42,11 +42,8 @@ public class EsccoterAddRequest {
     private String address;
     private String county;
     private String country;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date tripStart;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date tripEnd;
+    private String tripStart;
+    private String tripEnd;
 
     private String contentType;
 }

@@ -55,10 +55,8 @@ export class AppComponent {
           console.log(userData.isVerified)
           console.log(userData.isVerifiedConsent)
 
-
-          setTimeout(() => {
             this.authService.openDialog();
-          }, 4000)
+
 
         }
 

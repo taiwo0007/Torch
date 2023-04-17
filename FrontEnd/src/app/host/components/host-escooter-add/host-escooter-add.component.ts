@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Make} from "../../../escooter/models/make.interface";
 import {HostService} from "../../services/host.service";
@@ -18,7 +18,9 @@ import {ToastrService} from "ngx-toastr";
 })
 export class HostEscooterAddComponent implements OnInit{
 
+    @ViewChild('addForm', {static: false}) addForm:any;
   makes:Make[];
+  today = new Date()
   isHostCreated:boolean = false;
   error:any;
   options:Options = new Options({
@@ -32,7 +34,7 @@ export class HostEscooterAddComponent implements OnInit{
   base64textString = [];
   isLoading: boolean = false;
   scooterAddRequestPayload:ScooterAddRequestPayload | undefined = {
-    make:"",
+    make:'Segway',
     modelName:"",
     cost:0,
     maxSpeed:0,
@@ -74,7 +76,11 @@ export class HostEscooterAddComponent implements OnInit{
     const fileType = valueSplitted[1];
     this.imageFileType = fileType;
 
-    this.scooterAddRequestPayload.country = this.googlePlaceLocation;
+    console.log(addForm.value.tripStart)
+      console.log(addForm.value.tripEnd)
+
+
+      this.scooterAddRequestPayload.country = this.googlePlaceLocation;
     this.scooterAddRequestPayload.modelName = addForm.value.modelName;
     this.scooterAddRequestPayload.cost = addForm.value.cost;
     this.scooterAddRequestPayload.maxSpeed = addForm.value.maxSpeed;
@@ -130,6 +136,8 @@ export class HostEscooterAddComponent implements OnInit{
   ngOnInit() {
     this.setHostAddedAlert();
     this.getAllMakes();
+
+    console.log(this.addForm)
   }
 
   getAllMakes(){

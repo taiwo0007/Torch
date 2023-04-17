@@ -2,16 +2,20 @@ package com.troch.torchApplication.models;
 
 
 import com.fasterxml.jackson.annotation.*;
-import com.troch.torchApplication.Views.Views;
 import com.troch.torchApplication.enums.TripStatus;
+import com.troch.torchApplication.repositories.HostReviewRepository;
+import com.troch.torchApplication.services.HostReviewService;
+import com.troch.torchApplication.services.HostService;
 import lombok.*;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.json.JSONPropertyIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import javax.persistence.*;
 import java.util.*;
+
+
 
 @Getter
 @Setter
@@ -23,8 +27,9 @@ import java.util.*;
 @Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
+
+
     @Id
-    @JsonView(Views.Id.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Integer id;
@@ -99,35 +104,9 @@ public class User {
 
     private Boolean isVerified = false;
 
+
     private Boolean isHost;
 
-    public double getRating() {
-        List<HostReview> allHostReviews = this.hostReviews;
-        double averageRating = 0.0;
-
-        int one = 0, two = 0, three = 0, four = 0, five = 0;
-        for (HostReview scoot : allHostReviews) {
-            if (scoot.getStarRating() == 1) {
-                one++;
-            }
-            if (scoot.getStarRating() == 2) {
-                two++;
-            }
-            if (scoot.getStarRating() == 3) {
-                three++;
-            }
-            if (scoot.getStarRating() == 4) {
-                four++;
-            }
-            if (scoot.getStarRating() == 5) {
-                five++;
-            }
-
-            averageRating = (five * 5 + four * 4 + three * 3 + two * 2 + one * 1) / (five + four + three + two + one);
-
-        }
-        return averageRating;
-    }
     public User(String firstName, String lastName, String email, String password, Collection<Role> roles){
         this.firstName= firstName;
         this.lastName = lastName;
