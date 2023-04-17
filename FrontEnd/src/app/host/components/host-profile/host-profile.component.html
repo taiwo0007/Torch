@@ -1,15 +1,22 @@
-<header *ngIf="!isLoading" class="bg-green text-dark position-relative mt-5">
-    <div class="container">
+<header  *ngIf="!isLoading" class="bg-green text-dark position-relative mt-5">
+    <div style="width: 78vw !important;"  class="container">
         <div class="row pt-5 pb-3 mw-25">
             <div style="position: relative" class="col-xs-12 col-md-3 text-center">
                 <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"
                      [src]="host?.hostUser.profilePicture" alt="">
                 <p *ngIf="host?.hostUser?.accountType == 'Pro'"
-                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:23px; left:34%;"
-                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}} Plan</p>
+                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:23px; left:30%;"
+                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
+                    Plan</p>
                 <p *ngIf="host?.hostUser?.accountType == 'Advanced'"
-                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:27%;"
-                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}} Plan</p>
+                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:23%;"
+                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
+                    Plan</p>
+                <p *ngIf="host?.hostUser?.accountType == 'Basic'"
+                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:23%;"
+                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
+                    Plan</p>
+
 
                 <div class=" fs-4 d-flex align-items-center my-auto text-center justify-content-center mt-2">
                     <p class="text-center fw-bold align-self-center ms-1 p-0 m-0">{{host?.hostUser.rating ? (host.hostUser.rating | number: '1.1-1') : 0.0}} </p>
@@ -18,7 +25,7 @@
             </div>
             <div class="col-xs-12 col-md-9 my-auto">
                 <div class="d-flex justify-content-between">
-                    <h1 class="fw-bold">{{host?.hostUser?.firstName +' ' +host?.hostUser?.lastName}}</h1>
+                    <h1 class="fw-bold">{{host?.hostUser?.firstName + ' ' + host?.hostUser?.lastName}}</h1>
                     <div class="socials fs-1">
                         <i class="fa fa-twitter-square btn  text-light rounded-circle"
                            aria-hidden="true"></i>
@@ -48,94 +55,118 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="host?.hostUser?.accountType" class="d-flex justify-content-end mt-n5 pt-n3 me-5">
-            <button class="btn btn-dark text-light rounded-0 fs-4 px-5 my-auto">
-               {{host?.hostUser?.accountType}} user
-            </button>
-        </div>
     </div>
 </header>
 
-<section *ngIf="!isLoading" class="container">
+<section style="width: 78vw !important;" *ngIf="!isLoading" class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8">
             <div class="row">
-                <div class="col-sm-12 mt-3 pt-4 p-4  ">
+                <div class="col-sm-12 mt-3 pt-4 p-4 border-bottom ">
                     <div class="header-about-section d-flex align-items-center justify-content-between">
-                        <p class="my-auto fw-bolder pb-1 text-info text-uppercase disabled">About</p>
+                        <h6 class="my-auto fw-bold pb-1  text-uppercase disabled">About the host</h6>
                         <p class="btn btn-light">3 years Expereince</p>
                     </div>
                     <p class="text-secondary mt-2">{{host?.hostUser.about}}
                     </p>
                 </div>
 
-                <div *ngIf="host?.hostTrips.length > 1 || host.hostTrips.length > 29 || host?.hostUser.torchTrusted || host?.hostUser.rating > 4 || (host?.hostUser.isVerified && host?.hostUser.rating > 4)" class="col-sm-12 mt-3 pt-0 p-4  ">
-                    <p class="my-auto fw-bolder pb-1 text-info mx-auto text-center text-uppercase disabled">Host Badges</p>
+                <div *ngIf="host?.hostTrips.length > 1 || host.hostTrips.length > 29 || host?.hostUser.torchTrusted || host?.hostUser.rating > 4 || (host?.hostUser.isVerified && host?.hostUser.rating > 4)"
+                     class="col-sm-12 border-bottom mt-5 pt-0 p-4  ">
+                    <h6 class="my-auto fw-bold pb-1  mx-auto  text-uppercase disabled">Badges earned by host</h6>
                     <div class="d-flex justify-content-around mt-5">
                         <div *ngIf="host?.hostTrips.length > 1" class="d-flex flex-column align-items-center mx-2">
-                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/new.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Trips Starter</p>
+                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/new.png"
+                                 alt="" srcset="">
+                            <p style="width: 4rem;"
+                               class="fw-bold justify-content-center align-self-center text-center pt-3"> Trips
+                                Starter</p>
                         </div>
-                        <div *ngIf="host.hostTrips.length > 29" class="d-flex flex-column align-items-center mx-2">
-                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/100trips.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Trip Master</p>
+                        <div *ngIf="host.hostTrips.length > 27" class="d-flex flex-column align-items-center mx-2">
+                            <img style="width: 6.2rem;" class=" text-center mx-auto"
+                                 src="assets/images/website/100trips.png" alt="" srcset="">
+                            <p style="width: 4rem;"
+                               class="fw-bold justify-content-center align-self-center text-center pt-3"> Trip
+                                Master</p>
                         </div>
                         <div *ngIf="host?.hostUser.torchTrusted" class="d-flex flex-column align-items-center mx-2">
-                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/torchTrusted.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Torch trusted</p>
+                            <img style="width: 6.2rem;" class=" text-center mx-auto"
+                                 src="assets/images/website/torchTrusted.png" alt="" srcset="">
+                            <p style="width: 4rem;"
+                               class="fw-bold justify-content-center align-self-center text-center pt-3"> Torch
+                                trusted</p>
                         </div>
                         <div *ngIf="host?.hostUser.rating > 4" class="d-flex flex-column align-items-center mx-2">
-                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/topRated.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Top Rated</p>
+                            <img style="width: 6.2rem;" class=" text-center mx-auto"
+                                 src="assets/images/website/topRated.png" alt="" srcset="">
+                            <p style="width: 4rem;"
+                               class="fw-bold justify-content-center align-self-center text-center pt-3"> Top Rated</p>
                         </div>
-                        <div *ngIf="host?.hostUser.isVerified && host?.hostUser.rating > 4" class="d-flex flex-column align-items-center mx-2">
-                            <img style="width: 6.2rem;" class=" text-center mx-auto" src="assets/images/website/safety.png" alt="" srcset="">
-                            <p style="width: 4rem;" class="fw-bold justify-content-center align-self-center text-center pt-3"> Safe Host</p>
+                        <div *ngIf="host?.hostUser.isVerified && host?.hostUser.rating > 4"
+                             class="d-flex flex-column align-items-center mx-2">
+                            <img style="width: 6.2rem;" class=" text-center mx-auto"
+                                 src="assets/images/website/safety.png" alt="" srcset="">
+                            <p style="width: 4rem;"
+                               class="fw-bold justify-content-center align-self-center text-center pt-3"> Safe Host</p>
                         </div>
                     </div>
 
                 </div>
 
-                <div  class="col-sm-12 p-4">
-                    <div class="  ">
-                        <p class="my-auto fw-bolder text-upercase text-info text-uppercase"> Host Reviews</p>
-                    </div>
-                    <div   *ngFor="let hr of host.hostReviews"
-                         class="row border-bottom my-2 p-2 pt-3">
-                        <div class="col-xs-12 col-sm-1">
-                            <img style="object-fit: cover; border-radius: 50% !important"
-                                width="60"
-                                 height="60" class="rounded" alt="..."
-                                 [src]="hr.user_reviewer.profilePicture"
-                            />
+
+                <div class="col-sm-12 p-4">
+
+                    <div>
+                        <div class="  ">
+                            <h6 class="my-auto fw-bold text-upercase text-uppercase pt-3 "> Host Reviews</h6>
+
                         </div>
-                        <div class="col-xs-12 col-sm-11">
-                            <div class="row">
-                                <div class="col-sm-10 col-sxs-12">
-                                    <p><span class="fw-bold">
-                                        {{hr.user_reviewer.firstName +' ' +hr.user_reviewer.lastName}}
-                                    </span>
-                                    <br> <span th:text="${review.getScooter_reviewer().getCountry()}"
-                                                   class="badge badge-dark bg-dark">{{hr.user_reviewer.country}}</span> </p>
-                                </div>
-                                <div class="col-2 d-flex justify-content-between">
-                                    <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}"
-                                       class=" ">{{hr.reviewDate | date : 'MM/yyyy'}}</p>
-                                    <div class="d-flex">
-                                        <p th:text="${review.getStarRating()}" class="me-2">{{hr.starRating}}</p>
-                                        <i class="fa fa-star  text-info pt-1"></i>
+                        <div *ngFor="let hr of host.hostReviews; let i = index"
+                             class="row mx-auto border-bottom my-2 py-4 pt-5 ">
+
+                            <div class="col-md-1 col-sm-12">
+                                <img style="object-fit: cover; border-radius: 50% !important"
+                                     src="{{hr.user_reviewer.profilePicture}}" width="60" height="60" class="rounded"
+                                     alt="..."/>
+                            </div>
+                            <div class="col-11">
+                                <div class="row ">
+                                    <div class="col-md-10 col-sm-12 ">
+                                        <div class="row mx-auto">
+                                            <div style="width: 99%" class="col-md-12 mx-auto">
+                                                <i *ngFor="let g of ratingList[i]"
+                                                   class="fa fa-star fs-4 me-1 text-info pt-1"></i>
+                                                <br>
+                                                <small class="text-secondary"><span>{{hr?.user_reviewer.firstName}} {{hr?.user_reviewer.lastName}}
+                                                    - {{hr?.user_reviewer.country}}</span> <br>
+                                                    <span class="d-flex">
+                    </span>
+
+                                                </small>
+
+                                                <p class="text-dark mt-2">{{hr?.comment}}
+                                                </p>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-2 col-sm-12 d-flex justify-content-between">
+                                        <small th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}"
+                                               class=" text-secondary">{{hr?.reviewDate | date : 'dd MMM yyyy'}}</small>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <p th:text="${review.getComment()}" class="">{{hr.comment}}
-                                </p>
+                                <div class="row mx-auto">
+
+
+                                </div>
                             </div>
                         </div>
-                        <div *ngIf="!host.hostReviews" class="col-11 mb-5 pb-5">
-                            No reviews
-                        </div>
+
                     </div>
+
 
                     <div class="mb-5 pb-5" *ngIf="!host?.hostReviews.length ">
                         <p class="text-center mt-5"> No Reviews</p>
@@ -146,7 +177,7 @@
         <div class="col-xs-12 col-sm-4 ">
             <div class="p-4 pt-2  rounded mt-3">
                 <div>
-                    <p class="fw-bolder mt-3 text-info text-uppercase">VERIFIED STATUS</p>
+                    <h6 class="fw-bolder mt-3 text-uppercase">VERIFIED STATUS</h6>
 
                     <div class="card-body px-2 mx-0">
                         <div class="row  border-light ">
@@ -182,8 +213,8 @@
                 </div>
             </div>
             <div class="p-4  rounded mt-2">
-                <p class="fw-bold text-uppercase text-info">Insurance information</p>
-                <p>Taiwo has succssfuly secured all vehicles under <span class="text-dark fw-bold">Axa Insurance</span>
+                <h6 class="fw-bold text-uppercase mb-3">Insurance information</h6>
+                <p class="fw-lighter">Taiwo has succssfuly secured all vehicles under <span class="text-dark fw-bold">{{host?.insurance.name}}</span>
                     This means that:</p>
 
                 <div class="card-body px-2 mx-0">
@@ -216,18 +247,22 @@
             </div>
 
             <div *ngIf="hostEsccoters" class="escooters-host p-4">
-                <p class="fw-bold text-info text-uppercase">{{host?.hostUser.firstName}}'s Escooters</p>
+                <h6 class="fw-bold  text-uppercase">{{host?.hostUser.firstName}}'s Escooters</h6>
                 <div *ngIf="hostEsccoters" class="row">
-                    <a [routerLink]="['/escooter-detail', e.id]" *ngFor="let e of hostEsccoters" style="text-decoration: none; width: 46%; height: 100% !important;" class="card mx-auto p-0 mb-2 text-dark scooter-card col-6  mx-auto mx-2" id="scooter-card">
-                        <img style="object-fit:cover !important; width: 100% !important; height: 8rem !important;" [src]="e.image" class="card-img-top mx-auto" alt="..." />
+                    <a [routerLink]="['/escooter-detail', e.id]" *ngFor="let e of hostEsccoters"
+                       style="text-decoration: none; width: 46%; height: 100% !important;"
+                       class="card mx-auto p-0 mb-2 text-dark scooter-card col-6  mx-auto mx-2" id="scooter-card">
+                        <img style="object-fit:cover !important; width: 100% !important; height: 8rem !important;"
+                             [src]="e.image" class="card-img-top mx-auto" alt="..."/>
                         <div class="card-body m-0">
                             <div class=" ">
                                 <div class="">
                                     <h5 class="card-text fw-bold">{{e.modelName}}</h5>
                                 </div>
-                                <div class="d-flex align-items-center border-top  justify-content-between mt-3 pt-3" >
+                                <div class="d-flex align-items-center border-top  justify-content-between mt-3 pt-3">
                                     <div class="">
-                                        <span class="fw-bold">{{e.rating | number : '1.2-2'}}</span> <i class="fa fa-star text-info"></i>
+                                        <span class="fw-bold">{{e.rating | number : '1.2-2'}}</span> <i
+                                            class="fa fa-star text-info"></i>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <p class="fw-bold m-0 p-0">{{e.cost | currency: 'EUR'}}/day</p>
@@ -239,7 +274,9 @@
                         </div>
                     </a>
                     <div class="d-grid px-5 gap-2 col-12 pt-4 mx-auto">
-                        <button [routerLink]="['/host-escooters',host.id]" class="btn btn-dark text-light fw-bold" *ngIf="isMore" type="button">View More</button>
+                        <button [routerLink]="['/host-escooters',host.id]" class="btn btn-dark text-light fw-bold"
+                                *ngIf="isMore" type="button">View More
+                        </button>
                     </div>
                 </div>
             </div>

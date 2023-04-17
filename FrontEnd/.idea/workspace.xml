@@ -2,33 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Implemented formulae in trip location that searches withing a given radius and returns scooter withing said location with input date">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/f/6f9d98ca6b2005fc0cd4b0f000b670b16bf3c496" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/b/9bae3918e9e9e127bef4ebe79670ba4d28d61777" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/6/06895b2dfff011115a8eded7e3fad29788965566" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/c/ecb2d86619fe7f1bbc1810122e60baa86557c497" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/f/6f9d98ca6b2005fc0cd4b0f000b670b16bf3c496" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/b/9bae3918e9e9e127bef4ebe79670ba4d28d61777" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/6/06895b2dfff011115a8eded7e3fad29788965566" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/c/ecb2d86619fe7f1bbc1810122e60baa86557c497" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog/are-you-sure-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog/are-you-sure-dialog.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/delete-scooter-dialog/delete-scooter-dialog.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/delete-scooter-dialog/delete-scooter-dialog.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/mobile-nav-bar/mobile-nav-bar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/review/review.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +137,7 @@
       <workItem from="1681647381009" duration="3049000" />
       <workItem from="1681650627515" duration="19569000" />
       <workItem from="1681670899126" duration="4257000" />
-      <workItem from="1681683049776" duration="1567000" />
+      <workItem from="1681683049776" duration="7752000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>

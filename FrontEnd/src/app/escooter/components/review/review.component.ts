@@ -11,6 +11,7 @@ import {BasicUserResponsePayload} from "../../../user/models/basic-user-response
 export class ReviewComponent implements OnInit {
   @Input() Review:ScooterReviewer;
   reviewUser:BasicUserResponsePayload;
+   ratingList: any;
 
   constructor(private userService: UserService) { }
 
@@ -19,9 +20,24 @@ export class ReviewComponent implements OnInit {
     this.userService.fetchBasicUser(this.Review.scooter_reviewer).subscribe((data:BasicUserResponsePayload) => {
 
       this.reviewUser = data;
+      this.initRatingList();
 
       console.log("reivewUser",data)
     })
+  }
+
+
+  initRatingList() {
+
+    let tempList = []
+      for(let i = 0; i < this.Review.starRating; i++){
+        tempList.push(1)
+      }
+
+      this.ratingList = tempList;
+
+     console.log(this.ratingList)
+
   }
 
 }

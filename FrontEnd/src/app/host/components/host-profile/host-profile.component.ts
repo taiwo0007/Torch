@@ -42,6 +42,7 @@ export class HostProfileComponent implements OnInit{
   }
 
   //just an ID is being returned for userreviewr - we are calling an api to change it to a userobject
+    ratingList: any = [];
   getHostData(paramid:number){
 
     this.hostService.getHostById(paramid).pipe( map((data:Host) => {
@@ -56,9 +57,11 @@ export class HostProfileComponent implements OnInit{
         .subscribe((data:Host) => {
       console.log(data)
         this.host = data
+
           console.log(this.host)
 
           this.getHostEsccotersInitEscooters()
+              this.initRatingList()
           // this.loadingService.isLoading.next(false);
           this.loadingService.isLoading.next(false);
           this.isLoading = false
@@ -106,5 +109,27 @@ export class HostProfileComponent implements OnInit{
 
     })
   }
+
+  initRatingList() {
+
+    let tempList = []
+
+    for(let l of this.host.hostReviews){
+      for(let i = 0; i < l.starRating; i++){
+        tempList.push(1)
+      }
+      this.ratingList.push(tempList)
+
+      console.log(this.ratingList)
+
+      tempList = []
+    }
+
+    console.log(this.ratingList)
+    console.log("this.ratingList")
+
+
+  }
+
 
 }

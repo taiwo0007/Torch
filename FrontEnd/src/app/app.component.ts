@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from "./auth/services/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {VerificationDialogComponent} from "./shared/components/verification-dialog/verification-dialog.component";
 import {LoadingService} from "./shared/services/loading.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -37,11 +37,11 @@ export class AppComponent {
 
   ngOnInit() {
 
-    // this.router.events.subscribe(event => {
-    //   if(event instanceof NavigationEnd){
-    //     window.scrollTo(0,0);
-    //   }
-    // })
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        window.scrollTo(0,0);
+      }
+    })
 
 
 

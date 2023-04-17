@@ -1,6 +1,6 @@
 
 
-<div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row mx-auto border-bottom my-2 pb-4 pt-3 ">
+<div th:if="${not #lists.isEmpty(reviews)}" th:each="review: ${reviews}" class="row mx-auto border-top my-2 py-4 pt-5 ">
 
 <div class="col-md-1 col-sm-12">
     <img style="object-fit: cover; border-radius: 50% !important" src="{{reviewUser?.profilePicture}}" width="60" height="60" class="rounded"
@@ -13,26 +13,32 @@
 
 
                 <div style="width: 99%" class="col-md-12 mx-auto">
-                    <div ><span>{{reviewUser?.firstName}} {{reviewUser?.lastName}}</span> <br>
+                    <i *ngFor="let i of ratingList" class="fa fa-star fs-4 me-1 text-info pt-1"></i>
+                    <br>
+                    <small class="text-secondary"><span>{{reviewUser?.firstName}} {{reviewUser?.lastName}} - {{reviewUser?.country}}</span> <br>
                         <span class="d-flex">
-                    <p th:text="${review.getStarRating()}" class="me-2">{{Review?.starRating}}</p>
+                    </span>
 
-                    <i class="fa fa-star  text-info pt-1"></i></span> </div>
+                </small>
+
+                    <p class="text-dark mt-2">{{Review?.comment}}
+                    </p>
                 </div>
+
+
             </div>
 
 
 
         </div>
         <div class="col-md-2 col-sm-12 d-flex justify-content-between">
-            <p th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">{{Review?.reviewDate | date : 'MM/yyyy'}}</p>
+            <small th:text="${#dates.format(review.getReviewDate(), 'MM/yyyy')}" class=" text-secondary">{{Review?.reviewDate | date : 'dd MMM yyyy'}}</small>
         </div>
     </div>
     <div class="row mx-auto">
-        <p style="width: 97%" th:text="${review.getComment()}" class="text-dark">{{Review?.comment}}
 
 
-        </p>
+
     </div>
 </div>
 </div>

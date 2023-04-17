@@ -1,5 +1,9 @@
 <div *ngIf="ReviewList.length > 0" >
    <app-review *ngFor="let review of ReviewList" [Review]="review"></app-review>
+    <button *ngIf="!isShown" class=" mt-3 btn btn-outline-dark" (click)="showAllReviews()">See all {{tempList.length}} reviews </button>
+    <button *ngIf="isShown" class=" mt-3 btn btn-outline-dark" (click)="closeAllReviews()"> Close all reviews </button>
+
+
 </div>
 
 <div *ngIf="ReviewList.length < 1" class="col-md-11 col-sm-12 mb-5 pb-5">
