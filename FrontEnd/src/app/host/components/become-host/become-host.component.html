@@ -5,13 +5,13 @@
     </div>
     <div style="height: 80vh !important ;" class="row pt-4 mt-2">
 
-        <div class="col-md-6 col-sm-12 my-auto">
+        <div class="col-md-7 col-sm-12 my-auto">
             <div class="my-auto ">
                 <h1  class="h1 hm-sm fw-bold font-gro-bold">
                     Apply <span class="text-info font-gro-bold">now</span> and become a <span class="text-info font-gro-bold">host</span>
                     at Torch<span class="text-info font-gro-bold">.</span>
                 </h1>
-                <h3 class="badge-info  font-gro-medium ">
+                <h3 class="badge-info mb-5 font-gro-medium ">
                     Host users get an opurtunity to make money by renting out your scooter.
                     We are 100% theft safe and provide insurance cover on every scooter on our website.
                     Enjoy a hastle free way of making money online!
@@ -28,7 +28,7 @@
                         </mat-error>
                     </mat-form-field>
                     <div style="margin-top: -1.4rem !important; margin-left: 1rem !important;">
-                        <button [disabled]="!selectFormControl.valid"  *ngIf="!isLoading " (click)="createHost()" class="btn btn-info text-light  px-4 rounded-2 py-3  fw-bold "> Apply Now </button>
+                        <button *ngIf="!isLoading " (click)="createHost()" class="btn btn-info text-light  px-4 rounded-2 py-3  fw-bold "> Apply Now </button>
                         <a *ngIf="isLoading" style="width: 24%" type="submit" class="btn btn-info text-light  px-3 rounded-0 fw-bold" disabled>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             Loading...
@@ -45,14 +45,14 @@
 
             </div>
         </div>
-        <div  class="col-md-6 col-sm-12 remove-mb">
+        <div  class="col-md-5 col-sm-12 remove-mb">
             <img src="assets/images/website/torchModel1.png" class="my-auto" style="height: 80vh; width: auto"  width="" alt="" />
         </div>
     </div>
 </div>
 
 
-<div style="margin-top: 3rem !important;" class=" container ">
+<div style="margin-top: 3rem !important;" class="w-75 mx-auto container ">
 
 
 

@@ -4,6 +4,6 @@
 
 </div>
 <div mat-dialog-actions>
-    <button mat-button >No Thanks</button>
-    <button mat-button mat-dialog-close cdkFocusInitial (click)="completeTrip()">Ok</button>
+    <button mat-button [mat-dialog-close]="true" >No Thanks</button>
+    <button mat-button class="bg-primary text-light" mat-dialog-close cdkFocusInitial (click)="completeTrip()">Ok</button>
 </div>

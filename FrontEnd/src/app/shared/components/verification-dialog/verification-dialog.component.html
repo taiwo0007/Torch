@@ -1,5 +1,5 @@
 
-<div style="background-image: url('./assets/images/website/verify.png');" class="position-relative pb-5">
+<div class="position-relative pb-5">
     <mat-dialog-content class=" d-flex flex-column justify-content-center">
         <img class="align-content-center align-self-center " style="width: 18rem; height: auto" src="assets/images/website/fingerprint.gif" alt="">
         <h1 class=" fw-bold fs-2 mx-auto text-center" mat-dialog-title>Verify Now</h1>
@@ -11,7 +11,7 @@
 
     </mat-dialog-content>
     <mat-dialog-actions align="center" class="d-flex mt-4 flex-column">
-        <button (click)="onVerifyConsented()" style="padding: 5px 7rem !important;" class="rounded-3 fw-bold btn btn-success px-5 row" [routerLink]="['/verify']" mat-button [mat-dialog-close]="true">
+        <button (click)="onVerifyConsented()" style="padding: 5px 7rem !important;" class="rounded-3 fw-bold btn text-white fw-bold btn-info px-5 row" [routerLink]="['/verify']" mat-button [mat-dialog-close]="true">
 
             <mat-icon>fingerprint</mat-icon>
            <span>Verify</span>

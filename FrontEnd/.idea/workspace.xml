@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Auth images">
+      <change afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message-container/alert-message-container.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message-container/alert-message-container.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message-container/alert-message-container.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/website/torchlogoinfo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/d/1d9a4de19792e98a5d5b678029497ec33f457b63" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/3/230dd3eaf5f290c3ed37a398571afcdf62adecf1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/f/8f8d3a2f06dc747490d21b2fc546b0cb52a2c00e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/1/913cbca808333de22d017648adafe8a647b6f441" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/b/9bae3918e9e9e127bef4ebe79670ba4d28d61777" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9f9b56e6d9b7e313398e991a88576a2a5df2d302" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/4/b4e30ba0b6854c8ce17f375b29f2644ca1923bbc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/9/e9df2ed59aa7e41e96248b206db37c5800a34af2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/0/2/02c004b4329a0d99c45abb61a30dadfde61ecf5d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/1/61edfb4cb3012de7809daa87103648005758c2bf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/5/d5d7c48783ec5a8002abef1a601fb0563397ce25" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/d/1d9a4de19792e98a5d5b678029497ec33f457b63" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/3/230dd3eaf5f290c3ed37a398571afcdf62adecf1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/f/8f8d3a2f06dc747490d21b2fc546b0cb52a2c00e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/1/913cbca808333de22d017648adafe8a647b6f441" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/b/9bae3918e9e9e127bef4ebe79670ba4d28d61777" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9f9b56e6d9b7e313398e991a88576a2a5df2d302" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/4/b4e30ba0b6854c8ce17f375b29f2644ca1923bbc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/9/e9df2ed59aa7e41e96248b206db37c5800a34af2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/2/02c004b4329a0d99c45abb61a30dadfde61ecf5d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/1/61edfb4cb3012de7809daa87103648005758c2bf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/5/d5d7c48783ec5a8002abef1a601fb0563397ce25" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/torch-trusted-badge/torch-trusted-badge.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/torch-trusted-badge/torch-trusted-badge.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog/are-you-sure-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog/are-you-sure-dialog.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/verified-badge/verified-badge.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/verified-badge/verified-badge.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/user-trips/user-trips.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/user-trips/user-trips.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/website/fingerprint.gif" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/images/website/fingerprint.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/images/website/sign-up.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/images/website/sign-up.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,25 +53,28 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2N1X8AHPoU3X2DzDoN7aSMZg8hy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "js.last.introduce.type": "LET",
+    "last_opened_file_path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/fonts" />
@@ -162,7 +167,7 @@
       <workItem from="1681766061677" duration="5160000" />
       <workItem from="1681780294005" duration="7698000" />
       <workItem from="1681817694321" duration="4126000" />
-      <workItem from="1681842652705" duration="598000" />
+      <workItem from="1681842652705" duration="7677000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -430,14 +435,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681813824278</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="UI enhancements for verification step pages">
+      <created>1681843375182</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1681843375182</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="More plan ui fixes" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="possible deps fix" />
     <MESSAGE value="Toasters added" />
     <MESSAGE value="added badge plan to user profile" />
@@ -462,6 +474,7 @@
     <MESSAGE value="Host profile UI AND Escooter detail UI" />
     <MESSAGE value="ui" />
     <MESSAGE value="login/sign up ui improvement" />
-    <option name="LAST_COMMIT_MESSAGE" value="login/sign up ui improvement" />
+    <MESSAGE value="UI enhancements for verification step pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI enhancements for verification step pages" />
   </component>
 </project>

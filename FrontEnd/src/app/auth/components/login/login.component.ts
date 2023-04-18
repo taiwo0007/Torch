@@ -63,6 +63,9 @@ isForbiddenNotice: false;
     this.error = null;
     this.isLoading = true;
     if(!authForm.valid){
+      this.loadingService.isNotice.next({message: 'Please check all fields and try again'})
+      this.loadingService.isLoadingLine.next(false);
+      this.isLoading = false;
       return
     }
 
@@ -85,12 +88,16 @@ isForbiddenNotice: false;
 
         this.isLoading = false;
         if(error.error.message){
+          console.log('this.error.error.message')
+          console.log(error.error.message)
           this.error = error.error.message;
           this.loadingService.isError.next({message:'Error! '+ this.error})
+          this.isLoading = false;
 
         }
         else{
           this.loadingService.isError.next({message: 'An unexpected Error has occurred'})
+          this.isLoading = false;
 
         }
 

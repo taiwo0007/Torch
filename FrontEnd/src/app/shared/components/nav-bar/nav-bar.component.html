@@ -5,7 +5,6 @@
         <a class="navbar-brand me-3" [routerLink]="['']">
             <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
         </a>
-
         <app-nav-bar-search></app-nav-bar-search>
     </div>
 
@@ -168,7 +167,30 @@
                    style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
 </nav>
 
+<nav *ngIf="isAuthURL" class="position-relative">
 
+        <alert-message [@showHided]="isNotice ? 'show' : 'hide'"  [isNotice]="isNotice" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important; z-index: 9999999999 !important;"></alert-message>
+
+
+        <alert-message [@showHided]="isAlert ? 'show' : 'hide'"  [isAlert]="isAlert" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+
+
+
+        <alert-message [@showHided]="isSuccess ? 'show' : 'hide'"  [isSuccess]="isSuccess" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+
+
+        <alert-message [@showHided]="isError ? 'show' : 'hide'"  [isError]="isError" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+
+
+</nav>
 
 <app-load-screen *ngIf="isLoading" class="mx-auto remove-mb full-spinner"></app-load-screen>
 

@@ -3,13 +3,13 @@
         <div style="overflow-y: hidden;" class="col-md-5 col-sm-12 me-auto text-start remove-mb position-relative">
             <a style="z-index: 999 !important; top: 0; margin: 2.0rem 2.7rem" class="position-absolute"
                [routerLink]="['']">
-                <img src="assets/images/website/torchlogo.png" width="90" height="auto" alt="logo"/>
+                <img src="assets/images/website/torchlogoblack.png" width="90" height="auto" alt="logo"/>
             </a>
             <img style="width: auto; height: 100vh; place-items: center" class="me-auto  text-center"
                  src="assets/images/website/sign-up.png" alt=""/>
         </div>
 
-        <div class="col-md-7 col-sm-12 my-auto">
+        <div class="col-md-7 col-sm-12 my-auto position-relative">
             <div class=" pt-2 my-auto">
                 <div class="p-5 my-auto sign-up-form">
                     <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
@@ -58,9 +58,9 @@
 
 
                         <div class="form-group">
-                            <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch"
+                            <button *ngIf="!isLoading"
                                     style="width: 50%; padding: 0.7rem"
-                                    type="submit" class="btn btn-info text-light mt-3">Create Account
+                                    type="submit" class="btn btn-info text-white fw-bold mt-3">Create Account
                             </button>
                             <button *ngIf="isLoading" style="width: 50%; padding: 0.7rem" type="submit"
                                     class="btn btn-info text-light mt-3" disabled>
@@ -69,7 +69,7 @@
                         </div>
 
                         <div class="form-text py-4 text-start pt-4">
-                            Already have an account? <a [routerLink]="['../login']" class="link text-info">Sign In</a>
+                            Already have an account? <a [routerLink]="['../login']" class="link text-info fw-bold">Sign In</a>
                         </div>
                     </form>
                 </div>

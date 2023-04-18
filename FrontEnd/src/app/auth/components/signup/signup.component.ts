@@ -66,6 +66,8 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
     if(!signupForm.valid){
       this.loadingService.isLoadingLine.next(false);
 
+      this.loadingService.isNotice.next({message: 'Please check all fields and try again'})
+      this.isLoading = false;
       return
     }
     this.error = null;
@@ -89,11 +91,11 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
 
         this.loadingService.isError.next({message:this.error})
 
-
-
         this.emailInput.nativeElement.style.border = '2px solid red'
         console.log(this.emailInput.nativeElement)
         console.log(error)
+
+
       })
   }
 }

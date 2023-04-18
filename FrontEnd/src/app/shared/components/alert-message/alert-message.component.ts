@@ -10,11 +10,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       trigger('showHided', [
           state('show', style({
             opacity: 1,
-            transform: 'translateY(0)'
+            transform: 'translateY(0) !important'
           })),
         state('hide', style({
           opacity: 0,
-          transform: 'translateY(-20px)'
+          transform: 'translateY(-20px) !important'
         })),
           transition('show => hide', animate('200ms ease-out')),
           transition('hide => show', animate('200ms ease-in')),

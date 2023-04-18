@@ -98,6 +98,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { AlertMessageContainerComponent } from './shared/components/alert-message-container/alert-message-container.component';
 
 
 @NgModule({
@@ -166,6 +167,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
      CookieNoticeComponent,
      VerifiedBadgeComponent,
      TorchTrustedBadgeComponent,
+     AlertMessageContainerComponent,
 
   ],
     imports: [

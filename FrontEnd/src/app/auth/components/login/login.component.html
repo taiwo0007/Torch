@@ -17,7 +17,7 @@
 <!--                    your account to-->
 <!--                    book an electric scooter. </h1>-->
 
-                                <h1 class="fw-bold pt-4 mb-3 pb-2 font-gro-black"><span class="text-dark font-gro-bold">Sign in to <span class="text-info font-gro-bold">Torch</span> </span>
+                                <h1 class="fw-bold pt-5 mb-3 pb-2 font-gro-black"><span class="text-dark font-gro-bold">Sign in to <span class="text-info font-gro-bold">Torch</span> </span>
                                    </h1>
 
 
@@ -41,13 +41,13 @@
                 <div class="form-group mb-3">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-sm-offset-12 ">
-                            <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="padding: 0.7rem; width: 50% !important;"
+                            <button *ngIf="!isLoading" style="padding: 0.7rem; width: 50% !important;"
                                     type="submit" name="login-submit" id="login-submit"
-                                    class="form-control btn btn-dark  mt-4 me-auto" value="Log In">
+                                    class="form-control btn btn-dark fw-bold text-white mt-4 me-auto" value="Log In">
                                 Sign in
                             </button>
 
-                            <button *ngIf="isLoading" disabled style="width: 50% !important; padding: 0.7rem " type="submit"
+                            <button *ngIf="isLoading" style="width: 50% !important; padding: 0.7rem " type="submit"
                                     name="login-submit" id="login-submit"
                                     class="form-control btn btn-dark  mt-4" value="Log In">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
                 </div>
 
                 <div id="emailHelp" class="form-text py-4 text-start mt-2">
-                    Don't have an account? <a [routerLink]="['../signup']" class="link text-info">Sign Up</a>
+                    Don't have an account? <a [routerLink]="['../signup']" class="link text-info fw-bold">Sign Up</a>
                 </div>
             </form>
         </div>

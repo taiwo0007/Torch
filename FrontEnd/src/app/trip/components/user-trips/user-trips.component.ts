@@ -28,7 +28,7 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
   }
 
   getUserDetails(){
-    this.userService.fetchUserDetails().pipe(delay(3000)).subscribe((userResponseData:UserData) => {
+    this.userService.fetchUserDetails().subscribe((userResponseData:UserData) => {
       console.log(userResponseData.renterTrips[0].user)
       this.tripUser = userResponseData
       this.trips = userResponseData.renterTrips;

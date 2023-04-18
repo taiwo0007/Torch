@@ -7,10 +7,6 @@ v
 Fsrc/test/java/com/troch/torchApplication/services/HostServiceTest.java,b/2/b2397f47255e0ec5787810043287b77f3f39396f
 z
 Jsrc/test/java/com/troch/torchApplication/services/EScooterServiceTest.java,3/0/30e025013141dd1b0e952387b92027acba8a6c99
-r
-Bsrc/main/java/com/troch/torchApplication/services/AuthService.java,e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319
-r
-Bsrc/main/java/com/troch/torchApplication/services/UserService.java,4/6/469db8c499e3ec4eb9ef3326d3f4cf6d4de7b458
 ?
 cloudbuild.yaml,2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7
 i
@@ -31,8 +27,6 @@ x
 Hsrc/main/java/com/troch/torchApplication/controllers/HostController.java,8/1/8151552cf73115fec5897f08e5fcdfec91a96535
 ‚
 Rsrc/main/java/com/troch/torchApplication/controllers/AuthenticationController.java,b/5/b5eaf0255b57e3af03d0fbd3426ad28acccde2d9
-v
-Fsrc/main/java/com/troch/torchApplication/services/UserServiceImpl.java,6/3/63f6f8a9d6ef7dfc9307dc9afa23a47025468508
 {
 Ksrc/main/java/com/troch/torchApplication/controllers/PaymentController.java,2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8
 |

@@ -4,16 +4,33 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {VerificationDialogComponent} from "./shared/components/verification-dialog/verification-dialog.component";
 import {LoadingService} from "./shared/services/loading.service";
 import {MatDialog} from "@angular/material/dialog";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    trigger('showHided', [
+      state('show', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      state('hide', style({
+        opacity: .3,
+        transform: 'translateY(-15px)'
+      })),
+      transition('show => hide', animate('200ms ease-in-out')),
+      transition('hide => show', animate('200ms ease-in-out')),
+
+    ])
+  ]
 })
 export class AppComponent {
   title = 'torch-front-end';
   isAuthUrl = false;
   isLoading = false;
   showCookie:boolean;
+
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,

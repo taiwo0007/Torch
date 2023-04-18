@@ -43,7 +43,7 @@ export class VerificationComponent {
   });
 
 
-  isLinear = false;
+  isLinear = true;
   firstFormGroup = this._formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
