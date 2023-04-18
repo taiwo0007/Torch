@@ -29,6 +29,10 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
       this.isLoading = true;
         this.userService.fetchUserDetails().subscribe( (data: any) => {
             this.userData = data;
+            if(!this.userData.isVerified && this.userData.isVerified != true){
+                // this.authService.saveLocalVerifyInfo()
+
+            }
 
             if(this.userData.host){
                 this.getHostDetails();
@@ -39,12 +43,12 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
 
             this.route.queryParams.subscribe(data => {
                 if(data['success']) {
-                    this.authService.saveLocalVerifyInfo()
 
                     this.loadingSerivce.isNotice.next({message:'Verification email has been sent'})
 
                     this.loadingSerivce.isLoading.next(false);
                     this.isLoading = false;
+                    this.authService.saveLocalVerifyInfo()
 
 
                 }

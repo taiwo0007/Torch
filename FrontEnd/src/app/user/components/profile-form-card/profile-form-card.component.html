@@ -80,16 +80,16 @@
     </div>
 
     <!-- IF CUSTOMER IS ANONYMOUS -->
-    <div *ngIf="InitialUserDetails?.isVerified" id="emailHelp" class="form-text py-4 " th:if="${user.getIsVerified()}">
-      Update your contact information and click update to submit.
-    </div>
-    <!-- ELSE -->
-    <div  *ngIf="!InitialUserDetails?.isVerified" id="emailHelp" class="form-text py-4 " th:unless="${user.getIsVerified()}">
-      Please fill out all the information and click verify, to verify account.
-    </div>
-    <button  style="width: 8rem" type="submit" class="btn btn-info text-light p-2 mt-1 rounded-0">
-      Update
-    </button>
+<!--    <div *ngIf="InitialUserDetails?.isVerified" id="emailHelp" class="form-text py-4 " th:if="${user.getIsVerified()}">-->
+<!--      Update your contact information and click update to submit.-->
+<!--    </div>-->
+<!--    &lt;!&ndash; ELSE &ndash;&gt;-->
+<!--    <div  *ngIf="!InitialUserDetails?.isVerified" id="emailHelp" class="form-text py-4 " th:unless="${user.getIsVerified()}">-->
+<!--      Please fill out all the information and click verify, to verify account.-->
+<!--    </div>-->
+<!--    <button  style="width: 8rem" type="submit" class="btn btn-info text-light p-2 mt-1 rounded-0">-->
+<!--      Update-->
+<!--    </button>-->
   </form>
 
 </div>

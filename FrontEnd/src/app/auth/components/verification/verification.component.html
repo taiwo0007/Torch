@@ -1,12 +1,13 @@
-
 <div class="container mt-5 pt-5 mx-auto">
 
     <h1 class="fw-bold">Verification</h1>
-    <mat-stepper  [linear]="isLinear" #stepper>
+    <mat-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="firstFormGroup">
             <form class="mt-3" [formGroup]="firstFormGroup">
                 <ng-template matStepLabel>Tell us more about yourself</ng-template>
                 <div class="personalInfo w-50 row mx-auto">
+                    <h2 class="mb-4">Tell us more about yourself</h2>
+
                     <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>First Name</mat-label>
                         <mat-icon matPrefix>fingerprint</mat-icon>
@@ -19,109 +20,121 @@
                     </mat-form-field>
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
-                    <mat-form-field  appearance="outline">
-                    <mat-label>About</mat-label>
+                    <mat-form-field appearance="outline">
+                        <mat-label>About</mat-label>
                         <mat-icon class="my-auto" matPrefix>face</mat-icon>
-                        <textarea style="height: 6rem !important;" matInput placeholder="About yourself" size="12rem" formControlName="about" required></textarea>
-                </mat-form-field>
+                        <textarea style="height: 6rem !important;" matInput placeholder="About yourself" size="12rem"
+                                  formControlName="about" required></textarea>
+                    </mat-form-field>
 
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
-                    <mat-form-field class="col-sm-12"  appearance="outline">
+                    <mat-form-field class="col-sm-12" appearance="outline">
                         <mat-label>Phone Number</mat-label>
                         <mat-icon matPrefix>phone</mat-icon>
 
-                        <input matInput placeholder="087 345 3456" type="number" formControlName="phoneNumber" required/>
-                        </mat-form-field>
+                        <input matInput placeholder="087 345 3456" type="number" formControlName="phoneNumber"
+                               required/>
+                    </mat-form-field>
                 </div>
                 <div class="personalInfo w-50 row mx-auto">
                     <mat-form-field class="col-sm-12 " appearance="outline">
-                            <mat-label>Gender</mat-label>
+                        <mat-label>Gender</mat-label>
 
                         <mat-select formControlName="gender">
                             <mat-option value="male">male</mat-option>
                             <mat-option value="female">female</mat-option>
                         </mat-select>
                     </mat-form-field>
-                        <div class="col-sm-12 6">
-                            <label for="formFile" class="form-label fw-bold">Profile Picture</label>
-<!--                            <button type="button" hidden mat-raised-button (click)="fileInput.click()">Profile Pciture</button>-->
-<!--                            <input  required formControlName="profilePicture" placeholder="Profile" class="form-control"  (change)="onFileSelected($event)" #fileInput type="file" id="formFile">-->
-                            <input formControlName="profilePicture"  (change)="onFileSelected($event)"  name="image" type="file" accept=".png, .jpg, .jpeg, .pdf" class="form-control" aria-label="file example" required>
+                    <div class="col-sm-12 6">
+                        <label for="formFile" class="form-label fw-bold">Profile Picture</label>
+                        <!--                            <button type="button" hidden mat-raised-button (click)="fileInput.click()">Profile Pciture</button>-->
+                        <!--                            <input  required formControlName="profilePicture" placeholder="Profile" class="form-control"  (change)="onFileSelected($event)" #fileInput type="file" id="formFile">-->
+                        <input formControlName="profilePicture" (change)="onFileSelected($event)" name="image"
+                               type="file" accept=".png, .jpg, .jpeg, .pdf" class="form-control"
+                               aria-label="file example" required>
 
-                        </div>
+                    </div>
                     <div class="mx-auto mt-5">
-                        <button mat-button type="submit" matStepperNext class="btn btn-primary px-5" >Next</button>
+                        <button mat-button type="submit" matStepperNext class="btn btn-primary px-5">Next</button>
                     </div>
                 </div>
 
             </form>
         </mat-step>
-        <mat-step [stepControl]="secondFormGroup" class="mb-5 pb-5" label="Fill out your address">
-            <form class="mb-5 pb-5"  [formGroup]="secondFormGroup">
-                <div class="personalInfo w-50 row mx-auto">
+        <mat-step style="height: 70vh !important;" [stepControl]="secondFormGroup" class="mb-5 pb-5"
+                  label="Fill out your address">
+            <form style="height: 70vh !important;" class="mb-5 mx-auto my-auto pb-5" [formGroup]="secondFormGroup">
+                <div class="personalInfo w-50 my-auto row mx-auto ">
+                    <div  class="my-auto mx-auto">
+                        <h3 class="mb-4 mt-3">Where are you located?</h3>
 
-                <mat-form-field class="col-sm-12 mt-4" appearance="outline">
-                    <mat-label>Address</mat-label>
-                    <input class="mx-auto" [options]="options"
-                           (onAddressChange)="handleAddressChange($event)" ngx-google-places-autocomplete matInput formControlName="location" placeholder="Ex. 1 Main St, New York, NY"
-                           required>
-                </mat-form-field>
+                        <mat-form-field class="col-sm-12 my-auto" appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input class="mx-auto" [options]="options"
+                                   (onAddressChange)="handleAddressChange($event)" ngx-google-places-autocomplete
+                                   matInput formControlName="location" placeholder="Ex. 1 Main St, New York, NY"
+                                   required>
+                        </mat-form-field>
 
-                    <div>
-                        <button mat-button matStepperPrevious>Back</button>
-                        <button mat-button class="btn btn-primary px-3" type="submit"  matStepperNext>Next</button>
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button class="btn btn-primary px-3" type="submit" matStepperNext>Next</button>
+                        </div>
                     </div>
                 </div>
+
 
             </form>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Verify</ng-template>
-            <h3 class="font-gro-bold">Verify Info</h3>
-            <div class="mt-5">
+            <div class="mt-2 w-75 mx-auto">
 
-                <div class="row mt-3 fs-5">
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2 font-gro-bold">
+                <div class="row fs-5 w-75 mx-auto">
+                    <h3 class="font-gro-bold mb-3">Confirm your details</h3>
+                    <div class="col-xs-12 col-sm-6 fw-bold  my-2 font-gro-bold">
                         Name
                     </div>
-                    <div class="col-xs-12 col-sm-6 bg-light">
+                    <div class="col-xs-12 col-sm-6 text-end ">
                         {{firstFormGroup.value.firstName}} {{firstFormGroup.value.lastName}}
                     </div>
                     <div class="col-xs-12 col-sm-6 fw-bold my-2 font-gro-bold">
                         Gender
                     </div>
-                    <div class="col-xs-12 col-sm-6 my-2">
+                    <div class="col-xs-12 col-sm-6 text-end">
                         {{firstFormGroup.value.gender}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light my-2 font-gro-bold">
+                    <div class="col-xs-12 col-sm-6 fw-bold  my-2 font-gro-bold">
                         About
                     </div>
-                    <div class="col-xs-12 col-sm-6 bg-light">
+                    <div class="col-xs-12 col-sm-6 text-end">
                         {{firstFormGroup.value.about}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold font-gro-bold">
+                    <div class="col-xs-12 col-sm-6  my-2 fw-bold font-gro-bold">
                         Location
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-6 text-end">
                         {{secondFormGroup.value.location}}
                     </div>
-                    <div class="col-xs-12 col-sm-6 fw-bold bg-light font-gro-bold">
+                    <div class="col-xs-12 col-sm-6  my-2 fw-bold  font-gro-medium">
                         Phone Number
                     </div>
-                    <div class="col-xs-12 col-sm-6 bg-light">
+                    <div class="col-xs-12 col-sm-6 text-end">
                         +353 {{firstFormGroup.value.phoneNumber}}
                     </div>
 
                 </div>
 
-                <div class="mt-5 pt-5 mx-auto">
-                    <button *ngIf="!isLoading" type="submit" (click)="onSubmit()" class="btn btn-primary px-5 mx-auto">Verify</button>
-                    <button *ngIf="isLoading" type="submit" (click)="onSubmit()" class="btn btn-primary px-5 mx-auto" disabled>
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Verifying
-                    </button>
+                <div class="mt-1 pt-5 mx-auto w-75 mx-auto">
+                    <button *ngIf="!isLoading" type="submit" (click)="onSubmit()" class="d-flex align-items-center btn btn-primary px-5 text-start">
+                        <span class="">Verify </span>
 
+                    </button>
+                    <button *ngIf="isLoading" type="submit" (click)="onSubmit()" class="btn btn-primary px-5 mx-auto"
+                            disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    </button>
 
 
                 </div>
