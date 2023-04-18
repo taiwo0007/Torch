@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../../auth/services/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {BsDropdownDirective} from 'ngx-bootstrap/dropdown';
 import {UserService} from "../../../user/services/user.service";
 import {UserData} from "../../../user/models/user-data.model";
@@ -49,6 +49,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     accountType: string;
     isLoadingLine: boolean = false;
     isOpen: any = false;
+    isAuthURL:boolean = false;
     isProd: boolean;
     userEmail:string;
     alertMessage:String;
@@ -66,7 +67,18 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
+        this.router.events.subscribe(events => {
+            console.log(events)
+            if(events instanceof NavigationStart){
+                if(events.url == '/signup' || events.url.startsWith('/login') ){
+                    this.isAuthURL = true;
+                }
+                else {
+                    this.isAuthURL = false;
 
+                }
+            }
+        })
         //alerts
         this.loadingService.isNotice.subscribe(data => {
                 this.isNotice = true;

@@ -1,11 +1,16 @@
-<div style="overflow-y: hidden;" class="mt-2">
+<div style="overflow-y: hidden;" class="">
     <div style="height: 100vh !important;" class="row my-auto ">
-        <div style="overflow-y: hidden;" class="col-md-6 col-sm-12 mx-auto text-end remove-mb">
-            <img style="width: 50rem; height: 100%;" class=" text-end" src="assets/images/website/signup.gif" alt=""/>
+        <div style="overflow-y: hidden;" class="col-md-4 col-sm-12 mx-auto text-end remove-mb position-relative">
+            <a style="z-index: 999 !important; top: 0; margin: 2.0rem 2.7rem" class="position-absolute" [routerLink]="['']">
+                <img src="assets/images/website/torchlogo.png" width="90" height="auto" alt="logo"/>
+            </a>
+            <img style="width: auto; height: 100vh; place-items: center" class="mx-auto  text-center" src="assets/images/website/sign-up.png" alt=""/>
+
+
         </div>
 
-        <div class="col-md-6 col-sm-12 my-auto">
-            <div class=" pt-5 my-auto">
+        <div class="col-md-8 col-sm-12 my-auto">
+            <div class=" pt-2 my-auto">
                 <div class="p-5 my-auto sign-up-form">
                     <form #signupForm="ngForm" class="my-auto" (ngSubmit)="onSubmit(signupForm)">
                         <h1 class="fw-bold  mb-3 pb-2 font-gro-bold"><span

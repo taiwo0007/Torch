@@ -35,3 +35,11 @@ v
 Fsrc/main/java/com/troch/torchApplication/services/UserServiceImpl.java,6/3/63f6f8a9d6ef7dfc9307dc9afa23a47025468508
 {
 Ksrc/main/java/com/troch/torchApplication/controllers/PaymentController.java,2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8
+|
+Lsrc/main/java/com/troch/torchApplication/services/EScooterReviewService.java,1/5/155c137697b404f7b22f1bd015af10347133bffa
+o
+?src/main/java/com/troch/torchApplication/models/HostReview.java,c/b/cb616c1866c1c592c655acb1d97370062e3deacf
+i
+9src/main/java/com/troch/torchApplication/models/Host.java,a/8/a8a58233db32ae504d318728bf19a0502ecfa149
+x
+Hsrc/main/java/com/troch/torchApplication/services/HostReviewService.java,d/b/db289cc7409739a43fdd9552440d0dca33a3a64d
