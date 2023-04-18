@@ -20,7 +20,7 @@
 
                         <div class="mb-3 form-group">
                             <label for="password" class=" form-label fw-bold">Password</label>
-                            <input #password #passwordNG="ngModel" ngModel [minLength]="5" required
+                            <input [minLength]="5" [min]="5"  #password #passwordNG="ngModel" ngModel  required
                                    style="border:none ; background-color: #f3f3f3; padding: 0.7rem" name="password" type="password" class="form-control mb-3 password"
                                    id="password"/>
 
@@ -33,9 +33,9 @@
                                 not match</small>
                         </div>
 
-                        <div style="line-height: 1rem; padding-top: 0.4rem" class="form-check mb-2 w-100 text-secondary">
-                            <input class="form-check-input" ngModel #termsNG="ngModel" name="condition" type="checkbox" value="" id="invalidCheck" required>
-                            <small class="form-check-label " for="invalidCheck">
+                        <div style="line-height: 1rem; padding-top: 0.4rem" class="form-check mb-2 w-100 ">
+                            <input style="color: black !important;" class="form-check-input text-info" ngModel #termsNG="ngModel" name="condition" type="checkbox" value="" id="invalidCheck" required>
+                            <small class="form-check-label text-secondary" for="invalidCheck">
                                 Creating an account means you’re okay with our <a [routerLink]="['/privacy-policy']">Terms of Service</a> ,<a [routerLink]="['/privacy-policy']">Privacy Policy</a> , and our <a [routerLink]="['/legal-insurance']">Legal Information</a>  .
                             </small>
                         </div>
@@ -43,11 +43,11 @@
 
 
                         <div class="form-group">
-                            <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch" style="width: 50%"
-                                    type="submit" class="btn btn-info text-light p-2 mt-3">Create Account
+                            <button *ngIf="!isLoading" [disabled]="signupForm.invalid || isNoMatch" style="width: 50%; padding: 0.7rem"
+                                    type="submit" class="btn btn-info text-light mt-3">Create Account
                             </button>
-                            <button *ngIf="isLoading" style="width: 50%" type="submit"
-                                    class="btn btn-info text-light p-2 mt-3" disabled>
+                            <button *ngIf="isLoading" style="width: 50%; padding: 0.7rem" type="submit"
+                                    class="btn btn-info text-light mt-3" disabled>
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </button>
                         </div>

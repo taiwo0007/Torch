@@ -2,49 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/1/5/155c137697b404f7b22f1bd015af10347133bffa" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/c/4/c4870c0b22b9b76c140e57de3497299b681e51a1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/repositories/HostReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/repositories/HostReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/EScooterReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/EScooterReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/HostReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/c/fcd8618721df7b6af5416b5ace3f40fcd4e7b5f4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/e/7e0ea1c29a65162e46f5c934cec86e151e54fe8e" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/c/fcd8618721df7b6af5416b5ace3f40fcd4e7b5f4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/e/7e0ea1c29a65162e46f5c934cec86e151e54fe8e" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verification/verification.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verify-email/verify-email.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verify-email/verify-email.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/components/verify-email/verify-email.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/verify-email/verify-email.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/reviews-list/reviews-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/payload/scooter-add-request.payload.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/payload/scooter-add-request.payload.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/subscription-modal/subscription-modal.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/subscription-modal/subscription-modal.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/subscription-modal/subscription-modal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/subscription-modal/subscription-modal.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +131,7 @@
       <workItem from="1681650627515" duration="19569000" />
       <workItem from="1681670899126" duration="4257000" />
       <workItem from="1681683049776" duration="20539000" />
-      <workItem from="1681766061677" duration="3297000" />
+      <workItem from="1681766061677" duration="4941000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>

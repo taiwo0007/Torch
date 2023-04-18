@@ -3,8 +3,6 @@ x
 Hsrc/app/trip/components/host-details-card/host-details-card.component.ts,f/0/f0baac2e723cbd94345a83e74be84f1dde7b9564
 Q
 !src/app/user/models/user.model.ts,9/a/9a77c8eb4c5cb82686760ba920e72bd2457fcb5b
-d
-4src/app/auth/components/signup/signup.component.html,7/e/7e0ea1c29a65162e46f5c934cec86e151e54fe8e
 ]
 -src/app/escooter/models/escooter.interface.ts,6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d
 U
@@ -57,16 +55,12 @@ Csrc/app/escooter/components/reviews-list/reviews-list.component.css,4/4/4443ce
 .src/app/home/components/home/home.component.ts,e/2/e2cafb481c3f83a005873c17f1cc771313186cae
 `
 0src/app/home/components/home/home.component.html,9/1/913cbca808333de22d017648adafe8a647b6f441
-]
--.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
 g
 7src/app/escooter/components/review/review.component.css,7/a/7ac9a6e71b625ab0752b6093919302c5a78a95eb
 h
 8src/app/escooter/components/review/review.component.html,e/c/ecb2d86619fe7f1bbc1810122e60baa86557c497
 f
 6src/app/escooter/components/review/review.component.ts,e/7/e77e5384f876208a136f450bf98429d069a700bf
-S
-#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
 ~
 Nsrc/app/user/components/profile-details-card/profile-details-card.component.ts,e/1/e161ced5460bf8d822a7304454d711cbbb3a7672
 x

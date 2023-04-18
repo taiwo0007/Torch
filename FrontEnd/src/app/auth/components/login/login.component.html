@@ -33,15 +33,15 @@
                 <div class="form-group mb-3">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-sm-offset-12 ">
-                            <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="width: 50% !important;"
+                            <button *ngIf="!isLoading" [disabled]="!loginForm.valid" style="padding: 0.7rem; width: 50% !important;"
                                     type="submit" name="login-submit" id="login-submit"
-                                    class="form-control btn btn-dark p-2 mt-4 me-auto" value="Log In">
+                                    class="form-control btn btn-dark  mt-4 me-auto" value="Log In">
                                 Sign in
                             </button>
 
-                            <button *ngIf="isLoading" disabled style="width: 50% !important;" type="submit"
+                            <button *ngIf="isLoading" disabled style="width: 50% !important; padding: 0.7rem " type="submit"
                                     name="login-submit" id="login-submit"
-                                    class="form-control btn btn-dark p-2 mt-4" value="Log In">
+                                    class="form-control btn btn-dark  mt-4" value="Log In">
                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </button>
                             <div class="bg-dark">
