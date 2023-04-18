@@ -16,10 +16,10 @@ java:S5411™"(Use a primitive boolean expression here.(Ø®è‰ÿÿÿÿÿ
 \
 java:S2789Z"FEnsure this "Optional" could never be null and remove this null-check.(ºá
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê
-c
-java:S3655]"HCall "user.isPresent()" or "!user.isEmpty()" before accessing the value.(¬§ÉÊøÿÿÿÿ
 k
 java:S3655|"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜Ãùõúÿÿÿÿ
+c
+java:S3655]"HCall "user.isPresent()" or "!user.isEmpty()" before accessing the value.(¬§ÉÊøÿÿÿÿ
 Z
 java:S2583Z"DChange this condition so that it does not always evaluate to "false"(ºá
 W

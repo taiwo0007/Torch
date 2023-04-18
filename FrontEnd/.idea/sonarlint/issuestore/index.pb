@@ -59,8 +59,6 @@ t
 Dsrc/app/escooter/components/reviews-list/reviews-list.component.html,4/c/4c6c48de65298cbb70f7836592374598ab702415
 x
 Hsrc/app/escooter/components/cost-info-card/cost-info-card.component.html,6/a/6a09a297a79e9d8d783e1b613cc7a12578f838a7
-g
-7src/app/shared/components/nav-bar/nav-bar.component.css,c/f/cffde892d1236b776b2b21b27d247251d5d2df47
 ~
 Nsrc/app/shared/components/verification-dialog/verification-dialog.component.ts,a/c/ac7fe8f2df3d56925e7da8177221d0d6a7c74dc5
 U
