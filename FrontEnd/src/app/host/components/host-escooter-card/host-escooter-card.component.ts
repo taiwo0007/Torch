@@ -1,4 +1,14 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    ViewChildren,
+    ElementRef,
+    ViewChild,
+    AfterContentInit, OnChanges, SimpleChanges, DoCheck
+} from '@angular/core';
 import {Escooter} from "../../../escooter/models/escooter.interface";
 import {EscooterService} from "../../../escooter/services/escooter.service";
 
@@ -7,10 +17,11 @@ import {EscooterService} from "../../../escooter/services/escooter.service";
   templateUrl: './host-escooter-card.component.html',
   styleUrls: ['./host-escooter-card.component.css']
 })
-export class HostEscooterCardComponent implements OnInit{
-
+export class HostEscooterCardComponent implements OnInit, AfterContentInit, OnChanges, DoCheck{
+    @ViewChild('imgerr', {static: false}) imgerr:any
     @Output() deleteClick: EventEmitter<number> = new EventEmitter<number>();
   @Input() escooter:Escooter;
+    @Input() OnImageRemove:boolean;
   @Input() isScooterOwner:boolean = false;
   isAdRunning:boolean;
   @Output() adClick: EventEmitter<Escooter> = new EventEmitter<Escooter>();
@@ -18,8 +29,32 @@ export class HostEscooterCardComponent implements OnInit{
   onAddClick(){
     this.adClick.emit(this.escooter)
   }
+ngAfterContentInit() {
+    console.log(this.imgerr)
 
-  ngOnInit() {
+}
+
+ngDoCheck() {
+
+}
+
+    ngOnChanges(changes: SimpleChanges) {
+        if(this.OnImageRemove){
+            console.log(this.imgerr.nativeElement)
+            this.imgerr.nativeElement.style.display = 'none'
+        }
+        if(this.OnImageRemove == false){
+            console.log(this.imgerr.nativeElement)
+            this.imgerr.nativeElement.style.display = 'block'
+        }
+}
+
+    ngOnInit() {
+
+
+
+
+
 
 
     this.calculateAdRunning();

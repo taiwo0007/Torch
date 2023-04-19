@@ -10,7 +10,12 @@
                     <div class="d-flex justify-content-between mb-3">
                         <div *ngIf="hostEscooters.length == 0"> </div>
                         <h2 class="fw-bold " *ngIf="hostEscooters.length > 0"> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
+                        <a *ngIf="isScooterOwner" (click)="toggleShow()"   class="btn"><mat-icon *ngIf="!isImgRemove">visibility</mat-icon>
+                            <mat-icon *ngIf="isImgRemove">visibility_off</mat-icon>
+                        </a>
                         <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"  class="btn btn-dark rounded-3 btn-lg fw-bold">+ Add scooter</a>
+
+
                     </div>
                     <div *ngIf="hostEscooters.length == 0" class=" w-100 mx-auto text-center">
                         <h1 class="fw-bold " >No Electric scooters</h1>
@@ -20,7 +25,7 @@
                     <div *ngIf="hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" class="row pb-5">
                         <div *ngFor="let escooterItem of hostEscooters" style=" overflow-x: hidden; !important" th:if="${eScooterList}" th:each="escooter: ${eScooterList}" class="col-md-3 col-sm-3 pt-3 pb-4">
 
-                        <host-escooter-card (deleteClick)="onDeleteClick($event)" (adClick)="onAdClick($event)" [isScooterOwner]="isScooterOwner" [escooter]="escooterItem" ></host-escooter-card>
+                        <host-escooter-card [OnImageRemove]="isImgRemove" (deleteClick)="onDeleteClick($event)" (adClick)="onAdClick($event)" [isScooterOwner]="isScooterOwner" [escooter]="escooterItem" ></host-escooter-card>
                         </div>
                         </div>
                 </div>

@@ -12,7 +12,7 @@
     <div class="row ">
         <div class="col-md-2 col-sm-3 ">
         </div>
-        <div style="text-decoration: none !important; scroll-behavior: smooth; position: fixed !important; height: 100vh ;overflow-y: scroll;" class="col-md-2 col-sm-2 pb-5 bg-light remove-mb">
+        <div style="text-decoration: none !important; scroll-behavior: smooth; position: fixed !important; height: 100vh ;" class="col-md-2 filter-scroll col-sm-2 pb-5 bg-light remove-mb">
                 <h3 class="border-bottom p-3">Filter</h3>
 
             <div class="border-bottom p-2 px-3">
@@ -92,8 +92,8 @@
                     </div>
                 </div>
                 <div class="row" *ngIf="escooterResults">
-                    <div *ngFor="let escooterItem of escooterResults | filterPipe: searchText" class="col-xs-12 col-sm-12 col-md-6 my-3">
-                        <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card"  [escooterItem]="escooterItem"></app-escooter-card>
+                    <div *ngFor="let escooterItem of escooterResults | filterPipe: searchText" class="col-xs-12 col-sm-12  col-md-6 my-3">
+                        <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card shadow"  [escooterItem]="escooterItem"></app-escooter-card>
                     </div>
                 </div>
             </div>

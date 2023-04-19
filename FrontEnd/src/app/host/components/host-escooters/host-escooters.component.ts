@@ -30,6 +30,7 @@ export class HostEscootersComponent implements OnInit{
   isLoading:boolean = false;
   totalAdDays: number = 0;
   createAdRequest:CreateAdRequestPayload;
+    isImgRemove: boolean = false;
 
   constructor( private hostService: HostService, private route:ActivatedRoute,
               private authService:AuthService, private dialog:MatDialog,
@@ -203,6 +204,11 @@ export class HostEscootersComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
     });
 
+
+  }
+
+  toggleShow() {
+    this.isImgRemove = !this.isImgRemove ;
 
   }
 }

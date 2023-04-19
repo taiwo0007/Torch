@@ -5,6 +5,17 @@
     --warehouse-color: #558B2F;
 }
 
+.filter-scroll{
+    overflow-y: hidden;
+    transition: 1.5s ease-in-outa;
+
+}
+
+.filter-scroll:hover{
+    overflow-y: scroll;
+}
+
+
 
 /*.scooter-card {*/
 /*    transition: all .1s ease-in-out;*/
