@@ -11,6 +11,9 @@ import {LoadingService} from "../../../shared/services/loading.service";
 })
 export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
+
+    searchText: string;
+
   //Filter Variables
   is1to10 = false;
   is11to20 = false;
@@ -24,10 +27,16 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
     is1to70 = false;
     is71to140 = false;
     is141toEnd = false;
+    isSpeed10to15 = false;
+    isSpeed16to20 = false;
+    isSpeed21to25 = false;
+    isSpeed26Plus = false;
 
   priceFilterCriteria:any[] = [];
   makeFilterCriteria:any[] = [];
   maxWeightFilterCriteria:any[] = [];
+  speedFilterCriteria:any[] = [];
+    milesFilterCriteria:any[] = [];
 
   escooterResults:any[] = [];
   escooterAdsResult:any[] = []
@@ -171,6 +180,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
                     lng: eList[i].longitude
                 }, icon: "assets/images/website/icons/marker.png" });
 
+
             markers.push(tempMarker);
 
         }
@@ -215,21 +225,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
              });
          },0)
-
-
-
-
-        //
-        //  escooters.forEach((elem) => {
-        //     console.log("hi")
-        //     elem.addEventListener("mouseover", () => {
-        //         changeIcon(elem.id);
-        //     });
-        //
-        //     elem.addEventListener("mouseout", () => {
-        //         resetIcon(elem.id);
-        //     });
-        // })
     }
 
 
@@ -242,10 +237,14 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
         })
     }
 
+
+
+
     //Filter Methods
-
-
-
+    isMiles10to15: boolean;
+    isMiles21to25: boolean;
+    isMiles16to20: boolean;
+    isMiles26Plus: boolean;
 
     toggleFilter(filterValue:string){
 
@@ -332,7 +331,48 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
         }
 
 
-      this.applyFilter();
+        // SCOOTER - SPEED
+        if(filterValue == 'speed10to15'){
+            this.isSpeed10to15 = !this.isSpeed10to15;
+            this.isSpeed10to15 ? this.speedFilterCriteria.push(filterValue) : this.speedFilterCriteria.splice(this.speedFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+        if(filterValue == 'speed16to20'){
+            this.isSpeed16to20 = !this.isSpeed16to20;
+            this.isSpeed16to20 ? this.speedFilterCriteria.push(filterValue) : this.speedFilterCriteria.splice(this.speedFilterCriteria.indexOf(filterValue),1) ;
+        }
+        if(filterValue == 'speed21to25'){
+            this.isSpeed21to25 = !this.isSpeed21to25;
+            this.isSpeed21to25 ? this.speedFilterCriteria.push(filterValue) : this.speedFilterCriteria.splice(this.speedFilterCriteria.indexOf(filterValue),1) ;
+        }
+        if(filterValue == 'speed26Plus'){
+            this.isSpeed26Plus = !this.isSpeed26Plus;
+            this.isSpeed26Plus ? this.speedFilterCriteria.push(filterValue) : this.speedFilterCriteria.splice(this.speedFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+
+        // SCOOTER - MILES
+        if(filterValue == 'miles10to15'){
+            this.isMiles10to15 = !this.isMiles10to15;
+            this.isMiles10to15 ? this.milesFilterCriteria.push(filterValue) : this.milesFilterCriteria.splice(this.milesFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+        if(filterValue == 'miles16to20'){
+            this.isMiles16to20 = !this.isMiles16to20;
+            this.isMiles16to20 ? this.milesFilterCriteria.push(filterValue) : this.milesFilterCriteria.splice(this.milesFilterCriteria.indexOf(filterValue),1) ;
+        }
+        if(filterValue == 'miles21to25'){
+            this.isMiles21to25 = !this.isMiles21to25;
+            this.isMiles21to25 ? this.milesFilterCriteria.push(filterValue) : this.milesFilterCriteria.splice(this.milesFilterCriteria.indexOf(filterValue),1) ;
+        }
+        if(filterValue == 'miles26Plus'){
+            this.isMiles26Plus = !this.isMiles26Plus;
+            this.isMiles26Plus ? this.milesFilterCriteria.push(filterValue) : this.milesFilterCriteria.splice(this.milesFilterCriteria.indexOf(filterValue),1) ;
+        }
+
+
+
+        this.applyFilter();
     }
 
     applyFilter(){
@@ -343,6 +383,8 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
       this.escooterPriceResults = [];
       let escooterMakeResults = [];
       let escooterMaxWeightResults = [];
+      let escooterSpeedResults = [];
+      let escooterMilesResults = [];
 
 
         //price filtering
@@ -379,7 +421,6 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
                 return true;
             }
         })
-
 
         //make filtering
         escooterMakeResults = this.escooterPriceResults.filter((e) => {
@@ -430,7 +471,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
             }
         })
 
-
+        //weight filtering
         escooterMaxWeightResults = escooterMakeResults.filter((e) => {
 
             if(this.maxWeightFilterCriteria.length > 0) {
@@ -462,11 +503,80 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
             }
         })
 
+        //speed filtering
+        escooterSpeedResults = escooterMaxWeightResults.filter((e) => {
 
+            if(this.speedFilterCriteria.length > 0) {
+                for (let speedFilter of this.speedFilterCriteria) {
 
+                    if (speedFilter == 'speed10to15') {
+                        if (e.maxSpeed >= 10 && e.maxSpeed <= 15) {
+                            return true;
+                        }
+                    }
+                    if (speedFilter == 'speed16to20') {
+                        if (e.maxSpeed >= 16 && e.maxSpeed <= 20) {
+                            return true;
+                        }
+                    }
+                    if (speedFilter == 'speed21to25') {
+                        if (e.maxSpeed >= 21 && e.maxSpeed <= 25) {
+                            return true;
+                        }
+                    }
+                    if (speedFilter == 'speed26Plus') {
+                        if (e.maxSpeed >= 26) {
+                            return true;
+                        }
+                    }
+                }
+                console.log(false)
+                return false;
+            }
+            else {
+
+                return true;
+            }
+        })
+
+        //miles filtering
+        escooterMilesResults = escooterSpeedResults.filter((e) => {
+
+            if(this.milesFilterCriteria.length > 0) {
+                for (let milesFilter of this.milesFilterCriteria) {
+
+                    if (milesFilter == 'miles10to15') {
+                        if (e.maxRange >= 10 && e.maxRange <= 15) {
+                            return true;
+                        }
+                    }
+                    if (milesFilter == 'miles16to20') {
+                        if (e.maxRange >= 16 && e.maxRange <= 20) {
+                            return true;
+                        }
+                    }
+                    if (milesFilter == 'miles21to25') {
+                        if (e.maxRange >= 21 && e.maxRange <= 25) {
+                            return true;
+                        }
+                    }
+                    if (milesFilter == 'miles26Plus') {
+                        if (e.maxRange >= 26) {
+                            return true;
+                        }
+                    }
+                }
+                console.log(false)
+                return false;
+            }
+            else {
+
+                return true;
+            }
+        })
 
         //add all to final list
-        this.escooterFilterResults.push(...escooterMaxWeightResults)
+        this.escooterFilterResults.push(...escooterMilesResults)
 
         this.isLoading = false;
         this.escooterResults = this.escooterFilterResults;

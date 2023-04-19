@@ -1,0 +1,38 @@
+
+J
+java:S3740D"/Provide the parametrized type for this generic.(³î«üÿÿÿÿ
+J
+java:S3740W"/Provide the parametrized type for this generic.(ÀÀ•’ÿÿÿÿÿ
+J
+java:S3740{"/Provide the parametrized type for this generic.(ºé€úÿÿÿÿ
+F
+java:S3740œ"/Provide the parametrized type for this generic.(­ÔŒ
+F
+java:S3740Ÿ"/Provide the parametrized type for this generic.(±Ã‹Ş
+R
+java:S2629M"7Use the built-in formatting to construct this argument.(ÔÀ†Äøÿÿÿÿ
+R
+java:S2629Q"7Use the built-in formatting to construct this argument.(Á¦×Êüÿÿÿÿ
+R
+java:S2629m"7Use the built-in formatting to construct this argument.(©ÚÒÜûÿÿÿÿ
+;
+java:S2629"$Invoke method(s) only conditionally.(ñ£¾¹
+>
+java:S5411`"(Use a primitive boolean expression here.( ­‹
+=
+java:S5411t"(Use a primitive boolean expression here.(ıè“
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê
+\
+java:S3457M"AFormat specifiers should be used instead of string concatenation.(ÔÀ†Äøÿÿÿÿ
+\
+java:S3457Q"AFormat specifiers should be used instead of string concatenation.(Á¦×Êüÿÿÿÿ
+\
+java:S3457m"AFormat specifiers should be used instead of string concatenation.(©ÚÒÜûÿÿÿÿ
+<
+java:S1125t"'Remove the unnecessary boolean literal.(ıè“
+G
+java:S1172{",Remove this unused method parameter "email".(ºé€úÿÿÿÿ
+X
+java:S3457‹"AFormat specifiers should be used instead of string concatenation.(ûªş 
+n
+java:S1128"XRemove this unused import 'com.troch.torchApplication.repositories.InsuranceRepository'.(¸¯ğ

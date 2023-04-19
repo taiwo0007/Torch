@@ -49,37 +49,34 @@
 
             </div>
 
-<!--            <div class="border-bottom p-3">-->
-<!--                <h5 class="text-info">Top Speed</h5>-->
-<!--                <div>-->
-<!--                    <button class="btn btn-light">10km/h - 15km/h</button>-->
-<!--                    <button class="btn btn-light">15km/h - 20km/h</button>-->
-<!--                    <button class="btn btn-light">20km/h - 25km/h</button>-->
-<!--                    <button class="btn btn-light">25km/h +</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="border-bottom p-3">-->
-<!--                <h5 class="text-info">Range</h5>-->
-<!--                <div>-->
-<!--                    <button class="btn btn-light">10 miles - 15 miles</button>-->
-<!--                    <button class="btn btn-light">15 miles - 20 miles</button>-->
-<!--                    <button class="btn btn-light">20 miles - 25 miles</button>-->
-<!--                    <button class="btn btn-light">25 miles +</button>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="border-bottom p-3">
+                <h5 class="text-info">Top Speed</h5>
+                <div>
+                    <button (click)="toggleFilter('speed10to15')" [ngClass]="isSpeed10to15 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">10km/h - 15km/h</button>
+                    <button (click)="toggleFilter('speed16to20')" [ngClass]="isSpeed16to20 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1" >16km/h - 20km/h</button>
+                    <button (click)="toggleFilter('speed21to25')" [ngClass]="isSpeed21to25 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1" >21km/h - 25km/h</button>
+                    <button (click)="toggleFilter('speed26Plus')" [ngClass]="isSpeed26Plus ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1" >26km/h +</button>
+                </div>
+            </div>
+            <div class="border-bottom p-3">
+                <h5 class="text-info">Range</h5>
+                <div>
+                    <button (click)="toggleFilter('miles10to15')" [ngClass]="isMiles10to15 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">10 miles - 15 miles</button>
+                    <button (click)="toggleFilter('miles16to20')" [ngClass]="isMiles16to20 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">16 miles - 20 miles</button>
+                    <button (click)="toggleFilter('miles21to25')" [ngClass]="isMiles21to25 ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">21 miles - 25 miles</button>
+                    <button (click)="toggleFilter('miles26Plus')" [ngClass]="isMiles26Plus ? 'btn-primary' : 'btn-light'" class="btn px-2 m-1">26 miles +</button>
+                </div>
+            </div>
         </div>
         <div  class="col-md-6 col-sm-12 ">
             <div   class="row mx-auto mt-3">
                 <div  class="col-12 d-flex flex-row justify-content-center align-items-center border-bottom pb-3">
                     <i class="fa fa-search " aria-hidden="true"></i>
-                    <input style="width: 80% ; border-top-style: hidden;
+                    <input [(ngModel)]="searchText" style="width: 95% ; border-top-style: hidden;
               border-right-style: hidden;
               border-left-style: hidden;
               border-bottom-style:hidden; color: black;
               " class="border-none py-2  ps-2 border-none" placeholder="Search scooters" type="text">
-                    <button (click)="this.markerStatus = 'assets/images/website/icons/markerChanged.png'" class="btn btn-outline-secondary">
-                        Search
-                    </button>
                 </div>
                 <div *ngIf="isLoading" class="row mx-auto mt-3">
                    <app-custom-skeleton-loader class="remove-mb"></app-custom-skeleton-loader>
@@ -89,13 +86,13 @@
                     </div>
 
                 </div>
-                <div class="row" *ngIf="escooterAdsResult">
+                <div class="row" *ngIf="escooterAdsResult && !searchText">
                     <div *ngFor="let escooterItem of escooterAdsResult" class="col-xs-12 col-sm-12 col-md-6 my-3 ">
                         <app-escooter-ad-card  id="{{escooterItem.modelName}}" class="scooter-card ad-card border-warning "  [escooterItem]="escooterItem"></app-escooter-ad-card>
                     </div>
                 </div>
                 <div class="row" *ngIf="escooterResults">
-                    <div *ngFor="let escooterItem of escooterResults" class="col-xs-12 col-sm-12 col-md-6 my-3">
+                    <div *ngFor="let escooterItem of escooterResults | filterPipe: searchText" class="col-xs-12 col-sm-12 col-md-6 my-3">
                         <app-escooter-card  id="{{escooterItem.modelName}}" class="scooter-card"  [escooterItem]="escooterItem"></app-escooter-card>
                     </div>
                 </div>

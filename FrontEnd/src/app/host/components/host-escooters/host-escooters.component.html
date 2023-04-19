@@ -10,7 +10,7 @@
                     <div class="d-flex justify-content-between mb-3">
                         <div *ngIf="hostEscooters.length == 0"> </div>
                         <h2 class="fw-bold " *ngIf="hostEscooters.length > 0"> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
-                        <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"  class="btn btn-dark rounded-0 btn-lg fw-bold">+ Add scooter</a>
+                        <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"  class="btn btn-dark rounded-3 btn-lg fw-bold">+ Add scooter</a>
                     </div>
                     <div *ngIf="hostEscooters.length == 0" class=" w-100 mx-auto text-center">
                         <h1 class="fw-bold " >No Electric scooters</h1>

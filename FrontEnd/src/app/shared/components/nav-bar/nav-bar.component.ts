@@ -67,6 +67,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
+        //remove navbar auth page
         this.router.events.subscribe(events => {
             console.log(events)
             if(events instanceof NavigationStart){

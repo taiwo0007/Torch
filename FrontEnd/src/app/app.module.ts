@@ -99,6 +99,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AlertMessageContainerComponent } from './shared/components/alert-message-container/alert-message-container.component';
+import { FilterPipePipe } from './escooter/pipes/filter-pipe.pipe';
 
 
 @NgModule({
@@ -168,6 +169,7 @@ import { AlertMessageContainerComponent } from './shared/components/alert-messag
      VerifiedBadgeComponent,
      TorchTrustedBadgeComponent,
      AlertMessageContainerComponent,
+     FilterPipePipe,
 
   ],
     imports: [

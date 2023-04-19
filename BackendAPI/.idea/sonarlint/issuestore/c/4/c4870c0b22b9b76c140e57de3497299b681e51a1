@@ -1,0 +1,29 @@
+
+E
+java:S1066®"/Merge this if statement with the enclosing one.(ì¦
+ƒ
+java:S1319z"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(Œ¸Ôá
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥‚‰
+v	java:S116."aRename this field "user_verification_code" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹Ô»É
+R
+java:S1854|"7Remove this useless assignment to local variable "cal".(¿ÍÜŞüÿÿÿÿ
+C
+java:S1481|"(Remove this unused "cal" local variable.(¿ÍÜŞüÿÿÿÿ
+K
+java:S1874"/Remove this use of "getDate"; it is deprecated.(¸Ç¬Øşÿÿÿÿ
+K
+java:S1874"/Remove this use of "getDate"; it is deprecated.(¸Ç¬Øşÿÿÿÿ
+Z
+java:S1155¨">Use isEmpty() to check whether the collection is empty or not.(Ÿ÷İ³ÿÿÿÿÿ
+F
+java:S1874´"/Remove this use of "getDate"; it is deprecated.(«Ìí
+F
+java:S1874´"/Remove this use of "getDate"; it is deprecated.(«Ìí
+t
+java:S1128"YRemove this unused import 'com.troch.torchApplication.repositories.HostReviewRepository'.(‹¯˜Òıÿÿÿÿ
+h
+java:S1128"RRemove this unused import 'com.troch.torchApplication.services.HostReviewService'.(‘ëé
+g
+java:S1128"LRemove this unused import 'com.troch.torchApplication.services.HostService'.(·¯‹Ïÿÿÿÿÿ
+n
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ
