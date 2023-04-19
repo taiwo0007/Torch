@@ -39,8 +39,6 @@ Csrc/app/escooter/components/reviews-list/reviews-list.component.css,4/4/4443ce
 .src/app/home/components/home/home.component.ts,e/2/e2cafb481c3f83a005873c17f1cc771313186cae
 g
 7src/app/escooter/components/review/review.component.css,7/a/7ac9a6e71b625ab0752b6093919302c5a78a95eb
-h
-8src/app/escooter/components/review/review.component.html,e/c/ecb2d86619fe7f1bbc1810122e60baa86557c497
 f
 6src/app/escooter/components/review/review.component.ts,e/7/e77e5384f876208a136f450bf98429d069a700bf
 ~
