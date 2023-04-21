@@ -1,4 +1,4 @@
-<div class="card  shadow-sm rounded-3  mx-auto mobile-arrange mr-b mb-wd pb-3" style="height: max-content">
+<div class="card  shadow-sm rounded-3  mx-auto mobile-arrange mr-b mb-wd pb-4" style="height: max-content">
 
 
   <div style="position: relative !important;" class="mx-auto mt-1">
@@ -16,7 +16,19 @@
 
   </ng-template>
 
-  <h4 class="fw-bold text-center"> {{ userDetails?.firstName}} {{ userDetails?.lastName}} </h4>
+  <h4 class="fw-bold text-center "> {{ userDetails?.firstName}} {{ userDetails?.lastName}} </h4>
 
 
-  <span class="text-info text-center" style="font-size: 1rem;  ">{{ userDetails?.userTrips ? userDetails?.userTrips: 0 }} trips</span>
+  <div class=" text-center position-relative" style="font-size: 1rem;  ">
+<span [routerLink]="['/user-trips']" class="position-relative btn btn-dark p-1 px-2 rounded  ">
+    {{ userDetails?.renterTrips.length ? userDetails?.renterTrips.length : 0 }} trips
+    <span *ngIf="userDetails?.userTripDetails.ACTIVE > 0" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+          <span class="visually-hidden">New alerts</span>
+</span>
+
+
+
+
+  </span>
+
+  </div>

@@ -14,7 +14,7 @@
 
                 </div>
                 <div class="col-3 my-auto mx-auto text-center">
-                    <p class="my-auto mx-auto text-center bg-warning px-3 py-2 text-bold fw-bold">{{data.totalAdDays}} days left</p>
+                    <p class="my-auto mx-auto text-center bg-warning rounded px-3 py-2 text-bold fw-bold">{{data.totalAdDays}} days left</p>
                 </div>
 
             </div>
@@ -89,7 +89,7 @@
                 </mat-form-field>
 
                 <mat-action-row>
-                    <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                    <button mat-button type="button" color="warn" (click)="prevStep()">Previous</button>
                     <div *ngIf="isLoading" class="spinner-border text-primary mx-3" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>

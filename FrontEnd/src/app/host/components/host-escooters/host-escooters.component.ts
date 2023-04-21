@@ -6,7 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../../auth/services/auth.service";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
-import {catchError, delay, of, switchMap} from "rxjs";
+import {catchError, of, switchMap} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Host} from "../../models/host.interface";
 import {LoadingService} from "../../../shared/services/loading.service";
@@ -168,14 +168,11 @@ export class HostEscootersComponent implements OnInit{
       this.loadingService.isLoadingLine.next(true);
 
       //once the api returns scooter, we display success message
-      return this.escooterService.deleteEscooter(id).pipe(delay(3000))
+      return this.escooterService.deleteEscooter(id)
     }).subscribe(data => {
 
-          this.toastr.success(  'Electric scooter deleted', '', {
-            positionClass: 'toast-top-center'
-          });
+          this.loadingService.isSuccess.next({message: "Escooter deleted successfully"})
 
-          console.log(data)
           this.loadingService.isLoadingLine.next(false);
           this.getHostEscooters();
 

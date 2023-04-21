@@ -186,6 +186,11 @@
     overflow-y: hidden !important;
 }
 
+
+.btn-promoted {
+border-bottom-right-radius: 2rem !important;
+}
+
 .ad-card {
     transition: all .1s ease-in-out;
     width: 95%;
