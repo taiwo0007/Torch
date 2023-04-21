@@ -23,6 +23,14 @@ steps:
   #       "&",
   #     ]
 
+  # Replace smtp.google.password with an environmental variable
+  - name: "gcr.io/cloud-builders/docker"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        sed -i "s/spring.mail.password=.*/spring.mail.password=$_EMAIL_PASSWORD/" ./BackendAPI/src/main/resources/application.properties
+
   - name: "gcr.io/cloud-builders/mvn"
     entrypoint: "mvn"
     args: ["clean", "install", "-DskipTests"]

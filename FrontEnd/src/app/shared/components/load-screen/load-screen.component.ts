@@ -7,7 +7,7 @@ import * as lottie from 'lottie-web';
   styleUrls: ['./load-screen.component.css']
 })
 export class LoadScreenComponent implements AfterViewInit{
-  @ViewChild('lottieContainer') private lottieContainer: ElementRef;
+  @ViewChild('lottieContainer') public lottieContainer: ElementRef;
 
 
   ngAfterViewInit(): void {

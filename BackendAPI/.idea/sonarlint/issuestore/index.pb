@@ -7,8 +7,6 @@ v
 Fsrc/test/java/com/troch/torchApplication/services/HostServiceTest.java,b/2/b2397f47255e0ec5787810043287b77f3f39396f
 z
 Jsrc/test/java/com/troch/torchApplication/services/EScooterServiceTest.java,3/0/30e025013141dd1b0e952387b92027acba8a6c99
-?
-cloudbuild.yaml,2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7
 i
 9src/main/java/com/troch/torchApplication/models/Trip.java,7/9/7925f272797339ba5e7e05ad02f439ce34342a09
 n
