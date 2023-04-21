@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +133,7 @@
       <workItem from="1681817694321" duration="4126000" />
       <workItem from="1681842652705" duration="25375000" />
       <workItem from="1682066237128" duration="3654000" />
-      <workItem from="1682093917050" duration="4954000" />
+      <workItem from="1682093917050" duration="5746000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -458,7 +457,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682098483848</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Loading line on ad creation on scooter retrieval from API">
+      <created>1682099185431</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1682099185431</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,7 +472,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="changes Dockerfile" />
     <MESSAGE value="Host Ads Front End UI implemented" />
     <MESSAGE value="Added imrovement with new font" />
     <MESSAGE value="mobile spinner fix" />
@@ -491,6 +496,7 @@
     <MESSAGE value="Close image" />
     <MESSAGE value="Verif Modal design changes" />
     <MESSAGE value="Trip page UI enhancements, bug fix host scooter link, delte modal fix, icon host escooters change, Run ad button UI improvment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trip page UI enhancements, bug fix host scooter link, delte modal fix, icon host escooters change, Run ad button UI improvment" />
+    <MESSAGE value="Loading line on ad creation on scooter retrieval from API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading line on ad creation on scooter retrieval from API" />
   </component>
 </project>

@@ -9,5 +9,5 @@ height: 100% !important;
 .rounded-button:hover{
     transition: .3s ease-in-out !important;
 
-    border-radius: 10px !important;
+    border-radius: 5px !important;
 }
