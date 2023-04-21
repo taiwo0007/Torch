@@ -55,8 +55,8 @@
       </div>
 
       <div style="width: 47% !important;">
-        <label for="postCode" class="form-label fw-bold">Post Code:</label>
-        <input disabled id="postCode" [ngModel]="InitialUserDetails?.postCode" name="postCode" class="form-control" th:field="*{postCode}"
+        <label for="postCode" class="form-label fw-bold">Joined:</label>
+        <input disabled id="postCode" [ngModel]="InitialUserDetails?.joined | date: 'dd MMM yyyy'" name="postCode" class="form-control" th:field="*{postCode}"
                required autofocus="autofocus" />
         <span th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}"></span>
       </div>
@@ -75,6 +75,21 @@
         <label for="state" class="form-label fw-bold">Email</label>
         <input id="state" [ngModel]="InitialUserDetails?.email" disabled name="email" class="form-control" th:field="*{state}"
                 autofocus="autofocus" />
+        <span th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
+      </div>
+    </div>
+
+    <div style="" class="mb-3 d-flex justify-content-between form-group">
+      <div style="width: 47% !important;">
+        <label for="country" class="form-label fw-bold">Location</label>
+        <input disabled id="country" [ngModel]="InitialUserDetails?.location" name="location" class="form-control" th:field="*{country}"
+               required autofocus="autofocus" />
+        <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+      </div>
+      <div style="width: 47% !important;">
+        <label for="state" class="form-label fw-bold">User id</label>
+        <input id="state" [ngModel]="InitialUserDetails?.id" disabled name="id" class="form-control" th:field="*{state}"
+               autofocus="autofocus" />
         <span th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
       </div>
     </div>

@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Auth images">
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Close image">
+      <change afterPath="$PROJECT_DIR$/src/assets/images/website/verifyimg.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/a/9a258de321e6a6b1786b7d18df55d2f3a7a599a3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/f/6f9d98ca6b2005fc0cd4b0f000b670b16bf3c496" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/c/ac7fe8f2df3d56925e7da8177221d0d6a7c74dc5" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/a/9a258de321e6a6b1786b7d18df55d2f3a7a599a3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/f/6f9d98ca6b2005fc0cd4b0f000b670b16bf3c496" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/c/ac7fe8f2df3d56925e7da8177221d0d6a7c74dc5" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-card/escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-card/escooter-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/search-form/search-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/verification-dialog/verification-dialog.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,21 +47,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "js.last.introduce.type": "LET",
-    "last_opened_file_path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/src/assets/fonts&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/taiwo/Documents/Projects/Torch/FrontEnd/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets/fonts" />
@@ -145,7 +154,8 @@
       <workItem from="1681766061677" duration="5160000" />
       <workItem from="1681780294005" duration="7698000" />
       <workItem from="1681817694321" duration="4126000" />
-      <workItem from="1681842652705" duration="20682000" />
+      <workItem from="1681842652705" duration="25375000" />
+      <workItem from="1682066237128" duration="3390000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -448,7 +458,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681864258020</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Close image">
+      <created>1681868407290</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1681868407290</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -456,7 +473,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="bug fix for npm" />
     <MESSAGE value="prod folder" />
     <MESSAGE value="updates" />
     <MESSAGE value="changes Dockerfile" />
@@ -481,6 +497,7 @@
     <MESSAGE value="Auth images" />
     <MESSAGE value="Ad UI improvment" />
     <MESSAGE value="Scrollable filter section" />
-    <option name="LAST_COMMIT_MESSAGE" value="Scrollable filter section" />
+    <MESSAGE value="Close image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Close image" />
   </component>
 </project>

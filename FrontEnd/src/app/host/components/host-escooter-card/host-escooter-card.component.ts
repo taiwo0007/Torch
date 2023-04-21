@@ -4,8 +4,6 @@ import {
     Output,
     EventEmitter,
     OnInit,
-    ViewChildren,
-    ElementRef,
     ViewChild,
     AfterContentInit, OnChanges, SimpleChanges, DoCheck
 } from '@angular/core';
@@ -19,6 +17,10 @@ import {EscooterService} from "../../../escooter/services/escooter.service";
 })
 export class HostEscooterCardComponent implements OnInit, AfterContentInit, OnChanges, DoCheck{
     @ViewChild('imgerr', {static: false}) imgerr:any
+    @ViewChild('price', {static: false}) price:any
+    @ViewChild('modelName', {static: false}) modelName:any
+
+
     @Output() deleteClick: EventEmitter<number> = new EventEmitter<number>();
   @Input() escooter:Escooter;
     @Input() OnImageRemove:boolean;
@@ -39,13 +41,21 @@ ngDoCheck() {
 }
 
     ngOnChanges(changes: SimpleChanges) {
-        if(this.OnImageRemove){
+        if(this.OnImageRemove && this.imgerr){
             console.log(this.imgerr.nativeElement)
             this.imgerr.nativeElement.style.display = 'none'
+            this.price.nativeElement.style.display = 'none'
+            this.modelName.nativeElement.style.width = '50%'
+
+
         }
-        if(this.OnImageRemove == false){
+        if(this.OnImageRemove == false && this.imgerr){
             console.log(this.imgerr.nativeElement)
             this.imgerr.nativeElement.style.display = 'block'
+            this.price.nativeElement.style.display = 'block'
+            this.modelName.nativeElement.style.width = 'auto'
+
+
         }
 }
 

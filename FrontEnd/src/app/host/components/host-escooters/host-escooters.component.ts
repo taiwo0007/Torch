@@ -65,6 +65,7 @@ export class HostEscootersComponent implements OnInit{
     console.log(this.hostID)
     this.hostService.getHostById(this.hostID).subscribe((hostData:Host) => {
       console.log(hostData)
+      this.loadingService.isLoading.next(false);
 
       this.totalAdDays = hostData.totalAdDays;
       this.isLoading = false

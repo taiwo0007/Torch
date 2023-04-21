@@ -4,13 +4,13 @@
 
 
 <form [formGroup]="searchFormReactive" (ngSubmit)="onSubmit()"
-      class="p-5 mt-2 form-search rounded-3 shadow-lg  "
+      class="p-5 form-search rounded-3 shadow-lg  "
       style="  margin-left: 8rem ; background-color: white; ">
 
 
 
     <div class="mx-auto text-center ">
-        <h1 style="font-size: 3.8rem" class="fw-bold text-start   ">Make your <span
+        <h1 style="font-size: 3.8rem" class="fw-bold text-start">Make your <span
                 class="text-info font-gro-black">trip</span></h1>
         <div id="emailHelp2" class="form-text text-start text-dark mb-2">Brows a catalogue of scooters here at <u
                 class="text-info">Torch</u></div>
@@ -44,7 +44,7 @@
 
     <button (mouseover)="onMouseButton()" (mouseleave)="onMouseOutButton()"  style="width: 100%;  background-color: black !important;" type="submit"
             class="btn  text-light p-3 mt-3 fw-bold rounded-3 ">Search
-        <i #arrow class="fa fa-long-arrow-right ms-2 arrow" aria-hidden="true"></i>
+        <i #arrow class="fa fa-long-arrow-right arrow" aria-hidden="true"></i>
 
     </button>
 

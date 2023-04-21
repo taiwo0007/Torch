@@ -16,6 +16,7 @@ import {LoadingService} from "../../../shared/services/loading.service";
 import * as moment from "moment";
 import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {Escooter} from "../../models/escooter.interface";
+import {Moment} from "moment";
 
 @Component({
     selector: 'app-start-trip-form',
@@ -37,14 +38,14 @@ export class StartTripFormComponent implements OnInit, AfterViewInit {
     tommorwsDate = new Date();
     user: any;
     rangeDates: any;
+    formattedToday:any = moment();
+    formattedTripStart:any = moment();
+
     startTripForm = this._formBuilder.group({
         tripStart: [moment()],
         tripEnd: [moment().add(1, 'day')],
 
     });
-
-
-
 
     constructor(private authService: AuthService,
                 private router: Router,
@@ -60,6 +61,12 @@ export class StartTripFormComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.formattedTripStart = moment(this.escooter.tripStart)
+        this.formattedToday = moment()
+
+        // console.log('diff')
+        // console.log(date1.diff(date2, 'days'))
+
 
         this.authService.user.subscribe((data: any) => {
 

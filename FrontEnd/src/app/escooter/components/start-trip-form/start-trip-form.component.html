@@ -8,7 +8,7 @@
             <mat-form-field  style="width: 100% !important; margin-top: -1rem !important;"  appearance="outline">
                 <mat-label>Trip Start & Trip End</mat-label>
                 <mat-icon matPrefix>date_range</mat-icon>
-                <mat-date-range-input [max]="escooter?.tripEnd" [min]="escooter?.tripStart" (click)="picker.open()" [rangePicker]="picker">
+                <mat-date-range-input [max]="escooter?.tripEnd" [min]="formattedToday.diff(formattedTripStart, 'days') > 0 ? formattedToday : formattedTripStart" (click)="picker.open()" [rangePicker]="picker">
                     <input [min]="todaysDate" formControlName="tripStart"  name="tripStart"  matStartDate >
                     <input formControlName="tripEnd" name="tripEnd"  matEndDate placeholder="End date">
                 </mat-date-range-input>

@@ -29,7 +29,7 @@ input, select, textarea{
 @media (min-width: 580.68px) {
 
   .pt-md{
-    padding-top: 5rem !important;
+    padding-top: 4rem !important;
   }
   .hm-sm{
     font-size: 3.8rem !important;

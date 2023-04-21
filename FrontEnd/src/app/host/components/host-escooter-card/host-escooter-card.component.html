@@ -8,13 +8,13 @@
                     <h6 class="card-text  fw-bold">{{escooter.modelName}}</h6>
                     <p  class="fw-bold">{{escooter.cost | currency:'EUR'}}/day</p>
                 </div>
-                <div style="margin-top:-.61rem;">
-                    <i class="fa fa-star text-info"></i>
-                    <i class="fa fa-star text-info"></i>
-                    <i class="fa fa-star text-info"></i>
-                    <i class="fa fa-star text-info"></i>
-                    <i class="fa fa-star text-info"></i>
-                </div>
+<!--                <div style="margin-top:-.61rem;">-->
+<!--                    <i class="fa fa-star text-info"></i>-->
+<!--                    <i class="fa fa-star text-info"></i>-->
+<!--                    <i class="fa fa-star text-info"></i>-->
+<!--                    <i class="fa fa-star text-info"></i>-->
+<!--                    <i class="fa fa-star text-info"></i>-->
+<!--                </div>-->
             </div>
             <div class="d-flex justify-content-between">
                 <p [ngClass]="escooter.inUse ? 'text-danger' : 'text-success'" class="text-end fw-bolder  my-auto pt-3">{{escooter.inUse ? 'Active' :  'Inactive' }} </p>
@@ -25,29 +25,27 @@
 </a>
 <ng-template #hostEditLink>
     <div class="scooter-card rounded-4 shadow card mx-auto" style="position:relative; overflow: hidden">
-        <button *ngIf="!isAdRunning" (click)="onAddClick()" style="position:absolute; z-index: 1; right: 0;" class="btn btn-warning rounded-3 fw-bold">Run ad +</button>
+        <button *ngIf="!isAdRunning" (click)="onAddClick()" style="position:absolute; z-index: 1; right: 0;" class="btn btn-warning rounded-3 fw-bold">+ Run ad </button>
         <button *ngIf="isAdRunning" style="position:absolute; z-index: 1; right: 0; cursor: initial !important; display: flex; align-items: center; justify-content: center" class="btn btn-success rounded-3 fw-bold">
             Ad is Live
             <div class="recording-circle ms-2"></div>
         </button>
-
-
-        <a >
+        <a [routerLink]="['']">
             <div class="" style="width: 18rem; overflow-x: hidden; !important">
                 <img #imgerr [routerLink]="['/escooter-detail', escooter.id]" style="object-fit:cover !important; width: 100% !important; height: 27rem !important;  overflow-x: hidden; !important" src="{{escooter.image}}" class="card-img-top" alt="..." />
                 <div style=" overflow-x: hidden; !important" class="card-body pt-3">
                     <div   style=" overflow-x: hidden; !important" class=" pb-3 border-bottom">
                         <div class="d-flex justify-content-between">
-                            <h6 class="card-text  fw-bold">{{escooter.modelName}}</h6>
-                            <p  class="fw-bold">{{escooter.cost | currency:'EUR'}}/day</p>
+                            <h6 #modelName class="card-text  fw-bold">{{escooter.modelName}}</h6>
+                            <p #price  class="fw-bold">{{escooter.cost | currency:'EUR'}}/day</p>
                         </div>
-                        <div style="margin-top:-.61rem;">
-                            <i class="fa fa-star text-info"></i>
-                            <i class="fa fa-star text-info"></i>
-                            <i class="fa fa-star text-info"></i>
-                            <i class="fa fa-star text-info"></i>
-                            <i class="fa fa-star text-info"></i>
-                        </div>
+<!--                        <div style="margin-top:-.61rem;">-->
+<!--                            <i class="fa fa-star text-info"></i>-->
+<!--                            <i class="fa fa-star text-info"></i>-->
+<!--                            <i class="fa fa-star text-info"></i>-->
+<!--                            <i class="fa fa-star text-info"></i>-->
+<!--                            <i class="fa fa-star text-info"></i>-->
+<!--                        </div>-->
                     </div>
                     <div class="d-flex justify-content-between">
                         <p [ngClass]="escooter.inUse ? 'text-danger' : 'text-success'" class="text-end fw-bolder  my-auto pt-3">{{escooter.inUse ? 'Active' :  'Inactive' }} </p>

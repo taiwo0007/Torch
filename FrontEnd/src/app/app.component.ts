@@ -74,7 +74,7 @@ export class AppComponent {
           console.log(userData.isVerified)
           console.log(userData.isVerifiedConsent)
 
-            this.authService.openDialog();
+          this.authService.openDialog();
 
 
         }

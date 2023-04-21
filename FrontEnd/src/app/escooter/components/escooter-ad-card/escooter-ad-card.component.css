@@ -216,7 +216,7 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     width: auto;
 }
 .card{
-    border: 2px solid #fec104 !important;
+    border: 4px solid #0dcaf0 !important;
 }
 
 @media(max-width: 575.68px){

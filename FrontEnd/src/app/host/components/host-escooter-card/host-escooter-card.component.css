@@ -57,6 +57,10 @@
     flex-direction: column;
     flex: 1;
 }
+img{
+    transition: 0.1s ease-in-out;
+    transition-duration: 0.1s;
+}
 
 .property .address {
     color: #9E9E9E;
