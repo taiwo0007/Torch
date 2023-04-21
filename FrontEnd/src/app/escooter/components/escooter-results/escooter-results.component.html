@@ -84,7 +84,7 @@
                         <mat-spinner size="6px"></mat-spinner>
                     </div>
                 </div>
-                <div class="row" *ngIf="escooterAdsResult && !searchText">
+                <div class="row" *ngIf="escooterAdsResult && !searchText && !isFiltering">
                     <div *ngFor="let escooterItem of escooterAdsResult" class="col-xs-12 col-sm-12 col-md-6 my-3 ">
                         <app-escooter-ad-card  id="{{escooterItem.modelName}}" class="scooter-card ad-card border-warning "  [escooterItem]="escooterItem"></app-escooter-ad-card>
                     </div>

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {delay} from "rxjs";
 import {LoadingService} from "../../../shared/services/loading.service";
 
@@ -13,7 +13,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
 
     searchText: string;
-
+isFiltering:boolean = false;
   //Filter Variables
   is1to10 = false;
   is11to20 = false;
@@ -53,19 +53,23 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
     isLoading: boolean = true;
 
   constructor(private escooterService: EscooterService,
-              private route: ActivatedRoute, private loadingService:LoadingService) { }
+              private route: ActivatedRoute, private loadingService:LoadingService,
+              private router:Router) { }
 
   ngOnInit(): void {
 
       this.loadingService.isRemoveFooter.next(true);
+      this.loadingService.isLoadingLine.next(true)
 
-    this.route.queryParams.subscribe(paramValue => {
+
+      this.route.queryParams.subscribe(paramValue => {
 
       this.escooterService.searchEscooter(
           paramValue['tripStart'],
           paramValue['tripEnd'],
           paramValue['location'])
           .subscribe((data: any[]) => {
+                  this.loadingService.isLoadingLine.next(false)
 
                   this.isLoading = false;
             this.escooterResults = data;
@@ -79,7 +83,8 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
           }, error => {
               this.escooterResults = null;
-
+                  this.loadingService.isLoadingLine.next(false)
+                    this.router.navigate(['/error'])
                   this.isLoading = false;
           },
               () => {
@@ -248,6 +253,15 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
     toggleFilter(filterValue:string){
 
+        this.isLoading = true;
+
+        // setTimeout(()=> {
+        //     this.isLoading = false;
+        //
+        // }, 2000)
+
+
+
       //PRICES
 
 
@@ -377,7 +391,8 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
     applyFilter(){
       this.isLoading = true;
-      setTimeout(()=>{},1000 )
+      this.loadingService.isLoadingLine.next(true)
+
       this.escooterResults = [];
       this.escooterFilterResults = [];
       this.escooterPriceResults = [];
@@ -577,10 +592,18 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
         //add all to final list
         this.escooterFilterResults.push(...escooterMilesResults)
-
-        this.isLoading = false;
+        if(this.escooterFilterResults.length != 0){
+            this.isFiltering = true
+        }
+        else {
+            this.isFiltering = false;
+        }
         this.escooterResults = this.escooterFilterResults;
+        setTimeout(()=>{
+            this.isLoading = false;
+            this.loadingService.isLoadingLine.next(false)
 
+        },1000 )
         //init the map
         this.initMap();
         this.markerEventInit();

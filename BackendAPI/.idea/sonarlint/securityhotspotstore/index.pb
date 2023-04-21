@@ -25,8 +25,6 @@ z
 Jsrc/main/java/com/troch/torchApplication/config/SecurityConfiguration.java,8/8/887a2a9c4fd9579f40d58d275db55cd3fb42092a
 ‚
 Rsrc/main/java/com/troch/torchApplication/controllers/AuthenticationController.java,b/5/b5eaf0255b57e3af03d0fbd3426ad28acccde2d9
-{
-Ksrc/main/java/com/troch/torchApplication/controllers/PaymentController.java,2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8
 |
 Lsrc/main/java/com/troch/torchApplication/services/EScooterReviewService.java,1/5/155c137697b404f7b22f1bd015af10347133bffa
 o
@@ -43,3 +41,9 @@ r
 Bsrc/main/java/com/troch/torchApplication/services/HostService.java,1/f/1f0dbfaa56b2d41a8b2687b43f7a5142e24caae8
 v
 Fsrc/main/java/com/troch/torchApplication/Utilities/FileUploadUtil.java,2/e/2e4e89f8730a373c0d4312edaf00129fc0efa491
+v
+Fsrc/main/java/com/troch/torchApplication/services/EScooterService.java,e/0/e0415bc13f4f98b7f86616f4e90bbf672e71138d
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0

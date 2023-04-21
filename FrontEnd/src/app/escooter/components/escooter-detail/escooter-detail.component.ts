@@ -50,23 +50,19 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
                 this.escooter = escooterData;
                 this.configureMapOptions();
                 this.configureMarker();
-                console.log(escooterData)
                 this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i)
-
-                console.log("Escooter Data" + this.escooter)
                 this.isLoading = false;
-
+                this.loadService.isLoading.next(false);
 
             }, error => {
                 // this.isLoading = false;
                 this.isLoading = false;
                 this.loadService.isLoading.next(false);
 
-                this.router.navigate(['../error'])
+                this.router.navigate(['/error'])
             },
             () => {
-                this.loadService.isLoading.next(false);
-                this.isLoading = false;
+
 
             })
         console.log(this.ratingArray)
@@ -78,8 +74,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
             this.escooterService.getEscooterById(this.paramId)
                 .subscribe(escooterData => {
                     this.escooter = escooterData;
-                    this.isLoading = false;
-                    this.loadService.isLoading.next(false);
+
 
                     this.ratingArray = Array(escooterData.rating).fill(0).map((x, i) => i)
                 })
@@ -93,6 +88,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     ngAfterContentInit() {
         this.initMap()
+
 
     }
 
@@ -130,7 +126,11 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     }
 
     setHostData(host: Host) {
+
+
         this.host = host;
+
+
 
     }
 }

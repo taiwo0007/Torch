@@ -5,9 +5,15 @@
          style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
          id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
         <div class="d-md-flex  align-items-center">
-            <a class="navbar-brand me-3" [routerLink]="['']">
-                <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
-            </a>
+            <div class="my-auto me-4 ">
+                <a class="navbar-brand me-3 d-flex align-items-center" [routerLink]="['']">
+                    <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
+                    <span *ngIf="accountType" class="text-warning fw-bold mt-2">{{accountType}} </span>
+                </a>
+
+
+            </div>
+
             <app-nav-bar-search></app-nav-bar-search>
         </div>
 
@@ -55,11 +61,6 @@
 
 
 
-            <li *ngIf="accountType" class="nav-item my-auto me-3">
-
-                <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-                   class=" btn btn-outline-warning disabled rounded-0 text-warning fw-bold  my-auto">{{accountType}} plan</p>
-            </li>
 
             <li *ngIf="isAuthenticated" (click)="closeDropdownAny()" class="nav-item my-auto">
                 <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
