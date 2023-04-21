@@ -51,10 +51,12 @@ export class HostEscootersComponent implements OnInit{
 
   getHostEscooters(){
 
-    this.hostService.fetchHostEscooters(this.hostID).subscribe(data => {
+    this.hostService.fetchHostEscooters(this.hostID)
+        .subscribe(data => {
       console.log(data)
       this.hostEscooters = data
       this.loadingService.isLoading.next(false);
+      this.loadingService.isLoadingLine.next(false);
 
 
     })
@@ -143,6 +145,7 @@ export class HostEscootersComponent implements OnInit{
         }))
         .subscribe(data => {
           this.loadingService.isSuccess.next({message: 'Successfully created ad campaign!'});
+          this.loadingService.isLoadingLine.next(true);
           this.checkHostID()
           this.getHostDetails()
           dialogRef.close();
@@ -171,7 +174,7 @@ export class HostEscootersComponent implements OnInit{
       return this.escooterService.deleteEscooter(id)
     }).subscribe(data => {
 
-          this.loadingService.isSuccess.next({message: "Escooter deleted successfully"})
+          this.loadingService.isSuccess.next({message: "E-Scooter deleted successfully"})
 
           this.loadingService.isLoadingLine.next(false);
           this.getHostEscooters();

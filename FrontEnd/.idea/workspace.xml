@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Verif Modal design changes">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/e/be49b469c52cd10ad6655dde0a7ae9120eea4ca4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/1/e161ced5460bf8d822a7304454d711cbbb3a7672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/e/be49b469c52cd10ad6655dde0a7ae9120eea4ca4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/1/e161ced5460bf8d822a7304454d711cbbb3a7672" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/ad-modal/ad-modal.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/delete-scooter-dialog/delete-scooter-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/delete-scooter-dialog/delete-scooter-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-history-card/trip-history-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-history-card/trip-history-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-host-stats-header/trip-host-stats-header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-host-stats-header/trip-host-stats-header.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-stats-header/trip-stats-header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-stats-header/trip-stats-header.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/user-profile/user-profile.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +134,7 @@
       <workItem from="1681817694321" duration="4126000" />
       <workItem from="1681842652705" duration="25375000" />
       <workItem from="1682066237128" duration="3654000" />
-      <workItem from="1682093917050" duration="4242000" />
+      <workItem from="1682093917050" duration="4954000" />
     </task>
     <task id="LOCAL-00001" summary="Impelemented Filter functionality">
       <created>1679079880015</created>
@@ -472,7 +451,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682069920750</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Trip page UI enhancements, bug fix host scooter link, delte modal fix, icon host escooters change, Run ad button UI improvment">
+      <created>1682098483848</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1682098483848</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -480,7 +466,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="updates" />
     <MESSAGE value="changes Dockerfile" />
     <MESSAGE value="Host Ads Front End UI implemented" />
     <MESSAGE value="Added imrovement with new font" />
@@ -505,6 +490,7 @@
     <MESSAGE value="Scrollable filter section" />
     <MESSAGE value="Close image" />
     <MESSAGE value="Verif Modal design changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Verif Modal design changes" />
+    <MESSAGE value="Trip page UI enhancements, bug fix host scooter link, delte modal fix, icon host escooters change, Run ad button UI improvment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trip page UI enhancements, bug fix host scooter link, delte modal fix, icon host escooters change, Run ad button UI improvment" />
   </component>
 </project>
