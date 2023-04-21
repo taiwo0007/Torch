@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {LoadingService} from "../../../shared/services/loading.service";
 import {HostService} from "../../../host/services/host.service";
 import {Host} from "../../../host/models/host.interface";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-user-profile',
@@ -27,7 +28,8 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
 
     ngAfterContentInit() {
       this.isLoading = true;
-        this.userService.fetchUserDetails().subscribe( (data: any) => {
+        this.userService.fetchUserDetails()
+            .subscribe( (data: any) => {
             this.userData = data;
             if(this.userData.isVerified == true){
                 this.authService.saveLocalVerifyInfo()

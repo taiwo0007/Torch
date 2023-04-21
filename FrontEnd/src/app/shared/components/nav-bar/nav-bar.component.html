@@ -1,171 +1,176 @@
-<nav *ngIf="!isAuthURL"
-        style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
-        id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
-    <div class="d-md-flex  align-items-center">
-        <a class="navbar-brand me-3" [routerLink]="['']">
-            <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
-        </a>
-        <app-nav-bar-search></app-nav-bar-search>
-    </div>
 
-    <ul class="nav nav-pills">
-        <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
-            <a [routerLink]="['login']"
-               style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;"
-               class="btn my-auto text-light rounded-0 fw-bold">
 
-                Log in
+<ng-container *ngIf="isLoading == false">
+    <nav *ngIf="isAuthURL == false"
+         style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
+         id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
+        <div class="d-md-flex  align-items-center">
+            <a class="navbar-brand me-3" [routerLink]="['']">
+                <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
             </a>
-        </li>
-        <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
+            <app-nav-bar-search></app-nav-bar-search>
+        </div>
 
-            <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
+        <ul class="nav nav-pills">
+            <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
+                <a [routerLink]="['login']"
+                   style="border-radius: 2.3rem !important; font-size: .8rem !important; background-color: black !important;"
+                   class="btn my-auto text-light rounded-0 fw-bold">
 
-        </li>
-
-        <li *ngIf="isAuthenticated && !accountType && isHost"  class="nav-item my-auto me-3">
-            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn d-flex align-items-center btn-outline-warning rounded-0  fw-bold  my-auto font-gro-bold" (click)="subscriptionModal()" >
-                <mat-icon class="me-1">monetization_on</mat-icon>
-                <span class="pt-1 fw-bold font-gro-bold">Upgrade Plan</span>
-
-            </a>
-        </li>
-
-        <li  *ngIf="isVerified == false && isAuthenticated == true"class="nav-item my-auto me-3">
-            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn d-flex align-items-center btn-info rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['verify']">
-                <mat-icon class="me-1">verified</mat-icon>
-                <span class="pt-1 fw-bold font-gro-bold">Verify now</span>
-
-            </a>
-        </li>
-        <li  *ngIf="isHost == false && isVerified == true" class="nav-item my-auto me-3">
-            <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn d-flex align-items-center btn-primary rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['become-host']">
-                <mat-icon class="me-1">fingerprint</mat-icon>
-                <span class="pt-1 fw-bold font-gro-bold">Become a host</span>
-
-            </a>
-        </li>
-
-
-
-        <li *ngIf="accountType" class="nav-item my-auto me-3">
-
-            <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class=" btn btn-outline-warning disabled rounded-0 text-warning fw-bold  my-auto">{{accountType}} plan</p>
-        </li>
-
-        <li *ngIf="isAuthenticated" (click)="closeDropdownAny()" class="nav-item my-auto">
-            <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
-               class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
-
-        </li>
-        <li *ngIf="isAuthenticated" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false"
-            style="background-color: black !important " class=" nav-item dropdown bg-dark m-auto nav-link">
-            <a dropdownToggle (click)="toggleDropdown()" style="background-color: black !important"
-               class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#" role="button"
-               aria-expanded="false">
-                <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
-                     class="rounded-circle " src="https://api.dicebear.com/6.x/micah/svg?seed={{userEmail}}&backgroundColor=b6e3f4" alt="">
-
-                <img *ngIf="profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
-                     class="rounded-circle " [src]="profileImage" alt="">
-            </a>
-        </li>
-
-    </ul>
-
-
-
-    <div *ngIf="isOpen" #customMenu class="position-absolute mt-5 bg-black rounded-4 shadow-lg"
-         style="right: 1rem; bottom:-3rem; top:1.0rem; height: max-content; width: 23rem">
-        <ul role="menu" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false" class="text-light px-3 pt-3">
-            <li role="menuitem li">
-                <hr class="dropdown-divider bg-dark">
+                    Log in
+                </a>
             </li>
-            <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['/profile']" class="rounded py-2 px-2  li">
-                <a style="width: 100%" class="dropdown-item d-flex align-items-center my-auto" >
-                    <mat-icon class="my-auto me-2">person</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Account</p></a>
-            </li>
-            <li *ngIf="isVerified" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/user-trips']" (click)="toggleDropdown()">
-                    <mat-icon class="my-auto me-2">flight_takeoff</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Trips</p></a>
+            <li *ngIf="!isAuthenticated" class="nav-item  my-auto">
+
+                <a [routerLink]="['signup']" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class="btn btn-light rounded-0 text-dark fw-bold  my-auto">Sign up</a>
+
             </li>
 
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['host-escooters', hostID]">
-                <a class="dropdown-item d-flex align-items-center my-auto"  >
-                    <mat-icon class="my-auto me-2">swap_calls</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Electric scooters</p></a>
-            </li>
-            <hr class=" bg-light">
+            <li *ngIf="isAuthenticated && !accountType && isHost"  class="nav-item my-auto me-3">
+                <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class="btn d-flex align-items-center btn-outline-warning rounded-0  fw-bold  my-auto font-gro-bold" (click)="subscriptionModal()" >
+                    <mat-icon class="me-1">monetization_on</mat-icon>
+                    <span class="pt-1 fw-bold font-gro-bold">Upgrade Plan</span>
 
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/legal-insurance']">
-                <a class="dropdown-item d-flex align-items-center my-auto" >
-                    <mat-icon class="my-auto me-2">featured_play_list</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Legal & Insurance</p></a>
+                </a>
             </li>
-            <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/privacy-policy']">
-                <a class="dropdown-item d-flex align-items-center my-auto" >
-                    <mat-icon class="my-auto me-2">list_alt</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Privacy Policy</p></a>
+
+            <li  *ngIf="isVerified == false && isAuthenticated == true"class="nav-item my-auto me-3">
+                <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class="btn d-flex align-items-center btn-info rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['verify']">
+                    <mat-icon class="me-1">verified</mat-icon>
+                    <span class="pt-1 fw-bold font-gro-bold">Verify now</span>
+
+                </a>
             </li>
-            <hr class=" bg-light">
-            <li *ngIf="isVerified == false && isAuthenticated == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 bg-info text-light font-gro-bold li" [routerLink]="['verify']">
-                <a class="dropdown-item d-flex align-items-center my-auto">
-                    <mat-icon class="my-auto me-2">verified</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Verify now</p></a>
+            <li  *ngIf="isHost == false && isVerified == true" class="nav-item my-auto me-3">
+                <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class="btn d-flex align-items-center btn-primary rounded-0  fw-bold  my-auto text-light font-gro-bold" [routerLink]="['become-host']">
+                    <mat-icon class="me-1">fingerprint</mat-icon>
+                    <span class="pt-1 fw-bold font-gro-bold">Become a host</span>
+
+                </a>
             </li>
 
 
 
-            <li [routerLink]="['become-host']" *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="bg-warning text-dark rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" >
-                    <mat-icon class="my-auto me-2">badge</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Become a host</p></a>
+            <li *ngIf="accountType" class="nav-item my-auto me-3">
+
+                <p style="opacity: 100% !important; border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class=" btn btn-outline-warning disabled rounded-0 text-warning fw-bold  my-auto">{{accountType}} plan</p>
             </li>
-            <li [routerLink]="['/host-profile', hostID]" *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto" >
-                    <mat-icon class="my-auto me-2">art_track</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Host Profile</p></a>
+
+            <li *ngIf="isAuthenticated" (click)="closeDropdownAny()" class="nav-item my-auto">
+                <a style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
+                   class="btn btn-light rounded-0 text-dark fw-bold  my-auto"  (click)="onLogout()">Sign out</a>
+
             </li>
-            <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['host-trips']" class="rounded py-2 px-2  li">
-                <a class="dropdown-item d-flex align-items-center my-auto"  >
-                    <mat-icon class="my-auto me-2">rocket_launch</mat-icon>
-                    <p class="m-0 pt-1 my-auto ">Host Trips</p></a>
+            <li *ngIf="isAuthenticated" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false"
+                style="background-color: black !important " class=" nav-item dropdown bg-dark m-auto nav-link">
+                <a dropdownToggle (click)="toggleDropdown()" style="background-color: black !important"
+                   class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">
+                    <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
+                         class="rounded-circle " src="https://api.dicebear.com/6.x/micah/svg?seed={{userEmail}}&backgroundColor=b6e3f4" alt="">
+
+                    <img *ngIf="profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
+                         class="rounded-circle " [src]="profileImage" alt="">
+                </a>
             </li>
 
         </ul>
-    </div>
-
-    <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute remove-mb mt-5" style="left: 0; bottom:0"
-                      mode="indeterminate"></mat-progress-bar>
-
-
-    <alert-message [@showHided]="isNotice ? 'show' : 'hide'"  [isNotice]="isNotice" [message]="alertMessage"
-                    class="position-absolute mt-5 mx-auto text-center"
-                    style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important; z-index: 9999999999 !important;"></alert-message>
-
-
-    <alert-message [@showHided]="isAlert ? 'show' : 'hide'"  [isAlert]="isAlert" [message]="alertMessage"
-                   class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
 
 
 
-    <alert-message [@showHided]="isSuccess ? 'show' : 'hide'"  [isSuccess]="isSuccess" [message]="alertMessage"
-                   class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+        <div *ngIf="isOpen" #customMenu class="position-absolute mt-5 bg-black rounded-4 shadow-lg"
+             style="right: 1rem; bottom:-3rem; top:1.0rem; height: max-content; width: 23rem">
+            <ul role="menu" bsDropdown dropdown #dropdown="bs-dropdown" [autoClose]="false" class="text-light px-3 pt-3">
+                <li role="menuitem li">
+                    <hr class="dropdown-divider bg-dark">
+                </li>
+                <li *ngIf="isAuthenticated" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['/profile']" class="rounded py-2 px-2  li">
+                    <a style="width: 100%" class="dropdown-item d-flex align-items-center my-auto" >
+                        <mat-icon class="my-auto me-2">person</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Account</p></a>
+                </li>
+                <li *ngIf="isVerified" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
+                    <a class="dropdown-item d-flex align-items-center my-auto" [routerLink]="['/user-trips']" (click)="toggleDropdown()">
+                        <mat-icon class="my-auto me-2">flight_takeoff</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Trips</p></a>
+                </li>
+
+                <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['host-escooters', hostID]">
+                    <a class="dropdown-item d-flex align-items-center my-auto"  >
+                        <mat-icon class="my-auto me-2">swap_calls</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Electric scooters</p></a>
+                </li>
+                <hr class=" bg-light">
+
+                <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/legal-insurance']">
+                    <a class="dropdown-item d-flex align-items-center my-auto" >
+                        <mat-icon class="my-auto me-2">featured_play_list</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Legal & Insurance</p></a>
+                </li>
+                <li (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li" [routerLink]="['/privacy-policy']">
+                    <a class="dropdown-item d-flex align-items-center my-auto" >
+                        <mat-icon class="my-auto me-2">list_alt</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Privacy Policy</p></a>
+                </li>
+                <hr class=" bg-light">
+                <li *ngIf="isVerified == false && isAuthenticated == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2 bg-info text-light font-gro-bold li" [routerLink]="['verify']">
+                    <a class="dropdown-item d-flex align-items-center my-auto">
+                        <mat-icon class="my-auto me-2">verified</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Verify now</p></a>
+                </li>
 
 
-    <alert-message [@showHided]="isError ? 'show' : 'hide'"  [isError]="isError" [message]="alertMessage"
-                   class="position-absolute mt-5 mx-auto text-center"
-                   style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
-</nav>
+
+                <li [routerLink]="['become-host']" *ngIf="isHost == false && isVerified == true" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="bg-warning text-dark rounded py-2 px-2  li">
+                    <a class="dropdown-item d-flex align-items-center my-auto" >
+                        <mat-icon class="my-auto me-2">badge</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Become a host</p></a>
+                </li>
+                <li [routerLink]="['/host-profile', hostID]" *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" class="rounded py-2 px-2  li">
+                    <a class="dropdown-item d-flex align-items-center my-auto" >
+                        <mat-icon class="my-auto me-2">art_track</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Host Profile</p></a>
+                </li>
+                <li *ngIf="isHost" (click)="toggleDropdown()" style="cursor: pointer" role="menuitem" [routerLink]="['host-trips']" class="rounded py-2 px-2  li">
+                    <a class="dropdown-item d-flex align-items-center my-auto"  >
+                        <mat-icon class="my-auto me-2">rocket_launch</mat-icon>
+                        <p class="m-0 pt-1 my-auto ">Host Trips</p></a>
+                </li>
+
+            </ul>
+        </div>
+
+        <mat-progress-bar *ngIf="isLoadingLine" class="position-absolute remove-mb mt-5" style="left: 0; bottom:0"
+                          mode="indeterminate"></mat-progress-bar>
+
+
+        <alert-message [@showHided]="isNotice ? 'show' : 'hide'"  [isNotice]="isNotice" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important; z-index: 9999999999 !important;"></alert-message>
+
+
+        <alert-message [@showHided]="isAlert ? 'show' : 'hide'"  [isAlert]="isAlert" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+
+
+
+        <alert-message [@showHided]="isSuccess ? 'show' : 'hide'"  [isSuccess]="isSuccess" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+
+
+        <alert-message [@showHided]="isError ? 'show' : 'hide'"  [isError]="isError" [message]="alertMessage"
+                       class="position-absolute mt-5 mx-auto text-center"
+                       style="top: 40%; bottom:0%; left: 40%; right:93rem; width: max-content !important;z-index: 9999999999 !important;"></alert-message>
+    </nav>
+
+</ng-container>
 
 <nav *ngIf="isAuthURL" class="position-relative">
 
@@ -192,5 +197,5 @@
 
 </nav>
 
-<app-load-screen *ngIf="isLoading" class="mx-auto remove-mb full-spinner"></app-load-screen>
+<app-load-screen *ngIf="isLoading"  class="mx-auto remove-mb full-spinner"></app-load-screen>
 

@@ -30,6 +30,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-datepicker": "^1.9.0",
     "jquery": "^3.6.3",
+    "lottie-web": "^5.11.0",
     "moment": "^2.29.4",
     "ngx-bootstrap": "^8.0.0",
     "ngx-google-places-autocomplete": "^2.0.5",
