@@ -7,7 +7,6 @@ import {ToastrService} from "ngx-toastr";
 import {LoadingService} from "../../../shared/services/loading.service";
 import {HostService} from "../../../host/services/host.service";
 import {Host} from "../../../host/models/host.interface";
-import {delay} from "rxjs";
 
 @Component({
   selector: 'app-user-profile',
