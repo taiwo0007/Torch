@@ -4,3 +4,6 @@
     overflow-y: hidden !important;
 }
 
+.takeWhile{
+    transition: 1s ease-in-out;
+}

@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Loading animation">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/f/7fee6fabe586143b824beba1f1b2e5310a3d34ba" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/f/fff892f51cdabc91042d502e1a1226ed6bd49c04" beforeDir="false" />
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/0/f0c0796ae88350c3796a4339ea570547fab84f90" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/f/7fee6fabe586143b824beba1f1b2e5310a3d34ba" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/f/fff892f51cdabc91042d502e1a1226ed6bd49c04" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/0/f0c0796ae88350c3796a4339ea570547fab84f90" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/components/signup/signup.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/custom-skeleton-loader/custom-skeleton-loader.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/custom-skeleton-loader/custom-skeleton-loader.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-profile/host-profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-details-card/profile-details-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/components/profile-form-card/profile-form-card.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,14 +149,7 @@
       <workItem from="1681842652705" duration="25375000" />
       <workItem from="1682066237128" duration="3654000" />
       <workItem from="1682093917050" duration="14422000" />
-      <workItem from="1682112087077" duration="6304000" />
-    </task>
-    <task id="LOCAL-00003" summary="Front end">
-      <created>1679129199352</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1679129199352</updated>
+      <workItem from="1682112087077" duration="10143000" />
     </task>
     <task id="LOCAL-00004" summary="Saved account type in storage">
       <created>1679131369294</created>
@@ -498,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682114316606</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="account type beside logo">
+      <created>1682118771935</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1682118771935</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,7 +502,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Mobile reponseive improvments" />
     <MESSAGE value="Fully responsive" />
     <MESSAGE value="Main trip form ui enhancement with material ui" />
     <MESSAGE value="header image add" />
@@ -531,6 +526,7 @@
     <MESSAGE value="Loading animation" />
     <MESSAGE value="Loading animation bug fix" />
     <MESSAGE value="Loading UI improvment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Loading UI improvment" />
+    <MESSAGE value="account type beside logo" />
+    <option name="LAST_COMMIT_MESSAGE" value="account type beside logo" />
   </component>
 </project>

@@ -1,13 +1,15 @@
 
-<div   class="d-flex  align-items-center  z-10 mx-auto my-auto text-center justify-content-center " style="z-index: 999999 !important; overflow: hidden !important; height: 100vh !important; width: 100vw !important;">
+<div   class="d-flex  align-items-center pb-3 z-10 mx-auto my-auto text-center justify-content-center " style="z-index: 999999 !important; overflow: hidden !important; height: 100vh !important; width: 100vw !important;">
 <!--    <mat-spinner size="10px"></mat-spinner>-->
 <!--    <img style="width: 42rem" src="assets/images/website/loading.gif" alt="">-->
 
-    <div class="mx-auto my-auto pb-5 text-center" >
+    <div class="mx-auto my-auto pb-5 text-center position-relative" >
         <img class="mx-auto text-center" style="width: 10rem " src="assets/images/website/torchlogoblack.png" alt="">
 <!--        <div class="text-center" style="width: 28rem"  #lottieContainer></div>-->
         <mat-progress-bar  color="primary" style="width: 20rem"  class="remove-mb p-1 mt-5 mx-auto text-center"
                           mode="indeterminate"></mat-progress-bar>
+        <p *ngIf="isLongLoad" [@showHided]="isLongLoad ? 'show' : 'hide'"  style="right:0; left: 0" class=" takeWhile text-center mt-3 text-primary position-absolute ">This may take a while.</p>
+
     </div>
 
 
