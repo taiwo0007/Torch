@@ -147,8 +147,6 @@ A
 0src/app/home/components/home/home.component.html,9/1/913cbca808333de22d017648adafe8a647b6f441
 €
 Psrc/app/shared/components/verification-dialog/verification-dialog.component.html,f/1/f14d3a78904145b91567891fad3e8385144a44d2
->
-src/index.html,5/c/5c975582791da6f060261188096d6aad85db6e09
 M
 src/app/app-routing.module.ts,6/f/6fd35c988c6ab19d90be440792fa8c817dd8dc67
 x
@@ -207,3 +205,13 @@ E
 src/app/app.module.ts,0/2/02c004b4329a0d99c45abb61a30dadfde61ecf5d
 ~
 Nsrc/app/escooter/components/escoooter-booking/escoooter-booking.component.html,0/b/0b442eba448aeb4c1c06c2a6586b773ccd783d66
+t
+Dsrc/app/host/components/host-escooters/host-escooters.component.html,f/3/f3d40f87ed79b5f8036cd3920515eb8ea03b7b78
+h
+8src/app/shared/components/nav-bar/nav-bar.component.html,8/f/8f720f710b6267cae06bf2013346c20d8b736efe
+f
+6src/app/shared/components/footer/footer.component.html,5/f/5f2ee86a643650b9feb4689a07c270ac3705d4ab
+d
+4src/app/shared/components/footer/footer.component.ts,3/e/3e54812535f2ca23186eae00cdf820e86b0a0fb9
+f
+6src/app/shared/components/nav-bar/nav-bar.component.ts,e/d/edceeabfb163facbb12d6f702672851a405c9858
