@@ -13,8 +13,6 @@ Gsrc/app/escooter/components/cost-info-card/cost-info-card.component.css,a/e/ae
 -src/app/escooter/models/discount.interface.ts,2/f/2f60a669ee4e3e8a66988961b0189c721a8a45e7
 v
 Fsrc/app/escooter/components/cost-info-card/cost-info-card.component.ts,3/4/34205e41e7f9c547b62c91a6023cbc9a30d5f780
-x
-Hsrc/app/escooter/components/mini-host-card/mini-host-card.component.html,a/2/a2cc2265944af0b6c22367bd709ba77ad3739439
 `
 0src/app/trip/components/trip/trip.component.html,9/1/91339762dcb89f971449617e29067e484e9ee5ee
 r

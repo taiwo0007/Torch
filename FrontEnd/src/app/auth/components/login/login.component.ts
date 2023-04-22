@@ -42,6 +42,8 @@ isForbiddenNotice: false;
               private loadingService:LoadingService) { }
 
   ngOnInit(): void {
+    this.loadingService.isRemoveFooter.next(true);
+
     this.route.queryParams.subscribe((params) => {
 
       if(params['success']){
@@ -69,7 +71,7 @@ isForbiddenNotice: false;
       return
     }
 
-    this.loginRequestPayload.email = authForm.value.email;
+    this.loginRequestPayload.email = authForm.value.email.trim();
     this.loginRequestPayload.password = authForm.value.password;
 
     console.log(this.loginRequestPayload.email)

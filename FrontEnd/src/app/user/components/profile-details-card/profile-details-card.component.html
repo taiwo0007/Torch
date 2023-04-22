@@ -3,8 +3,7 @@
 
   <div style="position: relative !important;" class="mx-auto mt-1">
     <img *ngIf="userDetails?.profilePicture else avatar"  style=" object-fit: cover; border-radius: 100% !important; width: 14.7rem; height: 14.7rem;"  [src]="userDetails?.profilePicture" class="rounded-circle p-4 m-auto" alt="...">
-    <p *ngIf="userDetails?.accountType == 'Advanced'" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:3rem; z-index: 99" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
-    <p *ngIf="userDetails?.accountType == 'Pro'" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:4.5rem; z-index: 99" class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
+    <p *ngIf="userDetails?.accountType" style=" border: 2px solid white; width: max-content; position: absolute; bottom:9px; left:0; right:0; z-index: 99" class="rounded-pill font-gro-bold text-dark bg-warning mb-2 my-auto text-light p-1 fs-7 px-3 mx-auto">{{userDetails?.accountType}} Plan</p>
 
   </div>
 
@@ -20,7 +19,7 @@
 
 
   <div class=" text-center position-relative" style="font-size: 1rem;  ">
-<span [routerLink]="['/user-trips']" class="position-relative btn btn-dark p-1 px-2 rounded  ">
+<span [routerLink]="['/user-trips']" class="position-relative font-gro-bold btn btn-dark p-1 px-3 rounded-2  ">
     {{ userDetails?.renterTrips.length ? userDetails?.renterTrips.length : 0 }} trips
     <span *ngIf="userDetails?.userTripDetails.ACTIVE > 0" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
           <span class="visually-hidden">New alerts</span>

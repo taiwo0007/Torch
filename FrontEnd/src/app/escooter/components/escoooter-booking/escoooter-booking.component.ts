@@ -46,6 +46,7 @@ export class EscoooterBookingComponent implements OnInit {
     PRO_DISCOUNT_RATE: number = 1;
     //mutable
     processingFee: number = 20;
+    isLoading: boolean = false;
 
     insuranceBeforeDiscount: number;
     isProDiscount: boolean = false;
@@ -98,7 +99,8 @@ export class EscoooterBookingComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadingService.isLoading.next(false);
+        this.isLoading = true;
+        this.loadingService.isLoading.next(true);
 
         this.route.queryParams.subscribe(paramValue => {
             this.tripDays = +paramValue['tripDays'];
@@ -131,7 +133,8 @@ export class EscoooterBookingComponent implements OnInit {
     initHostData() {
         this.hostService.getHostById(this.escooter.host).subscribe((data: Host) => {
                 this.insurance = data.insurance.cost;
-                this.loadingService.isLoading.next(false);
+                this.host = data;
+                this.loadingService.isLoading.next(true);
 
                 //get account type of currently logged-in user
                 this.authService.user.subscribe((user: any) => {
@@ -211,12 +214,14 @@ export class EscoooterBookingComponent implements OnInit {
     }
 
     createPaymentIntentFromApi() {
+        this.loadingService.isLoading.next(true);
 
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
                     console.log(paymentIntent)
                     this.elementsOptions.clientSecret = paymentIntent.clientSecret;
-
+                    this.loadingService.isLoading.next(false);
+                    this.isLoading= false
                 },
                 () => {
                     this.loadingService.isLoading.next(false);
@@ -246,9 +251,9 @@ export class EscoooterBookingComponent implements OnInit {
     }
 
     collectPayment() {
-        this.loadingService.isLoading.next(true);
+        this.loadingService.isLoadingLine.next(true);
 
-        if (this.paying) return;
+        // if (this.paying) return;
 
 
         this.tripCreateRequestPayload = {
@@ -274,25 +279,23 @@ export class EscoooterBookingComponent implements OnInit {
 
                 next: (result) => {
 
-                    console.log(result)
-                    this.paying = false;
+
                     if (result.error) {
+                        this.paying = false;
                         this.error = result.error
                     } else if (result.paymentIntent.status === 'succeeded') {
 
                         console.log(this.tripCreateRequestPayload)
 
                         this.tripService.createNewTrip(this.tripCreateRequestPayload).subscribe(((tripData: any) => {
-                            console.log(tripData.id);
-                            console.log(tripData);
-                            this.loadingService.isLoading.next(false);
-
+                            this.loadingService.isLoadingLine.next(false);
+                            this.paying = false;
                             this.router.navigate(['../trip-detail', tripData?.id], {queryParams: {success: true}})
                         }))
                     }
                 },
                 error: (err) => {
-                    this.loadingService.isLoading.next(false);
+                    this.loadingService.isLoadingLine.next(false);
 
                     this.paying = false;
 

@@ -603,7 +603,7 @@ isFiltering:boolean = false;
             this.isLoading = false;
             this.loadingService.isLoadingLine.next(false)
 
-        },1000 )
+        },500 )
         //init the map
         this.initMap();
         this.markerEventInit();

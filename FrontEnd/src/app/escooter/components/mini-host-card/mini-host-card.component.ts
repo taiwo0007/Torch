@@ -11,8 +11,8 @@ import {LoadingService} from "../../../shared/services/loading.service";
 })
 export class MiniHostCardComponent implements OnInit, AfterContentInit {
 
-  @Input() HostId;
-  host: Host;
+
+  @Input()  host: Host;
   hostObserver;
 
   @Output() onHostRetrieved:EventEmitter<Host> = new EventEmitter<Host>()
@@ -25,21 +25,8 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
   ngOnInit(): void {
 
 
-    console.log("this.hostId", this.HostId)
-
-      this.hostObserver = this.hostService.getHostById(this.HostId).subscribe((data:Host) => {
-
-        this.host = data;
-        this.onHostRetrieved.emit(data);
-        console.log("Api Host data",this.host)
 
 
-
-      }, ()=> {
-
-      }, () => {
-
-      })
 
 
 

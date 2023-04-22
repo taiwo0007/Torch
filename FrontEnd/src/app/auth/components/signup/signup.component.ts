@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
               private loadingService:LoadingService) { }
 
   ngOnInit(): void {
+    this.loadingService.isRemoveFooter.next(true);
 
     if(this.emailModelInput != ''){
       console.log("hello")
@@ -72,7 +73,7 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
     }
     this.error = null;
 
-    this.signupRequestPayload.email = signupForm.value.email;
+    this.signupRequestPayload.email = signupForm.value.email.trim();
     this.signupRequestPayload.password = signupForm.value.password;
     this.signupRequestPayload.lastName = signupForm.value.lastName;
     this.signupRequestPayload.firstName = signupForm.value.firstName;
@@ -88,10 +89,14 @@ export class SignupComponent implements OnInit, DoCheck, AfterViewInit {
         this.loadingService.isLoadingLine.next(false);
 
         this.error = error.error.message;
+        if(error.error.message){
+
+          this.emailInput.nativeElement.style.border = '2px solid red'
+
+        }
 
         this.loadingService.isError.next({message:this.error})
 
-        this.emailInput.nativeElement.style.border = '2px solid red'
         console.log(this.emailInput.nativeElement)
         console.log(error)
 

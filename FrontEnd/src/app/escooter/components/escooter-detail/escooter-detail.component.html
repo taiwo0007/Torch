@@ -1,4 +1,4 @@
-<div class="mx-auto custom-con" style="" *ngIf="!isLoading">
+<div class="mx-auto custom-con pb-5" style="" *ngIf="!isLoading">
     <section  class="header container mt-5 pt-5">
         <div class="row">
 
@@ -73,7 +73,7 @@
                 </div>
 
 <!--                mobile-->
-                <app-mini-host-card (onHostRetrieved)="setHostData($event)" *ngIf="escooter" [HostId]="escooter?.host"
+                <app-mini-host-card  *ngIf="host" [host]="host"
                                     class="show-mb"></app-mini-host-card>
                 <div *ngIf="!isLoading" class="p-4 border rounded mt-4 show-mb">
                     <p class="fw-bold">Insurance information</p>
@@ -169,7 +169,7 @@
                 </div>
             </div>
             <div class="col-4 ">
-                <app-mini-host-card *ngIf="escooter" [HostId]="escooter?.host" class="remove-mb"></app-mini-host-card>
+                <app-mini-host-card *ngIf="host" [host]="host" class="remove-mb"></app-mini-host-card>
 
                 <div  class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
 
@@ -198,3 +198,4 @@
     </section>
 
 </div>
+<div class="pb-5"></div>

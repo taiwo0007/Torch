@@ -4,22 +4,15 @@
             <div style="position: relative" class="col-xs-12 col-md-3 text-center">
                 <img style=" height: 15rem !important; width: 15rem !important; object-fit: cover; border-radius: 50% !important;"
                      [src]="host?.hostUser.profilePicture" alt="">
-                <p *ngIf="host?.hostUser?.accountType == 'Pro'"
-                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:23px; left:30%;"
-                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
+                <p *ngIf="host?.hostUser?.accountType"
+                   style=" border: 1.5px solid white; width: max-content; position: absolute; bottom:23px; left:0; right:0;"
+                   class="rounded-pill bg-warning mb-2 my-auto text-dark font-gro-bold p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
                     Plan</p>
-                <p *ngIf="host?.hostUser?.accountType == 'Advanced'"
-                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:23%;"
-                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
-                    Plan</p>
-                <p *ngIf="host?.hostUser?.accountType == 'Basic'"
-                   style=" border: 1px solid white; width: max-content; position: absolute; bottom:30px; left:23%;"
-                   class="rounded-pill bg-dark mb-2 my-auto text-light p-1 fs-7 px-4 mx-auto">{{host?.hostUser?.accountType}}
-                    Plan</p>
+
 
 
                 <div class=" fs-4 d-flex align-items-center my-auto text-center justify-content-center mt-2">
-                    <p class="text-center fw-bold align-self-center ms-1 p-0 m-0">{{host?.hostUser.rating ? (host?.hostUser.rating | number : '1.2-2') : 0 | number : '1.2-2'}} </p>
+                    <p class="text-center fw-bold align-self-center ms-2 p-0 m-0">{{host?.hostUser.rating ? (host?.hostUser.rating | number : '1.2-2') : 0 | number : '1.2-2'}} </p>
                     <i class="fa fa-star fs-6 align-self-center me-1 p-0 m-0 text-info ms-1" aria-hidden="true"></i>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
 import {LoadingService} from "../../../shared/services/loading.service";
 import {Host} from "../../../host/models/host.interface";
+import {HostService} from "../../../host/services/host.service";
 
 @Component({
     selector: 'app-escooter-detail',
@@ -32,7 +33,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     constructor(private escooterService: EscooterService,
                 private route: ActivatedRoute,
                 private authService: AuthService,
-                private router: Router, private loadService: LoadingService) {
+                private router: Router, private loadService: LoadingService,
+                private hostService:HostService) {
     }
 
     ngOnInit(): void {
@@ -48,11 +50,11 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
                 // this.isLoading = false;
                 this.escooter = escooterData;
+                this.setHostData()
                 this.configureMapOptions();
                 this.configureMarker();
                 this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i)
-                this.isLoading = false;
-                this.loadService.isLoading.next(false);
+
 
             }, error => {
                 // this.isLoading = false;
@@ -68,18 +70,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         console.log(this.ratingArray)
         this.authService.user.subscribe((data: boolean) => this.isAuthenticated = data)
 
-
-        this.escooterService.EscooterChangeEmitter.subscribe(() => {
-
-            this.escooterService.getEscooterById(this.paramId)
-                .subscribe(escooterData => {
-                    this.escooter = escooterData;
-
-
-                    this.ratingArray = Array(escooterData.rating).fill(0).map((x, i) => i)
-                })
-
-        })
     }
 
     ngAfterViewInit() {
@@ -121,14 +111,28 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     configureMarker() {
         console.log(+this.escooter?.longitude)
 
-
+        this.isLoading = false;
+        this.loadService.isLoading.next(false);
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
     }
 
-    setHostData(host: Host) {
 
 
-        this.host = host;
+    setHostData() {
+
+
+        this.hostService.getHostById(this.escooter.host).subscribe((data:Host) => {
+
+            this.host = data;
+            console.log("Api Host data",this.host)
+
+
+
+        }, ()=> {
+
+        }, () => {
+
+        })
 
 
 
