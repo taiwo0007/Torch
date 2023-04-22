@@ -71,8 +71,6 @@ Csrc/app/shared/components/alert-message/alert-message.component.css,d/4/d457e5
 Vsrc/app/shared/components/alert-message-container/alert-message-container.component.ts,a/1/a1a23c87257c7e050d78e4b254264b0b3ba4952b
 n
 >src/app/host/components/become-host/become-host.component.html,f/7/f79ec3a2c40b1de69aa30fe37abf7cb125e06f61
-d
-4src/app/shared/components/footer/footer.component.ts,3/e/3e54812535f2ca23186eae00cdf820e86b0a0fb9
 r
 Bsrc/app/escooter/components/review-form/review-form.component.html,7/3/7376c932b6786e8f92c31dbae2f5b5cd23f72a34
 h

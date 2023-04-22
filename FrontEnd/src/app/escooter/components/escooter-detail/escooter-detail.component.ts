@@ -2,7 +2,7 @@ import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core'
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
-import {delay, map, Subject} from "rxjs";
+import {delay, map, Subject, tap} from "rxjs";
 import {AuthService} from "../../../auth/services/auth.service";
 import {ImageModule} from 'primeng/image';
 import {LoadingService} from "../../../shared/services/loading.service";
@@ -48,6 +48,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
                 // this.isLoading = false;
                 this.escooter = escooterData;
+                this.loadService.isLoading.next(true)
+                this.isLoading = true;
                 this.setHostData()
                 this.configureMapOptions();
                 this.configureMarker();
@@ -104,6 +106,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     configureMarker() {
         console.log(+this.escooter?.longitude)
+        this.isLoading = false;
+        this.loadService.isLoading.next(false);
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
     }
 
@@ -111,20 +115,22 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     setHostData() {
 
-
-        this.hostService.getHostById(this.escooter.host).subscribe((data:Host) => {
-            this.loadService.isLoading.next(false)
-            this.isLoading = false;
+        this.loadService.isLoading.next(true)
+        this.isLoading = true;
+        this.hostService.getHostById(this.escooter.host)
+            .pipe(tap(()=> {
+                this.loadService.isLoading.next(true)
+                this.isLoading = true;
+            }))
+            .subscribe((data:Host) => {
 
             this.host = data;
             console.log("Api Host data",this.host)
 
-
-
+                this.loadService.isLoading.next(false)
+                this.isLoading = false;
 
         }, ()=> {
-            this.loadService.isLoading.next(false)
-            this.isLoading = false;
 
         }, () => {
 

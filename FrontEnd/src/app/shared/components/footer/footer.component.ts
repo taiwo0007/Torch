@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.router.events.subscribe(events => {
-      console.log(events)
+
       if(events instanceof NavigationStart){
         console.log(events.url)
         if(events.url.includes('/results') ){

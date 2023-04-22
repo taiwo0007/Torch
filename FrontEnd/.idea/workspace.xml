@@ -2,23 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Fix host card loading delay in escooter detail page, fixed trip insurance card displaying wrong time">
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-card/host-escooter-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/footer/footer.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/footer/footer.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/loading.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/services/loading.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,14 +145,8 @@
       <workItem from="1682112087077" duration="15023000" />
       <workItem from="1682163953216" duration="1184000" />
       <workItem from="1682166285069" duration="1485000" />
-      <workItem from="1682168724704" duration="7341000" />
-    </task>
-    <task id="LOCAL-00006" summary="updates">
-      <created>1679133741984</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1679133741984</updated>
+      <workItem from="1682168724704" duration="9669000" />
+      <workItem from="1682183401577" duration="629000" />
     </task>
     <task id="LOCAL-00007" summary="possible deps fix">
       <created>1679134412939</created>
@@ -497,7 +484,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682171613099</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Hot electric scooter page loading fixes and skeleton UI implementation">
+      <created>1682180553558</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1682180553558</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +499,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="header image add" />
     <MESSAGE value="Date moment bug fixes" />
     <MESSAGE value="Pyament form UI" />
     <MESSAGE value="dropdown ui" />
@@ -530,6 +523,7 @@
     <MESSAGE value="account type beside logo" />
     <MESSAGE value="Fix loading trip and booking animation timing" />
     <MESSAGE value="Fix host card loading delay in escooter detail page, fixed trip insurance card displaying wrong time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix host card loading delay in escooter detail page, fixed trip insurance card displaying wrong time" />
+    <MESSAGE value="Hot electric scooter page loading fixes and skeleton UI implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hot electric scooter page loading fixes and skeleton UI implementation" />
   </component>
 </project>

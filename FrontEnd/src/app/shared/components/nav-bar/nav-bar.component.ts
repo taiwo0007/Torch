@@ -69,7 +69,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
 this.isLoading = true;
         //remove navbar auth page
         this.router.events.subscribe(events => {
-            console.log(events)
+
             if(events instanceof NavigationStart){
                 if(events.url == '/signup' || events.url.startsWith('/login') ){
                     this.isAuthURL = true;
