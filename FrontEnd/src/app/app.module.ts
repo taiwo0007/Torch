@@ -190,7 +190,8 @@ import { FilterPipePipe } from './escooter/pipes/filter-pipe.pipe';
         BsDropdownModule,
         MatFormFieldModule,
         ReactiveFormsModule,
-        NgxStripeModule.forRoot('pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul'),
+        NgxStripeModule.forRoot(
+            'pk_test_51M5pMwBapNSScoYvl9KdhcEEvyCUp41XXVqqzOKxQo7XAzXlm42PnZQIOvnshRre0hYUIpzEk22qz2i4gEfODZkI00AjRfjVul'),
         MatInputModule,
         MatToolbarModule,
         MatCardModule,

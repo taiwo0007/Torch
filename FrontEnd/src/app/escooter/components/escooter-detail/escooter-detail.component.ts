@@ -42,9 +42,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.isLoading = true;
         this.route.params.subscribe(params => {
             this.paramId = params['id'];
-
         })
-
 
         // this.isLoading = true;
         this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
@@ -55,16 +53,13 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
                 this.configureMarker();
                 this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i)
 
-
             }, error => {
                 // this.isLoading = false;
                 this.isLoading = false;
                 this.loadService.isLoading.next(false);
-
                 this.router.navigate(['/error'])
             },
             () => {
-
 
             })
         console.log(this.ratingArray)
@@ -73,7 +68,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     }
 
     ngAfterViewInit() {
-
     }
 
     ngAfterContentInit() {
@@ -110,7 +104,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     configureMarker() {
         console.log(+this.escooter?.longitude)
-
         this.isLoading = false;
         this.loadService.isLoading.next(false);
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}

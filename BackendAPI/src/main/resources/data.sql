@@ -1,4 +1,4 @@
--- use torchdb;
+--  use torchdb;
 -- use freedb_torchdb;
 DELETE FROM host_review;
 
@@ -116,7 +116,7 @@ VALUES ('Advanced',-6.308530354714592,53.358888300000004, 'ireland', true,'Dalym
         ','2000-01-01',10,
         '00167646@mytudublin.ie', '$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm', 'Tori', 'Cardon',
         'https://images.pexels.com/photos/3768689/pexels-photo-3768689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 444, true, 843568932);
---
+
 
 
 -- INSERT INTO user (country, is_verified, id, email, password, first_name, last_name, host_id, profile_picture, phone_number, is_host) VALUES ("Ireland", true, 9, "taiwo.obadareee@gmail.com", "$2a$10$Gr.nVo2F4RAjUDNyHO86T.PxaUVhBcrz/Dx6bQiFb122mBqDAI1Gm", "Taiwo", "Obadre", 920386034, "/images/uploads/profile.jpg", 08764532, true);
@@ -702,6 +702,7 @@ INSERT INTO scooter_review(id, comment, review_date, star_rating, scooter_id, sc
 VALUES (182,
         "Always a pleasant experience with Tung Sang Tran! Repeat customer, will use again",
         '2023-01-11', 4, 15, 7777);
+
 
 
 

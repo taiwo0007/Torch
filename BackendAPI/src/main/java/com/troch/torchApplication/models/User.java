@@ -88,10 +88,10 @@ public class User {
 //    @JsonIgnore
     List<HostReview> hostReviews = new ArrayList<>();
 
-    @Column(columnDefinition = "double 1.0")
+
     private Double longitude = 1.9;
 
-    @Column(columnDefinition = "double 1.0")
+
     private Double latitude = 1.9;
 
     @OneToMany(mappedBy = "scooter_reviewer", cascade = CascadeType.ALL)
