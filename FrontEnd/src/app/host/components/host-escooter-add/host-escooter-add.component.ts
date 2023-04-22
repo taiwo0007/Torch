@@ -10,6 +10,7 @@ import {UserService} from "../../../user/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoadingService} from "../../../shared/services/loading.service";
 import {ToastrService} from "ngx-toastr";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-host-escooter-add',
@@ -31,6 +32,7 @@ export class HostEscooterAddComponent implements OnInit{
   isGooglePlaceSelected:boolean = false;
   googlePlaceLocation:any;
   imageFileType:String;
+  isMakeLoading = false;
   base64textString = [];
   isLoading: boolean = false;
   scooterAddRequestPayload:ScooterAddRequestPayload | undefined = {
@@ -134,6 +136,7 @@ export class HostEscooterAddComponent implements OnInit{
   }
 
   ngOnInit() {
+      this.isMakeLoading = true;
     this.setHostAddedAlert();
     this.getAllMakes();
 
@@ -141,10 +144,15 @@ export class HostEscooterAddComponent implements OnInit{
   }
 
   getAllMakes(){
-    this.hostService.fetchAllMakes().subscribe(makesData => {
+    this.hostService.fetchAllMakes()
+        .subscribe(makesData => {
       console.log(makesData);
       this.makes = makesData;
-    })
+        this.isMakeLoading = false;
+    },
+        ()=> {
+            this.isMakeLoading = false;
+        })
   }
 
   handleAddressChange(locationData: Address) {

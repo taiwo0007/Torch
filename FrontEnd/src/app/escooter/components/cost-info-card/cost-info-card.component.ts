@@ -20,6 +20,7 @@ export class CostInfoCardComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log("When is it coming thorugh?")
 
     console.log(this.discountObj)
   }

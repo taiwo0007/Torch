@@ -34,7 +34,7 @@ export class LoadScreenComponent implements AfterViewInit{
 
     setTimeout(()=> {
       this.isLongLoad = true
-    }, 4000)
+    }, 5000)
 
 
     // @ts-ignore

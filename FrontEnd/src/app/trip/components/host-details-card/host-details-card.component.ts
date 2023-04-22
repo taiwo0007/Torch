@@ -10,32 +10,18 @@ import {Escooter} from "../../../escooter/models/escooter.interface";
 })
 export class HostDetailsCardComponent implements OnInit {
 
-  @Input() hostId:any;
+  @Input() host:Host;
   @Input() escooter:Escooter;
   @Output() onHostInit: EventEmitter<Host> = new EventEmitter<Host>();
-  host: Host;
+
 
   constructor(private hostService:HostService) { }
 
   ngOnInit(): void {
 
-    console.log("Data")
-    console.log(this.hostId);
-    console.log(this.escooter);
-
-
-    this.getHostData();
   }
 
 
-  getHostData(){
-    console.log("a")
-    this.hostService.getHostById(this.hostId).subscribe((hostData:any) => {
 
-      this.host = hostData;
-      this.onHostInit.emit(hostData);
-
-    })
-  }
 
 }

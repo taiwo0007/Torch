@@ -100,13 +100,13 @@
 
                             <div class="row mx-auto">
                                 <div class="col-md-7 col-sm-12">
-                                    <host-details-card (onHostInit)="setInsuranceData($event)"  *ngIf="trip.trip_owner" [escooter]="trip.eScooterOnTrip"
-                                                       [hostId]="trip.trip_owner"></host-details-card>
+                                    <host-details-card  *ngIf="host" [escooter]="trip.eScooterOnTrip"
+                                                       [host]="host"></host-details-card>
                                 </div>
                                 <div class="col-md-5 mx-auto col-sm-12">
                                     <div class="row pt-5 mx-auto border-top mt-4">
                                         <div style="padding: 0 !important;" class="card mx-auto">
-                                            <div class="card-img-top mx-auto" style="height: 19rem" id="map"></div>
+                                            <div #map class="card-img-top mx-auto" style="height: 19rem" id="map"></div>
                                             <div class="card-body">
                                                 <p class="text-info text-center fw-bold mb-1"> Pickup Location</p>
                                             </div>

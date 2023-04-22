@@ -7,8 +7,8 @@
         <div style="" class="mb-3 d-flex justify-content-between ">
             <div style="width: 47% !important;">
                 <label class="form-label fw-bold">Make</label>
-
-                <select required ngModel name="make" class="form-select form-select-md mb-3" aria-label=".form-select-md example" th:field="*{make}">
+                <ngx-skeleton-loader *ngIf="isMakeLoading" class=" mb-3 " [theme]="{height: '50%', width: '100%'}"></ngx-skeleton-loader>
+                <select *ngIf="!isMakeLoading" required ngModel name="make" class="form-select form-select-md mb-3" aria-label=".form-select-md example" th:field="*{make}">
                     <option *ngFor="let thisMake of makes" [value]="thisMake.name">{{thisMake.name}}
                     </option>
                 </select>
@@ -22,7 +22,7 @@
         <div style="" class="mb-3 d-flex justify-content-between ">
             <div style="width: 47% !important;">
                 <label for="cost" class="form-label fw-bold">Cost per day €:</label>
-                <input ngModel required th:field="*{cost}" pattern="^[1-9]+[0-9]*$" name="cost" type="number" min="0.00" max="10000.00" step="0.01" class="form-control" id="cost" />
+                <input ngModel required  name="cost" type="number"  class="form-control" id="cost" />
             </div>
             <div style="width: 47% !important;">
                 <label for="maxSpeed" class="form-label fw-bold">Max Speed (mp/h):</label>

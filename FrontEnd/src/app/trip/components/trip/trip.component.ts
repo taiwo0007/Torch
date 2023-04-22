@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {
+    AfterContentInit,
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    ViewChild
+} from '@angular/core';
 import {ActivatedRoute, Event, Router} from "@angular/router";
 import {TripService} from "../../services/trip.service";
 import {Trip} from "../../models/trip";
@@ -21,11 +30,12 @@ import {MatDialog} from "@angular/material/dialog";
     templateUrl: './trip.component.html',
     styleUrls: ['./trip.component.css']
 })
-export class TripComponent implements OnInit, AfterViewInit {
+export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges {
+    @ViewChild('map', {static: false}) theMap: any;
     isNewlyBooked = false;
     tripId: number;
     trip: Trip;
-    host:Host;
+    host: Host;
     initialCost: number;
     vatCost: number;
     totalCost: number;
@@ -53,34 +63,27 @@ export class TripComponent implements OnInit, AfterViewInit {
                 private loadingService: LoadingService,
                 private toastr: ToastrService,
                 private hostService: HostService,
-                private authService:AuthService) {
+                private authService: AuthService) {
     }
 
-    setInsuranceData(host:Host){
 
-        this.host = host;
-        this.insurance = host.insurance.cost;
-        this.preTripCostCalculateForAccountTypes()
+    preTripCostCalculateForAccountTypes() {
 
-    }
+        this.authService.user.subscribe((user: any) => {
 
-    preTripCostCalculateForAccountTypes(){
-
-        this.authService.user.subscribe((user:any) => {
-
-            if(user._accountType){
+            if (user._accountType) {
                 this.processingFee = 0;
 
                 let discountRate;
-             if (user._accountType === 'Advanced'){
-                 discountRate = this.ADVANCED_DISCOUNT_RATE;
+                if (user._accountType === 'Advanced') {
+                    discountRate = this.ADVANCED_DISCOUNT_RATE;
 
-             }else if (user._accountType === 'Pro'){
-                 discountRate = this.PRO_DISCOUNT_RATE;
+                } else if (user._accountType === 'Pro') {
+                    discountRate = this.PRO_DISCOUNT_RATE;
 
-             } else {
-                 discountRate = this.BASIC_DISCOUNT_RATE;
-             }
+                } else {
+                    discountRate = this.BASIC_DISCOUNT_RATE;
+                }
 
                 this.discountObject = {
                     insuranceDiscount: this.insurance - (this.insurance * discountRate),
@@ -90,12 +93,13 @@ export class TripComponent implements OnInit, AfterViewInit {
 
                 this.insurance = this.insurance - (this.insurance * discountRate);
                 console.log("Advanced Insurance: " + this.insurance)
-            }
 
+            }
+            this.loadingService.isLoading.next(false)
+            this.isLoading = false;
             this.calculateTripCost()
         })
     }
-
 
 
     ngOnInit(): void {
@@ -156,8 +160,20 @@ export class TripComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log(this.trip)
+
     }
+
+    ngAfterContentInit() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+
+
+            console.log("The map: " + this.theMap)
+
+
+    }
+
 
     intialiseSuccessStatus(): void {
         this.route.queryParams.subscribe((queryParams) => {
@@ -183,6 +199,21 @@ export class TripComponent implements OnInit, AfterViewInit {
         })
     }
 
+    getHostData(hostId: number) {
+        console.log("aaaaaaaaaa")
+        this.hostService.getHostById(hostId).subscribe((hostData: any) => {
+            this.insurance = hostData.insurance.cost;
+            this.host = hostData;
+
+            console.log("The host " + this.host)
+            console.log("The insurncae " + this.insurance)
+
+            this.preTripCostCalculateForAccountTypes()
+
+
+        })
+    }
+
     fetchTripDetails(id: number) {
         this.isLoading = true;
         console.log("loading service placeholder")
@@ -191,19 +222,16 @@ export class TripComponent implements OnInit, AfterViewInit {
         this.tripService.fetchTripDetailsFromApi(id).subscribe((tripData: any) => {
                 this.tripEndFormattedDate = new Date(tripData.tripEnd);
                 this.trip = tripData;
-                this.loadingService.isLoading.next(false)
-                this.isLoading = false;
 
-                console.log(this.trip.eScooterOnTrip)
+                console.log(this.trip)
+                this.getHostData(tripData.trip_owner)
 
-                setTimeout(() => {
 
-                    this.initMap(this.trip.eScooterOnTrip.latitude, this.trip.eScooterOnTrip.longitude)
-                }, 1000)
             },
             () => {
                 this.loadingService.isLoading.next(false)
-                this.isLoading = false
+                this.isLoading = false;
+                this.router.navigate(['/error'])
 
             })
 
@@ -215,9 +243,15 @@ export class TripComponent implements OnInit, AfterViewInit {
         this.initialCost = this.trip.days * this.trip.eScooterOnTrip.cost;
         this.vatCost = this.initialCost * 0.20;
         this.totalCost = this.initialCost + this.processingFee + this.vatCost + this.insurance;
+        this.isLoading = false;
+
+        setTimeout(()=> this.initMap(this.trip.eScooterOnTrip.latitude, this.trip.eScooterOnTrip.longitude) ,500)
+
+
+
     }
 
-    initMap(lat:number, lng:number) {
+    initMap(lat: number, lng: number) {
         const location = {lat: lat, lng: lng}
         const options = {
 

@@ -1,6 +1,4 @@
 
-x
-Hsrc/app/trip/components/host-details-card/host-details-card.component.ts,f/0/f0baac2e723cbd94345a83e74be84f1dde7b9564
 Q
 !src/app/user/models/user.model.ts,9/a/9a77c8eb4c5cb82686760ba920e72bd2457fcb5b
 ]
@@ -11,10 +9,6 @@ w
 Gsrc/app/escooter/components/cost-info-card/cost-info-card.component.css,a/e/ae2cae88ee574c9be01e1a07c6bd0a9d9017c9b0
 ]
 -src/app/escooter/models/discount.interface.ts,2/f/2f60a669ee4e3e8a66988961b0189c721a8a45e7
-v
-Fsrc/app/escooter/components/cost-info-card/cost-info-card.component.ts,3/4/34205e41e7f9c547b62c91a6023cbc9a30d5f780
-`
-0src/app/trip/components/trip/trip.component.html,9/1/91339762dcb89f971449617e29067e484e9ee5ee
 r
 Bsrc/app/trip/components/trip-completed/trip-completed.component.ts,a/f/afb3d962b58e8cbe1cd519a2484f17d2f6c9b01a
 l
@@ -35,8 +29,6 @@ r
 Bsrc/app/escooter/components/reviews-list/reviews-list.component.ts,0/3/035fa4101cfabc8b680770027c31611e13f7628a
 t
 Dsrc/app/escooter/components/reviews-list/reviews-list.component.html,4/c/4c6c48de65298cbb70f7836592374598ab702415
-x
-Hsrc/app/escooter/components/cost-info-card/cost-info-card.component.html,6/a/6a09a297a79e9d8d783e1b613cc7a12578f838a7
 p
 @src/app/auth/components/verify-email/verify-email.component.html,a/b/ab83f689dba626c75cfb4cc12d1caea3be877596
 n
@@ -53,8 +45,6 @@ n
 Psrc/app/shared/components/torch-trusted-badge/torch-trusted-badge.component.html,f/6/f65c09eb3ee0e238219410615d55e92241ab6a07
 ~
 Nsrc/app/shared/components/are-you-sure-dialog/are-you-sure-dialog.component.ts,d/5/d5d7c48783ec5a8002abef1a601fb0563397ce25
-^
-.src/app/trip/components/trip/trip.component.ts,6/1/61edfb4cb3012de7809daa87103648005758c2bf
 p
 @src/app/auth/components/verification/verification.component.html,f/c/fcd8618721df7b6af5416b5ace3f40fcd4e7b5f4
 t
@@ -141,8 +131,6 @@ Tsrc/app/trip/components/trip-host-stats-header/trip-host-stats-header.component
 Ksrc/app/escooter/components/escooter-ad-card/escooter-ad-card.component.css,c/7/c70f287d51b3a5737acc481dff9bb3e473b48c33
 h
 8src/app/host/components/ad-modal/ad-modal.component.html,7/0/706c4083389718af875f981a28515af8d5479a3a
-z
-Jsrc/app/host/components/host-escooter-card/host-escooter-card.component.ts,a/3/a3d4bebba840165defc35b8902d9943b59e95412
 |
 Lsrc/app/host/components/host-escooter-card/host-escooter-card.component.html,b/7/b79ecffa09f4e0f0482600031a779c634f07ac2d
 r
@@ -205,8 +193,6 @@ f
 6src/app/shared/components/nav-bar/nav-bar.component.ts,e/d/edceeabfb163facbb12d6f702672851a405c9858
 o
 ?src/app/shared/components/load-screen/load-screen.component.css,e/7/e7efd1a0aca661a984af77707299f0e23ab019a0
-n
->src/app/shared/components/load-screen/load-screen.component.ts,5/1/5149283f9ffb088c70248e3f860faac8becc1f96
 o
 ?src/app/user/components/user-profile/user-profile.component.css,1/a/1a1f3455d718f708813517bfa72144f8bc30d035
 d
@@ -221,8 +207,6 @@ b
 2src/app/auth/components/login/login.component.html,0/1/01f8b8fd3bd630e26a4eddcaddb7a6614cc4cf18
 €
 Psrc/app/user/components/profile-details-card/profile-details-card.component.html,b/e/be49b469c52cd10ad6655dde0a7ae9120eea4ca4
-z
-Jsrc/app/escooter/components/escooter-results/escooter-results.component.ts,b/f/bfe38a13f2660ff8a73b0ac029159b09fa3b61f2
 p
 @src/app/host/components/host-profile/host-profile.component.html,e/f/ef36ac572b1c7d21bddc2d8938648ef79a436924
 b
@@ -233,3 +217,9 @@ g
 7src/app/shared/components/nav-bar/nav-bar.component.css,c/f/cffde892d1236b776b2b21b27d247251d5d2df47
 h
 8src/app/shared/components/nav-bar/nav-bar.component.html,8/f/8f720f710b6267cae06bf2013346c20d8b736efe
+|
+Lsrc/app/escooter/components/escoooter-booking/escoooter-booking.component.ts,f/0/f0c0796ae88350c3796a4339ea570547fab84f90
+E
+src/app/app.module.ts,0/2/02c004b4329a0d99c45abb61a30dadfde61ecf5d
+~
+Nsrc/app/escooter/components/escoooter-booking/escoooter-booking.component.html,0/b/0b442eba448aeb4c1c06c2a6586b773ccd783d66

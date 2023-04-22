@@ -104,8 +104,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     configureMarker() {
         console.log(+this.escooter?.longitude)
-        this.isLoading = false;
-        this.loadService.isLoading.next(false);
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
     }
 
@@ -115,13 +113,18 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
 
         this.hostService.getHostById(this.escooter.host).subscribe((data:Host) => {
+            this.loadService.isLoading.next(false)
+            this.isLoading = false;
 
             this.host = data;
             console.log("Api Host data",this.host)
 
 
 
+
         }, ()=> {
+            this.loadService.isLoading.next(false)
+            this.isLoading = false;
 
         }, () => {
 

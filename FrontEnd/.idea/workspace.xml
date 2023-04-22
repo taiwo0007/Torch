@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/c/4/c4870c0b22b9b76c140e57de3497299b681e51a1" beforeDir="false" />
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Fix host l">
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/8/8/88a9255124c95bdc913197c120a8d560edc59c8e" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/9/f/9fe84ebb15faf917b7def6236dba604453cc61e0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/c/4/c4870c0b22b9b76c140e57de3497299b681e51a1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/models/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/3/4/34205e41e7f9c547b62c91a6023cbc9a30d5f780" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/a/6a09a297a79e9d8d783e1b613cc7a12578f838a7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/1/91339762dcb89f971449617e29067e484e9ee5ee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/0/f0baac2e723cbd94345a83e74be84f1dde7b9564" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/3/4/34205e41e7f9c547b62c91a6023cbc9a30d5f780" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/a/6a09a297a79e9d8d783e1b613cc7a12578f838a7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/1/91339762dcb89f971449617e29067e484e9ee5ee" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/0/f0baac2e723cbd94345a83e74be84f1dde7b9564" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/cost-info-card/cost-info-card.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooter-add/host-escooter-add.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/load-screen/load-screen.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/host-details-card/host-details-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/host-details-card/host-details-card.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +162,8 @@
       <workItem from="1682093917050" duration="14422000" />
       <workItem from="1682112087077" duration="15023000" />
       <workItem from="1682163953216" duration="1184000" />
-      <workItem from="1682166285069" duration="1210000" />
+      <workItem from="1682166285069" duration="1485000" />
+      <workItem from="1682168724704" duration="2626000" />
     </task>
     <task id="LOCAL-00005" summary="More plan ui fixes">
       <created>1679133409875</created>
