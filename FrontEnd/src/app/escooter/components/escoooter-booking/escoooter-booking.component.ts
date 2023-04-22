@@ -46,14 +46,14 @@ export class EscoooterBookingComponent implements OnInit {
     PRO_DISCOUNT_RATE: number = 1;
     //mutable
     processingFee: number = 20;
-    isLoading: boolean = false;
+    isLoading: boolean;
 
     insuranceBeforeDiscount: number;
     isProDiscount: boolean = false;
     isAdvancedDiscount: boolean = false;
     isBasicDiscount: boolean = false;
     tripEnd: Date;
-
+    isButtonShow: boolean;
     tripCreateRequestPayload: TripCreateRequestPayload
 
     checkoutForm = this.fb.group({
@@ -130,11 +130,14 @@ export class EscoooterBookingComponent implements OnInit {
 
 //get host related data for insurance information
 //we need this data for calculating insurance data
+
     initHostData() {
+
         this.hostService.getHostById(this.escooter.host).subscribe((data: Host) => {
                 this.insurance = data.insurance.cost;
                 this.host = data;
-                this.loadingService.isLoading.next(true);
+
+
 
                 //get account type of currently logged-in user
                 this.authService.user.subscribe((user: any) => {
@@ -197,7 +200,6 @@ export class EscoooterBookingComponent implements OnInit {
                 })
 
             }, () => {
-                this.loadingService.isLoading.next(false);
 
             },
             () => {
@@ -214,17 +216,22 @@ export class EscoooterBookingComponent implements OnInit {
     }
 
     createPaymentIntentFromApi() {
-        this.loadingService.isLoading.next(true);
-
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
                     console.log(paymentIntent)
+
                     this.elementsOptions.clientSecret = paymentIntent.clientSecret;
-                    this.loadingService.isLoading.next(false);
-                    this.isLoading= false
+                    this.isLoading = false;
+                    this.loadingService.isLoading.next(false)
+
                 },
                 () => {
-                    this.loadingService.isLoading.next(false);
+
+                }, ()=> {
+
+
+
+
 
                 });
     }
@@ -239,6 +246,8 @@ export class EscoooterBookingComponent implements OnInit {
         console.log(this.vatCost)
         console.log(this.totalCost)
         console.log(this.initialCost)
+
+
     }
 
     private createPaymentIntent(amount: number): Observable<any> {
@@ -251,7 +260,6 @@ export class EscoooterBookingComponent implements OnInit {
     }
 
     collectPayment() {
-        this.loadingService.isLoadingLine.next(true);
 
         // if (this.paying) return;
 
@@ -295,7 +303,6 @@ export class EscoooterBookingComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    this.loadingService.isLoadingLine.next(false);
 
                     this.paying = false;
 

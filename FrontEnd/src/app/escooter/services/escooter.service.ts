@@ -57,7 +57,6 @@ export class EscooterService implements OnDestroy{
                 return dateB.getTime() - dateA.getTime();
             })
 
-            console.log(escoterData.escooterReviews)
             return escoterData
         }))
     }

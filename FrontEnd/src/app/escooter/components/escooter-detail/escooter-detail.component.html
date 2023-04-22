@@ -169,7 +169,24 @@
                 </div>
             </div>
             <div class="col-4 ">
+
                 <app-mini-host-card *ngIf="host" [host]="host" class="remove-mb"></app-mini-host-card>
+                <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!host">
+                    <ngx-skeleton-loader appearance="line" [theme]="{height: '1.5rem', width: '10rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+
+                    <div class="d-flex align-items-center">
+                        <ngx-skeleton-loader [theme]="{width: '6rem', height: '6rem'}" appearance="circle"></ngx-skeleton-loader>
+                        <div class="p-2">
+                            <ngx-skeleton-loader appearance="line" [theme]="{height: '1.5rem', width: '6rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                            <div class="d-flex">
+                                <ngx-skeleton-loader appearance="line" [theme]="{height: '1.6rem', width: '7rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader appearance="line" [theme]="{height: '1.6rem', width: '5rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
                 <div  class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
 
@@ -179,7 +196,13 @@
 
                 <div *ngIf="!isLoading" class="p-4 border rounded mt-4 remove-mb font-gro-bold">
                     <p class="fw-bold font-gro-bold">Insurance information</p>
-                    <p class="">Insured under <span class="text-info font-gro-bold">{{host?.insurance.name}}</span></p>
+                    <p class="my-auto" >
+                        <span *ngIf="host">Insured under</span>
+
+                        <span *ngIf="!host" class="my-auto mt-1"><ngx-skeleton-loader style="margin: 0 !important;" class="my-auto p-0 m-0" appearance="line" [theme]="{height: '1.2rem', width: '14rem', borderRadius: '5rem',  margin: '0'}"></ngx-skeleton-loader></span>
+
+                        <span class="text-info font-gro-bold">
+                        {{host?.insurance.name}}</span></p>
                 </div>
             </div>
             <div class="col-sm-12 mb-5">
