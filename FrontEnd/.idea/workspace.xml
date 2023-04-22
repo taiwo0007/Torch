@@ -4,15 +4,6 @@
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="remove delay">
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escoooter-booking/escoooter-booking.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/services/loading.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/services/loading.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,14 +139,7 @@
       <workItem from="1682166285069" duration="1485000" />
       <workItem from="1682168724704" duration="9669000" />
       <workItem from="1682183401577" duration="1195000" />
-      <workItem from="1682198145175" duration="4125000" />
-    </task>
-    <task id="LOCAL-00009" summary="added badge plan to user profile">
-      <created>1679137264775</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1679137264775</updated>
+      <workItem from="1682198145175" duration="4659000" />
     </task>
     <task id="LOCAL-00010" summary="Loading animation on escooter detail">
       <created>1679141794752</created>
@@ -493,7 +477,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682198334986</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Remove delay, rounded loading cards for host and results page">
+      <created>1682202554955</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1682202554955</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +492,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="dropdown ui" />
     <MESSAGE value="Verif page redesign and email fixes" />
     <MESSAGE value="Implemented formulae in trip location that searches withing a given radius and returns scooter withing said location with input date" />
     <MESSAGE value="Host profile UI AND Escooter detail UI" />
@@ -526,6 +516,7 @@
     <MESSAGE value="Hot electric scooter page loading fixes and skeleton UI implementation" />
     <MESSAGE value="Temp escooter detail page fix" />
     <MESSAGE value="remove delay" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove delay" />
+    <MESSAGE value="Remove delay, rounded loading cards for host and results page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove delay, rounded loading cards for host and results page" />
   </component>
 </project>
