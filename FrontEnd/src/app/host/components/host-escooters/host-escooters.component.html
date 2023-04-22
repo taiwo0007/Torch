@@ -2,7 +2,95 @@
 
     <div style=" overflow-x: hidden; !important"  class="row ">
 
-        <div *ngIf="hostEscooters" class="col-12">
+
+        <div *ngIf="isLoading" class="col-12 mt-1 border p-4 rounded-3">
+        <div class="row mx-auto mt-3">
+    <ngx-skeleton-loader class="rounded-5 mb-3" [theme]="{height: '4rem', width: '25vw'}"></ngx-skeleton-loader>
+
+    <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1 mb-1">
+                <div class="mx-auto rounded" style="width: 100%" >
+                    <ngx-skeleton-loader class="rounded-3" [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+                </div>
+
+            </div>
+    <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1 mb-1">
+        <div class="mx-auto rounded" style="width: 100%" >
+            <ngx-skeleton-loader class="rounded-3" [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+        </div>
+
+    </div>
+    <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1 mb-1">
+        <div class="mx-auto rounded" style="width: 100%" >
+            <ngx-skeleton-loader class="rounded-3" [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+        </div>
+
+    </div>
+    <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1 mb-1">
+        <div class="mx-auto rounded" style="width: 100%" >
+            <ngx-skeleton-loader class="rounded-3" [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+            <br>
+            <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+        </div>
+
+    </div>
+            <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1  mb-1">
+                <div class="mx-auto" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+                </div>
+
+            </div>
+            <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1  mb-1">
+                <div class="mx-auto" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+                </div>
+
+            </div>
+            <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1  mb-1">
+                <div class="mx-auto" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+                </div>
+
+            </div>
+            <div class=" mx-auto pb-3 col-xs-12 col-sm-12 col-md-3 my-5 text-dark  mt-1  mb-1">
+                <div class="mx-auto" style="width: 100%" >
+                    <ngx-skeleton-loader [theme]="{height: '24rem', width: '21vw'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '15rem'}"></ngx-skeleton-loader>
+                    <br>
+                    <ngx-skeleton-loader [theme]="{width: '5rem'}"></ngx-skeleton-loader>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+        <div *ngIf="hostEscooters && !isLoading" class="col-12">
 
             <div class="container card mt-3"
                  style=" background-color: white; margin: auto !important;">
@@ -11,13 +99,12 @@
                         <div *ngIf="hostEscooters.length == 0"> </div>
                         <h2 class="fw-bold " *ngIf="hostEscooters.length > 0"> {{isScooterOwner ?  'Your' : "Host's" }} Electric Scooters </h2>
                        <div class="d-flex ">
-                            <a *ngIf="isScooterOwner" (click)="toggleShow()"   class="d-flex rounded-button rounded-circle justify-content-center align-items-center btn btn-dark ">
+                            <a *ngIf="isScooterOwner" (click)="toggleShow()"   class="d-flex text-dark rounded-button rounded-circle justify-content-center align-items-center btn btn-warning ">
                                 <mat-icon *ngIf="!isImgRemove">visibility</mat-icon>
                                 <mat-icon *ngIf="isImgRemove">visibility_off</mat-icon>
                             </a>
                             <a *ngIf="isScooterOwner" [routerLink]="['/add-escooter']"
                                class="rounded-button ms-2 btn btn-dark rounded-4 btn-lg fw-bold">+ Add Escooter</a>
-
                         </div>
                     </div>
                     <div *ngIf="hostEscooters.length == 0" class=" w-100 mx-auto text-center">

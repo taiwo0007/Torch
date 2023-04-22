@@ -27,7 +27,7 @@
 <ng-template #hostEditLink>
     <div class="scooter-card rounded-4 shadow card mx-auto" style="position:relative; overflow: hidden">
         <button *ngIf="!isAdRunning" (click)="onAddClick()" style="position:absolute; z-index: 1; right: 0;" class="btn btn-warning rounded-3 fw-bold">+ Run ad </button>
-        <button *ngIf="isAdRunning" style="position:absolute; z-index: 1; right: 0; cursor: initial !important; display: flex; align-items: center; justify-content: center" class="btn btn-success rounded-3 fw-bold">
+        <button *ngIf="isAdRunning" style="position:absolute; z-index: 1; right: 0; cursor: initial !important; display: flex; align-items: center; justify-content: center" class="btn btn-dark rounded-3 fw-bold">
             Ad is Live
             <div class="recording-circle ms-2"></div>
         </button>

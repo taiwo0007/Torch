@@ -66,7 +66,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+this.isLoading = true;
         //remove navbar auth page
         this.router.events.subscribe(events => {
             console.log(events)
@@ -122,6 +122,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
             console.table(data)
 
             this.userService.fetchUserDetails().subscribe((userData: UserData) => {
+                this.isLoading = false
                 this.profileImage = userData.profilePicture;
             })
 
