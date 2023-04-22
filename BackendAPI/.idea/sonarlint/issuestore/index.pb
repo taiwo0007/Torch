@@ -43,8 +43,6 @@ v
 Fsrc/main/java/com/troch/torchApplication/services/EScooterService.java,e/0/e0415bc13f4f98b7f86616f4e90bbf672e71138d
 ?
 cloudbuild.yaml,2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7
-{
-Ksrc/main/java/com/troch/torchApplication/controllers/PaymentController.java,2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8
 r
 Bsrc/main/java/com/troch/torchApplication/services/AuthService.java,e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319
 K

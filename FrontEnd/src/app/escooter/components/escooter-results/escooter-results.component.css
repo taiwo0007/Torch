@@ -5,15 +5,25 @@
     --warehouse-color: #558B2F;
 }
 
-.filter-scroll{
-    overflow-y: hidden;
-    transition: 1.5s ease-in-outa;
-
-}
-
-.filter-scroll:hover{
+.filter-scroll {
+    /* Add the following styles */
     overflow-y: scroll;
 }
+
+.filter-scroll::-webkit-scrollbar{
+    width: 5px !important;
+}
+
+/*.filter-scroll::-webkit-scrollbar-thumb{*/
+/*    background-color: rgba(0, 0, 0, 0.25);*/
+/*    border-radius: 20px;*/
+/*}*/
+
+/*.filter-scroll::-webkit-scrollbar-track{*/
+/*    background-color: rgba(0, 0, 0, 0.1);*/
+/*    border-radius: 20px;*/
+/*}*/
+
 
 
 

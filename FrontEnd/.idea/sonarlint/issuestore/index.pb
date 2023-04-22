@@ -81,8 +81,6 @@ _
 /src/app/escooter/pipes/filter-pipe.pipe.spec.ts,6/1/6161135d3652b428b93c5e0935963e6c0aba13fd
 t
 Dsrc/app/escooter/components/escooter-card/escooter-card.component.ts,4/8/4864be9d6a588af80abf8d3c7c4133cad84c38b4
-{
-Ksrc/app/escooter/components/escooter-results/escooter-results.component.css,6/1/61eff4b0e48c5cd611f57bf51c2a18b0e35c1aaa
 y
 Isrc/app/escooter/components/escooter-detail/escooter-detail.component.css,4/5/45c0b02400201e38538abda4293189331792c552
 y
