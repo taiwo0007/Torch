@@ -1,8 +1,6 @@
 
 t
 Dsrc/main/java/com/troch/torchApplication/services/StripeService.java,0/2/0247b479295f7456251b3e6b7854cb80452f48a4
-r
-Bsrc/main/java/com/troch/torchApplication/services/TripService.java,2/4/24ae71116bfa082e3c4aca494ea8640295e131e2
 v
 Fsrc/test/java/com/troch/torchApplication/services/HostServiceTest.java,b/2/b2397f47255e0ec5787810043287b77f3f39396f
 z
@@ -33,14 +31,10 @@ i
 9src/main/java/com/troch/torchApplication/models/Host.java,a/8/a8a58233db32ae504d318728bf19a0502ecfa149
 x
 Hsrc/main/java/com/troch/torchApplication/services/HostReviewService.java,d/b/db289cc7409739a43fdd9552440d0dca33a3a64d
-m
-=src/main/java/com/troch/torchApplication/models/EScooter.java,f/3/f37e8a746d1d7af9d7b042ab813638f3d5c2573d
 r
 Bsrc/main/java/com/troch/torchApplication/services/HostService.java,1/f/1f0dbfaa56b2d41a8b2687b43f7a5142e24caae8
 v
 Fsrc/main/java/com/troch/torchApplication/Utilities/FileUploadUtil.java,2/e/2e4e89f8730a373c0d4312edaf00129fc0efa491
-v
-Fsrc/main/java/com/troch/torchApplication/services/EScooterService.java,e/0/e0415bc13f4f98b7f86616f4e90bbf672e71138d
 ?
 cloudbuild.yaml,2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7
 r

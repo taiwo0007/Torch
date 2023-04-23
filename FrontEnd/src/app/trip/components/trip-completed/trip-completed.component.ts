@@ -18,6 +18,10 @@ export class TripCompletedComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router, private dialog: MatDialog, private toastr: ToastrService,
                 private escooterService: EscooterService, private loadingService: LoadingService) {
+
+        setTimeout(() => {
+            this.openDialog();
+        }, 2000)
     }
 
     ngOnInit() {
@@ -32,10 +36,6 @@ export class TripCompletedComponent implements OnInit {
                 this.tripID = params['tripId'];
                 this.loadingService.isSuccess.next({message: 'Successfully completed trip: ' + this.tripID})
 
-                setTimeout(() => {
-                    this.openDialog();
-                }, 1000)
-
 
             },
             () => {
@@ -49,7 +49,7 @@ export class TripCompletedComponent implements OnInit {
             width: '600px',
         });
 
-        dialogRef.componentInstance.userReview.pipe(switchMap((choice:any) => {
+        dialogRef.componentInstance.userReview.pipe(switchMap((choice: any) => {
 
             choice.tripID = this.tripID;
 

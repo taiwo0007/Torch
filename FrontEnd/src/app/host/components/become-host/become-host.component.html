@@ -17,8 +17,9 @@
                     Enjoy a hastle free way of making money online!
                 </h3>
                 <div class=" d-flex align-items-center">
+                    <ngx-skeleton-loader *ngIf="!insurances"  class=" " [theme]="{height: '3.8rem', width: '22rem'}"></ngx-skeleton-loader>
 
-                    <mat-form-field style="width: 22rem !important;" appearance="outline">
+                    <mat-form-field *ngIf="insurances" style="width: 22rem !important;" appearance="outline">
                         <mat-label>Select your insurance (required)</mat-label>
                         <mat-select  required [formControl]="selectFormControl">
                             <mat-option *ngFor="let insurance of insurances" [value]="insurance.id">{{insurance?.name}} - {{insurance?.cost | currency: 'EUR'}}</mat-option>

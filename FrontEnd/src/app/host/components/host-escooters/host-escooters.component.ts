@@ -6,7 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../auth/services/auth.service";
 import {AdModalComponent} from "../ad-modal/ad-modal.component";
 import {CreateAdRequestPayload} from "../../payload/create-ad-request.payload";
-import {catchError, delay, of, switchMap, tap} from "rxjs";
+import {catchError, of, switchMap} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Host} from "../../models/host.interface";
 import {LoadingService} from "../../../shared/services/loading.service";
@@ -52,14 +52,9 @@ export class HostEscootersComponent implements OnInit {
 
     getHostEscooters() {
         this.hostService.fetchHostEscooters(this.hostID)
-
-            .pipe(tap(() => {
-
-            }), delay(2000))
             .subscribe(data => {
                     console.log(data)
                     // this.isLoading = false
-
 
                   this.hostEscooters = data
                 this.isLoading =false;
@@ -79,12 +74,10 @@ export class HostEscootersComponent implements OnInit {
     }
 
     getHostDetails() {
-        console.log("id")
-        console.log(this.hostID)
+
         this.hostService.getHostById(this.hostID).subscribe((hostData: Host) => {
             console.log(hostData)
             this.loadingService.isLoading.next(false);
-
             this.totalAdDays = hostData.totalAdDays;
 
         })
@@ -162,8 +155,7 @@ export class HostEscootersComponent implements OnInit {
             .subscribe(data => {
                 this.loadingService.isSuccess.next({message: 'Successfully created ad campaign!'});
                 this.loadingService.isLoadingLine.next(true);
-                this.checkHostID()
-                this.getHostDetails()
+                this.getHostEscooters()
                 dialogRef.close();
             }, error => {
 

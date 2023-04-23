@@ -13,7 +13,7 @@ import {TripService} from "../../services/trip.service";
 import {Trip} from "../../models/trip";
 import {AreYouSureDialogComponent} from "../../../shared/components/are-you-sure-dialog/are-you-sure-dialog.component";
 import {DialogService} from "../../../shared/services/dialog.service";
-import {delay, filter, of, Subscription, switchMap} from "rxjs";
+import {delay, filter, of, Subscription, switchMap, tap} from "rxjs";
 import {
     AreYouSureDialogCancelComponent
 } from "../../../shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component";
@@ -39,6 +39,8 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
     initialCost: number;
     vatCost: number;
     totalCost: number;
+    dialogRefComplete: any;
+    dialogRefCancel: any;
 
     //rates
     ADVANCED_DISCOUNT_RATE: number = .30;
@@ -103,19 +105,19 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
 
 
     ngOnInit(): void {
-
         this.isLoading = true;
-        console.log("loading service placeholder")
         this.loadingService.isLoading.next(true)
         this.intialiseSuccessStatus();
         this.initTripId();
-        console.log(this.todaysDate)
         this.isLoading = true;
+
         this.confirmSubscription = this.dialogService.confirmTripComplete
-            .pipe(
+            .pipe(tap(() => {
+                        this.loadingService.isLoadingLine.next(true);
+                        this.isLoading = false
+                    }
+                ),
                 switchMap((val: any) => {
-                    this.loadingService.isLoadingLine.next(true);
-                    this.isLoading = false
 
                     return this.tripService.completeTripFromApi(this.tripId)
                 })
@@ -126,52 +128,46 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
                     this.isLoading = false
                     this.router.navigate(['/trip-complete'], {queryParams: {tripId: data.tripId}})
                 }, () => {
+                    this.loadingService.isLoadingLine.next(false);
+                    this.isLoading = false
+                    this.router.navigate(['/error'])
                     this.isError = "An Error has occurred"
                 }, () => {
-                    this.loadingService.isLoadingLine.next(false);
 
-                    this.isLoading = false;
                 })
 
         this.cancelSubscription = this.dialogService.confirmTripCancel
-            .pipe(
+            .pipe(tap(() => {
+                        this.loadingService.isLoadingLine.next(true);
+                        this.isLoading = false
+                    }
+                ),
                 switchMap((val: any) => {
-                    this.loadingService.isLoadingLine.next(true);
-
-                    this.isLoading = true;
                     return this.tripService.cancelTripFromApi(this.tripId)
                 })
             ).subscribe(
                 (data: Trip) => {
-                    console.log(data)
                     this.loadingService.isLoadingLine.next(false);
                     this.isLoading = false
-
                     this.router.navigate(['/trip-cancel'], {queryParams: {tripId: data.tripId}})
                 }, () => {
                     this.loadingService.isLoadingLine.next(false);
                     this.isLoading = false;
+                    this.router.navigate(['/error'])
                     this.isError = "An Error has occurred"
                 }, () => {
                     this.loadingService.isLoadingLine.next(false);
-
                     this.isLoading = false;
                 })
     }
 
     ngAfterViewInit() {
-
     }
 
     ngAfterContentInit() {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
-
-            console.log("The map: " + this.theMap)
-
-
     }
 
 
@@ -179,7 +175,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
         this.route.queryParams.subscribe((queryParams) => {
             this.isNewlyBooked = queryParams['success'];
             if (this.isNewlyBooked) {
-
                 this.loadingService.isSuccess.next({message: 'Your Trip has been booked successfully'})
             }
 
@@ -190,27 +185,18 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
 
     initTripId() {
         this.isLoading = true;
-        console.log("loading service placeholder")
         this.loadingService.isLoading.next(true)
         this.route.params.subscribe(params => {
             this.tripId = params['id'];
-            console.log(this.tripId)
             this.fetchTripDetails(this.tripId);
         })
     }
 
     getHostData(hostId: number) {
-        console.log("aaaaaaaaaa")
         this.hostService.getHostById(hostId).subscribe((hostData: any) => {
             this.insurance = hostData.insurance.cost;
             this.host = hostData;
-
-            console.log("The host " + this.host)
-            console.log("The insurncae " + this.insurance)
-
             this.preTripCostCalculateForAccountTypes()
-
-
         })
     }
 
@@ -245,8 +231,7 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
         this.totalCost = this.initialCost + this.processingFee + this.vatCost + this.insurance;
         this.isLoading = false;
 
-        setTimeout(()=> this.initMap(this.trip.eScooterOnTrip.latitude, this.trip.eScooterOnTrip.longitude) ,500)
-
+        setTimeout(() => this.initMap(this.trip.eScooterOnTrip.latitude, this.trip.eScooterOnTrip.longitude), 500)
 
 
     }
@@ -278,7 +263,7 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
     }
 
     openCompleteDialog(dialogType: String): void {
-        const dialogRef = this.dialog.open(AreYouSureDialogComponent, {
+        this.dialogRefComplete = this.dialog.open(AreYouSureDialogComponent, {
             height: '200px',
             width: '700px',
             data: {
@@ -286,15 +271,15 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
             }
         });
 
-        console.log(dialogRef)
+        console.log(this.dialogRefComplete)
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogRefComplete.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
         });
     }
 
     openCancelDialog(dialogType: String): void {
-        const dialogRef = this.dialog.open(AreYouSureDialogCancelComponent, {
+        this.dialogRefCancel = this.dialog.open(AreYouSureDialogCancelComponent, {
             height: '200px',
             width: '700px',
             data: {
@@ -302,7 +287,7 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
             }
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        this.dialogRefCancel.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
         });
     }

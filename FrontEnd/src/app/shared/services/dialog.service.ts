@@ -4,7 +4,7 @@ import {BehaviorSubject, Subject, Subscription} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class DialogService implements OnDestroy{
+export class DialogService{
   confirmTripComplete = new Subject<boolean>()
   confirmTripCancel = new Subject<boolean>()
   confirmDeleteScooter = new Subject<any>();
@@ -12,11 +12,7 @@ export class DialogService implements OnDestroy{
   }
 
 
-  ngOnDestroy() {
-    this.confirmTripComplete.unsubscribe();
-    this.confirmTripCancel.unsubscribe();
 
-  }
 
 
 

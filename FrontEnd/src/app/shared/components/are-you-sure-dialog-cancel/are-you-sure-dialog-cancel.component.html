@@ -1,9 +1,11 @@
-<h1 mat-dialog-title>Cancellation </h1>
-<div mat-dialog-content style="height: calc(100% - 96px);">
-    <p>Are you sure you want to cancel this trip?</p>
+<div #dialogCancel *ngIf="isShowing">
+    <h1 mat-dialog-title>Cancellation </h1>
+    <div mat-dialog-content style="height: calc(100% - 96px);">
+        <p>Are you sure you want to cancel this trip?</p>
 
-</div>
-<div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true">No Thanks</button>
-    <button class="bg-danger" mat-button mat-dialog-close cdkFocusInitial (click)="cancelTrip()">Confirm</button>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="true">No Thanks</button>
+        <button class="bg-danger text-light" mat-button [mat-dialog-close]="true"  (click)="cancelTrip()">Confirm</button>
+    </div>
 </div>

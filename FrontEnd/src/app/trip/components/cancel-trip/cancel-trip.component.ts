@@ -17,6 +17,11 @@ export class CancelTripComponent {
 
   constructor(private route:ActivatedRoute, private router:Router, private toastr:ToastrService,
               private dialog:MatDialog, private escooterService:EscooterService, private loadingService:LoadingService) {
+      setTimeout(() => {
+          this.openDialog();
+      }, 2000)
+
+
   }
 
   ngOnInit() {
@@ -29,9 +34,6 @@ export class CancelTripComponent {
           this.tripID = params['tripId'];
             this.loadingService.isSuccess.next({message:'Successfully cancelled trip: '+this.tripID})
 
-            setTimeout(() => {
-                this.openDialog();
-            }, 1000)
 
 
         },

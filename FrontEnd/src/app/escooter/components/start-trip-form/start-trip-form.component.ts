@@ -17,6 +17,7 @@ import * as moment from "moment";
 import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {Escooter} from "../../models/escooter.interface";
 import {Moment} from "moment";
+import {Host} from "../../../host/models/host.interface";
 
 @Component({
     selector: 'app-start-trip-form',
@@ -32,6 +33,7 @@ export class StartTripFormComponent implements OnInit, AfterViewInit {
     isAuthenticated = false;
     @Input() cost;
     @Input() escooter:Escooter;
+    @Input() host:Host
     @ViewChild("arrow",{static: false}) arrow: ElementRef;
     @Input() escooterId;
     todaysDate = new Date()

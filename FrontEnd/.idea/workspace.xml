@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="remove delay">
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" beforeDir="false" />
+    <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="Ui">
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/2/4/24ae71116bfa082e3c4aca494ea8640295e131e2" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/2/4/24ae71116bfa082e3c4aca494ea8640295e131e2" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/f/afb3d962b58e8cbe1cd519a2484f17d2f6c9b01a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/c/6/c6386fd1b9813752fcde7568088132e016393f98" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/f/afb3d962b58e8cbe1cd519a2484f17d2f6c9b01a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/c/6/c6386fd1b9813752fcde7568088132e016393f98" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-results/escooter-results.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/become-host/become-host.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/host/components/host-escooters/host-escooters.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/alert-message/alert-message.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/are-you-sure-dialog-cancel/are-you-sure-dialog-cancel.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/shared/services/dialog.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/services/dialog.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/cancel-trip/cancel-trip.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip-completed/trip-completed.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/trip/components/trip/trip.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,14 +164,10 @@
       <workItem from="1682166285069" duration="1485000" />
       <workItem from="1682168724704" duration="9669000" />
       <workItem from="1682183401577" duration="1195000" />
-      <workItem from="1682198145175" duration="5687000" />
-    </task>
-    <task id="LOCAL-00010" summary="Loading animation on escooter detail">
-      <created>1679141794752</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1679141794752</updated>
+      <workItem from="1682198145175" duration="6475000" />
+      <workItem from="1682204796243" duration="866000" />
+      <workItem from="1682209501251" duration="927000" />
+      <workItem from="1682253535643" duration="6425000" />
     </task>
     <task id="LOCAL-00011" summary="updates">
       <created>1679142594006</created>
@@ -491,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682202554955</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Fix scrollbar">
+      <created>1682203971799</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1682203971799</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -499,7 +520,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Verif page redesign and email fixes" />
     <MESSAGE value="Implemented formulae in trip location that searches withing a given radius and returns scooter withing said location with input date" />
     <MESSAGE value="Host profile UI AND Escooter detail UI" />
     <MESSAGE value="ui" />
@@ -524,6 +544,7 @@
     <MESSAGE value="Temp escooter detail page fix" />
     <MESSAGE value="remove delay" />
     <MESSAGE value="Remove delay, rounded loading cards for host and results page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove delay, rounded loading cards for host and results page" />
+    <MESSAGE value="Fix scrollbar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix scrollbar" />
   </component>
 </project>
