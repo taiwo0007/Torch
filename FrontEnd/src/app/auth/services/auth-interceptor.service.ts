@@ -14,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor{
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
       return this.authService.user.pipe(
-        // delay(2000),
+        // delay(3000),
         take(1),
         exhaustMap ( user =>{
           if(!user){

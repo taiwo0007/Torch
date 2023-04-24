@@ -10,11 +10,16 @@
     <div  class="d-flex justify-content-between mb-4">
       <h2 class="fw-bold ">Profile</h2>
       <div class="d-flex">
-        <app-verified-badge class="ms-3" *ngIf="InitialUserDetails?.isVerified"/>
+        <p *ngIf="host" style=" font-size: 0.7rem !important; width: max-content; padding: 0.4rem 0.8rem 0.4rem 0.4rem !important;" class="remove-mb rounded rounded-4 text-bg-dark d-flex align-items-center ">
+          <mat-icon style="font-size: 1.2rem !important; height: auto !important; width: auto !important;">verified</mat-icon>
+          <span  style="padding-top: 0.1rem !important;" class="ms-1">Torch Host </span>
+        </p>
+        <app-verified-badge class="ms-2" *ngIf="InitialUserDetails?.isVerified"/>
         <p *ngIf="host" style=" font-size: 0.7rem !important; width: max-content; padding: 0.4rem 0.8rem 0.4rem 0.4rem !important;" class="remove-mb rounded rounded-4 text-bg-primary me-1 d-flex align-items-center ">
           <mat-icon style="font-size: 1.2rem !important; height: auto !important; width: auto !important;">admin_panel_settings</mat-icon>
           <span  style="padding-top: 0.1rem !important;" class="ms-1">Successfully insured with <u>{{host?.insurance.name}}</u> </span>
         </p>
+
       </div>
 
 

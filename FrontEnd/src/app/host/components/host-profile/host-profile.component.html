@@ -118,9 +118,23 @@
                              class="row mx-auto border-bottom my-2 py-4 pt-5 ">
 
                             <div class="col-md-1 col-sm-12">
-                                <img style="object-fit: cover; border-radius: 50% !important"
-                                     src="{{hr.user_reviewer.profilePicture}}" width="60" height="60" class="rounded"
-                                     alt="..."/>
+                                <div *ngIf="hr.user_reviewer.host; else normalUser" style="cursor:pointer" [routerLink]="['/host-profile', hr.user_reviewer.host]" class="position-relative">
+                                    <img style="object-fit: cover; border-radius: 50% !important"
+                                         src="{{hr.user_reviewer.profilePicture}}" width="60" height="60" class="rounded"
+                                         alt="..."/>
+                                    <app-host-badge style="bottom: -10px; left: 10px; right: 0" class="position-absolute "></app-host-badge>
+
+                                </div>
+
+                                <ng-template #normalUser>
+                                    <div  class="position-relative">
+                                        <img style="object-fit: cover; border-radius: 50% !important"
+                                             src="{{hr.user_reviewer.profilePicture}}" width="60" height="60" class="rounded"
+                                             alt="..."/>
+                                    </div>
+
+                                </ng-template>
+
                             </div>
                             <div class="col-11">
                                 <div class="row ">

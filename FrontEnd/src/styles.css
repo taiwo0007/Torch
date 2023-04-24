@@ -35,6 +35,13 @@
     font-style: auto;
 }
 
+@font-face {
+    font-family: "BasicGroLight";
+    src: url("assets/fonts/BasisGrotesqueArabicPro-Light.ttf") format("truetype");
+    font-weight: auto;
+    font-style: auto;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -118,6 +125,9 @@ h2, h3, h4, h5, h6, h7{
 
 .font-gro-bold {
     font-family: 'BasicGroBold', sans-serif !important;
+
+}.font-gro-light {
+    font-family: 'BasicGroLight', sans-serif !important;
 
 }
 

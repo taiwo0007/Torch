@@ -100,6 +100,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AlertMessageContainerComponent } from './shared/components/alert-message-container/alert-message-container.component';
 import { FilterPipePipe } from './escooter/pipes/filter-pipe.pipe';
+import { HostBadgeComponent } from './shared/components/host-badge/host-badge.component';
 
 
 @NgModule({
@@ -170,6 +171,7 @@ import { FilterPipePipe } from './escooter/pipes/filter-pipe.pipe';
      TorchTrustedBadgeComponent,
      AlertMessageContainerComponent,
      FilterPipePipe,
+     HostBadgeComponent,
 
   ],
     imports: [

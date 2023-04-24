@@ -53,3 +53,13 @@ w
 G.idea/sonarlint/issuestore/2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7,4/d/4d3b34d91b16f4d0ce1e33bcded7509503987302
 Å
 Q.idea/sonarlint/securityhotspotstore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8,f/d/fd60fc57ddbb0db6d86e679efa92440746422d96
+i
+9src/main/java/com/troch/torchApplication/models/User.java,c/4/c4870c0b22b9b76c140e57de3497299b681e51a1
+t
+Dsrc/main/java/com/troch/torchApplication/dto/EsccoterAddRequest.java,e/f/ef6596b356fd9ccb2bfa8be0f959616c0c9b36b3
+i
+9src/main/java/com/troch/torchApplication/models/Role.java,1/c/1c98baccd51de19353a4e35f5720156c0c4206fe
+m
+=src/main/java/com/troch/torchApplication/models/EScooter.java,f/3/f37e8a746d1d7af9d7b042ab813638f3d5c2573d
+x
+Hsrc/main/java/com/troch/torchApplication/controllers/BaseController.java,9/f/9f632d2f9f6fe7b5eff5b16f2f4ad3c90c555980

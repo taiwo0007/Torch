@@ -20,17 +20,17 @@
                         class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </h1>
                 <h2 class="fw-bold text-center ">Thank you </h2>
-                <h1 class="fw-bold text-center ">Your trip has been successfuly booked</h1>
+                <h1 class="fw-bold text-center ">Your trip has been successfully booked</h1>
             </div>
             <div class="col-md-8  col-sm-12">
                 <div class="p-4 shadow-sm rounded mt-4 bg-white ">
                     <div>
                         <div class="row">
-                            <div class="col-md-7 col-sm-12 text-start">
+                            <div class="col-md-6 pb-5 col-sm-12 text-start">
                                 <div class="p-3">
-                                    <h3 class="fw-bold">Trip #: <span class="text-info">{{trip?.tripId}}</span></h3>
+                                    <h3 class="fw-bold">Trip #: <span class="text-info fw-bold">{{trip?.tripId}}</span></h3>
                                     <h5 th:text="${escooter.getModelName}" style=""
-                                        class="text-secondary mb-5"> {{ trip.eScooterOnTrip.modelName }} </h5>
+                                        class="fw-bold mb-5"> {{ trip.eScooterOnTrip.modelName }} </h5>
                                     <div style="border-left: 4px solid black !important ; font-size: 1rem;"
                                          class="row py-2 px-3 bg-light mt-4">
                                         <div style="padding-right: 0 !important" class="col-1 my-auto">
@@ -76,42 +76,42 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-5 col-sm-12 my-auto">
+                            <div class="col-md-6 pb-5 col-sm-12 my-auto">
                                 <div class="mx-auto my-auto text-center">
                                     <img
+                                            [routerLink]="['/escooter-detail', trip?.eScooterOnTrip.id
+                                       ]"
                                             class="rounded mx-auto text-center shadow-sm"
-                                            style="object-fit: cover; width: 14.2rem; height: 15.2rem"
+                                            style="object-fit: cover; width: 80%; height: auto; cursor: pointer"
                                             src="{{trip?.eScooterOnTrip.image}}"
                                             alt=""
                                     />
                                     <a *ngIf="tripEndFormattedDate > todaysDate && trip.status == 'ACTIVE'"
-                                       (click)="onCancelTrip()" style="width: 14.2rem;"
+                                       (click)="onCancelTrip()" style="width: 80%;"
                                        class="btn btn-danger mt-3 text-center mx-auto">Cancel Trip</a>
                                     <a *ngIf="tripEndFormattedDate < todaysDate && trip.status == 'ACTIVE'"
-                                       (click)="onCompleteTrip()" style="width: 14.2rem;"
-                                       class="btn btn-primary mt-3 text-center mx-auto text-white">Complete Trip</a>
-                                    <a *ngIf="trip.status == 'COMPLETED'" style="width: 14.2rem;"
+                                       (click)="onCompleteTrip()" style="width: 80%;"
+                                       class="btn btn-dark mt-3 text-center mx-auto text-white">Complete Trip</a>
+                                    <a *ngIf="trip.status == 'COMPLETED'" style="width: 80%;"
                                        class="btn btn-success mt-3 text-center mx-auto text-white disabled" disabled>Completed</a>
-                                    <a *ngIf="trip.status == 'CANCELLED'" style="width: 14.2rem;"
+                                    <a *ngIf="trip.status == 'CANCELLED'" style="width: 80%;"
                                        class="btn btn-danger mt-3 text-center mx-auto text-white disabled" disabled>Cancelled</a>
 
                                 </div>
                             </div>
 
                             <div class="row mx-auto">
-                                <div class="col-md-7 col-sm-12">
-                                    <host-details-card  *ngIf="host" [escooter]="trip.eScooterOnTrip"
-                                                       [host]="host"></host-details-card>
-                                </div>
-                                <div class="col-md-5 mx-auto col-sm-12">
-                                    <div class="row pt-5 mx-auto border-top mt-4">
-                                        <div style="padding: 0 !important;" class="card mx-auto">
-                                            <div #map class="card-img-top mx-auto" style="height: 19rem" id="map"></div>
-                                            <div class="card-body">
-                                                <p class="text-info text-center fw-bold mb-1"> Pickup Location</p>
-                                            </div>
+                                <div class="col-md-12 border-top mx-auto col-sm-12">
+                                    <div class="row py-1 mx-auto mb-4 pb-2">
+                                        <h3 class="fw-bold py-4 ">Scooter pickup location</h3>
+                                        <div style="padding: 0 !important;" class=" mx-auto">
+                                            <div #map class="card-img-top mx-auto rounded-3" style="height: 27rem" id="map"></div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <host-details-card  *ngIf="host" [escooter]="trip.eScooterOnTrip"
+                                                       [host]="host"></host-details-card>
                                 </div>
                             </div>
                         </div>

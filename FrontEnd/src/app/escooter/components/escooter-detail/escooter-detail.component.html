@@ -1,5 +1,5 @@
 <div class="mx-auto custom-con mt-4 pb-5" style="" *ngIf="!isLoading">
-    <section  class="header container mt-5 pt-5">
+    <section class="header container mt-5 pt-5">
         <div class="row">
 
             <div class="col-md-8 col-sm-12">
@@ -26,7 +26,7 @@
         </div>
     </section>
 
-    <section  class="container">
+    <section class="container">
         <div class="row">
             <div class="col-md-8 col-sm-12">
                 <div *ngIf="isLoading" style="width: 100%">
@@ -45,7 +45,7 @@
 
                 <div *ngIf="!isLoading" class="p-4 pt-2 border rounded mt-4 d-sm-none d-md-block show-mb">
 
-<!--                    mobile-->
+                    <!--                    mobile-->
                     <app-start-trip-form class="" *ngIf="escooter" [cost]="escooter?.cost"
                                          [escooterId]="escooter?.id"></app-start-trip-form>
 
@@ -72,8 +72,8 @@
 
                 </div>
 
-<!--                mobile-->
-                <app-mini-host-card  *ngIf="host" [host]="host"
+                <!--                mobile-->
+                <app-mini-host-card *ngIf="host" [host]="host"
                                     class="show-mb"></app-mini-host-card>
                 <div *ngIf="!isLoading" class="p-4 border rounded mt-4 show-mb">
                     <p class="fw-bold">Insurance information</p>
@@ -82,7 +82,7 @@
 
                 <div class="row">
                     <div class="col-12 border-bottom py-4">
-                            <h4 class="my-auto mb-3"> More about this scooter</h4>
+                        <h4 class="my-auto mb-3"> More about this scooter</h4>
                         <div *ngIf="!isLoading">
                             <p class="text-secondary">{{ escooter?.about }} </p>
                             <p class="text-info">Read more</p>
@@ -93,10 +93,10 @@
                         <div class="row py-5">
                             <h4 class="my-auto pb-2">What this scooter has to offer</h4>
 
-                        <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
-                            <mat-icon class="fs-2 mb-1">speed</mat-icon>
-                            <p class="ms-4 my-auto pt-2 fs-6"> Max speed {{escooter?.maxSpeed}} km/h</p>
-                        </div>
+                            <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
+                                <mat-icon class="fs-2 mb-1">speed</mat-icon>
+                                <p class="ms-4 my-auto pt-2 fs-6"> Max speed {{escooter?.maxSpeed}} km/h</p>
+                            </div>
                             <div class="col-md-6 col-sm-12 d-flex align-items-center my-2">
                                 <mat-icon class="fs-2 mb-1">settings_accessibility</mat-icon>
                                 <p class="ms-4 my-auto pt-2 fs-6"> Max rider weight {{escooter?.maxWeight}} lbs</p>
@@ -172,15 +172,20 @@
 
                 <app-mini-host-card *ngIf="host" [host]="host" class="remove-mb"></app-mini-host-card>
                 <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!host">
-                    <ngx-skeleton-loader appearance="line" [theme]="{height: '1.5rem', width: '10rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader appearance="line"
+                                         [theme]="{height: '1.5rem', width: '10rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
 
                     <div class="d-flex align-items-center">
-                        <ngx-skeleton-loader [theme]="{width: '6rem', height: '6rem'}" appearance="circle"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader [theme]="{width: '6rem', height: '6rem'}"
+                                             appearance="circle"></ngx-skeleton-loader>
                         <div class="p-2">
-                            <ngx-skeleton-loader appearance="line" [theme]="{height: '1.5rem', width: '6rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader appearance="line"
+                                                 [theme]="{height: '1.5rem', width: '6rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
                             <div class="d-flex">
-                                <ngx-skeleton-loader appearance="line" [theme]="{height: '1.6rem', width: '7rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
-                                <ngx-skeleton-loader appearance="line" [theme]="{height: '1.6rem', width: '5rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader appearance="line"
+                                                     [theme]="{height: '1.6rem', width: '7rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader appearance="line"
+                                                     [theme]="{height: '1.6rem', width: '5rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
 
                             </div>
 
@@ -188,35 +193,107 @@
                     </div>
                 </div>
 
-                <div  class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
+                <div class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
 
-                    <app-start-trip-form [escooter]="escooter" class="" [host]="host" *ngIf="escooter" [cost]="escooter?.cost"
+                    <app-start-trip-form [escooter]="escooter" class="" [host]="host" *ngIf="escooter"
+                                         [cost]="escooter?.cost"
                                          [escooterId]="escooter?.id"></app-start-trip-form>
                 </div>
 
                 <div *ngIf="!isLoading" class="p-4 border rounded mt-4 remove-mb font-gro-bold">
                     <p class="fw-bold font-gro-bold">Insurance information</p>
-                    <p class="my-auto" >
+                    <p class="my-auto">
                         <span *ngIf="host">Insured under</span>
 
-                        <span *ngIf="!host" class="my-auto mt-1"><ngx-skeleton-loader style="margin: 0 !important;" class="my-auto p-0 m-0" appearance="line" [theme]="{height: '1.2rem', width: '14rem', borderRadius: '5rem',  margin: '0'}"></ngx-skeleton-loader></span>
+                        <span *ngIf="!host" class="my-auto mt-1"><ngx-skeleton-loader style="margin: 0 !important;"
+                                                                                      class="my-auto p-0 m-0"
+                                                                                      appearance="line"
+                                                                                      [theme]="{height: '1.2rem', width: '14rem', borderRadius: '5rem',  margin: '0'}"></ngx-skeleton-loader></span>
 
                         <span class="text-info font-gro-bold">
                         {{host?.insurance.name}}</span></p>
                 </div>
             </div>
-            <div class="col-sm-12 mb-5">
+            <div class="col-sm-12 mb-5 pb-5 border-bottom">
                 <h4 class="mt-5 mb-3"> Where the scooter is located</h4>
 
 
-                <google-map class="mx-auto text-center rounded-3 mt-5" height="30rem"
+                <google-map class="mx-auto text-center rounded-5 mt-5" height="30rem"
                             width="100%" [options]="options"
                 >
                     <map-marker
                             [position]="markerPosition"
                             [options]="markerOptions"></map-marker>
                 </google-map>
+
+                <div class="mt-5 w-75">
+                    <h5>{{escooter.county}}, {{escooter.country}}</h5>
+
+                    <p>Find out more about the trip and meet the host at the designated pickup
+                        location {{host.hostUser.location}}</p>
+                </div>
             </div>
+            <div class="col-sm-12 mb-5 pb-5 ">
+                <h4 class="mt-1 mb-3">More info</h4>
+
+                <div>
+                    <div class="text-dark">
+                        <div class="d-flex flex-column mx-auto pt-2">
+                            <div class="d-flex flex-wrap justify-content-between">
+                                <div>
+                                    <p class=" mb-1 text-dark font-gro-medium" >Safety & Health</p>
+                                    <ul class="p-0" style="list-style: none; cursor: pointer">
+                                        <li class="my-2">
+                                            <p class="text-secondary">Please abide by applicable speed laws</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Clean scooter after use</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Wear reflective clothing</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Appropriate footwear mandatory</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class=" mb-1 text-dark font-gro-medium">Regulations</p>
+                                    <ul class="p-0" style="list-style: none; cursor: pointer">
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Abode by speed laws</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Confirm insurance informaton</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Minors not allowed</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class=" mb-1 text-dark font-gro-medium" >Tips</p>
+                                    <ul class="p-0" style="list-style: none; cursor: pointer">
+                                        <li class="my-2">
+                                            <p class="text-secondary text-secondary" >Ask host about defects</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Point inspections before use</p>
+                                        </li>
+                                        <li class="my-2">
+                                            <p class="text-secondary" >Service scooter regularly</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <small class="text-center mt-5">Please drive responsibly</small>
+
         </div>
     </section>
 

@@ -14,10 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,12 +40,34 @@ public class TripService {
         return tripRepository.findById(id).get();
     }
 
-    public Trip createNewTrip(TripCreateRequest tripCreateRequest,EScooter eScooter, User user) {
+    public Trip createNewTrip(TripCreateRequest tripCreateRequest,EScooter eScooter, User user) throws ParseException {
 
         String uniqueString = new SecureRandom().ints(0, 24)
                 .mapToObj(i -> Integer.toString(i, 24))
                 .map(String::toUpperCase).distinct().limit(12).collect(Collectors.joining())
                 .replaceAll("([A-Z0-9]{4})", "$1-").substring(0,14);
+
+
+        System.out.printf("Create Trip start %s",tripCreateRequest.getTripStart());
+        System.out.println();
+        System.out.printf("Create Trip end %s",tripCreateRequest.getTripEnd());
+        System.out.println();
+
+        for(Trip trip:  eScooter.getEscooterTrips()){
+
+            System.out.printf("Trip start %s",trip.getTripStart());
+            System.out.println();
+            System.out.printf("Trip end %s",trip.getTripEnd());
+            System.out.println();
+
+            System.out.println("Comparisons Trip start");
+            System.out.println(trip.getTripStart().compareTo(tripCreateRequest.getTripStart()));
+            System.out.println();
+
+            System.out.println("Comparisons Trip End");
+            System.out.println(trip.getTripEnd().compareTo(tripCreateRequest.getTripEnd()));
+            System.out.println();
+        }
 
 
         Trip trip = new Trip();
