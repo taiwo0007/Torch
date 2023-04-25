@@ -1,0 +1,9 @@
+
+ƒ
+java:S1319"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(¢–¶ê
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ªÍ¸í
+k
+java:S6201#"PReplace this instanceof check and cast with 'instanceof UserDetails userdetails'(ñ¢ŸŽøÿÿÿÿ
+4
+java:S1128
+"Remove this duplicated import.(ŒÄæë

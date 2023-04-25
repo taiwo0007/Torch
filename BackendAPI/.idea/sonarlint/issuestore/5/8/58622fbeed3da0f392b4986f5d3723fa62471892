@@ -1,0 +1,32 @@
+
+b	java:S112A"FDefine and throw a dedicated exception instead of using a generic one.(–Ø¥à8ƒî©¬û0
+a	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(å±È8ƒî©¬û0
+Y
+java:S2629:"7Use the built-in formatting to construct this argument.(Õ˜ÚÂûÿÿÿÿ8„î©¬û0
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ªÍ¸í
+Q	java:S125"<This block of commented-out lines of code should be removed.(á’’ã
+^
+java:S34579"AFormat specifiers should be used instead of string concatenation.(Ùñ‘‡8™î©¬û0
+W	java:S899>";Do something with the "boolean" value returned by "delete".(¡×–8¡î©¬û0
+k
+java:S4042>"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(¡×–8¡î©¬û0
+e
+java:S1128"JRemove this unused import 'com.google.api.services.storage.StorageScopes'.(ÀòûÎıÿÿÿÿ
+`
+java:S1128"ERemove this unused import 'com.google.auth.oauth2.GoogleCredentials'.(«îÿ”úÿÿÿÿ
+h
+java:S1128"RRemove this unused import 'com.troch.torchApplication.controllers.HostController'.(‡“îî
+e
+java:S1128	"ORemove this unused import 'org.springframework.beans.factory.annotation.Value'.(ìø›
+g
+java:S1128"LRemove this unused import 'org.springframework.web.multipart.MultipartFile'.(ôŸœÿÿÿÿÿ
+J
+java:S1128"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ
+K
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
+F
+java:S1128"0Remove this unused import 'java.io.InputStream'.(¹»º
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+H
+java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ

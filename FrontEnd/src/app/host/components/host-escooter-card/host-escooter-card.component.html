@@ -49,7 +49,7 @@
 <!--                        </div>-->
                     </div>
                     <div class="d-flex justify-content-between">
-                        <p [ngClass]="escooter.inUse ? 'text-danger' : 'text-success'" class="text-end fw-bolder  my-auto pt-3">{{escooter.inUse ? 'Active' :  'Inactive' }} </p>
+                        <p [ngClass]="escooter.active ? 'text-primary' : 'text-success'" class="text-end fw-bolder  my-auto pt-3">{{escooter.active ? 'Active' :  'Inactive' }} </p>
                         <p (click)="onDelete(escooter.id)" class="text-end  my-auto pt-3 text-danger fw-bold text-decoration-underline">Delete</p>
 <!--                        <p class="text-end  my-auto pt-3"><span>{{ escooter.county }}</span>, <span class="fw-bold">{{ escooter.country }}</span></p>-->
                     </div>

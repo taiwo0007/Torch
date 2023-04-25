@@ -27,21 +27,9 @@ public class GCPUtil {
     @Autowired
     FileUploadUtil fileUploadUtil;
 
-//    @Value("${spring.cloud.gcp.storage.credentials.location}")
-//    String credentialsLocation;
-
-
     static Logger logger = LoggerFactory.getLogger(GCPUtil.class);
 
     public String uploadObject(Path filePath, String contentType) throws Exception {
-
-//        InputStream inputStream = getClass().getResourceAsStream("/static/credentials/application_default_credentials.json");
-
-
-//        GoogleCredentials credentials = GoogleCredentials.fromStream(inputStream)
-//                .createScoped(StorageScopes.all());
-
-
 
         String projectId = "school-376315";
         String bucketName = "torch-gcp-bucket";

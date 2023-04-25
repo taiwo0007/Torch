@@ -13,7 +13,7 @@ export class EscooterResultsComponent implements OnInit, AfterViewInit {
 
 
     searchText: string;
-isFiltering:boolean = false;
+    isFiltering:boolean = false;
   //Filter Variables
   is1to10 = false;
   is11to20 = false;
@@ -31,6 +31,12 @@ isFiltering:boolean = false;
     isSpeed16to20 = false;
     isSpeed21to25 = false;
     isSpeed26Plus = false;
+
+    //Filter Methods
+    isMiles10to15: boolean;
+    isMiles21to25: boolean;
+    isMiles16to20: boolean;
+    isMiles26Plus: boolean;
 
   priceFilterCriteria:any[] = [];
   makeFilterCriteria:any[] = [];
@@ -74,12 +80,8 @@ isFiltering:boolean = false;
                   this.isLoading = false;
             this.escooterResults = data;
             this.escooterResultsFilterCopy = data;
-            this.configureMapOptions();
-            this.configureAllMarkers();
-
             console.log(this.escooterResults)
                   this.initMap();
-                  this.markerEventInit();
 
           }, error => {
               this.escooterResults = null;
@@ -108,24 +110,7 @@ isFiltering:boolean = false;
 
   }
 
-    configureMapOptions(){
-        this.options = {
-            center: {lat: +this.escooterResults[0].latitude, lng: +this.escooterResults[0].longitude},
-            zoom: 12
-        };
-    }
 
-    configureAllMarkers(){
-
-      for(let i of this.escooterResults){
-
-          this.markerPositions.push({
-          lat: i.latitude, lng: i.longitude
-          })
-
-
-      }
-    }
 
     addHighlight() {
 
@@ -175,10 +160,10 @@ isFiltering:boolean = false;
                 }
             });
         }
-        console.log(markers)
 
         for (var i = 0; i < eList.length; i++) {
 
+            //Adds in a marker on the map
             // @ts-ignore
             let tempMarker = new google.maps.Marker({ map: map, id: eList[i].modelName , position: {
                     lat: eList[i].latitude,
@@ -192,7 +177,7 @@ isFiltering:boolean = false;
 
         eList.forEach((escooter) => {
 
-            var myContent = `<a [routerLink]="['../escooter-detail', ${escooter.id}]"><div  class="card" style="width: 6rem; padding: 0.3rem 0 0 0.3rem"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> \`;`;
+            var myContent = `<a href="/escooter-detail/${escooter.id}"><div  class="nav-link" style="width: 9rem; padding: 0.3rem 0 0 0.3rem; text-decoration: none !important; ;"> <img style="" src="${escooter.image}" class="card-img-top rounded-0" alt="..."><div style="padding:0rem 0rem 0rem 0rem !important;" class="card-body  text-info"><h5 style="margin:0 !important;" class="card-title pt-2 fw-bold text-center"><span>€</span>${Number(escooter.cost).toFixed(2)}</h5> </div> </div></a> `;
             markers.forEach((elem) => {
 
                 if(escooter.modelName == elem.id){
@@ -233,41 +218,19 @@ isFiltering:boolean = false;
     }
 
 
-    markerEventInit(){
 
-      console.log(this.cards.length)
-
-        this.cards.forEach(element => {
-            console.log(element.nativeElement)
-        })
-    }
-
-
-
-
-    //Filter Methods
-    isMiles10to15: boolean;
-    isMiles21to25: boolean;
-    isMiles16to20: boolean;
-    isMiles26Plus: boolean;
 
     toggleFilter(filterValue:string){
 
         this.isLoading = true;
 
-        // setTimeout(()=> {
-        //     this.isLoading = false;
-        //
-        // }, 2000)
-
-
-
       //PRICES
 
 
       if(filterValue == '1to10'){
-
+          //on and off button
           this.is1to10 = !this.is1to10;
+          //if on push to price filter list else remove it
           this.is1to10 ? this.priceFilterCriteria.push(filterValue) : this.priceFilterCriteria.splice(this.priceFilterCriteria.indexOf(filterValue),1) ;
 
       }
@@ -393,6 +356,7 @@ isFiltering:boolean = false;
       this.isLoading = true;
       this.loadingService.isLoadingLine.next(true)
 
+      //set up lists we need all filter lists
       this.escooterResults = [];
       this.escooterFilterResults = [];
       this.escooterPriceResults = [];
@@ -402,10 +366,15 @@ isFiltering:boolean = false;
       let escooterMilesResults = [];
 
 
+      //Get the price lists do checks if any filter in the list
+        //e.g 1 - 10 filter
+        //
         //price filtering
+        //copy never changed, keeps source of truth
         this.escooterPriceResults = this.escooterResultsFilterCopy.filter((e) => {
 
             if(this.priceFilterCriteria.length > 0) {
+
 
                 for (let priceFilter of this.priceFilterCriteria) {
 
@@ -430,6 +399,7 @@ isFiltering:boolean = false;
                         }
                     }
                 }
+                //dont return results that dont meet these criteria even if they are in price
                 return false;
             }
             else {
@@ -439,6 +409,8 @@ isFiltering:boolean = false;
 
         //make filtering
         escooterMakeResults = this.escooterPriceResults.filter((e) => {
+
+            //then we take the price filter list and filter that wit aditional
 
             console.log( e.maxWeight)
             if(this.makeFilterCriteria.length > 0) {
@@ -477,7 +449,7 @@ isFiltering:boolean = false;
                     }
 
                 }
-                console.log(false)
+
                 return false;
             }
             else {
@@ -598,14 +570,15 @@ isFiltering:boolean = false;
         else {
             this.isFiltering = false;
         }
+        //change page results to equal filterd
         this.escooterResults = this.escooterFilterResults;
         setTimeout(()=>{
             this.isLoading = false;
             this.loadingService.isLoadingLine.next(false)
 
         },500 )
-        //init the map
+
+        //init the map again
         this.initMap();
-        this.markerEventInit();
     }
 }

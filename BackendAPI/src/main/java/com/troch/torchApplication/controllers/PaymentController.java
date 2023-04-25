@@ -90,16 +90,16 @@ public class PaymentController {
                 break;
             case "invoice.paid":
                 Invoice invoice = (Invoice) stripeObject;
+
+
                 if (invoice.getSubscription() != null) {
 
                     Subscription subscription = Subscription.retrieve(invoice.getSubscription());
-
                     User userSub = userService.findUserByEmail(invoice.getCustomerEmail());
-                    Host hostSub = userSub.getHost();
 
-                    logger.info("paid info", "invoice paid");
-
-                    for (SubscriptionItem item : subscription.getItems().getData()) {
+                    if(userSub.getHost() != null){
+                        Host hostSub = userSub.getHost();
+                        for (SubscriptionItem item : subscription.getItems().getData()) {
                         System.out.println("plan" + item.getPlan());
                         System.out.println("plan id" + item.getPlan().getId());
 
@@ -124,6 +124,35 @@ public class PaymentController {
                         userService.saveUser(userSub);
                         hostService.save(hostSub);
                     }
+
+                    }
+                    else{
+                        for (SubscriptionItem item : subscription.getItems().getData()) {
+                            System.out.println("plan" + item.getPlan());
+                            System.out.println("plan id" + item.getPlan().getId());
+
+                            // Pro Plan
+                            if (item.getPlan().getId().equals("price_1Mlhx9BapNSScoYvu765T22Y")) {
+                                userSub.setAccountType("Pro");
+                            }
+
+                            // Advanced Plan
+                            if (item.getPlan().getId().equals("price_1MlhwfBapNSScoYvnenMR1I0")) {
+                                userSub.setAccountType("Advanced");
+                            }
+
+                            // Basic Plan
+                            if (item.getPlan().getId().equals("price_1Mlhs9BapNSScoYv0wI6C4q9")) {
+                                userSub.setAccountType("Basic");
+                            }
+
+                            userService.saveUser(userSub);
+                        }
+
+                    }
+
+                    logger.info("paid info", "invoice paid");
+
 
                 }
 

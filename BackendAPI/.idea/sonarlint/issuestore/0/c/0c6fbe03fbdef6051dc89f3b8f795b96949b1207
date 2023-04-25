@@ -1,0 +1,12 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(«æÅ 
+V	java:S125,"<This block of commented-out lines of code should be removed.(œ™∞ñ˘ˇˇˇˇ
+^
+java:S34577"AFormat specifiers should be used instead of string concatenation.(¬∑∏Œ8¶ª∞ü˚0
+c
+java:S3457<"AFormat specifiers should be used instead of string concatenation.(õãÒ¯˚ˇˇˇˇ8ı…∏ü˚0
+X
+java:S1128";Remove this unused import 'freemarker.core.ParseException'.(⁄ª—√8¶ª∞ü˚0
+l
+java:S1128
+"JRemove this unused import 'org.springframework.core.io.ClassPathResource'.(›π∫ß˝ˇˇˇˇ8ßª∞ü˚0

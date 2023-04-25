@@ -1,0 +1,32 @@
+
+L
+java:S3740t"/Provide the parametrized type for this generic.(øæøÿ8ÀÜ¡û0
+M
+java:S3740"/Provide the parametrized type for this generic.(Ä†¦Ÿ8ÀÜ¡û0
+l	java:S117k"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸ÛÙ8ÁÜ¡û0
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê8ÂÜ¡û0
+r
+java:S3655+"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ëÃ¾Œüÿÿÿÿ8ÕÜ¡û0
+b
+java:S1854_"@Remove this useless assignment to local variable "formatString".(è¿ƒ¯øÿÿÿÿ8ØÜ¡û0
+
+java:S1130."qRemove the declaration of thrown exception 'java.text.ParseException', as it cannot be thrown from method's body.(”–½³8ÙÜ¡û0
+Z	java:S1066"9Replace this use of System.out or System.err by a logger.(‚òŸ×ûÿÿÿÿ8ÜÜ¡û0
+Z	java:S1067"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÜÜ¡û0
+U	java:S1068"9Replace this use of System.out or System.err by a logger.(êÅ¡¤8ÜÜ¡û0
+Z	java:S1069"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÜÜ¡û0
+Z	java:S106="9Replace this use of System.out or System.err by a logger.(óô²şÿÿÿÿ8ÜÜ¡û0
+Z	java:S106>"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8ÜÜ¡û0
+Z	java:S106?"9Replace this use of System.out or System.err by a logger.(ÇÀ¢ûÿÿÿÿ8İÜ¡û0
+Z	java:S106@"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8İÜ¡û0
+Z	java:S106B"9Replace this use of System.out or System.err by a logger.(—Ä­Øùÿÿÿÿ8İÜ¡û0
+Z	java:S106C"9Replace this use of System.out or System.err by a logger.(ã‰è¼øÿÿÿÿ8İÜ¡û0
+Z	java:S106D"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8İÜ¡û0
+U	java:S106F"9Replace this use of System.out or System.err by a logger.(½¥¬Ü8İÜ¡û0
+Z	java:S106G"9Replace this use of System.out or System.err by a logger.(ØääÛıÿÿÿÿ8İÜ¡û0
+Z	java:S106H"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ8İÜ¡û0
+S
+java:S1481_"1Remove this unused "formatString" local variable.(è¿ƒ¯øÿÿÿÿ8àÜ¡û0
+J	java:S108~")Either remove or fill this block of code.(Š®¯¢şÿÿÿÿ8âÜ¡û0
+T
+java:S1128"7Remove this unused import 'java.text.SimpleDateFormat'.(ú¡ÙÛ8Ôö¡û0

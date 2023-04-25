@@ -2,7 +2,7 @@
 
 <ng-container *ngIf="isLoading == false">
     <nav *ngIf="isAuthURL == false"
-         style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 5rem !important"
+         style=" z-index: 100 !important; background-color: black !important; padding: 0.4rem 6rem !important"
          id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
         <div class="d-md-flex  align-items-center">
             <div class="my-auto me-4 ">
@@ -33,7 +33,7 @@
 
             </li>
 
-            <li *ngIf="isAuthenticated && !accountType && isHost"  class="nav-item my-auto me-3">
+            <li *ngIf="isAuthenticated && !accountType && isVerified"  class="nav-item my-auto me-3">
                 <a [classList]="" style=" border-radius: 2.9rem !important; font-size: 0.8rem !important; "
                    class="btn d-flex align-items-center btn-outline-warning rounded-0  fw-bold  my-auto font-gro-bold" (click)="subscriptionModal()" >
                     <mat-icon class="me-1">monetization_on</mat-icon>
@@ -72,6 +72,7 @@
                 <a dropdownToggle (click)="toggleDropdown()" style="background-color: black !important"
                    class=" dropdown-toggle text-white open a-img-dropdown" data-bs-toggle="dropdown" href="#" role="button"
                    aria-expanded="false">
+
                     <img *ngIf="!profileImage" style="width: 1.9rem; height: 1.9rem; border-radius: 100%; object-fit: cover"
                          class="rounded-circle " src="https://api.dicebear.com/6.x/micah/svg?seed={{userEmail}}&backgroundColor=b6e3f4" alt="">
 

@@ -20,4 +20,7 @@ public class BasicUserResponse {
     private String country;
 
     private String profilePicture;
+
+    private Integer host;
+    private Integer userId;
 }

@@ -5,13 +5,10 @@ Z
 java:S1874r"DRemove this use of "WebSecurityConfigurerAdapter"; it is deprecated.(»Œü
 T
 java:S5344|">Don't use the default "PasswordEncoder" relying on plain-text.(Ö˜ÔÚ
-R	java:S125…"<This block of commented-out lines of code should be removed.(â±½
-R	java:S125‘"<This block of commented-out lines of code should be removed.(â±½
-W	java:S125¢"<This block of commented-out lines of code should be removed.(ÃÈÜıÿÿÿÿ
 ?
-java:S1116ï"Remove this empty statement.(Ğö€Ûøÿÿÿÿ8 ²²ø0
-^	java:S125ô"<This block of commented-out lines of code should be removed.(½Ô™ÿıÿÿÿÿ8 ²²ø0
-^	java:S125“"<This block of commented-out lines of code should be removed.(¸¢˜Ïøÿÿÿÿ8 ²²ø0
+java:S1116Ö"Remove this empty statement.(Ğö€Ûøÿÿÿÿ8 ²²ø0
+^	java:S125Û"<This block of commented-out lines of code should be removed.(½Ô™ÿıÿÿÿÿ8 ²²ø0
+^	java:S125ú"<This block of commented-out lines of code should be removed.(¸¢˜Ïøÿÿÿÿ8 ²²ø0
 n
 java:S1128"LRemove this unused import 'com.troch.torchApplication.services.UserService'.(ı‚ùÔøÿÿÿÿ8 ²²ø0
 u

@@ -129,37 +129,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("1.1.1.1","0.0.0.0", "127.0.0.1", "https://localhost:4200", "localhost:4200"));
-//        configuration.setAllowedMethods(Arrays.asList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("localhost:4200", "1.1.1.1","0.0.0.0", "127.0.0.1", "localhost:8080"));
-//        configuration.setAllowedMethods(Arrays.asList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
 
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-//         config.addAllowedOrigin("http://localhost:4200");
         config.setAllowedOrigins(Arrays.asList("https://torch-front-end-wfurmbodqa-nw.a.run.app/",
                 "https://torch-front-end-wfurmbodqa-nw.a.run.app", "http://torch-wfurmbodqa-uc.a.run.app",
                 "https://torch-wfurmbodqa-uc.a.run.app/", "http://localhost:4200", "1.1.1.1","https://0.0.0.0",

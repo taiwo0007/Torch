@@ -1,0 +1,16 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(«æÅ 
+V	java:S125"<This block of commented-out lines of code should be removed.(¿´ß†˝ˇˇˇˇ
+f
+java:S1128"KRemove this unused import 'com.troch.torchApplication.dto.RegisterRequest'.( ®π¢˛ˇˇˇˇ
+e
+java:S1128"ORemove this unused import 'com.troch.torchApplication.dto.UserRegistrationDto'.(ì„˚
+Y
+java:S1128"CRemove this unused import 'com.troch.torchApplication.models.User'.(“‘ÊÙ
+m
+java:S1128"WRemove this unused import 'com.troch.torchApplication.repositories.EScooterRepository'.(ë‡°⁄
+i
+java:S1128	"SRemove this unused import 'com.troch.torchApplication.repositories.UserRepository'.(ñ≥≠‘
+n
+java:S1128
+"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(°û∏Œ˘ˇˇˇˇ

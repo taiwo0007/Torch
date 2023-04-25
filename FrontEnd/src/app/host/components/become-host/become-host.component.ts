@@ -40,7 +40,7 @@ export class BecomeHostComponent implements OnInit{
   createHost() {
 
     if(!this.selectFormControl.valid){
-      this.loadingService.isError.next({message: 'Please select an insurance provider to continue'})
+      this.loadingService.isNotice.next({message: 'Please select an insurance provider to continue'})
     return;
     }
     this.loadingService.isLoadingLine.next(true);

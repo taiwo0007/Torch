@@ -1,0 +1,42 @@
+
+[	java:S112`"FDefine and throw a dedicated exception instead of using a generic one.(ı½ô«
+Z	java:S112]"FDefine and throw a dedicated exception instead of using a generic one.(àÓ¦C
+[	java:S112u"FDefine and throw a dedicated exception instead of using a generic one.(Şİ§Š
+J
+java:S3740K"/Provide the parametrized type for this generic.(”äáéÿÿÿÿÿ
+E
+java:S3740L"/Provide the parametrized type for this generic.(°à°½
+E
+java:S3740t"/Provide the parametrized type for this generic.(Ö²¤Î
+R
+java:S2629m"7Use the built-in formatting to construct this argument.(ïğ€ªúÿÿÿÿ
+M
+java:S2629n"7Use the built-in formatting to construct this argument.(ø¢¾ã
+>
+java:S5411L"(Use a primitive boolean expression here.(°à°½
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Í­Ó„
+:
+java:S37515"Make this method non "private".(Ğ®òÇşÿÿÿÿ
+:
+java:S3751B"Make this method non "private".(Ú†¦³şÿÿÿÿ
+h	java:S100K"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”äáéÿÿÿÿÿ
+\
+java:S3457m"AFormat specifiers should be used instead of string concatenation.(ïğ€ªúÿÿÿÿ
+W
+java:S3457n"AFormat specifiers should be used instead of string concatenation.(ø¢¾ã
+‚
+java:S1130u"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(Şİ§Š
+j
+java:S1128"ORemove this unused import 'com.troch.torchApplication.forms.ScooterReviewForm'.(¡Õ¿Æıÿÿÿÿ
+Y
+java:S1128	"CRemove this unused import 'com.troch.torchApplication.models.Trip'.(¤üÉ¦
+T
+java:S1128"9Remove this unused import 'org.springframework.ui.Model'.(ê†ıÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ
+U
+java:S1128"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ

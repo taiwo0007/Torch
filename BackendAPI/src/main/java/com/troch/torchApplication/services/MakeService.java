@@ -12,8 +12,6 @@ public class MakeService {
 
     @Autowired
     MakeRepository makeRepository;
-
-
     public List<Make> findAllMake() {
        return makeRepository.findAll();
     }

@@ -31,6 +31,9 @@ public class TripService {
     @Autowired
     UserServiceImpl userService;
 
+    @Autowired
+    EScooterService eScooterService;
+
     public Optional<Trip> findTripById(int id){
 
         return tripRepository.findById(id);
@@ -83,9 +86,16 @@ public class TripService {
         trip.setUser_renter(user);
         trip.setDays(tripCreateRequest.getTripDays());
 
-        List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
+        eScooter.setTrips(eScooter.getTrips() + 1);
+        eScooter.setActive(true);
 
+        eScooterService.save(eScooter);
+
+
+        List<String> formatString = Arrays.asList(trip.getEScooterOnTrip().getAddress().split(","));
         return tripRepository.save(trip);
+
+
 
     }
 
@@ -124,8 +134,11 @@ public class TripService {
             }
             else {
                 retrivedTrip.get().setStatus(TripStatus.CANCELLED);
-
             }
+            EScooter escooter = retrivedTrip.get().getEScooterOnTrip();
+            escooter.setActive(false);
+            escooter.setTrips(escooter.getTrips() + 1);
+            eScooterService.save(escooter);
 
             return new ResponseEntity(this.tripRepository.save(retrivedTrip.get()), HttpStatus.ACCEPTED);
 

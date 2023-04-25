@@ -124,11 +124,7 @@ public class EScooterService {
         Date tripEndDate = null;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-
-
-
             tripStartDate = formatter.parse(esccoterAddRequest.getTripStart().toString());
-
 
             tripEndDate = formatter.parse(esccoterAddRequest.getTripEnd().toString());
 
@@ -210,7 +206,6 @@ public class EScooterService {
                 //if error getting right country name
                 ex.printStackTrace();
             }
-
         }
 
         return eScooterRepository.findAllByTripDatesAndLocation(tripStartDate, tripEndDate, country);
@@ -221,9 +216,9 @@ public class EScooterService {
 
         //today 30 00:00:00
         //
-        //30 - 59    -> 1
+        //30  -> 59    -> 1
         //29  -> 2
-        //28   -> 3
+        //28  -> 3
 
 
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -236,7 +231,7 @@ public class EScooterService {
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 
-        //QUERY 2 DAYS AGO AND TODAYS DATE
+        //QUERY 2 DAYS AGO AND TODAY'S DATE
         List<EScooter> eScootersEligible = eScooterRepository.findAllEscooterAds(new Date(todayWithZeroTime.getTime() - (2 * DAY_IN_MS)), todayWithZeroTime
         );
 

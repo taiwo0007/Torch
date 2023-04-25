@@ -38,21 +38,14 @@ public class EScooterReviewService {
     @Autowired
     HostReviewService hostReviewService;
 
-
-
     public ScooterReview save(ScooterReview escooterReview){
-
         return escooterReviewRepository.save(escooterReview);
-
-
     }
 
     public ScooterReview saveCustom(User user, ScooterReviewRequest scooterReviewRequest) throws Exception {
 
         ScooterReview scooterReview = new ScooterReview();
         Optional<EScooter> eScooter = eScooterService.findEScooter(scooterReviewRequest.getEScooterId());
-
-
 
         if(eScooter.isEmpty()){
             throw new Exception("Escooter Not found");
@@ -63,8 +56,6 @@ public class EScooterReviewService {
         scooterReview.setStarRating(scooterReviewRequest.getStarRating());
         scooterReview.setReviewDate(new Date());
         return escooterReviewRepository.save(scooterReview);
-
-
     }
 
     public List<ScooterReview> findAllReviewsByScooter(Integer id){
@@ -86,18 +77,14 @@ public class EScooterReviewService {
         scooterReview.setComment(hostScooterReviewRequest.getEscooter_comment());
         scooterReview.setStarRating(hostScooterReviewRequest.getEscooter_starRating());
 
-
-
         hostReview.setUser_reviewer(user);
         hostReview.setHost(host);
         hostReview.setComment(hostScooterReviewRequest.getHost_comment());
         hostReview.setStarRating(hostScooterReviewRequest.getHost_starRating());
         hostReview.setReviewDate(new Date());
 
-
         escooterReviewRepository.save(scooterReview);
         hostReviewService.save(hostReview);
-
 
         return new ResponseEntity(HttpStatus.CREATED);
     }

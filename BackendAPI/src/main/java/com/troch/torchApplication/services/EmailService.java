@@ -4,6 +4,8 @@ import com.troch.torchApplication.dto.MailRequest;
 import com.troch.torchApplication.dto.MailResponse;
 import freemarker.core.ParseException;
 import freemarker.template.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,6 +29,9 @@ public class EmailService {
     @Autowired
     private Configuration config;
 
+    Logger logger = LoggerFactory.getLogger(EmailService.class);
+
+
 
     public MailResponse sendEmail(MailRequest request, Map<String, Object> model) {
         MailResponse response = new MailResponse();
@@ -47,10 +52,12 @@ public class EmailService {
             helper.setFrom(request.getFrom());
             sender.send(message);
 
+            logger.info("mail send to : " + request.getTo());
             response.setMessage("mail send to : " + request.getTo());
             response.setStatus(Boolean.TRUE);
 
         } catch (MessagingException | IOException | TemplateException e) {
+            logger.info("Mail Sending failure : "+e.getMessage());
             response.setMessage("Mail Sending failure : "+e.getMessage());
             response.setStatus(Boolean.FALSE);
         }

@@ -11,10 +11,8 @@ import java.util.Optional;
 @Service
 public class InsuranceService {
 
-
     @Autowired
     InsuranceRepository insuranceRepository;
-
 
     public List<Insurance> findAllInsurance(){
         return insuranceRepository.findAll();

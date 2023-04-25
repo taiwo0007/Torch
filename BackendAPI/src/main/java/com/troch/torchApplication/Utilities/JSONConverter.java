@@ -21,30 +21,4 @@ public class JSONConverter {
         return mapper.readTree(url);
     }
 
-
-    public JSONObject getJSON(HttpURLConnection conn) throws IOException {
-        JSONObject job = null;//  w w w .j  av a2s.  com
-        // write it out yo
-        OutputStream os = conn.getOutputStream();
-        conn.connect();
-        //   OutputStreamWriter out = new OutputStreamWriter(os);
-        //   out.flush();
-
-        // out.write(jsonObject.toString());
-        //   out.close();
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-        StringBuffer sb = new StringBuffer();
-        String s = "";
-        while ((s = in.readLine()) != null) {
-            sb.append(s);
-        }
-        System.out.println("\nREST Service Invoked Successfully..");
-        in.close();
-
-        // os.write(job.toString().getBytes("UTF-8"));
-        os.close();
-        return job;
-    }
 }

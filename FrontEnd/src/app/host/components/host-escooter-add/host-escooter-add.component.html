@@ -8,7 +8,7 @@
             <div style="width: 47% !important;">
                 <label class="form-label fw-bold">Make</label>
                 <ngx-skeleton-loader *ngIf="isMakeLoading" class=" mb-3 " [theme]="{height: '50%', width: '100%'}"></ngx-skeleton-loader>
-                <select *ngIf="!isMakeLoading" required ngModel name="make" class="form-select form-select-md mb-3" aria-label=".form-select-md example" th:field="*{make}">
+                <select *ngIf="!isMakeLoading" required [(ngModel)]="make" name="make" class="form-select form-select-md mb-3" aria-label=".form-select-md example" th:field="*{make}">
                     <option *ngFor="let thisMake of makes" [value]="thisMake.name">{{thisMake.name}}
                     </option>
                 </select>
@@ -70,7 +70,7 @@
         <div style="" class="mb-3 d-flex justify-content-between ">
             <div style="width: 47% !important;" class="form-group">
                 <label for="waterResistant" class="form-label fw-bold mb-2">Water Rating</label>
-                <select ngModel required name="waterResistant" id="waterResistant" th:field="*{waterResistant}" class="form-select form-select-md ">
+                <select [(ngModel)]="waterResistant" required name="waterResistant" id="waterResistant" th:field="*{waterResistant}" class="form-select form-select-md ">
                     <option [value]="true">Water Resistant</option>
                     <option [value]="false">Not Water Resistant</option>
 

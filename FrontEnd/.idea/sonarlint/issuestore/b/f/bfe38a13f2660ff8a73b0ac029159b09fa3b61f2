@@ -1,0 +1,11 @@
+
+Qtypescript:S1128")Remove this unused import of 'ViewChild'.(°Öì­øÿÿÿÿ8°²ğÃû0
+Htypescript:S1128"%Remove this unused import of 'delay'.(”€´8°²ğÃû0
+typescript:S1874M"ä'subscribe' is deprecated. Instead of passing separate callback arguments, use an observer argument. Signatures taking separate callback arguments will be removed in v8. Details: https://rxjs.dev/deprecations/subscribe-arguments(û‰÷ûÿÿÿÿ8°²ğÃû0
+Rtypescript:S1186l"*Unexpected empty method 'ngAfterViewInit'.(»…Æ€øÿÿÿÿ8°²ğÃû0
+Rtypescript:S3504€")Unexpected var, use let or const instead.(Ãáªìüÿÿÿÿ8°²ğÃû0
+Mtypescript:S3504„")Unexpected var, use let or const instead.(€ÒÓÖ8°²ğÃû0
+Rtypescript:S3504¤")Unexpected var, use let or const instead.(„õ–÷ûÿÿÿÿ8¢ÎÜÆû0
+Rtypescript:S3504´")Unexpected var, use let or const instead.(ïÈÎÎûÿÿÿÿ8ª€ıÃû0
+xtypescript:S3776ß"TRefactor this function to reduce its Cognitive Complexity from 60 to the 15 allowed.(ÖÇ¼×8«€ıÃû0
+ytypescript:S3776ã"URefactor this function to reduce its Cognitive Complexity from 223 to the 15 allowed.(ãêàí8«€ıÃû0

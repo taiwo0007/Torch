@@ -1,0 +1,12 @@
+
+R
+java:S2629 "7Use the built-in formatting to construct this argument.(÷©‚üÿÿÿÿ
+R
+java:S2629*"7Use the built-in formatting to construct this argument.(èƒ– øÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Í­Ó„
+L
+java:S3416"1Update this logger to use "UserController.class".(ííõßıÿÿÿÿ
+\
+java:S3457 "AFormat specifiers should be used instead of string concatenation.(÷©‚üÿÿÿÿ
+\
+java:S3457*"AFormat specifiers should be used instead of string concatenation.(èƒ– øÿÿÿÿ

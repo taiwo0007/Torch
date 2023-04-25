@@ -137,8 +137,6 @@ export class EscoooterBookingComponent implements OnInit {
                 this.insurance = data.insurance.cost;
                 this.host = data;
 
-
-
                 //get account type of currently logged-in user
                 this.authService.user.subscribe((user: any) => {
                     console.log(user)

@@ -8,6 +8,7 @@ import com.troch.torchApplication.Utilities.JSONConverter;
 import com.troch.torchApplication.Utilities.JwtUtil;
 import com.troch.torchApplication.controllers.TripController;
 import com.troch.torchApplication.dto.*;
+import com.troch.torchApplication.models.Host;
 import com.troch.torchApplication.models.Role;
 import com.troch.torchApplication.models.User;
 import com.troch.torchApplication.repositories.UserRepository;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService{
     public User findUserByEmail(String email){
         User user = userRepository.findByEmail(email);
         if(user == null) {
-            throw new UsernameNotFoundException("Username NotFound");
+            throw new UsernameNotFoundException("Username Not found");
         }
 
         return user;
@@ -92,7 +93,13 @@ public class UserServiceImpl implements UserService{
         }
         User newUser = user.get();
 
-        return new BasicUserResponse(newUser.getFirstName(), newUser.getLastName(), newUser.getCountry(), newUser.getProfilePicture());
+
+        return new BasicUserResponse(newUser.getFirstName(),
+                newUser.getLastName(),
+                newUser.getCountry(),
+                newUser.getProfilePicture(),
+                newUser.getHost() != null ? newUser.getHost().getId() : null,
+                newUser.getId());
 
     }
 

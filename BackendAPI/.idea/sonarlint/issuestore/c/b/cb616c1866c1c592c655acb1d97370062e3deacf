@@ -1,0 +1,9 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(…¥‚‰
+l	java:S116#"XRename this field "user_reviewer" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë‘³S
+j
+java:S1128"ORemove this unused import 'com.fasterxml.jackson.annotation.JsonBackReference'.(»Ôœ¿ýÿÿÿÿ
+^
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnore'.(þ‘‹„
+h
+java:S1128"RRemove this unused import 'com.fasterxml.jackson.annotation.JsonIgnoreProperties'.(ô’ˆî

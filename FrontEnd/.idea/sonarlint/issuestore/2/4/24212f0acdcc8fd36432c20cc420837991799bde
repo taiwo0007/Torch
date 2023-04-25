@@ -1,0 +1,10 @@
+
+Mtypescript:S1128"%Remove this unused import of 'Input'.(´Üâ”ÿÿÿÿÿ8ÓéÇˆù0
+Ptypescript:S1128"(Remove this unused import of 'daLocale'.(İ½ãøÿÿÿÿ8ÔéÇˆù0
+Gtypescript:S1128"%Remove this unused import of 'delay'.(ê8ÔéÇˆù0
+Ntypescript:S1128
+"+Remove this unused import of 'CONSTRUCTOR'.(ØÁÈä8ÕéÇˆù0
+}typescript:S22012"UConsider using "forEach" instead of "map" as its return value is not being used here.(†áòùÿÿÿÿ8ÖéÇˆù0
+ˆtypescript:S1874:"ä'subscribe' is deprecated. Instead of passing separate callback arguments, use an observer argument. Signatures taking separate callback arguments will be removed in v8. Details: https://rxjs.dev/deprecations/subscribe-arguments(½¦‹™8ÖéÇˆù0
+Ftypescript:S125D"Remove this commented out code.(¶è€óùÿÿÿÿ8ÖéÇˆù0
+typescript:S1874Y"ä'subscribe' is deprecated. Instead of passing separate callback arguments, use an observer argument. Signatures taking separate callback arguments will be removed in v8. Details: https://rxjs.dev/deprecations/subscribe-arguments(§İÅ–ÿÿÿÿÿ8ÖéÇˆù0

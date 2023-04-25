@@ -1,0 +1,44 @@
+
+M
+java:S3740Œ"/Provide the parametrized type for this generic.(¶Äƒ²8æÌò”û0
+M
+java:S3740’"/Provide the parametrized type for this generic.(²áÛ‹8çÌò”û0
+R
+java:S3740—"/Provide the parametrized type for this generic.(—€»ışÿÿÿÿ8çÌò”û0
+R
+java:S3740¡"/Provide the parametrized type for this generic.(ëŒÓ×øÿÿÿÿ8çÌò”û0
+R
+java:S3740Ú"/Provide the parametrized type for this generic.(„Î¯éøÿÿÿÿ8çÌò”û0
+U
+java:S2629¬"7Use the built-in formatting to construct this argument.(²úõ„8éÌò”û0
+K
+java:S5411 "(Use a primitive boolean expression here.(Ø®è‰ÿÿÿÿÿ8éÌò”û0
+c
+java:S2789["FEnsure this "Optional" could never be null and remove this null-check.(ºá8éÌò”û0
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Ç¾Ê8êÌò”û0
+s
+java:S3655ƒ"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(˜Ãùõúÿÿÿÿ8ÿÌò”û0
+j
+java:S3655^"HCall "user.isPresent()" or "!user.isEmpty()" before accessing the value.(¬§ÉÊøÿÿÿÿ8ÿÌò”û0
+a
+java:S2583["DChange this condition so that it does not always evaluate to "false"(ºá8ÿÌò”û0
+^
+java:S1126R"AReplace this if-then-else statement by a single return statement.(ºá8…Íò”û0
+o
+java:S6204w"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ÀÄ¿¥8ŠÍò”û0
+k
+java:S5361¨"HReplace this call to "replaceAll()" by a call to the "replace()" method.(Ñ…¾”øÿÿÿÿ8‘Íò”û0
+_
+java:S3457¬"AFormat specifiers should be used instead of string concatenation.(²úõ„8’Íò”û0
+R
+java:S1128"0Remove this unused import 'com.google.api.Http'.(î°Åùøÿÿÿÿ8˜Íò”û0
+o
+java:S1128	"RRemove this unused import 'com.troch.torchApplication.controllers.TripController'.(•ÃŠı8˜Íò”û0
+_
+java:S1128"CRemove this unused import 'com.troch.torchApplication.models.Host'.(²¼‡o8™Íò”û0
+@
+java:S1128#"Remove this duplicated import.(åÅÚ…ûÿÿÿÿ8™Íò”û0
+;
+java:S1128$"Remove this duplicated import.(¼º¡Ú8™Íò”û0
+a
+java:S1128&"?Remove this unused import 'javax.validation.constraints.Email'.(¸àô¹üÿÿÿÿ8™Íò”û0
