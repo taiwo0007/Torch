@@ -1,5 +1,10 @@
 #  (Torch)
 
+## Live Site
+
+Check out the live site [here](https://torch-front-end-wfurmbodqa-nw.a.run.app/).
+
+
 ## Table of Contents
 1. [Project Name](#project-name)
 2. [Project Description](#project-description)
@@ -59,19 +64,16 @@ The following development framework will be used:
 - Flyway Migrations
 
 ## Images
-Images of website:
 
-## Images
-
-<!-- ![Image 1](./images/image1.jpg)
+![Image 1](./images/image1.png)
 ![Image 2](./images/image2.png)
-![Image 3](./images/image3.gif)
-![Image 4](./images/image4.jpeg)
-![Image 5](./images/image5.svg)
-![Image 6](./images/image6.bmp)
-![Image 7](./images/image7.tiff)
-![Image 8](./images/image8.ico)
-![Image 9](./images/image9.webp)
-![Image 10](./images/image10.heic) -->
+![Image 3](./images/image3.png)
+![Image 4](./images/image4.png)
+![Image 5](./images/image5.png)
+![Image 6](./images/image6.png)
+![Image 7](./images/image7.png)
+![Image 8](./images/image8.png)
+![Image 9](./images/image9.png)
+![Image 10](./images/image10.png)
 
 
