@@ -52,6 +52,7 @@ The application is hosted on the google cloud platform. The application uses a h
 The following development framework will be used:
 
 - Spring Boot
+- Angular
 - Bootstrap
 - CSS Grid/FlexBox
 - HTML
@@ -59,9 +60,8 @@ The following development framework will be used:
 - Spring Data JPA
 - Spring Security
 - Lombok
-- Swagger
-- FreeMarker (Front-end)
-- Flyway Migrations
+- FreeMarker (Email)
+
 
 ## Images
 
