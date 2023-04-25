@@ -1,6 +1,4 @@
-#  Torch
-
-## Live Site
+![Image 1](./FrontEnd/src/assets/images/website/torchlogoblack.png)
 
 Check out the live site [here](https://torch-front-end-wfurmbodqa-nw.a.run.app/).
 View images here: [Images](#Images)
