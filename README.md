@@ -1,9 +1,9 @@
-#  (Torch)
+#  Torch
 
 ## Live Site
 
 Check out the live site [here](https://torch-front-end-wfurmbodqa-nw.a.run.app/).
-
+View images here: [Images](#Images)
 
 ## Table of Contents
 1. [Project Name](#project-name)
