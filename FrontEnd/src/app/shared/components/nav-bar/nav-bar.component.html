@@ -2,7 +2,7 @@
 
 <ng-container *ngIf="isLoading == false">
     <nav *ngIf="isAuthURL == false"
-         style=" z-index: 100 !important; background-color: black !important; padding: 0.4rem 6rem !important"
+         style=" z-index: 100 !important; background-color: black !important; padding: 0.6rem 7rem !important"
          id="navbar-example2" class="navbar my-nav  remove-mb  bg-light navbar-light sticky fixed-top py-2">
         <div class="d-md-flex  align-items-center">
             <div class="my-auto me-4 ">
@@ -10,11 +10,8 @@
                     <img src="assets/images/website/torchlogo.png" width="80" height="auto" alt="logo"/>
                     <span *ngIf="accountType" class="text-warning fw-bold mt-2">{{accountType}} </span>
                 </a>
-
-
             </div>
-
-            <app-nav-bar-search></app-nav-bar-search>
+<!--            <app-nav-bar-search></app-nav-bar-search>-->
         </div>
 
         <ul class="nav nav-pills">
@@ -199,5 +196,5 @@
 
 </nav>
 
-<app-load-screen *ngIf="isLoading"  class="mx-auto remove-mb full-spinner"></app-load-screen>
+<!--<app-load-screen *ngIf="isLoading"  class="mx-auto remove-mb full-spinner"></app-load-screen>-->
 

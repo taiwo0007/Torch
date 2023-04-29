@@ -42,21 +42,16 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
                         this.getHostDetails();
                     }
 
-                    this.loadingSerivce.isLoading.next(false);
                     this.isLoading = false;
 
                     this.route.queryParams.subscribe(data => {
                         if (data['success']) {
                             this.loadingSerivce.isNotice.next({message: 'Verification email has been sent'})
-                            this.loadingSerivce.isLoading.next(false);
                             this.isLoading = false;
-
-
                         }
 
                         console.log(data['subscriptionInitiated']);
                         console.log(this.userData)
-                        this.loadingSerivce.isLoading.next(false);
                         this.isLoading = false;
                         this.authService.saveAccountType(this.userData.accountType)
 
@@ -67,24 +62,19 @@ export class UserProfileComponent implements OnInit, AfterContentInit {
                                 this.loadingSerivce.isError.next({message: 'Your Subscription has not been activated'})
 
                             }
-                            this.loadingSerivce.isLoading.next(false);
                             this.isLoading = false;
                         }
-
-                        this.loadingSerivce.isLoading.next(false);
                         this.isLoading = false;
                     })
                 },
                 () => {
                     this.router.navigate(['/error'])
-                    this.loadingSerivce.isLoading.next(false);
                     this.isLoading = false;
                 })
     }
 
     ngOnInit(): void {
 
-        this.loadingSerivce.isLoading.next(true);
         this.isLoading = true;
 
 

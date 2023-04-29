@@ -28,6 +28,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         draggable: false,
         icon: 'assets/images/website/icons/markerChanged.png'
     };
+     isHostInit: boolean;
 
 
     constructor(private escooterService: EscooterService,
@@ -38,13 +39,14 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     }
 
     ngOnInit(): void {
-        this.loadService.isLoading.next(true);
         this.isLoading = true;
         this.route.params.subscribe(params => {
             this.paramId = params['id'];
         })
 
+        // this.isLoading = true;
         this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
+                // this.isLoading = false;
                 this.escooter = escooterData;
                 this.loadService.isLoading.next(true)
                 this.isLoading = true;
@@ -54,8 +56,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
                 this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i)
 
             }, error => {
+                // this.isLoading = false;
                 this.isLoading = false;
-                this.loadService.isLoading.next(false);
                 this.router.navigate(['/error'])
             },
             () => {
@@ -71,6 +73,8 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     ngAfterContentInit() {
         this.initMap()
+
+
     }
 
     initMap() {
@@ -101,8 +105,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     configureMarker() {
         console.log(+this.escooter?.longitude)
-        this.isLoading = false;
-        this.loadService.isLoading.next(false);
         this.markerPosition = {lat: +this.escooter?.latitude, lng: +this.escooter?.longitude}
     }
 
@@ -110,28 +112,16 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
 
     setHostData() {
 
-        this.loadService.isLoading.next(true)
-        this.isLoading = true;
         this.hostService.getHostById(this.escooter.host)
-            .pipe(tap(()=> {
-                this.loadService.isLoading.next(true)
-                this.isLoading = true;
-            }))
             .subscribe((data:Host) => {
+                this.host = data;
+            }, ()=> {
+            }, () => {
+                this.isLoading = false
+            })
+    }
 
-            this.host = data;
-            console.log("Api Host data",this.host)
-
-                this.loadService.isLoading.next(false)
-                this.isLoading = false;
-
-        }, ()=> {
-
-        }, () => {
-
-        })
-
-
-
+    handleHostInit($event: any) {
+        this.isHostInit = true;
     }
 }

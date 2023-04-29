@@ -30,7 +30,6 @@ export class TripHostsComponent implements OnInit{
   getHostDetails(){
     this.hostService.fetchHostDataByUserToken().subscribe((apiData:Host) => {
       this.isLoading = false;
-      this.loadingService.isLoading.next(false);
 
       this.hostDetails = apiData;
       this.hostTrips = apiData.hostTrips.length == 0 ? null : apiData.hostTrips;

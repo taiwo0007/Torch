@@ -47,15 +47,14 @@ export class EscoooterBookingComponent implements OnInit {
     //mutable
     processingFee: number = 20;
     isLoading: boolean;
-
     insuranceBeforeDiscount: number;
     isProDiscount: boolean = false;
     isAdvancedDiscount: boolean = false;
     isBasicDiscount: boolean = false;
     tripEnd: Date;
+
     isButtonShow: boolean;
     tripCreateRequestPayload: TripCreateRequestPayload
-
     checkoutForm = this.fb.group({
         name: ['', [Validators.required]],
         email: ['', [Validators.required]],
@@ -92,15 +91,14 @@ export class EscoooterBookingComponent implements OnInit {
         private route: ActivatedRoute,
         private tripService: TripService,
         private router: Router,
-        private loadingService: LoadingService,
         private hostService: HostService,
-        private authService: AuthService
+        private authService: AuthService,
+        private loadingService: LoadingService
     ) {
     }
 
     ngOnInit() {
         this.isLoading = true;
-        this.loadingService.isLoading.next(true);
 
         this.route.queryParams.subscribe(paramValue => {
             this.tripDays = +paramValue['tripDays'];
@@ -192,8 +190,6 @@ export class EscoooterBookingComponent implements OnInit {
                         console.log("if account insurance value:" + this.insurance)
                     }
 
-                    console.log("calulcating.....")
-                    console.log(this.insurance)
 
                 })
 
@@ -201,11 +197,6 @@ export class EscoooterBookingComponent implements OnInit {
 
             },
             () => {
-
-            console.log(this.discountObject)
-
-
-
                 this.totalTripCost()
                 this.createPaymentIntentFromApi();
 
@@ -216,36 +207,22 @@ export class EscoooterBookingComponent implements OnInit {
     createPaymentIntentFromApi() {
         this.createPaymentIntent(this.totalCost)
             .subscribe(paymentIntent => {
-                    console.log(paymentIntent)
-
                     this.elementsOptions.clientSecret = paymentIntent.clientSecret;
                     this.isLoading = false;
-                    this.loadingService.isLoading.next(false)
 
                 },
                 () => {
 
-                }, ()=> {
-
-
-
+                }, () => {
 
 
                 });
     }
 
     totalTripCost() {
-
         this.initialCost = this.tripDays * this.escooter.cost;
         this.vatCost = this.initialCost * 0.20;
         this.totalCost = this.initialCost + this.processingFee + this.vatCost + this.insurance;
-
-        console.log("calculated data")
-        console.log(this.vatCost)
-        console.log(this.totalCost)
-        console.log(this.initialCost)
-
-
     }
 
     private createPaymentIntent(amount: number): Observable<any> {
@@ -259,6 +236,7 @@ export class EscoooterBookingComponent implements OnInit {
 
     collectPayment() {
 
+        this.loadingService.isLoadingLine.next(true)
         // if (this.paying) return;
 
 
@@ -276,6 +254,7 @@ export class EscoooterBookingComponent implements OnInit {
 
         this.paying = true;
 
+
         this.stripeService
             .confirmPayment({
                 elements: this.paymentElement.elements,
@@ -288,21 +267,22 @@ export class EscoooterBookingComponent implements OnInit {
 
                     if (result.error) {
                         this.paying = false;
-                        this.error = result.error
-                    } else if (result.paymentIntent.status === 'succeeded') {
+                        this.error = result.error;
+                        this.loadingService.isLoadingLine.next(false)
 
+                    } else if (result.paymentIntent.status === 'succeeded') {
                         console.log(this.tripCreateRequestPayload)
 
                         this.tripService.createNewTrip(this.tripCreateRequestPayload).subscribe(((tripData: any) => {
-                            this.loadingService.isLoadingLine.next(false);
-                            this.paying = false;
+                            this.loadingService.isLoadingLine.next(false)
                             this.router.navigate(['../trip-detail', tripData?.id], {queryParams: {success: true}})
                         }))
                     }
                 },
                 error: (err) => {
-
+                    this.isLoading = false;
                     this.paying = false;
+
 
                 },
             });

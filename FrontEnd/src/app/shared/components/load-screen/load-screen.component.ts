@@ -1,6 +1,7 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as lottie from 'lottie-web';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {LoadingService} from "../../services/loading.service";
 
 @Component({
   selector: 'app-load-screen',
@@ -22,13 +23,19 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     ])
   ]
 })
-export class LoadScreenComponent implements AfterViewInit{
+export class LoadScreenComponent implements AfterViewInit, OnInit, OnDestroy{
   @ViewChild('lottieContainer') public lottieContainer: ElementRef;
     isLongLoad: boolean = false;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private changeDetectorRef: ChangeDetectorRef, private loadingService:LoadingService) {
     }
 
+    ngOnInit() {
+      this.loadingService.isLoading.next(true);
+    }
+    ngOnDestroy() {
+      this.loadingService.isLoading.next(false);
+    }
 
   ngAfterViewInit(): void {
 
@@ -37,14 +44,14 @@ export class LoadScreenComponent implements AfterViewInit{
     }, 5000)
 
 
-    // @ts-ignore
-    const animation = lottie.loadAnimation({
-      container: this.lottieContainer.nativeElement,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: 'assets/images/website/loading.json' // path to your JSON animation file
-    });
+    // // @ts-ignore
+    // const animation = lottie.loadAnimation({
+    //   container: this.lottieContainer.nativeElement,
+    //   renderer: 'svg',
+    //   loop: true,
+    //   autoplay: true,
+    //   path: 'assets/images/website/loading.json' // path to your JSON animation file
+    // });
   }
 
 }

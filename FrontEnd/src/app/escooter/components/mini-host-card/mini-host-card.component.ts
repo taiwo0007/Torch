@@ -14,6 +14,7 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
 
   @Input()  host: Host;
   hostObserver;
+  @Output() onInit: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() onHostRetrieved:EventEmitter<Host> = new EventEmitter<Host>()
 
@@ -23,16 +24,7 @@ export class MiniHostCardComponent implements OnInit, AfterContentInit {
               ) { }
 
   ngOnInit(): void {
-
-
-
-
-
-
-
-
-
-
+    this.onInit.next(true);
 
   }
 

@@ -15,16 +15,8 @@ K
 src/main/resources/data.sql,7/3/73d31a43eeb5160da7670a8c11a94a16128cf92d
 Å
 Q.idea/sonarlint/securityhotspotstore/e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319,7/e/7e3b113c4dacfa93c812f4a10a7a3d7e1e35b65f
-Å
-Q.idea/sonarlint/securityhotspotstore/2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7,a/0/a0380a097c74ee536dc2ed6388711ef7853b600c
-w
-G.idea/sonarlint/issuestore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8,3/0/30d3a900cc88a1a5efe6fa18978c16dee54f1999
 w
 G.idea/sonarlint/issuestore/e/9/e954a5376c41c444dae3133f6bfc2e45d6cbd319,4/3/435e1ad71c9dc10e9d2cbd8e50bb41a4b39f4f34
-w
-G.idea/sonarlint/issuestore/2/9/29f05b800c87ad5f37e2133933c9576c7ef9b2d7,4/d/4d3b34d91b16f4d0ce1e33bcded7509503987302
-Å
-Q.idea/sonarlint/securityhotspotstore/2/4/24bd77eb4f93bd8a20e0a61c1ef57bb133dc6af8,f/d/fd60fc57ddbb0db6d86e679efa92440746422d96
 i
 9src/main/java/com/troch/torchApplication/models/User.java,c/4/c4870c0b22b9b76c140e57de3497299b681e51a1
 t

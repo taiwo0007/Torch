@@ -27,14 +27,10 @@ export class HostProfileComponent implements OnInit{
               private userService:UserService,
               private loadingService:LoadingService) {
 
-
-
   }
 
 
   ngOnInit() {
-
-    this.loadingService.isLoading.next(true);
     console.log("loading")
     this.isLoading = true;
 
@@ -59,19 +55,14 @@ export class HostProfileComponent implements OnInit{
       console.log(data)
         this.host = data
           this.host.hostUser.rating = this.calcHostRating();
-          console.log("HOST DATA:" +this.host.hostUser.rating)
-
-          console.log(this.host)
 
           this.getHostEsccotersInitEscooters()
               this.initRatingList()
           // this.loadingService.isLoading.next(false);
-          this.loadingService.isLoading.next(false);
           this.isLoading = false
 
         },
             ()=>{
-              this.loadingService.isLoading.next(false);
               this.isLoading = false
             })
   }
@@ -92,13 +83,8 @@ export class HostProfileComponent implements OnInit{
       console.log(data);
 
       this.isLoading = false;
-       this.loadingService.isLoading.next(false);
-
-
-
      },
          ()=> {
-           this.loadingService.isLoading.next(false);
            this.isLoading = false
          })
   }

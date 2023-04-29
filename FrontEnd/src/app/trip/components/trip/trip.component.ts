@@ -62,7 +62,7 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
                 private dialog: MatDialog,
                 private dialogService: DialogService,
                 private router: Router,
-                private loadingService: LoadingService,
+                private loadingService:LoadingService,
                 private toastr: ToastrService,
                 private hostService: HostService,
                 private authService: AuthService) {
@@ -97,7 +97,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
                 console.log("Advanced Insurance: " + this.insurance)
 
             }
-            this.loadingService.isLoading.next(false)
             this.isLoading = false;
             this.calculateTripCost()
         })
@@ -106,7 +105,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
 
     ngOnInit(): void {
         this.isLoading = true;
-        this.loadingService.isLoading.next(true)
         this.intialiseSuccessStatus();
         this.initTripId();
         this.isLoading = true;
@@ -185,7 +183,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
 
     initTripId() {
         this.isLoading = true;
-        this.loadingService.isLoading.next(true)
         this.route.params.subscribe(params => {
             this.tripId = params['id'];
             this.fetchTripDetails(this.tripId);
@@ -203,7 +200,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
     fetchTripDetails(id: number) {
         this.isLoading = true;
         console.log("loading service placeholder")
-        this.loadingService.isLoading.next(true)
         console.log(id)
         this.tripService.fetchTripDetailsFromApi(id).subscribe((tripData: any) => {
                 this.tripEndFormattedDate = new Date(tripData.tripEnd);
@@ -215,7 +211,6 @@ export class TripComponent implements OnInit, AfterViewInit, AfterContentInit, O
 
             },
             () => {
-                this.loadingService.isLoading.next(false)
                 this.isLoading = false;
                 this.router.navigate(['/error'])
 

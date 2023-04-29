@@ -18,7 +18,6 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.loadingService.isLoading.next(true);
   }
 
   ngAfterViewInit() {
@@ -32,16 +31,13 @@ export class UserTripsComponent implements OnInit, AfterViewInit {
       console.log(userResponseData.renterTrips[0].user)
       this.tripUser = userResponseData
       this.trips = userResponseData.renterTrips;
-      this.loadingService.isLoading.next(false)
       this.isLoading = false;
     }, ()=> {
-      this.loadingService.isLoading.next(false)
       this.isLoading = false;
     },
         () => {
           this.isLoading = false;
 
-          this.loadingService.isLoading.next(false)
         } )
   }
 
