@@ -81,6 +81,20 @@
 
 </section>
 
+<section *ngIf="featuredScooters.length > 0" class="row container py-4 mx-auto my-1">
+    <h1 style="margin-left: 0 !important; margin-right: 0 !important;"
+        class=" text-center fw-bold pb-5 mt-5 mx-auto  hm-sm m-0 px-sm"
+    >
+        Featured <span class="text-info font-gro-black">Scooters</span>
+    </h1>
+
+        <div style=" overflow-x: hidden; !important" class="row pb-5">
+            <div *ngFor="let escooterItem of featuredScooters" style=" overflow-x: hidden; !important" class="col-md-3 col-sm-3 pt-3 pb-4">
+                <app-escooter-ad-card   [escooterItem]="escooterItem" ></app-escooter-ad-card >
+            </div>
+        </div>
+
+</section>
 <section class="header-bottom mx-auto text-center py-5">
     <h1 class="h1 hm-sm px-sm text-center mx-auto fw-bold">
         Browse scooter models.

@@ -174,10 +174,9 @@
             <div class="col-4 ">
 
                 <app-mini-host-card (onInit)="handleHostInit($event)" *ngIf="host" [host]="host" class="remove-mb"></app-mini-host-card>
-                <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!host">
+                <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!isHostInit">
                     <ngx-skeleton-loader appearance="line"
                                          [theme]="{height: '1.5rem', width: '10rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
-
                     <div class="d-flex align-items-center">
                         <ngx-skeleton-loader [theme]="{width: '6rem', height: '6rem'}"
                                              appearance="circle"></ngx-skeleton-loader>
@@ -197,6 +196,7 @@
                 </div>
 
                 <div class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
+
 
                     <app-start-trip-form [escooter]="escooter" class="" [host]="host" *ngIf="escooter"
                                          [cost]="escooter?.cost"

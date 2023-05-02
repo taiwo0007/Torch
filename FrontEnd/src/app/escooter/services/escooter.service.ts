@@ -25,6 +25,11 @@ export class EscooterService implements OnDestroy{
         }
         )
   }
+
+  getFeaturedScooterAds (){
+
+      return this.http.get(environment.appUrl +'/api/escooter/find-escooter-ads');
+  }
     getAllEscooterAds(){
         return this.http.get(environment.appUrl +'/api/escooter/find-escooter-ads'
 

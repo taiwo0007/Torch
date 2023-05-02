@@ -34,7 +34,7 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     constructor(private escooterService: EscooterService,
                 private route: ActivatedRoute,
                 private authService: AuthService,
-                private router: Router, private loadService: LoadingService,
+                private router: Router,
                 private hostService:HostService) {
     }
 
@@ -48,7 +48,6 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
         this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
                 // this.isLoading = false;
                 this.escooter = escooterData;
-                this.loadService.isLoading.next(true)
                 this.isLoading = true;
                 this.setHostData()
                 this.configureMapOptions();
