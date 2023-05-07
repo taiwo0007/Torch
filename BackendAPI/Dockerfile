@@ -5,6 +5,7 @@ ADD /target/*.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
+
 # FROM node:16-alpine3.16 as build
 # WORKDIR /app
 # COPY ./FrontEnd/package*.json ./

@@ -51,8 +51,6 @@ z
 Jsrc/main/java/com/troch/torchApplication/config/SecurityConfiguration.java,8/8/887a2a9c4fd9579f40d58d275db55cd3fb42092a
 y
 Isrc/main/java/com/troch/torchApplication/config/SwaggerConfiguration.java,2/0/205cfd1356f5d0f139fbc94ff48ee46d99416933
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 s
 Csrc/main/java/com/troch/torchApplication/dto/TripCreateRequest.java,1/a/1adced47ca8e13b34e5591ee9a7f86bbc8740ff5
 v

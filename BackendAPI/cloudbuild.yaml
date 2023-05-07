@@ -23,7 +23,7 @@ steps:
   #       "&",
   #     ]
 
-  # Replace  smtp.google.password with an environmental variable
+  # Replace smtp.google.password with an environmental variable
   - name: "gcr.io/cloud-builders/docker"
     entrypoint: "bash"
     args:
