@@ -77,14 +77,10 @@ x
 Hsrc/main/java/com/troch/torchApplication/controllers/BaseController.java,9/f/9f632d2f9f6fe7b5eff5b16f2f4ad3c90c555980
 ‚
 Rsrc/main/java/com/troch/torchApplication/controllers/AuthenticationController.java,b/5/b5eaf0255b57e3af03d0fbd3426ad28acccde2d9
-o
-?src/main/java/com/troch/torchApplication/Utilities/GCPUtil.java,5/8/58622fbeed3da0f392b4986f5d3723fa62471892
 v
 Fsrc/main/java/com/troch/torchApplication/services/UserServiceImpl.java,6/3/63f6f8a9d6ef7dfc9307dc9afa23a47025468508
 |
 Lsrc/main/java/com/troch/torchApplication/controllers/EScooterController.java,f/c/fcbce069bc94accacc4227edcc7f61b6f586bc1c
-x
-Hsrc/main/java/com/troch/torchApplication/controllers/TripController.java,b/d/bd86405c9c98ef06dc3a66fbcc0c4ecd09a14ea2
 x
 Hsrc/main/java/com/troch/torchApplication/controllers/HostController.java,8/1/8151552cf73115fec5897f08e5fcdfec91a96535
 r
