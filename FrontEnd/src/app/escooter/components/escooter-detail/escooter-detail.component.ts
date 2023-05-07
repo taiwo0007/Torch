@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {EscooterService} from "../../services/escooter.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Escooter} from "../../models/escooter.interface";
@@ -35,45 +35,53 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
                 private route: ActivatedRoute,
                 private authService: AuthService,
                 private router: Router,
-                private hostService:HostService) {
+                private hostService:HostService,
+                private cdr: ChangeDetectorRef) {
+
     }
 
     ngOnInit(): void {
+        console.log("0"+this.isLoading)
         this.isLoading = true;
+        console.log("1"+this.isLoading)
+
         this.route.params.subscribe(params => {
             this.paramId = params['id'];
-        })
+            console.log("2"+this.isLoading)
+        });
 
-        // this.isLoading = true;
-        this.escooterService.getEscooterById(this.paramId).subscribe(escooterData => {
-                // this.isLoading = false;
+        this.escooterService.getEscooterById(this.paramId)
+            .pipe(
+                tap(() => {
+                    this.isLoading = true
+
+                    console.log("3"+this.isLoading)
+                }),
+
+            )
+            .subscribe(escooterData => {
                 this.escooter = escooterData;
-                this.isLoading = true;
-                this.setHostData()
+
+                this.setHostData();
                 this.configureMapOptions();
                 this.configureMarker();
-                this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i)
-
+                this.ratingArray = Array(Math.trunc(escooterData.rating)).fill(0).map((x, i) => i);
             }, error => {
-                // this.isLoading = false;
+                this.router.navigate(['/error']);
+            }, () => {
+                console.log("4"+this.isLoading)
                 this.isLoading = false;
-                this.router.navigate(['/error'])
-            },
-            () => {
+            });
 
-            })
-        console.log(this.ratingArray)
-        this.authService.user.subscribe((data: boolean) => this.isAuthenticated = data)
-
+        this.authService.user.subscribe((data: boolean) => this.isAuthenticated = data);
     }
+
 
     ngAfterViewInit() {
     }
 
     ngAfterContentInit() {
         this.initMap()
-
-
     }
 
     initMap() {
@@ -112,11 +120,13 @@ export class EscooterDetailComponent implements OnInit, AfterViewInit, AfterCont
     setHostData() {
 
         this.hostService.getHostById(this.escooter.host)
+
+
             .subscribe((data:Host) => {
                 this.host = data;
             }, ()=> {
             }, () => {
-                this.isLoading = false
+
             })
     }
 

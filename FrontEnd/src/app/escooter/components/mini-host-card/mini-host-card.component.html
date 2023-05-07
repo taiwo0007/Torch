@@ -2,7 +2,7 @@
     <p class="fw-bold font-gro-bold">More about the Host</p>
     <div class="d-flex">
         <div>
-            <a [routerLink]="['/host-profile', host.id]" class="nav-link">
+            <a [routerLink]="['/host-profile', host?.id]" class="nav-link">
                 <img src="{{host?.hostUser?.profilePicture}}" style="border-radius: 50%; object-fit: cover" width="100" height="100" class="" alt="..." />
             </a>
         </div>
@@ -12,7 +12,7 @@
             </a>
             <div class="d-flex flex-column ">
                 <p class="fw-bold d-flex">
-                    <app-torch-trusted-badge *ngIf="host.hostUser.torchTrusted"/>
+                    <app-torch-trusted-badge *ngIf="host?.hostUser.torchTrusted"/>
                     <app-verified-badge/>
                 </p>
                 <p style="margin-top: -1.5rem; font-size: 0.7rem">

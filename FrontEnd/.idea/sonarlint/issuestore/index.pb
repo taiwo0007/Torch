@@ -1,8 +1,6 @@
 
 Q
 !src/app/user/models/user.model.ts,9/a/9a77c8eb4c5cb82686760ba920e72bd2457fcb5b
-]
--src/app/escooter/models/escooter.interface.ts,6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d
 U
 %src/app/host/models/host.interface.ts,1/c/1cb97cf766f5599a7942ee6150e47f0b95997a12
 w
@@ -149,8 +147,6 @@ t
 Dsrc/app/shared/components/alert-message/alert-message.component.html,e/2/e2b70aa4fc30f433eb71ef570b2330e1d213a81e
 s
 Csrc/app/shared/components/alert-message/alert-message.component.css,d/4/d457e5f1bb1b39018302bc1b610d3b34ed40c1be
-x
-Hsrc/app/escooter/components/start-trip-form/start-trip-form.component.ts,7/e/7efa2d665bc963e5d0160743025ee9c8355c0194
 `
 0src/app/auth/components/login/login.component.ts,c/d/cd614a6f08127716ce2faf6cc5b348f9748f45bf
 r
@@ -163,8 +159,6 @@ Jsrc/app/trip/components/host-details-card/host-details-card.component.html,a/8
 src/test.ts,3/f/3fc80f76f5f2902335ccfa4f7aa372099c7d9f47
 €
 Psrc/app/user/components/profile-details-card/profile-details-card.component.html,b/e/be49b469c52cd10ad6655dde0a7ae9120eea4ca4
-z
-Jsrc/app/escooter/components/start-trip-form/start-trip-form.component.html,9/f/9f810a157ca2b383a777fe7da98de335170a31cc
 l
 <src/app/shared/components/host-badge/host-badge.component.ts,2/6/26c59f077eb76d1a23ec1845bf24d0f3fc7ddb63
 q
@@ -224,8 +218,6 @@ f
 6src/app/shared/components/footer/footer.component.html,5/f/5f2ee86a643650b9feb4689a07c270ac3705d4ab
 d
 4src/app/shared/components/footer/footer.component.ts,3/e/3e54812535f2ca23186eae00cdf820e86b0a0fb9
-x
-Hsrc/app/escooter/components/mini-host-card/mini-host-card.component.html,a/2/a2cc2265944af0b6c22367bd709ba77ad3739439
 |
 Lsrc/app/escooter/components/escoooter-booking/escoooter-booking.component.ts,f/0/f0c0796ae88350c3796a4339ea570547fab84f90
 p
@@ -242,8 +234,6 @@ C
 Nsrc/app/escooter/components/escoooter-booking/escoooter-booking.component.html,0/b/0b442eba448aeb4c1c06c2a6586b773ccd783d66
 f
 6src/app/shared/components/nav-bar/nav-bar.component.ts,e/d/edceeabfb163facbb12d6f702672851a405c9858
-v
-Fsrc/app/escooter/components/mini-host-card/mini-host-card.component.ts,f/f/fff892f51cdabc91042d502e1a1226ed6bd49c04
 `
 0src/app/trip/components/trip/trip.component.html,9/1/91339762dcb89f971449617e29067e484e9ee5ee
 ^
@@ -266,3 +256,11 @@ l
 <src/app/trip/components/trip-hosts/trip-hosts.component.html,5/3/536ee35ab1f396094409d031652d97fb86def104
 |
 Lsrc/app/host/components/host-escooter-card/host-escooter-card.component.html,b/7/b79ecffa09f4e0f0482600031a779c634f07ac2d
+z
+Jsrc/app/escooter/components/escooter-ad-card/escooter-ad-card.component.ts,d/f/df54729150dd16c8e70dc84da31edfb5e3b230e6
+`
+0src/app/home/components/home/home.component.html,9/1/913cbca808333de22d017648adafe8a647b6f441
+|
+Lsrc/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html,d/4/d472a7de34909ef9b944e7b4e86b84a6f063f26c
+h
+8src/app/shared/components/nav-bar/nav-bar.component.html,8/f/8f720f710b6267cae06bf2013346c20d8b736efe

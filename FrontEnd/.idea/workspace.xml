@@ -2,38 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/1/1115b0b51ad01b1921ea3de6be8866a4d9744e13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/4/8/4864be9d6a588af80abf8d3c7c4133cad84c38b4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/7/6711a3be51559ca95e84381b2dfae368a543babc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/1/913cbca808333de22d017648adafe8a647b6f441" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/7/b79ecffa09f4e0f0482600031a779c634f07ac2d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/f/bfe38a13f2660ff8a73b0ac029159b09fa3b61f2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/d/4/d472a7de34909ef9b944e7b4e86b84a6f063f26c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/e/2/e2cafb481c3f83a005873c17f1cc771313186cae" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/f/3/f3d40f87ed79b5f8036cd3920515eb8ea03b7b78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/e/7efa2d665bc963e5d0160743025ee9c8355c0194" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9f810a157ca2b383a777fe7da98de335170a31cc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/0/7/074164a6f508b2e25159c686adcc4962ba851495" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/1/1/1115b0b51ad01b1921ea3de6be8866a4d9744e13" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/4/8/4864be9d6a588af80abf8d3c7c4133cad84c38b4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/7/6711a3be51559ca95e84381b2dfae368a543babc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/f/7fee6fabe586143b824beba1f1b2e5310a3d34ba" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/8/f/8f720f710b6267cae06bf2013346c20d8b736efe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/1/913cbca808333de22d017648adafe8a647b6f441" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/7/b79ecffa09f4e0f0482600031a779c634f07ac2d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/f/bfe38a13f2660ff8a73b0ac029159b09fa3b61f2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/d/4/d472a7de34909ef9b944e7b4e86b84a6f063f26c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/e/2/e2cafb481c3f83a005873c17f1cc771313186cae" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/f/3/f3d40f87ed79b5f8036cd3920515eb8ea03b7b78" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/e/7efa2d665bc963e5d0160743025ee9c8355c0194" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9f810a157ca2b383a777fe7da98de335170a31cc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-guard.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-guard.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-ad-card/escooter-ad-card.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/services/escooter.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/home/components/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/home/components/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/shared/components/nav-bar/nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,13 +177,11 @@
       <workItem from="1682799014031" duration="4783000" />
       <workItem from="1682804552298" duration="1856000" />
       <workItem from="1682866992714" duration="2259000" />
-    </task>
-    <task id="LOCAL-00014" summary="updates">
-      <created>1679144403986</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1679144403986</updated>
+      <workItem from="1683032487070" duration="1459000" />
+      <workItem from="1683130049910" duration="93000" />
+      <workItem from="1683194585220" duration="844000" />
+      <workItem from="1683196241690" duration="2457000" />
+      <workItem from="1683479742565" duration="2398000" />
     </task>
     <task id="LOCAL-00015" summary="updates">
       <created>1679144566291</created>
@@ -534,7 +519,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682803821796</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Bug fixes">
+      <created>1683032750289</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1683032750290</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +534,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="login/sign up ui improvement" />
     <MESSAGE value="UI enhancements for verification step pages" />
     <MESSAGE value="Alert fixes for new login, Modal verification ui enhancement" />
     <MESSAGE value="Auth images" />
@@ -567,7 +558,8 @@
     <MESSAGE value="Loading for input start trip, trip start, cancel delay close bug fix, become host select button loading status, Review pannel multiple dialog shwoing fix" />
     <MESSAGE value="Host badges on review users/host users, Trip map increase, escooter detail map area location and more info ui" />
     <MESSAGE value="Fixed loading delays, impleemtned better loading mechanism" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed loading delays, impleemtned better loading mechanism" />
+    <MESSAGE value="Bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

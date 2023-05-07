@@ -1,24 +1,23 @@
 
 <app-load-screen *ngIf="!isHostInit"></app-load-screen>
 
-<div class="mx-auto custom-con mt-4 pb-5" style="" *ngIf="!isLoading">
+<div class="mx-auto custom-con mt-4 pb-5" *ngIf="!isLoading" style="" >
     <section class="header container mt-5 pt-5">
         <div class="row">
-
             <div class="col-md-8 col-sm-12">
-                <div *ngIf="isLoading">
-                    <ngx-skeleton-loader [theme]="{height: '5rem', width: '42rem'}"></ngx-skeleton-loader>
-                    <br>
+                <br>
+                <br>
+                    <ngx-skeleton-loader *ngIf="isLoading" [theme]="{height: '4rem', width: '42rem'}"></ngx-skeleton-loader>
 
-                </div>
-                <h1 style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
+                    <br>
+                <h1 *ngIf="!isLoading" style="font-size: 2.8rem !important" class="h1 text-start fw-bold">
                     {{escooter?.modelName}}
                 </h1>
 
             </div>
             <div class="col-md-4 col-sm-12">
                 <div class="my-auto mx-auto text-center">
-                    <div *ngIf="isLoading" style="width: 100%">
+                    <div *ngIf="isLoading" style="max-width: 100%">
                         <ngx-skeleton-loader [theme]="{height: '3rem', width: '40%'}"></ngx-skeleton-loader>
                         <br>
                     </div>
@@ -32,18 +31,18 @@
     <section class="container">
         <div class="row">
             <div class="col-md-8 col-sm-12">
-                <div *ngIf="isLoading" style="width: 100%">
-                    <ngx-skeleton-loader [theme]="{height: '34rem', width: '52rem'}"></ngx-skeleton-loader>
+
+                    <ngx-skeleton-loader *ngIf="isLoading" [theme]="{height: '34rem', width: '100%'}"></ngx-skeleton-loader>
                     <br>
 
-                </div>
+
 
                 <!--                <p-image style="width:2rem !important; height:auto !important; object-fit: cover;"-->
                 <!--                         class="rounded my-4 shadow-sm" src="{{ escooter?.image }}" alt="Image" width="850"-->
                 <!--                         [preview]="true"></p-image>-->
 
 
-                <img src="{{ escooter?.image }}" style="width:100%; height:auto !important; object-fit: cover;"
+                <img *ngIf="!isLoading" src="{{ escooter?.image }}" style="width:100%; height:auto !important; object-fit: cover;"
                      class="rounded-3 my-4 shadow-sm" alt="..."/>
 
                 <div *ngIf="!isLoading" class="p-4 pt-2 border rounded mt-4 d-sm-none d-md-block show-mb">
@@ -174,7 +173,7 @@
             <div class="col-4 ">
 
                 <app-mini-host-card (onInit)="handleHostInit($event)" *ngIf="host" [host]="host" class="remove-mb"></app-mini-host-card>
-                <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!isHostInit">
+                <div class="border rounded mt-4 shadow-sm p-3" *ngIf="!host">
                     <ngx-skeleton-loader appearance="line"
                                          [theme]="{height: '1.5rem', width: '10rem', borderRadius: '5rem'}"></ngx-skeleton-loader>
                     <div class="d-flex align-items-center">
@@ -195,7 +194,7 @@
                     </div>
                 </div>
 
-                <div class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
+                <div *ngIf="escooter" class="p-4 pt-2 border shadow-sm rounded-3 mt-4 d-sm-none d-md-block remove-mb">
 
 
                     <app-start-trip-form [escooter]="escooter" class="" [host]="host" *ngIf="escooter"
@@ -230,10 +229,10 @@
                 </google-map>
 
                 <div class="mt-5 w-75">
-                    <h5>{{escooter.county}}, {{escooter.country}}</h5>
+                    <h5>{{escooter?.county}}, {{escooter?.country}}</h5>
 
                     <p>Find out more about the trip and meet the host at the designated pickup
-                        location {{host.hostUser.location}}</p>
+                        location {{host?.hostUser.location}}</p>
                 </div>
             </div>
             <div class="col-sm-12 mb-5 pb-5 ">
