@@ -2,25 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef40dd66-51f0-4ac3-827a-f366af632454" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/java/com/troch/torchApplication/controllers/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BackendAPI/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../BackendAPI/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/7/e/7efa2d665bc963e5d0160743025ee9c8355c0194" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9f810a157ca2b383a777fe7da98de335170a31cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/1/61ab95712e0a960aa4e44c73c6defb9b0ff3e07d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/7/e/7efa2d665bc963e5d0160743025ee9c8355c0194" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9f810a157ca2b383a777fe7da98de335170a31cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-guard.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-guard.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/auth/services/auth-interceptor.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/escooter-detail/escooter-detail.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/mini-host-card/mini-host-card.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/escooter/components/start-trip-form/start-trip-form.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,14 +168,7 @@
       <workItem from="1683130049910" duration="93000" />
       <workItem from="1683194585220" duration="844000" />
       <workItem from="1683196241690" duration="2457000" />
-      <workItem from="1683479742565" duration="2398000" />
-    </task>
-    <task id="LOCAL-00015" summary="updates">
-      <created>1679144566291</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1679144566291</updated>
+      <workItem from="1683479742565" duration="3115000" />
     </task>
     <task id="LOCAL-00016" summary="updates">
       <created>1679144683538</created>
@@ -526,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683032750290</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Fix loading screen">
+      <created>1683482259970</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1683482259971</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -534,7 +521,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="UI enhancements for verification step pages" />
     <MESSAGE value="Alert fixes for new login, Modal verification ui enhancement" />
     <MESSAGE value="Auth images" />
     <MESSAGE value="Ad UI improvment" />
@@ -559,7 +545,8 @@
     <MESSAGE value="Host badges on review users/host users, Trip map increase, escooter detail map area location and more info ui" />
     <MESSAGE value="Fixed loading delays, impleemtned better loading mechanism" />
     <MESSAGE value="Bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
+    <MESSAGE value="Fix loading screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix loading screen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
