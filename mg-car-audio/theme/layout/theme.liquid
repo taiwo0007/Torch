@@ -24,6 +24,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-palette' -%}
+    {%- render 'mg-local-business-schema' -%}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -169,6 +170,8 @@
     {% render 'theme-drawer' %}
 
     {% render 'search-modal' %}
+
+    {% render 'mg-whatsapp-button' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}

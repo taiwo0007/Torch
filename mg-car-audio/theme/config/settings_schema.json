@@ -2116,5 +2116,174 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "MG Car Audio: business details",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Contact"
+      },
+      {
+        "type": "text",
+        "id": "mg_business_name",
+        "label": "Business name",
+        "default": "MG Car Audio"
+      },
+      {
+        "type": "text",
+        "id": "mg_tagline",
+        "label": "Tagline",
+        "default": "Ireland's CarPlay & Car Audio Specialist"
+      },
+      {
+        "type": "text",
+        "id": "mg_phone_display",
+        "label": "Phone (as shown)",
+        "default": "087 034 4355"
+      },
+      {
+        "type": "text",
+        "id": "mg_phone_e164",
+        "label": "Phone (international, digits only)",
+        "info": "Used for tel: links and structured data. Example: 353870344355",
+        "default": "353870344355"
+      },
+      {
+        "type": "text",
+        "id": "mg_email",
+        "label": "Email",
+        "info": "Leave blank to hide."
+      },
+      {
+        "type": "header",
+        "content": "Address"
+      },
+      {
+        "type": "text",
+        "id": "mg_street",
+        "label": "Street address",
+        "default": "Unit 3, Ballymount Business Centre, Ballymount Road Lower"
+      },
+      {
+        "type": "text",
+        "id": "mg_locality",
+        "label": "Town / city",
+        "default": "Dublin 12"
+      },
+      {
+        "type": "text",
+        "id": "mg_region",
+        "label": "County",
+        "default": "Co. Dublin"
+      },
+      {
+        "type": "text",
+        "id": "mg_postcode",
+        "label": "Eircode",
+        "default": "D12 YX27"
+      },
+      {
+        "type": "text",
+        "id": "mg_country_code",
+        "label": "Country code",
+        "default": "IE"
+      },
+      {
+        "type": "text",
+        "id": "mg_geo_lat",
+        "label": "Latitude",
+        "info": "Optional. Copy from Google Maps (right-click the pin). Used in local SEO structured data."
+      },
+      {
+        "type": "text",
+        "id": "mg_geo_lng",
+        "label": "Longitude"
+      },
+      {
+        "type": "text",
+        "id": "mg_map_query",
+        "label": "Google Maps search query",
+        "default": "MG Car Audio, Ballymount Business Centre, D12 YX27"
+      },
+      {
+        "type": "header",
+        "content": "Opening hours"
+      },
+      {
+        "type": "text",
+        "id": "mg_hours_weekdays",
+        "label": "Monday to Friday",
+        "default": "9:30am – 7:00pm"
+      },
+      {
+        "type": "text",
+        "id": "mg_hours_saturday",
+        "label": "Saturday",
+        "default": "11:00am – 7:00pm"
+      },
+      {
+        "type": "text",
+        "id": "mg_hours_sunday",
+        "label": "Sunday",
+        "default": "By appointment"
+      },
+      {
+        "type": "header",
+        "content": "WhatsApp"
+      },
+      {
+        "type": "checkbox",
+        "id": "mg_whatsapp_enabled",
+        "label": "Show floating WhatsApp button",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "mg_whatsapp_number",
+        "label": "WhatsApp number (international, digits only)",
+        "default": "353870344355"
+      },
+      {
+        "type": "text",
+        "id": "mg_whatsapp_message",
+        "label": "Pre-filled message",
+        "default": "Hi MG Car Audio, I'd like a quote. My reg is: "
+      },
+      {
+        "type": "header",
+        "content": "Reviews (trust badge)"
+      },
+      {
+        "type": "text",
+        "id": "mg_review_rating",
+        "label": "Google rating",
+        "info": "PLACEHOLDER: replace with the real Google Business rating.",
+        "default": "4.9"
+      },
+      {
+        "type": "text",
+        "id": "mg_review_count",
+        "label": "Number of Google reviews",
+        "info": "PLACEHOLDER: replace with the real count.",
+        "default": "120"
+      },
+      {
+        "type": "url",
+        "id": "mg_review_url",
+        "label": "Google reviews link"
+      },
+      {
+        "type": "header",
+        "content": "Warranty"
+      },
+      {
+        "type": "text",
+        "id": "mg_warranty_text",
+        "label": "Warranty headline",
+        "info": "PLACEHOLDER: confirm the warranty terms with the client.",
+        "default": "12-month fitting warranty"
+      }
+    ]
   }
 ]

@@ -1,0 +1,315 @@
+/*
+ * MG Car Audio design tokens and shared utilities.
+ * Loaded after base.css (see snippets/stylesheets.liquid).
+ * Section-specific styles live in each mg-* section's {% stylesheet %} tag.
+ */
+
+:root {
+  /* Surfaces: near-black graphite stack */
+  --mg-bg: #0b0d10;
+  --mg-surface: #15191f;
+  --mg-surface-2: #1c2129;
+  --mg-border: #2a3039;
+  --mg-border-strong: #3a424e;
+
+  /* Text */
+  --mg-text: #f2f4f7;
+  --mg-text-muted: #aab3c0;
+  --mg-text-subtle: #7d8796;
+
+  /* Accent: ignition red. Only for primary actions, prices and small highlights. */
+  --mg-accent: #e4002b;
+  --mg-accent-hover: #ff1f47;
+  --mg-accent-soft: rgb(228 0 43 / 0.14);
+
+  /* Secondary signal colours */
+  --mg-whatsapp: #25d366;
+  --mg-star: #fbbc04;
+  --mg-success: #2ecc71;
+
+  /* Shape and depth */
+  --mg-radius-sm: 6px;
+  --mg-radius: 10px;
+  --mg-radius-lg: 16px;
+  --mg-shadow: 0 12px 32px rgb(0 0 0 / 0.45);
+  --mg-glow: 0 0 0 1px rgb(228 0 43 / 0.35), 0 10px 30px rgb(228 0 43 / 0.18);
+
+  /* Layout */
+  --mg-page-max: 1320px;
+  --mg-gutter: clamp(16px, 4vw, 40px);
+  --mg-section-space: clamp(56px, 8vw, 112px);
+
+  /* Type scale (fluid) */
+  --mg-eyebrow-size: 0.8125rem;
+  --mg-h1: clamp(2.25rem, 5.5vw, 4.25rem);
+  --mg-h2: clamp(1.75rem, 3.6vw, 2.75rem);
+  --mg-h3: clamp(1.25rem, 2vw, 1.5rem);
+
+  --mg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Layout helpers ---------- */
+
+.mg-section {
+  padding-block: var(--mg-section-space);
+  color: var(--mg-text);
+}
+
+.mg-section--tight {
+  padding-block: calc(var(--mg-section-space) * 0.55);
+}
+
+.mg-section--surface {
+  background: var(--mg-surface);
+}
+
+.mg-container {
+  width: 100%;
+  max-width: var(--mg-page-max);
+  margin-inline: auto;
+  padding-inline: var(--mg-gutter);
+}
+
+/* ---------- Section headings ---------- */
+
+.mg-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-subheading--family);
+  font-weight: 600;
+  font-size: var(--mg-eyebrow-size);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mg-accent);
+}
+
+.mg-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: currentColor;
+}
+
+.mg-heading {
+  margin: 0;
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: var(--mg-h2);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--mg-text);
+  text-wrap: balance;
+}
+
+.mg-lede {
+  max-width: 60ch;
+  margin: 1rem 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--mg-text-muted);
+  text-wrap: pretty;
+}
+
+.mg-section-head {
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.mg-section-head--center {
+  text-align: center;
+}
+
+.mg-section-head--center .mg-lede {
+  margin-inline: auto;
+}
+
+.mg-section-head--row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+/* ---------- Buttons ---------- */
+
+.mg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--mg-radius-sm);
+  font-family: var(--font-body--family);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--mg-ease),
+    border-color 0.2s var(--mg-ease),
+    color 0.2s var(--mg-ease),
+    transform 0.2s var(--mg-ease);
+}
+
+.mg-btn:hover {
+  transform: translateY(-1px);
+}
+
+.mg-btn:focus-visible {
+  outline: 2px solid var(--mg-text);
+  outline-offset: 3px;
+}
+
+.mg-btn svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+.mg-btn--primary {
+  background: var(--mg-accent);
+  color: #fff;
+}
+
+.mg-btn--primary:hover {
+  background: var(--mg-accent-hover);
+  color: #fff;
+}
+
+.mg-btn--ghost {
+  background: transparent;
+  border-color: var(--mg-border-strong);
+  color: var(--mg-text);
+}
+
+.mg-btn--ghost:hover {
+  border-color: var(--mg-text);
+  color: var(--mg-text);
+}
+
+.mg-btn--whatsapp {
+  background: var(--mg-whatsapp);
+  color: #06301a;
+}
+
+.mg-btn--whatsapp:hover {
+  background: #3be07a;
+  color: #06301a;
+}
+
+.mg-btn--block {
+  width: 100%;
+}
+
+/* ---------- Cards ---------- */
+
+.mg-card {
+  position: relative;
+  background: var(--mg-surface);
+  border: 1px solid var(--mg-border);
+  border-radius: var(--mg-radius);
+  transition:
+    border-color 0.25s var(--mg-ease),
+    transform 0.25s var(--mg-ease),
+    box-shadow 0.25s var(--mg-ease);
+}
+
+a.mg-card,
+.mg-card--link {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.mg-card:hover,
+.mg-card--link:hover {
+  border-color: var(--mg-border-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--mg-shadow);
+}
+
+/* ---------- Price ---------- */
+
+.mg-price-from {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: var(--mg-text);
+}
+
+.mg-price-from small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mg-text-subtle);
+}
+
+.mg-price-from strong {
+  font-size: 1.25rem;
+  color: var(--mg-accent);
+}
+
+/* ---------- Chips / badges ---------- */
+
+.mg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--mg-border);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.03);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--mg-text-muted);
+}
+
+.mg-placeholder-note {
+  font-size: 0.75rem;
+  color: var(--mg-text-subtle);
+}
+
+/* ---------- Grids ---------- */
+
+.mg-grid {
+  display: grid;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-btn,
+  .mg-card {
+    transition: none;
+  }
+
+  .mg-btn:hover,
+  a.mg-card:hover,
+  .mg-card--link:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Visually hidden ---------- */
+
+.mg-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
