@@ -8,7 +8,7 @@
 | SEO title | `About Us: CarPlay & Car Audio Specialists in Dublin \| MG Car Audio` (plain `\|`) |
 | SEO description | `MG Car Audio fits Apple CarPlay, Android Auto, screen upgrades and premium car audio at our Dublin 12 workshop, for BMW, Audi, Mercedes-Benz, VW and more.` |
 
-Source: MG's own About page (`docs/source/mgcaraudio-ie-about.txt`), tightened and put into Irish/UK English. No new claims have been added (no years in business, no install counts). Paste everything below the line into the page editor. Use **Heading 2** for `##` lines and **Heading 3** for `###` lines.
+Source: MG's own About page (`docs/source/mgcaraudio-ie-about.txt`), tightened and put into Irish/UK English. No new claims have been added (no origin story, years in business or install counts). Paste everything below the line into the page editor. Use **Heading 2** for `##` lines and **Heading 3** for `###` lines.
 
 ---
 
@@ -16,9 +16,9 @@ Source: MG's own About page (`docs/source/mgcaraudio-ie-about.txt`), tightened a
 
 At MG Car Audio, we make the car you already love feel brand new inside. From Apple CarPlay and Android Auto on your factory screen to widescreen upgrades and premium sound, we bring the latest in-car technology to your dashboard with a clean, factory-quality finish.
 
-## Our story
+## What we do
 
-We started out doing what we still love most: steering wheel and CarPlay screen installations for BMW and Mercedes-Benz. Today we upgrade Audi, Volkswagen and all major makes too, turning everyday cars into modern, connected ones that are a pleasure to drive.
+We specialise in steering wheel and CarPlay screen installations for BMW and Mercedes-Benz, and we upgrade Audi, Volkswagen and all major makes too, turning everyday cars into modern, connected ones that are a pleasure to drive.
 
 ## Who we are
 

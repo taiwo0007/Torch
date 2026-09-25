@@ -15,7 +15,7 @@
       "type": "mg-footer-contact",
       "name": "Contact band",
       "settings": {
-        "eyebrow": "Visit the workshop",
+        "eyebrow": "Get in touch",
         "show_tagline": true,
         "text": "CarPlay, Android Auto, screens and sound, fitted properly at our Dublin 12 workshop. Send us your reg and we'll tell you exactly what fits your car.",
         "call_label": "Call",
@@ -30,7 +30,8 @@
         "contact_heading": "Talk to us",
         "whatsapp_line": "Send your reg + a dash photo",
         "contact_note": "Tell us your make, model and year and we'll come back with a fitted price.",
-        "background": "surface"
+        "background": "surface",
+        "compact_on_contact_pages": true
       }
     },
     "footer": {

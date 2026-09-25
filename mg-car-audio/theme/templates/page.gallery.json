@@ -1,0 +1,151 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "eyebrow": {
+          "type": "custom-liquid",
+          "name": "Eyebrow",
+          "settings": {
+            "custom_liquid": "<p class=\"mg-eyebrow\" style=\"margin: 0\">Fitted in Dublin 12</p>"
+          },
+          "blocks": {}
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "page-content"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 16,
+        "padding-block-start": 56,
+        "padding-block-end": 0
+      }
+    },
+    "gallery": {
+      "type": "mg-gallery",
+      "blocks": {
+        "install_bmw": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "car_label": "BMW · Wireless CarPlay",
+            "caption": "CarPlay added to the factory widescreen, keeping the original controls wherever possible."
+          }
+        },
+        "install_audi": {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "car_label": "Audi · CarPlay retrofit",
+            "caption": "An OEM-style fit designed to work with the original MMI controls."
+          }
+        },
+        "install_android_auto": {
+          "type": "image",
+          "settings": {
+            "fallback": "radio-frequency",
+            "car_label": "Japanese imports · Radio conversion",
+            "caption": "Imported cars tuned to Irish FM stations, with menus and maps switched to European spec."
+          }
+        },
+        "install_showroom": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "car_label": "Ballymount showroom",
+            "caption": "Call in to see screens, speakers and head units in person."
+          }
+        },
+        "install_radio": {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "car_label": "Radio upgrades · Head units",
+            "caption": "From simple radio swaps to full Android screens, finished to a factory standard."
+          }
+        },
+        "install_speakers": {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "car_label": "Speaker upgrades",
+            "caption": "Clearer vocals and tighter bass, fitted without the door rattle."
+          }
+        }
+      },
+      "block_order": [
+        "install_bmw",
+        "install_audi",
+        "install_android_auto",
+        "install_showroom",
+        "install_radio",
+        "install_speakers"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Finished to a factory standard",
+        "text": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way.",
+        "follow_label": "Follow our installs",
+        "background": "page",
+        "spacing": "normal"
+      }
+    },
+    "cta": {
+      "type": "mg-service-cta",
+      "settings": {
+        "eyebrow": "Like what you see?",
+        "heading": "Let's upgrade your car next",
+        "text": "Send your reg and a photo of your dash on WhatsApp and we'll come back with the right option for your car and a fitted price.",
+        "show_details": true,
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp your reg",
+        "whatsapp_message": "Hi MG Car Audio, I saw your work on the website. Can you tell me what fits my car? My reg is: ",
+        "show_call": true,
+        "call_label": "Call",
+        "book_label": "Book a fitting",
+        "book_url": "/pages/book-a-fitting",
+        "glow_position": "right",
+        "glow_strength": 30,
+        "spacing": "tight"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "gallery",
+    "cta"
+  ]
+}

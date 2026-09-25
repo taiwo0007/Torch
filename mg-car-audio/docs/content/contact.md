@@ -4,7 +4,7 @@
 |---|---|
 | Title | `Contact Us` |
 | URL handle | `contact` |
-| Theme template | `page.contact` (shows the page content, then Shopify's contact form; the integrator adds the map section) |
+| Theme template | `page.contact` (shows the page content, then the MG message form, then the map with the address, hours and buttons) |
 | SEO title | `Contact MG Car Audio, Ballymount, Dublin 12` |
 | SEO description | `Call 087 034 4355, WhatsApp us or visit our workshop at Ballymount Business Centre, Dublin 12, D12 YX27. Open Mon–Sat, Sundays by appointment.` |
 
@@ -20,11 +20,4 @@ Questions about CarPlay, screens, sound or a fitting you've booked? Get in touch
 
 **Phone and WhatsApp:** 087 034 4355
 
-**Workshop:** MG Car Audio, Unit 3, Ballymount Business Centre, Ballymount Road Lower, Dublin 12, D12 YX27
-
-**Opening hours**
-Monday to Friday: 9:30am to 7pm
-Saturday: 11am to 7pm
-Sunday: by appointment
-
-Prefer to write? Use the form below and tell us which service you're interested in. We'll get back to you as soon as possible.
+Prefer to write? Use the form below and tell us which service you're interested in. We'll get back to you as soon as possible. Our address, opening hours and directions are at the bottom of the page.

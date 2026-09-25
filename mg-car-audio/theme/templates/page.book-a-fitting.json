@@ -1,0 +1,306 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact-deposit": {
+          "type": "fact",
+          "settings": {
+            "icon": "tag",
+            "text": "€50 deposit, off your bill"
+          }
+        },
+        "fact-time": {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "text": "Most fits in 1–2 hours"
+          }
+        },
+        "fact-price": {
+          "type": "fact",
+          "settings": {
+            "icon": "check",
+            "text": "Fixed price before you book"
+          }
+        },
+        "fact-location": {
+          "type": "fact",
+          "settings": {
+            "icon": "map-pin",
+            "text": "Ballymount, Dublin 12"
+          }
+        }
+      },
+      "block_order": [
+        "fact-deposit",
+        "fact-time",
+        "fact-price",
+        "fact-location"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "",
+        "breadcrumb_schema": true,
+        "eyebrow": "Book in three steps",
+        "heading": "",
+        "intro": "Send us your reg, get a fixed fitted price, then secure your slot with a €50 deposit that comes off your final bill. Most fittings are done in one to two hours at our Ballymount workshop.",
+        "price_prefix": "Deposit",
+        "price": "€50",
+        "price_suffix": "secures your slot",
+        "price_note": "Taken off your final bill. Move your date free with 48 hours' notice.",
+        "primary_label": "Pay the €50 deposit",
+        "primary_url": "/products/booking-deposit",
+        "show_whatsapp": true,
+        "whatsapp_label": "Get a price on WhatsApp",
+        "whatsapp_message": "Hi MG Car Audio, I'd like to book a fitting. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-showroom.webp",
+        "show_rating": true
+      }
+    },
+    "how_it_works": {
+      "type": "mg-how-it-works",
+      "blocks": {
+        "step_reg": {
+          "type": "step",
+          "settings": {
+            "icon": "camera",
+            "title": "Send your reg + a dash photo",
+            "text": "WhatsApp us your registration and a quick photo of your dash, or use the quote form. That's usually all we need to tell you exactly what fits."
+          }
+        },
+        "step_quote": {
+          "type": "step",
+          "settings": {
+            "icon": "message",
+            "title": "Get a fixed quote",
+            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+          }
+        },
+        "step_book": {
+          "type": "step",
+          "settings": {
+            "icon": "calendar",
+            "title": "Pay the €50 deposit",
+            "text": "The <strong>€50 deposit</strong> secures your slot at our Ballymount workshop and comes off your final bill."
+          }
+        },
+        "step_drive": {
+          "type": "step",
+          "settings": {
+            "icon": "car",
+            "title": "Drive in, drive away",
+            "text": "We fit it, test everything with your phone and show you how it works. The balance is paid when the work is done."
+          }
+        }
+      },
+      "block_order": [
+        "step_reg",
+        "step_quote",
+        "step_book",
+        "step_drive"
+      ],
+      "settings": {
+        "eyebrow": "How booking works",
+        "heading": "From your reg to a booked slot",
+        "text": "No app to download and no account to create. Tell us about your car, agree the price, then pay the deposit online.",
+        "align": "left",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us your reg",
+        "button_label": "Get a quote",
+        "button_link": "/pages/get-a-quote",
+        "show_phone": true,
+        "phone_prefix": "Rather talk it through? Call",
+        "background": "surface",
+        "spacing": "normal"
+      }
+    },
+    "fittings": {
+      "type": "mg-services-grid",
+      "blocks": {
+        "svc_bmw_carplay": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Apple CarPlay",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen, with an OEM-style finish.",
+            "price": "€350",
+            "price_label": "",
+            "url": "/products/carplay-installation-bmw",
+            "badge": "Most popular",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
+          }
+        },
+        "svc_bmw_android_auto": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Android Auto (iDrive 7)",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens. About an hour in the bay.",
+            "price": "€299",
+            "price_label": "",
+            "url": "/products/android-auto-installation-bmw-id7",
+            "fallback_image": "mg-android-auto-dash.webp"
+          }
+        },
+        "svc_android_radio": {
+          "type": "service",
+          "settings": {
+            "title": "Android radio fitting",
+            "text": "You supply the radio, we fit it properly with neat wiring. About 1 hour 30 minutes.",
+            "price": "€150",
+            "price_label": "",
+            "url": "/products/android-radio-installation",
+            "fallback_image": "mg-dash-radio.webp"
+          }
+        },
+        "svc_video_in_motion": {
+          "type": "service",
+          "settings": {
+            "title": "BMW iDrive 7 video in motion",
+            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "price": "€149",
+            "price_label": "",
+            "url": "/products/bmw-idrive7-video-in-motion",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
+          }
+        },
+        "svc_bmw_japan": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Japan-to-Europe conversion",
+            "text": "Menus, maps and radio band switched to European spec on imported BMWs. About 2 hours.",
+            "price": "€450",
+            "price_label": "",
+            "url": "/products/bmw-japan-to-europe-conversion",
+            "fallback_image": "mg-bmw-japan-to-europe.webp"
+          }
+        },
+        "svc_reverse_camera": {
+          "type": "service",
+          "settings": {
+            "title": "Reverse camera, supplied and fitted",
+            "text": "Switches on the moment you select reverse, with the wiring hidden. BMW, Audi, VW and Honda.",
+            "price": "€399",
+            "price_label": "from",
+            "url": "/products/reverse-camera-installation",
+            "fallback_image": "mg-showroom.webp"
+          }
+        }
+      },
+      "block_order": [
+        "svc_bmw_carplay",
+        "svc_bmw_android_auto",
+        "svc_android_radio",
+        "svc_video_in_motion",
+        "svc_bmw_japan",
+        "svc_reverse_camera"
+      ],
+      "settings": {
+        "eyebrow": "Popular fittings",
+        "heading": "Book one of these online",
+        "text": "MG's published prices for our most-booked jobs, all fitted at our Dublin 12 workshop. Open a service to see the details and book it.",
+        "button_label": "All services",
+        "button_url": "/pages/services",
+        "price_suffix": "fitted",
+        "quote_label": "Get a quote",
+        "columns_desktop": 3,
+        "background": "page",
+        "footnote": "Something else? Send us your reg and we'll come back with a price and a time."
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "page-content"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 16,
+        "padding-block-start": 0,
+        "padding-block-end": 56
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "faq_deposit": {
+          "type": "question",
+          "settings": {
+            "question": "Why do I need to pay a deposit?",
+            "answer": "<p>The <strong>€50 deposit</strong> confirms your booking, reserves workshop time for your car and lets us have any parts ready. It's taken off your final bill on the day.</p>"
+          }
+        },
+        "faq_reschedule": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change or cancel my booking?",
+            "answer": "<p>Yes. Contact us at least 48 hours before your appointment and we'll move your deposit to a new date. Deposits are non-refundable if you don't attend, or if you cancel with less than 48 hours' notice.</p>"
+          }
+        },
+        "faq_quote": {
+          "type": "question",
+          "settings": {
+            "question": "What do you need from me to give a price?",
+            "answer": "<p>Your registration number, a photo of your dash and screen, and what you'd like done. WhatsApp is quickest, or use our <a href=\"/pages/get-a-quote\">quote form</a>.</p>"
+          }
+        },
+        "faq_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long will my car be with you?",
+            "answer": "<p>Most CarPlay and Android Auto fittings take one to two hours. BMW Android Auto on iDrive 7 takes about an hour, an Android radio fitting about an hour and a half, and a BMW Japan-to-Europe conversion about two hours. We'll confirm the time when you book.</p>"
+          }
+        },
+        "faq_own_radio": {
+          "type": "question",
+          "settings": {
+            "question": "Can I bring my own radio for you to fit?",
+            "answer": "<p>Yes. Our Android radio fitting is <strong>€150</strong> when you supply the radio, fascia kit and harness. For CarPlay interfaces and screen upgrades we recommend buying the parts through us, so we can check they suit your car and stand over the whole job.</p>"
+          }
+        },
+        "faq_balance": {
+          "type": "question",
+          "settings": {
+            "question": "When do I pay the rest?",
+            "answer": "<p>The balance is paid in the workshop once the work is done and you've seen everything working.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_deposit",
+        "faq_reschedule",
+        "faq_quote",
+        "faq_time",
+        "faq_own_radio",
+        "faq_balance"
+      ],
+      "settings": {
+        "eyebrow": "Booking FAQ",
+        "heading": "Before you book",
+        "text": "Deposits, timings and what to bring. Anything else, send us a message.",
+        "show_contact": true,
+        "contact_heading": "Not sure what fits your car?",
+        "open_first": true,
+        "output_faq_schema": true,
+        "layout": "split",
+        "background": "surface",
+        "spacing": "normal"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "how_it_works",
+    "fittings",
+    "main",
+    "faq"
+  ]
+}

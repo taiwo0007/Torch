@@ -2,7 +2,7 @@
 
 Exact values for the **BMW** entry of the `car_make` metaobject, plus its four `faq` entries and the page that uses it. Enter them in Shopify admin as described in `docs/SETUP.md` §7–8.
 
-Every price here is MG's real price, from mgcaraudio.ie/book-online and MG's reverse camera listing (checked 25 September 2026). Nothing in this file is a placeholder except where it says so.
+Every price here is MG's real price, from mgcaraudio.ie/book-online and MG's reverse camera listing (checked 25 September 2026). Fitting times are only the ones MG publishes (Android Auto on iDrive 7: 1 hour; Japan-to-Europe: 2 hours); MG gives no time for BMW Apple CarPlay, so none is stated. Nothing in this file is a placeholder except where it says so.
 
 ---
 
@@ -16,7 +16,7 @@ Admin: **Content → Metaobjects → FAQ → Add entry**. Create four entries. T
 - **answer:**
 
 ```
-In most cases, yes. We add Apple CarPlay to the factory iDrive screen, so you keep the original look, the iDrive controller and your steering wheel buttons. Depending on your iDrive version, that's a software activation or a small interface fitted behind the dash. BMW Apple CarPlay installation is €350 and takes about an hour.
+In most cases, yes. We add Apple CarPlay to the factory iDrive screen, so you keep the original look, the iDrive controller and your steering wheel buttons. Depending on your iDrive version, that's a software activation or a small interface fitted behind the dash. BMW Apple CarPlay installation is €350, and we'll confirm the fitting time for your iDrive system when you book.
 ```
 
 ### FAQ 2

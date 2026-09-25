@@ -1,8 +1,21 @@
 {%- liquid
   assign business_name = settings.mg_business_name | default: shop.name
 
+  # The home and contact pages already end with the map, address and hours (mg-contact-map),
+  # so the band slims down to the name and buttons there, on the page background.
+  assign is_compact = false
+  if section.settings.compact_on_contact_pages
+    if template.name == 'index'
+      assign is_compact = true
+    elsif template.name == 'page' and template.suffix == 'contact'
+      assign is_compact = true
+    endif
+  endif
+
   assign section_classes = 'mg-footer-contact'
-  if section.settings.background == 'surface'
+  if is_compact
+    assign section_classes = section_classes | append: ' mg-footer-contact--compact'
+  elsif section.settings.background == 'surface'
     assign section_classes = section_classes | append: ' mg-footer-contact--surface'
   endif
 
@@ -98,6 +111,7 @@
       </div>
     </div>
 
+    {%- unless is_compact -%}
     <ul
       class="mg-footer-contact__details"
       role="list"
@@ -196,6 +210,7 @@
         </div>
       </li>
     </ul>
+    {%- endunless -%}
   </div>
 </div>
 
@@ -212,6 +227,14 @@
 
   .mg-footer-contact--surface {
     background: var(--mg-surface);
+  }
+
+  .mg-footer-contact--compact {
+    padding-block: clamp(40px, 5vw, 64px);
+  }
+
+  .mg-footer-contact--compact .mg-footer-contact__brand {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
   }
 
   /* Ignition-red hairline and a faint glow, top left */
@@ -512,7 +535,7 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Visit the workshop"
+      "default": "Get in touch"
     },
     {
       "type": "checkbox",
@@ -629,6 +652,13 @@
         }
       ],
       "default": "surface"
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_on_contact_pages",
+      "label": "Slim band on the home and contact pages",
+      "info": "Those pages already end with the map, address and hours, so the band shows only the name and buttons there, on the page background.",
+      "default": true
     }
   ],
   "presets": [

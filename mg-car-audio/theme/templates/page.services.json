@@ -1,0 +1,281 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact-inhouse": {
+          "type": "fact",
+          "settings": {
+            "icon": "wrench",
+            "text": "Everything fitted in-house"
+          }
+        },
+        "fact-finish": {
+          "type": "fact",
+          "settings": {
+            "icon": "shield",
+            "text": "OEM-style finish"
+          }
+        },
+        "fact-makes": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        },
+        "fact-deposit": {
+          "type": "fact",
+          "settings": {
+            "icon": "calendar",
+            "text": "€50 deposit secures your slot"
+          }
+        }
+      },
+      "block_order": [
+        "fact-inhouse",
+        "fact-finish",
+        "fact-makes",
+        "fact-deposit"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "",
+        "breadcrumb_schema": true,
+        "eyebrow": "Everything we fit",
+        "heading": "",
+        "intro": "From wireless CarPlay on your factory screen to a full sound upgrade, every job is done in-house at our Dublin 12 workshop with a factory-style finish. Not sure what you need? Send us your reg and a photo of your dash.",
+        "price_prefix": "From",
+        "price": "€149",
+        "price_suffix": "fitted",
+        "price_note": "BMW iDrive 7 video in motion. BMW Apple CarPlay €350, Android radio fitting €150. Other jobs quoted from your reg.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp for a quote",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-showroom.webp",
+        "show_rating": false
+      }
+    },
+    "services": {
+      "type": "mg-services-grid",
+      "blocks": {
+        "service_bmw_carplay": {
+          "type": "service",
+          "settings": {
+            "title": "Apple CarPlay for BMW",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept.",
+            "price": "€350",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-carplay-screen.webp",
+            "url": "/pages/carplay-installation",
+            "badge": "Most popular"
+          }
+        },
+        "service_bmw_android_auto": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Android Auto (iDrive 7)",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens. Around an hour in the bay while you wait.",
+            "price": "€299",
+            "price_label": "from",
+            "fallback_image": "mg-android-auto-dash.webp",
+            "url": "/products/android-auto-installation-bmw-id7",
+            "badge": "1 hour"
+          }
+        },
+        "service_android_radio": {
+          "type": "service",
+          "settings": {
+            "title": "Android radio fitting",
+            "text": "Android head units fitted properly, with neat wiring and a factory-style finish. About 90 minutes.",
+            "price": "€150",
+            "price_label": "from",
+            "fallback_image": "mg-dash-radio.webp",
+            "url": "/products/android-radio-installation"
+          }
+        },
+        "service_japan_to_europe": {
+          "type": "service",
+          "settings": {
+            "title": "Japanese-to-European conversion",
+            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. We convert Mercedes-Benz and VW imports too.",
+            "price": "€450",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-japan-to-europe.webp",
+            "url": "/products/bmw-japan-to-europe-conversion"
+          }
+        },
+        "service_screen_upgrades": {
+          "type": "service",
+          "settings": {
+            "title": "Screen upgrades",
+            "text": "Bigger, sharper widescreens for BMW, Mercedes, Audi and VW, with CarPlay and Android Auto built in.",
+            "price": "€X",
+            "price_label": "from",
+            "fallback_image": "mg-audi-carplay-screen.webp",
+            "url": "/collections/screen-upgrades"
+          }
+        },
+        "service_speakers": {
+          "type": "service",
+          "settings": {
+            "title": "Speaker & subwoofer upgrades",
+            "text": "JBL and Harman Kardon speakers, subs and amps, matched to your car for clear, powerful sound.",
+            "price": "€X",
+            "price_label": "from",
+            "fallback_image": "mg-door-speaker.webp",
+            "url": "/pages/get-a-quote?service=speaker"
+          }
+        },
+        "service_video_in_motion": {
+          "type": "service",
+          "settings": {
+            "title": "BMW iDrive 7 video in motion",
+            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "price": "€149",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-carplay-screen.webp",
+            "url": "/products/bmw-idrive7-video-in-motion"
+          }
+        },
+        "service_reverse_camera": {
+          "type": "service",
+          "settings": {
+            "title": "Reverse camera fitting",
+            "text": "A reverse camera that switches on the moment you select reverse, with the wiring hidden. Dashcams hard-wired too.",
+            "price": "€399",
+            "price_label": "from",
+            "fallback_image": "mg-showroom.webp",
+            "url": "/products/reverse-camera-installation"
+          }
+        }
+      },
+      "block_order": [
+        "service_bmw_carplay",
+        "service_bmw_android_auto",
+        "service_android_radio",
+        "service_japan_to_europe",
+        "service_screen_upgrades",
+        "service_speakers",
+        "service_video_in_motion",
+        "service_reverse_camera"
+      ],
+      "settings": {
+        "eyebrow": "Most booked",
+        "heading": "Popular services",
+        "text": "Upfront 'from' prices on our most-booked jobs, all fitted at our workshop in Ballymount, Dublin 12. A €50 deposit secures your slot.",
+        "button_label": "",
+        "price_suffix": "fitted",
+        "quote_label": "Get a quote",
+        "columns_desktop": 4,
+        "background": "page",
+        "footnote": "Prices shown are starting prices for fitting at our Dublin 12 workshop. Send us your reg and we'll confirm the exact price for your car before you book."
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "page-content"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 16,
+        "padding-block-start": 0,
+        "padding-block-end": 56
+      }
+    },
+    "how_it_works": {
+      "type": "mg-how-it-works",
+      "blocks": {
+        "step_reg": {
+          "type": "step",
+          "settings": {
+            "icon": "camera",
+            "title": "Send your reg + a dash photo",
+            "text": "WhatsApp us your registration and a quick photo of your dash. That's usually all we need to tell you exactly what fits."
+          }
+        },
+        "step_quote": {
+          "type": "step",
+          "settings": {
+            "icon": "message",
+            "title": "Get a fixed quote",
+            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+          }
+        },
+        "step_book": {
+          "type": "step",
+          "settings": {
+            "icon": "calendar",
+            "title": "Book a slot",
+            "text": "Pick a day and time that suits you. A <strong>€50 deposit</strong> secures your slot at our Ballymount workshop."
+          }
+        },
+        "step_drive": {
+          "type": "step",
+          "settings": {
+            "icon": "car",
+            "title": "Drive away",
+            "text": "We fit it, test everything with your phone and show you how it all works. Most installs take one to two hours."
+          }
+        }
+      },
+      "block_order": [
+        "step_reg",
+        "step_quote",
+        "step_book",
+        "step_drive"
+      ],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "From your reg to CarPlay in four steps",
+        "text": "No guesswork and no chasing call-backs. Send us a couple of details and we'll tell you exactly what fits your car, what it costs and when we can fit it.",
+        "align": "left",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us your reg",
+        "button_label": "Book a fitting",
+        "show_phone": true,
+        "phone_prefix": "Rather talk it through? Call",
+        "background": "surface",
+        "spacing": "normal"
+      }
+    },
+    "cta": {
+      "type": "mg-service-cta",
+      "settings": {
+        "eyebrow": "Quick compatibility check",
+        "heading": "Not sure what you need?",
+        "text": "Send your reg and a photo of your dash on WhatsApp. We'll tell you which option suits your car, what it costs and how long the fitting takes.",
+        "show_details": true,
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp your reg",
+        "whatsapp_message": "Hi MG Car Audio, can you tell me what fits my car? My reg is: ",
+        "show_call": true,
+        "call_label": "Call",
+        "book_label": "Book a fitting",
+        "book_url": "/pages/book-a-fitting",
+        "glow_position": "right",
+        "glow_strength": 30,
+        "spacing": "tight"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "services",
+    "main",
+    "how_it_works",
+    "cta"
+  ]
+}

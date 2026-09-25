@@ -34,6 +34,147 @@
   endif
 -%}
 
+{%- comment -%}
+  The price card is captured once. From 990px it sits in the aside (sidebar or below the
+  content); on phones and tablets a copy follows the first content block, so the prices and
+  the Book button aren't five screens down. Only one copy is displayed at a time.
+{%- endcomment -%}
+{%- if has_card -%}
+  {%- capture card_html -%}
+        <aside
+          class="mg-svc-details__aside mg-svc-details__aside--side"
+          {% if section.settings.card_heading != blank %}
+            aria-labelledby="{{ card_heading_id }}"
+          {% else %}
+            aria-label="Prices and booking"
+          {% endif %}
+        >
+          <div class="mg-svc-card">
+            {%- if section.settings.card_heading != blank -%}
+              <h2
+                class="mg-svc-card__title"
+                id="{{ card_heading_id }}"
+              >
+                {{ section.settings.card_heading | escape }}
+              </h2>
+            {%- endif -%}
+            {%- if section.settings.card_text != blank -%}
+              <p class="mg-svc-card__text">{{ section.settings.card_text | escape }}</p>
+            {%- endif -%}
+
+            {%- if price_rows.size > 0 -%}
+              <ul
+                class="mg-svc-card__prices"
+                role="list"
+              >
+                {%- for block in price_rows -%}
+                  {%- if block.settings.label != blank -%}
+                    {%- liquid
+                      assign row_tag = 'div'
+                      if block.settings.url != blank
+                        assign row_tag = 'a'
+                      endif
+                    -%}
+                    <li {{ block.shopify_attributes }}>
+                      <{{ row_tag }}
+                        class="mg-svc-card__row{% if row_tag == 'a' %} mg-svc-card__row--link{% endif %}"
+                        {% if row_tag == 'a' %}
+                          href="{{ block.settings.url }}"
+                        {% endif %}
+                      >
+                        <span class="mg-svc-card__row-main">
+                          <span class="mg-svc-card__row-label">{{ block.settings.label | escape }}</span>
+                          {%- if block.settings.note != blank -%}
+                            <span class="mg-svc-card__row-note">{{ block.settings.note | escape }}</span>
+                          {%- endif -%}
+                        </span>
+                        {%- if block.settings.price != blank -%}
+                          <span class="mg-svc-card__row-price">{{ block.settings.price | escape }}</span>
+                        {%- endif -%}
+                        {%- if row_tag == 'a' -%}
+                          {%- render 'mg-icon', icon: 'arrow-right', class: 'mg-svc-card__row-arrow' -%}
+                        {%- endif -%}
+                      </{{ row_tag }}>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if section.settings.deposit_text != blank -%}
+              <p class="mg-svc-card__deposit">
+                {%- render 'mg-icon', icon: 'calendar' -%}
+                <span>{{ section.settings.deposit_text | escape }}</span>
+              </p>
+            {%- endif -%}
+
+            {%- if section.settings.card_button_label != blank or show_whatsapp -%}
+              <div class="mg-svc-card__actions">
+                {%- if section.settings.card_button_label != blank -%}
+                  <a
+                    class="mg-btn mg-btn--primary mg-btn--block"
+                    href="{{ book_url }}"
+                  >
+                    {%- render 'mg-icon', icon: 'calendar' -%}
+                    <span>{{ section.settings.card_button_label | escape }}</span>
+                  </a>
+                {%- endif -%}
+                {%- if show_whatsapp -%}
+                  <a
+                    class="mg-btn mg-btn--whatsapp mg-btn--block"
+                    href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {%- render 'mg-icon', icon: 'whatsapp' -%}
+                    <span>{{ section.settings.card_whatsapp_label | escape }}</span>
+                    <span class="mg-visually-hidden">(opens WhatsApp)</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.card_show_contact -%}
+              <ul
+                class="mg-svc-card__contact"
+                role="list"
+              >
+                {%- if settings.mg_phone_display != blank -%}
+                  <li>
+                    {%- render 'mg-icon', icon: 'phone' -%}
+                    <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.mg_hours_weekdays != blank -%}
+                  <li>
+                    {%- render 'mg-icon', icon: 'clock' -%}
+                    <span>
+                      Mon–Fri {{ settings.mg_hours_weekdays | escape -}}
+                      {%- if settings.mg_hours_saturday != blank %}, Sat {{ settings.mg_hours_saturday | escape }}{% endif -%}
+                    </span>
+                  </li>
+                {%- endif -%}
+                {%- if settings.mg_street != blank or settings.mg_locality != blank -%}
+                  <li>
+                    {%- render 'mg-icon', icon: 'map-pin' -%}
+                    <span>
+                      {{- settings.mg_street | escape -}}
+                      {%- if settings.mg_street != blank and settings.mg_locality != blank %}, {% endif -%}
+                      {{- settings.mg_locality | escape -}}
+                    </span>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </aside>
+  {%- endcapture -%}
+  {%- liquid
+    assign card_heading_id_inline = card_heading_id | append: '-inline'
+    assign card_html_inline = card_html | replace: card_heading_id, card_heading_id_inline | replace: 'mg-svc-details__aside--side', 'mg-svc-details__aside--inline' | replace: 'data-shopify-editor-block', 'data-mg-editor-copy'
+  -%}
+{%- endif -%}
+
 <div class="{{ section_classes }}">
   <div class="mg-container">
     {%- if section.settings.eyebrow != blank
@@ -191,137 +332,14 @@
                 </div>
               {%- endif -%}
           {%- endcase -%}
+          {%- if forloop.first and has_card -%}
+            {{ card_html_inline }}
+          {%- endif -%}
         {%- endfor -%}
       </div>
 
       {%- if has_card -%}
-        <aside
-          class="mg-svc-details__aside"
-          {% if section.settings.card_heading != blank %}
-            aria-labelledby="{{ card_heading_id }}"
-          {% else %}
-            aria-label="Prices and booking"
-          {% endif %}
-        >
-          <div class="mg-svc-card">
-            {%- if section.settings.card_heading != blank -%}
-              <h2
-                class="mg-svc-card__title"
-                id="{{ card_heading_id }}"
-              >
-                {{ section.settings.card_heading | escape }}
-              </h2>
-            {%- endif -%}
-            {%- if section.settings.card_text != blank -%}
-              <p class="mg-svc-card__text">{{ section.settings.card_text | escape }}</p>
-            {%- endif -%}
-
-            {%- if price_rows.size > 0 -%}
-              <ul
-                class="mg-svc-card__prices"
-                role="list"
-              >
-                {%- for block in price_rows -%}
-                  {%- if block.settings.label != blank -%}
-                    {%- liquid
-                      assign row_tag = 'div'
-                      if block.settings.url != blank
-                        assign row_tag = 'a'
-                      endif
-                    -%}
-                    <li {{ block.shopify_attributes }}>
-                      <{{ row_tag }}
-                        class="mg-svc-card__row{% if row_tag == 'a' %} mg-svc-card__row--link{% endif %}"
-                        {% if row_tag == 'a' %}
-                          href="{{ block.settings.url }}"
-                        {% endif %}
-                      >
-                        <span class="mg-svc-card__row-main">
-                          <span class="mg-svc-card__row-label">{{ block.settings.label | escape }}</span>
-                          {%- if block.settings.note != blank -%}
-                            <span class="mg-svc-card__row-note">{{ block.settings.note | escape }}</span>
-                          {%- endif -%}
-                        </span>
-                        {%- if block.settings.price != blank -%}
-                          <span class="mg-svc-card__row-price">{{ block.settings.price | escape }}</span>
-                        {%- endif -%}
-                        {%- if row_tag == 'a' -%}
-                          {%- render 'mg-icon', icon: 'arrow-right', class: 'mg-svc-card__row-arrow' -%}
-                        {%- endif -%}
-                      </{{ row_tag }}>
-                    </li>
-                  {%- endif -%}
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
-
-            {%- if section.settings.deposit_text != blank -%}
-              <p class="mg-svc-card__deposit">
-                {%- render 'mg-icon', icon: 'calendar' -%}
-                <span>{{ section.settings.deposit_text | escape }}</span>
-              </p>
-            {%- endif -%}
-
-            {%- if section.settings.card_button_label != blank or show_whatsapp -%}
-              <div class="mg-svc-card__actions">
-                {%- if section.settings.card_button_label != blank -%}
-                  <a
-                    class="mg-btn mg-btn--primary mg-btn--block"
-                    href="{{ book_url }}"
-                  >
-                    {%- render 'mg-icon', icon: 'calendar' -%}
-                    <span>{{ section.settings.card_button_label | escape }}</span>
-                  </a>
-                {%- endif -%}
-                {%- if show_whatsapp -%}
-                  <a
-                    class="mg-btn mg-btn--whatsapp mg-btn--block"
-                    href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    {%- render 'mg-icon', icon: 'whatsapp' -%}
-                    <span>{{ section.settings.card_whatsapp_label | escape }}</span>
-                    <span class="mg-visually-hidden">(opens WhatsApp)</span>
-                  </a>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-
-            {%- if section.settings.card_show_contact -%}
-              <ul
-                class="mg-svc-card__contact"
-                role="list"
-              >
-                {%- if settings.mg_phone_display != blank -%}
-                  <li>
-                    {%- render 'mg-icon', icon: 'phone' -%}
-                    <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
-                  </li>
-                {%- endif -%}
-                {%- if settings.mg_hours_weekdays != blank -%}
-                  <li>
-                    {%- render 'mg-icon', icon: 'clock' -%}
-                    <span>
-                      Mon–Fri {{ settings.mg_hours_weekdays | escape -}}
-                      {%- if settings.mg_hours_saturday != blank %}, Sat {{ settings.mg_hours_saturday | escape }}{% endif -%}
-                    </span>
-                  </li>
-                {%- endif -%}
-                {%- if settings.mg_street != blank or settings.mg_locality != blank -%}
-                  <li>
-                    {%- render 'mg-icon', icon: 'map-pin' -%}
-                    <span>
-                      {{- settings.mg_street | escape -}}
-                      {%- if settings.mg_street != blank and settings.mg_locality != blank %}, {% endif -%}
-                      {{- settings.mg_locality | escape -}}
-                    </span>
-                  </li>
-                {%- endif -%}
-              </ul>
-            {%- endif -%}
-          </div>
-        </aside>
+        {{ card_html }}
       {%- endif -%}
     </div>
   </div>
@@ -488,7 +506,7 @@
     font-weight: 700;
     letter-spacing: 0.12em;
     font-variant-numeric: tabular-nums;
-    color: var(--mg-accent);
+    color: var(--mg-accent-text);
   }
 
   .mg-svc-details--numbered .mg-svc-details__num::before {
@@ -676,6 +694,14 @@
   /* Price card */
   .mg-svc-details__aside {
     min-width: 0;
+  }
+
+  .mg-svc-details__aside--side {
+    display: none;
+  }
+
+  .mg-svc-details__aside--inline {
+    margin-block: clamp(8px, 2vw, 16px) clamp(28px, 4vw, 40px);
   }
 
   .mg-svc-card {
@@ -886,6 +912,14 @@
   }
 
   @media (min-width: 990px) {
+    .mg-svc-details__aside--side {
+      display: block;
+    }
+
+    .mg-svc-details__aside--inline {
+      display: none;
+    }
+
     .mg-svc-details--sidebar .mg-svc-details__layout {
       grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
       align-items: start;
@@ -945,7 +979,7 @@
       "type": "select",
       "id": "layout",
       "label": "Desktop layout",
-      "info": "On mobile the price card always sits below the content.",
+      "info": "On phones and tablets the price card sits after the first content block.",
       "options": [
         { "value": "sidebar", "label": "Content with price card on the right" },
         { "value": "stacked", "label": "Price card below the content" }

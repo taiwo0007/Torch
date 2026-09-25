@@ -748,7 +748,7 @@
 
   .mg-quote__req {
     font-weight: 700;
-    color: var(--mg-accent-hover);
+    color: var(--mg-accent-text);
   }
 
   /* ---------- Groups and fields ---------- */
@@ -800,7 +800,7 @@
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     font-variant-numeric: tabular-nums;
-    color: var(--mg-accent-hover);
+    color: var(--mg-accent-text);
   }
 
   .mg-quote__optional {
@@ -860,7 +860,7 @@
     margin: 0;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--mg-accent-hover);
+    color: var(--mg-accent-text);
   }
 
   /* Two-class selectors so these win over Horizon's global input rules */
@@ -1197,6 +1197,9 @@
   }
 
   .mg-quote__again {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 0.9375rem;
     font-weight: 600;
   }

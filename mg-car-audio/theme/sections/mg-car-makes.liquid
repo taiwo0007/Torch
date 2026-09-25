@@ -160,10 +160,28 @@
       box-shadow 0.25s var(--mg-ease);
   }
 
-  .mg-makes__tile:hover {
-    border-color: var(--mg-border-strong);
-    transform: translateY(-3px);
-    box-shadow: var(--mg-shadow);
+  @media (hover: hover) {
+    .mg-makes__tile:hover {
+      border-color: var(--mg-border-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--mg-shadow);
+    }
+
+    .mg-makes__tile:hover .mg-makes__img {
+      opacity: 0.6;
+      transform: scale(1.04);
+    }
+
+    .mg-makes__tile:hover .mg-makes__arrow {
+      border-color: var(--mg-accent);
+      background: var(--mg-accent);
+      color: var(--mg-on-accent);
+      transform: translateX(2px);
+    }
+
+    .mg-makes__tile:hover .mg-makes__line {
+      transform: scaleX(1);
+    }
   }
 
   .mg-makes__tile:focus-visible {
@@ -197,11 +215,6 @@
     transition:
       opacity 0.35s var(--mg-ease),
       transform 0.6s var(--mg-ease);
-  }
-
-  .mg-makes__tile:hover .mg-makes__img {
-    opacity: 0.6;
-    transform: scale(1.04);
   }
 
   .mg-makes__top {
@@ -239,13 +252,6 @@
     height: 16px;
   }
 
-  .mg-makes__tile:hover .mg-makes__arrow {
-    border-color: var(--mg-accent);
-    background: var(--mg-accent);
-    color: var(--mg-text);
-    transform: translateX(2px);
-  }
-
   .mg-makes__name {
     margin-top: auto;
     font-family: var(--font-heading--family);
@@ -280,9 +286,30 @@
     transition: transform 0.35s var(--mg-ease);
   }
 
-  .mg-makes__tile:hover .mg-makes__line,
   .mg-makes__tile:focus-visible .mg-makes__line {
     transform: scaleX(1);
+  }
+
+  /* Phones: compact tiles (name and arrow only) so 12 makes don't push the services far down */
+  @media (max-width: 749px) {
+    .mg-makes__tile {
+      gap: 10px;
+      min-height: 92px;
+      aspect-ratio: auto;
+      padding: 12px 14px 14px;
+    }
+
+    .mg-makes__name {
+      font-size: clamp(1.125rem, 13cqi, 1.5rem);
+    }
+
+    .mg-makes__tile--long .mg-makes__name {
+      font-size: clamp(0.9375rem, 10cqi, 1.25rem);
+    }
+
+    .mg-makes__subtitle {
+      display: none;
+    }
   }
 
   @media (min-width: 750px) {

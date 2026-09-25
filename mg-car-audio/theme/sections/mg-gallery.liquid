@@ -179,9 +179,14 @@
                   class: 'mg-gallery__img'
               }}
             {%- elsif fallback_file != blank -%}
+              {%- comment -%} Wide theme photos ship an -800 copy for tile-sized slots {%- endcomment -%}
               <img
                 class="mg-gallery__img"
                 src="{{ fallback_file | asset_url }}"
+                {% if fallback_w > 1024 %}
+                  srcset="{{ fallback_file | replace: '.webp', '-800.webp' | asset_url }} 800w, {{ fallback_file | asset_url }} {{ fallback_w }}w"
+                  sizes="{{ img_sizes }}"
+                {% endif %}
                 width="{{ fallback_w }}"
                 height="{{ fallback_h }}"
                 alt="{{ item_alt | escape }}"

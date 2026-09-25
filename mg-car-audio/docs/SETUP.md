@@ -105,7 +105,7 @@ All 20 products have **Charge tax: TRUE**, including the installation services a
    - `Standard delivery`: €7.95 *(placeholder)*.
    - `Free standard delivery`: €0.00, with the condition **based on order price, minimum €150** *(placeholder)*.
 2. Remove the "Rest of world" zone for now (the shipping page says Republic of Ireland only, *placeholder*).
-3. **Local pickup**: enable it for the Ballymount location (§2.7). Pickup instructions: `We'll email you when your order is ready. Collect from Unit 3, Ballymount Business Centre, Dublin 12, Mon–Fri 9:30am–7pm, Sat 11am–7pm.` Expected pickup time: "Usually ready in 24 hours" *(placeholder)*.
+3. **Local pickup**: do §2.7 first (rename the default location to `MG Car Audio – Ballymount`), then come back and enable local pickup for that location. Pickup instructions: `We'll email you when your order is ready. Collect from Unit 3, Ballymount Business Centre, Dublin 12, Mon–Fri 9:30am–7pm, Sat 11am–7pm.` Expected pickup time: "Usually ready in 24 hours" *(placeholder)*.
 
 Installation services have **Requires shipping: FALSE**, so an order with only services (or the deposit) skips delivery entirely.
 
@@ -135,7 +135,7 @@ Installation services have **Requires shipping: FALSE**, so an order with only s
 |---|---|
 | Home page title | `MG Car Audio \| CarPlay, Android Auto & Car Audio Fitting in Dublin` (66 characters; type a plain `\|`) |
 | Home page meta description | `Ireland's CarPlay and car audio specialist. Wireless CarPlay, Android Auto, screen upgrades, speakers and cameras, fitted at our Dublin 12 workshop.` (148) |
-| Social sharing image | MG's showroom photo (https://static.wixstatic.com/media/c67c38_9f66ce5182fa4d39be339a5217ee9483~mv2.jpeg) or the BMW CarPlay picture |
+| Social sharing image | Preferences takes an uploaded file, not a URL: download MG's showroom photo (https://static.wixstatic.com/media/c67c38_9f66ce5182fa4d39be339a5217ee9483~mv2.jpeg) and upload it here |
 
 **Password**: **Settings → Online store → Store access → Password protection** (path from shopify.dev). Set a simple password to share with MG, for example `mg-demo-2026` *(choose your own)*. The password page can't be removed while the store is in your Partner organisation. Its design comes from the theme's `templates/password.json`.
 
@@ -143,7 +143,7 @@ Installation services have **Requires shipping: FALSE**, so an order with only s
 
 ## 3. Push and publish the theme  **[CLI]** + **[HUMAN]** login
 
-Do this **before creating pages**: the page **Theme template** dropdown only lists the templates in the *published* theme, so `page.quote`, `page.service`, `page.car-make` and `page.contact` must be live first. Publishing is safe: the storefront stays behind the password.
+Do this **before creating pages**: the page **Theme template** dropdown only lists the templates in the *published* theme, so `page.quote`, `page.service`, `page.car-make`, `page.contact`, `page.book-a-fitting`, `page.services` and `page.gallery` must be live first. Publishing is safe: the storefront stays behind the password.
 
 ```bash
 cd /home/user/Torch
@@ -323,7 +323,7 @@ The five empty collections (Speakers, Subwoofers, Amplifiers, Dashcams, Gift Vou
 
 1. **FAQ → Add entry**: create the four BMW FAQs from `docs/content/car-make-bmw.md` §1.
 2. **Car make → Add entry**: create the BMW entry from `docs/content/car-make-bmw.md` §2 (upload the hero image to **Content → Files** first). Save. If Active-draft status is on for the definition, set the entry to **Active**.
-3. *Optional in Phase 1, required in Phase 2:* the Audi, Mercedes-Benz and Volkswagen entries and their FAQs from `car-make-audi.md`, `car-make-mercedes-benz.md` and `car-make-volkswagen.md`. They contain placeholder prices, clearly marked.
+3. **Required in Phase 1:** the Audi, Mercedes-Benz and Volkswagen entries and their FAQs from `car-make-audi.md`, `car-make-mercedes-benz.md` and `car-make-volkswagen.md`. The home page car make tiles for those three makes link to their pages (§8 step 2), so the pages and their entries must exist before the demo. The files mark which prices are placeholders.
 
 ---
 
@@ -335,20 +335,20 @@ The five empty collections (Speakers, Subwoofers, Amplifiers, Dashcams, Gift Vou
 |---|---|---|---|---|
 | About MG Car Audio | `about` | Default page | `docs/content/about.md` | In the file |
 | Contact Us | `contact` | `page.contact` | `docs/content/contact.md` | In the file |
-| Get a Quote | `get-a-quote` | `page.quote` | Leave empty (the quote form shows the page title as the heading) | `Get a Quote: CarPlay, Screens & Car Audio \| MG Car Audio` / `Send your reg, car and what you'd like fitted and we'll reply with a fixed fitted price. Or WhatsApp us a photo of your dash for the fastest quote.` |
-| Book a Fitting | `book-a-fitting` | Default page | `docs/content/book-a-fitting.md` | In the file |
+| Get a Quote | `get-a-quote` | `page.quote` | Leave empty (the template's H1 is "Get a fixed quote", set in the theme editor, not the page title) | `Get a Quote: CarPlay, Screens & Car Audio \| MG Car Audio` / `Send your reg, car and what you'd like fitted and we'll reply with a fixed fitted price. Or WhatsApp us a photo of your dash for the fastest quote.` |
+| Book a Fitting | `book-a-fitting` | `page.book-a-fitting` | `docs/content/book-a-fitting.md` (deposit terms only; the template has the rest) | In the file |
 | Apple CarPlay & Android Auto Installation in Dublin | `carplay-installation` | `page.service` | Leave empty (the template has all the content; the title is the page heading) | `Apple CarPlay & Android Auto Installation in Dublin \| MG Car Audio` / `Wired and wireless Apple CarPlay and Android Auto for BMW, Audi, Mercedes-Benz, VW and more. OEM-style finish, BMW from €350. Fitted in Dublin 12.` |
 | BMW CarPlay & Screen Upgrades | `bmw-carplay` | `page.car-make` | Leave empty | In `docs/content/car-make-bmw.md` §3 |
-| Our Work | `gallery` | Default page (or `page.gallery`, if the integrator adds one) | `docs/content/gallery.md` | In the file |
+| Our Work | `gallery` | `page.gallery` | `docs/content/gallery.md` (one paragraph; the template shows MG's photos) | In the file |
 | Frequently Asked Questions | `faq` | Default page | `docs/content/faq.md` | In the file |
 | Warranty & Returns | `warranty-returns` | Default page | `docs/content/warranty-returns.md` | In the file |
 | Shipping & Collection | `shipping` | Default page | `docs/content/shipping.md` | In the file |
-| Our Services | `services` | Default page | `docs/content/services.md` | In the file |
+| Our Services | `services` | `page.services` | `docs/content/services.md` | In the file |
 
 Then:
 
 1. Open **BMW CarPlay & Screen Upgrades → Metafields → Car make** and select the **BMW** entry. Save.
-2. *Car Makes menu without 404s (recommended even in Phase 1):* also create `Audi CarPlay & Screen Upgrades` (`audi-carplay`), `Mercedes-Benz CarPlay & Screen Upgrades` (`mercedes-benz-carplay`) and `Volkswagen CarPlay & Screen Upgrades` (`volkswagen-carplay`), all with template `page.car-make`, and link each to its entry if you created it in §7. Without an entry, the page still works: it takes the make from the first word of the title and shows the section's fallback content (whose prices are placeholders).
+2. **Required in Phase 1** (the home page's Audi, Mercedes-Benz and Volkswagen tiles link here, so without these pages they 404): also create `Audi CarPlay & Screen Upgrades` (`audi-carplay`), `Mercedes-Benz CarPlay & Screen Upgrades` (`mercedes-benz-carplay`) and `Volkswagen CarPlay & Screen Upgrades` (`volkswagen-carplay`), all with template `page.car-make`, and link each to its entry from §7 step 3. If an entry is missing, the page still works: it takes the make from the first word of the title and shows the section's make-neutral fallback (no hero price; only the €150 Android radio fitting is priced, the rest say "Price on request").
 
 Pasting the Markdown: paste into the page editor, then set `##` lines as **Heading 2** and `###` as **Heading 3**, or paste the text into any Markdown previewer first and copy the formatted result. Tables paste best from a previewer.
 
@@ -365,7 +365,7 @@ Pasting the Markdown: paste into the page editor, then set `##` lines as **Headi
 | Home | `/` (Home page) | – |
 | Shop | `/collections/all` (Collections → All products) | CarPlay & Android Auto → `/collections/carplay-android-auto` · Screen Upgrades → `/collections/screen-upgrades` · Android Radios → `/collections/android-radios` · Reverse Cameras → `/collections/reverse-cameras` · Accessories → `/collections/accessories` · Installation Services → `/collections/installation-services` · Best Sellers → `/collections/best-sellers` (Phase 2: add Speakers, Subwoofers, Amplifiers, Dashcams, Gift Vouchers) |
 | Services | `/pages/services` | Apple CarPlay & Android Auto → `/pages/carplay-installation` · Android Radio Fitting → `/products/android-radio-installation` · Reverse Camera Installation → `/products/reverse-camera-installation` · All Services → `/pages/services` |
-| Car Makes | `/pages/bmw-carplay` | BMW → `/pages/bmw-carplay` · Audi → `/pages/audi-carplay` · Mercedes-Benz → `/pages/mercedes-benz-carplay` · VW → `/pages/volkswagen-carplay` (only add the last three once those pages exist, §8 step 2) |
+| Car Makes | `/pages/bmw-carplay` | BMW → `/pages/bmw-carplay` · Audi → `/pages/audi-carplay` · Mercedes-Benz → `/pages/mercedes-benz-carplay` · VW → `/pages/volkswagen-carplay` (all four pages are created in §8) |
 | Gallery | `/pages/gallery` | – |
 | Book Fitting | `/pages/book-a-fitting` | – |
 | Contact | `/pages/contact` | – |
@@ -397,7 +397,7 @@ Apple CarPlay & Android Auto → `/pages/carplay-installation` · BMW Apple CarP
 | 6 | Price | Price |
 | 7 | Availability (already there by default) | Availability |
 
-A metafield only appears in the source list if its definition exists (§4.4). Filters only show on the storefront for values that products actually have.
+A metafield only appears in the source list if its definition exists (§4.4). Filters only show on the storefront for values that products actually have. **Brand** (Vendor) has a single value in Phase 1, because every demo product's vendor is `MG Car Audio` (the hardware is own-label placeholder stock). It becomes useful in Phase 2, when MG's real products (JBL and so on) are added with their brand as the vendor.
 
 3. Check: `/collections/all?filter.p.m.custom.car_make=BMW` (the BMW page's "Shop BMW parts" button) should list only BMW products.
 4. **Synonyms** (Search & Discovery → Synonyms), one group per line:
@@ -422,9 +422,15 @@ A metafield only appears in the source list if its definition exists (§4.4). Fi
 | Phone, address, hours, WhatsApp number (`353870344355`) | MG's real details | **[HUMAN]** Confirm the WhatsApp number with MG |
 | Email | Blank (hidden) | MG's site shows `MGCARAUDIODUBLIN@GMAIL.COM`. **[HUMAN]** Confirm with MG before adding it (it's published on every page) |
 | Latitude / Longitude | Blank | Right-click MG's pin in Google Maps and copy the two numbers (used in local SEO structured data) |
-| Google rating / review count | **Placeholder** 4.9 / 120 | **[HUMAN]** Replace with MG's real Google figures, or the trust bar shows invented numbers |
-| Google reviews link | Blank | MG's Google Business Profile reviews URL |
-| Warranty headline | **Placeholder** "12-month fitting warranty" | **[HUMAN]** Confirm with MG |
+| Google rating / review count | **Placeholder** 4.9 / 120 | **Before the demo:** look up MG Car Audio's public Google Business Profile (search "MG Car Audio Ballymount" in Google Maps) and copy the real star rating and review count. No client contact is needed. They show in the home trust bar, the reviews section and the service page hero as "from N Google reviews", so invented figures must not reach MG. If the profile has no rating, clear both fields: the rating hides everywhere |
+| Google reviews link | Blank | The same profile's reviews URL (Share → copy link) |
+| Warranty headline | "Workmanship warranty" (no length) | **[HUMAN]** Once MG confirms a length, change it to, for example, "12-month fitting warranty" |
+
+**Logo and favicon** (brief §7: theme branded). **Theme settings → Logo and favicon**: upload MG's logo (a light or white version for the dark header; download it from MG's current site or ask MG for the original file) and a square favicon (at least 32 × 32 px, for example the red "MG" mark on black). Until a logo is uploaded, the header shows "MG CAR AUDIO" as styled text with a red bar, which is fine for the demo.
+
+**Announcement bar** (**Header → Announcement bar**): the third message is plain text, `Call or WhatsApp 087 034 4355`, linked to `tel:+353870344355`. It doesn't read Theme settings, so if the number ever changes, edit this text and link as well.
+
+**Reviews section** (home page): the five reviews are clearly marked demo text ("Demo review: replace with a real Google review", source label "Demo", and a "Demo" banner above the carousel). Before launch, replace each with a real Google review, copied word for word with the customer's permission (first name and initial only), set the source label to `Google`, and turn off **Show "Demo reviews" banner**.
 
 Then click through the home page, one collection, one product and each page template in the editor and check nothing needs a setting (the integration task sets up `templates/index.json` and `templates/product.json`). If the home page "Best sellers" grid isn't already pointing at a collection, choose **Best Sellers**.
 
@@ -469,7 +475,7 @@ With the Bogus Gateway (§2.4):
 |---|---|---|
 | Store is indexable, no `noindex` | Nothing in the theme outputs a robots `noindex` (see `snippets/meta-tags.liquid`); Shopify's default `robots.txt` and `/sitemap.xml` are left alone | **[HUMAN]** The client transfer store is password-protected, so Google can't see it until MG's plan is active and the password is removed at launch (Phase 3). After launch: view the source of the home page, check there's no `noindex`, and run URL Inspection in Google Search Console |
 | Unique title and meta description on every page | Car make pages use the entry's `seo_title` / `seo_description`, or build "`<Make>` CarPlay & Screen Upgrades in Dublin". Titles get " \| MG Car Audio" automatically unless they already contain it. All 20 products have an SEO title and description in the CSV (≤155 characters) | **[ADMIN]** Enter the page (§8), collection (§6) and home page (§2.10) SEO fields given in this guide |
-| LocalBusiness / AutoRepair schema with NAP | `snippets/mg-local-business-schema.liquid` (loaded on every page) outputs AutoRepair JSON-LD from Theme settings: name, address, phone, hours. It deliberately has no star rating | **[ADMIN]** Add latitude/longitude (§11). After launch, test the home page with Google's Rich Results Test (it can't get past the password before then) |
+| LocalBusiness / AutoRepair schema with NAP | `snippets/mg-local-business-schema.liquid` (rendered in the layout, but it only outputs on the home page and the contact page) outputs AutoRepair JSON-LD from Theme settings: name, address, phone, hours. It deliberately has no star rating | **[ADMIN]** Add latitude/longitude (§11). After launch, test the home page with Google's Rich Results Test (it can't get past the password before then) |
 | 301 redirects from old Wix URLs | `data/redirects.csv`: the brief's 5, plus 35 found by crawling the old site (§12) | **[ADMIN]** Import (Phase 2). **[HUMAN]** Test after the domain moves (Phase 3) |
 | Image alt text; compressed WebP | Theme images use Shopify's CDN (`image_url`), which serves WebP/AVIF automatically; theme assets are WebP. Every product image row in the CSV has alt text | **[ADMIN]** Add alt text to anything uploaded later (Files, theme editor, collection images) |
 | Lighthouse mobile ≥ 85, no more than 3–4 apps | No new JS libraries; section JS is small and deferred. `docs/APPS.md` keeps the app count to 3 (4 with the optional form) | **[HUMAN]** Run Lighthouse (Chrome DevTools, mobile) on the preview while logged in: PageSpeed Insights can't get past the password page. Re-test after each app |
@@ -487,10 +493,13 @@ With the Bogus Gateway (§2.4):
 Tick everything before sending anything to MG:
 
 - [ ] `shopify theme check` reports 0 errors; the theme is pushed and published (§3).
-- [ ] Home page looks finished on a phone and on desktop: hero, trust bar, car makes, services, best sellers, how it works, gallery, reviews, FAQ, contact map.
-- [ ] `/collections/carplay-android-auto` shows 11 products with images and prices, and the Car make / Car model / Screen size / Brand / Price filters work.
+- [ ] Theme settings → MG Car Audio: business details: the Google rating and review count are MG's real figures, copied from his public Google profile (§11). Not 4.9 / 120 unless that's what Google shows.
+- [ ] Home page looks finished on a phone and on desktop: hero, trust bar, car makes, services, best sellers, how it works, gallery, reviews (with the "Demo" banner showing), FAQ, contact map.
+- [ ] Every home page car make tile opens a real page: `/pages/bmw-carplay`, `/pages/audi-carplay`, `/pages/mercedes-benz-carplay` and `/pages/volkswagen-carplay` (the other makes open the quote form).
+- [ ] `/collections/carplay-android-auto` shows 11 products with images and prices, and the Car make / Car model / Screen size / Price filters work (Brand has one value until Phase 2, §10).
 - [ ] A hardware product (for example the BMW interface) shows the "Need it fitted? Fitted from €350" card; an installation product doesn't.
-- [ ] `/pages/carplay-installation` (service page) and `/pages/bmw-carplay` (with BMW entry: systems, models, services, 4 FAQs) look complete.
+- [ ] `/pages/carplay-installation` (service page) and `/pages/bmw-carplay` (with BMW entry: systems, models, services, 4 FAQs) look complete, and so do the Audi, Mercedes-Benz and VW pages with their entries.
+- [ ] `/pages/book-a-fitting`, `/pages/services` and `/pages/gallery` use their own templates (hero, cards, FAQ or gallery), not the plain Default page.
 - [ ] `/pages/get-a-quote`: a test submission arrives at **Taiwo's** email.
 - [ ] The WhatsApp button opens a chat to +353 87 034 4355 with the pre-filled message. **Don't press send**: it's MG's real number.
 - [ ] Test orders placed and archived (§13).
@@ -503,7 +512,7 @@ Tick everything before sending anything to MG:
 - Or, if the theme isn't published yet, the preview link from `shopify theme push` (`…?preview_theme_id=…`). It still asks for the storefront password first.
 - The Appendix A placeholder list.
 
-Suggested message for Taiwo to adapt: *"Here's the first look at your new MG Car Audio website: [link], password [password]. Prices for your services are the ones from your current booking page; anything marked as a sample (the hardware products, some 'from' prices, the warranty length and the review count) is there to show the layout, and I'll swap in your real details. Have a look on your phone and tell me what you think."*
+Suggested message for Taiwo to adapt: *"Here's the first look at your new MG Car Audio website: [link], password [password]. Prices for your services are the ones from your booking page. Three come from your individual service pages, so please check them: Mercedes Japan-to-Europe €450, VW Japan-to-Europe €350 and radio frequency conversion €150. Anything marked as a sample (the hardware products, some 'from' prices, the demo reviews and the warranty wording) is there to show the layout, and I'll swap in your real details. Customers send their dash photos on WhatsApp for now; if you'd like a photo upload on the quote form itself, that needs a free form app. Have a look on your phone and tell me what you think."*
 
 ---
 
@@ -530,10 +539,12 @@ Suggested message for Taiwo to adapt: *"Here's the first look at your new MG Car
 | All 10 hardware products: names, specs, prices (€79–€699), stock levels, compatibility lists | `products.csv`, tag `demo-placeholder` |
 | Hardware "fitted from" prices: BMW interface €350 (assumes MG's €350 includes it), Audi €399, Mercedes €399, VW €329, BMW F30 screen €699, W205 screen €849, 9" radio €429 (€279 + MG's real €150 fitting), 7" radio €379, reverse camera kit €399 (MG's lowest real reverse camera price) | `products.csv` metafield `custom.fitted_price` |
 | Approximate production years for iDrive, MMI, NTG and MIB systems and chassis codes | Product copy and car make entries (general knowledge, not from MG) |
-| Warranty length "12 months", warranty exclusions, parts-warranty handling | Theme setting, `warranty-returns.md`, `faq.md` |
-| Google rating 4.9 from 120 reviews; demo reviews | Theme settings, reviews section |
+| Warranty length (not stated yet; headline "Workmanship warranty"), warranty exclusions, parts-warranty handling | Theme setting, `warranty-returns.md`, `faq.md` (listed in each file's notes) |
+| Google rating 4.9 from 120 reviews (replace from MG's public Google profile before the demo, §11); five demo reviews, marked "Demo" on the site | Theme settings, reviews section |
 | Delivery rates (€7.95, free over €150), delivery times, dispatch cut-off, Ireland-only, damaged-item window | `shipping.md`, §2.6 |
-| Reply time ("same working day"), workshop payment methods, parking, car-warranty FAQ wording | `book-a-fitting.md`, `faq.md` |
+| Reply time (left out until MG confirms one), workshop payment methods, parking, car-warranty FAQ wording | Notes in `book-a-fitting.md` and `faq.md` |
+| Car make page fallback (used only when a page has no car make entry): no prices except Android radio fitting €150 | `sections/mg-car-make.liquid`, `templates/page.car-make.json` |
+| Quote form: no on-site dash photo upload (Shopify's contact form can't take files); photos come in on WhatsApp. On-site upload needs a free form app (`docs/APPS.md` §5) | Quote page, contact page |
 | "From €X" prices for radio upgrades, JBL radios, speakers, subwoofers, amplifiers, dashcams, repairs, radio codes | `services.md` |
 | Audi, Mercedes-Benz and VW CarPlay / screen prices | `car-make-*.md` |
 | Gift voucher denominations | §6 |

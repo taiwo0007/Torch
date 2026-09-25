@@ -236,7 +236,7 @@
           "type": "service",
           "settings": {
             "title": "Japanese-to-European conversion",
-            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. Mercedes and VW on request.",
+            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. We convert Mercedes-Benz and VW imports too.",
             "price": "€450",
             "price_label": "from",
             "fallback_image": "mg-bmw-japan-to-europe.webp",

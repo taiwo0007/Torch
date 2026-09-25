@@ -44,7 +44,7 @@
           "type": "_announcement",
           "settings": {
             "text": "Call or WhatsApp 087 034 4355",
-            "link": "/pages/contact",
+            "link": "tel:+353870344355",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
             "weight": "600",

@@ -8,7 +8,7 @@
 | SEO title | `CarPlay & Car Audio FAQs \| MG Car Audio, Dublin` (plain `\|`) |
 | SEO description | `Answers about CarPlay and Android Auto fitting, prices, deposits, warranty, Japanese imports and what to bring. MG Car Audio, Dublin 12.` |
 
-**What's real and what's a placeholder.** Real, from MG's site: prices (€350, €299, €150, €149, €450, reverse cameras from €399), fitting times, the €50 deposit and its 48-hour terms, "you supply the radio" for Android radio fitting, the makes covered, the address and the opening hours. **Placeholders MG must confirm** are marked *(confirm)*: the warranty length, payment methods, the answer on car warranties, and the reply time. The answers are consistent with the theme's home page FAQ section.
+**What's real and what's a placeholder.** Real, from MG's site: prices (€350, €299, €150, €149, €450, reverse cameras from €399), fitting times, the €50 deposit and its 48-hour terms, "you supply the radio" for Android radio fitting, the makes covered, the address and the opening hours. **Placeholders MG must confirm** are listed in the notes at the end (nothing in the text to paste is marked, so it reads finished on the demo). The answers are consistent with the theme's home page FAQ section.
 
 Paste everything below the line into the page editor. Make each question a **Heading 3**.
 
@@ -18,7 +18,7 @@ Paste everything below the line into the page editor. Make each question a **Hea
 
 ### How much does it cost to add Apple CarPlay to my car?
 
-It depends on your car and its screen. For BMW, Apple CarPlay installation is **€350**, and Android Auto on iDrive 7 is **€299**. For other makes, send us your reg and a photo of your dash on WhatsApp and we'll give you a fixed fitted price, usually the same day *(confirm reply time)*.
+It depends on your car and its screen. For BMW, Apple CarPlay installation is **€350**, and Android Auto on iDrive 7 is **€299**. For other makes, send us your reg and a photo of your dash on WhatsApp and we'll give you a fixed fitted price before you book.
 
 ### How long does a fitting take?
 
@@ -38,7 +38,7 @@ Yes. Our Android radio fitting service is **€150** when you supply the radio, 
 
 ### Which payment methods do you accept?
 
-Online, you can pay by card at checkout. In the workshop we accept card and cash *(confirm payment methods)*.
+Online, you can pay by card at checkout. In the workshop, you pay the balance once the work is done: ask us when you book if you'd like to check how you can pay.
 
 ## Your car
 
@@ -60,7 +60,7 @@ Usually, yes, and often without any fitting at all: a plug-and-play wireless ada
 
 ### Will an upgrade affect my car's warranty?
 
-Fitting aftermarket equipment doesn't automatically void your car's manufacturer warranty, but a manufacturer can refuse a claim for a fault caused by that equipment. If your car is still under warranty, tell us and we'll talk you through the options *(confirm wording with MG)*.
+Fitting aftermarket equipment doesn't automatically void your car's manufacturer warranty, but a manufacturer can refuse a claim for a fault caused by that equipment. If your car is still under warranty, tell us and we'll talk you through the options.
 
 ### Can you convert my Japanese import?
 
@@ -70,7 +70,7 @@ Yes. We convert BMW (**€450**), Mercedes-Benz and Volkswagen imports to Europe
 
 ### Is my installation covered by a warranty?
 
-Yes. Our fitting work is covered by a **12-month workmanship warranty** *(confirm length)*, and the parts we supply carry their manufacturer's warranty. See [Warranty & Returns](/pages/warranty-returns) for the details.
+Yes. Our fitting work is covered by a **workmanship warranty**, and the parts we supply carry their manufacturer's warranty. See [Warranty & Returns](/pages/warranty-returns) for the details.
 
 ### Can I return something I bought online?
 
@@ -80,8 +80,20 @@ Yes. If it hasn't been fitted, you have 14 days from delivery to change your min
 
 ### Where are you?
 
-Unit 3, Ballymount Business Centre, Ballymount Road Lower, Dublin 12, D12 YX27. There's parking at the business centre *(confirm)*.
+Unit 3, Ballymount Business Centre, Ballymount Road Lower, Dublin 12, D12 YX27.
 
 ### When are you open?
 
 Monday to Friday 9:30am to 7pm, Saturday 11am to 7pm, and Sunday by appointment.
+
+---
+
+## Notes for Taiwo (don't paste)
+
+Confirm with MG, then edit the pasted page:
+
+- **Reply time:** if MG wants to promise one, add it to the first answer (for example "usually the same day").
+- **Workshop payment methods:** replace the second sentence of "Which payment methods do you accept?" with what MG takes (for example "In the workshop we accept card and cash").
+- **Car warranty answer:** check MG is happy with the wording.
+- **Warranty length:** once confirmed, add it ("a **12-month** workmanship warranty") here, in `warranty-returns.md` and in Theme settings → MG Car Audio: business details → Warranty headline.
+- **Parking:** if there's customer parking at the business centre, add "There's parking at the business centre." to "Where are you?".

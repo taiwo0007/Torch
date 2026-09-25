@@ -355,7 +355,9 @@
   }
 
   .mg-reviews__all {
-    display: inline;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--mg-text);
@@ -369,11 +371,10 @@
   }
 
   .mg-reviews__all .mg-icon {
-    display: inline-block;
+    flex: none;
     width: 16px;
     height: 16px;
     margin-left: 6px;
-    vertical-align: -3px;
   }
 
   /* Carousel */

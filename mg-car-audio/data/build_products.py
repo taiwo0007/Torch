@@ -564,7 +564,7 @@ PRODUCTS = [
             ("Apple CarPlay", "79.00", "MG-ADP-CP"),
             ("Apple CarPlay + Android Auto", "99.00", "MG-ADP-CPAA"),
         ],
-        images=["audi_carplay"],
+        images=["showroom"],
         shipping=True, weight_g=80, inventory=20,
         metafields=dict(
             car_make=["Universal"],
@@ -607,7 +607,7 @@ PRODUCTS = [
             ("Static guidelines", "129.00", "MG-CAM-STAT"),
             ("Dynamic guidelines", "159.00", "MG-CAM-DYN"),
         ],
-        images=["dash_radio"],
+        images=["showroom"],
         shipping=True, weight_g=350, inventory=15,
         metafields=dict(
             car_make=["Universal"],
@@ -642,7 +642,7 @@ PRODUCTS = [
                 "Pairing your phone and a quick walkthrough before you leave",
             ])),
             section("Good to know", ul([
-                "Fitting takes about 1 hour",
+                "We confirm the fitting time for your iDrive system when you book",
                 "Not sure which iDrive you have? Send us a photo of your screen and we'll tell you",
                 "We confirm exactly what your BMW needs, and the price, before you book. No surprises on the day",
                 "Want Android Auto on iDrive 7? See Android Auto Installation – BMW iDrive 7 (€299)",
@@ -650,7 +650,7 @@ PRODUCTS = [
             CTA_SERVICE,
         ),
         seo_title="BMW Apple CarPlay Installation Dublin, €350 | MG Car Audio",
-        seo_description="Apple CarPlay installed on your BMW iDrive for €350: CIC, NBT, NBT EVO and iDrive 7. OEM-style finish, about an hour, at our Dublin 12 workshop.",
+        seo_description="Apple CarPlay installed on your BMW iDrive for €350: CIC, NBT, NBT EVO and iDrive 7. OEM-style finish, fitted at our Dublin 12 workshop.",
         option_name="iDrive system",
         variants=[
             ("iDrive CIC", "350.00", "MG-SVC-CP-BMW-CIC"),
@@ -764,7 +764,7 @@ PRODUCTS = [
                 "Test of video playback and all screen functions",
             ])),
             section("Good to know", ul([
-                "About 1 hour at our workshop",
+                "Done at our Dublin 12 workshop. We confirm the time when you book",
                 "For BMWs with iDrive 7 (ID7), usually built from 2019",
                 "For passenger use only. The driver must never watch video while driving",
             ])),
