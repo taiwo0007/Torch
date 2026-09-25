@@ -1,0 +1,47 @@
+{
+  "//": "Fake storefront objects for the preview renderer. Keys under pages/collections/products are template names (fallback: 'page', 'collection', 'product'). Edit freely; read at render time.",
+  "pages": {
+    "page.service": {
+      "title": "Apple CarPlay & Android Auto Installation",
+      "handle": "carplay-installation",
+      "content": "<p>Professional wired and wireless Apple CarPlay and Android Auto installation in Dublin.</p>"
+    },
+    "page.car-make": {
+      "title": "BMW CarPlay & Screen Upgrades",
+      "handle": "bmw-carplay",
+      "content": "",
+      "metafields": {}
+    },
+    "page.quote": {
+      "title": "Get a Quote",
+      "handle": "get-a-quote",
+      "content": "<p>Tell us about your car and what you'd like fitted, and we'll come back with a fixed price.</p>"
+    },
+    "page.contact": {
+      "title": "Contact MG Car Audio",
+      "handle": "contact",
+      "content": "<p>Call, WhatsApp or visit our fitting centre in Ballymount, Dublin 12.</p>"
+    },
+    "page": {
+      "title": "About MG Car Audio",
+      "handle": "about",
+      "content": "<p>Dublin's CarPlay and car audio specialists.</p>"
+    }
+  },
+  "collections": {
+    "collection": {
+      "title": "Installation Services",
+      "handle": "installation-services",
+      "description": "<p>Fitted CarPlay, Android Auto, screens, speakers and conversions at our Dublin 12 workshop.</p>",
+      "products_count": 8,
+      "all_products_count": 8
+    }
+  },
+  "products": {
+    "product": {
+      "title": "BMW Apple CarPlay Installation",
+      "handle": "carplay-installation-bmw",
+      "price": 35000
+    }
+  }
+}
