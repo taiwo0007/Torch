@@ -1,0 +1,111 @@
+{%- doc -%}
+  MG Car Audio inline SVG icon set. 24x24 stroke icons that inherit `currentColor`.
+  Size them with CSS (`.mg-icon { width: 20px; height: 20px; }`), they default to 24px.
+  Unknown names render nothing.
+
+  Any build task may APPEND new icons: add a new `when` branch before `endcase`,
+  keep the path data compact, and don't edit existing icons.
+
+  @param {string} icon - Icon name, e.g. 'phone', 'whatsapp', 'arrow-right'
+  @param {string} [class] - Extra classes for the <svg> element
+
+  @example
+  {% render 'mg-icon', icon: 'phone' %}
+  {% render 'mg-icon', icon: 'arrow-right', class: 'my-section__arrow' %}
+{%- enddoc -%}
+
+{%- capture mg_icon_paths -%}
+  {%- case icon -%}
+    {%- when 'phone' -%}
+      <path d="M5 4h3.5l1.8 4.5-2.3 1.4a11 11 0 0 0 6.1 6.1l1.4-2.3L20 15.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>
+    {%- when 'whatsapp' -%}
+      <path d="M4.3 15.6A8.5 8.5 0 1 1 8.4 19.7L3.3 20.7z"/>
+      <path fill="currentColor" stroke="none" d="M9.3 7.4c-.5 0-1.3.5-1.3 1.6 0 1.2.8 2.6 1.9 3.8 1.2 1.3 2.8 2.4 4.3 2.7 1 .2 1.8-.4 2-1l.2-.8c0-.2-.1-.4-.3-.5l-1.7-.8c-.2-.1-.4 0-.5.1l-.7.8c-.1.1-.3.2-.5.1-1-.4-2.3-1.6-2.8-2.7 0-.2 0-.3.1-.4l.6-.7c.1-.1.2-.4.1-.5l-.7-1.7c-.1-.2-.3-.3-.5-.3z"/>
+    {%- when 'calendar' -%}
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2"/>
+      <path d="M3.5 10h17M8 3v4M16 3v4"/>
+    {%- when 'star' -%}
+      <path fill="currentColor" d="M12 3.2l2.7 5.5 6 .9-4.4 4.2 1 6L12 17l-5.3 2.8 1-6-4.4-4.2 6-.9z"/>
+    {%- when 'shield' -%}
+      <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/>
+      <path d="M8.8 12.2l2.2 2.2 4.3-4.4"/>
+    {%- when 'map-pin' -%}
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/>
+      <circle cx="12" cy="10" r="2.5"/>
+    {%- when 'clock' -%}
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M12 7.5V12l3 2"/>
+    {%- when 'check' -%}
+      <path d="M5 12.5l4.5 4.5L19 7.5"/>
+    {%- when 'arrow-right' -%}
+      <path d="M4.5 12h15M13.5 6l6 6-6 6"/>
+    {%- when 'chevron-down' -%}
+      <path d="M6 9l6 6 6-6"/>
+    {%- when 'chevron-left' -%}
+      <path d="M15 6l-6 6 6 6"/>
+    {%- when 'chevron-right' -%}
+      <path d="M9 6l6 6-6 6"/>
+    {%- when 'camera' -%}
+      <path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+      <circle cx="12" cy="13.5" r="3.5"/>
+    {%- when 'car' -%}
+      <path d="M4 16v-3.5l2-5A1.6 1.6 0 0 1 7.5 6.5h9A1.6 1.6 0 0 1 18 7.5l2 5V16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zM4 12.5h16M6.5 17v2M17.5 17v2M7.5 14.5h1M15.5 14.5h1"/>
+    {%- when 'wrench' -%}
+      <path d="M14.6 6.4a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a5.5 5.5 0 0 1-7.3 7.3l-6.6 6.6a2 2 0 0 1-2.8-2.8l6.6-6.6a5.5 5.5 0 0 1 7.3-7.3z"/>
+    {%- when 'speaker' -%}
+      <rect x="5.5" y="3" width="13" height="18" rx="2"/>
+      <circle cx="12" cy="14.5" r="3.5"/>
+      <circle cx="12" cy="7.5" r="1.2"/>
+    {%- when 'screen' -%}
+      <rect x="2.5" y="4.5" width="19" height="13" rx="2"/>
+      <path d="M8 20.5h8M7 9h2M11 9h2M15 9h2M7 13h2M11 13h2"/>
+    {%- when 'message' -%}
+      <path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9.5L5 20.5V17H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/>
+      <path d="M7.5 9.5h9M7.5 13h6"/>
+    {%- when 'upload' -%}
+      <path d="M12 15.5v-12M7 8.5l5-5 5 5M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>
+    {%- when 'plus' -%}
+      <path d="M12 5v14M5 12h14"/>
+    {%- when 'play' -%}
+      <path d="M7 4.8v14.4a.8.8 0 0 0 1.2.7l11.3-7.2a.8.8 0 0 0 0-1.4L8.2 4.1a.8.8 0 0 0-1.2.7z"/>
+    {%- when 'x' -%}
+      <path d="M6 6l12 12M18 6L6 18"/>
+    {%- when 'mail' -%}
+      <rect x="3" y="5.5" width="18" height="13" rx="1.8"/>
+      <path d="M3.5 6.5l8.5 6.5 8.5-6.5"/>
+    {%- when 'globe' -%}
+      <circle cx="12" cy="12" r="8.5"/>
+      <path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.2 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.2-3.5-8.5s1.1-6.1 3.5-8.5z"/>
+    {%- when 'radio' -%}
+      <rect x="2.5" y="7" width="19" height="11" rx="1.8"/>
+      <circle cx="16.5" cy="12.5" r="2.5"/>
+      <path d="M5.5 10.5h6M5.5 14.5h4M7 7l8-4"/>
+    {%- when 'award' -%}
+      <circle cx="12" cy="9" r="5.5"/>
+      <path d="M8.5 13.3L7 21l5-2.8 5 2.8-1.5-7.7"/>
+    {%- when 'bolt' -%}
+      <path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>
+    {%- when 'tag' -%}
+      <path d="M3.5 4.5v6.3a1 1 0 0 0 .3.7l8.7 8.7a1 1 0 0 0 1.4 0l6.3-6.3a1 1 0 0 0 0-1.4L11.5 3.8a1 1 0 0 0-.7-.3H4.5a1 1 0 0 0-1 1z"/>
+      <circle cx="8" cy="8" r="1.3"/>
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- if mg_icon_paths != blank -%}
+  <svg
+    class="mg-icon mg-icon--{{ icon }}{% if class != blank %} {{ class }}{% endif %}"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    {{- mg_icon_paths -}}
+  </svg>
+{%- endif -%}
