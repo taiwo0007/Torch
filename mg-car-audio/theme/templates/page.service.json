@@ -1,0 +1,204 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact-time": {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "text": "Most fits in 1–2 hours"
+          }
+        },
+        "fact-connection": {
+          "type": "fact",
+          "settings": {
+            "icon": "screen",
+            "text": "Wired & wireless"
+          }
+        },
+        "fact-finish": {
+          "type": "fact",
+          "settings": {
+            "icon": "shield",
+            "text": "OEM-style finish"
+          }
+        },
+        "fact-makes": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        }
+      },
+      "block_order": [
+        "fact-time",
+        "fact-connection",
+        "fact-finish",
+        "fact-makes"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/collections/installation-services",
+        "breadcrumb_schema": true,
+        "eyebrow": "Fitted in Dublin 12",
+        "heading": "Apple CarPlay & Android Auto Installation in Dublin",
+        "intro": "Google Maps, Waze, Spotify, calls and messages, right on your car's screen. We fit wired and wireless Apple CarPlay and Android Auto to factory screens or as a complete radio upgrade, with an OEM-style appearance that preserves your original features wherever possible.",
+        "price_prefix": "From",
+        "price": "€299",
+        "price_suffix": "fitted",
+        "price_note": "BMW Android Auto (iDrive 7). BMW Apple CarPlay from €350. Other cars quoted from your reg.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/products/carplay-installation-bmw",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp for a quote",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-audi-carplay-screen.webp",
+        "show_rating": true
+      }
+    },
+    "details": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text-intro": {
+          "type": "text",
+          "settings": {
+            "title": "Factory screen or full upgrade",
+            "content": "<p>We specialise in professional Apple CarPlay and Android Auto installations for a wide range of vehicles. Whether your car has a factory screen or needs a complete radio upgrade, we bring modern smartphone connectivity to your dash.</p><p>Enjoy safe, hands-free access to Google Maps, Apple Maps, Waze, Spotify, WhatsApp, calls and messages, all on your car's screen. Every installation is designed to integrate seamlessly with your vehicle, keeping an <strong>OEM-style appearance and preserving original features wherever possible</strong>.</p>",
+            "use_page_content": false
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "Compatibility check from your reg and a photo of your dash\nInterface matched to your car's screen and system\nWired or wireless CarPlay and Android Auto, set up and paired\nMicrophone fitted for Siri, Google Assistant and calls\nFactory screen, controls and features kept wherever possible\nFull function test and a walkthrough before you drive away",
+            "show_warranty": true
+          }
+        },
+        "text-options": {
+          "type": "text",
+          "settings": {
+            "title": "Wired, wireless or OEM retrofit",
+            "content": "<p>We install both <strong>wired and wireless</strong> Apple CarPlay and Android Auto, so your phone connects effortlessly every time you get in. Our technicians complete every job to the highest standard, using quality components for long-lasting performance.</p><p>If your car doesn't support Apple CarPlay or Android Auto yet, we can still help. From <strong>OEM retrofits to complete touchscreen upgrades</strong>, we offer tailored solutions that keep a clean, factory-quality finish.</p>",
+            "use_page_content": false
+          }
+        },
+        "benefits": {
+          "type": "benefits",
+          "settings": {
+            "title": "Benefits of Apple CarPlay & Android Auto",
+            "items": "Wireless and wired connectivity available\nApple Maps, Google Maps & Waze navigation\nSpotify, Apple Music & other streaming apps\nHands-free calling and messaging\nSiri and Google Assistant voice control\nImproved driving safety and convenience\nOEM-style integration with your vehicle\nProfessional installation with expert support",
+            "icon": "check"
+          }
+        },
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Makes we cover",
+            "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
+            "note": "And many more. European, Japanese or imported, we'll recommend the best solution to suit your car and budget.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "price-bmw-carplay": {
+          "type": "price_row",
+          "settings": {
+            "label": "BMW Apple CarPlay",
+            "price": "€350",
+            "note": "Factory iDrive screen",
+            "url": "/products/carplay-installation-bmw"
+          }
+        },
+        "price-bmw-android-auto": {
+          "type": "price_row",
+          "settings": {
+            "label": "BMW Android Auto (iDrive 7)",
+            "price": "€299",
+            "note": "About 1 hour",
+            "url": "/products/android-auto-installation-bmw-id7"
+          }
+        },
+        "price-android-radio": {
+          "type": "price_row",
+          "settings": {
+            "label": "Android radio system install",
+            "price": "€150",
+            "note": "About 1 hr 30 min",
+            "url": "/products/android-radio-installation"
+          }
+        },
+        "price-video-in-motion": {
+          "type": "price_row",
+          "settings": {
+            "label": "BMW iDrive 7 video in motion",
+            "price": "€149",
+            "note": "iDrive 7 (ID7) systems"
+          }
+        }
+      },
+      "block_order": [
+        "text-intro",
+        "included",
+        "text-options",
+        "benefits",
+        "makes",
+        "price-bmw-carplay",
+        "price-bmw-android-auto",
+        "price-android-radio",
+        "price-video-in-motion"
+      ],
+      "settings": {
+        "eyebrow": "What you get",
+        "heading": "Smartphone connectivity, fitted properly",
+        "intro": "Whether your car has a factory screen or needs a complete radio upgrade, we'll recommend the right solution for your car and budget, then fit it to the highest standard using quality components.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_numbers": true,
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fitted at our unit in Ballymount, Dublin 12. Send us your reg first and we'll confirm exactly what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/products/carplay-installation-bmw",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "Quote on WhatsApp",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
+        "card_show_contact": true,
+        "output_schema": true,
+        "schema_name": "",
+        "schema_description": "Professional wired and wireless Apple CarPlay and Android Auto installation in Dublin, for factory screens and complete radio upgrades, with an OEM-style finish on BMW, Audi, Mercedes-Benz, Volkswagen and most major makes."
+      }
+    },
+    "cta": {
+      "type": "mg-service-cta",
+      "settings": {
+        "eyebrow": "Quick compatibility check",
+        "heading": "Not sure what fits your car?",
+        "text": "Send your reg and a photo of your dash on WhatsApp. We'll tell you exactly which CarPlay or Android Auto option suits your car, what it costs and how long the fitting takes.",
+        "show_details": true,
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp your reg",
+        "whatsapp_message": "Hi MG Car Audio, can you tell me which CarPlay / Android Auto option fits my car? My reg is: ",
+        "show_call": true,
+        "call_label": "Call",
+        "book_label": "Book a fitting",
+        "book_url": "/products/carplay-installation-bmw",
+        "glow_position": "right",
+        "glow_strength": 30,
+        "spacing": "tight"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "details",
+    "cta"
+  ]
+}

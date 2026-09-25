@@ -1,1 +1,183 @@
-{% comment %}Owned by the quote-form build task: floating WhatsApp button.{% endcomment %}
+{%- doc -%}
+  Floating WhatsApp button, rendered once per page from layout/theme.liquid.
+
+  Shows only when "Show floating WhatsApp button" is on and a WhatsApp number is set
+  (Theme settings > MG Car Audio: business details). Never shown on the password page or in print.
+  On product pages the product title is added to the pre-filled message.
+
+  Stacking: sits below Horizon's sticky header, sticky add-to-cart bar, menus and every
+  drawer/modal (those use showModal(), so they are in the top layer anyway). It lifts itself
+  above the sticky add-to-cart bar while that bar is showing, and above the Shopify Inbox chat
+  bubble if the Inbox app is installed.
+
+  @param {object} [product] - The product object, available globally on product pages.
+
+  @example
+  {% render 'mg-whatsapp-button' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+
+  assign show_button = false
+  if settings.mg_whatsapp_enabled and wa_number != blank and template.name != 'password'
+    assign show_button = true
+  endif
+
+  if show_button
+    assign business_name = settings.mg_business_name | default: shop.name
+    assign fallback_message = 'Hi ' | append: business_name | append: ','
+    assign wa_message = settings.mg_whatsapp_message | strip | default: fallback_message
+    assign wa_text = wa_message | url_encode
+
+    if request.page_type == 'product' and product.title != blank
+      assign product_line = "I'm interested in: " | append: product.title | url_encode
+      assign wa_text = wa_text | append: '%0A' | append: product_line
+    endif
+  endif
+-%}
+
+{%- if show_button -%}
+  <a
+    class="mg-wa-float"
+    href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat on WhatsApp with {{ business_name | escape }} (opens in a new tab)"
+  >
+    {%- render 'mg-icon', icon: 'whatsapp', class: 'mg-wa-float__icon' -%}
+    <span
+      class="mg-wa-float__label"
+      aria-hidden="true"
+    >
+      Chat on WhatsApp
+    </span>
+  </a>
+  <script>
+    /* Shopify Inbox registers <shopify-chat> only when the app is installed; its bubble also sits bottom-right. */
+    if (window.customElements) {
+      window.customElements.whenDefined('shopify-chat').then(function () {
+        document.documentElement.classList.add('mg-has-shopify-chat');
+      });
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .mg-wa-float {
+    --mg-wa-offset: 16px;
+    --mg-wa-lift: 0px;
+    --mg-wa-chat-lift: 0px;
+    position: fixed;
+    right: max(var(--mg-wa-offset), env(safe-area-inset-right, 0px)); /* stylelint-disable-line csstools/use-logical -- pinned to the physical corner in RTL too */
+    bottom: max(var(--mg-wa-offset), env(safe-area-inset-bottom, 0px));
+    z-index: calc(var(--layer-sticky, 8) - 2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    color: var(--mg-bg);
+    background: var(--mg-whatsapp);
+    border-radius: 999px;
+    box-shadow: var(--mg-shadow);
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    translate: 0 calc((var(--mg-wa-lift) + var(--mg-wa-chat-lift)) * -1);
+    transition:
+      translate 0.3s var(--mg-ease),
+      transform 0.2s var(--mg-ease),
+      box-shadow 0.2s var(--mg-ease);
+  }
+
+  .mg-wa-float:hover {
+    color: var(--mg-bg);
+    transform: translateY(-2px);
+  }
+
+  .mg-wa-float:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+  }
+
+  .mg-wa-float__icon {
+    flex: none;
+    width: 28px;
+    height: 28px;
+  }
+
+  .mg-wa-float__label {
+    display: none;
+  }
+
+  @media (min-width: 750px) {
+    .mg-wa-float {
+      --mg-wa-offset: 24px;
+      width: auto;
+      padding: 0 22px 0 16px;
+    }
+
+    .mg-wa-float__icon {
+      width: 26px;
+      height: 26px;
+    }
+
+    .mg-wa-float__label {
+      display: inline;
+    }
+  }
+
+  /* Clear Horizon's sticky add-to-cart bar while it is showing (full width on mobile,
+     a centred 600px pill on desktop that only reaches the corner below 1200px). */
+  @media (max-width: 1199px) {
+    body:has(sticky-add-to-cart[data-variant-available='true'] .sticky-add-to-cart__bar[data-stuck='true'])
+      .mg-wa-float {
+      --mg-wa-lift: calc(var(--height-buy-buttons, 3.25rem) + var(--padding-sm, 0.7rem) * 2 + 12px);
+    }
+  }
+
+  .mg-has-shopify-chat .mg-wa-float {
+    --mg-wa-chat-lift: 76px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-wa-float {
+      animation: mg-wa-float-in 0.5s var(--mg-ease) 0.6s both;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-wa-float {
+      transition: none;
+    }
+
+    .mg-wa-float:hover {
+      transform: none;
+    }
+  }
+
+  @keyframes mg-wa-float-in {
+    from {
+      opacity: 0;
+      scale: 0.6;
+    }
+
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  @media print {
+    .mg-wa-float {
+      display: none !important;
+    }
+  }
+{% endstylesheet %}

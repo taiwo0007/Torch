@@ -1,0 +1,92 @@
+{
+  "sections": {
+    "main": {
+      "type": "mg-car-make",
+      "blocks": {
+        "faq-factory-screen": {
+          "type": "question",
+          "settings": {
+            "question": "Can you add Apple CarPlay to my [make]'s factory screen?",
+            "answer": "<p>In most cases, yes. We fit a CarPlay and Android Auto interface behind your original screen, so you keep the factory look and can still switch back to the standard menus. Send us your reg and a photo of your dash and we'll confirm what fits your car.</p>"
+          }
+        },
+        "faq-wired-wireless": {
+          "type": "question",
+          "settings": {
+            "question": "Wired or wireless CarPlay: which should I get?",
+            "answer": "<p>Wireless CarPlay connects a few seconds after you start the car, so your phone can stay in your pocket or bag. Wired connects when you plug in with a USB cable. We fit both, and we'll tell you which options suit your [make] when we quote.</p>"
+          }
+        },
+        "faq-controls": {
+          "type": "question",
+          "settings": {
+            "question": "Will I keep my steering wheel controls and reverse camera?",
+            "answer": "<p>Wherever possible, yes. We choose parts that work with your [make]'s original controls, microphone and reverse camera. If anything can't be kept, we'll tell you before you book, not after.</p>"
+          }
+        },
+        "faq-time": {
+          "type": "question",
+          "settings": {
+            "question": "How long does the fitting take?",
+            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours at our Dublin 12 workshop. Japanese-to-European conversions take around two hours. We'll confirm the time when you book.</p>"
+          }
+        },
+        "faq-deposit": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to pay a deposit?",
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot. We agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-factory-screen",
+        "faq-wired-wireless",
+        "faq-controls",
+        "faq-time",
+        "faq-deposit"
+      ],
+      "settings": {
+        "fallback_make": "",
+        "fallback_heading": "[make] CarPlay & Screen Upgrades in Dublin",
+        "fallback_intro": "Wired and wireless Apple CarPlay, Android Auto and full screen upgrades for your [make], fitted in-house at our Dublin 12 workshop. We work with your factory screen and controls wherever possible, so the finish looks like it left the factory that way.\nSend us your reg and a photo of your dash and we'll confirm exactly what fits, with the fitted price agreed before you book.",
+        "fallback_from_price": "€299",
+        "fallback_services": "[make] wireless Apple CarPlay retrofit | From €350 | /pages/carplay-installation\nAndroid Auto on your factory screen | From €299 | /pages/carplay-installation\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nVideo in motion activation | From €149\nJapanese-to-European conversion | From €450\nRadio frequency conversion (Japan to Europe)",
+        "show_breadcrumb": true,
+        "fallback_image": "auto",
+        "eyebrow": "Car makes",
+        "price_note": "Fitted price agreed before you book. A €50 deposit secures your slot.",
+        "book_label": "Book a fitting",
+        "show_whatsapp": true,
+        "whatsapp_label": "Get a quote on WhatsApp",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or a screen upgrade on my [make]. My reg is: ",
+        "facts": "Fitted in-house, Dublin 12 | Wired & wireless CarPlay | OEM-style finish",
+        "show_systems": true,
+        "systems_heading": "Systems we upgrade",
+        "systems_text": "The factory infotainment systems we retrofit with Apple CarPlay, Android Auto or a bigger screen. Not sure which one your [make] has? Send us a photo of your dash.",
+        "show_models": true,
+        "models_heading": "Models we fit",
+        "models_note": "Don't see your model? Send us your reg and we'll check what fits.",
+        "show_services": true,
+        "services_heading": "[make] services",
+        "services_text": "Straight prices for the jobs we do most on [make] models, fitted at our Dublin 12 workshop.",
+        "services_note": "A €50 deposit secures your booking slot. \"From\" prices depend on your exact model and system, and we'll confirm yours before you book.",
+        "show_shop": true,
+        "shop_heading": "Parts for your [make]",
+        "shop_text": "CarPlay interfaces, screens and fitting kits for [make] models. Buy online, or book a fitting and we'll install it for you.",
+        "shop_label": "Shop [make] parts",
+        "show_page_content": true,
+        "content_heading": "More about [make] upgrades",
+        "show_faq": true,
+        "faq_heading": "[make] CarPlay questions",
+        "faq_schema": true,
+        "show_cta": true,
+        "cta_heading": "Ready to upgrade your [make]?",
+        "cta_text": "Send us your reg and a photo of your dash on WhatsApp. We'll come back with the right option for your car and a fitted price."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

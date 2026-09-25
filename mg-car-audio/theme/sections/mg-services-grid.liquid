@@ -164,7 +164,8 @@
   }
 
   .mg-services__all {
-    flex: none;
+    flex: 0 1 auto;
+    max-width: 100%;
   }
 
   /* Mobile: horizontal scroll-snap rail with a visible peek of the next card */
@@ -274,8 +275,8 @@
     margin: 0;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
     font-size: 0.875rem;
     line-height: 1.5;
     color: var(--mg-text-muted);
@@ -480,7 +481,7 @@
           "id": "text",
           "label": "Text",
           "info": "One or two short lines.",
-          "default": "Wired and wireless CarPlay on your factory iDrive screen, with an OEM-style finish and original features kept."
+          "default": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept."
         },
         {
           "type": "text",
@@ -505,8 +506,7 @@
           "type": "text",
           "id": "badge",
           "label": "Badge",
-          "info": "Optional, e.g. Most popular.",
-          "default": ""
+          "info": "Optional, e.g. Most popular."
         },
         {
           "type": "image_picker",
@@ -547,7 +547,7 @@
           "type": "service",
           "settings": {
             "title": "Apple CarPlay for BMW",
-            "text": "Wired and wireless CarPlay on your factory iDrive screen, with an OEM-style finish and original features kept.",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept.",
             "price": "€350",
             "url": "/pages/carplay-installation",
             "badge": "Most popular",
@@ -569,7 +569,7 @@
           "type": "service",
           "settings": {
             "title": "Android radio fitting",
-            "text": "Professional installation of Android head units, with neat wiring and a factory-style finish. About 90 minutes.",
+            "text": "Android head units fitted properly, with neat wiring and a factory-style finish. About 90 minutes.",
             "price": "€150",
             "url": "/products/android-radio-installation",
             "fallback_image": "mg-dash-radio.webp"
@@ -579,7 +579,7 @@
           "type": "service",
           "settings": {
             "title": "Japanese-to-European conversion",
-            "text": "Imported BMW? We switch menus, navigation and radio bands to European spec. Mercedes-Benz and VW on request.",
+            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. Mercedes and VW on request.",
             "price": "€450",
             "url": "/pages/get-a-quote",
             "fallback_image": "mg-bmw-japan-to-europe.webp"
@@ -589,7 +589,7 @@
           "type": "service",
           "settings": {
             "title": "Screen upgrades",
-            "text": "Bigger, sharper widescreens for BMW, Mercedes-Benz, Audi and VW, with CarPlay and Android Auto built in.",
+            "text": "Bigger, sharper widescreens for BMW, Mercedes, Audi and VW, with CarPlay and Android Auto built in.",
             "price": "€X",
             "url": "/collections/screen-upgrades",
             "fallback_image": "mg-audi-carplay-screen.webp"
@@ -619,7 +619,7 @@
           "type": "service",
           "settings": {
             "title": "Dashcam & reverse camera fitting",
-            "text": "Hard-wired dashcams and reverse cameras with the cables hidden and power taken safely from the fuse box.",
+            "text": "Hard-wired dashcams and reverse cameras, cables hidden and powered safely from the fuse box.",
             "price": "€X",
             "url": "/collections/dashcams",
             "fallback_image": "mg-showroom.webp"

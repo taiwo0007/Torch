@@ -159,6 +159,16 @@
   {%- endif -%}
 {%- endif -%}
 
+{% javascript %}
+  if (!window.mgFaqEditorBound) {
+    window.mgFaqEditorBound = true;
+    document.addEventListener('shopify:block:select', (event) => {
+      const item = event.target;
+      if (item instanceof HTMLDetailsElement && item.classList.contains('mg-faq__item')) item.open = true;
+    });
+  }
+{% endjavascript %}
+
 {% stylesheet %}
   .mg-faq {
     --mg-faq-panel: var(--mg-surface);
@@ -364,7 +374,8 @@
     color: var(--mg-text);
   }
 
-  .mg-faq__answer a {
+  .mg-faq .mg-faq__answer a,
+  .mg-faq .mg-faq__answer a:hover {
     color: var(--mg-text);
     text-decoration: underline;
     text-decoration-color: var(--mg-accent);
@@ -421,7 +432,7 @@
 
 {% schema %}
 {
-  "name": "MG: FAQ",
+  "name": "MG FAQ",
   "tag": "div",
   "class": "mg-faq-section",
   "disabled_on": {
@@ -519,7 +530,7 @@
         },
         {
           "value": "surface",
-          "label": "Raised surface"
+          "label": "Raised panel"
         }
       ],
       "default": "page"
@@ -564,7 +575,7 @@
   ],
   "presets": [
     {
-      "name": "MG: FAQ",
+      "name": "MG FAQ",
       "category": "MG Car Audio",
       "blocks": [
         {

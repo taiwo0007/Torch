@@ -19,10 +19,41 @@
 >
 
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  # MG Car Audio: title and description logic.
+  # Car make pages (template page.car-make): the car_make metaobject's seo_title /
+  # seo_description win; otherwise, when the page's SEO title isn't customised,
+  # use "<Make> CarPlay & Screen Upgrades in Dublin". Every title ends with
+  # " | <shop name>" unless it already contains it (so the home page isn't doubled).
+  # Nothing in this theme outputs a robots noindex tag.
+  assign mg_title = page_title | default: shop.name
+  assign mg_description = page_description
+  if template.name == 'page' and template.suffix == 'car-make'
+    assign mg_car_make = page.metafields.custom.car_make.value
+    assign mg_make_first_word = page.title | strip | split: ' ' | first
+    assign mg_make_name = mg_car_make.name.value | strip | default: mg_make_first_word
+    assign mg_seo_title = mg_car_make.seo_title.value | strip
+    assign mg_seo_description = mg_car_make.seo_description.value | strip
+    if mg_seo_title != blank
+      assign mg_title = mg_seo_title
+    elsif page_title == page.title and mg_make_name != blank
+      assign mg_title = mg_make_name | append: ' CarPlay & Screen Upgrades in Dublin'
+    endif
+    if mg_seo_description != blank
+      assign mg_description = mg_seo_description
+    elsif mg_description == blank and mg_make_name != blank
+      assign mg_locality = settings.mg_locality | default: 'Dublin'
+      assign mg_description = 'Apple CarPlay, Android Auto and screen upgrades for ' | append: mg_make_name | append: ', fitted in-house in ' | append: mg_locality | append: '. Book a fitting or get a quote on WhatsApp.'
+    endif
+  endif
+  assign mg_title_suffix = ' | ' | append: shop.name
+  if mg_title contains shop.name
+    assign mg_title_suffix = ''
+  endif
+
+  assign og_title = mg_title | append: mg_title_suffix
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = mg_description | default: shop.description | default: shop.name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -104,10 +135,10 @@
 >
 
 <title>
-  {{ page_title }}
+  {{ mg_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {{- mg_title_suffix -}}
 </title>
 
 <link
@@ -115,9 +146,9 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
+{% if mg_description != blank %}
   <meta
     name="description"
-    content="{{ page_description | escape }}"
+    content="{{ mg_description | escape }}"
   >
 {% endif %}

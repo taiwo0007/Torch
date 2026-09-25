@@ -232,7 +232,7 @@
     color: var(--mg-text-muted);
   }
 
-  .mg-how__text a {
+  .mg-how .mg-how__text a {
     color: var(--mg-text);
     text-decoration: underline;
     text-underline-offset: 0.2em;
@@ -259,7 +259,7 @@
     color: var(--mg-text-muted);
   }
 
-  .mg-how__phone a {
+  .mg-how .mg-how__phone a {
     font-weight: 700;
     color: var(--mg-text);
     text-decoration: underline;
@@ -267,7 +267,8 @@
     text-underline-offset: 0.25em;
   }
 
-  .mg-how__phone a:hover {
+  .mg-how .mg-how__phone a:hover {
+    color: var(--mg-text);
     text-decoration-color: var(--mg-accent);
   }
 
@@ -350,7 +351,7 @@
 
 {% schema %}
 {
-  "name": "MG: How it works",
+  "name": "MG how it works",
   "tag": "div",
   "class": "mg-how-section",
   "disabled_on": {
@@ -411,7 +412,7 @@
       "type": "text",
       "id": "whatsapp_label",
       "label": "WhatsApp button label",
-      "default": "Send your reg on WhatsApp"
+      "default": "WhatsApp us your reg"
     },
     {
       "type": "text",
@@ -453,7 +454,7 @@
         },
         {
           "value": "surface",
-          "label": "Raised surface"
+          "label": "Raised panel"
         }
       ],
       "default": "surface"
@@ -569,7 +570,7 @@
   ],
   "presets": [
     {
-      "name": "MG: How it works",
+      "name": "MG how it works",
       "category": "MG Car Audio",
       "blocks": [
         {

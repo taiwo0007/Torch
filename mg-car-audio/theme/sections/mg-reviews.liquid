@@ -263,6 +263,13 @@
     }
 
     customElements.define('mg-review-carousel', MgReviewCarousel);
+
+    document.addEventListener('shopify:block:select', (event) => {
+      const slide = event.target;
+      if (!(slide instanceof HTMLElement) || !slide.matches('[data-mg-slide]')) return;
+      const track = slide.closest('[data-mg-track]');
+      if (track) track.scrollTo({ left: slide.offsetLeft - (parseFloat(getComputedStyle(track).paddingLeft) || 0), behavior: 'smooth' });
+    });
   }
 {% endjavascript %}
 
@@ -295,7 +302,7 @@
     margin: 0;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 3rem);
     line-height: 1;
     letter-spacing: -0.03em;
     color: var(--mg-text);
@@ -345,9 +352,7 @@
   }
 
   .mg-reviews__all {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline;
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--mg-text);
@@ -361,12 +366,16 @@
   }
 
   .mg-reviews__all .mg-icon {
+    display: inline-block;
     width: 16px;
     height: 16px;
+    margin-left: 6px;
+    vertical-align: -3px;
   }
 
   /* Carousel */
   .mg-reviews__track {
+    position: relative;
     margin: 0 calc(var(--mg-gutter) * -1);
     padding: 4px var(--mg-gutter) 8px;
     overflow-x: auto;
@@ -617,7 +626,7 @@
 
 {% schema %}
 {
-  "name": "MG: Reviews carousel",
+  "name": "MG reviews carousel",
   "tag": "div",
   "class": "mg-reviews-section",
   "disabled_on": {
@@ -690,7 +699,7 @@
         },
         {
           "value": "surface",
-          "label": "Raised surface"
+          "label": "Raised panel"
         }
       ],
       "default": "surface"
@@ -761,7 +770,7 @@
   ],
   "presets": [
     {
-      "name": "MG: Reviews carousel",
+      "name": "MG reviews carousel",
       "category": "MG Car Audio",
       "blocks": [
         {

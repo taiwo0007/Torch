@@ -313,3 +313,443 @@ a.mg-card:hover,
   white-space: nowrap;
   border: 0;
 }
+
+/* =====================================================================
+ * Horizon polish (chrome task, appended). Makes Horizon's own parts
+ * (header, cards, prices, filters, product page, cart drawer, inputs,
+ * footer, password page) match the MG look.
+ *
+ * Most Horizon component CSS comes from {% stylesheet %} tags, which load
+ * AFTER this file. Rules that must win therefore carry exactly one extra
+ * class or element of specificity. Colours are MG tokens only.
+ * ===================================================================== */
+
+/* ---------- Page ---------- */
+
+html {
+  color-scheme: dark;
+  background-color: var(--mg-bg);
+  scrollbar-color: var(--mg-border-strong) var(--mg-bg);
+}
+
+html body {
+  background-color: var(--mg-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--mg-accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline-color: var(--mg-accent-hover);
+}
+
+input[type='checkbox'],
+input[type='radio'],
+progress {
+  accent-color: var(--mg-accent);
+}
+
+/* ---------- Header: announcement bar ---------- */
+
+/* Muted by default (skipped when a text colour is set on the announcement) */
+.announcement-bar .announcement-bar__slide:not([style*='--color:']) .announcement-bar__text {
+  color: var(--mg-text-muted);
+  transition: color 0.2s var(--mg-ease);
+}
+
+.announcement-bar .announcement-bar__slide:not([style*='--color:']):has(.announcement-bar__link:hover) .announcement-bar__text {
+  color: var(--mg-text);
+}
+
+/* ---------- Header: bar, logo, menu ---------- */
+
+/* Text logo (no logo image uploaded): heavy uppercase wordmark with a red ignition mark */
+.header .header-logo:not(:has(img)) {
+  gap: 0.6rem;
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  font-size: clamp(1rem, 1.4vw, 1.1875rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header .header-logo:not(:has(img))::before {
+  content: '';
+  flex: none;
+  width: 4px;
+  height: 1.15em;
+  border-radius: 2px;
+  background: var(--mg-accent);
+}
+
+/* Sticky state: slightly translucent graphite with a backdrop blur */
+.header[data-header-rows='single'][data-sticky-state='active'] .header__underlay-closed {
+  background: color-mix(in srgb, var(--color-background-top-row) 80%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+/* Transparent home header: soften the hairline while it floats over the hero */
+#header-component[transparent]:not([data-sticky-state='active']) .header__row.header__row--top,
+#header-component[transparent]:not([data-sticky-state='active']) .header__row.header__row--top .header__columns {
+  border-bottom-color: color-mix(in srgb, var(--mg-text) 14%, transparent);
+}
+
+.header .menu-list__link {
+  letter-spacing: 0.08em;
+}
+
+.header .menu-list__link-title {
+  position: relative;
+}
+
+/* Red underline for the current section and on hover (top level only) */
+.header .menu-list__list-item:not([slot='overflow']) > .menu-list__link .menu-list__link-title::after,
+.header .menu-list__list-item:not([slot='overflow']) > .menu-list__trigger .menu-list__link-title::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--gap-sm, 8px);
+  bottom: -7px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--mg-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s var(--mg-ease);
+}
+
+.header .menu-list__link--active .menu-list__link-title::after,
+.header .menu-list__list-item:hover > .menu-list__link .menu-list__link-title::after,
+.header .menu-list__list-item:hover > .menu-list__trigger .menu-list__link-title::after {
+  transform: scaleX(1);
+}
+
+/* "Book a fitting" menu link becomes an outlined pill (matches any link to /pages/book-a-fitting) */
+.header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title {
+  padding: 0.7em 1.1em;
+  border: 1px solid var(--mg-accent);
+  border-radius: var(--mg-radius-sm);
+  color: var(--mg-text);
+  transition: background-color 0.2s var(--mg-ease);
+}
+
+.header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title::after {
+  content: none;
+}
+
+.header .menu-list__link[href*='book-a-fitting']:hover .menu-list__link-title {
+  background: var(--mg-accent);
+  color: #fff;
+}
+
+/* Mobile drawer: big, confident top-level links */
+.menu-drawer__menu .menu-drawer__menu-item--mainlist {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  letter-spacing: -0.01em;
+}
+
+.menu-drawer__menu .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] {
+  color: var(--mg-accent-hover);
+}
+
+/* ---------- Buttons (Horizon) ---------- */
+
+:is(.button, .button-secondary):not(.button-unstyled) {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Product cards ---------- */
+
+product-card .product-grid__card.product-grid__card {
+  padding-block: max(8px, var(--padding-block-start, 0px)) max(16px, var(--padding-block-end, 0px));
+  padding-inline: max(8px, var(--padding-inline-start, 0px)) max(8px, var(--padding-inline-end, 0px));
+  border: 1px solid var(--mg-border);
+  border-radius: var(--mg-radius);
+  background: var(--mg-surface);
+  transition:
+    border-color 0.25s var(--mg-ease),
+    box-shadow 0.25s var(--mg-ease),
+    transform 0.25s var(--mg-ease);
+}
+
+product-card .card-gallery {
+  border-radius: max(var(--mg-radius-sm), var(--border-radius, 0px));
+  background: var(--mg-surface-2);
+}
+
+product-card [ref='productTitleLink'] .text-block {
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mg-text);
+}
+
+@media (hover: hover) {
+  product-card:hover .product-grid__card.product-grid__card {
+    border-color: var(--mg-border-strong);
+    box-shadow: var(--mg-shadow);
+    transform: translateY(-3px);
+  }
+}
+
+/* ---------- Prices ---------- */
+
+product-price .price {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--mg-text);
+}
+
+/* Sale price in accent, whichever order Horizon renders it in */
+product-price .price-item__group.price:has(+ .compare-at-price),
+product-price .compare-at-price + .price-item__group.price {
+  color: var(--mg-accent-hover);
+}
+
+product-price .compare-at-price {
+  font-weight: 500;
+}
+
+/* ---------- Collection filters ---------- */
+
+@media screen and (min-width: 750px) {
+  .facets.facets--horizontal {
+    border-block: 1px solid var(--mg-border);
+  }
+
+  .facets.facets--horizontal .facets__summary {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .facets.facets--horizontal .facets__panel-content {
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    background-color: var(--mg-surface);
+    box-shadow: var(--mg-shadow);
+  }
+}
+
+.facets-toggle .facets-toggle__button {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Product page ---------- */
+
+media-gallery .product-media-container {
+  background: var(--mg-surface);
+}
+
+/* Variant pills: graphite buttons, selected one gets a red edge */
+.variant-picker {
+  --color-variant-background: var(--mg-surface);
+  --color-variant-border: var(--mg-border-strong);
+  --color-variant-text: var(--mg-text);
+  --color-variant-hover-background: var(--mg-surface-2);
+  --color-variant-hover-border: var(--mg-text-muted);
+  --color-variant-hover-text: var(--mg-text);
+  --color-selected-variant-background: var(--mg-accent-soft);
+  --color-selected-variant-border: var(--mg-accent);
+  --color-selected-variant-text: var(--mg-text);
+  --color-selected-variant-hover-background: var(--mg-accent-soft);
+  --color-selected-variant-hover-border: var(--mg-accent-hover);
+  --color-selected-variant-hover-text: var(--mg-text);
+}
+
+.variant-picker .variant-option__button-label {
+  font-weight: 600;
+}
+
+/* Add to cart uses the accent even when the block is set to the secondary style */
+.buy-buttons-block .add-to-cart-button.button-secondary {
+  --button-color: var(--color-primary-button-text);
+  --button-background-color: var(--color-primary-button-background);
+  --button-border-color: var(--color-primary-button-border);
+  --button-border-width: var(--style-border-width-primary);
+}
+
+.buy-buttons-block .add-to-cart-button.button-secondary:hover {
+  --button-color: var(--color-primary-button-hover-text);
+  --button-background-color: var(--color-primary-button-hover-background);
+  --button-border-color: var(--color-primary-button-hover-border);
+}
+
+/* ---------- Drawers (cart, filters, menu) ---------- */
+
+.theme-drawer__dialog.theme-drawer__dialog {
+  border-inline-start: 1px solid var(--mg-border);
+}
+
+.theme-drawer__header .theme-drawer__title {
+  font-family: var(--font-heading--family);
+  font-weight: var(--font-heading--weight);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.theme-drawer__header .theme-drawer__badge {
+  background-color: var(--mg-accent);
+  color: #fff;
+}
+
+.cart-drawer__items .cart-items__table-row {
+  border-bottom-color: var(--mg-border);
+}
+
+/* ---------- Inputs ---------- */
+
+.field .field__input:focus,
+.field__input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 0 1px var(--mg-accent), 0 0 0 4px var(--mg-accent-soft);
+  outline: none;
+}
+
+.field__input::placeholder,
+textarea::placeholder {
+  color: var(--mg-text-subtle);
+}
+
+/* ---------- Footer (Horizon footer + utilities) ---------- */
+
+.footer-content :is(.menu__heading, .text-block.h6) {
+  font-family: var(--font-subheading--family);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mg-text-subtle);
+}
+
+.footer-content .menu__heading > span {
+  font-weight: 600;
+}
+
+.footer-content .menu__item a {
+  color: var(--mg-text-muted);
+  text-decoration: none;
+  transition: color 0.2s var(--mg-ease);
+}
+
+.footer-content .menu__item a:hover {
+  color: var(--mg-text);
+}
+
+.footer-content .text-block.rte {
+  color: var(--mg-text-muted);
+}
+
+.footer-content .menu--dividers .menu__details {
+  border-block-end-color: var(--mg-border);
+}
+
+.footer-content .payment-icons__list {
+  opacity: 0.85;
+}
+
+.footer-utilities .utilities {
+  color: var(--mg-text-subtle);
+}
+
+.footer-utilities .utilities a:hover {
+  color: var(--mg-text);
+}
+
+/* Leave room for the floating WhatsApp button on phones */
+@media screen and (max-width: 749px) {
+  .footer-utilities {
+    padding-bottom: 72px;
+  }
+}
+
+/* ---------- Password page ---------- */
+
+body:has(.password-main-content) {
+  background:
+    radial-gradient(900px 460px at 50% -8%, var(--mg-accent-soft), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--mg-bg) 78%, transparent) 0%, var(--mg-bg) 70%),
+    url('mg-bmw-carplay-screen.webp') center top / cover no-repeat,
+    var(--mg-bg);
+}
+
+.section-password .mg-password__eyebrow {
+  justify-content: center;
+  margin: 0;
+}
+
+.section-password .text-block.h1,
+.section-password .text-block.h1 h1 {
+  font-size: clamp(2.25rem, 7vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.section-password .text-block.rte {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--mg-text-muted);
+}
+
+.mg-password__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mg-password__actions .mg-icon {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.mg-password__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-password__note {
+  max-width: 48ch;
+  margin: 20px auto 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--mg-text-subtle);
+}
+
+.password-footer.password-footer {
+  border-top: 1px solid var(--mg-border);
+  font-size: 0.8125rem;
+  color: var(--mg-text-subtle);
+}
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  product-card .product-grid__card.product-grid__card,
+  .header .menu-list__link-title::after,
+  .header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title,
+  .footer-content .menu__item a {
+    transition: none;
+  }
+
+  product-card:hover .product-grid__card.product-grid__card {
+    transform: none;
+  }
+}

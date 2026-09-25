@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "mg-quote-form",
+      "settings": {
+        "background": "default",
+        "spacing": "default",
+        "eyebrow": "No-obligation quote",
+        "heading": "Get a fixed quote",
+        "use_page_title": false,
+        "heading_is_h1": true,
+        "show_contact": true,
+        "show_whatsapp_photo_step": true
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,1008 @@
+{%- liquid
+  assign is_above_fold = true
+  if section.index > 2
+    assign is_above_fold = false
+  endif
+
+  assign heading = section.settings.heading | strip
+  if heading == blank
+    if page and page.title != blank
+      assign heading = page.title
+    else
+      assign heading = 'Apple CarPlay & Android Auto Installation in Dublin'
+    endif
+  endif
+
+  assign crumb_current = heading
+  if page and page.title != blank
+    assign crumb_current = page.title
+  endif
+  assign crumb_parent_label = section.settings.breadcrumb_parent_label | strip
+  assign crumb_parent_url = section.settings.breadcrumb_parent_url | default: '/collections/installation-services'
+
+  assign book_url = section.settings.primary_url | default: '/products/carplay-installation-bmw'
+  assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
+    assign show_whatsapp = true
+  endif
+
+  assign show_rating = false
+  if section.settings.show_rating and settings.mg_review_rating != blank
+    assign show_rating = true
+  endif
+
+  assign fallback = section.settings.fallback_image | default: 'mg-audi-carplay-screen.webp'
+  assign fallback_w = 1536
+  assign fallback_h = 1024
+  case fallback
+    when 'mg-bmw-carplay-screen.webp'
+      assign fallback_alt = 'BMW widescreen display running Apple CarPlay'
+    when 'mg-audi-carplay-screen.webp'
+      assign fallback_alt = 'Audi dashboard showing Apple CarPlay with a connected iPhone'
+    when 'mg-android-auto-dash.webp'
+      assign fallback_alt = 'Car dashboard screen running Android Auto'
+    when 'mg-showroom.webp'
+      assign fallback_alt = 'MG Car Audio showroom and product wall in Dublin'
+      assign fallback_w = 1600
+      assign fallback_h = 1200
+    when 'mg-dash-radio.webp'
+      assign fallback_alt = 'Dashboard with an upgraded touchscreen head unit'
+      assign fallback_w = 1024
+      assign fallback_h = 1024
+    when 'mg-single-din-radio.webp'
+      assign fallback_alt = 'Single-DIN car radio'
+      assign fallback_w = 1024
+      assign fallback_h = 1024
+    when 'mg-door-speaker.webp'
+      assign fallback_alt = 'Upgraded car door speaker'
+      assign fallback_w = 1024
+      assign fallback_h = 1024
+    when 'mg-speaker-pair.webp'
+      assign fallback_alt = 'Pair of car speakers'
+      assign fallback_w = 1024
+      assign fallback_h = 1024
+    when 'mg-bmw-japan-to-europe.webp'
+      assign fallback_alt = 'BMW infotainment converted from Japanese to European spec'
+    when 'mg-mercedes-japan-to-europe.webp'
+      assign fallback_alt = 'Mercedes-Benz infotainment converted from Japanese to European spec'
+    when 'mg-vw-japan-to-europe.webp'
+      assign fallback_alt = 'Volkswagen infotainment converted from Japanese to European spec'
+    when 'mg-radio-frequency-conversion.webp'
+      assign fallback_alt = 'Radio frequency conversion for an imported Japanese car'
+    else
+      assign fallback_alt = heading
+  endcase
+  assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
+-%}
+
+<div class="mg-svc-hero">
+  <div
+    class="mg-svc-hero__glow"
+    aria-hidden="true"
+  ></div>
+
+  <div class="mg-container">
+    {%- if section.settings.show_breadcrumb -%}
+      <nav
+        class="mg-svc-hero__crumbs"
+        aria-label="Breadcrumb"
+      >
+        <ol role="list">
+          <li>
+            <a href="{{ routes.root_url }}">Home</a>
+          </li>
+          {%- if crumb_parent_label != blank -%}
+            <li>
+              <a href="{{ crumb_parent_url }}">{{ crumb_parent_label | escape }}</a>
+            </li>
+          {%- endif -%}
+          <li>
+            <span aria-current="page">{{ crumb_current | escape }}</span>
+          </li>
+        </ol>
+      </nav>
+    {%- endif -%}
+
+    <div class="mg-svc-hero__grid">
+      <div class="mg-svc-hero__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p
+            class="mg-eyebrow mg-svc-hero__reveal"
+            style="--mg-reveal-i: 0;"
+          >
+            {{ section.settings.eyebrow | escape }}
+          </p>
+        {%- endif -%}
+
+        <h1
+          class="mg-svc-hero__heading mg-svc-hero__reveal"
+          style="--mg-reveal-i: 1;"
+        >
+          {{- heading | escape -}}
+        </h1>
+
+        {%- if section.settings.intro != blank -%}
+          <p
+            class="mg-lede mg-svc-hero__intro mg-svc-hero__reveal"
+            style="--mg-reveal-i: 2;"
+          >
+            {{ section.settings.intro | escape | newline_to_br }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.price != blank or section.settings.price_note != blank -%}
+          <div
+            class="mg-svc-hero__offer mg-svc-hero__reveal"
+            style="--mg-reveal-i: 3;"
+          >
+            {%- if section.settings.price != blank -%}
+              <p class="mg-price-from mg-svc-hero__price">
+                {%- if section.settings.price_prefix != blank -%}
+                  <small>{{ section.settings.price_prefix | escape }}</small>
+                {%- endif -%}
+                <strong>{{ section.settings.price | escape }}</strong>
+                {%- if section.settings.price_suffix != blank -%}
+                  <small>{{ section.settings.price_suffix | escape }}</small>
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+            {%- if section.settings.price_note != blank -%}
+              <p class="mg-svc-hero__price-note">{{ section.settings.price_note | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.primary_label != blank or show_whatsapp -%}
+          <div
+            class="mg-svc-hero__actions mg-svc-hero__reveal"
+            style="--mg-reveal-i: 4;"
+          >
+            {%- if section.settings.primary_label != blank -%}
+              <a
+                class="mg-btn mg-btn--primary mg-svc-hero__btn"
+                href="{{ book_url }}"
+              >
+                {%- render 'mg-icon', icon: 'calendar' -%}
+                <span>{{ section.settings.primary_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if show_whatsapp -%}
+              <a
+                class="mg-btn mg-btn--whatsapp mg-svc-hero__btn"
+                href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {%- render 'mg-icon', icon: 'whatsapp' -%}
+                <span>{{ section.settings.whatsapp_label | escape }}</span>
+                <span class="mg-visually-hidden">(opens WhatsApp)</span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_call and settings.mg_phone_display != blank -%}
+          <p
+            class="mg-svc-hero__call mg-svc-hero__reveal"
+            style="--mg-reveal-i: 5;"
+          >
+            {%- render 'mg-icon', icon: 'phone' -%}
+            <span>
+              {{- section.settings.call_prefix | escape }}
+              <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+            </span>
+          </p>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul
+            class="mg-svc-hero__facts mg-svc-hero__reveal"
+            style="--mg-reveal-i: 6;"
+            role="list"
+          >
+            {%- for block in section.blocks -%}
+              {%- if block.settings.text != blank -%}
+                <li
+                  class="mg-svc-hero__fact"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- render 'mg-icon', icon: block.settings.icon -%}
+                  <span>{{ block.settings.text | escape }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="mg-svc-hero__media">
+        <div class="mg-svc-hero__frame">
+          {%- if section.settings.image != blank -%}
+            {%- liquid
+              if is_above_fold
+                assign loading = 'eager'
+                assign priority = 'high'
+              else
+                assign loading = 'lazy'
+                assign priority = 'auto'
+              endif
+              assign image_alt = section.settings.image.alt | default: heading
+              assign focal_style = 'object-position: ' | append: section.settings.image.presentation.focal_point | append: ';'
+            -%}
+            {{
+              section.settings.image
+              | image_url: width: 2200
+              | image_tag:
+                widths: '600, 800, 1000, 1200, 1500, 1800, 2200',
+                sizes: '(min-width: 1320px) 600px, (min-width: 990px) 46vw, calc(100vw - 32px)',
+                loading: loading,
+                fetchpriority: priority,
+                alt: image_alt,
+                class: 'mg-svc-hero__img',
+                style: focal_style
+            }}
+          {%- else -%}
+            <img
+              class="mg-svc-hero__img"
+              src="{{ fallback | asset_url }}"
+              alt="{{ fallback_alt | escape }}"
+              width="{{ fallback_w }}"
+              height="{{ fallback_h }}"
+              {% if is_above_fold %}
+                loading="eager" fetchpriority="high"
+              {% else %}
+                loading="lazy"
+              {% endif %}
+              decoding="async"
+            >
+          {%- endif -%}
+        </div>
+
+        {%- if show_rating -%}
+          {%- capture rating_inner -%}
+            <span class="mg-svc-hero__rating-stars">
+              {%- render 'mg-icon', icon: 'star' -%}
+              <strong>{{ settings.mg_review_rating | escape }}</strong>
+            </span>
+            <span class="mg-svc-hero__rating-text">
+              {%- if settings.mg_review_count != blank -%}
+                {{ settings.mg_review_count | escape }} Google reviews
+              {%- else -%}
+                Google rating
+              {%- endif -%}
+            </span>
+          {%- endcapture -%}
+          {%- if settings.mg_review_url != blank -%}
+            <a
+              class="mg-svc-hero__rating"
+              href="{{ settings.mg_review_url }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {{- rating_inner -}}
+              <span class="mg-visually-hidden">(opens Google reviews)</span>
+            </a>
+          {%- else -%}
+            <p class="mg-svc-hero__rating">{{- rating_inner -}}</p>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.show_breadcrumb and section.settings.breadcrumb_schema -%}
+  {%- liquid
+    assign home_url = request.origin | append: routes.root_url
+    assign parent_abs = crumb_parent_url
+    assign parent_first = crumb_parent_url | slice: 0
+    if parent_first == '/'
+      assign parent_abs = request.origin | append: crumb_parent_url
+    endif
+    assign current_abs = request.origin | append: request.path
+    assign position = 2
+  -%}
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":{{ home_url | json }}}
+    {%- if crumb_parent_label != blank -%}
+      ,{"@type":"ListItem","position":2,"name":{{ crumb_parent_label | json }},"item":{{ parent_abs | json }}}
+      {%- assign position = 3 -%}
+    {%- endif -%}
+    ,{"@type":"ListItem","position":{{ position }},"name":{{ crumb_current | json }},"item":{{ current_abs | json }}}]}
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  /*
+   * Service page hero. Mobile: breadcrumb, photo, then copy. Desktop (990px+):
+   * copy on the left, framed photo on the right, over a faint red glow and grid.
+   */
+  .mg-svc-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(12px, 2vw, 24px) clamp(48px, 6vw, 80px);
+    border-bottom: 1px solid var(--mg-border);
+    background: var(--mg-bg);
+    color: var(--mg-text);
+  }
+
+  .mg-svc-hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 60% at 80% 30%, color-mix(in srgb, var(--mg-accent) 15%, transparent), transparent 70%),
+      radial-gradient(45% 45% at 0% 100%, color-mix(in srgb, var(--mg-accent) 6%, transparent), transparent 70%);
+  }
+
+  .mg-svc-hero__glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--mg-text) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--mg-text) 4%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(70% 70% at 75% 35%, var(--mg-text) 0%, transparent 75%);
+    mask-image: radial-gradient(70% 70% at 75% 35%, var(--mg-text) 0%, transparent 75%);
+  }
+
+  /* Breadcrumb */
+  .mg-svc-hero__crumbs ol {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-svc-hero__crumbs li {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  /* The current page shrinks with an ellipsis so the trail stays on one line */
+  .mg-svc-hero__crumbs li:last-child {
+    flex: 0 1 auto;
+    overflow: hidden;
+  }
+
+  .mg-svc-hero__crumbs li:last-child span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mg-svc-hero__crumbs li + li::before {
+    content: '/';
+    color: var(--mg-border-strong);
+  }
+
+  .mg-svc-hero__crumbs a {
+    display: inline-block;
+    padding-block: 0.5rem;
+    color: var(--mg-text-muted);
+    text-decoration: none;
+    transition: color 0.2s var(--mg-ease);
+  }
+
+  .mg-svc-hero__crumbs a:hover {
+    color: var(--mg-text);
+  }
+
+  .mg-svc-hero__crumbs a:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .mg-svc-hero__crumbs [aria-current] {
+    color: var(--mg-text);
+  }
+
+  /* Layout */
+  .mg-svc-hero__grid {
+    display: grid;
+    gap: 32px;
+    margin-top: clamp(8px, 2vw, 24px);
+  }
+
+  .mg-svc-hero__media {
+    position: relative;
+    order: -1;
+    margin-bottom: 8px;
+  }
+
+  .mg-svc-hero__content {
+    min-width: 0;
+  }
+
+  /* Copy */
+  .mg-svc-hero__heading {
+    margin: 0;
+    max-width: 20ch;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2rem, 3.8vw, 3.375rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    text-wrap: balance;
+  }
+
+  .mg-svc-hero__intro {
+    max-width: 54ch;
+    margin-top: 1.25rem;
+  }
+
+  /* "From" price panel */
+  .mg-svc-hero__offer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    margin-top: 1.75rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--mg-border);
+    border-left: 2px solid var(--mg-accent);
+    border-radius: var(--mg-radius-sm);
+    background: color-mix(in srgb, var(--mg-surface) 70%, transparent);
+  }
+
+  .mg-svc-hero__price {
+    margin: 0;
+    line-height: 1;
+  }
+
+  .mg-svc-hero__price strong {
+    font-size: clamp(1.875rem, 3vw, 2.5rem);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-svc-hero__price-note {
+    flex: 1 1 220px;
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--mg-text-muted);
+  }
+
+  /* Buttons */
+  .mg-svc-hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 1.25rem;
+  }
+
+  .mg-svc-hero__btn {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .mg-svc-hero__call {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-svc-hero__call .mg-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-svc-hero__call a {
+    font-weight: 700;
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-border-strong);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s var(--mg-ease);
+  }
+
+  .mg-svc-hero__call a:hover {
+    text-decoration-color: var(--mg-accent);
+  }
+
+  .mg-svc-hero__call a:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Key facts: spec-sheet strip with hairline dividers */
+  .mg-svc-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    overflow: hidden;
+    background: var(--mg-border);
+  }
+
+  .mg-svc-hero__fact {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    padding: 0.85rem 0.9rem;
+    background: var(--mg-bg);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    color: var(--mg-text);
+  }
+
+  .mg-svc-hero__fact .mg-icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--mg-accent);
+  }
+
+  /* Framed photo */
+  .mg-svc-hero__media::before {
+    content: '';
+    position: absolute;
+    inset: 10% 6% -4% 12%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--mg-accent) 32%, transparent), transparent);
+    filter: blur(48px);
+  }
+
+  .mg-svc-hero__frame {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: var(--mg-radius-lg);
+    background: var(--mg-surface);
+    box-shadow: var(--mg-shadow);
+  }
+
+  .mg-svc-hero__frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mg-text) 6%, transparent);
+    background: linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--mg-bg) 55%, transparent) 100%);
+  }
+
+  .mg-svc-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Rating badge, overlapping the bottom edge of the frame */
+  .mg-svc-hero__rating {
+    position: absolute;
+    right: 16px;
+    bottom: -18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--mg-surface) 88%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--mg-shadow);
+    font-size: 0.8125rem;
+    color: var(--mg-text-muted);
+    text-decoration: none;
+    transition:
+      border-color 0.2s var(--mg-ease),
+      transform 0.2s var(--mg-ease);
+  }
+
+  a.mg-svc-hero__rating:hover {
+    border-color: var(--mg-text-subtle);
+    transform: translateY(-2px);
+  }
+
+  a.mg-svc-hero__rating:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+  }
+
+  .mg-svc-hero__rating-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--mg-text);
+  }
+
+  .mg-svc-hero__rating-stars .mg-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--mg-star);
+    stroke: none;
+  }
+
+  .mg-svc-hero__rating-stars strong {
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 750px) {
+    .mg-svc-hero__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .mg-svc-hero__btn {
+      width: auto;
+    }
+
+    .mg-svc-hero__facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .mg-svc-hero__fact {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+
+    .mg-svc-hero__rating {
+      right: 24px;
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 989px) {
+    .mg-svc-hero__frame {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-svc-hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+      align-items: center;
+      gap: clamp(40px, 5vw, 88px);
+      margin-top: clamp(24px, 3vw, 40px);
+    }
+
+    .mg-svc-hero__media {
+      order: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-svc-hero__reveal {
+      animation: mg-svc-hero-rise 0.7s var(--mg-ease) both;
+      animation-delay: calc(var(--mg-reveal-i, 0) * 70ms + 80ms);
+    }
+
+    .mg-svc-hero__frame {
+      animation: mg-svc-hero-fade 0.9s var(--mg-ease) both;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.mg-svc-hero__rating,
+    .mg-svc-hero__crumbs a,
+    .mg-svc-hero__call a {
+      transition: none;
+    }
+
+    a.mg-svc-hero__rating:hover {
+      transform: none;
+    }
+  }
+
+  @keyframes mg-svc-hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes mg-svc-hero-fade {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG service hero",
+  "tag": "section",
+  "class": "mg-service-hero-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "info": "Home / Services / page title. Helps visitors and Google understand where this page sits.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_parent_label",
+      "label": "Middle link label",
+      "info": "Leave blank to show only Home / page title.",
+      "default": "Services",
+      "visible_if": "{{ section.settings.show_breadcrumb }}"
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_parent_url",
+      "label": "Middle link",
+      "info": "Leave blank to link to /collections/installation-services.",
+      "visible_if": "{{ section.settings.show_breadcrumb }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "breadcrumb_schema",
+      "label": "Add breadcrumb structured data for Google",
+      "default": true,
+      "visible_if": "{{ section.settings.show_breadcrumb }}"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fitted in Dublin 12"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (page H1)",
+      "info": "Leave blank to use the page title. Include the service and 'Dublin' for local search."
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Google Maps, Waze, Spotify, calls and messages, right on your car's screen. We fit wired and wireless Apple CarPlay and Android Auto to factory screens or as a complete radio upgrade, with an OEM-style appearance that preserves your original features wherever possible."
+    },
+    {
+      "type": "header",
+      "content": "Price"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Text before price",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "info": "Leave blank to hide. €299 is MG's real BMW Android Auto (iDrive 7) price from the current booking page.",
+      "default": "€299"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "Text after price",
+      "default": "fitted"
+    },
+    {
+      "type": "text",
+      "id": "price_note",
+      "label": "Price note",
+      "info": "Real prices from MG's booking page.",
+      "default": "BMW Android Auto (iDrive 7). BMW Apple CarPlay from €350. Other cars quoted from your reg."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Booking button label",
+      "info": "Leave blank to hide.",
+      "default": "Book a fitting"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Booking button link",
+      "info": "Leave blank to link to /products/carplay-installation-bmw."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "WhatsApp for a quote",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "WhatsApp pre-filled message",
+      "info": "Leave blank to use the message from Theme settings.",
+      "default": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_call",
+      "label": "Show phone number",
+      "info": "Uses the phone number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "call_prefix",
+      "label": "Text before the number",
+      "default": "Prefer to talk? Call",
+      "visible_if": "{{ section.settings.show_call }}"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Landscape (3:2) works best, at least 1600px wide. Shown on the right on desktop and above the text on mobile."
+    },
+    {
+      "type": "select",
+      "id": "fallback_image",
+      "label": "Image to use until one is uploaded",
+      "options": [
+        { "value": "mg-audi-carplay-screen.webp", "label": "Audi CarPlay with iPhone" },
+        { "value": "mg-bmw-carplay-screen.webp", "label": "BMW CarPlay screen" },
+        { "value": "mg-android-auto-dash.webp", "label": "Android Auto dash" },
+        { "value": "mg-dash-radio.webp", "label": "Dash with head unit" },
+        { "value": "mg-showroom.webp", "label": "MG showroom" },
+        { "value": "mg-single-din-radio.webp", "label": "Single-DIN radio" },
+        { "value": "mg-door-speaker.webp", "label": "Door speaker" },
+        { "value": "mg-speaker-pair.webp", "label": "Speaker pair" },
+        { "value": "mg-bmw-japan-to-europe.webp", "label": "BMW Japan-to-Europe conversion" },
+        { "value": "mg-mercedes-japan-to-europe.webp", "label": "Mercedes Japan-to-Europe conversion" },
+        { "value": "mg-vw-japan-to-europe.webp", "label": "VW Japan-to-Europe conversion" },
+        { "value": "mg-radio-frequency-conversion.webp", "label": "Radio frequency conversion" }
+      ],
+      "default": "mg-audi-carplay-screen.webp"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Google rating badge on the image",
+      "info": "Uses the rating in Theme settings > MG Car Audio: business details. PLACEHOLDER: those figures are placeholders until the real Google rating is entered.",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Key fact",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "clock", "label": "Clock" },
+            { "value": "screen", "label": "Screen" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "car", "label": "Car" },
+            { "value": "check", "label": "Tick" },
+            { "value": "wrench", "label": "Wrench" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "bolt", "label": "Lightning bolt" },
+            { "value": "award", "label": "Award" },
+            { "value": "tag", "label": "Price tag" },
+            { "value": "map-pin", "label": "Map pin" },
+            { "value": "phone", "label": "Phone" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "OEM-style finish"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG service hero",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "text": "Most fits in 1–2 hours"
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "icon": "screen",
+            "text": "Wired & wireless"
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "icon": "shield",
+            "text": "OEM-style finish"
+          }
+        },
+        {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

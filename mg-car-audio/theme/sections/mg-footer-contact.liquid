@@ -1,0 +1,641 @@
+{%- liquid
+  assign business_name = settings.mg_business_name | default: shop.name
+
+  assign section_classes = 'mg-footer-contact'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-footer-contact--surface'
+  endif
+
+  assign heading_id = 'MgFooterContactHeading-' | append: section.id
+
+  assign phone_e164 = settings.mg_phone_e164 | remove: '+' | remove: ' '
+
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_enabled and wa_number != blank
+    assign show_whatsapp = true
+  endif
+  assign wa_fallback = 'Hi ' | append: business_name | append: ','
+  assign wa_message = settings.mg_whatsapp_message | strip | default: wa_fallback
+  assign wa_text = wa_message | url_encode
+
+  assign map_query = settings.mg_map_query
+  if map_query == blank
+    assign map_query = business_name | append: ', ' | append: settings.mg_street | append: ', ' | append: settings.mg_postcode
+  endif
+  assign map_query_encoded = map_query | url_encode
+
+  assign street_lines = settings.mg_street | split: ', '
+
+  assign has_hours = false
+  if settings.mg_hours_weekdays != blank or settings.mg_hours_saturday != blank or settings.mg_hours_sunday != blank
+    assign has_hours = true
+  endif
+-%}
+
+<div
+  class="{{ section_classes }}"
+  role="region"
+  aria-labelledby="{{ heading_id }}"
+>
+  <div class="mg-container mg-footer-contact__inner">
+    <div class="mg-footer-contact__intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      <h2
+        id="{{ heading_id }}"
+        class="mg-footer-contact__brand"
+      >
+        {{ business_name | escape }}
+      </h2>
+
+      {%- if section.settings.show_tagline and settings.mg_tagline != blank -%}
+        <p class="mg-footer-contact__tagline">{{ settings.mg_tagline | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <p class="mg-footer-contact__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+
+      <div class="mg-footer-contact__actions">
+        {%- if phone_e164 != blank -%}
+          <a
+            class="mg-btn mg-btn--primary"
+            href="tel:+{{ phone_e164 }}"
+          >
+            {%- render 'mg-icon', icon: 'phone' -%}
+            <span>
+              {{- section.settings.call_label | default: 'Call' | escape -}}
+              {%- if settings.mg_phone_display != blank %} {{ settings.mg_phone_display | escape }}{% endif -%}
+            </span>
+          </a>
+        {%- endif -%}
+
+        {%- if show_whatsapp -%}
+          <a
+            class="mg-btn mg-btn--whatsapp"
+            href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp' -%}
+            <span>{{ section.settings.whatsapp_label | default: 'WhatsApp us' | escape }}</span>
+            <span class="mg-visually-hidden">(opens in a new tab)</span>
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.quote_label != blank -%}
+          <a
+            class="mg-btn mg-btn--ghost"
+            href="{{ section.settings.quote_url | default: '/pages/get-a-quote' }}"
+          >
+            <span>{{ section.settings.quote_label | escape }}</span>
+            {%- render 'mg-icon', icon: 'arrow-right' -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <ul
+      class="mg-footer-contact__details"
+      role="list"
+    >
+      <li class="mg-footer-contact__item">
+        <span class="mg-footer-contact__icon">{%- render 'mg-icon', icon: 'map-pin' -%}</span>
+        <div class="mg-footer-contact__body">
+          <h3 class="mg-footer-contact__label">{{ section.settings.address_heading | default: 'Workshop' | escape }}</h3>
+          <address class="mg-footer-contact__address">
+            <strong>{{ business_name | escape }}</strong>
+            {%- for line in street_lines -%}
+              <br>{{ line | strip | escape }}
+            {%- endfor -%}
+            {%- if settings.mg_locality != blank -%}
+              <br>{{ settings.mg_locality | escape }}
+            {%- endif -%}
+            {%- if settings.mg_postcode != blank -%}
+              <br>{{ settings.mg_postcode | escape }}
+            {%- endif -%}
+          </address>
+          {%- if section.settings.directions_label != blank -%}
+            <a
+              class="mg-footer-contact__link"
+              href="https://www.google.com/maps/dir/?api=1&amp;destination={{ map_query_encoded }}"
+              target="_blank"
+              rel="noopener"
+            >
+              <span>{{ section.settings.directions_label | escape }}</span>
+              {%- render 'mg-icon', icon: 'arrow-right' -%}
+              <span class="mg-visually-hidden">(opens Google Maps in a new tab)</span>
+            </a>
+          {%- endif -%}
+        </div>
+      </li>
+
+      {%- if section.settings.show_hours and has_hours -%}
+        <li class="mg-footer-contact__item">
+          <span class="mg-footer-contact__icon">{%- render 'mg-icon', icon: 'clock' -%}</span>
+          <div class="mg-footer-contact__body">
+            <h3 class="mg-footer-contact__label">{{ section.settings.hours_heading | default: 'Opening hours' | escape }}</h3>
+            <dl class="mg-footer-contact__hours">
+              <div class="mg-footer-contact__hours-row">
+                <dt>Mon – Fri</dt>
+                <dd>{{ settings.mg_hours_weekdays | default: 'Closed' | escape }}</dd>
+              </div>
+              <div class="mg-footer-contact__hours-row">
+                <dt>Saturday</dt>
+                <dd>{{ settings.mg_hours_saturday | default: 'Closed' | escape }}</dd>
+              </div>
+              <div class="mg-footer-contact__hours-row">
+                <dt>Sunday</dt>
+                <dd>{{ settings.mg_hours_sunday | default: 'Closed' | escape }}</dd>
+              </div>
+            </dl>
+          </div>
+        </li>
+      {%- endif -%}
+
+      <li class="mg-footer-contact__item">
+        <span class="mg-footer-contact__icon">{%- render 'mg-icon', icon: 'message' -%}</span>
+        <div class="mg-footer-contact__body">
+          <h3 class="mg-footer-contact__label">{{ section.settings.contact_heading | default: 'Talk to us' | escape }}</h3>
+          <ul
+            class="mg-footer-contact__lines"
+            role="list"
+          >
+            {%- if phone_e164 != blank and settings.mg_phone_display != blank -%}
+              <li>
+                <span class="mg-footer-contact__line-label">Phone</span>
+                <a href="tel:+{{ phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+              </li>
+            {%- endif -%}
+            {%- if show_whatsapp -%}
+              <li>
+                <span class="mg-footer-contact__line-label">WhatsApp</span>
+                <a
+                  href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {{- section.settings.whatsapp_line | default: 'Send your reg + a dash photo' | escape -}}
+                  <span class="mg-visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </li>
+            {%- endif -%}
+            {%- if settings.mg_email != blank -%}
+              <li>
+                <span class="mg-footer-contact__line-label">Email</span>
+                <a href="mailto:{{ settings.mg_email | escape }}">{{ settings.mg_email | escape }}</a>
+              </li>
+            {%- endif -%}
+          </ul>
+          {%- if section.settings.contact_note != blank -%}
+            <p class="mg-footer-contact__note">{{ section.settings.contact_note | escape }}</p>
+          {%- endif -%}
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .mg-footer-contact {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(48px, 7vw, 96px);
+    border-top: 1px solid var(--mg-border);
+    background: var(--mg-bg);
+    color: var(--mg-text);
+  }
+
+  .mg-footer-contact--surface {
+    background: var(--mg-surface);
+  }
+
+  /* Ignition-red hairline and a faint glow, top left */
+  .mg-footer-contact::before {
+    content: '';
+    position: absolute;
+    inset: -1px 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--mg-accent) 18%, transparent 62%);
+  }
+
+  .mg-footer-contact::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(560px 240px at 4% 0%, color-mix(in srgb, var(--mg-accent) 9%, transparent), transparent 72%);
+  }
+
+  .mg-footer-contact__inner {
+    display: grid;
+    gap: clamp(32px, 5vw, 64px);
+  }
+
+  .mg-footer-contact__brand {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2rem, 5.2vw, 3.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    text-wrap: balance;
+  }
+
+  .mg-footer-contact__tagline {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-subheading--family);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-footer-contact__text {
+    max-width: 46ch;
+    margin: 1.25rem 0 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--mg-text-muted);
+    text-wrap: pretty;
+  }
+
+  .mg-footer-contact__actions {
+    display: grid;
+    gap: 12px;
+    margin-top: 1.75rem;
+  }
+
+  .mg-footer-contact__details {
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius-lg);
+    background: var(--mg-border);
+  }
+
+  .mg-footer-contact__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-content: start;
+    gap: 16px;
+    padding: clamp(20px, 2.4vw, 28px);
+    background: var(--mg-surface);
+  }
+
+  .mg-footer-contact--surface .mg-footer-contact__item {
+    background: var(--mg-surface-2);
+  }
+
+  .mg-footer-contact__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: var(--mg-radius);
+    color: var(--mg-accent);
+    background: var(--mg-bg);
+  }
+
+  .mg-footer-contact__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-footer-contact__body {
+    min-width: 0;
+  }
+
+  .mg-footer-contact__label {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-subheading--family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-footer-contact__address {
+    font-style: normal;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-footer-contact__address strong {
+    font-weight: 700;
+    color: var(--mg-text);
+  }
+
+  .mg-footer-contact__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--mg-text);
+    text-decoration: none;
+  }
+
+  .mg-footer-contact__link svg {
+    width: 16px;
+    height: 16px;
+    color: var(--mg-accent);
+    transition: transform 0.2s var(--mg-ease);
+  }
+
+  .mg-footer-contact__link:hover {
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .mg-footer-contact__link:hover svg {
+    transform: translateX(3px);
+  }
+
+  .mg-footer-contact__hours {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+
+  .mg-footer-contact__hours-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--mg-border);
+  }
+
+  .mg-footer-contact__hours-row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .mg-footer-contact__hours dt {
+    color: var(--mg-text-muted);
+  }
+
+  .mg-footer-contact__hours dd {
+    margin: 0;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--mg-text);
+  }
+
+  .mg-footer-contact__lines {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+  }
+
+  .mg-footer-contact__lines li {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .mg-footer-contact__line-label {
+    font-size: 0.75rem;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-footer-contact__lines a {
+    font-weight: 600;
+    color: var(--mg-text);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .mg-footer-contact__lines a:hover {
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .mg-footer-contact__note {
+    margin: 0.9rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--mg-text-subtle);
+  }
+
+  @media screen and (min-width: 600px) {
+    .mg-footer-contact__actions {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-footer-contact__details {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mg-footer-contact__item {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Desktop: brand on the left, a stacked "control panel" of actions on the right,
+     then the three detail cells full width underneath */
+  @media screen and (min-width: 990px) {
+    .mg-footer-contact__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+      column-gap: clamp(40px, 6vw, 96px);
+      align-items: end;
+    }
+
+    .mg-footer-contact__intro > * {
+      grid-column: 1;
+    }
+
+    .mg-footer-contact__intro > .mg-footer-contact__actions {
+      display: grid;
+      grid-column: 2;
+      grid-row: 1 / span 4;
+      align-self: end;
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-footer-contact__link svg {
+      transition: none;
+    }
+
+    .mg-footer-contact__link:hover svg {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG footer: contact band",
+  "tag": "div",
+  "class": "mg-footer-contact-section",
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Name, tagline, phone, WhatsApp, address and hours come from Theme settings > MG Car Audio: business details."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Visit the workshop"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tagline",
+      "label": "Show tagline",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Intro text",
+      "default": "CarPlay, Android Auto, screens and sound, fitted properly at our Dublin 12 workshop. Send us your reg and we'll tell you exactly what fits your car."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "call_label",
+      "label": "Call button label",
+      "info": "The phone number is added after this text.",
+      "default": "Call"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp",
+      "info": "Also needs WhatsApp turned on in the business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "WhatsApp us"
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Third button label",
+      "info": "Leave blank to hide.",
+      "default": "Get a quote"
+    },
+    {
+      "type": "url",
+      "id": "quote_url",
+      "label": "Third button link",
+      "info": "Leave blank to link to /pages/get-a-quote."
+    },
+    {
+      "type": "header",
+      "content": "Details"
+    },
+    {
+      "type": "text",
+      "id": "address_heading",
+      "label": "Address heading",
+      "default": "Workshop"
+    },
+    {
+      "type": "text",
+      "id": "directions_label",
+      "label": "Directions link label",
+      "info": "Opens Google Maps using the map search in the business details. Leave blank to hide.",
+      "default": "Get directions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hours",
+      "label": "Show opening hours",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "hours_heading",
+      "label": "Hours heading",
+      "default": "Opening hours"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact heading",
+      "default": "Talk to us"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_line",
+      "label": "WhatsApp link text",
+      "default": "Send your reg + a dash photo"
+    },
+    {
+      "type": "text",
+      "id": "contact_note",
+      "label": "Small note",
+      "default": "Tell us your make, model and year and we'll come back with a fitted price."
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "default",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "surface"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG footer: contact band",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}

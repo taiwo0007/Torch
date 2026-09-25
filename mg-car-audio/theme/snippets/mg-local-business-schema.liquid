@@ -1,1 +1,149 @@
-{% comment %}Owned by the SEO build task: LocalBusiness / AutoRepair JSON-LD.{% endcomment %}
+{%- doc -%}
+  Local SEO structured data: one AutoRepair (a LocalBusiness subtype) JSON-LD block
+  with MG Car Audio's name, address, phone and opening hours. Rendered in <head> on
+  every page by layout/theme.liquid, but only outputs on the home page and the
+  contact page (template page.contact or page handle "contact").
+
+  Business details come from Theme settings > MG Car Audio: business details
+  (settings.mg_*). Every string goes through the json filter, so the output is
+  always valid JSON. No aggregateRating: add one only from a real reviews source.
+
+  @example
+  {% render 'mg-local-business-schema' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign mg_lb_show = false
+  if template.name == 'index'
+    assign mg_lb_show = true
+  elsif template.name == 'page'
+    if template.suffix == 'contact' or page.handle == 'contact'
+      assign mg_lb_show = true
+    endif
+  endif
+-%}
+
+{%- if mg_lb_show -%}
+  {%- liquid
+    assign mg_lb_name = settings.mg_business_name | strip | default: shop.name
+    assign mg_lb_url = shop.url | default: request.origin
+    assign mg_lb_id = mg_lb_url | append: '/#business'
+
+    # asset_url and image_url return protocol-relative URLs (//...), so prefix https:
+    if settings.logo != blank
+      assign mg_lb_logo = settings.logo | image_url: width: 600 | prepend: 'https:'
+      assign mg_lb_image = settings.logo | image_url: width: 1200 | prepend: 'https:'
+    else
+      assign mg_lb_image = 'mg-showroom.webp' | asset_url | prepend: 'https:'
+    endif
+
+    assign mg_lb_phone = settings.mg_phone_e164 | remove: '+' | remove: ' ' | strip
+    assign mg_lb_email = settings.mg_email | strip
+
+    assign mg_lb_map_query = settings.mg_map_query | strip
+    if mg_lb_map_query != blank
+      assign mg_lb_map_encoded = mg_lb_map_query | url_encode
+      assign mg_lb_map = 'https://www.google.com/maps/search/?api=1&query=' | append: mg_lb_map_encoded
+    endif
+
+    # Coordinates are optional text settings; coerce to numbers and skip if blank or zero.
+    assign mg_lb_lat = settings.mg_geo_lat | strip
+    assign mg_lb_lng = settings.mg_geo_lng | strip
+    assign mg_lb_has_geo = false
+    if mg_lb_lat != blank and mg_lb_lng != blank
+      assign mg_lb_lat_num = mg_lb_lat | plus: 0
+      assign mg_lb_lng_num = mg_lb_lng | plus: 0
+      if mg_lb_lat_num != 0 and mg_lb_lng_num != 0
+        assign mg_lb_has_geo = true
+      endif
+    endif
+
+    # Profile URLs for sameAs (Facebook, Instagram, Google Business Profile, ...).
+    # Add them here, separated by commas. Blank entries are skipped.
+    assign mg_lb_same_as = '' | split: ','
+  -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "@id": {{ mg_lb_id | json }},
+      "name": {{ mg_lb_name | json }},
+      "url": {{ mg_lb_url | json }},
+      "image": {{ mg_lb_image | json }}
+      {%- if mg_lb_logo != blank -%}
+        ,"logo": {{ mg_lb_logo | json }}
+      {%- endif -%}
+      {%- if settings.mg_tagline != blank -%}
+        ,"description": {{ settings.mg_tagline | strip | json }}
+      {%- endif -%}
+      {%- if mg_lb_phone != blank -%}
+        ,"telephone": {{ mg_lb_phone | prepend: '+' | json }}
+      {%- endif -%}
+      {%- if mg_lb_email != blank -%}
+        ,"email": {{ mg_lb_email | json }}
+      {%- endif -%}
+      ,"address": {
+        "@type": "PostalAddress"
+        {%- if settings.mg_street != blank -%}
+          ,"streetAddress": {{ settings.mg_street | strip | json }}
+        {%- endif -%}
+        {%- if settings.mg_locality != blank -%}
+          ,"addressLocality": {{ settings.mg_locality | strip | json }}
+        {%- endif -%}
+        {%- if settings.mg_region != blank -%}
+          ,"addressRegion": {{ settings.mg_region | strip | json }}
+        {%- endif -%}
+        {%- if settings.mg_postcode != blank -%}
+          ,"postalCode": {{ settings.mg_postcode | strip | json }}
+        {%- endif -%}
+        ,"addressCountry": {{ settings.mg_country_code | strip | default: 'IE' | json }}
+      }
+      {%- if mg_lb_has_geo -%}
+        ,"geo": {
+          "@type": "GeoCoordinates",
+          "latitude": {{ mg_lb_lat_num | json }},
+          "longitude": {{ mg_lb_lng_num | json }}
+        }
+      {%- endif -%}
+      {%- if mg_lb_map != blank -%}
+        ,"hasMap": {{ mg_lb_map | json }}
+      {%- endif -%}
+      {%- comment -%}
+        Opening hours are hard-coded from MG's real hours (Mon–Fri 9:30am–7pm, Sat 11am–7pm,
+        Sun by appointment, so Sunday is left out). The mg_hours_* theme settings are free text
+        for display only: if the hours change, update them here too.
+      {%- endcomment -%}
+      ,"openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:30",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "11:00",
+          "closes": "19:00"
+        }
+      ]
+      ,"priceRange": "€€"
+      ,"currenciesAccepted": "EUR"
+      ,"areaServed": {
+        "@type": "City",
+        "name": "Dublin"
+      }
+      {%- capture mg_lb_same_as_json -%}
+        {%- for mg_lb_profile in mg_lb_same_as -%}
+          {%- assign mg_lb_profile_url = mg_lb_profile | strip -%}
+          {%- if mg_lb_profile_url != blank -%}
+            ,{{ mg_lb_profile_url | json }}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if mg_lb_same_as_json != blank -%}
+        ,"sameAs": [{{ mg_lb_same_as_json | remove_first: ',' }}]
+      {%- endif %}
+    }
+  </script>
+{%- endif -%}

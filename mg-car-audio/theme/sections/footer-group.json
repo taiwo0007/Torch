@@ -9,13 +9,90 @@
  */
 {
   "type": "footer",
-  "name": "t:names.footer",
+  "name": "Footer",
   "sections": {
+    "mg_footer_contact": {
+      "type": "mg-footer-contact",
+      "name": "Contact band",
+      "settings": {
+        "eyebrow": "Visit the workshop",
+        "show_tagline": true,
+        "text": "CarPlay, Android Auto, screens and sound, fitted properly at our Dublin 12 workshop. Send us your reg and we'll tell you exactly what fits your car.",
+        "call_label": "Call",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "address_heading": "Workshop",
+        "directions_label": "Get directions",
+        "show_hours": true,
+        "hours_heading": "Opening hours",
+        "contact_heading": "Talk to us",
+        "whatsapp_line": "Send your reg + a dash photo",
+        "contact_note": "Tell us your make, model and year and we'll come back with a fitted price.",
+        "background": "surface"
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
-        "group_wErUQf": {
+        "menu_main": {
+          "type": "menu",
+          "name": "Explore menu",
+          "settings": {
+            "menu": "main-menu",
+            "heading": "Explore",
+            "menu_spacing": 12,
+            "show_as_accordion": true,
+            "accordion_icon": "plus",
+            "accordion_dividers": true,
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "menu_services": {
+          "type": "menu",
+          "name": "Services menu",
+          "settings": {
+            "menu": "services",
+            "heading": "",
+            "menu_spacing": 12,
+            "show_as_accordion": true,
+            "accordion_icon": "plus",
+            "accordion_dividers": true,
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "menu_footer": {
+          "type": "menu",
+          "name": "Help menu",
+          "settings": {
+            "menu": "footer",
+            "heading": "Help & info",
+            "menu_spacing": 12,
+            "show_as_accordion": true,
+            "accordion_icon": "plus",
+            "accordion_dividers": true,
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "group_newsletter": {
           "type": "group",
+          "name": "Newsletter",
           "settings": {
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -23,8 +100,8 @@
             "vertical_alignment": "center",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 14,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -51,15 +128,15 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_pF6rVi": {
+            "newsletter_heading": {
               "type": "text",
-              "name": "t:names.heading",
+              "name": "Heading",
               "settings": {
-                "text": "<h2>Join our email list</h2>",
+                "text": "<p>Offers &amp; new kit</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h3",
+                "type_preset": "h6",
                 "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
@@ -76,13 +153,13 @@
               },
               "blocks": {}
             },
-            "text_HafH7P": {
+            "newsletter_text": {
               "type": "text",
-              "name": "t:names.text",
+              "name": "Text",
               "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
+                "text": "<p>The odd email with install offers, new CarPlay kits and open fitting slots. No spam, unsubscribe any time.</p>",
                 "width": "100%",
-                "max_width": "normal",
+                "max_width": "narrow",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
@@ -101,22 +178,20 @@
               },
               "blocks": {}
             },
-            "email-signup_HafH7P": {
+            "newsletter_signup": {
               "type": "email-signup",
-              "name": "t:names.email_signup",
+              "name": "Email signup",
               "settings": {
                 "width": "fill",
                 "custom_width": 100,
                 "heading": "",
                 "heading_preset": "h3",
                 "border_style": "all",
-                "input_style": "custom",
+                "input_style": "default",
                 "border_width": 1,
-                "border_radius": 100,
-                "input_background_color": "{{ settings.color_palette.color1 }}",
-                "input_border_color": "",
+                "border_radius": 6,
                 "input_type_preset": "paragraph",
-                "style_class": "button-secondary",
+                "style_class": "button",
                 "custom_button_background": "{{ settings.color_palette.foreground }}",
                 "custom_button_text": "{{ settings.color_palette.background }}",
                 "custom_button_border": "{{ settings.color_palette.background }}",
@@ -124,7 +199,20 @@
                 "label": "Sign up",
                 "integrated_button": false,
                 "button_type_preset": "paragraph",
-                "padding-block-start": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "newsletter_payments": {
+              "type": "payment-icons",
+              "name": "Payment icons",
+              "settings": {
+                "horizontal_alignment": "flex-start",
+                "gap": 8,
+                "padding-block-start": 12,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
@@ -133,67 +221,36 @@
             }
           },
           "block_order": [
-            "text_pF6rVi",
-            "text_HafH7P",
-            "email-signup_HafH7P"
+            "newsletter_heading",
+            "newsletter_text",
+            "newsletter_signup",
+            "newsletter_payments"
           ]
-        },
-        "menu_footer": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer",
-            "heading": "",
-            "menu_spacing": 12,
-            "show_as_accordion": false,
-            "accordion_icon": "plus",
-            "accordion_dividers": false,
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "menu_main": {
-          "type": "menu",
-          "settings": {
-            "menu": "main-menu",
-            "heading": "",
-            "menu_spacing": 12,
-            "show_as_accordion": false,
-            "accordion_icon": "plus",
-            "accordion_dividers": false,
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
         }
       },
       "block_order": [
-        "group_wErUQf",
+        "menu_main",
+        "menu_services",
         "menu_footer",
-        "menu_main"
+        "group_newsletter"
       ],
-      "name": "t:names.footer",
+      "name": "Footer",
       "settings": {
         "section_width": "page-width",
         "gap": 40,
-        "background_color": "{{ settings.color_palette.color1 }}",
-        "padding-block-start": 36,
-        "padding-block-end": 36
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 56,
+        "padding-block-end": 40
       }
     },
     "utilities": {
       "type": "footer-utilities",
+      "name": "Copyright and policies",
       "blocks": {
         "copyright": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           }
@@ -204,34 +261,25 @@
             "font_size": "0.75rem",
             "case": "none"
           }
-        },
-        "social_icons": {
-          "type": "social-links",
-          "settings": {
-            "facebook_url": "https://www.facebook.com",
-            "instagram_url": "https://www.instagram.com",
-            "youtube_url": "https://www.youtube.com",
-            "tiktok_url": "https://www.tiktok.com",
-            "twitter_url": "https://www.twitter.com"
-          }
         }
       },
       "block_order": [
         "copyright",
-        "policy_list",
-        "social_icons"
+        "policy_list"
       ],
       "settings": {
         "section_width": "page-width",
         "gap": 24,
-        "background_color": "{{ settings.color_palette.color1 }}",
+        "background_color": "{{ settings.color_palette.background }}",
         "divider_thickness": 1,
-        "padding-block-start": 12,
-        "padding-block-end": 16
+        "divider_color": "{{ settings.color_palette.color3 }}",
+        "padding-block-start": 20,
+        "padding-block-end": 24
       }
     }
   },
   "order": [
+    "mg_footer_contact",
     "footer",
     "utilities"
   ]

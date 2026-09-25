@@ -1,0 +1,422 @@
+{%- doc -%}
+  MG fitting CTA: a compact "Need it fitted?" card for the product page (add it inside the
+  product information section, under the buy buttons).
+
+  Fitted price comes from the product metafield `custom.fitted_price` (single line text, e.g. €350),
+  falling back to the block's "Fallback price". With neither, the price line is hidden.
+  Hides itself on products whose type is "Installation" (can be switched off in the block).
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+
+  assign hide_block = false
+  if block_settings.hide_on_installation and product_resource != blank
+    assign product_type = product_resource.type | strip | downcase
+    if product_type == 'installation'
+      assign hide_block = true
+    endif
+  endif
+
+  assign fitted_price = product_resource.metafields.custom.fitted_price.value | default: block_settings.fallback_price | strip
+  assign book_url = block_settings.book_url | default: '/pages/book-a-fitting'
+
+  assign book_class = 'mg-btn--ghost'
+  if block_settings.book_style == 'primary'
+    assign book_class = 'mg-btn--primary'
+  endif
+
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign show_whatsapp = false
+  if block_settings.show_whatsapp and wa_number != blank
+    assign show_whatsapp = true
+  endif
+
+  assign product_title = product_resource.title | default: 'this product'
+  assign wa_template = block_settings.whatsapp_message | default: "Hi MG Car Audio, I'd like a fitting quote for: [product]. My reg is: "
+  assign wa_message = wa_template | replace: '[product]', product_title
+  assign wa_text = wa_message | url_encode
+
+  assign show_points = false
+  if block_settings.point_1 != blank or block_settings.point_2 != blank
+    assign show_points = true
+  endif
+  if block_settings.show_warranty and settings.mg_warranty_text != blank
+    assign show_points = true
+  endif
+-%}
+
+{%- if hide_block -%}
+  {%- if request.design_mode -%}
+    <div
+      class="mg-fit-note"
+      {{ block.shopify_attributes }}
+    >
+      Fitting card hidden: this product's type is "Installation". Turn off "Hide on installation products" in the
+      block to show it.
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <div
+    class="mg-fit-wrap spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="mg-fit">
+      <div class="mg-fit__top">
+        <span class="mg-fit__icon">{%- render 'mg-icon', icon: 'wrench' -%}</span>
+        <div class="mg-fit__copy">
+          {%- if block_settings.heading != blank -%}
+            <p class="mg-fit__title">{{ block_settings.heading | escape }}</p>
+          {%- endif -%}
+          {%- if block_settings.subheading != blank -%}
+            <p class="mg-fit__sub">{{ block_settings.subheading | escape }}</p>
+          {%- endif -%}
+        </div>
+        {%- if fitted_price != blank -%}
+          <p class="mg-fit__price mg-price-from">
+            <small>{{ block_settings.price_label | default: 'Fitted from' | escape }}</small>
+            <strong>{{ fitted_price | escape }}</strong>
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if show_points -%}
+        <ul
+          class="mg-fit__points"
+          role="list"
+        >
+          {%- if block_settings.point_1 != blank -%}
+            <li>{%- render 'mg-icon', icon: 'check' -%}{{ block_settings.point_1 | escape }}</li>
+          {%- endif -%}
+          {%- if block_settings.point_2 != blank -%}
+            <li>{%- render 'mg-icon', icon: 'check' -%}{{ block_settings.point_2 | escape }}</li>
+          {%- endif -%}
+          {%- if block_settings.show_warranty and settings.mg_warranty_text != blank -%}
+            <li>{%- render 'mg-icon', icon: 'shield' -%}{{ settings.mg_warranty_text | escape }}</li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if block_settings.book_label != blank or show_whatsapp -%}
+        <div class="mg-fit__actions">
+          {%- if block_settings.book_label != blank -%}
+            <a
+              class="mg-btn {{ book_class }} mg-fit__btn"
+              href="{{ book_url }}"
+            >
+              {%- render 'mg-icon', icon: 'calendar' -%}
+              <span>{{ block_settings.book_label | escape }}</span>
+            </a>
+          {%- endif -%}
+          {%- if show_whatsapp -%}
+            <a
+              class="mg-btn mg-btn--whatsapp mg-fit__btn"
+              href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {%- render 'mg-icon', icon: 'whatsapp' -%}
+              <span>{{ block_settings.whatsapp_label | default: 'WhatsApp' | escape }}</span>
+              <span class="mg-visually-hidden">(opens WhatsApp in a new tab)</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .mg-fit-wrap {
+    width: 100%;
+  }
+
+  .mg-fit {
+    display: grid;
+    gap: 16px;
+    padding: 18px;
+    color: var(--mg-text);
+    background: var(--mg-surface);
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+  }
+
+  .mg-fit__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 14px;
+  }
+
+  .mg-fit__icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    color: var(--mg-text);
+    background: var(--mg-surface-2);
+    border: 1px solid var(--mg-border);
+    border-radius: 50%;
+  }
+
+  .mg-fit__icon .mg-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mg-fit__copy {
+    flex: 1 1 160px;
+    min-width: 0;
+  }
+
+  .mg-fit .mg-fit__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-fit .mg-fit__sub {
+    margin: 3px 0 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-fit .mg-fit__price {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    margin: 0 0 0 auto;
+    text-align: end;
+  }
+
+  .mg-fit__points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 0;
+    padding: 12px 0 0;
+    list-style: none;
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-fit__points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-fit__points .mg-icon {
+    flex: none;
+    width: 15px;
+    height: 15px;
+    stroke-width: 2.25;
+    color: var(--mg-accent-hover);
+  }
+
+  .mg-fit__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .mg-fit .mg-fit__btn {
+    flex: 1 1 150px;
+    min-height: 48px;
+    padding-inline: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .mg-fit-note {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.8125rem;
+    color: var(--mg-text-muted);
+    border: 1px dashed var(--mg-border-strong);
+    border-radius: var(--mg-radius-sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG fitting CTA",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows a \"Need it fitted?\" card with a booking button and WhatsApp. Add it to the product information section, under the buy buttons."
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Need it fitted?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Professional installation in Dublin"
+    },
+    {
+      "type": "header",
+      "content": "Fitted price"
+    },
+    {
+      "type": "paragraph",
+      "content": "The price comes from the product metafield custom.fitted_price (for example €350). Products without it use the fallback below. With neither, no price is shown."
+    },
+    {
+      "type": "text",
+      "id": "price_label",
+      "label": "Price label",
+      "default": "Fitted from"
+    },
+    {
+      "type": "text",
+      "id": "fallback_price",
+      "label": "Fallback price",
+      "info": "PLACEHOLDER: only fill this in with a real price from MG, e.g. €150. Leave blank to hide the price when a product has no fitted price."
+    },
+    {
+      "type": "header",
+      "content": "Highlights"
+    },
+    {
+      "type": "text",
+      "id": "point_1",
+      "label": "Highlight 1",
+      "default": "Fitted in-house"
+    },
+    {
+      "type": "text",
+      "id": "point_2",
+      "label": "Highlight 2",
+      "default": "OEM-style finish"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_warranty",
+      "label": "Show warranty highlight",
+      "info": "Uses the warranty headline in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Booking button"
+    },
+    {
+      "type": "text",
+      "id": "book_label",
+      "label": "Label",
+      "info": "Leave blank to hide.",
+      "default": "Book fitting"
+    },
+    {
+      "type": "url",
+      "id": "book_url",
+      "label": "Link",
+      "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "select",
+      "id": "book_style",
+      "label": "Style",
+      "info": "Outline keeps Add to cart as the main button on the page.",
+      "options": [
+        {
+          "value": "ghost",
+          "label": "Outline"
+        },
+        {
+          "value": "primary",
+          "label": "Solid red"
+        }
+      ],
+      "default": "ghost"
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "Label",
+      "default": "Ask on WhatsApp",
+      "visible_if": "{{ block.settings.show_whatsapp }}"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Pre-filled message",
+      "info": "[product] is replaced with the product name.",
+      "default": "Hi MG Car Audio, I'd like a fitting quote for: [product]. My reg is: ",
+      "visible_if": "{{ block.settings.show_whatsapp }}"
+    },
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_installation",
+      "label": "Hide on installation products",
+      "info": "Hides the card when the product type is \"Installation\", since those products are the fitting.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Space above",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Space below",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG fitting CTA",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

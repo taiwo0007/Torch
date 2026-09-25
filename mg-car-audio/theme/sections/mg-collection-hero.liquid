@@ -1,0 +1,701 @@
+{%- liquid
+  assign business_name = settings.mg_business_name | default: shop.name
+  assign heading_id = 'MgCollectionHeroTitle-' | append: section.id
+  assign desc_id = 'MgCollectionHeroDesc-' | append: section.id
+
+  assign section_classes = 'mg-collection-hero'
+  if section.settings.height == 'medium'
+    assign section_classes = section_classes | append: ' mg-collection-hero--medium'
+  endif
+
+  assign overlay = section.settings.overlay | append: '%'
+
+  # Background: collection image, then the section's fallback image, then a theme asset.
+  assign hero_image = collection.image
+  if hero_image == blank
+    assign hero_image = section.settings.fallback_image
+  endif
+
+  if hero_image == blank
+    assign asset_name = section.settings.fallback_asset
+    if section.settings.auto_image
+      case collection.handle
+        when 'carplay-android-auto'
+          assign asset_name = 'mg-bmw-carplay-screen.webp'
+        when 'android-radios'
+          assign asset_name = 'mg-android-auto-dash.webp'
+        when 'screen-upgrades'
+          assign asset_name = 'mg-audi-carplay-screen.webp'
+        when 'speakers', 'subwoofers', 'amplifiers'
+          assign asset_name = 'mg-door-speaker.webp'
+        when 'dashcams', 'reverse-cameras', 'accessories'
+          assign asset_name = 'mg-dash-radio.webp'
+      endcase
+    endif
+
+    case asset_name
+      when 'mg-showroom.webp'
+        assign asset_width = 1600
+        assign asset_height = 1200
+      when 'mg-door-speaker.webp', 'mg-dash-radio.webp'
+        assign asset_width = 1024
+        assign asset_height = 1024
+      else
+        assign asset_width = 1536
+        assign asset_height = 1024
+    endcase
+  endif
+
+  assign description = collection.description | strip
+  if description == blank and section.settings.fallback_text != blank
+    assign description = section.settings.fallback_text | escape | newline_to_br | prepend: '<p>' | append: '</p>'
+  endif
+
+  assign product_count = collection.all_products_count | default: collection.products_count | default: 0
+
+  assign chip_lines = section.settings.chips | newline_to_br | split: '<br />'
+
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign show_help = false
+  if section.settings.show_help and settings.mg_whatsapp_enabled and wa_number != blank and section.settings.help_link_label != blank
+    assign show_help = true
+    assign wa_message = 'Hi ' | append: business_name | append: ", I'm looking at " | append: collection.title | append: '. What fits my car? My reg is: '
+    assign wa_text = wa_message | url_encode
+  endif
+-%}
+
+<div
+  class="{{ section_classes }}"
+  style="--mg-ch-overlay: {{ overlay }};"
+>
+  <div
+    class="mg-collection-hero__media"
+    aria-hidden="true"
+  >
+    {%- if hero_image != blank -%}
+      {{-
+        hero_image
+        | image_url: width: 2000
+        | image_tag:
+          widths: '640, 960, 1280, 1600, 2000',
+          sizes: '(min-width: 990px) 65vw, 100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          alt: '',
+          class: 'mg-collection-hero__img'
+      -}}
+    {%- else -%}
+      <img
+        class="mg-collection-hero__img mg-collection-hero__img--fallback"
+        src="{{ asset_name | asset_url }}"
+        width="{{ asset_width }}"
+        height="{{ asset_height }}"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      >
+    {%- endif -%}
+    <span class="mg-collection-hero__scrim"></span>
+  </div>
+
+  <div class="mg-container mg-collection-hero__inner">
+    {%- if section.settings.show_breadcrumbs -%}
+      <nav
+        class="mg-collection-hero__crumbs"
+        aria-label="Breadcrumb"
+      >
+        <ol role="list">
+          <li><a href="{{ routes.root_url }}">Home</a></li>
+          {%- if section.settings.breadcrumb_label != blank and collection.handle != 'all' -%}
+            <li>
+              <a href="{{ routes.collections_url }}">{{ section.settings.breadcrumb_label | escape }}</a>
+            </li>
+          {%- endif -%}
+          <li>
+            <span aria-current="page">{{ collection.title | escape }}</span>
+          </li>
+        </ol>
+      </nav>
+    {%- endif -%}
+
+    <div class="mg-collection-hero__content">
+      {%- capture eyebrow_html -%}
+        {{- section.settings.eyebrow | escape -}}
+        {%- if section.settings.show_count and product_count > 0 -%}
+          {%- if section.settings.eyebrow != blank %} <span aria-hidden="true">·</span> {% endif -%}
+          {{- product_count }}
+          {% if product_count == 1 %}product{% else %}products{% endif -%}
+        {%- endif -%}
+      {%- endcapture -%}
+      {%- if eyebrow_html != blank -%}
+        <p class="mg-eyebrow mg-collection-hero__eyebrow">{{ eyebrow_html }}</p>
+      {%- endif -%}
+
+      <h1
+        id="{{ heading_id }}"
+        class="mg-collection-hero__title"
+      >
+        {{ collection.title | escape }}
+      </h1>
+
+      {%- if description != blank -%}
+        <mg-read-more
+          class="mg-collection-hero__desc-wrap"
+          data-more="{{ section.settings.read_more_label | default: 'Read more' | escape }}"
+          data-less="{{ section.settings.read_less_label | default: 'Show less' | escape }}"
+        >
+          <div
+            id="{{ desc_id }}"
+            class="mg-collection-hero__desc"
+            data-mg-readmore-content
+          >
+            {{ description }}
+          </div>
+          <button
+            type="button"
+            class="mg-collection-hero__more"
+            aria-controls="{{ desc_id }}"
+            aria-expanded="false"
+            data-mg-readmore-toggle
+            hidden
+          >
+            <span data-mg-readmore-label>{{ section.settings.read_more_label | default: 'Read more' | escape }}</span>
+            {%- render 'mg-icon', icon: 'chevron-down' -%}
+          </button>
+        </mg-read-more>
+      {%- endif -%}
+
+      {%- if section.settings.chips != blank -%}
+        <ul
+          class="mg-collection-hero__chips"
+          role="list"
+        >
+          {%- for chip in chip_lines -%}
+            {%- assign chip_text = chip | strip -%}
+            {%- if chip_text != blank -%}
+              <li class="mg-chip">
+                {%- render 'mg-icon', icon: 'check' -%}
+                <span>{{ chip_text | escape }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if show_help -%}
+        <p class="mg-collection-hero__help">
+          {%- if section.settings.help_text != blank -%}
+            <span>{{ section.settings.help_text | escape }}</span>
+          {%- endif -%}
+          <a
+            href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp' -%}
+            <span>{{ section.settings.help_link_label | escape }}</span>
+            <span class="mg-visually-hidden">(opens WhatsApp in a new tab)</span>
+          </a>
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- if section.settings.show_breadcrumbs -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": {{ request.origin | append: routes.root_url | json }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": {{ request.origin | append: collection.url | json }}
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% javascript %}
+  if (!customElements.get('mg-read-more')) {
+    class MgReadMore extends HTMLElement {
+      connectedCallback() {
+        this.content = this.querySelector('[data-mg-readmore-content]');
+        this.button = this.querySelector('[data-mg-readmore-toggle]');
+        this.label = this.querySelector('[data-mg-readmore-label]');
+        if (!this.content || !this.button || this.dataset.ready) return;
+        this.dataset.ready = 'true';
+
+        /* Clamp only once JS runs, so the full text is always readable without it */
+        this.classList.add('is-clamped');
+        requestAnimationFrame(() => {
+          if (this.content.scrollHeight - this.content.clientHeight > 4) {
+            this.button.hidden = false;
+          } else {
+            this.classList.remove('is-clamped');
+          }
+        });
+
+        this.button.addEventListener('click', () => {
+          const expanded = this.button.getAttribute('aria-expanded') === 'true';
+          this.button.setAttribute('aria-expanded', String(!expanded));
+          this.classList.toggle('is-clamped', expanded);
+          if (this.label) {
+            this.label.textContent = expanded ? this.dataset.more : this.dataset.less;
+          }
+        });
+      }
+    }
+
+    customElements.define('mg-read-more', MgReadMore);
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .mg-collection-hero {
+    --mg-ch-overlay: 80%;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-bottom: 1px solid var(--mg-border);
+    background: var(--mg-bg);
+    color: var(--mg-text);
+  }
+
+  .mg-collection-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .mg-collection-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+  }
+
+  /* Mobile: even wash over the photo, heavier at the bottom where the copy sits */
+  .mg-collection-hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(0deg, var(--mg-bg) 0%, transparent 45%),
+      color-mix(in srgb, var(--mg-bg) var(--mg-ch-overlay), transparent);
+  }
+
+  .mg-collection-hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: clamp(28px, 5vw, 56px);
+    min-height: clamp(300px, 34vw, 400px);
+    padding-block: clamp(20px, 3vw, 32px) clamp(28px, 4.5vw, 56px);
+  }
+
+  .mg-collection-hero--medium .mg-collection-hero__inner {
+    min-height: clamp(380px, 44vw, 540px);
+  }
+
+  .mg-collection-hero__content {
+    max-width: 720px;
+  }
+
+  /* Breadcrumb */
+  .mg-collection-hero__crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-collection-hero__crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mg-collection-hero__crumbs li + li::before {
+    content: '/';
+    color: var(--mg-border-strong);
+  }
+
+  .mg-collection-hero__crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--mg-text-muted);
+    text-decoration: none;
+  }
+
+  .mg-collection-hero__crumbs a:hover {
+    color: var(--mg-text);
+  }
+
+  .mg-collection-hero__crumbs [aria-current='page'] {
+    color: var(--mg-text);
+  }
+
+  .mg-collection-hero__eyebrow {
+    margin-bottom: 0.9rem;
+  }
+
+  .mg-collection-hero__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(2.125rem, 5.4vw, 3.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    text-wrap: balance;
+  }
+
+  /* Description with optional clamp */
+  .mg-collection-hero__desc-wrap {
+    display: block;
+    margin-top: 1.1rem;
+  }
+
+  .mg-collection-hero__desc {
+    max-width: 62ch;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--mg-text-muted);
+    text-wrap: pretty;
+  }
+
+  .mg-collection-hero__desc > * {
+    margin: 0 0 0.75em;
+  }
+
+  .mg-collection-hero__desc > :last-child {
+    margin-bottom: 0;
+  }
+
+  .mg-collection-hero__desc a {
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .mg-collection-hero__desc :is(h2, h3, h4) {
+    font-size: 1rem;
+    color: var(--mg-text);
+  }
+
+  .mg-collection-hero__desc-wrap.is-clamped .mg-collection-hero__desc {
+    max-height: 4.8em;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
+    mask-image: linear-gradient(180deg, #000 55%, transparent);
+  }
+
+  .mg-collection-hero__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    margin-top: 0.25rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    cursor: pointer;
+  }
+
+  .mg-collection-hero__more[hidden] {
+    display: none;
+  }
+
+  .mg-collection-hero__more svg {
+    width: 16px;
+    height: 16px;
+    color: var(--mg-accent);
+    transition: transform 0.2s var(--mg-ease);
+  }
+
+  .mg-collection-hero__more[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+
+  .mg-collection-hero__more:hover span {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  /* Chips */
+  .mg-collection-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-collection-hero__chips .mg-chip {
+    background: color-mix(in srgb, var(--mg-surface) 72%, transparent);
+    color: var(--mg-text);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .mg-collection-hero__chips svg {
+    width: 14px;
+    height: 14px;
+    color: var(--mg-accent);
+  }
+
+  .mg-collection-hero__help {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.6rem;
+    margin: 1.1rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-collection-hero__help a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    font-weight: 700;
+    color: var(--mg-whatsapp);
+    text-decoration: none;
+  }
+
+  .mg-collection-hero__help a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .mg-collection-hero__help svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Desktop: photo sits right, copy on a solid-to-clear scrim on the left */
+  @media screen and (min-width: 990px) {
+    .mg-collection-hero__media {
+      inset: 0 0 0 auto;
+      width: 68%;
+    }
+
+    .mg-collection-hero__scrim {
+      background:
+        linear-gradient(90deg, var(--mg-bg) 0%, color-mix(in srgb, var(--mg-bg) var(--mg-ch-overlay), transparent) 38%, color-mix(in srgb, var(--mg-bg) 30%, transparent) 100%),
+        linear-gradient(0deg, var(--mg-bg) 0%, transparent 35%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-collection-hero__more svg {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG collection header",
+  "tag": "section",
+  "class": "mg-collection-hero-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the collection title, description and image. Edit those in Products > Collections."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_label",
+      "label": "Breadcrumb: all collections label",
+      "info": "Links to the list of all collections. Leave blank to skip this step.",
+      "default": "Collections"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "textarea",
+      "id": "fallback_text",
+      "label": "Text when a collection has no description",
+      "default": "Hand-picked kit that we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part."
+    },
+    {
+      "type": "text",
+      "id": "read_more_label",
+      "label": "Read more label",
+      "info": "Long descriptions are cut to three lines with this button.",
+      "default": "Read more"
+    },
+    {
+      "type": "text",
+      "id": "read_less_label",
+      "label": "Show less label",
+      "default": "Show less"
+    },
+    {
+      "type": "textarea",
+      "id": "chips",
+      "label": "Highlights",
+      "info": "One per line. Leave blank to hide.",
+      "default": "Fitted in Dublin\nWired & wireless options\nExpert advice on WhatsApp"
+    },
+    {
+      "type": "header",
+      "content": "Help link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_help",
+      "label": "Show WhatsApp help link",
+      "info": "Opens WhatsApp with the collection name in the message. Uses the number in the business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "help_text",
+      "label": "Help text",
+      "default": "Not sure what fits your car?"
+    },
+    {
+      "type": "text",
+      "id": "help_link_label",
+      "label": "Help link label",
+      "default": "Ask us on WhatsApp"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "paragraph",
+      "content": "Uses the collection image first. Without one, it uses the image below, then a stock MG photo."
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_image",
+      "label": "Match the stock photo to the collection",
+      "info": "For example, speakers get the door speaker photo and CarPlay gets the BMW screen photo.",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "fallback_asset",
+      "label": "Default stock photo",
+      "options": [
+        {
+          "value": "mg-showroom.webp",
+          "label": "MG showroom"
+        },
+        {
+          "value": "mg-bmw-carplay-screen.webp",
+          "label": "Widescreen with CarPlay"
+        },
+        {
+          "value": "mg-audi-carplay-screen.webp",
+          "label": "CarPlay with iPhone"
+        },
+        {
+          "value": "mg-android-auto-dash.webp",
+          "label": "Android Auto dash"
+        },
+        {
+          "value": "mg-dash-radio.webp",
+          "label": "Dash with head unit"
+        },
+        {
+          "value": "mg-door-speaker.webp",
+          "label": "Door speaker"
+        }
+      ],
+      "default": "mg-showroom.webp"
+    },
+    {
+      "type": "range",
+      "id": "overlay",
+      "label": "Darken image",
+      "min": 30,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        {
+          "value": "compact",
+          "label": "Compact"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        }
+      ],
+      "default": "compact"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG collection header",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

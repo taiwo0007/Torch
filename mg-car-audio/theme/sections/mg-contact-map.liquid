@@ -72,11 +72,11 @@
               {%- for line in street_lines -%}
                 <br>{{ line }}
               {%- endfor -%}
-              {%- if settings.mg_locality != blank -%}
-                <br>{{ settings.mg_locality | escape }}
-              {%- endif -%}
-              {%- if settings.mg_region != blank -%}
-                <br>{{ settings.mg_region | escape }}
+              {%- if settings.mg_locality != blank or settings.mg_region != blank -%}
+                <br>
+                {{- settings.mg_locality | escape -}}
+                {%- if settings.mg_locality != blank and settings.mg_region != blank %}, {% endif -%}
+                {{- settings.mg_region | escape -}}
               {%- endif -%}
               {%- if settings.mg_postcode != blank -%}
                 <br>{{ settings.mg_postcode | escape }}
@@ -356,6 +356,7 @@
   }
 
   .mg-contact__hours td {
+    white-space: nowrap;
     text-align: right;
     font-variant-numeric: tabular-nums;
     color: var(--mg-text);
@@ -412,8 +413,8 @@
   /* Map panel */
   .mg-contact__map {
     position: relative;
-    min-height: 340px;
-    aspect-ratio: 4 / 3;
+    min-width: 0;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border: 1px solid var(--mg-border);
     border-radius: var(--mg-radius-lg);
@@ -452,7 +453,7 @@
       linear-gradient(90deg, var(--mg-border) 1px, transparent 1px);
     background-size: 56px 56px;
     background-position: center;
-    opacity: 0.55;
+    opacity: 0.7;
   }
 
   .mg-contact__facade-art::after {
@@ -473,7 +474,7 @@
     right: -20%;
     height: 10px;
     border-block: 1px solid var(--mg-border-strong);
-    background: color-mix(in srgb, var(--mg-border-strong) 45%, transparent);
+    background: color-mix(in srgb, var(--mg-border-strong) 60%, transparent);
   }
 
   .mg-contact__road--a {
@@ -585,6 +586,14 @@
       display: flex;
       flex-wrap: wrap;
     }
+
+    .mg-contact__actions .mg-btn {
+      flex: 1 1 auto;
+    }
+
+    .mg-contact__map {
+      aspect-ratio: 4 / 3;
+    }
   }
 
   @media (min-width: 990px) {
@@ -603,7 +612,7 @@
 
 {% schema %}
 {
-  "name": "MG: Contact and map",
+  "name": "MG contact and map",
   "tag": "div",
   "class": "mg-contact-section",
   "disabled_on": {
@@ -685,7 +694,7 @@
         },
         {
           "value": "surface",
-          "label": "Raised surface"
+          "label": "Raised panel"
         }
       ],
       "default": "surface"
@@ -709,7 +718,7 @@
   ],
   "presets": [
     {
-      "name": "MG: Contact and map",
+      "name": "MG contact and map",
       "category": "MG Car Audio"
     }
   ]

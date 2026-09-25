@@ -22,7 +22,7 @@
 -%}
 
 <div
-  class="mg-hero"
+  class="mg-hero mg-hero--{{ section.settings.desktop_layout }}"
   style="--mg-hero-overlay: {{ overlay }};"
 >
   <div class="mg-hero__media">
@@ -36,13 +36,17 @@
           assign priority = 'auto'
         endif
         assign image_alt = section.settings.image.alt | default: fallback_alt
+        assign sizes = '100vw'
+        if section.settings.desktop_layout == 'split'
+          assign sizes = '(min-width: 990px) 64vw, 100vw'
+        endif
       -%}
       {{
         section.settings.image
         | image_url: width: 3200
         | image_tag:
           widths: '750, 1100, 1500, 1800, 2200, 2800, 3200',
-          sizes: '100vw',
+          sizes: sizes,
           loading: loading,
           fetchpriority: priority,
           alt: image_alt,
@@ -62,11 +66,11 @@
         {% endif %}
       >
     {%- endif -%}
+    <div
+      class="mg-hero__scrim"
+      aria-hidden="true"
+    ></div>
   </div>
-  <div
-    class="mg-hero__scrim"
-    aria-hidden="true"
-  ></div>
   <div
     class="mg-hero__fade"
     aria-hidden="true"
@@ -177,8 +181,14 @@
 </div>
 
 {% stylesheet %}
+  /*
+   * Mobile and tablet: the photo is a band across the top that fades into the page,
+   * with the copy stacked below it (bottom-aligned). Desktop: copy on the left over
+   * a left-to-right scrim, photo either on the right ("split") or full width.
+   */
   .mg-hero {
     --mg-hero-overlay: 0.85;
+    --mg-hero-media-h: 54svh;
     position: relative;
     isolation: isolate;
     display: flex;
@@ -192,8 +202,10 @@
 
   .mg-hero__media {
     position: absolute;
-    inset: 0;
-    z-index: -3;
+    inset: 0 0 auto;
+    z-index: -2;
+    height: 54vh;
+    height: var(--mg-hero-media-h);
   }
 
   .mg-hero__img {
@@ -204,45 +216,51 @@
   }
 
   .mg-hero__img--fallback {
-    object-position: 55% 30%;
+    object-position: 50% 35%;
   }
 
-  /* Directional scrim: bottom-up on mobile, left-to-right on desktop */
   .mg-hero__scrim {
     position: absolute;
     inset: 0;
-    z-index: -2;
     opacity: var(--mg-hero-overlay);
     background: linear-gradient(
       0deg,
       var(--mg-bg) 0%,
-      color-mix(in srgb, var(--mg-bg) 92%, transparent) 30%,
-      color-mix(in srgb, var(--mg-bg) 55%, transparent) 62%,
-      color-mix(in srgb, var(--mg-bg) 20%, transparent) 100%
+      color-mix(in srgb, var(--mg-bg) 85%, transparent) 22%,
+      color-mix(in srgb, var(--mg-bg) 35%, transparent) 55%,
+      color-mix(in srgb, var(--mg-bg) 10%, transparent) 100%
     );
   }
 
-  /* Always-on edge fades: blends into the header above and the next section below */
+  /* Solid bottom edge under the photo band so it never shows a hard line */
+  .mg-hero__media::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 -1px;
+    height: 18%;
+    background: linear-gradient(0deg, var(--mg-bg), transparent);
+  }
+
+  /* Edge fades: blends into the header above and the next section below */
   .mg-hero__fade {
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
     background:
-      linear-gradient(180deg, color-mix(in srgb, var(--mg-bg) 70%, transparent) 0%, transparent 18%),
-      linear-gradient(0deg, var(--mg-bg) 0%, transparent 16%);
+      linear-gradient(180deg, color-mix(in srgb, var(--mg-bg) 70%, transparent) 0%, transparent 16%),
+      linear-gradient(0deg, var(--mg-bg) 0%, transparent 12%);
   }
 
   .mg-hero__inner {
     position: relative;
-    padding-top: calc(
-      clamp(96px, 16vh, 160px) + var(--header-height, 0px) * var(--transparent-header-offset-boolean, 0)
-    );
-    padding-bottom: clamp(40px, 7vh, 72px);
+    padding-top: calc(38vh + var(--header-height, 0px) * var(--transparent-header-offset-boolean, 0));
+    padding-top: calc(38svh + var(--header-height, 0px) * var(--transparent-header-offset-boolean, 0));
+    padding-bottom: clamp(36px, 6vh, 64px);
   }
 
   .mg-hero__content {
-    max-width: 700px;
+    max-width: 600px;
   }
 
   .mg-hero__eyebrow {
@@ -251,7 +269,7 @@
 
   .mg-hero__heading {
     margin: 0;
-    max-width: 15ch;
+    max-width: 13ch;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
     font-size: var(--mg-h1);
@@ -263,7 +281,7 @@
   }
 
   .mg-hero__sub {
-    max-width: 56ch;
+    max-width: 52ch;
     margin: 1.25rem 0 0;
     font-size: clamp(1rem, 1.3vw, 1.1875rem);
     line-height: 1.6;
@@ -275,7 +293,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 2rem;
+    margin-top: 1.75rem;
   }
 
   .mg-hero__btn {
@@ -294,7 +312,6 @@
 
   .mg-hero__chip {
     background: color-mix(in srgb, var(--mg-bg) 55%, transparent);
-    backdrop-filter: blur(6px);
     color: var(--mg-text);
   }
 
@@ -342,27 +359,7 @@
 
   @media (min-width: 750px) {
     .mg-hero {
-      align-items: center;
-      min-height: 86vh;
-      min-height: 86svh;
-    }
-
-    .mg-hero__img--fallback {
-      object-position: 60% center;
-    }
-
-    .mg-hero__scrim {
-      background: linear-gradient(
-        90deg,
-        var(--mg-bg) 0%,
-        color-mix(in srgb, var(--mg-bg) 88%, transparent) 32%,
-        color-mix(in srgb, var(--mg-bg) 45%, transparent) 62%,
-        color-mix(in srgb, var(--mg-bg) 12%, transparent) 100%
-      );
-    }
-
-    .mg-hero__inner {
-      padding-bottom: clamp(72px, 10vh, 120px);
+      --mg-hero-media-h: 58svh;
     }
 
     .mg-hero__actions {
@@ -372,7 +369,77 @@
 
     .mg-hero__btn {
       width: auto;
-      padding-inline: 1.75rem;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-hero {
+      align-items: center;
+      min-height: 86vh;
+      min-height: 86svh;
+    }
+
+    .mg-hero__media {
+      inset: 0;
+      height: auto;
+    }
+
+    .mg-hero__media::after {
+      display: none;
+    }
+
+    .mg-hero__img--fallback {
+      object-position: center;
+    }
+
+    .mg-hero__scrim {
+      background: linear-gradient(
+        90deg,
+        var(--mg-bg) 0%,
+        color-mix(in srgb, var(--mg-bg) 92%, transparent) 36%,
+        color-mix(in srgb, var(--mg-bg) 55%, transparent) 58%,
+        color-mix(in srgb, var(--mg-bg) 15%, transparent) 100%
+      );
+    }
+
+    /* Split: photo sits on the right and dissolves into the copy column */
+    .mg-hero--split .mg-hero__media {
+      inset-inline-start: 42%;
+    }
+
+    .mg-hero--split .mg-hero__media::after {
+      display: block;
+      inset: 0 auto 0 -1px;
+      width: 34%;
+      height: auto;
+      background: linear-gradient(90deg, var(--mg-bg) 0%, color-mix(in srgb, var(--mg-bg) 60%, transparent) 45%, transparent 100%);
+    }
+
+    .mg-hero--split .mg-hero__scrim {
+      background: linear-gradient(
+        90deg,
+        var(--mg-bg) 0%,
+        color-mix(in srgb, var(--mg-bg) 78%, transparent) 14%,
+        color-mix(in srgb, var(--mg-bg) 25%, transparent) 38%,
+        color-mix(in srgb, var(--mg-bg) 6%, transparent) 100%
+      );
+    }
+
+    .mg-hero__inner {
+      padding-top: calc(clamp(80px, 12vh, 140px) + var(--header-height, 0px) * var(--transparent-header-offset-boolean, 0));
+      padding-bottom: clamp(80px, 12vh, 140px);
+    }
+
+    .mg-hero__content {
+      max-width: none;
+    }
+
+    .mg-hero__sub {
+      max-width: 44ch;
+    }
+
+    .mg-hero__chips {
+      max-width: 620px;
     }
   }
 
@@ -441,6 +508,23 @@
       "default": 85
     },
     {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "Desktop photo layout",
+      "info": "On mobile the photo always sits above the text.",
+      "options": [
+        {
+          "value": "split",
+          "label": "Photo on the right, fading into the text"
+        },
+        {
+          "value": "full",
+          "label": "Full-width photo behind the text"
+        }
+      ],
+      "default": "split"
+    },
+    {
       "type": "header",
       "content": "Text"
     },
@@ -467,7 +551,7 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Wired and wireless Apple CarPlay and Android Auto, screen upgrades, speakers and sound for BMW, Audi, Mercedes-Benz, VW and more. Fitted by our own team in Dublin with a clean, factory-quality finish."
+      "default": "Wired and wireless Apple CarPlay and Android Auto, screen upgrades, speakers and sound for BMW, Audi, Mercedes-Benz, VW and more."
     },
     {
       "type": "header",
