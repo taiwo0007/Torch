@@ -93,6 +93,7 @@
             >
               {%- render 'mg-icon', icon: 'whatsapp' -%}
               <span>{{ section.settings.whatsapp_label | escape }}</span>
+              <span class="mg-visually-hidden">(opens WhatsApp)</span>
             </a>
           {%- endif -%}
           {%- if section.settings.button_label != blank -%}
