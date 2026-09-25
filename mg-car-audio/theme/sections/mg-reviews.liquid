@@ -88,6 +88,12 @@
     </header>
 
     {%- if section.blocks.size > 0 -%}
+      {%- if section.settings.show_placeholder_note -%}
+        <p class="mg-reviews__demo" role="note">
+          <span class="mg-reviews__demo-tag">Demo</span>
+          <span>Sample text to show the layout. MG's real Google reviews go here.</span>
+        </p>
+      {%- endif -%}
       <mg-review-carousel class="mg-reviews__carousel">
         <div
           id="{{ track_id }}"
@@ -168,9 +174,6 @@
               {%- render 'mg-icon', icon: 'chevron-right' -%}
             </button>
           </div>
-          {%- if section.settings.show_placeholder_note -%}
-            <p class="mg-placeholder-note mg-reviews__note">Sample reviews shown for the demo.</p>
-          {%- endif -%}
         </div>
       </mg-review-carousel>
     {%- elsif request.design_mode -%}
@@ -586,8 +589,29 @@
     cursor: default;
   }
 
-  .mg-reviews__note {
-    margin: 0;
+  .mg-reviews__demo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    padding: 10px 14px;
+    border: 1px dashed var(--mg-border-strong);
+    border-radius: var(--mg-radius);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-reviews__demo-tag {
+    flex: none;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--mg-surface-2);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mg-text);
   }
 
   @media (min-width: 750px) {
@@ -680,8 +704,8 @@
     {
       "type": "checkbox",
       "id": "show_placeholder_note",
-      "label": "Show \"Sample reviews\" note",
-      "info": "Keep this on while the demo reviews are showing. Turn it off once every review is a real one.",
+      "label": "Show \"Demo reviews\" banner",
+      "info": "PLACEHOLDER: the preset reviews are demo text, not real customers. Keep this on until every review is a real Google review (copied with the customer's permission), then turn it off.",
       "default": true
     },
     {
@@ -743,27 +767,27 @@
           "type": "textarea",
           "id": "text",
           "label": "Review text",
-          "info": "PLACEHOLDER in the demo: paste the customer's words exactly as written.",
-          "default": "Replace this with a real review from Google."
+          "info": "PLACEHOLDER in the demo: paste the customer's words exactly as written, with their permission.",
+          "default": "Demo review: replace with a real Google review."
         },
         {
           "type": "text",
           "id": "author",
           "label": "Customer name",
           "info": "PLACEHOLDER in the demo. Use first name and initial, for example: Aoife M.",
-          "default": "Customer A."
+          "default": "Aoife M."
         },
         {
           "type": "text",
           "id": "car",
           "label": "Car or job",
-          "default": "BMW 3 Series · CarPlay"
+          "default": "BMW · CarPlay"
         },
         {
           "type": "text",
           "id": "source",
-          "label": "Source",
-          "default": "Google"
+          "label": "Source label",
+          "info": "Small label on the card, for example: Google. The demo reviews use \"Demo\". Leave blank to hide."
         }
       ]
     }
@@ -777,50 +801,50 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "Sent a photo of my dash on WhatsApp and had a price back quickly. Wireless CarPlay fitted in about an hour, and the steering wheel buttons and reverse camera still work. Looks like it came from the factory.",
-            "author": "Customer A.",
-            "car": "BMW 3 Series · Wireless CarPlay",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a BMW owner on the wireless CarPlay fitting: the quote, the time in the bay and the finish.",
+            "author": "Aoife M.",
+            "car": "BMW · Wireless CarPlay",
+            "source": "Demo"
           }
         },
         {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "The original speakers were muddy at any volume. New front components and the difference is night and day: vocals are clear and the bass is tight without the doors rattling.",
-            "author": "Customer B.",
-            "car": "Volkswagen Golf · Speaker upgrade",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a speaker upgrade: how the car sounded before, and how it sounds now.",
+            "author": "Ciarán D.",
+            "car": "Volkswagen · Speaker upgrade",
+            "source": "Demo"
           }
         },
         {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "My screen went black and I was told the whole unit would need replacing. MG found the actual fault, fixed it and had me back on the road the same day for a fraction of what I was expecting.",
-            "author": "Customer C.",
-            "car": "Audi A4 · Black-screen repair",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a screen fault or upgrade: what the problem was and how it was sorted.",
+            "author": "Niamh K.",
+            "car": "Audi · Screen repair",
+            "source": "Demo"
           }
         },
         {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "Imported my BMW from Japan and everything was in Japanese, with no local radio stations. They converted the menus and navigation to English and sorted the radio frequencies. Brilliant job, and explained everything clearly.",
-            "author": "Customer D.",
-            "car": "BMW 5 Series · Japan-to-Europe conversion",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a Japanese import converted to European spec: menus, maps and radio.",
+            "author": "Darren O.",
+            "car": "BMW · Japan-to-Europe conversion",
+            "source": "Demo"
           }
         },
         {
           "type": "review",
           "settings": {
-            "rating": 4,
-            "text": "Honest advice on which Android radio suited my car and budget, no hard sell. Tidy install with no loose wires, and they set it up with my phone before I left.",
-            "author": "Customer E.",
-            "car": "Toyota Auris · Android radio",
-            "source": "Google"
+            "rating": 5,
+            "text": "Demo review: replace with a real Google review. For example, an Android radio fitting: the advice given and how tidy the install was.",
+            "author": "Sinéad B.",
+            "car": "Toyota · Android radio",
+            "source": "Demo"
           }
         }
       ]

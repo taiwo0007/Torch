@@ -2258,14 +2258,14 @@
         "type": "text",
         "id": "mg_review_rating",
         "label": "Google rating",
-        "info": "PLACEHOLDER: replace with the real Google Business rating.",
+        "info": "PLACEHOLDER: before showing the demo, copy the real rating from MG's public Google Business Profile. Leave blank to hide the rating everywhere.",
         "default": "4.9"
       },
       {
         "type": "text",
         "id": "mg_review_count",
         "label": "Number of Google reviews",
-        "info": "PLACEHOLDER: replace with the real count.",
+        "info": "PLACEHOLDER: copy the real review count from the same Google profile.",
         "default": "120"
       },
       {
@@ -2281,8 +2281,8 @@
         "type": "text",
         "id": "mg_warranty_text",
         "label": "Warranty headline",
-        "info": "PLACEHOLDER: confirm the warranty terms with the client.",
-        "default": "12-month fitting warranty"
+        "info": "Shown in the trust bar, service pages and product fitting cards. Add the length once MG confirms it, for example: 12-month fitting warranty. PLACEHOLDER until then.",
+        "default": "Workmanship warranty"
       }
     ]
   }

@@ -678,50 +678,50 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "Sent a photo of my dash on WhatsApp and had a price back quickly. Wireless CarPlay fitted in about an hour, and the steering wheel buttons and reverse camera still work. Looks like it came from the factory.",
-            "author": "Customer A.",
-            "car": "BMW 3 Series · Wireless CarPlay",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a BMW owner on the wireless CarPlay fitting: the quote, the time in the bay and the finish.",
+            "author": "Aoife M.",
+            "car": "BMW · Wireless CarPlay",
+            "source": "Demo"
           }
         },
         "review_b": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "The original speakers were muddy at any volume. New front components and the difference is night and day: vocals are clear and the bass is tight without the doors rattling.",
-            "author": "Customer B.",
-            "car": "Volkswagen Golf · Speaker upgrade",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a speaker upgrade: how the car sounded before, and how it sounds now.",
+            "author": "Ciarán D.",
+            "car": "Volkswagen · Speaker upgrade",
+            "source": "Demo"
           }
         },
         "review_c": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "My screen went black and I was told the whole unit would need replacing. MG found the actual fault, fixed it and had me back on the road the same day for a fraction of what I was expecting.",
-            "author": "Customer C.",
-            "car": "Audi A4 · Black-screen repair",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a screen fault or upgrade: what the problem was and how it was sorted.",
+            "author": "Niamh K.",
+            "car": "Audi · Screen repair",
+            "source": "Demo"
           }
         },
         "review_d": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "text": "Imported my BMW from Japan and everything was in Japanese, with no local radio stations. They converted the menus and navigation to English and sorted the radio frequencies. Brilliant job, and explained everything clearly.",
-            "author": "Customer D.",
-            "car": "BMW 5 Series · Japan-to-Europe conversion",
-            "source": "Google"
+            "text": "Demo review: replace with a real Google review. For example, a Japanese import converted to European spec: menus, maps and radio.",
+            "author": "Darren O.",
+            "car": "BMW · Japan-to-Europe conversion",
+            "source": "Demo"
           }
         },
         "review_e": {
           "type": "review",
           "settings": {
-            "rating": 4,
-            "text": "Honest advice on which Android radio suited my car and budget, no hard sell. Tidy install with no loose wires, and they set it up with my phone before I left.",
-            "author": "Customer E.",
-            "car": "Toyota Auris · Android radio",
-            "source": "Google"
+            "rating": 5,
+            "text": "Demo review: replace with a real Google review. For example, an Android radio fitting: the advice given and how tidy the install was.",
+            "author": "Sinéad B.",
+            "car": "Toyota · Android radio",
+            "source": "Demo"
           }
         }
       },

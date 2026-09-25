@@ -15,15 +15,22 @@
   /* Text */
   --mg-text: #f2f4f7;
   --mg-text-muted: #aab3c0;
-  --mg-text-subtle: #7d8796;
+  --mg-text-subtle: #8a94a3; /* 5.27:1 on surface-2, 6.34:1 on bg */
 
   /* Accent: ignition red. Only for primary actions, prices and small highlights. */
   --mg-accent: #e4002b;
   --mg-accent-hover: #ff1f47;
   --mg-accent-soft: rgb(228 0 43 / 0.14);
+  /* Red for small text (eyebrows, labels): 5.59 / 5.07 / 4.64:1 on bg / surface / surface-2 */
+  --mg-accent-text: #ff3d4f;
+  /* Text on a red fill (4.85:1), and the deeper red used behind it on hover (6.08:1) */
+  --mg-on-accent: #fff;
+  --mg-accent-hover-bg: #c70026;
 
   /* Secondary signal colours */
   --mg-whatsapp: #25d366;
+  --mg-whatsapp-hover: #3be07a;
+  --mg-on-whatsapp: #06301a;
   --mg-star: #fbbc04;
   --mg-success: #2ecc71;
 
@@ -44,8 +51,22 @@
   --mg-h1: clamp(2.25rem, 5.5vw, 4.25rem);
   --mg-h2: clamp(1.75rem, 3.6vw, 2.75rem);
   --mg-h3: clamp(1.25rem, 2vw, 1.5rem);
+  /* Page heroes (service, car make, collection, quote): one H1 scale below the home hero */
+  --mg-h1-page: clamp(2.125rem, 4.6vw, 3.75rem);
 
   --mg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/*
+ * Share Horizon's page grid: body carries .page-width-<setting>, which defines
+ * --page-width and --page-margin (16px on phones, 40px from 750px, plus safe areas),
+ * so MG sections line up with the header, product grids and footer.
+ * Horizon's h2 preset follows the MG heading scale.
+ */
+body {
+  --mg-page-max: var(--page-width, 1320px);
+  --mg-gutter: var(--page-margin, clamp(16px, 4vw, 40px));
+  --font-h2--size: var(--mg-h2);
 }
 
 /* ---------- Layout helpers ---------- */
@@ -82,7 +103,7 @@
   font-size: var(--mg-eyebrow-size);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--mg-accent);
+  color: var(--mg-accent-text);
 }
 
 .mg-eyebrow::before {
@@ -159,8 +180,10 @@
     transform 0.2s var(--mg-ease);
 }
 
-.mg-btn:hover {
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .mg-btn:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .mg-btn:focus-visible {
@@ -176,12 +199,13 @@
 
 .mg-btn--primary {
   background: var(--mg-accent);
-  color: #fff;
+  color: var(--mg-on-accent);
 }
 
+/* Deepen the red on hover (lightening it drops white text below 4.5:1) */
 .mg-btn--primary:hover {
-  background: var(--mg-accent-hover);
-  color: #fff;
+  background: var(--mg-accent-hover-bg);
+  color: var(--mg-on-accent);
 }
 
 .mg-btn--ghost {
@@ -197,12 +221,12 @@
 
 .mg-btn--whatsapp {
   background: var(--mg-whatsapp);
-  color: #06301a;
+  color: var(--mg-on-whatsapp);
 }
 
 .mg-btn--whatsapp:hover {
-  background: #3be07a;
-  color: #06301a;
+  background: var(--mg-whatsapp-hover);
+  color: var(--mg-on-whatsapp);
 }
 
 .mg-btn--block {
@@ -228,11 +252,13 @@ a.mg-card,
   text-decoration: none;
 }
 
-a.mg-card:hover,
-.mg-card--link:hover {
-  border-color: var(--mg-border-strong);
-  transform: translateY(-3px);
-  box-shadow: var(--mg-shadow);
+@media (hover: hover) {
+  a.mg-card:hover,
+  .mg-card--link:hover {
+    border-color: var(--mg-border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--mg-shadow);
+  }
 }
 
 /* ---------- Price ---------- */
@@ -340,7 +366,7 @@ html body {
 
 ::selection {
   background: var(--mg-accent);
-  color: #fff;
+  color: var(--mg-on-accent);
 }
 
 :focus-visible {
@@ -444,8 +470,8 @@ progress {
 }
 
 .header .menu-list__link[href*='book-a-fitting']:hover .menu-list__link-title {
-  background: var(--mg-accent);
-  color: #fff;
+  background: var(--mg-accent-hover-bg);
+  color: var(--mg-on-accent);
 }
 
 /* Mobile drawer: big, confident top-level links */
@@ -600,7 +626,7 @@ media-gallery .product-media-container {
 
 .theme-drawer__header .theme-drawer__badge {
   background-color: var(--mg-accent);
-  color: #fff;
+  color: var(--mg-on-accent);
 }
 
 .cart-drawer__items .cart-items__table-row {
