@@ -12,7 +12,7 @@
 
   assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
   assign show_whatsapp = false
-  if section.settings.show_whatsapp and settings.mg_whatsapp_enabled and wa_number != blank
+  if section.settings.show_whatsapp and wa_number != blank
     assign show_whatsapp = true
   endif
   assign wa_fallback = 'Hi ' | append: business_name | append: ','

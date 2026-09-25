@@ -54,13 +54,21 @@
     assign description = section.settings.fallback_text | escape | newline_to_br | prepend: '<p>' | append: '</p>'
   endif
 
+  # Long descriptions are clamped server-side (over ~3 lines even at full width), so the
+  # "Read more" button is in the first paint and nothing below it shifts.
+  assign desc_chars = description | strip_html | strip | size
+  assign desc_clamped = false
+  if desc_chars > 200
+    assign desc_clamped = true
+  endif
+
   assign product_count = collection.all_products_count | default: collection.products_count | default: 0
 
   assign chip_lines = section.settings.chips | newline_to_br | split: '<br />'
 
   assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
   assign show_help = false
-  if section.settings.show_help and settings.mg_whatsapp_enabled and wa_number != blank and section.settings.help_link_label != blank
+  if section.settings.show_help and wa_number != blank and section.settings.help_link_label != blank
     assign show_help = true
     assign wa_message = 'Hi ' | append: business_name | append: ", I'm looking at " | append: collection.title | append: '. What fits my car? My reg is: '
     assign wa_text = wa_message | url_encode
@@ -76,6 +84,7 @@
     aria-hidden="true"
   >
     {%- if hero_image != blank -%}
+      {%- assign focal_style = 'object-position: ' | append: hero_image.presentation.focal_point -%}
       {{-
         hero_image
         | image_url: width: 2000
@@ -85,6 +94,7 @@
           loading: 'eager',
           fetchpriority: 'high',
           alt: '',
+          style: focal_style,
           class: 'mg-collection-hero__img'
       -}}
     {%- else -%}
@@ -144,7 +154,7 @@
 
       {%- if description != blank -%}
         <mg-read-more
-          class="mg-collection-hero__desc-wrap"
+          class="mg-collection-hero__desc-wrap{% if desc_clamped %} is-clamped{% endif %}"
           data-more="{{ section.settings.read_more_label | default: 'Read more' | escape }}"
           data-less="{{ section.settings.read_less_label | default: 'Show less' | escape }}"
         >
@@ -155,17 +165,18 @@
           >
             {{ description }}
           </div>
-          <button
-            type="button"
-            class="mg-collection-hero__more"
-            aria-controls="{{ desc_id }}"
-            aria-expanded="false"
-            data-mg-readmore-toggle
-            hidden
-          >
-            <span data-mg-readmore-label>{{ section.settings.read_more_label | default: 'Read more' | escape }}</span>
-            {%- render 'mg-icon', icon: 'chevron-down' -%}
-          </button>
+          {%- if desc_clamped -%}
+            <button
+              type="button"
+              class="mg-collection-hero__more"
+              aria-controls="{{ desc_id }}"
+              aria-expanded="false"
+              data-mg-readmore-toggle
+            >
+              <span data-mg-readmore-label>{{ section.settings.read_more_label | default: 'Read more' | escape }}</span>
+              {%- render 'mg-icon', icon: 'chevron-down' -%}
+            </button>
+          {%- endif -%}
         </mg-read-more>
       {%- endif -%}
 
@@ -238,16 +249,7 @@
         this.label = this.querySelector('[data-mg-readmore-label]');
         if (!this.content || !this.button || this.dataset.ready) return;
         this.dataset.ready = 'true';
-
-        /* Clamp only once JS runs, so the full text is always readable without it */
-        this.classList.add('is-clamped');
-        requestAnimationFrame(() => {
-          if (this.content.scrollHeight - this.content.clientHeight > 4) {
-            this.button.hidden = false;
-          } else {
-            this.classList.remove('is-clamped');
-          }
-        });
+        /* The clamp and the button are rendered by Liquid (long descriptions only), so this only toggles */
 
         this.button.addEventListener('click', () => {
           const expanded = this.button.getAttribute('aria-expanded') === 'true';
