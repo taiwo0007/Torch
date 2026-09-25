@@ -81,6 +81,9 @@ async function main() {
   const server = await startStaticServer(REPO_DIR);
   const executablePath = resolveExecutable();
   const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  // Playwright normally forces loopback traffic through the proxy too (<-loopback>); we need the
+  // local preview server to be reached directly.
+  if (proxy) process.env.PLAYWRIGHT_DISABLE_FORCED_CHROMIUM_PROXIED_LOOPBACK = '1';
   const browser = await chromium.launch({
     headless: true,
     ...(executablePath ? { executablePath } : {}),
