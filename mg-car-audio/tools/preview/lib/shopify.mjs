@@ -402,6 +402,10 @@ export function createFilters(rt) {
     money_without_trailing_zeros: (v) => `€${(Number(toValue(v)) / 100 || 0).toFixed(2).replace(/\.00$/, '')}`,
 
     /* ---------- Strings ---------- */
+    // Ruby CGI.escape (what Shopify uses): spaces become '+', and !'()* are escaped too.
+    url_encode: (v) => encodeURIComponent(str(v)).replace(/[!'()*]/g, (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase()).replace(/%20/g, '+'),
+    url_escape: (v) => encodeURI(str(v)).replace(/[!'()*]/g, (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase()),
+    url_param_escape: (v) => encodeURIComponent(str(v)),
     handleize: (v) => str(v).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/['"]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
     handle: (v) => f.handleize(v),
     camelize: (v) => str(v).replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : '')),

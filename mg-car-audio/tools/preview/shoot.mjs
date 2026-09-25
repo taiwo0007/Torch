@@ -1,16 +1,46 @@
 #!/usr/bin/env node
-// Usage: node tools/preview/shoot.mjs [template ...] [render options] [--only mobile|desktop] [--keep-open]
+// Usage: node tools/preview/shoot.mjs [template ...] [render options] [--only mobile|desktop]
 // Renders the templates (default: index, page.service, page.car-make, page.quote, page.contact),
 // serves the repo over a local http server and writes full-page screenshots:
 //   tools/preview/out/<template>-mobile.png   (390x844 viewport, full page)
 //   tools/preview/out/<template>-desktop.png  (1440x900 viewport, full page)
+// Render options are the same as render.mjs (--all, --home-fallback, --sections a,b --name x, ...).
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { chromium } from 'playwright';
 import { parseArgs, renderMany } from './render.mjs';
-import { formatReport, REPO_DIR } from './lib/theme.mjs';
+import { formatReport, REPO_DIR, PREVIEW_DIR } from './lib/theme.mjs';
 import { startStaticServer } from './lib/server.mjs';
+
+const FONT_CACHE = path.join(PREVIEW_DIR, '.cache', 'fonts');
+
+/** Serve Google Fonts from a disk cache (filled on first use, with retries) so runs are stable/offline-friendly. */
+async function routeFonts(context) {
+  await context.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//, async (route) => {
+    const url = route.request().url();
+    const file = path.join(FONT_CACHE, crypto.createHash('sha1').update(url).digest('hex'));
+    try {
+      if (fs.existsSync(file) && fs.existsSync(file + '.json')) {
+        const meta = JSON.parse(fs.readFileSync(file + '.json', 'utf8'));
+        return await route.fulfill({ status: 200, headers: meta.headers, body: fs.readFileSync(file) });
+      }
+      const res = await route.fetch({ maxRetries: 3, timeout: 20000 });
+      const body = await res.body();
+      const h = res.headers();
+      const headers = { 'content-type': h['content-type'] || 'application/octet-stream', 'access-control-allow-origin': '*' };
+      if (res.ok()) {
+        fs.mkdirSync(FONT_CACHE, { recursive: true });
+        fs.writeFileSync(file, body);
+        fs.writeFileSync(file + '.json', JSON.stringify({ url, headers }));
+      }
+      return await route.fulfill({ status: res.status(), headers, body });
+    } catch {
+      return route.abort().catch(() => {});
+    }
+  });
+}
 
 const VIEWPORTS = {
   mobile: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true },
@@ -100,6 +130,7 @@ async function main() {
       for (const [name, device] of Object.entries(VIEWPORTS)) {
         if (only && only !== name) continue;
         const context = await browser.newContext({ ...device, ignoreHTTPSErrors: true });
+        await routeFonts(context);
         const page = await context.newPage();
         const issues = [];
         page.on('pageerror', (e) => issues.push(`page error: ${e.message.split('\n')[0]}`));

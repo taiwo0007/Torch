@@ -601,9 +601,10 @@ class PageRenderer {
       result.html = `<${tag} id="shopify-section-${escapeHtml(id)}" class="${escapeHtml(classes)}">${html}</${tag}>`;
       return result;
     } catch (err) {
+      const message = String(err?.message || err).split(this.themeDir + path.sep).join('');
       result.status = 'error';
-      result.error = String(err?.message || err).split('\n')[0];
-      result.html = sectionError(id, type, key, err);
+      result.error = message.split('\n')[0];
+      result.html = sectionError(id, type, key, message);
       return result;
     } finally {
       result.ms = Date.now() - started;
