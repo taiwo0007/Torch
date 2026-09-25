@@ -1,0 +1,717 @@
+{%- liquid
+  assign section_classes = 'mg-section mg-contact'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-section--surface'
+  endif
+  if section.settings.spacing == 'tight'
+    assign section_classes = section_classes | append: ' mg-section--tight'
+  endif
+  if section.settings.dark_map
+    assign section_classes = section_classes | append: ' mg-contact--dark-map'
+  endif
+
+  assign heading_id = 'MgContactHeading-' | append: section.id
+
+  assign business_name = settings.mg_business_name | default: shop.name
+  assign map_query = settings.mg_map_query
+  if map_query == blank
+    assign map_query = business_name | append: ', ' | append: settings.mg_street | append: ', ' | append: settings.mg_postcode
+  endif
+  assign map_query_encoded = map_query | url_encode
+  assign map_src = 'https://maps.google.com/maps?q=' | append: map_query_encoded | append: '&output=embed'
+  assign directions_href = 'https://www.google.com/maps/dir/?api=1&destination=' | append: map_query_encoded
+  assign map_title = 'Map showing ' | append: business_name
+  if settings.mg_locality != blank
+    assign map_title = map_title | append: ', ' | append: settings.mg_locality
+  endif
+
+  assign wa_text = settings.mg_whatsapp_message | url_encode
+  assign wa_href = 'https://wa.me/' | append: settings.mg_whatsapp_number | append: '?text=' | append: wa_text
+
+  assign street_lines = settings.mg_street | escape | split: ', '
+-%}
+
+{%- capture map_iframe -%}
+  <iframe
+    class="mg-contact__iframe"
+    src="{{ map_src | replace: '&', '&amp;' }}"
+    title="{{ map_title | escape }}"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+  ></iframe>
+{%- endcapture -%}
+
+<section
+  class="{{ section_classes }}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <mg-contact-map class="mg-container mg-contact__layout">
+    <div class="mg-contact__info">
+      <header class="mg-section-head mg-contact__head">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </header>
+
+      <div class="mg-contact__details">
+        <div class="mg-contact__block">
+          <span class="mg-contact__block-icon">{%- render 'mg-icon', icon: 'map-pin' -%}</span>
+          <div class="mg-contact__block-body">
+            <h3 class="mg-contact__label">Address</h3>
+            <address class="mg-contact__address">
+              <strong>{{ business_name | escape }}</strong>
+              {%- for line in street_lines -%}
+                <br>{{ line }}
+              {%- endfor -%}
+              {%- if settings.mg_locality != blank -%}
+                <br>{{ settings.mg_locality | escape }}
+              {%- endif -%}
+              {%- if settings.mg_region != blank -%}
+                <br>{{ settings.mg_region | escape }}
+              {%- endif -%}
+              {%- if settings.mg_postcode != blank -%}
+                <br>{{ settings.mg_postcode | escape }}
+              {%- endif -%}
+            </address>
+          </div>
+        </div>
+
+        <div class="mg-contact__block">
+          <span class="mg-contact__block-icon">{%- render 'mg-icon', icon: 'clock' -%}</span>
+          <div class="mg-contact__block-body">
+            <h3 class="mg-contact__label">Opening hours</h3>
+            <table class="mg-contact__hours">
+              <caption class="mg-visually-hidden">Opening hours</caption>
+              <tbody>
+                <tr data-days="1,2,3,4,5">
+                  <th scope="row">Monday – Friday</th>
+                  <td>{{ settings.mg_hours_weekdays | default: 'Closed' | escape }}</td>
+                </tr>
+                <tr data-days="6">
+                  <th scope="row">Saturday</th>
+                  <td>{{ settings.mg_hours_saturday | default: 'Closed' | escape }}</td>
+                </tr>
+                <tr data-days="0">
+                  <th scope="row">Sunday</th>
+                  <td>{{ settings.mg_hours_sunday | default: 'Closed' | escape }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {%- if settings.mg_phone_display != blank or settings.mg_email != blank -%}
+          <div class="mg-contact__block">
+            <span class="mg-contact__block-icon">{%- render 'mg-icon', icon: 'phone' -%}</span>
+            <div class="mg-contact__block-body">
+              <h3 class="mg-contact__label">Get in touch</h3>
+              <ul class="mg-contact__lines" role="list">
+                {%- if settings.mg_phone_display != blank -%}
+                  <li>
+                    <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.mg_email != blank -%}
+                  <li>
+                    <a href="mailto:{{ settings.mg_email | escape }}">{{ settings.mg_email | escape }}</a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="mg-contact__actions">
+        {%- if settings.mg_phone_e164 != blank -%}
+          <a class="mg-btn mg-btn--primary" href="tel:+{{ settings.mg_phone_e164 }}">
+            {%- render 'mg-icon', icon: 'phone' -%}
+            <span>Call us</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank -%}
+          <a
+            class="mg-btn mg-btn--whatsapp"
+            href="{{ wa_href }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp' -%}
+            <span>WhatsApp</span>
+          </a>
+        {%- endif -%}
+        <a
+          class="mg-btn mg-btn--ghost"
+          href="{{ directions_href | replace: '&', '&amp;' }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {%- render 'mg-icon', icon: 'arrow-right' -%}
+          <span>Get directions</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mg-contact__map" data-mg-map>
+      {%- if section.settings.map_mode == 'embed' -%}
+        {{ map_iframe }}
+      {%- else -%}
+        <div class="mg-contact__facade" data-mg-facade>
+          <div class="mg-contact__facade-art" aria-hidden="true">
+            <span class="mg-contact__road mg-contact__road--a"></span>
+            <span class="mg-contact__road mg-contact__road--b"></span>
+            <span class="mg-contact__road mg-contact__road--c"></span>
+          </div>
+          <div class="mg-contact__facade-content">
+            <span class="mg-contact__pin" aria-hidden="true">
+              {%- render 'mg-icon', icon: 'map-pin' -%}
+            </span>
+            <p class="mg-contact__facade-title">{{ business_name | escape }}</p>
+            <p class="mg-contact__facade-address">
+              {{- settings.mg_locality | escape -}}
+              {%- if settings.mg_postcode != blank %} · {{ settings.mg_postcode | escape }}{% endif -%}
+            </p>
+            <button type="button" class="mg-btn mg-btn--ghost mg-contact__load" data-mg-load-map>
+              {%- render 'mg-icon', icon: 'map-pin' -%}
+              <span>Load map</span>
+            </button>
+            <p class="mg-contact__consent">Loads Google Maps, which may set cookies.</p>
+          </div>
+        </div>
+        <template data-mg-map-template>
+          {{- map_iframe -}}
+        </template>
+      {%- endif -%}
+    </div>
+  </mg-contact-map>
+</section>
+
+{% javascript %}
+  if (!customElements.get('mg-contact-map')) {
+    class MgContactMap extends HTMLElement {
+      connectedCallback() {
+        this.markToday();
+
+        this.loadButton = this.querySelector('[data-mg-load-map]');
+        if (this.loadButton) {
+          this.handleLoad = this.loadMap.bind(this);
+          this.loadButton.addEventListener('click', this.handleLoad);
+        }
+      }
+
+      disconnectedCallback() {
+        if (this.loadButton && this.handleLoad) {
+          this.loadButton.removeEventListener('click', this.handleLoad);
+        }
+      }
+
+      loadMap() {
+        const container = this.querySelector('[data-mg-map]');
+        const template = this.querySelector('template[data-mg-map-template]');
+        const facade = this.querySelector('[data-mg-facade]');
+        if (!container || !template) return;
+
+        container.appendChild(template.content.cloneNode(true));
+        if (facade) facade.remove();
+        template.remove();
+
+        const frame = container.querySelector('iframe');
+        if (frame) frame.focus({ preventScroll: true });
+      }
+
+      markToday() {
+        let day;
+        try {
+          const name = new Intl.DateTimeFormat('en-GB', { weekday: 'short', timeZone: 'Europe/Dublin' }).format(
+            new Date()
+          );
+          day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(name);
+        } catch (error) {
+          day = new Date().getDay();
+        }
+        if (day < 0) return;
+
+        this.querySelectorAll('tr[data-days]').forEach((row) => {
+          const days = (row.getAttribute('data-days') || '').split(',');
+          if (!days.includes(String(day)) || row.classList.contains('is-today')) return;
+          row.classList.add('is-today');
+          const cell = row.querySelector('th');
+          if (cell) {
+            const badge = document.createElement('span');
+            badge.className = 'mg-contact__today';
+            badge.textContent = 'Today';
+            cell.appendChild(badge);
+          }
+        });
+      }
+    }
+
+    customElements.define('mg-contact-map', MgContactMap);
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .mg-contact {
+    --mg-contact-panel: var(--mg-surface);
+  }
+
+  .mg-contact.mg-section--surface {
+    --mg-contact-panel: var(--mg-surface-2);
+  }
+
+  mg-contact-map {
+    display: block;
+  }
+
+  .mg-contact__layout {
+    display: grid;
+    gap: clamp(32px, 5vw, 64px);
+  }
+
+  .mg-contact__head {
+    margin-bottom: 28px;
+  }
+
+  .mg-contact__details {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-contact__block {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--mg-border);
+  }
+
+  .mg-contact__block-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius-sm);
+    background: var(--mg-contact-panel);
+    color: var(--mg-text);
+  }
+
+  .mg-contact__block-icon .mg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-contact__label {
+    margin: 0 0 8px;
+    font-family: var(--font-body--family);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-contact__address {
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-contact__address strong {
+    color: var(--mg-text);
+  }
+
+  .mg-contact__hours {
+    width: 100%;
+    max-width: 420px;
+    border-collapse: collapse;
+    font-size: 0.975rem;
+  }
+
+  .mg-contact__hours th,
+  .mg-contact__hours td {
+    padding: 6px 0;
+    border: 0;
+    vertical-align: top;
+  }
+
+  .mg-contact__hours th {
+    padding-right: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-contact__hours td {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--mg-text);
+  }
+
+  .mg-contact__hours tr.is-today th,
+  .mg-contact__hours tr.is-today td {
+    font-weight: 700;
+    color: var(--mg-text);
+  }
+
+  .mg-contact__today {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--mg-accent-soft);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    vertical-align: 1px;
+  }
+
+  .mg-contact__lines {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-contact__lines a {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-border-strong);
+    text-underline-offset: 0.25em;
+    overflow-wrap: anywhere;
+  }
+
+  .mg-contact__lines a:hover {
+    text-decoration-color: var(--mg-accent);
+  }
+
+  .mg-contact__actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  /* Map panel */
+  .mg-contact__map {
+    position: relative;
+    min-height: 340px;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius-lg);
+    background: var(--mg-contact-panel);
+  }
+
+  .mg-contact__iframe {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .mg-contact--dark-map .mg-contact__iframe {
+    filter: invert(0.9) hue-rotate(180deg) saturate(0.7) brightness(0.95);
+  }
+
+  .mg-contact__facade {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .mg-contact__facade-art {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background-image:
+      linear-gradient(var(--mg-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--mg-border) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center;
+    opacity: 0.55;
+  }
+
+  .mg-contact__facade-art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 45%,
+      transparent 0,
+      color-mix(in srgb, var(--mg-contact-panel) 70%, transparent) 45%,
+      var(--mg-contact-panel) 78%
+    );
+  }
+
+  .mg-contact__road {
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    height: 10px;
+    border-block: 1px solid var(--mg-border-strong);
+    background: color-mix(in srgb, var(--mg-border-strong) 45%, transparent);
+  }
+
+  .mg-contact__road--a {
+    top: 38%;
+    transform: rotate(-14deg);
+  }
+
+  .mg-contact__road--b {
+    top: 62%;
+    height: 6px;
+    transform: rotate(9deg);
+  }
+
+  .mg-contact__road--c {
+    top: -20%;
+    bottom: -20%;
+    left: 64%;
+    right: auto;
+    width: 8px;
+    height: auto;
+    border-block: 0;
+    border-inline: 1px solid var(--mg-border-strong);
+    transform: rotate(12deg);
+  }
+
+  .mg-contact__facade-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 340px;
+  }
+
+  .mg-contact__pin {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--mg-accent);
+    color: var(--mg-text);
+    box-shadow: var(--mg-glow);
+  }
+
+  .mg-contact__pin .mg-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .mg-contact__pin::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border: 1px solid var(--mg-accent);
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-contact__pin::before {
+      animation: mg-contact-pulse 2.4s var(--mg-ease) infinite;
+    }
+  }
+
+  @keyframes mg-contact-pulse {
+    0% {
+      opacity: 0.7;
+      transform: scale(0.8);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
+  .mg-contact__facade-title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 1.125rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-contact__facade-address {
+    margin: 6px 0 20px;
+    font-size: 0.9375rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-contact__load {
+    background: var(--mg-bg);
+  }
+
+  .mg-contact__consent {
+    margin: 12px 0 0;
+    font-size: 0.75rem;
+    color: var(--mg-text-subtle);
+  }
+
+  @media (min-width: 600px) {
+    .mg-contact__actions {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-contact__layout {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: stretch;
+    }
+
+    .mg-contact__map {
+      aspect-ratio: auto;
+      min-height: 520px;
+      height: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG: Contact and map",
+  "tag": "div",
+  "class": "mg-contact-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Address, phone, WhatsApp, opening hours and the map search come from Theme settings > MG Car Audio: business details."
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Visit the workshop"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find us in Ballymount, Dublin 12"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "Call in to see screens and speakers in person, drop your car in for a fitting, or message us first to check what suits your car. Sundays are by appointment."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "type": "select",
+      "id": "map_mode",
+      "label": "Map loading",
+      "info": "\"Click to load\" keeps the page fast and doesn't load Google Maps (or its cookies) until the visitor asks for it.",
+      "options": [
+        {
+          "value": "facade",
+          "label": "Click to load (recommended)"
+        },
+        {
+          "value": "embed",
+          "label": "Load straight away"
+        }
+      ],
+      "default": "facade"
+    },
+    {
+      "type": "checkbox",
+      "id": "dark_map",
+      "label": "Dark map style",
+      "info": "Tints the Google map to match the dark theme.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "surface"
+    },
+    {
+      "type": "select",
+      "id": "spacing",
+      "label": "Vertical spacing",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "tight",
+          "label": "Tight"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG: Contact and map",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

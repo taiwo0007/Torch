@@ -1,0 +1,630 @@
+{%- liquid
+  assign section_classes = 'mg-section mg-faq'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-section--surface'
+  endif
+  if section.settings.spacing == 'tight'
+    assign section_classes = section_classes | append: ' mg-section--tight'
+  endif
+  if section.settings.layout == 'split'
+    assign section_classes = section_classes | append: ' mg-faq--split'
+  else
+    assign section_classes = section_classes | append: ' mg-faq--stacked'
+  endif
+
+  assign heading_id = 'MgFaqHeading-' | append: section.id
+
+  # Source of questions: the section's own blocks, or (when there are none)
+  # the FAQs linked to the page's car make metaobject (page.metafields.custom.car_make).
+  assign use_metaobject = false
+  assign faq_items = section.blocks
+  if section.blocks.size == 0
+    assign metaobject_faqs = page.metafields.custom.car_make.value.faqs.value
+    if metaobject_faqs != blank and metaobject_faqs.size > 0
+      assign faq_items = metaobject_faqs
+      assign use_metaobject = true
+    endif
+  endif
+
+  assign faq_count = 0
+  if use_metaobject or section.blocks.size > 0
+    assign faq_count = faq_items.size
+  endif
+
+  assign wa_text = settings.mg_whatsapp_message | url_encode
+  assign wa_href = 'https://wa.me/' | append: settings.mg_whatsapp_number | append: '?text=' | append: wa_text
+-%}
+
+{%- if faq_count > 0 or request.design_mode -%}
+  <section
+    class="{{ section_classes }}"
+    {% if section.settings.heading != blank %}
+      aria-labelledby="{{ heading_id }}"
+    {% endif %}
+  >
+    <div class="mg-container mg-faq__layout">
+      <div class="mg-faq__aside">
+        <header class="mg-section-head mg-faq__head">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-lede">{{ section.settings.text }}</p>
+          {%- endif -%}
+        </header>
+
+        {%- if section.settings.show_contact -%}
+          <div class="mg-faq__contact">
+            {%- if section.settings.contact_heading != blank -%}
+              <p class="mg-faq__contact-title">{{ section.settings.contact_heading | escape }}</p>
+            {%- endif -%}
+            <div class="mg-faq__contact-actions">
+              {%- if settings.mg_whatsapp_number != blank -%}
+                <a
+                  class="mg-btn mg-btn--whatsapp"
+                  href="{{ wa_href }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {%- render 'mg-icon', icon: 'whatsapp' -%}
+                  <span>WhatsApp us</span>
+                </a>
+              {%- endif -%}
+              {%- if settings.mg_phone_e164 != blank -%}
+                <a class="mg-btn mg-btn--ghost" href="tel:+{{ settings.mg_phone_e164 }}">
+                  {%- render 'mg-icon', icon: 'phone' -%}
+                  <span>{{ settings.mg_phone_display | default: 'Call us' | escape }}</span>
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="mg-faq__list">
+        {%- if faq_count > 0 -%}
+          {%- for item in faq_items -%}
+            {%- liquid
+              if use_metaobject
+                assign faq_question = item.question.value
+                assign faq_answer = item.answer.value | escape | newline_to_br
+                if faq_answer != blank
+                  assign faq_answer = '<p>' | append: faq_answer | append: '</p>'
+                endif
+                assign faq_attributes = ''
+              else
+                assign faq_question = item.settings.question
+                assign faq_answer = item.settings.answer
+                assign faq_attributes = item.shopify_attributes
+              endif
+            -%}
+            {%- if faq_question != blank -%}
+              <details
+                class="mg-faq__item"
+                {% if forloop.first and section.settings.open_first %}
+                  open
+                {% endif %}
+                {{ faq_attributes }}
+              >
+                <summary class="mg-faq__question">
+                  <span class="mg-faq__question-text">{{ faq_question | escape }}</span>
+                  <span class="mg-faq__toggle" aria-hidden="true">
+                    {%- render 'mg-icon', icon: 'chevron-down' -%}
+                  </span>
+                </summary>
+                <div class="mg-faq__answer">
+                  {{ faq_answer }}
+                </div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <p class="mg-placeholder-note">
+            Add "Question" blocks. On car make pages you can leave this empty: the section then shows the FAQs linked to
+            the page's car make entry.
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- if section.settings.output_faq_schema and faq_count > 0 -%}
+    {%- capture faq_entities -%}
+      {%- assign separator = '' -%}
+      {%- for item in faq_items -%}
+        {%- liquid
+          if use_metaobject
+            assign schema_question = item.question.value
+            assign schema_answer = item.answer.value
+          else
+            assign schema_question = item.settings.question
+            assign schema_answer = item.settings.answer
+          endif
+        -%}
+        {%- if schema_question != blank and schema_answer != blank -%}
+          {{- separator -}}
+          {"@type":"Question","name":{{ schema_question | strip | json }},"acceptedAnswer":{"@type":"Answer","text":{{ schema_answer | strip | json }}}}
+          {%- assign separator = ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if faq_entities != blank -%}
+      <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{{ faq_entities }}]}
+      </script>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{% stylesheet %}
+  .mg-faq {
+    --mg-faq-panel: var(--mg-surface);
+  }
+
+  .mg-faq.mg-section--surface {
+    --mg-faq-panel: var(--mg-surface-2);
+  }
+
+  .mg-faq__layout {
+    display: grid;
+  }
+
+  /* Mobile and stacked layout: heading, questions, then the contact card. */
+  .mg-faq__aside {
+    display: contents;
+  }
+
+  .mg-faq__head {
+    order: 1;
+  }
+
+  .mg-faq__list {
+    order: 2;
+  }
+
+  .mg-faq--stacked .mg-faq__layout {
+    max-width: 920px;
+  }
+
+  .mg-faq--stacked .mg-faq__head {
+    text-align: center;
+  }
+
+  .mg-faq--stacked .mg-faq__head .mg-lede {
+    margin-inline: auto;
+  }
+
+  /* Contact card */
+  .mg-faq__contact {
+    order: 3;
+    margin-top: 32px;
+    padding: 20px;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    background: var(--mg-faq-panel);
+  }
+
+  .mg-faq--stacked .mg-faq__contact {
+    text-align: center;
+  }
+
+  .mg-faq--stacked .mg-faq__contact-actions {
+    justify-content: center;
+  }
+
+  .mg-faq__contact-title {
+    margin: 0 0 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--mg-text);
+  }
+
+  .mg-faq__contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .mg-faq__contact-actions .mg-btn {
+    flex: 1 1 180px;
+  }
+
+  .mg-faq--stacked .mg-faq__contact-actions .mg-btn {
+    flex: 0 1 220px;
+  }
+
+  /* Accordion */
+  .mg-faq__list {
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-faq__item {
+    border-bottom: 1px solid var(--mg-border);
+    interpolate-size: allow-keywords;
+  }
+
+  .mg-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 4px;
+    list-style: none;
+    cursor: pointer;
+    color: var(--mg-text);
+    border-radius: var(--mg-radius-sm);
+  }
+
+  .mg-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .mg-faq__question:hover {
+    color: var(--mg-text);
+  }
+
+  .mg-faq__question:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 2px;
+  }
+
+  .mg-faq__question-text {
+    font-family: var(--font-body--family);
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    font-weight: 600;
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+
+  .mg-faq__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: 50%;
+    color: var(--mg-text-muted);
+    transition:
+      transform 0.3s var(--mg-ease),
+      border-color 0.3s var(--mg-ease),
+      color 0.3s var(--mg-ease),
+      background-color 0.3s var(--mg-ease);
+  }
+
+  .mg-faq__toggle .mg-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mg-faq__question:hover .mg-faq__toggle {
+    border-color: var(--mg-text);
+    color: var(--mg-text);
+  }
+
+  .mg-faq__item[open] .mg-faq__toggle {
+    transform: rotate(180deg);
+    border-color: var(--mg-accent);
+    background: var(--mg-accent-soft);
+    color: var(--mg-text);
+  }
+
+  .mg-faq__item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.35s var(--mg-ease),
+      content-visibility 0.35s allow-discrete;
+  }
+
+  .mg-faq__item[open]::details-content {
+    block-size: auto;
+  }
+
+  .mg-faq__answer {
+    max-width: 68ch;
+    padding: 0 56px 24px 4px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-faq__item[open] .mg-faq__answer {
+    animation: mg-faq-reveal 0.35s var(--mg-ease);
+  }
+
+  .mg-faq__answer > :first-child {
+    margin-top: 0;
+  }
+
+  .mg-faq__answer > :last-child {
+    margin-bottom: 0;
+  }
+
+  .mg-faq__answer p,
+  .mg-faq__answer ul,
+  .mg-faq__answer ol {
+    margin: 0 0 0.85em;
+  }
+
+  .mg-faq__answer ul,
+  .mg-faq__answer ol {
+    padding-left: 1.25em;
+  }
+
+  .mg-faq__answer li + li {
+    margin-top: 0.35em;
+  }
+
+  .mg-faq__answer strong {
+    color: var(--mg-text);
+  }
+
+  .mg-faq__answer a {
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-accent);
+    text-underline-offset: 0.2em;
+  }
+
+  @keyframes mg-faq-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .mg-faq__answer {
+      padding-right: 4px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-faq--split .mg-faq__layout {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+    }
+
+    .mg-faq--split .mg-faq__aside {
+      display: block;
+      position: sticky;
+      top: 32px;
+    }
+
+    .mg-faq--split .mg-faq__contact {
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-faq__toggle,
+    .mg-faq__item::details-content {
+      transition: none;
+    }
+
+    .mg-faq__item[open] .mg-faq__answer {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG: FAQ",
+  "tag": "div",
+  "class": "mg-faq-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Good questions, straight answers"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "What people usually ask us before booking a CarPlay install, screen upgrade or conversion. Can't see your question? Send us a message."
+    },
+    {
+      "type": "header",
+      "content": "Contact card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_contact",
+      "label": "Show WhatsApp and call buttons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact card heading",
+      "default": "Not sure what fits your car?"
+    },
+    {
+      "type": "header",
+      "content": "Behaviour"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open the first question",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "output_faq_schema",
+      "label": "Add FAQ structured data for Google",
+      "info": "Outputs FAQPage JSON-LD built from the questions below. Turn this off if another section on the same page already outputs FAQ data.",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "No questions added? On car make pages this section shows the FAQs linked to the page's car make entry (page metafield custom.car_make > faqs)."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "split",
+          "label": "Heading beside questions"
+        },
+        {
+          "value": "stacked",
+          "label": "Heading above questions"
+        }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "select",
+      "id": "spacing",
+      "label": "Vertical spacing",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "tight",
+          "label": "Tight"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Add a question customers ask"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "info": "Keep answers short and accurate. The warranty answer in the demo is PLACEHOLDER wording: confirm the terms with the client.",
+          "default": "<p>Write a clear, honest answer in two or three sentences.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG: FAQ",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does a CarPlay installation take?",
+            "answer": "<p>Most Apple CarPlay and Android Auto installs take between one and two hours. Bigger jobs, such as Japanese-to-European conversions, can take a little longer. We'll confirm the expected time when you book.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What's the difference between wired and wireless CarPlay?",
+            "answer": "<p>Wired CarPlay starts when you plug your phone in with a USB cable. Wireless connects automatically a few seconds after you start the car, so your phone can stay in your pocket or bag. We fit both, and we'll tell you which options suit your car when we quote.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Will I keep my steering wheel controls, reverse camera and microphone?",
+            "answer": "<p>In most cases, yes. We choose parts that work with your car's original screen, steering wheel buttons, reverse camera and microphone wherever possible. If there's anything on your car that can't be kept, we'll tell you before you book, not after.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can you convert a Japanese import to European settings?",
+            "answer": "<p>Yes. We convert BMW, Mercedes-Benz and Volkswagen imports from Japanese to European spec, including the menu language and navigation, and we can convert the radio frequencies so you pick up Irish stations. BMW conversions are <strong>€450</strong>. For other makes, send us your reg for a price.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to pay a deposit to book?",
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Which cars do you work on?",
+            "answer": "<p>Most makes, including BMW, Audi, Volkswagen, Mercedes-Benz, Toyota, Honda, Nissan, Lexus, Ford, Mazda, Hyundai, Kia, Skoda, SEAT, Renault, Peugeot, Citroën, Volvo and Land Rover, as well as Japanese and other imported models. Not on the list? Send us your reg and we'll check.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is my installation covered by a warranty?",
+            "answer": "<p>Yes. Our fitting work is covered by a workmanship warranty, and the parts we supply carry their manufacturer's warranty. Ask us for the full terms when you book.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you sell parts without fitting?",
+            "answer": "<p>Yes, you can buy from our shop without booking a fitting. For CarPlay interfaces and screen upgrades we recommend letting us fit them, so we can check everything works with your car and stand over the whole job.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

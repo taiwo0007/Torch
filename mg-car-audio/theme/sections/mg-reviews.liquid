@@ -1,0 +1,821 @@
+{%- liquid
+  assign section_classes = 'mg-section mg-reviews'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-section--surface'
+  endif
+  if section.settings.spacing == 'tight'
+    assign section_classes = section_classes | append: ' mg-section--tight'
+  endif
+
+  assign heading_id = 'MgReviewsHeading-' | append: section.id
+  assign track_id = 'MgReviewsTrack-' | append: section.id
+
+  assign rating_text = settings.mg_review_rating | strip
+  assign rating_value = rating_text | replace: ',', '.' | plus: 0 | at_least: 0 | at_most: 5
+  assign rating_percent = rating_value | times: 20
+  assign review_count = settings.mg_review_count | strip
+  assign review_url = settings.mg_review_url
+
+  assign show_summary = false
+  if section.settings.show_rating and rating_value > 0
+    assign show_summary = true
+  endif
+-%}
+
+<section
+  class="{{ section_classes }}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="mg-container">
+    <header class="mg-section-head mg-section-head--row mg-reviews__head">
+      <div class="mg-reviews__intro">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if show_summary -%}
+        <div class="mg-reviews__summary">
+          <p class="mg-reviews__score" aria-hidden="true">{{ rating_text | escape }}</p>
+          <div class="mg-reviews__summary-body">
+            <span
+              class="mg-reviews__stars mg-reviews__stars--lg"
+              style="--mg-rating: {{ rating_percent }}%;"
+              aria-hidden="true"
+            >
+              <span class="mg-reviews__stars-base">
+                {%- for i in (1..5) -%}
+                  {%- render 'mg-icon', icon: 'star' -%}
+                {%- endfor -%}
+              </span>
+              <span class="mg-reviews__stars-fill">
+                {%- for i in (1..5) -%}
+                  {%- render 'mg-icon', icon: 'star' -%}
+                {%- endfor -%}
+              </span>
+            </span>
+            <p class="mg-reviews__count">
+              <span class="mg-visually-hidden">Rated {{ rating_text | escape }} out of 5</span>
+              {%- if review_count != blank -%}
+                <span class="mg-visually-hidden">, </span>
+                <span>from {{ review_count | escape }} Google reviews</span>
+              {%- else -%}
+                <span>on Google</span>
+              {%- endif -%}
+            </p>
+            {%- if review_url != blank and section.settings.reviews_link_label != blank -%}
+              <a
+                class="mg-reviews__all"
+                href="{{ review_url }}"
+                target="_blank"
+                rel="noopener"
+              >
+                <span>{{ section.settings.reviews_link_label | escape }}</span>
+                {%- render 'mg-icon', icon: 'arrow-right' -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <mg-review-carousel class="mg-reviews__carousel">
+        <div
+          id="{{ track_id }}"
+          class="mg-reviews__track"
+          data-mg-track
+          tabindex="0"
+          role="region"
+          aria-label="Customer reviews"
+        >
+          <ul class="mg-reviews__list" role="list" data-mg-list>
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign bs = block.settings
+                assign author_parts = bs.author | strip | split: ' '
+                assign author_initial = author_parts.first | slice: 0 | upcase
+                if author_parts.size > 1
+                  assign author_last_initial = author_parts.last | slice: 0 | upcase
+                  assign author_initial = author_initial | append: author_last_initial
+                endif
+              -%}
+              <li class="mg-reviews__slide" data-mg-slide {{ block.shopify_attributes }}>
+                <figure class="mg-reviews__card">
+                  <div class="mg-reviews__card-top">
+                    <span class="mg-reviews__rating" role="img" aria-label="Rated {{ bs.rating }} out of 5">
+                      {%- for i in (1..5) -%}
+                        <span class="mg-reviews__star{% if i <= bs.rating %} is-on{% endif %}">
+                          {%- render 'mg-icon', icon: 'star' -%}
+                        </span>
+                      {%- endfor -%}
+                    </span>
+                    {%- if bs.source != blank -%}
+                      <span class="mg-reviews__source">{{ bs.source | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  <blockquote class="mg-reviews__quote">
+                    <p>{{ bs.text | escape | newline_to_br }}</p>
+                  </blockquote>
+                  {%- if bs.author != blank or bs.car != blank -%}
+                    <figcaption class="mg-reviews__meta">
+                      {%- if author_initial != blank -%}
+                        <span class="mg-reviews__avatar" aria-hidden="true">{{ author_initial | escape }}</span>
+                      {%- endif -%}
+                      <span class="mg-reviews__who">
+                        {%- if bs.author != blank -%}
+                          <span class="mg-reviews__author">{{ bs.author | escape }}</span>
+                        {%- endif -%}
+                        {%- if bs.car != blank -%}
+                          <span class="mg-reviews__car">{{ bs.car | escape }}</span>
+                        {%- endif -%}
+                      </span>
+                    </figcaption>
+                  {%- endif -%}
+                </figure>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="mg-reviews__footer">
+          <div class="mg-reviews__controls" data-mg-controls>
+            <button
+              type="button"
+              class="mg-reviews__arrow"
+              data-mg-prev
+              aria-label="Previous reviews"
+              aria-controls="{{ track_id }}"
+              disabled
+            >
+              {%- render 'mg-icon', icon: 'chevron-left' -%}
+            </button>
+            <button
+              type="button"
+              class="mg-reviews__arrow"
+              data-mg-next
+              aria-label="Next reviews"
+              aria-controls="{{ track_id }}"
+            >
+              {%- render 'mg-icon', icon: 'chevron-right' -%}
+            </button>
+          </div>
+          {%- if section.settings.show_placeholder_note -%}
+            <p class="mg-placeholder-note mg-reviews__note">Sample reviews shown for the demo.</p>
+          {%- endif -%}
+        </div>
+      </mg-review-carousel>
+    {%- elsif request.design_mode -%}
+      <p class="mg-placeholder-note">Add "Review" blocks to fill the carousel.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% javascript %}
+  if (!customElements.get('mg-review-carousel')) {
+    class MgReviewCarousel extends HTMLElement {
+      connectedCallback() {
+        this.track = this.querySelector('[data-mg-track]');
+        this.list = this.querySelector('[data-mg-list]');
+        this.prevButton = this.querySelector('[data-mg-prev]');
+        this.nextButton = this.querySelector('[data-mg-next]');
+        this.controls = this.querySelector('[data-mg-controls]');
+        if (!this.track || !this.prevButton || !this.nextButton) return;
+
+        this.frame = null;
+        this.onScroll = () => {
+          if (this.frame) return;
+          this.frame = requestAnimationFrame(() => {
+            this.frame = null;
+            this.update();
+          });
+        };
+        this.onPrev = () => this.go(-1);
+        this.onNext = () => this.go(1);
+
+        this.track.addEventListener('scroll', this.onScroll, { passive: true });
+        this.prevButton.addEventListener('click', this.onPrev);
+        this.nextButton.addEventListener('click', this.onNext);
+
+        if ('ResizeObserver' in window) {
+          this.resizeObserver = new ResizeObserver(this.onScroll);
+          this.resizeObserver.observe(this.track);
+        } else {
+          window.addEventListener('resize', this.onScroll);
+        }
+
+        this.update();
+      }
+
+      disconnectedCallback() {
+        if (!this.track) return;
+        this.track.removeEventListener('scroll', this.onScroll);
+        if (this.prevButton) this.prevButton.removeEventListener('click', this.onPrev);
+        if (this.nextButton) this.nextButton.removeEventListener('click', this.onNext);
+        if (this.resizeObserver) this.resizeObserver.disconnect();
+        window.removeEventListener('resize', this.onScroll);
+        if (this.frame) cancelAnimationFrame(this.frame);
+      }
+
+      stepSize() {
+        const slide = this.track.querySelector('[data-mg-slide]');
+        if (!slide) return this.track.clientWidth;
+        const styles = getComputedStyle(this.list || this.track);
+        const gap = parseFloat(styles.columnGap) || 0;
+        return slide.getBoundingClientRect().width + gap;
+      }
+
+      go(direction) {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.track.scrollBy({
+          left: direction * this.stepSize(),
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+      }
+
+      update() {
+        const max = this.track.scrollWidth - this.track.clientWidth;
+        const position = Math.abs(this.track.scrollLeft);
+        const overflowing = max > 2;
+        const atStart = position <= 2;
+        const atEnd = position >= max - 2;
+
+        if (this.controls) this.controls.hidden = !overflowing;
+
+        const active = document.activeElement;
+        this.prevButton.disabled = !overflowing || atStart;
+        this.nextButton.disabled = !overflowing || atEnd;
+
+        if (active === this.prevButton && this.prevButton.disabled && !this.nextButton.disabled) {
+          this.nextButton.focus();
+        } else if (active === this.nextButton && this.nextButton.disabled && !this.prevButton.disabled) {
+          this.prevButton.focus();
+        }
+      }
+    }
+
+    customElements.define('mg-review-carousel', MgReviewCarousel);
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .mg-reviews {
+    --mg-reviews-card: var(--mg-surface);
+    --mg-reviews-gap: 16px;
+  }
+
+  .mg-reviews.mg-section--surface {
+    --mg-reviews-card: var(--mg-surface-2);
+  }
+
+  .mg-reviews__intro {
+    max-width: 680px;
+  }
+
+  /* Rating summary */
+  .mg-reviews__summary {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 20px;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    background: var(--mg-reviews-card);
+  }
+
+  .mg-reviews__score {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--mg-text);
+  }
+
+  .mg-reviews__summary-body {
+    display: grid;
+    gap: 6px;
+    justify-items: start;
+  }
+
+  .mg-reviews__stars {
+    position: relative;
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  .mg-reviews__stars-base,
+  .mg-reviews__stars-fill {
+    display: inline-flex;
+    gap: 2px;
+    white-space: nowrap;
+  }
+
+  .mg-reviews__stars-base {
+    color: var(--mg-border-strong);
+  }
+
+  .mg-reviews__stars-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--mg-rating, 100%);
+    overflow: hidden;
+    color: var(--mg-star);
+  }
+
+  .mg-reviews__stars .mg-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-reviews__count {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-reviews__all {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-border-strong);
+    text-underline-offset: 0.25em;
+  }
+
+  .mg-reviews__all:hover {
+    text-decoration-color: var(--mg-accent);
+  }
+
+  .mg-reviews__all .mg-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Carousel */
+  .mg-reviews__track {
+    margin: 0 calc(var(--mg-gutter) * -1);
+    padding: 4px var(--mg-gutter) 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--mg-gutter);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mg-reviews__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mg-reviews__track:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 2px;
+    border-radius: var(--mg-radius);
+  }
+
+  .mg-reviews__list {
+    list-style: none;
+    display: flex;
+    gap: var(--mg-reviews-gap);
+    margin: 0;
+    padding: 0;
+  }
+
+  .mg-reviews__slide {
+    flex: 0 0 min(86%, 380px);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .mg-reviews__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius-lg);
+    background: var(--mg-reviews-card);
+    transition: border-color 0.25s var(--mg-ease);
+  }
+
+  .mg-reviews__card:hover {
+    border-color: var(--mg-border-strong);
+  }
+
+  .mg-reviews__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .mg-reviews__rating {
+    display: inline-flex;
+    gap: 2px;
+    line-height: 0;
+  }
+
+  .mg-reviews__star {
+    display: inline-flex;
+    color: var(--mg-border-strong);
+  }
+
+  .mg-reviews__star.is-on {
+    color: var(--mg-star);
+  }
+
+  .mg-reviews__star .mg-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mg-reviews__source {
+    padding: 4px 10px;
+    border: 1px solid var(--mg-border);
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-reviews__quote {
+    position: relative;
+    flex: 1 1 auto;
+    margin: 20px 0 0;
+    padding: 0;
+  }
+
+  .mg-reviews__quote::before {
+    content: '\201C';
+    display: block;
+    height: 0.5em;
+    margin-bottom: 4px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--mg-accent);
+  }
+
+  .mg-reviews__quote p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--mg-text);
+  }
+
+  .mg-reviews__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-reviews__avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: 50%;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--mg-text);
+  }
+
+  .mg-reviews__who {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .mg-reviews__author {
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--mg-text);
+  }
+
+  .mg-reviews__car {
+    font-size: 0.8125rem;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-reviews__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 20px;
+  }
+
+  .mg-reviews__controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  .mg-reviews__controls[hidden] {
+    display: none;
+  }
+
+  .mg-reviews__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--mg-text);
+    cursor: pointer;
+    transition:
+      border-color 0.2s var(--mg-ease),
+      background-color 0.2s var(--mg-ease),
+      opacity 0.2s var(--mg-ease);
+  }
+
+  .mg-reviews__arrow .mg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-reviews__arrow:hover:not(:disabled) {
+    border-color: var(--mg-text);
+    background: var(--mg-surface-2);
+  }
+
+  .mg-reviews__arrow:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+  }
+
+  .mg-reviews__arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .mg-reviews__note {
+    margin: 0;
+  }
+
+  @media (min-width: 750px) {
+    .mg-reviews__track {
+      margin: 0;
+      padding: 4px 0 8px;
+      scroll-padding-inline: 0;
+    }
+
+    .mg-reviews__slide {
+      flex-basis: calc((100% - var(--mg-reviews-gap)) / 2);
+    }
+
+    .mg-reviews__card {
+      padding: 28px;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .mg-reviews {
+      --mg-reviews-gap: 20px;
+    }
+
+    .mg-reviews__slide {
+      flex-basis: calc((100% - var(--mg-reviews-gap) * 2) / 3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-reviews__card,
+    .mg-reviews__arrow {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG: Reviews carousel",
+  "tag": "div",
+  "class": "mg-reviews-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted by Dublin drivers"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "Honest advice, tidy installs and a fair price agreed up front. Here's what customers tell us after they drive away."
+    },
+    {
+      "type": "header",
+      "content": "Google rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating summary",
+      "info": "Rating, review count and link come from Theme settings > MG Car Audio: business details. The link is hidden until a Google reviews link is added there.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reviews_link_label",
+      "label": "Reviews link label",
+      "default": "Read all reviews on Google"
+    },
+    {
+      "type": "header",
+      "content": "Demo note"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_placeholder_note",
+      "label": "Show \"Sample reviews\" note",
+      "info": "Keep this on while the demo reviews are showing. Turn it off once every review is a real one.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "surface"
+    },
+    {
+      "type": "select",
+      "id": "spacing",
+      "label": "Vertical spacing",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "tight",
+          "label": "Tight"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "PLACEHOLDER: the demo reviews are sample text, not real customers. Replace them with real Google reviews (with the customer's permission), or switch to a reviews app in Phase 2."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "info": "PLACEHOLDER in the demo: paste the customer's words exactly as written.",
+          "default": "Replace this with a real review from Google."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer name",
+          "info": "PLACEHOLDER in the demo. Use first name and initial, for example: Aoife M.",
+          "default": "Customer A."
+        },
+        {
+          "type": "text",
+          "id": "car",
+          "label": "Car or job",
+          "default": "BMW 3 Series · CarPlay"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source",
+          "default": "Google"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG: Reviews carousel",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Sent a photo of my dash on WhatsApp and had a price back quickly. Wireless CarPlay fitted in about an hour, and the steering wheel buttons and reverse camera still work. Looks like it came from the factory.",
+            "author": "Customer A.",
+            "car": "BMW 3 Series · Wireless CarPlay",
+            "source": "Google"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "The original speakers were muddy at any volume. New front components and the difference is night and day: vocals are clear and the bass is tight without the doors rattling.",
+            "author": "Customer B.",
+            "car": "Volkswagen Golf · Speaker upgrade",
+            "source": "Google"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "My screen went black and I was told the whole unit would need replacing. MG found the actual fault, fixed it and had me back on the road the same day for a fraction of what I was expecting.",
+            "author": "Customer C.",
+            "car": "Audi A4 · Black-screen repair",
+            "source": "Google"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Imported my BMW from Japan and everything was in Japanese, with no local radio stations. They converted the menus and navigation to English and sorted the radio frequencies. Brilliant job, and explained everything clearly.",
+            "author": "Customer D.",
+            "car": "BMW 5 Series · Japan-to-Europe conversion",
+            "source": "Google"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "text": "Honest advice on which Android radio suited my car and budget, no hard sell. Tidy install with no loose wires, and they set it up with my phone before I left.",
+            "author": "Customer E.",
+            "car": "Toyota Auris · Android radio",
+            "source": "Google"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

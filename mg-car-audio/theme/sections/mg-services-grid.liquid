@@ -1,0 +1,632 @@
+{%- liquid
+  assign button_url = section.settings.button_url | default: '/pages/services'
+  assign heading_id = 'MgServicesHeading-' | append: section.id
+-%}
+
+<div
+  class="mg-section mg-services mg-services--{{ section.settings.background }}"
+  style="--mg-services-cols: {{ section.settings.columns_desktop }};"
+>
+  <div class="mg-container">
+    {%- if section.settings.eyebrow != blank
+      or section.settings.heading != blank
+      or section.settings.text != blank
+      or section.settings.button_label != blank
+    -%}
+      <div class="mg-section-head mg-section-head--row mg-services__head">
+        <div class="mg-services__intro">
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2
+              class="mg-heading"
+              id="{{ heading_id }}"
+            >
+              {{ section.settings.heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-lede">{{ section.settings.text | escape }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.button_label != blank -%}
+          <a
+            class="mg-btn mg-btn--ghost mg-services__all"
+            href="{{ button_url }}"
+          >
+            <span>{{ section.settings.button_label | escape }}</span>
+            {%- render 'mg-icon', icon: 'arrow-right' -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul
+        class="mg-services__track"
+        role="list"
+        {% if section.settings.heading != blank %}
+          aria-labelledby="{{ heading_id }}"
+        {% endif %}
+      >
+        {%- for block in section.blocks -%}
+          {%- liquid
+            if block.settings.title == blank
+              continue
+            endif
+            assign card_url = block.settings.url | default: '/pages/get-a-quote'
+            assign price = block.settings.price | strip
+
+            assign fallback = block.settings.fallback_image | default: 'mg-showroom.webp'
+            case fallback
+              when 'mg-showroom.webp'
+                assign fallback_w = 1600
+                assign fallback_h = 1200
+              when 'mg-single-din-radio.webp', 'mg-door-speaker.webp', 'mg-speaker-pair.webp', 'mg-dash-radio.webp'
+                assign fallback_w = 1024
+                assign fallback_h = 1024
+              when 'mg-speaker-range-banner.webp'
+                assign fallback_w = 1600
+                assign fallback_h = 320
+              else
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+            endcase
+          -%}
+          <li
+            class="mg-services__item"
+            {{ block.shopify_attributes }}
+          >
+            <a
+              class="mg-card mg-services__card"
+              href="{{ card_url }}"
+            >
+              <div class="mg-services__media">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1000
+                    | image_tag:
+                      widths: '360, 480, 640, 800, 1000',
+                      sizes: '(min-width: 1320px) 310px, (min-width: 990px) 25vw, (min-width: 750px) 42vw, 80vw',
+                      loading: 'lazy',
+                      alt: '',
+                      class: 'mg-services__img'
+                  }}
+                {%- else -%}
+                  <img
+                    class="mg-services__img"
+                    src="{{ fallback | asset_url }}"
+                    alt=""
+                    width="{{ fallback_w }}"
+                    height="{{ fallback_h }}"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- endif -%}
+                {%- if block.settings.badge != blank -%}
+                  <span class="mg-services__badge">{{ block.settings.badge | escape }}</span>
+                {%- endif -%}
+              </div>
+
+              <div class="mg-services__body">
+                <h3 class="mg-services__title">{{ block.settings.title | escape }}</h3>
+                {%- if block.settings.text != blank -%}
+                  <p class="mg-services__text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+
+                <div class="mg-services__foot">
+                  {%- if price != blank -%}
+                    <span class="mg-price-from mg-services__price">
+                      {%- if block.settings.price_label != blank %}
+                        <small>{{ block.settings.price_label | escape }}</small>
+                      {% endif -%}
+                      <strong>{{ price | escape }}</strong>
+                      {%- if section.settings.price_suffix != blank %}
+                        <small>{{ section.settings.price_suffix | escape }}</small>
+                      {%- endif -%}
+                    </span>
+                  {%- else -%}
+                    <span class="mg-services__quote">{{ section.settings.quote_label | default: 'Get a quote' | escape }}</span>
+                  {%- endif -%}
+                  <span
+                    class="mg-services__arrow"
+                    aria-hidden="true"
+                  >
+                    {%- render 'mg-icon', icon: 'arrow-right' -%}
+                  </span>
+                </div>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="mg-services__note">{{ section.settings.footnote | escape }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .mg-services--surface {
+    background: var(--mg-surface);
+  }
+
+  .mg-services--surface .mg-services__card {
+    background: var(--mg-surface-2);
+  }
+
+  .mg-services__intro {
+    max-width: 680px;
+  }
+
+  .mg-services__all {
+    flex: none;
+  }
+
+  /* Mobile: horizontal scroll-snap rail with a visible peek of the next card */
+  .mg-services__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    gap: 14px;
+    margin: 0 calc(var(--mg-gutter) * -1);
+    padding: 4px var(--mg-gutter) 12px;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--mg-gutter);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mg-services__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mg-services__item {
+    display: flex;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .mg-services__card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .mg-services__card:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+  }
+
+  .mg-services__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--mg-surface-2);
+  }
+
+  .mg-services__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--mg-bg) 55%, transparent) 100%);
+    pointer-events: none;
+  }
+
+  .mg-services__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--mg-ease);
+  }
+
+  .mg-services__card:hover .mg-services__img {
+    transform: scale(1.04);
+  }
+
+  .mg-services__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    background: var(--mg-accent);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-services__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 18px 16px;
+  }
+
+  .mg-services__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-services__text {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-services__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-services__quote {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-services__arrow {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: 50%;
+    color: var(--mg-text-muted);
+    transition:
+      background-color 0.25s var(--mg-ease),
+      border-color 0.25s var(--mg-ease),
+      color 0.25s var(--mg-ease),
+      transform 0.25s var(--mg-ease);
+  }
+
+  .mg-services__arrow .mg-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .mg-services__card:hover .mg-services__arrow {
+    border-color: var(--mg-accent);
+    background: var(--mg-accent);
+    color: var(--mg-text);
+    transform: translateX(2px);
+  }
+
+  .mg-services__note {
+    max-width: 72ch;
+    margin: 20px 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--mg-text-subtle);
+  }
+
+  @media (min-width: 750px) {
+    .mg-services__track {
+      grid-auto-columns: 42%;
+      gap: 18px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-services__track {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(var(--mg-services-cols, 4), minmax(0, 1fr));
+      grid-auto-columns: auto;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .mg-services__note {
+      margin-top: 28px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-services__img,
+    .mg-services__arrow {
+      transition: none;
+    }
+
+    .mg-services__card:hover .mg-services__img,
+    .mg-services__card:hover .mg-services__arrow {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG services grid",
+  "tag": "section",
+  "class": "mg-services-section",
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Popular services"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clear prices. Fitted properly."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Upfront 'from' prices on our most-booked jobs, all fitted at our workshop in Ballymount, Dublin 12. A €50 deposit secures your slot."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave blank to hide the button.",
+      "default": "All services"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link",
+      "info": "Leave blank to link to /pages/services."
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "Text after each price",
+      "default": "fitted"
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Text when a service has no price",
+      "default": "Get a quote"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "info": "Mobile shows a swipeable row with the next card peeking in.",
+      "min": 3,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised panel"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "textarea",
+      "id": "footnote",
+      "label": "Footnote",
+      "info": "Small print under the cards. Leave blank to hide.",
+      "default": "Prices shown are starting prices for fitting at our Dublin 12 workshop. Send us your reg and we'll confirm the exact price for your car before you book."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Apple CarPlay for BMW"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "info": "One or two short lines.",
+          "default": "Wired and wireless CarPlay on your factory iDrive screen, with an OEM-style finish and original features kept."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "info": "For example €350. Leave blank to show 'Get a quote'. PLACEHOLDER: '€X' on the demo means the price is still to come from MG.",
+          "default": "€350"
+        },
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "Text before the price",
+          "default": "from"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Leave blank to link to /pages/get-a-quote."
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "info": "Optional, e.g. Most popular.",
+          "default": ""
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Landscape works best (shown at 4:3)."
+        },
+        {
+          "type": "select",
+          "id": "fallback_image",
+          "label": "Image to use until one is uploaded",
+          "options": [
+            { "value": "mg-bmw-carplay-screen.webp", "label": "BMW CarPlay screen" },
+            { "value": "mg-audi-carplay-screen.webp", "label": "Audi CarPlay with iPhone" },
+            { "value": "mg-android-auto-dash.webp", "label": "Android Auto dash" },
+            { "value": "mg-showroom.webp", "label": "MG showroom" },
+            { "value": "mg-single-din-radio.webp", "label": "Single-DIN radio" },
+            { "value": "mg-door-speaker.webp", "label": "Door speaker" },
+            { "value": "mg-speaker-pair.webp", "label": "Speaker pair" },
+            { "value": "mg-dash-radio.webp", "label": "Dash with head unit" },
+            { "value": "mg-speaker-range-banner.webp", "label": "Speaker range strip" },
+            { "value": "mg-bmw-japan-to-europe.webp", "label": "BMW Japan-to-Europe conversion" },
+            { "value": "mg-mercedes-japan-to-europe.webp", "label": "Mercedes Japan-to-Europe conversion" },
+            { "value": "mg-vw-japan-to-europe.webp", "label": "VW Japan-to-Europe conversion" },
+            { "value": "mg-radio-frequency-conversion.webp", "label": "Radio frequency conversion" }
+          ],
+          "default": "mg-bmw-carplay-screen.webp"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG services grid",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "service",
+          "settings": {
+            "title": "Apple CarPlay for BMW",
+            "text": "Wired and wireless CarPlay on your factory iDrive screen, with an OEM-style finish and original features kept.",
+            "price": "€350",
+            "url": "/pages/carplay-installation",
+            "badge": "Most popular",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "BMW Android Auto (iDrive 7)",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens. Around an hour in the bay while you wait.",
+            "price": "€299",
+            "url": "/products/android-auto-installation-bmw-id7",
+            "badge": "1 hour",
+            "fallback_image": "mg-android-auto-dash.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Android radio fitting",
+            "text": "Professional installation of Android head units, with neat wiring and a factory-style finish. About 90 minutes.",
+            "price": "€150",
+            "url": "/products/android-radio-installation",
+            "fallback_image": "mg-dash-radio.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Japanese-to-European conversion",
+            "text": "Imported BMW? We switch menus, navigation and radio bands to European spec. Mercedes-Benz and VW on request.",
+            "price": "€450",
+            "url": "/pages/get-a-quote",
+            "fallback_image": "mg-bmw-japan-to-europe.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Screen upgrades",
+            "text": "Bigger, sharper widescreens for BMW, Mercedes-Benz, Audi and VW, with CarPlay and Android Auto built in.",
+            "price": "€X",
+            "url": "/collections/screen-upgrades",
+            "fallback_image": "mg-audi-carplay-screen.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Speaker & subwoofer upgrades",
+            "text": "JBL and Harman Kardon speakers, subs and amps, matched to your car for clear, powerful sound.",
+            "price": "€X",
+            "url": "/collections/speakers",
+            "fallback_image": "mg-door-speaker.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "BMW iDrive 7 video in motion",
+            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "price": "€149",
+            "url": "/pages/get-a-quote",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Dashcam & reverse camera fitting",
+            "text": "Hard-wired dashcams and reverse cameras with the cables hidden and power taken safely from the fuse box.",
+            "price": "€X",
+            "url": "/collections/dashcams",
+            "fallback_image": "mg-showroom.webp"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

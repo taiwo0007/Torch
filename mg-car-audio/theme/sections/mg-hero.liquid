@@ -1,0 +1,559 @@
+{%- liquid
+  assign is_above_fold = true
+  if section.index > 2
+    assign is_above_fold = false
+  endif
+
+  assign heading_tag = 'h2'
+  if section.settings.heading_is_h1
+    assign heading_tag = 'h1'
+  endif
+
+  assign primary_url = section.settings.primary_url | default: '/pages/book-a-fitting'
+
+  assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
+    assign show_whatsapp = true
+  endif
+
+  assign fallback_alt = 'BMW widescreen display running Apple CarPlay, fitted by ' | append: settings.mg_business_name
+  assign overlay = section.settings.overlay_opacity | divided_by: 100.0
+-%}
+
+<div
+  class="mg-hero"
+  style="--mg-hero-overlay: {{ overlay }};"
+>
+  <div class="mg-hero__media">
+    {%- if section.settings.image != blank -%}
+      {%- liquid
+        if is_above_fold
+          assign loading = 'eager'
+          assign priority = 'high'
+        else
+          assign loading = 'lazy'
+          assign priority = 'auto'
+        endif
+        assign image_alt = section.settings.image.alt | default: fallback_alt
+      -%}
+      {{
+        section.settings.image
+        | image_url: width: 3200
+        | image_tag:
+          widths: '750, 1100, 1500, 1800, 2200, 2800, 3200',
+          sizes: '100vw',
+          loading: loading,
+          fetchpriority: priority,
+          alt: image_alt,
+          class: 'mg-hero__img'
+      }}
+    {%- else -%}
+      <img
+        class="mg-hero__img mg-hero__img--fallback"
+        src="{{ 'mg-bmw-carplay-screen.webp' | asset_url }}"
+        alt="{{ fallback_alt | escape }}"
+        width="1536"
+        height="1024"
+        {% if is_above_fold %}
+          loading="eager" fetchpriority="high"
+        {% else %}
+          loading="lazy" decoding="async"
+        {% endif %}
+      >
+    {%- endif -%}
+  </div>
+  <div
+    class="mg-hero__scrim"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="mg-hero__fade"
+    aria-hidden="true"
+  ></div>
+
+  <div class="mg-container mg-hero__inner">
+    <div class="mg-hero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p
+          class="mg-eyebrow mg-hero__eyebrow mg-hero__reveal"
+          style="--mg-reveal-i: 0;"
+        >
+          {{ section.settings.eyebrow | escape }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <{{ heading_tag }}
+          class="mg-hero__heading mg-hero__reveal"
+          style="--mg-reveal-i: 1;"
+        >
+          {{- section.settings.heading | escape -}}
+        </{{ heading_tag }}>
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
+        <p
+          class="mg-hero__sub mg-hero__reveal"
+          style="--mg-reveal-i: 2;"
+        >
+          {{ section.settings.subheading | escape | newline_to_br }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.primary_label != blank or show_whatsapp -%}
+        <div
+          class="mg-hero__actions mg-hero__reveal"
+          style="--mg-reveal-i: 3;"
+        >
+          {%- if section.settings.primary_label != blank -%}
+            <a
+              class="mg-btn mg-btn--primary mg-hero__btn"
+              href="{{ primary_url }}"
+            >
+              {%- render 'mg-icon', icon: 'calendar' -%}
+              <span>{{ section.settings.primary_label | escape }}</span>
+            </a>
+          {%- endif -%}
+          {%- if show_whatsapp -%}
+            <a
+              class="mg-btn mg-btn--whatsapp mg-hero__btn"
+              href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {%- render 'mg-icon', icon: 'whatsapp' -%}
+              <span>{{ section.settings.whatsapp_label | escape }}</span>
+              <span class="mg-visually-hidden">(opens WhatsApp)</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.chip_1 != blank
+        or section.settings.chip_2 != blank
+        or section.settings.chip_3 != blank
+      -%}
+        <ul
+          class="mg-hero__chips mg-hero__reveal"
+          style="--mg-reveal-i: 4;"
+          role="list"
+        >
+          {%- if section.settings.chip_1 != blank -%}
+            <li class="mg-chip mg-hero__chip">
+              {%- render 'mg-icon', icon: 'check' -%}
+              {{ section.settings.chip_1 | escape }}
+            </li>
+          {%- endif -%}
+          {%- if section.settings.chip_2 != blank -%}
+            <li class="mg-chip mg-hero__chip">
+              {%- render 'mg-icon', icon: 'check' -%}
+              {{ section.settings.chip_2 | escape }}
+            </li>
+          {%- endif -%}
+          {%- if section.settings.chip_3 != blank -%}
+            <li class="mg-chip mg-hero__chip">
+              {%- render 'mg-icon', icon: 'check' -%}
+              {{ section.settings.chip_3 | escape }}
+            </li>
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.show_call and settings.mg_phone_display != blank -%}
+        <p
+          class="mg-hero__call mg-hero__reveal"
+          style="--mg-reveal-i: 5;"
+        >
+          {%- render 'mg-icon', icon: 'phone' -%}
+          <span>
+            {{- section.settings.call_prefix | escape }}
+            <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+          </span>
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .mg-hero {
+    --mg-hero-overlay: 0.85;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: 78vh;
+    min-height: 78svh;
+    overflow: hidden;
+    background: var(--mg-bg);
+    color: var(--mg-text);
+  }
+
+  .mg-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+  }
+
+  .mg-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mg-hero__img--fallback {
+    object-position: 55% 30%;
+  }
+
+  /* Directional scrim: bottom-up on mobile, left-to-right on desktop */
+  .mg-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: var(--mg-hero-overlay);
+    background: linear-gradient(
+      0deg,
+      var(--mg-bg) 0%,
+      color-mix(in srgb, var(--mg-bg) 92%, transparent) 30%,
+      color-mix(in srgb, var(--mg-bg) 55%, transparent) 62%,
+      color-mix(in srgb, var(--mg-bg) 20%, transparent) 100%
+    );
+  }
+
+  /* Always-on edge fades: blends into the header above and the next section below */
+  .mg-hero__fade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--mg-bg) 70%, transparent) 0%, transparent 18%),
+      linear-gradient(0deg, var(--mg-bg) 0%, transparent 16%);
+  }
+
+  .mg-hero__inner {
+    position: relative;
+    padding-top: calc(
+      clamp(96px, 16vh, 160px) + var(--header-height, 0px) * var(--transparent-header-offset-boolean, 0)
+    );
+    padding-bottom: clamp(40px, 7vh, 72px);
+  }
+
+  .mg-hero__content {
+    max-width: 700px;
+  }
+
+  .mg-hero__eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .mg-hero__heading {
+    margin: 0;
+    max-width: 15ch;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--mg-h1);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+    text-wrap: balance;
+  }
+
+  .mg-hero__sub {
+    max-width: 56ch;
+    margin: 1.25rem 0 0;
+    font-size: clamp(1rem, 1.3vw, 1.1875rem);
+    line-height: 1.6;
+    color: var(--mg-text-muted);
+    text-wrap: pretty;
+  }
+
+  .mg-hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+
+  .mg-hero__btn {
+    width: 100%;
+    min-height: 54px;
+  }
+
+  .mg-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-hero__chip {
+    background: color-mix(in srgb, var(--mg-bg) 55%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--mg-text);
+  }
+
+  .mg-hero__chip .mg-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--mg-accent);
+    stroke-width: 2.5;
+  }
+
+  .mg-hero__call {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-hero__call .mg-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-hero__call a {
+    font-weight: 700;
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-border-strong);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s var(--mg-ease);
+  }
+
+  .mg-hero__call a:hover {
+    text-decoration-color: var(--mg-accent);
+  }
+
+  .mg-hero__call a:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (min-width: 750px) {
+    .mg-hero {
+      align-items: center;
+      min-height: 86vh;
+      min-height: 86svh;
+    }
+
+    .mg-hero__img--fallback {
+      object-position: 60% center;
+    }
+
+    .mg-hero__scrim {
+      background: linear-gradient(
+        90deg,
+        var(--mg-bg) 0%,
+        color-mix(in srgb, var(--mg-bg) 88%, transparent) 32%,
+        color-mix(in srgb, var(--mg-bg) 45%, transparent) 62%,
+        color-mix(in srgb, var(--mg-bg) 12%, transparent) 100%
+      );
+    }
+
+    .mg-hero__inner {
+      padding-bottom: clamp(72px, 10vh, 120px);
+    }
+
+    .mg-hero__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .mg-hero__btn {
+      width: auto;
+      padding-inline: 1.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-hero__img {
+      animation: mg-hero-settle 1.6s var(--mg-ease) both;
+    }
+
+    .mg-hero__reveal {
+      animation: mg-hero-rise 0.7s var(--mg-ease) both;
+      animation-delay: calc(var(--mg-reveal-i, 0) * 80ms + 100ms);
+    }
+  }
+
+  @keyframes mg-hero-settle {
+    from {
+      transform: scale(1.05);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes mg-hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG hero",
+  "tag": "section",
+  "class": "mg-hero-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image",
+      "info": "Leave blank to use MG's BMW CarPlay photo. Use a landscape photo at least 2400px wide. Set a focal point so the screen stays in view on mobile."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Dark overlay strength",
+      "info": "Keeps the text readable over the photo. 80% or more is recommended.",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Dublin · Fitted in-house"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ireland's CarPlay & Car Audio Specialist"
+    },
+    {
+      "type": "checkbox",
+      "id": "heading_is_h1",
+      "label": "Use heading as the page's main title (H1)",
+      "info": "Keep on for the home page. Each page should have only one H1.",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Wired and wireless Apple CarPlay and Android Auto, screen upgrades, speakers and sound for BMW, Audi, Mercedes-Benz, VW and more. Fitted by our own team in Dublin with a clean, factory-quality finish."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Main button label",
+      "info": "Leave blank to hide.",
+      "default": "Book a fitting"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Main button link",
+      "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "Get a quote on WhatsApp",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "WhatsApp pre-filled message",
+      "info": "Leave blank to use the message from Theme settings.",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "header",
+      "content": "Highlights"
+    },
+    {
+      "type": "text",
+      "id": "chip_1",
+      "label": "Highlight 1",
+      "default": "Wired & wireless CarPlay"
+    },
+    {
+      "type": "text",
+      "id": "chip_2",
+      "label": "Highlight 2",
+      "default": "OEM-style finish"
+    },
+    {
+      "type": "text",
+      "id": "chip_3",
+      "label": "Highlight 3",
+      "info": "€299 is MG's BMW Android Auto (iDrive 7) price from the current booking page. Update it if prices change.",
+      "default": "From €299 fitted"
+    },
+    {
+      "type": "header",
+      "content": "Phone line"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_call",
+      "label": "Show phone number",
+      "info": "Uses the phone number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "call_prefix",
+      "label": "Text before the number",
+      "default": "Prefer to talk? Call",
+      "visible_if": "{{ section.settings.show_call }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG hero",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,611 @@
+{%- liquid
+  assign section_classes = 'mg-section mg-how'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-section--surface'
+  endif
+  if section.settings.spacing == 'tight'
+    assign section_classes = section_classes | append: ' mg-section--tight'
+  endif
+
+  assign step_count = section.blocks.size
+  assign step_cols = step_count | at_least: 1 | at_most: 6
+
+  assign wa_text = settings.mg_whatsapp_message | url_encode
+  assign wa_href = 'https://wa.me/' | append: settings.mg_whatsapp_number | append: '?text=' | append: wa_text
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
+    assign show_whatsapp = true
+  endif
+
+  assign button_link = section.settings.button_link | default: '/pages/book-a-fitting'
+  assign heading_id = 'MgHowHeading-' | append: section.id
+-%}
+
+<section
+  class="{{ section_classes }}{% if section.settings.align == 'center' %} mg-how--center{% endif %}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="mg-container">
+    {%- if section.settings.eyebrow != blank
+      or section.settings.heading != blank
+      or section.settings.text != blank
+    -%}
+      <header class="mg-section-head{% if section.settings.align == 'center' %} mg-section-head--center{% endif %}">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if step_count > 0 -%}
+      <ol
+        class="mg-how__steps"
+        role="list"
+        style="--mg-how-cols: {{ step_cols }};"
+      >
+        {%- for block in section.blocks -%}
+          {%- assign step_number = forloop.index | prepend: '0' | slice: -2, 2 -%}
+          <li class="mg-how__step" {{ block.shopify_attributes }}>
+            <div class="mg-how__rail" aria-hidden="true">
+              <span class="mg-how__num">{{ step_number }}</span>
+              {%- unless forloop.last -%}
+                <span class="mg-how__line"></span>
+              {%- endunless -%}
+            </div>
+            <div class="mg-how__body">
+              {%- if block.settings.icon != 'none' -%}
+                <span class="mg-how__icon">
+                  {%- render 'mg-icon', icon: block.settings.icon -%}
+                </span>
+              {%- endif -%}
+              <h3 class="mg-how__title">
+                <span class="mg-visually-hidden">Step {{ forloop.index }}: </span>
+                {{- block.settings.title | escape -}}
+              </h3>
+              {%- if block.settings.text != blank -%}
+                <p class="mg-how__text">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- elsif request.design_mode -%}
+      <p class="mg-placeholder-note">Add "Step" blocks to build the timeline.</p>
+    {%- endif -%}
+
+    {%- if show_whatsapp or section.settings.button_label != blank -%}
+      <div class="mg-how__cta">
+        <div class="mg-how__buttons">
+          {%- if show_whatsapp -%}
+            <a
+              class="mg-btn mg-btn--whatsapp"
+              href="{{ wa_href }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {%- render 'mg-icon', icon: 'whatsapp' -%}
+              <span>{{ section.settings.whatsapp_label | escape }}</span>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <a class="mg-btn mg-btn--ghost" href="{{ button_link }}">
+              {%- render 'mg-icon', icon: 'calendar' -%}
+              <span>{{ section.settings.button_label | escape }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.show_phone and settings.mg_phone_display != blank -%}
+          <p class="mg-how__phone">
+            {{ section.settings.phone_prefix | escape }}
+            <a href="tel:+{{ settings.mg_phone_e164 }}">{{ settings.mg_phone_display | escape }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .mg-how {
+    --mg-how-gap: clamp(24px, 3vw, 48px);
+    --mg-how-badge-bg: var(--mg-surface);
+  }
+
+  .mg-how.mg-section--surface {
+    --mg-how-badge-bg: var(--mg-surface-2);
+  }
+
+  .mg-how__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .mg-how__step {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+
+  .mg-how__rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mg-how__num {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--mg-text-subtle);
+    transition: color 0.3s var(--mg-ease);
+  }
+
+  @supports (-webkit-text-stroke: 1px black) {
+    .mg-how__num {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--mg-text-muted);
+    }
+  }
+
+  .mg-how__step:hover .mg-how__num,
+  .mg-how__step:focus-within .mg-how__num {
+    color: var(--mg-text);
+  }
+
+  .mg-how__line {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1px;
+    min-height: 24px;
+    margin: 14px 0 12px;
+    background: linear-gradient(to bottom, var(--mg-border-strong), var(--mg-border));
+  }
+
+  .mg-how__line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--mg-accent);
+    transform: translate(-50%, -50%);
+  }
+
+  .mg-how__body {
+    padding-bottom: 40px;
+  }
+
+  .mg-how__step:last-child .mg-how__body {
+    padding-bottom: 0;
+  }
+
+  .mg-how__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    background: var(--mg-how-badge-bg);
+    color: var(--mg-text);
+  }
+
+  .mg-how__icon .mg-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mg-how__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: 1.125rem;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-how__text {
+    max-width: 38ch;
+    margin: 0.6rem 0 0;
+    font-size: 0.975rem;
+    line-height: 1.6;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-how__text a {
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .mg-how__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: clamp(28px, 4vw, 40px);
+    border-top: 1px solid var(--mg-border);
+  }
+
+  .mg-how__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mg-how__phone {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-how__phone a {
+    font-weight: 700;
+    color: var(--mg-text);
+    text-decoration: underline;
+    text-decoration-color: var(--mg-border-strong);
+    text-underline-offset: 0.25em;
+  }
+
+  .mg-how__phone a:hover {
+    text-decoration-color: var(--mg-accent);
+  }
+
+  @media (min-width: 600px) {
+    .mg-how__buttons {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .mg-how__cta {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .mg-how--center .mg-how__cta {
+    justify-content: center;
+    text-align: center;
+  }
+
+  @media (min-width: 600px) {
+    .mg-how--center .mg-how__cta {
+      flex-direction: column;
+    }
+
+    .mg-how--center .mg-how__buttons {
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-how__steps {
+      grid-template-columns: repeat(var(--mg-how-cols, 4), minmax(0, 1fr));
+      column-gap: var(--mg-how-gap);
+    }
+
+    .mg-how__step {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 28px;
+      align-content: start;
+    }
+
+    .mg-how__rail {
+      flex-direction: row;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .mg-how__num {
+      font-size: clamp(3rem, 4.4vw, 4.25rem);
+    }
+
+    .mg-how__line {
+      width: auto;
+      height: 1px;
+      min-height: 0;
+      margin: 0 calc(18px - var(--mg-how-gap)) 0 0;
+      background: linear-gradient(to right, var(--mg-border-strong), var(--mg-border));
+    }
+
+    .mg-how__line::before {
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    .mg-how__body {
+      padding-bottom: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-how__num {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG: How it works",
+  "tag": "div",
+  "class": "mg-how-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From your reg to CarPlay in four steps"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "No guesswork and no chasing call-backs. Send us a couple of details and we'll tell you exactly what fits your car, what it costs and when we can fit it."
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "info": "Uses the WhatsApp number and pre-filled message from Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "Send your reg on WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Second button label",
+      "info": "Leave blank to hide the button.",
+      "default": "Book a fitting"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Second button link",
+      "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone number",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone_prefix",
+      "label": "Text before phone number",
+      "default": "Rather talk it through? Call"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "surface"
+    },
+    {
+      "type": "select",
+      "id": "spacing",
+      "label": "Vertical spacing",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "tight",
+          "label": "Tight"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "camera",
+              "label": "Camera"
+            },
+            {
+              "value": "message",
+              "label": "Message"
+            },
+            {
+              "value": "whatsapp",
+              "label": "WhatsApp"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "car",
+              "label": "Car"
+            },
+            {
+              "value": "wrench",
+              "label": "Wrench"
+            },
+            {
+              "value": "screen",
+              "label": "Screen"
+            },
+            {
+              "value": "speaker",
+              "label": "Speaker"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "check",
+              "label": "Tick"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "map-pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "upload",
+              "label": "Upload"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Step title"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "Describe this step in one or two short sentences."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG: How it works",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "camera",
+            "title": "Send your reg + a dash photo",
+            "text": "WhatsApp us your registration and a quick photo of your dash. That's usually all we need to tell you exactly what fits."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "message",
+            "title": "Get a fixed quote",
+            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "calendar",
+            "title": "Book a slot",
+            "text": "Pick a day and time that suits you. A <strong>€50 deposit</strong> secures your slot at our Ballymount workshop."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "car",
+            "title": "Drive away",
+            "text": "We fit it, test everything with your phone and show you how it all works. Most installs take one to two hours."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

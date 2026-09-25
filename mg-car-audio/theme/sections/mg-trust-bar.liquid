@@ -1,0 +1,529 @@
+{%- liquid
+  assign item_count = section.blocks.size
+  if item_count < 1
+    assign item_count = 1
+  endif
+-%}
+
+<div
+  class="mg-trust mg-trust--{{ section.settings.background }}"
+  style="--mg-trust-cols: {{ item_count }};"
+>
+  <div class="mg-container mg-trust__container">
+    <ul
+      class="mg-trust__list"
+      role="list"
+    >
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'rating' -%}
+            {%- liquid
+              assign rating = settings.mg_review_rating | strip
+              assign rating_value = rating | plus: 0
+              assign rating_pct = rating_value | times: 20 | at_most: 100 | at_least: 0
+              assign rating_url = block.settings.url | default: settings.mg_review_url
+            -%}
+            {%- if rating != blank -%}
+              <li
+                class="mg-trust__item mg-trust__item--rating"
+                {{ block.shopify_attributes }}
+              >
+                {%- if rating_url != blank -%}
+                  <a
+                    class="mg-trust__inner mg-trust__inner--link"
+                    href="{{ rating_url }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                {%- else -%}
+                  <div class="mg-trust__inner">
+                {%- endif -%}
+                <span
+                  class="mg-trust__badge mg-trust__badge--score"
+                  aria-hidden="true"
+                >
+                  {{- rating | escape -}}
+                </span>
+                <span class="mg-trust__body">
+                  <span
+                    class="mg-trust__stars"
+                    style="--mg-rating-pct: {{ rating_pct }}%;"
+                    aria-hidden="true"
+                  >
+                    <span class="mg-trust__stars-base">
+                      {%- for i in (1..5) -%}
+                        {%- render 'mg-icon', icon: 'star' -%}
+                      {%- endfor -%}
+                    </span>
+                    <span class="mg-trust__stars-fill">
+                      {%- for i in (1..5) -%}
+                        {%- render 'mg-icon', icon: 'star' -%}
+                      {%- endfor -%}
+                    </span>
+                  </span>
+                  <span class="mg-visually-hidden">Rated {{ rating | escape }} out of 5</span>
+                  {%- liquid
+                    assign review_line = block.settings.label | strip
+                    if settings.mg_review_count != blank
+                      assign count_part = settings.mg_review_count | strip
+                      if block.settings.count_prefix != blank
+                        assign count_part = block.settings.count_prefix | strip | append: ' ' | append: count_part
+                      endif
+                      assign review_line = count_part | append: ' ' | append: review_line | strip
+                    endif
+                  -%}
+                  {%- if review_line != blank -%}
+                    <span class="mg-trust__text">{{ review_line | escape }}</span>
+                  {%- endif -%}
+                  {%- if rating_url != blank -%}
+                    <span class="mg-visually-hidden">(opens in a new tab)</span>
+                  {%- endif -%}
+                </span>
+                {%- if rating_url != blank -%}
+                  </a>
+                {%- else -%}
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+
+          {%- when 'item' -%}
+            {%- liquid
+              assign title = block.settings.title
+              assign text = block.settings.text
+              assign url = block.settings.url
+              assign is_external = false
+
+              case block.settings.source
+                when 'warranty'
+                  assign title = title | default: settings.mg_warranty_text
+                when 'phone'
+                  assign title = title | default: settings.mg_phone_display
+                  if settings.mg_hours_weekdays != blank
+                    assign hours_text = 'Mon–Fri ' | append: settings.mg_hours_weekdays
+                    assign text = text | default: hours_text
+                  endif
+                  if url == blank and settings.mg_phone_e164 != blank
+                    assign url = 'tel:+' | append: settings.mg_phone_e164
+                  endif
+                when 'address'
+                  assign locality_title = 'Fitted in ' | append: settings.mg_locality
+                  assign title = title | default: locality_title
+                  assign text = text | default: settings.mg_postcode
+                  if url == blank and settings.mg_map_query != blank
+                    assign map_query = settings.mg_map_query | url_encode
+                    assign url = 'https://www.google.com/maps/search/?api=1&query=' | append: map_query
+                    assign is_external = true
+                  endif
+              endcase
+            -%}
+            {%- if title != blank or text != blank -%}
+              <li
+                class="mg-trust__item"
+                {{ block.shopify_attributes }}
+              >
+                {%- if url != blank -%}
+                  <a
+                    class="mg-trust__inner mg-trust__inner--link"
+                    href="{{ url }}"
+                    {% if is_external %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
+                  >
+                {%- else -%}
+                  <div class="mg-trust__inner">
+                {%- endif -%}
+                <span class="mg-trust__badge">
+                  {%- render 'mg-icon', icon: block.settings.icon -%}
+                </span>
+                <span class="mg-trust__body">
+                  {%- if title != blank -%}
+                    <span class="mg-trust__title">{{ title | escape }}</span>
+                  {%- endif -%}
+                  {%- if text != blank -%}
+                    <span class="mg-trust__text">{{ text | escape }}</span>
+                  {%- endif -%}
+                  {%- if is_external -%}
+                    <span class="mg-visually-hidden">(opens Google Maps in a new tab)</span>
+                  {%- endif -%}
+                </span>
+                {%- if url != blank -%}
+                  </a>
+                {%- else -%}
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .mg-trust {
+    --mg-trust-bg: var(--mg-surface);
+    background: var(--mg-trust-bg);
+    border-block: 1px solid var(--mg-border);
+    color: var(--mg-text);
+  }
+
+  .mg-trust--page {
+    --mg-trust-bg: var(--mg-bg);
+  }
+
+  .mg-trust__container {
+    padding-inline: 0;
+  }
+
+  .mg-trust__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--mg-border);
+  }
+
+  .mg-trust__item {
+    display: flex;
+    background: var(--mg-trust-bg);
+  }
+
+  .mg-trust__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .mg-trust__inner {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px var(--mg-gutter);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .mg-trust__inner--link {
+    transition: background-color 0.2s var(--mg-ease);
+  }
+
+  .mg-trust__inner--link:hover {
+    background: var(--mg-surface-2);
+  }
+
+  .mg-trust__inner--link:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: -2px;
+  }
+
+  .mg-trust__badge {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--mg-border-strong);
+    border-radius: var(--mg-radius-sm);
+    background: rgb(255 255 255 / 0.03);
+    color: var(--mg-accent);
+    transition: border-color 0.2s var(--mg-ease);
+  }
+
+  .mg-trust__inner--link:hover .mg-trust__badge {
+    border-color: var(--mg-accent);
+  }
+
+  .mg-trust__badge .mg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-trust__badge--score {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--mg-text);
+  }
+
+  .mg-trust__body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .mg-trust__title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--mg-text);
+  }
+
+  .mg-trust__text {
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-trust__stars {
+    position: relative;
+    display: inline-flex;
+    width: max-content;
+    line-height: 0;
+  }
+
+  .mg-trust__stars-base,
+  .mg-trust__stars-fill {
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .mg-trust__stars-base {
+    color: var(--mg-border-strong);
+  }
+
+  .mg-trust__stars-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--mg-rating-pct, 100%);
+    overflow: hidden;
+    color: var(--mg-star);
+  }
+
+  .mg-trust__stars .mg-icon {
+    flex: none;
+    width: 15px;
+    height: 15px;
+    stroke-width: 1;
+  }
+
+  @media (min-width: 750px) {
+    .mg-trust__container {
+      padding-inline: var(--mg-gutter);
+    }
+
+    .mg-trust__list {
+      border-inline: 1px solid var(--mg-border);
+    }
+
+    .mg-trust__inner {
+      gap: 14px;
+      padding: 22px 20px;
+    }
+
+    .mg-trust__title {
+      font-size: 0.9375rem;
+    }
+
+    .mg-trust__text {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-trust__list {
+      grid-template-columns: repeat(var(--mg-trust-cols, 4), minmax(0, 1fr));
+    }
+
+    .mg-trust__item:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+
+    .mg-trust__inner {
+      justify-content: center;
+      padding: 24px clamp(16px, 2vw, 28px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-trust__inner--link,
+    .mg-trust__badge {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG trust bar",
+  "tag": "section",
+  "class": "mg-trust-section",
+  "max_blocks": 6,
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "surface",
+          "label": "Raised panel"
+        },
+        {
+          "value": "page",
+          "label": "Page background"
+        }
+      ],
+      "default": "surface"
+    },
+    {
+      "type": "paragraph",
+      "content": "Works best with 4 items directly under the hero. The phone, address, rating and warranty text come from Theme settings > MG Car Audio: business details. PLACEHOLDER: the Google rating, review count and warranty wording ('12-month fitting warranty' / 'On every installation') must be confirmed with MG before launch."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Google rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "PLACEHOLDER: the rating and review count come from Theme settings > MG Car Audio: business details. Replace them with MG's real Google Business figures before launch."
+        },
+        {
+          "type": "text",
+          "id": "count_prefix",
+          "label": "Text before the review count",
+          "default": "from"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text after the review count",
+          "default": "Google reviews"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Leave blank to use the Google reviews link from Theme settings."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "source",
+          "label": "Content",
+          "info": "Theme settings options fill any blank title, text or link from Theme settings > MG Car Audio: business details.",
+          "options": [
+            {
+              "value": "custom",
+              "label": "Custom text"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty (from Theme settings)"
+            },
+            {
+              "value": "phone",
+              "label": "Phone number (from Theme settings)"
+            },
+            {
+              "value": "address",
+              "label": "Location (from Theme settings)"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "map-pin", "label": "Map pin" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "whatsapp", "label": "WhatsApp" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "star", "label": "Star" },
+            { "value": "award", "label": "Award" },
+            { "value": "check", "label": "Tick" },
+            { "value": "car", "label": "Car" },
+            { "value": "wrench", "label": "Wrench" },
+            { "value": "screen", "label": "Screen" },
+            { "value": "speaker", "label": "Speaker" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "message", "label": "Message" },
+            { "value": "bolt", "label": "Lightning bolt" },
+            { "value": "tag", "label": "Price tag" },
+            { "value": "globe", "label": "Globe" },
+            { "value": "mail", "label": "Email" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "For Theme settings items, leave blank to use the warranty text, phone number or 'Fitted in [town]'.",
+          "default": "Wired & wireless CarPlay"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "info": "For the phone item, leave blank to show weekday opening hours. For the location item, leave blank to show the Eircode.",
+          "default": "OEM-style finish"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Optional. The phone item links to a tel: link and the location item to Google Maps when this is blank."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG trust bar",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "rating"
+        },
+        {
+          "type": "item",
+          "settings": {
+            "source": "warranty",
+            "icon": "shield",
+            "title": "",
+            "text": "On every installation"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "source": "address",
+            "icon": "map-pin",
+            "title": "Fitted in Dublin 12",
+            "text": "Ballymount, D12"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "source": "phone",
+            "icon": "phone",
+            "title": "",
+            "text": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

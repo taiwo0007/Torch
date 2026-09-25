@@ -1,0 +1,941 @@
+{%- liquid
+  assign section_classes = 'mg-section mg-gallery'
+  if section.settings.background == 'surface'
+    assign section_classes = section_classes | append: ' mg-section--surface'
+  endif
+  if section.settings.spacing == 'tight'
+    assign section_classes = section_classes | append: ' mg-section--tight'
+  endif
+
+  assign item_count = section.blocks.size
+  assign heading_id = 'MgGalleryHeading-' | append: section.id
+
+  assign follow_link = section.settings.follow_link
+  assign follow_external = false
+  if follow_link contains '://'
+    assign follow_external = true
+  endif
+-%}
+
+<section
+  class="{{ section_classes }}"
+  {% if section.settings.heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="mg-container">
+    <header class="mg-section-head mg-section-head--row">
+      <div class="mg-gallery__intro">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+      {%- if follow_link != blank and section.settings.follow_label != blank -%}
+        <a
+          class="mg-btn mg-btn--ghost mg-gallery__follow"
+          href="{{ follow_link }}"
+          {% if follow_external %}
+            target="_blank" rel="noopener"
+          {% endif %}
+        >
+          <span>{{ section.settings.follow_label | escape }}</span>
+          {%- render 'mg-icon', icon: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+    </header>
+
+    {%- if item_count > 0 -%}
+      <ul
+        class="mg-gallery__list{% if item_count > 2 %} mg-gallery__list--editorial{% endif %}"
+        role="list"
+        tabindex="0"
+        aria-label="{{ section.settings.heading | default: 'Recent installs' | escape }}"
+      >
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign bs = block.settings
+            assign is_feature = false
+            if forloop.first and item_count > 2
+              assign is_feature = true
+            endif
+
+            if is_feature
+              assign img_sizes = '(min-width: 990px) min(66vw, 880px), (min-width: 750px) 92vw, 84vw'
+              assign img_widths = '480, 640, 800, 1000, 1200, 1600'
+            else
+              assign img_sizes = '(min-width: 990px) min(33vw, 440px), (min-width: 750px) 46vw, 84vw'
+              assign img_widths = '360, 480, 640, 800, 1000'
+            endif
+
+            assign has_video = false
+            assign video_kind = ''
+            if block.type == 'video'
+              assign picked_image = bs.cover_image
+              if picked_image == blank and bs.video != blank
+                assign picked_image = bs.video.preview_image
+              endif
+              assign fallback_key = bs.cover_fallback
+              if bs.video != blank
+                assign has_video = true
+                assign video_kind = 'shopify'
+              elsif bs.video_url != blank
+                assign has_video = true
+                assign video_kind = bs.video_url.type
+              endif
+            else
+              assign picked_image = bs.image
+              assign fallback_key = bs.fallback
+            endif
+
+            assign fallback_file = ''
+            assign fallback_alt = ''
+            case fallback_key
+              when 'bmw-carplay'
+                assign fallback_file = 'mg-bmw-carplay-screen.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'BMW widescreen display running Apple CarPlay'
+              when 'audi-carplay'
+                assign fallback_file = 'mg-audi-carplay-screen.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'Audi dashboard showing Apple CarPlay with an iPhone connected'
+              when 'android-auto'
+                assign fallback_file = 'mg-android-auto-dash.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'Car dashboard with an Android Auto touchscreen'
+              when 'showroom'
+                assign fallback_file = 'mg-showroom.webp'
+                assign fallback_w = 1600
+                assign fallback_h = 1200
+                assign fallback_alt = 'MG Car Audio showroom with screens and speakers on display'
+              when 'dash-radio'
+                assign fallback_file = 'mg-dash-radio.webp'
+                assign fallback_w = 1024
+                assign fallback_h = 1024
+                assign fallback_alt = 'Dashboard with a newly fitted touchscreen head unit'
+              when 'door-speaker'
+                assign fallback_file = 'mg-door-speaker.webp'
+                assign fallback_w = 1024
+                assign fallback_h = 1024
+                assign fallback_alt = 'Upgraded speaker fitted in a car door'
+              when 'single-din-radio'
+                assign fallback_file = 'mg-single-din-radio.webp'
+                assign fallback_w = 1024
+                assign fallback_h = 1024
+                assign fallback_alt = 'Single-DIN car radio'
+              when 'speaker-pair'
+                assign fallback_file = 'mg-speaker-pair.webp'
+                assign fallback_w = 1024
+                assign fallback_h = 1024
+                assign fallback_alt = 'Pair of car speakers'
+              when 'bmw-japan'
+                assign fallback_file = 'mg-bmw-japan-to-europe.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'BMW Japanese-to-European conversion'
+              when 'mercedes-japan'
+                assign fallback_file = 'mg-mercedes-japan-to-europe.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'Mercedes-Benz Japanese-to-European conversion'
+              when 'vw-japan'
+                assign fallback_file = 'mg-vw-japan-to-europe.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'Volkswagen Japanese-to-European conversion'
+              when 'radio-frequency'
+                assign fallback_file = 'mg-radio-frequency-conversion.webp'
+                assign fallback_w = 1536
+                assign fallback_h = 1024
+                assign fallback_alt = 'Radio frequency conversion for Japanese imports'
+            endcase
+
+            assign item_label = bs.car_label | default: bs.caption | default: fallback_alt | default: 'Recent install'
+            if picked_image != blank
+              assign item_alt = picked_image.alt | default: item_label
+            else
+              assign item_alt = fallback_alt | default: item_label
+            endif
+          -%}
+
+          {%- capture media_image -%}
+            {%- if picked_image != blank -%}
+              {{
+                picked_image
+                | image_url: width: 1600
+                | image_tag:
+                  widths: img_widths,
+                  sizes: img_sizes,
+                  loading: 'lazy',
+                  alt: item_alt,
+                  class: 'mg-gallery__img'
+              }}
+            {%- elsif fallback_file != blank -%}
+              <img
+                class="mg-gallery__img"
+                src="{{ fallback_file | asset_url }}"
+                width="{{ fallback_w }}"
+                height="{{ fallback_h }}"
+                alt="{{ item_alt | escape }}"
+                loading="lazy"
+                decoding="async"
+              >
+            {%- else -%}
+              <span class="mg-gallery__empty" aria-hidden="true">
+                {%- render 'mg-icon', icon: 'camera' -%}
+              </span>
+            {%- endif -%}
+          {%- endcapture -%}
+
+          {%- capture media_caption -%}
+            {%- if bs.car_label != blank or bs.caption != blank -%}
+              <figcaption class="mg-gallery__caption">
+                {%- if bs.car_label != blank -%}
+                  <span class="mg-gallery__label">{{ bs.car_label | escape }}</span>
+                {%- endif -%}
+                {%- if bs.caption != blank -%}
+                  <span class="mg-gallery__text">{{ bs.caption | escape }}</span>
+                {%- endif -%}
+              </figcaption>
+            {%- endif -%}
+          {%- endcapture -%}
+
+          <li
+            class="mg-gallery__item{% if is_feature %} mg-gallery__item--feature{% endif %}{% if block.type == 'video' %} mg-gallery__item--video{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.type == 'video' and has_video -%}
+              <mg-gallery-video class="mg-gallery__figure-wrap">
+                <figure class="mg-gallery__figure">
+                  <div class="mg-gallery__player" data-mg-player></div>
+                  {{ media_image }}
+                  <button
+                    type="button"
+                    class="mg-gallery__play"
+                    data-mg-play
+                    aria-label="Play video: {{ item_label | escape }}"
+                  >
+                    <span class="mg-gallery__play-icon">
+                      {%- render 'mg-icon', icon: 'play' -%}
+                    </span>
+                  </button>
+                  {{ media_caption }}
+                </figure>
+                <template data-mg-template>
+                  {%- case video_kind -%}
+                    {%- when 'shopify' -%}
+                      {{ bs.video | video_tag: image_size: '1600x', autoplay: true, controls: true }}
+                    {%- when 'youtube' -%}
+                      <iframe
+                        src="https://www.youtube-nocookie.com/embed/{{ bs.video_url.id }}?autoplay=1&amp;rel=0&amp;playsinline=1"
+                        title="{{ item_label | escape }}"
+                        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                        allowfullscreen
+                      ></iframe>
+                    {%- when 'vimeo' -%}
+                      <iframe
+                        src="https://player.vimeo.com/video/{{ bs.video_url.id }}?autoplay=1&amp;dnt=1&amp;title=0&amp;byline=0"
+                        title="{{ item_label | escape }}"
+                        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                        allowfullscreen
+                      ></iframe>
+                  {%- endcase -%}
+                </template>
+              </mg-gallery-video>
+            {%- else -%}
+              <figure class="mg-gallery__figure">
+                {{ media_image }}
+                {%- if block.type == 'video' and request.design_mode -%}
+                  <span class="mg-gallery__hint">Add a video or a YouTube/Vimeo link to this block</span>
+                {%- endif -%}
+                {{ media_caption }}
+              </figure>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif request.design_mode -%}
+      <p class="mg-placeholder-note">Add "Image" or "Video" blocks to build the gallery.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% javascript %}
+  if (!customElements.get('mg-gallery-video')) {
+    class MgGalleryVideo extends HTMLElement {
+      connectedCallback() {
+        this.button = this.querySelector('[data-mg-play]');
+        if (!this.button) return;
+        this.handleClick = this.play.bind(this);
+        this.button.addEventListener('click', this.handleClick);
+      }
+
+      disconnectedCallback() {
+        if (this.button && this.handleClick) {
+          this.button.removeEventListener('click', this.handleClick);
+        }
+      }
+
+      play() {
+        const template = this.querySelector('template[data-mg-template]');
+        const player = this.querySelector('[data-mg-player]');
+        if (!template || !player || this.classList.contains('is-playing')) return;
+
+        player.appendChild(template.content.cloneNode(true));
+        this.classList.add('is-playing');
+
+        const video = player.querySelector('video');
+        if (video) {
+          video.setAttribute('playsinline', '');
+          video.controls = true;
+          const attempt = video.play();
+          if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+          video.focus({ preventScroll: true });
+        } else {
+          const frame = player.querySelector('iframe');
+          if (frame) frame.focus({ preventScroll: true });
+        }
+      }
+    }
+
+    customElements.define('mg-gallery-video', MgGalleryVideo);
+  }
+{% endjavascript %}
+
+{% stylesheet %}
+  .mg-gallery__intro {
+    max-width: 720px;
+  }
+
+  .mg-gallery__follow {
+    flex: none;
+  }
+
+  .mg-gallery__list {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    margin: 0 calc(var(--mg-gutter) * -1);
+    padding: 0 var(--mg-gutter) 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--mg-gutter);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mg-gallery__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mg-gallery__list:focus-visible {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 4px;
+  }
+
+  .mg-gallery__item {
+    flex: 0 0 min(84%, 400px);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .mg-gallery__figure-wrap {
+    display: block;
+  }
+
+  .mg-gallery__figure {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border: 1px solid var(--mg-border);
+    border-radius: var(--mg-radius);
+    background: var(--mg-surface-2);
+    isolation: isolate;
+  }
+
+  .mg-gallery__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--mg-ease);
+  }
+
+  .mg-gallery__empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mg-text-subtle);
+  }
+
+  .mg-gallery__empty .mg-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media (hover: hover) {
+    .mg-gallery__figure:hover .mg-gallery__img {
+      transform: scale(1.04);
+    }
+  }
+
+  .mg-gallery__caption {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    display: grid;
+    gap: 6px;
+    padding: 56px 18px 16px;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--mg-bg) 94%, transparent) 0%,
+      color-mix(in srgb, var(--mg-bg) 60%, transparent) 55%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .mg-gallery__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mg-text);
+  }
+
+  .mg-gallery__label::before {
+    content: '';
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mg-accent);
+  }
+
+  .mg-gallery__text {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--mg-text-muted);
+  }
+
+  .mg-gallery__hint {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 3;
+    padding: 8px 10px;
+    border-radius: var(--mg-radius-sm);
+    background: var(--mg-surface);
+    font-size: 0.75rem;
+    color: var(--mg-text-muted);
+  }
+
+  /* Video facade */
+  .mg-gallery__player {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: none;
+    background: var(--mg-bg);
+  }
+
+  .mg-gallery__player > iframe,
+  .mg-gallery__player > video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+  }
+
+  .mg-gallery__play {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 36px;
+    border: 0;
+    background: transparent;
+    color: var(--mg-text);
+    cursor: pointer;
+  }
+
+  .mg-gallery__play-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--mg-accent);
+    box-shadow: var(--mg-glow);
+    transition:
+      transform 0.25s var(--mg-ease),
+      background-color 0.25s var(--mg-ease);
+  }
+
+  .mg-gallery__play-icon .mg-icon {
+    width: 26px;
+    height: 26px;
+    margin-left: 3px;
+    fill: currentColor;
+  }
+
+  .mg-gallery__play:hover .mg-gallery__play-icon {
+    background: var(--mg-accent-hover);
+    transform: scale(1.06);
+  }
+
+  .mg-gallery__play:focus-visible {
+    outline: none;
+  }
+
+  .mg-gallery__play:focus-visible .mg-gallery__play-icon {
+    outline: 2px solid var(--mg-text);
+    outline-offset: 4px;
+  }
+
+  mg-gallery-video.is-playing .mg-gallery__player {
+    display: block;
+  }
+
+  mg-gallery-video.is-playing .mg-gallery__play,
+  mg-gallery-video.is-playing .mg-gallery__caption {
+    display: none;
+  }
+
+  @media (min-width: 750px) {
+    .mg-gallery__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .mg-gallery__item {
+      flex: none;
+    }
+
+    .mg-gallery__figure {
+      aspect-ratio: 4 / 3;
+    }
+
+    .mg-gallery__item--feature {
+      grid-column: span 2;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__figure {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .mg-gallery__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      grid-auto-flow: dense;
+    }
+
+    .mg-gallery__item--feature {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__figure-wrap,
+    .mg-gallery__item--feature .mg-gallery__figure {
+      height: 100%;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__figure {
+      aspect-ratio: auto;
+      min-height: 360px;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__caption {
+      gap: 8px;
+      padding: 96px 28px 26px;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__label {
+      font-size: 0.8125rem;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__text {
+      max-width: 52ch;
+      font-size: 1rem;
+    }
+
+    .mg-gallery__item--feature .mg-gallery__play-icon {
+      width: 84px;
+      height: 84px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-gallery__img,
+    .mg-gallery__play-icon {
+      transition: none;
+    }
+
+    .mg-gallery__figure:hover .mg-gallery__img,
+    .mg-gallery__play:hover .mg-gallery__play-icon {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG: Install gallery",
+  "tag": "div",
+  "class": "mg-gallery-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Recent installs"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Fresh out of the workshop"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Intro text",
+      "default": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way."
+    },
+    {
+      "type": "text",
+      "id": "follow_label",
+      "label": "Follow link label",
+      "default": "Follow our installs"
+    },
+    {
+      "type": "url",
+      "id": "follow_link",
+      "label": "Follow link",
+      "info": "For example your Instagram or TikTok profile. The button is hidden while this is blank."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "paragraph",
+      "content": "Mobile: a swipeable strip. Desktop: an editorial grid where the first item is shown large (when there are 3 or more items)."
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page background"
+        },
+        {
+          "value": "surface",
+          "label": "Raised surface"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "select",
+      "id": "spacing",
+      "label": "Vertical spacing",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "tight",
+          "label": "Tight"
+        }
+      ],
+      "default": "normal"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Upload a photo of a real job. Until you do, the fallback image below is shown."
+        },
+        {
+          "type": "select",
+          "id": "fallback",
+          "label": "Fallback image",
+          "info": "Shown when no image is uploaded above.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "bmw-carplay",
+              "label": "BMW CarPlay screen"
+            },
+            {
+              "value": "audi-carplay",
+              "label": "Audi CarPlay dash"
+            },
+            {
+              "value": "android-auto",
+              "label": "Android Auto dash"
+            },
+            {
+              "value": "showroom",
+              "label": "Showroom"
+            },
+            {
+              "value": "dash-radio",
+              "label": "Dash head unit"
+            },
+            {
+              "value": "door-speaker",
+              "label": "Door speaker"
+            },
+            {
+              "value": "single-din-radio",
+              "label": "Single-DIN radio"
+            },
+            {
+              "value": "speaker-pair",
+              "label": "Speaker pair"
+            },
+            {
+              "value": "bmw-japan",
+              "label": "BMW Japan-to-Europe graphic"
+            },
+            {
+              "value": "mercedes-japan",
+              "label": "Mercedes Japan-to-Europe graphic"
+            },
+            {
+              "value": "vw-japan",
+              "label": "VW Japan-to-Europe graphic"
+            },
+            {
+              "value": "radio-frequency",
+              "label": "Radio frequency conversion graphic"
+            }
+          ],
+          "default": "bmw-carplay"
+        },
+        {
+          "type": "text",
+          "id": "car_label",
+          "label": "Car and job",
+          "info": "Short label, for example: BMW 3 Series · Wireless CarPlay",
+          "default": "BMW 3 Series · Wireless CarPlay"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "info": "Placeholder in the demo: replace with a line about the real job.",
+          "default": "Factory screen kept, CarPlay added."
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (uploaded to Shopify)",
+          "info": "Plays in place when clicked. Nothing loads until then."
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "Or a YouTube / Vimeo link",
+          "accept": ["youtube", "vimeo"],
+          "info": "Used when no uploaded video is chosen. The player only loads after a click."
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Cover image",
+          "info": "Optional. Uploaded videos use their own preview frame when this is blank."
+        },
+        {
+          "type": "select",
+          "id": "cover_fallback",
+          "label": "Fallback cover image",
+          "info": "Shown when there's no cover image and no uploaded video.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "bmw-carplay",
+              "label": "BMW CarPlay screen"
+            },
+            {
+              "value": "audi-carplay",
+              "label": "Audi CarPlay dash"
+            },
+            {
+              "value": "android-auto",
+              "label": "Android Auto dash"
+            },
+            {
+              "value": "showroom",
+              "label": "Showroom"
+            },
+            {
+              "value": "dash-radio",
+              "label": "Dash head unit"
+            },
+            {
+              "value": "door-speaker",
+              "label": "Door speaker"
+            },
+            {
+              "value": "single-din-radio",
+              "label": "Single-DIN radio"
+            },
+            {
+              "value": "speaker-pair",
+              "label": "Speaker pair"
+            },
+            {
+              "value": "bmw-japan",
+              "label": "BMW Japan-to-Europe graphic"
+            },
+            {
+              "value": "mercedes-japan",
+              "label": "Mercedes Japan-to-Europe graphic"
+            },
+            {
+              "value": "vw-japan",
+              "label": "VW Japan-to-Europe graphic"
+            },
+            {
+              "value": "radio-frequency",
+              "label": "Radio frequency conversion graphic"
+            }
+          ],
+          "default": "showroom"
+        },
+        {
+          "type": "text",
+          "id": "car_label",
+          "label": "Car and job",
+          "default": "Install walkthrough"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "See a CarPlay retrofit from start to finish."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG: Install gallery",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "car_label": "BMW 3 Series · Wireless CarPlay",
+            "caption": "Factory widescreen kept, CarPlay added. Steering controls and reverse camera still work as before."
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "car_label": "Audi A4 · Apple CarPlay retrofit",
+            "caption": "OEM-style fit that works with the original MMI controls."
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "android-auto",
+            "car_label": "Android Auto · Screen upgrade",
+            "caption": "Maps, calls and Spotify on a bright, responsive touchscreen."
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "car_label": "Ballymount showroom",
+            "caption": "Call in to see screens, speakers and head units in person."
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "car_label": "Android radio · Double-DIN",
+            "caption": "A modern head unit behind a clean, factory-style fascia."
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "car_label": "Speaker upgrade · Front doors",
+            "caption": "Clearer vocals and tighter bass without the door rattle."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
