@@ -23,7 +23,7 @@
         when 'carplay-android-auto'
           assign asset_name = 'mg-bmw-carplay-screen.webp'
         when 'android-radios'
-          assign asset_name = 'mg-android-auto-dash.webp'
+          assign asset_name = 'mg-dash-radio.webp'
         when 'screen-upgrades'
           assign asset_name = 'mg-audi-carplay-screen.webp'
         when 'speakers', 'subwoofers', 'amplifiers'
@@ -40,6 +40,9 @@
       when 'mg-door-speaker.webp', 'mg-dash-radio.webp'
         assign asset_width = 1024
         assign asset_height = 1024
+      when 'mg-bmw-carplay-screen.webp'
+        assign asset_width = 1536
+        assign asset_height = 840
       else
         assign asset_width = 1536
         assign asset_height = 1024

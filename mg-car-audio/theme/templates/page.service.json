@@ -57,7 +57,7 @@
         "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
-        "fallback_image": "mg-audi-carplay-screen.webp",
+        "fallback_image": "mg-bmw-carplay-screen.webp",
         "show_rating": true
       }
     },

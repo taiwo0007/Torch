@@ -23,7 +23,7 @@
         "whatsapp_label": "Get a quote on WhatsApp",
         "chip_1": "Wired & wireless CarPlay",
         "chip_2": "OEM-style finish",
-        "chip_3": "From €299 fitted",
+        "chip_3": "BMW CarPlay €350 fitted",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call"
       }
@@ -609,24 +609,24 @@
           "type": "image",
           "settings": {
             "fallback": "bmw-carplay",
-            "car_label": "BMW 3 Series · Wireless CarPlay",
-            "caption": "Factory widescreen kept, CarPlay added. Steering controls and reverse camera still work as before."
+            "car_label": "BMW · Wireless CarPlay",
+            "caption": "CarPlay added to the factory widescreen, keeping the original controls wherever possible."
           }
         },
         "install_audi": {
           "type": "image",
           "settings": {
             "fallback": "audi-carplay",
-            "car_label": "Audi A4 · Apple CarPlay retrofit",
-            "caption": "OEM-style fit that works with the original MMI controls."
+            "car_label": "Audi · CarPlay retrofit",
+            "caption": "An OEM-style fit designed to work with the original MMI controls."
           }
         },
         "install_android_auto": {
           "type": "image",
           "settings": {
-            "fallback": "android-auto",
-            "car_label": "Android Auto · Screen upgrade",
-            "caption": "Maps, calls and Spotify on a bright, responsive touchscreen."
+            "fallback": "radio-frequency",
+            "car_label": "Japanese imports · Radio conversion",
+            "caption": "Imported cars tuned to Irish FM stations, with menus and maps switched to European spec."
           }
         },
         "install_showroom": {
@@ -641,7 +641,7 @@
           "type": "image",
           "settings": {
             "fallback": "dash-radio",
-            "car_label": "Radio upgrade · Head unit",
+            "car_label": "Radio upgrades · Head units",
             "caption": "From simple radio swaps to full Android screens, finished to a factory standard."
           }
         },
@@ -649,8 +649,8 @@
           "type": "image",
           "settings": {
             "fallback": "door-speaker",
-            "car_label": "Speaker upgrade · Front doors",
-            "caption": "Clearer vocals and tighter bass without the door rattle."
+            "car_label": "Speaker upgrades",
+            "caption": "Clearer vocals and tighter bass, fitted without the door rattle."
           }
         }
       },
@@ -663,8 +663,8 @@
         "install_speakers"
       ],
       "settings": {
-        "eyebrow": "Recent installs",
-        "heading": "Fresh out of the workshop",
+        "eyebrow": "Our work",
+        "heading": "Finished to a factory standard",
         "text": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way.",
         "follow_label": "Follow our installs",
         "background": "page",

@@ -32,12 +32,13 @@
     assign show_rating = true
   endif
 
-  assign fallback = section.settings.fallback_image | default: 'mg-audi-carplay-screen.webp'
+  assign fallback = section.settings.fallback_image | default: 'mg-bmw-carplay-screen.webp'
   assign fallback_w = 1536
   assign fallback_h = 1024
   case fallback
     when 'mg-bmw-carplay-screen.webp'
       assign fallback_alt = 'BMW widescreen display running Apple CarPlay'
+      assign fallback_h = 840
     when 'mg-audi-carplay-screen.webp'
       assign fallback_alt = 'Audi dashboard showing Apple CarPlay with a connected iPhone'
     when 'mg-android-auto-dash.webp'
@@ -923,7 +924,7 @@
         { "value": "mg-vw-japan-to-europe.webp", "label": "VW Japan-to-Europe conversion" },
         { "value": "mg-radio-frequency-conversion.webp", "label": "Radio frequency conversion" }
       ],
-      "default": "mg-audi-carplay-screen.webp"
+      "default": "mg-bmw-carplay-screen.webp"
     },
     {
       "type": "checkbox",

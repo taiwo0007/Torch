@@ -56,11 +56,11 @@
     assign hero_media = section.settings.image
   endif
 
-  # "auto": MG's own BMW or Audi CarPlay photo for those makes, the Android Auto dash otherwise
+  # "auto": MG's own BMW or Audi CarPlay photo for those makes, the showroom otherwise
   assign fallback = section.settings.fallback_image | default: 'auto'
   if fallback == 'auto'
     assign make_lc = make_name | downcase
-    assign fallback = 'mg-android-auto-dash.webp'
+    assign fallback = 'mg-showroom.webp'
     if make_lc contains 'bmw'
       assign fallback = 'mg-bmw-carplay-screen.webp'
     elsif make_lc contains 'audi'
@@ -71,7 +71,7 @@
   assign fallback_w = 1536
   assign fallback_h = 1024
   capture fallback_map
-    echo 'mg-bmw-carplay-screen.webp~1536~1024~BMW widescreen display running Apple CarPlay;'
+    echo 'mg-bmw-carplay-screen.webp~1536~840~BMW widescreen display running Apple CarPlay;'
     echo 'mg-audi-carplay-screen.webp~1536~1024~Audi dashboard showing Apple CarPlay with a connected iPhone;'
     echo 'mg-android-auto-dash.webp~1536~1024~Car dashboard screen running Android Auto;'
     echo 'mg-showroom.webp~1600~1200~MG Car Audio showroom and product wall in Dublin;'
@@ -1797,15 +1797,14 @@
       "type": "text",
       "id": "fallback_from_price",
       "label": "From price",
-      "info": "Used only when no car make entry is linked. €299 is MG's real BMW Android Auto (iDrive 7) price from the booking page. For other makes it's a PLACEHOLDER.",
-      "default": "€299"
+      "info": "Used only when no car make entry is linked. Leave blank to hide the price in the hero (the safe choice: MG's real prices differ by make, so put them on the car make entry instead)."
     },
     {
       "type": "textarea",
       "id": "fallback_services",
       "label": "Services",
-      "info": "Used when the car make entry has no services. One per line: Service name | Price | /link. Price and link are optional; cards without a link open the quote page. Prices are MG's real BMW prices from the booking page; for other makes the 'From' prices are PLACEHOLDERS.",
-      "default": "[make] wireless Apple CarPlay retrofit | From €350 | /pages/carplay-installation\nAndroid Auto on your factory screen | From €299 | /pages/carplay-installation\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nVideo in motion activation | From €149\nJapanese-to-European conversion | From €450\nRadio frequency conversion (Japan to Europe)"
+      "info": "Used when the car make entry has no services, so it must suit any make. One per line: Service name | Price | /link. Price and link are optional: no price shows 'Price on request', no link opens the quote page. €150 is MG's real Android radio fitting price. Put make-specific prices (for example BMW CarPlay €350) on the car make entry, not here.",
+      "default": "[make] wireless CarPlay & Android Auto | | /pages/carplay-installation\nWidescreen Android display upgrade\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nReverse camera fitting\nSpeaker & sound upgrade"
     },
     {
       "type": "header",
@@ -1832,7 +1831,7 @@
       "options": [
         {
           "value": "auto",
-          "label": "Match the make (BMW or Audi photo, otherwise Android Auto dash)"
+          "label": "Match the make (BMW or Audi photo, otherwise the MG showroom)"
         },
         {
           "value": "mg-bmw-carplay-screen.webp",
@@ -1988,7 +1987,7 @@
       "type": "text",
       "id": "services_text",
       "label": "Text",
-      "default": "Straight prices for the jobs we do most on [make] models, fitted at our Dublin 12 workshop.",
+      "default": "The jobs we do most on [make] models, all fitted at our Dublin 12 workshop, with the fitted price agreed before you book.",
       "visible_if": "{{ section.settings.show_services }}"
     },
     {
