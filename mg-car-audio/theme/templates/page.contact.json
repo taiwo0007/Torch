@@ -88,13 +88,14 @@
         "service_list": "Apple CarPlay & Android Auto installation\nAndroid radio\nRadio upgrade\nScreen upgrade (BMW, Mercedes, Audi, VW)\nJBL radio\nSpeaker upgrade\nSubwoofer\nAmplifier\nDashcam installation\nReverse camera installation\nNo-sound repair\nBlack-screen repair\nRadio password / code\nJapan-to-Europe conversion (imports)\nNot sure yet, please advise",
         "submit_label": "Send message",
         "privacy_text": "We only use your details to reply to this request.",
+        "enquiry_type": "Contact page message",
         "show_whatsapp_photo_step": true,
         "photo_heading": "Add a photo of your dash",
         "photo_text": "A quick photo of your dash and screen, with the ignition on, lets us confirm the right kit first time.",
         "photo_button_label": "Send photo on WhatsApp",
         "photo_message": "Hi MG Car Audio, here's a photo of my dash.",
-        "success_heading": "Thanks, your request is in",
-        "success_text": "We'll check your car and come back to you with a fixed price, normally within one working day. Need it sooner? Give us a call."
+        "success_heading": "Thanks, your message is in",
+        "success_text": "We'll get back to you by phone, WhatsApp or email. Need an answer sooner? Give us a call."
       }
     },
     "map": {

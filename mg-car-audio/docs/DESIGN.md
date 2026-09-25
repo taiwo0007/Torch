@@ -8,7 +8,7 @@ Dials (taste skill): DESIGN_VARIANCE 5 · MOTION_INTENSITY 3 · VISUAL_DENSITY 5
 
 Skills this follows: `.claude/skills/design-taste-frontend`, `.claude/skills/redesign-existing-projects`, `.claude/skills/ui-ux-pro-max` (accessibility and UX rules), and Anthropic's `frontend-design`. Where they conflict with Taiwo's explicit direction (Back Market's grammar), **Taiwo's direction wins**.
 
-> This **replaces the dark theme** from the original brief. Taiwo asked for the Back Market look, which is light.
+> **Both light and dark themes (Taiwo's call).** Light is the default Back Market look. Dark mode is a first-class alternative that follows the visitor's system setting, with a manual override. Every section must look finished in both. See §2A.
 
 ## 1. Back Market's guidelines, translated for MG
 
@@ -56,6 +56,31 @@ Don't copy Back Market's (or anyone's) logos, images, icons, copy or signature c
 | `--mg-whatsapp` | `#25D366` | WhatsApp icon only (and the desktop floating button) |
 
 Rules: one signature colour (red) for surfaces and highlights, black for actions, and nothing else loud. Shadows are soft and cool (`0 1px 2px rgb(15 17 21 / .06), 0 8px 24px rgb(15 17 21 / .06)`), and only on raised cards and hover.
+
+### 2A. Dark mode (required; same layout, swapped tokens)
+
+- **How it switches:** `<html data-mg-theme="light|dark">`. The default comes from a new theme setting `mg_theme_mode` (`auto` | `light` | `dark`, default `auto`). `auto` follows `prefers-color-scheme`. A small **theme control** in the footer (a segmented "Auto / Light / Dark", not a sun/moon toggle) stores the visitor's choice in `localStorage`. An inline script in `<head>` applies it before first paint (no flash). `color-scheme` is set to match.
+- **Implementation:** every colour comes from `--mg-*` tokens defined for light on `:root`, overridden under `[data-mg-theme="dark"]` (and under `@media (prefers-color-scheme: dark)` for `[data-mg-theme="auto"]`). `mg-theme.css` also remaps **Horizon's own variables** (`--color-background`, `--color-foreground`, `--color-border`, input, button, drawer and popover vars) from the same tokens, so the header, cart drawer, product and collection pages switch too.
+- **Dark tokens:**
+
+| Token | Dark value |
+|---|---|
+| `--mg-page` | `#0E1319` (blue-slate night) |
+| `--mg-band` | `#151B24` |
+| `--mg-card` | `#1A212C` |
+| `--mg-line` | `#2A3442` |
+| `--mg-ink` | `#EEF2F6` |
+| `--mg-ink-2` | `#B3BDCA` |
+| `--mg-ink-3` | `#8E99A8` |
+| `--mg-red` | `#DF3131` (hero banner stays MG red in both modes) |
+| `--mg-red-ink` | `#FF7A74` (red text on dark, AA) |
+| `--mg-red-tint` | `#221A1F` (tile panel) |
+| `--mg-warm` | `#1D1A18` |
+| Primary button | **inverts**: `#F4F5F7` background, `#0F1115` text (the "black button" becomes a light button) |
+| Shadows | none; elevation by `--mg-line` borders and a lighter surface |
+
+- Photos stay the same. Where an image sits on a tinted panel, the panel must not become muddy: check each tile in both modes.
+- The preview tool must screenshot **both modes** (light and dark) at mobile and desktop.
 
 ### Type
 
@@ -105,7 +130,7 @@ Inner pages (service, car-make, quote, contact, collection, product) get the sam
 
 ## 4. Quality bar (pre-flight, every section)
 
-- Check it at 360, 390, 768, 1024 and 1440 widths with `tools/preview/shoot.mjs`: no horizontal page scroll, no clipped text, CTAs on one line, and the hero banner fits the first viewport with the plate input visible on 390×844.
+- Check it in **light and dark** at 360, 390, 768, 1024 and 1440 widths with `tools/preview/shoot.mjs`: no horizontal page scroll, no clipped text, CTAs on one line, and the hero banner fits the first viewport with the plate input visible on 390×844.
 - Contrast ≥ 4.5:1 for text (≥ 3:1 for large text and UI). Visible focus rings (2px ink ring with a 2px offset). Tap targets ≥ 44px.
 - Consistency: every section uses `.mg-section`, `.mg-container`, `.mg-head`, and the same gaps, radii and card styles. No section invents its own.
 - Copy: plain, specific, active voice, Irish/UK English. **No em dashes.** No hype words. No middle-dot strings in the UI except the Call · WhatsApp · Book labels (these are separate buttons, not a dotted string).

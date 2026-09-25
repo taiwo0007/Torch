@@ -110,7 +110,7 @@
           <input
             type="hidden"
             name="contact[Enquiry]"
-            value="Quote request (website)"
+            value="{{ section.settings.enquiry_type | default: 'Quote request (website)' | escape }}"
           >
 
           {%- liquid
@@ -1753,6 +1753,13 @@
       "label": "Privacy note",
       "info": "Shown under the button, with a link to the privacy policy once it exists (Settings > Policies).",
       "default": "We only use your details to reply to this request."
+    },
+    {
+      "type": "text",
+      "id": "enquiry_type",
+      "label": "Enquiry type (email label)",
+      "info": "Not shown on the site. Added to the notification email so MG can tell quote requests from general messages.",
+      "default": "Quote request (website)"
     },
     {
       "type": "header",

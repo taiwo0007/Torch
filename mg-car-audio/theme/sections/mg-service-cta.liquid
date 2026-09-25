@@ -1,6 +1,6 @@
 {%- liquid
   assign heading_id = 'MgSvcCtaHeading-' | append: section.id
-  assign book_url = section.settings.book_url | default: '/products/carplay-installation-bmw'
+  assign book_url = section.settings.book_url | default: '/pages/book-a-fitting'
   assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
 
   assign show_whatsapp = false
@@ -359,7 +359,7 @@
       "type": "url",
       "id": "book_url",
       "label": "Booking button link",
-      "info": "Leave blank to link to /products/carplay-installation-bmw."
+      "info": "Leave blank to link to /pages/book-a-fitting."
     },
     {
       "type": "header",

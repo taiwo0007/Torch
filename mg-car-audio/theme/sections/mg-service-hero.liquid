@@ -20,7 +20,7 @@
   assign crumb_parent_label = section.settings.breadcrumb_parent_label | strip
   assign crumb_parent_url = section.settings.breadcrumb_parent_url | default: '/collections/installation-services'
 
-  assign book_url = section.settings.primary_url | default: '/products/carplay-installation-bmw'
+  assign book_url = section.settings.primary_url | default: '/pages/book-a-fitting'
   assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
   assign show_whatsapp = false
   if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
@@ -381,7 +381,9 @@
   }
 
   .mg-svc-hero__crumbs li:last-child span {
+    min-width: 0;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
   }
 
@@ -435,7 +437,7 @@
     max-width: 20ch;
     font-family: var(--font-heading--family);
     font-weight: var(--font-heading--weight);
-    font-size: clamp(2rem, 3.8vw, 3.375rem);
+    font-size: var(--mg-h1-page);
     line-height: 1;
     letter-spacing: -0.025em;
     text-transform: uppercase;
@@ -511,6 +513,9 @@
   }
 
   .mg-svc-hero__call a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-weight: 700;
     color: var(--mg-text);
     text-decoration: underline;
@@ -858,7 +863,7 @@
       "type": "url",
       "id": "primary_url",
       "label": "Booking button link",
-      "info": "Leave blank to link to /products/carplay-installation-bmw."
+      "info": "Leave blank to link to /pages/book-a-fitting."
     },
     {
       "type": "checkbox",

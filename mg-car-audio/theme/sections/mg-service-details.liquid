@@ -2,7 +2,7 @@
   assign heading_id = 'MgSvcDetailsHeading-' | append: section.id
   assign card_heading_id = 'MgSvcCardHeading-' | append: section.id
 
-  assign book_url = section.settings.card_button_url | default: '/products/carplay-installation-bmw'
+  assign book_url = section.settings.card_button_url | default: '/pages/book-a-fitting'
   assign wa_message = section.settings.card_whatsapp_message | default: settings.mg_whatsapp_message
   assign show_whatsapp = false
   if section.settings.card_show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.card_whatsapp_label != blank
@@ -1018,7 +1018,7 @@
       "type": "url",
       "id": "card_button_url",
       "label": "Booking button link",
-      "info": "Leave blank to link to /products/carplay-installation-bmw."
+      "info": "Leave blank to link to /pages/book-a-fitting."
     },
     {
       "type": "checkbox",
