@@ -41,7 +41,7 @@
       "settings": {
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "Services",
-        "breadcrumb_parent_url": "/collections/installation-services",
+        "breadcrumb_parent_url": "/pages/services",
         "breadcrumb_schema": true,
         "eyebrow": "Fitted in Dublin 12",
         "heading": "Apple CarPlay & Android Auto Installation in Dublin",
@@ -176,6 +176,65 @@
         "schema_description": "Professional wired and wireless Apple CarPlay and Android Auto installation in Dublin, for factory screens and complete radio upgrades, with an OEM-style finish on BMW, Audi, Mercedes-Benz, Volkswagen and most major makes."
       }
     },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "faq_factory_screen": {
+          "type": "question",
+          "settings": {
+            "question": "Will CarPlay work on my car's original screen?",
+            "answer": "<p>In most cases, yes. If your car has a factory screen, we fit an interface so Apple CarPlay and Android Auto show on the original display, with an OEM-style finish and your factory menus still there when you want them. If your car has an older radio or no screen, we'll recommend a touchscreen upgrade instead.</p>"
+          }
+        },
+        "faq_android": {
+          "type": "question",
+          "settings": {
+            "question": "Does it work with Android phones as well as iPhone?",
+            "answer": "<p>Yes. We fit Apple CarPlay for iPhone and Android Auto for Android phones, wired or wireless. Most of the systems we fit support both, so everyone who drives the car can connect. We'll confirm what your car supports when we quote.</p>"
+          }
+        },
+        "faq_price": {
+          "type": "question",
+          "settings": {
+            "question": "How much does a CarPlay installation cost?",
+            "answer": "<p>BMW Apple CarPlay is <strong>€350</strong> fitted and BMW Android Auto on iDrive 7 is <strong>€299</strong>. Other makes depend on the screen and system in your car, so send us your reg and we'll give you a fixed price before you book. A <strong>€50 deposit</strong> secures your fitting slot.</p>"
+          }
+        },
+        "faq_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long does the fitting take?",
+            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours. BMW Android Auto on iDrive 7 takes about an hour. We'll confirm the time for your car when you book.</p>"
+          }
+        },
+        "faq_features": {
+          "type": "question",
+          "settings": {
+            "question": "Will I keep my steering wheel controls and reverse camera?",
+            "answer": "<p>Wherever possible, yes. We choose parts that work with your original steering wheel buttons, reverse camera, microphone and factory menus. If anything on your car can't be kept, we'll tell you before you book, not after.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_factory_screen",
+        "faq_android",
+        "faq_price",
+        "faq_time",
+        "faq_features"
+      ],
+      "settings": {
+        "eyebrow": "CarPlay FAQ",
+        "heading": "CarPlay & Android Auto questions",
+        "text": "The things drivers ask us most before booking a CarPlay or Android Auto fitting. Anything else, send us your reg and we'll check your car.",
+        "show_contact": false,
+        "contact_heading": "Not sure what fits your car?",
+        "open_first": true,
+        "output_faq_schema": true,
+        "layout": "split",
+        "background": "surface",
+        "spacing": "normal"
+      }
+    },
     "cta": {
       "type": "mg-service-cta",
       "settings": {
@@ -199,6 +258,7 @@
   "order": [
     "hero",
     "details",
+    "faq",
     "cta"
   ]
 }

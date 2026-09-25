@@ -27,7 +27,7 @@
   {%- liquid
     assign mg_lb_name = settings.mg_business_name | strip | default: shop.name
     assign mg_lb_url = shop.url | default: request.origin
-    assign mg_lb_id = mg_lb_url | append: '/#business'
+    assign mg_lb_id = mg_lb_url | append: '/#localbusiness'
 
     # asset_url and image_url return protocol-relative URLs (//...), so prefix https:
     if settings.logo != blank

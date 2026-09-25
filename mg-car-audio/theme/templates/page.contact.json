@@ -12,14 +12,22 @@
     "main": {
       "type": "main-page",
       "blocks": {
-        "title": {
+        "eyebrow": {
+          "type": "custom-liquid",
+          "name": "Eyebrow",
+          "settings": {
+            "custom_liquid": "<p class=\"mg-eyebrow\" style=\"margin: 0\">Get in touch</p>"
+          },
+          "blocks": {}
+        },
+        "heading": {
           "type": "text",
           "name": "t:names.title",
           "settings": {
             "text": "<h1>{{ closest.page.title }}</h1>",
             "width": "100%",
             "max_width": "normal",
-            "alignment": "center",
+            "alignment": "left",
             "type_preset": "h2",
             "font": "var(--font-body--family)",
             "font_size": "",
@@ -37,110 +45,75 @@
           },
           "blocks": {}
         },
-        "content": {
-          "type": "text",
-          "name": "t:names.content",
-          "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
           "blocks": {}
         }
       },
       "block_order": [
-        "title",
-        "content"
+        "eyebrow",
+        "heading",
+        "page-content"
       ],
       "settings": {
         "content_direction": "column",
-        "gap": 32,
-        "padding-block-start": 40,
+        "gap": 16,
+        "padding-block-start": 56,
         "padding-block-end": 0
       }
     },
     "form": {
-      "type": "section",
-      "blocks": {
-        "contact_form_UwiCkQ": {
-          "type": "contact-form",
-          "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
-            "custom_width_mobile": 100,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit",
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "block_order": [
-        "contact_form_UwiCkQ"
-      ],
-      "name": "t:names.contact_form",
+      "type": "mg-quote-form",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "padding-block-start": 32,
-        "padding-block-end": 84
+        "background": "default",
+        "spacing": "default",
+        "eyebrow": "Message us",
+        "heading": "Send us a message",
+        "use_page_title": false,
+        "heading_is_h1": false,
+        "intro": "Ask us anything about CarPlay, screens, sound or a fitting you've booked. Add your reg if it's about your car and we'll come back with the right answer first time.",
+        "steps_heading": "What happens next",
+        "step_1_title": "We check your car",
+        "step_1_text": "We look up your reg and factory screen to confirm exactly which CarPlay, screen or audio kit suits your car.",
+        "step_2_title": "You get a fixed price",
+        "step_2_text": "One clear price for parts and fitting, sent by phone, WhatsApp or email before any work starts.",
+        "step_3_title": "Book your slot",
+        "step_3_text": "Pick a time that suits you. A €50 deposit holds your slot, and most installs are done in one to two hours.",
+        "show_contact": true,
+        "contact_label": "Prefer to talk? Call us",
+        "form_heading": "Your message",
+        "form_text": "Name, mobile and email are all we need. The car details help us answer faster.",
+        "make_list": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover\nOther",
+        "service_list": "Apple CarPlay & Android Auto installation\nAndroid radio\nRadio upgrade\nScreen upgrade (BMW, Mercedes, Audi, VW)\nJBL radio\nSpeaker upgrade\nSubwoofer\nAmplifier\nDashcam installation\nReverse camera installation\nNo-sound repair\nBlack-screen repair\nRadio password / code\nJapan-to-Europe conversion (imports)\nNot sure yet, please advise",
+        "submit_label": "Send message",
+        "privacy_text": "We only use your details to reply to this request.",
+        "show_whatsapp_photo_step": true,
+        "photo_heading": "Add a photo of your dash",
+        "photo_text": "A quick photo of your dash and screen, with the ignition on, lets us confirm the right kit first time.",
+        "photo_button_label": "Send photo on WhatsApp",
+        "photo_message": "Hi MG Car Audio, here's a photo of my dash.",
+        "success_heading": "Thanks, your request is in",
+        "success_text": "We'll check your car and come back to you with a fixed price, normally within one working day. Need it sooner? Give us a call."
+      }
+    },
+    "map": {
+      "type": "mg-contact-map",
+      "settings": {
+        "eyebrow": "Visit the workshop",
+        "heading": "Find us in Ballymount, Dublin 12",
+        "text": "Call in to see screens and speakers in person, drop your car in for a fitting, or message us first to check what suits your car. Sundays are by appointment.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "dark_map": true,
+        "background": "surface",
+        "spacing": "normal"
       }
     }
   },
   "order": [
     "main",
-    "form"
+    "form",
+    "map"
   ]
 }

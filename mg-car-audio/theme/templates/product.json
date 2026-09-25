@@ -216,6 +216,27 @@
               },
               "block_order": []
             },
+            "mg_fitting_cta": {
+              "type": "mg-fitting-cta",
+              "name": "Fitting CTA",
+              "settings": {
+                "heading": "Need it fitted?",
+                "subheading": "Professional installation in Dublin",
+                "price_label": "Fitted from",
+                "point_1": "Fitted in-house",
+                "point_2": "OEM-style finish",
+                "show_warranty": true,
+                "book_label": "Book fitting",
+                "book_style": "ghost",
+                "show_whatsapp": true,
+                "whatsapp_label": "Ask on WhatsApp",
+                "whatsapp_message": "Hi MG Car Audio, I'd like a fitting quote for: [product]. My reg is: ",
+                "hide_on_installation": true,
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "t:names.product_description",
@@ -247,6 +268,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "mg_fitting_cta",
             "text_aEtTtq"
           ]
         },

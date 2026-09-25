@@ -1,0 +1,15 @@
+{
+  "name": "mg-theme-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local approximate renderer + screenshotter for the MG Car Audio Horizon theme's custom mg-* sections.",
+  "type": "module",
+  "scripts": {
+    "render": "node render.mjs",
+    "shoot": "node shoot.mjs"
+  },
+  "dependencies": {
+    "liquidjs": "^10.29.0",
+    "playwright": "1.56.1"
+  }
+}

@@ -9,101 +9,324 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "hero": {
+      "type": "mg-hero",
+      "settings": {
+        "overlay_opacity": 85,
+        "desktop_layout": "split",
+        "eyebrow": "Dublin · Fitted in-house",
+        "heading": "Ireland's CarPlay & Car Audio Specialist",
+        "heading_is_h1": false,
+        "subheading": "Wired and wireless Apple CarPlay and Android Auto, screen upgrades, speakers and sound for BMW, Audi, Mercedes-Benz, VW and more.",
+        "primary_label": "Book a fitting",
+        "show_whatsapp": true,
+        "whatsapp_label": "Get a quote on WhatsApp",
+        "chip_1": "Wired & wireless CarPlay",
+        "chip_2": "OEM-style finish",
+        "chip_3": "From €299 fitted",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call"
+      }
+    },
+    "trust_bar": {
+      "type": "mg-trust-bar",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "rating": {
+          "type": "rating",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.background }}",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "count_prefix": "from",
+            "label": "Google reviews"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "item_warranty": {
+          "type": "item",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0, 0, 0, 0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "source": "warranty",
+            "icon": "shield",
+            "title": "",
+            "text": "On every installation"
+          }
+        },
+        "item_address": {
+          "type": "item",
+          "settings": {
+            "source": "address",
+            "icon": "map-pin",
+            "title": "",
+            "text": ""
+          }
+        },
+        "item_phone": {
+          "type": "item",
+          "settings": {
+            "source": "phone",
+            "icon": "phone",
+            "title": "",
+            "text": ""
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "rating",
+        "item_warranty",
+        "item_address",
+        "item_phone"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "background": "surface"
       }
     },
-    "product_list_fa6P9H": {
+    "car_makes": {
+      "type": "mg-car-makes",
+      "blocks": {
+        "make_bmw": {
+          "type": "make",
+          "settings": {
+            "name": "BMW",
+            "subtitle": "CarPlay · iDrive · Audio"
+          }
+        },
+        "make_audi": {
+          "type": "make",
+          "settings": {
+            "name": "Audi",
+            "subtitle": "CarPlay · MMI · Audio"
+          }
+        },
+        "make_mercedes_benz": {
+          "type": "make",
+          "settings": {
+            "name": "Mercedes-Benz",
+            "subtitle": "CarPlay · Screens · Audio"
+          }
+        },
+        "make_volkswagen": {
+          "type": "make",
+          "settings": {
+            "name": "Volkswagen",
+            "subtitle": "CarPlay · Screens · Audio"
+          }
+        },
+        "make_toyota": {
+          "type": "make",
+          "settings": {
+            "name": "Toyota",
+            "subtitle": "CarPlay · Radios · Imports",
+            "url": "/pages/get-a-quote?make=Toyota"
+          }
+        },
+        "make_lexus": {
+          "type": "make",
+          "settings": {
+            "name": "Lexus",
+            "subtitle": "CarPlay · Screens · Imports",
+            "url": "/pages/get-a-quote?make=Lexus"
+          }
+        },
+        "make_ford": {
+          "type": "make",
+          "settings": {
+            "name": "Ford",
+            "subtitle": "CarPlay · Radios · Audio",
+            "url": "/pages/get-a-quote?make=Ford"
+          }
+        },
+        "make_nissan": {
+          "type": "make",
+          "settings": {
+            "name": "Nissan",
+            "subtitle": "CarPlay · Radios · Imports",
+            "url": "/pages/get-a-quote?make=Nissan"
+          }
+        },
+        "make_honda": {
+          "type": "make",
+          "settings": {
+            "name": "Honda",
+            "subtitle": "CarPlay · Radios · Imports",
+            "url": "/pages/get-a-quote?make=Honda"
+          }
+        },
+        "make_mazda": {
+          "type": "make",
+          "settings": {
+            "name": "Mazda",
+            "subtitle": "CarPlay · Radios · Imports",
+            "url": "/pages/get-a-quote?make=Mazda"
+          }
+        },
+        "make_hyundai": {
+          "type": "make",
+          "settings": {
+            "name": "Hyundai",
+            "subtitle": "CarPlay · Radios · Audio",
+            "url": "/pages/get-a-quote?make=Hyundai"
+          }
+        },
+        "make_kia": {
+          "type": "make",
+          "settings": {
+            "name": "Kia",
+            "subtitle": "CarPlay · Radios · Audio",
+            "url": "/pages/get-a-quote?make=Kia"
+          }
+        }
+      },
+      "block_order": [
+        "make_bmw",
+        "make_audi",
+        "make_mercedes_benz",
+        "make_volkswagen",
+        "make_toyota",
+        "make_lexus",
+        "make_ford",
+        "make_nissan",
+        "make_honda",
+        "make_mazda",
+        "make_hyundai",
+        "make_kia"
+      ],
+      "settings": {
+        "eyebrow": "Shop by car make",
+        "heading": "Built for the car you drive",
+        "text": "CarPlay, Android Auto, screen upgrades and sound for the makes we fit every week. We also cover Skoda, SEAT, Renault, Peugeot, Citroën, Volvo, Land Rover and many more, including Japanese imports.",
+        "view_all_label": "Other makes? Get a quote",
+        "columns_desktop": 6
+      }
+    },
+    "services": {
+      "type": "mg-services-grid",
+      "blocks": {
+        "service_bmw_carplay": {
+          "type": "service",
+          "settings": {
+            "title": "Apple CarPlay for BMW",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept.",
+            "price": "€350",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-carplay-screen.webp",
+            "url": "/pages/carplay-installation",
+            "badge": "Most popular"
+          }
+        },
+        "service_bmw_android_auto": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Android Auto (iDrive 7)",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens. Around an hour in the bay while you wait.",
+            "price": "€299",
+            "price_label": "from",
+            "fallback_image": "mg-android-auto-dash.webp",
+            "url": "/products/android-auto-installation-bmw-id7",
+            "badge": "1 hour"
+          }
+        },
+        "service_android_radio": {
+          "type": "service",
+          "settings": {
+            "title": "Android radio fitting",
+            "text": "Android head units fitted properly, with neat wiring and a factory-style finish. About 90 minutes.",
+            "price": "€150",
+            "price_label": "from",
+            "fallback_image": "mg-dash-radio.webp",
+            "url": "/products/android-radio-installation"
+          }
+        },
+        "service_japan_to_europe": {
+          "type": "service",
+          "settings": {
+            "title": "Japanese-to-European conversion",
+            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. Mercedes and VW on request.",
+            "price": "€450",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-japan-to-europe.webp",
+            "url": "/products/bmw-japan-to-europe-conversion"
+          }
+        },
+        "service_screen_upgrades": {
+          "type": "service",
+          "settings": {
+            "title": "Screen upgrades",
+            "text": "Bigger, sharper widescreens for BMW, Mercedes, Audi and VW, with CarPlay and Android Auto built in.",
+            "price": "€X",
+            "price_label": "from",
+            "fallback_image": "mg-audi-carplay-screen.webp",
+            "url": "/collections/screen-upgrades"
+          }
+        },
+        "service_speakers": {
+          "type": "service",
+          "settings": {
+            "title": "Speaker & subwoofer upgrades",
+            "text": "JBL and Harman Kardon speakers, subs and amps, matched to your car for clear, powerful sound.",
+            "price": "€X",
+            "price_label": "from",
+            "fallback_image": "mg-door-speaker.webp",
+            "url": "/pages/get-a-quote?service=speaker"
+          }
+        },
+        "service_video_in_motion": {
+          "type": "service",
+          "settings": {
+            "title": "BMW iDrive 7 video in motion",
+            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "price": "€149",
+            "price_label": "from",
+            "fallback_image": "mg-bmw-carplay-screen.webp",
+            "url": "/products/bmw-idrive7-video-in-motion"
+          }
+        },
+        "service_reverse_camera": {
+          "type": "service",
+          "settings": {
+            "title": "Reverse camera fitting",
+            "text": "A reverse camera that switches on the moment you select reverse, with the wiring hidden. Dashcams hard-wired too.",
+            "price": "€399",
+            "price_label": "from",
+            "fallback_image": "mg-showroom.webp",
+            "url": "/products/reverse-camera-installation"
+          }
+        }
+      },
+      "block_order": [
+        "service_bmw_carplay",
+        "service_bmw_android_auto",
+        "service_android_radio",
+        "service_japan_to_europe",
+        "service_screen_upgrades",
+        "service_speakers",
+        "service_video_in_motion",
+        "service_reverse_camera"
+      ],
+      "settings": {
+        "eyebrow": "Popular services",
+        "heading": "Clear prices. Fitted properly.",
+        "text": "Upfront 'from' prices on our most-booked jobs, all fitted at our workshop in Ballymount, Dublin 12. A €50 deposit secures your slot.",
+        "button_label": "All services",
+        "price_suffix": "fitted",
+        "quote_label": "Get a quote",
+        "columns_desktop": 4,
+        "background": "surface",
+        "footnote": "Prices shown are starting prices for fitting at our Dublin 12 workshop. Send us your reg and we'll confirm the exact price for your car before you book."
+      }
+    },
+    "best_sellers": {
       "type": "product-list",
+      "name": "Best sellers",
       "blocks": {
         "static-header": {
           "type": "_product-list-content",
-          "name": "t:names.header",
+          "name": "Header",
           "static": true,
           "settings": {
             "content_direction": "row",
             "vertical_on_mobile": false,
             "horizontal_alignment": "space-between",
             "vertical_alignment": "flex-end",
-            "align_baseline": true,
+            "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "gap": 24,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -123,38 +346,90 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
+            "heading_group": {
+              "type": "group",
+              "name": "Eyebrow and heading",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 0,
                 "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
-              "blocks": {}
+              "blocks": {
+                "eyebrow": {
+                  "type": "custom-liquid",
+                  "name": "Eyebrow",
+                  "settings": {
+                    "custom_liquid": "<p class=\"mg-eyebrow\">Shop the range</p>"
+                  },
+                  "blocks": {}
+                },
+                "heading": {
+                  "type": "text",
+                  "name": "Heading",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h2",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "balance",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "text": "<h2>Best sellers</h2>"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "eyebrow",
+                "heading"
+              ]
             },
-            "product_list_button_MWeP9V": {
+            "product_list_button": {
               "type": "_product-list-button",
-              "name": "t:names.product_list_button",
+              "name": "View all button",
               "settings": {
                 "label": "View all",
                 "open_in_new_tab": false,
-                "style_class": "button-unstyled",
+                "style_class": "button-secondary",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -164,31 +439,31 @@
             }
           },
           "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
+            "heading_group",
+            "product_list_button"
           ]
         },
         "static-product-card": {
           "type": "_product-card",
-          "name": "t:names.product_card",
+          "name": "Product card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 8,
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 8,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_card_gallery_677WP3": {
+            "product-card-gallery": {
               "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
+              "name": "Product card media",
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "square",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -197,14 +472,13 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
+              }
             },
-            "product_title_YXxMTj": {
+            "product_title": {
               "type": "product-title",
-              "name": "t:names.product_title",
+              "name": "Product title",
               "settings": {
-                "width": "100%",
+                "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "paragraph",
@@ -221,12 +495,11 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
+              }
             },
-            "price_JQzVV4": {
+            "price": {
               "type": "price",
-              "name": "t:names.product_price",
+              "name": "Price",
               "settings": {
                 "show_sale_price_first": true,
                 "show_installments": false,
@@ -243,40 +516,340 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
+              }
             }
           },
           "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
+            "product-card-gallery",
+            "product_title",
+            "price"
           ]
         }
       },
-      "name": "t:names.featured_collection",
+      "block_order": [],
       "settings": {
-        "collection": "all",
+        "collection": "best-sellers",
         "layout_type": "grid",
         "carousel_on_mobile": false,
-        "max_products": 8,
+        "max_products": 4,
         "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
+        "columns_gap": 16,
+        "rows_gap": 16,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "gap": 40,
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "how_it_works": {
+      "type": "mg-how-it-works",
+      "blocks": {
+        "step_reg": {
+          "type": "step",
+          "settings": {
+            "icon": "camera",
+            "title": "Send your reg + a dash photo",
+            "text": "WhatsApp us your registration and a quick photo of your dash. That's usually all we need to tell you exactly what fits."
+          }
+        },
+        "step_quote": {
+          "type": "step",
+          "settings": {
+            "icon": "message",
+            "title": "Get a fixed quote",
+            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+          }
+        },
+        "step_book": {
+          "type": "step",
+          "settings": {
+            "icon": "calendar",
+            "title": "Book a slot",
+            "text": "Pick a day and time that suits you. A <strong>€50 deposit</strong> secures your slot at our Ballymount workshop."
+          }
+        },
+        "step_drive": {
+          "type": "step",
+          "settings": {
+            "icon": "car",
+            "title": "Drive away",
+            "text": "We fit it, test everything with your phone and show you how it all works. Most installs take one to two hours."
+          }
+        }
+      },
+      "block_order": [
+        "step_reg",
+        "step_quote",
+        "step_book",
+        "step_drive"
+      ],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "From your reg to CarPlay in four steps",
+        "text": "No guesswork and no chasing call-backs. Send us a couple of details and we'll tell you exactly what fits your car, what it costs and when we can fit it.",
+        "align": "left",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us your reg",
+        "button_label": "Book a fitting",
+        "show_phone": true,
+        "phone_prefix": "Rather talk it through? Call",
+        "background": "surface",
+        "spacing": "normal"
+      }
+    },
+    "gallery": {
+      "type": "mg-gallery",
+      "blocks": {
+        "install_bmw": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "car_label": "BMW 3 Series · Wireless CarPlay",
+            "caption": "Factory widescreen kept, CarPlay added. Steering controls and reverse camera still work as before."
+          }
+        },
+        "install_audi": {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "car_label": "Audi A4 · Apple CarPlay retrofit",
+            "caption": "OEM-style fit that works with the original MMI controls."
+          }
+        },
+        "install_android_auto": {
+          "type": "image",
+          "settings": {
+            "fallback": "android-auto",
+            "car_label": "Android Auto · Screen upgrade",
+            "caption": "Maps, calls and Spotify on a bright, responsive touchscreen."
+          }
+        },
+        "install_showroom": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "car_label": "Ballymount showroom",
+            "caption": "Call in to see screens, speakers and head units in person."
+          }
+        },
+        "install_radio": {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "car_label": "Radio upgrade · Head unit",
+            "caption": "From simple radio swaps to full Android screens, finished to a factory standard."
+          }
+        },
+        "install_speakers": {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "car_label": "Speaker upgrade · Front doors",
+            "caption": "Clearer vocals and tighter bass without the door rattle."
+          }
+        }
+      },
+      "block_order": [
+        "install_bmw",
+        "install_audi",
+        "install_android_auto",
+        "install_showroom",
+        "install_radio",
+        "install_speakers"
+      ],
+      "settings": {
+        "eyebrow": "Recent installs",
+        "heading": "Fresh out of the workshop",
+        "text": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way.",
+        "follow_label": "Follow our installs",
+        "background": "page",
+        "spacing": "normal"
+      }
+    },
+    "reviews": {
+      "type": "mg-reviews",
+      "blocks": {
+        "review_a": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Sent a photo of my dash on WhatsApp and had a price back quickly. Wireless CarPlay fitted in about an hour, and the steering wheel buttons and reverse camera still work. Looks like it came from the factory.",
+            "author": "Customer A.",
+            "car": "BMW 3 Series · Wireless CarPlay",
+            "source": "Google"
+          }
+        },
+        "review_b": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "The original speakers were muddy at any volume. New front components and the difference is night and day: vocals are clear and the bass is tight without the doors rattling.",
+            "author": "Customer B.",
+            "car": "Volkswagen Golf · Speaker upgrade",
+            "source": "Google"
+          }
+        },
+        "review_c": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "My screen went black and I was told the whole unit would need replacing. MG found the actual fault, fixed it and had me back on the road the same day for a fraction of what I was expecting.",
+            "author": "Customer C.",
+            "car": "Audi A4 · Black-screen repair",
+            "source": "Google"
+          }
+        },
+        "review_d": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "text": "Imported my BMW from Japan and everything was in Japanese, with no local radio stations. They converted the menus and navigation to English and sorted the radio frequencies. Brilliant job, and explained everything clearly.",
+            "author": "Customer D.",
+            "car": "BMW 5 Series · Japan-to-Europe conversion",
+            "source": "Google"
+          }
+        },
+        "review_e": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "text": "Honest advice on which Android radio suited my car and budget, no hard sell. Tidy install with no loose wires, and they set it up with my phone before I left.",
+            "author": "Customer E.",
+            "car": "Toyota Auris · Android radio",
+            "source": "Google"
+          }
+        }
+      },
+      "block_order": [
+        "review_a",
+        "review_b",
+        "review_c",
+        "review_d",
+        "review_e"
+      ],
+      "settings": {
+        "eyebrow": "Reviews",
+        "heading": "Trusted by Dublin drivers",
+        "text": "Honest advice, tidy installs and a fair price agreed up front. Here's what customers tell us after they drive away.",
+        "show_rating": true,
+        "reviews_link_label": "Read all reviews on Google",
+        "show_placeholder_note": true,
+        "background": "surface",
+        "spacing": "normal"
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "faq_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long does a CarPlay installation take?",
+            "answer": "<p>Most Apple CarPlay and Android Auto installs take between one and two hours. Bigger jobs, such as Japanese-to-European conversions, can take a little longer. We'll confirm the expected time when you book.</p>"
+          }
+        },
+        "faq_wired_wireless": {
+          "type": "question",
+          "settings": {
+            "question": "What's the difference between wired and wireless CarPlay?",
+            "answer": "<p>Wired CarPlay starts when you plug your phone in with a USB cable. Wireless connects automatically a few seconds after you start the car, so your phone can stay in your pocket or bag. We fit both, and we'll tell you which options suit your car when we quote.</p>"
+          }
+        },
+        "faq_factory_features": {
+          "type": "question",
+          "settings": {
+            "question": "Will I keep my steering wheel controls, reverse camera and microphone?",
+            "answer": "<p>In most cases, yes. We choose parts that work with your car's original screen, steering wheel buttons, reverse camera and microphone wherever possible. If there's anything on your car that can't be kept, we'll tell you before you book, not after.</p>"
+          }
+        },
+        "faq_japan_imports": {
+          "type": "question",
+          "settings": {
+            "question": "Can you convert a Japanese import to European settings?",
+            "answer": "<p>Yes. We convert BMW, Mercedes-Benz and Volkswagen imports from Japanese to European spec, including the menu language and navigation, and we can convert the radio frequencies so you pick up Irish stations. BMW conversions are <strong>€450</strong>. For other makes, send us your reg for a price.</p>"
+          }
+        },
+        "faq_deposit": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to pay a deposit to book?",
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+          }
+        },
+        "faq_makes": {
+          "type": "question",
+          "settings": {
+            "question": "Which cars do you work on?",
+            "answer": "<p>Most makes, including BMW, Audi, Volkswagen, Mercedes-Benz, Toyota, Honda, Nissan, Lexus, Ford, Mazda, Hyundai, Kia, Skoda, SEAT, Renault, Peugeot, Citroën, Volvo and Land Rover, as well as Japanese and other imported models. Not on the list? Send us your reg and we'll check.</p>"
+          }
+        },
+        "faq_warranty": {
+          "type": "question",
+          "settings": {
+            "question": "Is my installation covered by a warranty?",
+            "answer": "<p>Yes. Our fitting work is covered by a workmanship warranty, and the parts we supply carry their manufacturer's warranty. Ask us for the full terms when you book.</p>"
+          }
+        },
+        "faq_parts": {
+          "type": "question",
+          "settings": {
+            "question": "Do you sell parts without fitting?",
+            "answer": "<p>Yes, you can buy from our shop without booking a fitting. For CarPlay interfaces and screen upgrades we recommend letting us fit them, so we can check everything works with your car and stand over the whole job.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_time",
+        "faq_wired_wireless",
+        "faq_factory_features",
+        "faq_japan_imports",
+        "faq_deposit",
+        "faq_makes",
+        "faq_warranty",
+        "faq_parts"
+      ],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Good questions, straight answers",
+        "text": "What people usually ask us before booking a CarPlay install, screen upgrade or conversion. Can't see your question? Send us a message.",
+        "show_contact": true,
+        "contact_heading": "Not sure what fits your car?",
+        "open_first": true,
+        "output_faq_schema": true,
+        "layout": "split",
+        "background": "page",
+        "spacing": "normal"
+      }
+    },
+    "contact_map": {
+      "type": "mg-contact-map",
+      "settings": {
+        "eyebrow": "Visit the workshop",
+        "heading": "Find us in Ballymount, Dublin 12",
+        "text": "Call in to see screens and speakers in person, drop your car in for a fitting, or message us first to check what suits your car. Sundays are by appointment.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "dark_map": true,
+        "background": "surface",
+        "spacing": "normal"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "hero",
+    "trust_bar",
+    "car_makes",
+    "services",
+    "best_sellers",
+    "how_it_works",
+    "gallery",
+    "reviews",
+    "faq",
+    "contact_map"
   ]
 }
