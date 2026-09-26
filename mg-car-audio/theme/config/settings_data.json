@@ -122,7 +122,10 @@
     "popover_shadow_color": "#0f1115",
     "badge_sold_out_text_color": "#4b5360",
     "mg_theme_mode": "auto",
-    "mg_show_theme_control": true
+    "mg_show_theme_control": true,
+    "mg_review_rating": "4.9",
+    "mg_review_count": "57",
+    "mg_review_url": "https://www.google.com/maps/search/?api=1&query=MG+Car+Audio+Ballymount+Dublin"
   },
   "presets": {
     "Default": {

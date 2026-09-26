@@ -933,11 +933,35 @@
             "car": "VW Golf MK7",
             "job": "New radio"
           }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I went to 3-4 different garages to fix my multimedia system in Audi and no one could do it. MG CAR AUDIO fixed my screen in no time. They were HONEST & fixed my multimedia system.",
+            "author": "Hajer D.",
+            "car": "Audi",
+            "job": "Multimedia screen repair"
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "Had a car radio upgrade from this garage. Have to say the quality and fitting was second to none. Very friendly, helpful and well priced.",
+            "author": "Alan C.",
+            "car": "",
+            "job": "Car radio upgrade"
+          }
         }
       },
       "block_order": [
         "review_1",
+        "review_9",
         "review_2",
+        "review_10",
         "review_3",
         "review_4",
         "review_5",

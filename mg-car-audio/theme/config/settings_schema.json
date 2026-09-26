@@ -2259,15 +2259,15 @@
         "type": "text",
         "id": "mg_review_rating",
         "label": "Google rating",
-        "info": "PLACEHOLDER: before showing the demo, copy the real rating from MG's public Google Business Profile. Leave blank to hide the rating everywhere.",
+        "info": "From MG's Google Business listing (4.9 from 57 reviews, September 2026). Update as reviews grow.",
         "default": "4.9"
       },
       {
         "type": "text",
         "id": "mg_review_count",
         "label": "Number of Google reviews",
-        "info": "PLACEHOLDER: copy the real review count from the same Google profile.",
-        "default": "120"
+        "info": "From MG's Google Business listing (4.9 from 57 reviews, September 2026). Update as reviews grow.",
+        "default": "57"
       },
       {
         "type": "url",
