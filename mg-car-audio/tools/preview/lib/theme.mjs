@@ -35,6 +35,7 @@ export const HOME_FALLBACK_SECTIONS = [
   'mg-how-it-works',
   'mg-reviews',
   'mg-gallery',
+  'mg-cta-band',
   'mg-faq',
   'mg-contact-map',
 ];

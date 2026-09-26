@@ -35,7 +35,10 @@
 <div class="{{ section_classes }}">
   <div class="mg-container">
     {%- if section.settings.heading != blank or section.settings.text != blank -%}
-      <div class="mg-head{% if section.settings.align == 'center' %} mg-head--center{% endif %}">
+      <div
+        class="mg-head{% if section.settings.align == 'center' %} mg-head--center{% endif %}"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
@@ -55,6 +58,7 @@
     {%- if step_count > 0 -%}
       <ol
         class="mg-how__steps"
+        data-mg-reveal-stagger
         role="list"
         style="--mg-how-cols: {{ step_cols }};"
         {% if section.settings.heading != blank %}

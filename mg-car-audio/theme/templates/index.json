@@ -22,7 +22,12 @@
         "quote_url": "/pages/get-a-quote",
         "show_whatsapp": true,
         "whatsapp_text": "Or WhatsApp us a photo of your dash",
-        "whatsapp_message": "Hi MG Car Audio, here's a photo of my dash for a quote. My car is: "
+        "whatsapp_message": "Hi MG Car Audio, here's a photo of my dash for a quote. My car is: ",
+        "fallback_image": "mg-img-hero-1",
+        "slideshow": true,
+        "fallback_2": "mg-img-hero-2",
+        "fallback_3": "mg-img-hero-3",
+        "slide_seconds": 7
       }
     },
     "trust_bar": {
@@ -87,7 +92,7 @@
             "price": "€299",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "mg-audi-carplay-screen",
+            "fallback_asset": "mg-img-sys-carplay",
             "icon": "screen"
           }
         },
@@ -99,7 +104,7 @@
             "price": "",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "mg-android-auto-dash",
+            "fallback_asset": "mg-img-sys-screens",
             "icon": "screen"
           }
         },
@@ -111,7 +116,7 @@
             "price": "€150",
             "price_label": "Fitting from",
             "price_suffix": "",
-            "fallback_asset": "mg-single-din-radio",
+            "fallback_asset": "mg-img-sys-android-radio",
             "icon": "radio"
           }
         },
@@ -123,7 +128,7 @@
             "price": "",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "mg-speaker-pair",
+            "fallback_asset": "mg-img-sys-speakers",
             "icon": "speaker"
           }
         },
@@ -135,7 +140,7 @@
             "price": "",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "mg-door-speaker",
+            "fallback_asset": "mg-img-sys-subs-amps",
             "icon": "speaker"
           }
         },
@@ -147,7 +152,7 @@
             "price": "",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-dashcam",
             "icon": "camera"
           }
         },
@@ -159,7 +164,7 @@
             "price": "",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-reverse-camera",
             "icon": "car"
           }
         },
@@ -171,7 +176,7 @@
             "price": "€450",
             "price_label": "From",
             "price_suffix": "",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-conversion",
             "icon": "globe"
           }
         }
@@ -369,7 +374,8 @@
         "on_request_label": "Price on request",
         "book_label": "Book",
         "quote_label": "Get a quote",
-        "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill."
+        "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill.",
+        "image_fallback": "mg-img-panel-workshop"
       }
     },
     "best_sellers": {
@@ -663,7 +669,8 @@
         "heading": "What's in every MG fit?",
         "text": "How we fit, test and stand behind every job at our Dublin 12 workshop.",
         "button_label": "",
-        "panel": "warm"
+        "panel": "warm",
+        "image_fallback": "mg-img-panel-promise"
       }
     },
     "car_makes": {
@@ -789,7 +796,9 @@
         "text": "",
         "view_all_label": "Other makes",
         "view_all_url": "/pages/get-a-quote",
-        "align_desktop": "left"
+        "align_desktop": "left",
+        "layout": "marquee",
+        "loop_seconds": 50
       }
     },
     "how_it_works": {
@@ -1129,6 +1138,20 @@
         "dark_map": true,
         "background": "page"
       }
+    },
+    "cta_band": {
+      "type": "mg-cta-band",
+      "settings": {
+        "heading": "Send your reg tonight.",
+        "heading_italic": "Drive home with CarPlay.",
+        "text": "We agree a fixed fitted price first. Most fits take one to two hours at our Dublin 12 workshop.",
+        "book_label": "Book a fitting",
+        "book_url": "/pages/book-a-fitting",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "",
+        "image_fallback": "mg-img-bg-night-drive"
+      }
     }
   },
   "order": [
@@ -1142,6 +1165,7 @@
     "how_it_works",
     "reviews",
     "gallery",
+    "cta_band",
     "faq",
     "contact_map"
   ]

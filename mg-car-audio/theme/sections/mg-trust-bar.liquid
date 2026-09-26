@@ -22,7 +22,10 @@
 <div class="mg-section mg-trust-bar">
   <div class="mg-container">
     {%- if statement != blank or subline != blank -%}
-      <div class="mg-head mg-head--center mg-trust-bar__head">
+      <div
+        class="mg-head mg-head--center mg-trust-bar__head"
+        data-mg-reveal
+      >
         <div class="mg-head__text mg-trust-bar__text">
           {%- if statement != blank -%}
             <h2 class="mg-display mg-display--center">{{ statement | escape }}</h2>
@@ -37,6 +40,7 @@
     {%- if section.blocks.size > 0 -%}
       <ul
         class="mg-trust mg-trust-bar__list"
+        data-mg-reveal
         role="list"
         style="--mg-trust-bar-tablet: {{ tablet_cols }}; --mg-trust-bar-desktop: {{ desktop_cols }};"
       >

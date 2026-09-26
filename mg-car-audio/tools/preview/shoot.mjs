@@ -105,12 +105,16 @@ async function settle(page) {
       await new Promise((r) => setTimeout(r, 30));
     }
     window.scrollTo(0, 0);
+    // Finish every scroll reveal (assets/mg-reveal.js) so a full-page capture shows the settled page
+    document.querySelectorAll('[data-mg-reveal], [data-mg-reveal-stagger]').forEach((el) => el.classList.add('is-revealed', 'mg-reveal-done'));
     await document.fonts.ready;
     await Promise.all(
       [...document.images].filter((img) => !img.complete).map((img) => new Promise((r) => { img.addEventListener('load', r, { once: true }); img.addEventListener('error', r, { once: true }); setTimeout(r, 8000); }))
     );
+    // Decode every image up front, so the full-page capture does not catch one before its raster
+    await Promise.all([...document.images].map((img) => (img.decode ? img.decode().catch(() => {}) : null)));
   });
-  await page.waitForTimeout(250);
+  await page.waitForTimeout(600);
 }
 
 async function main() {
@@ -184,6 +188,10 @@ async function main() {
           if (!applied) issues.push(`theme-mode script did not apply "${mode}"; attributes were set directly`);
           await settle(page);
           const out = path.join(path.dirname(report.output), `${base}-${width}-${mode}.png`);
+          // A first full-page capture makes Chromium raster the whole page; the second is the one kept
+          // (a single capture sometimes shows photos far below the fold still unpainted).
+          await page.screenshot({ fullPage: true, animations: 'disabled' });
+          await page.waitForTimeout(150);
           await page.screenshot({ path: out, fullPage: true, animations: 'disabled' });
           if (fold) {
             // First viewport only, with fixed bars where a visitor sees them

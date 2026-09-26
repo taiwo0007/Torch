@@ -142,7 +142,18 @@
 
   /* Motion and sizes */
   --mg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --mg-ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* reveals, image zooms: fast start, long settle */
   --mg-dur: 180ms;
+  --mg-dur-slow: 700ms;
+  --mg-dur-reveal: 560ms;
+
+  /* Night: the fixed dark surface under photos (cinematic heroes, photo tiles, CTA band) */
+  --mg-night: #0a0e13;
+  --mg-night-rgb: 10 14 19;
+  --mg-photo-scrim: linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.94) 0%, rgb(var(--mg-night-rgb) / 0.6) 34%, rgb(var(--mg-night-rgb) / 0) 70%);
+  /* MG red as light: a thin tail-light line, and the hover edge on photo tiles */
+  --mg-red-line: linear-gradient(90deg, rgb(var(--mg-red-rgb) / 0), rgb(var(--mg-red-rgb) / 0.95) 22%, rgb(var(--mg-red-rgb) / 0.95) 78%, rgb(var(--mg-red-rgb) / 0));
+  --mg-red-edge: inset 0 0 0 1px rgb(var(--mg-red-rgb) / 0.9), 0 10px 32px -12px rgb(var(--mg-red-rgb) / 0.7);
   --mg-tap: 44px;
   --mg-action-bar-h: 65px; /* 48px buttons + 8px padding each side + 1px hairline */
 
@@ -465,6 +476,11 @@ progress {
 
 .mg-section--warm {
   background-color: var(--mg-warm);
+}
+
+/* Starts flush under the header (full-bleed photo heroes), keeps the gap below */
+.mg-section--top {
+  padding-block-start: 0;
 }
 
 /* No outer spacing (a section that sits flush against the previous one) */
@@ -1831,6 +1847,395 @@ mg-carousel:defined:not([data-overflow]) .mg-carousel__nav {
 }
 
 /* =====================================================================
+ * 13B. Photo surfaces and motion (docs/DESIGN.md §5.14)
+ * ===================================================================== */
+
+/* Night surface: fixed dark tokens for content on photos (heroes, CTA band), in both schemes */
+.mg-surface-night {
+  --mg-ink: #f2f5f8;
+  --mg-ink-rgb: 242 245 248;
+  --mg-ink-2: #c9d1db; /* 12:1 on night */
+  --mg-ink-3: #a3adba;
+  --mg-line: rgb(255 255 255 / 0.14);
+  --mg-line-strong: rgb(255 255 255 / 0.3);
+  --mg-line-hover: rgb(255 255 255 / 0.3);
+  --mg-band: #151b24;
+  --mg-band-2: #1f2733;
+  --mg-card: #151b24;
+  --mg-card-raised: #1c2430;
+  --mg-red-ink: #ff7a74;
+  --mg-action: #f4f5f7;
+  --mg-action-hover: #ffffff;
+  --mg-on-action: #0f1115;
+  --mg-on-action-rgb: 15 17 21;
+  --mg-focus: #ffffff;
+  --mg-star: #f2f5f8;
+  --mg-star-empty: rgb(255 255 255 / 0.3);
+  --mg-btn-2-bg: rgb(255 255 255 / 0.06);
+  --mg-btn-2-ink: #f2f5f8;
+  --mg-btn-2-line: rgb(255 255 255 / 0.34);
+  --mg-btn-2-hover-bg: rgb(255 255 255 / 0.12);
+  --mg-btn-2-hover-line: #ffffff;
+  --mg-shadow: none;
+  --mg-shadow-raised: none;
+  background-color: var(--mg-night);
+  color: var(--mg-ink);
+  color-scheme: dark;
+}
+
+/* Glass secondary buttons over a photo */
+@supports (backdrop-filter: blur(1px)) {
+  .mg-surface-night :is(.mg-btn--secondary, .mg-btn--whatsapp) {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* Thin MG red tail-light line along the bottom edge of a photo panel or band */
+.mg-red-line {
+  position: relative;
+}
+
+.mg-red-line::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: 2px;
+  background: var(--mg-red-line);
+  pointer-events: none;
+}
+
+/*
+ * Cinematic panel: a photo that fades into the night surface. Phones and tablets: the photo on
+ * top, fading down into the copy. From 990px: the photo fills the right side and fades left
+ * under the copy (set --mg-cine-media for its width). Use with .mg-panel.mg-surface-night.
+ */
+.mg-cine {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.mg-cine__media {
+  position: relative;
+  z-index: -1;
+  margin: calc(var(--mg-panel-pad) * -1) calc(var(--mg-panel-pad) * -1) calc(var(--mg-space-7) * -1);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.mg-cine__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mg-cine__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, var(--mg-night) 0%, rgb(var(--mg-night-rgb) / 0.72) 26%, rgb(var(--mg-night-rgb) / 0) 64%),
+    linear-gradient(to bottom, rgb(var(--mg-night-rgb) / 0.35), rgb(var(--mg-night-rgb) / 0) 30%);
+  pointer-events: none;
+}
+
+@media screen and (min-width: 750px) {
+  .mg-cine__media {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .mg-cine__media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: var(--mg-cine-media, 62%);
+    margin: 0;
+    aspect-ratio: auto;
+  }
+
+  .mg-cine__media::after {
+    background:
+      linear-gradient(to right, var(--mg-night) 0%, rgb(var(--mg-night-rgb) / 0.78) 22%, rgb(var(--mg-night-rgb) / 0.12) 62%, rgb(var(--mg-night-rgb) / 0) 100%),
+      linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.55), rgb(var(--mg-night-rgb) / 0) 45%);
+  }
+}
+
+/* Photo tile: the photo covers the tile, a dark scrim at the bottom, white label and price */
+.mg-tile--photo {
+  justify-content: flex-end;
+  gap: 2px;
+  aspect-ratio: var(--mg-tile-ratio, 4 / 5);
+  padding: var(--mg-space-3);
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--mg-night);
+  color: var(--mg-white);
+}
+
+.mg-tile--photo .mg-tile__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  margin: 0;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.mg-tile--photo .mg-tile__media img {
+  transition: transform var(--mg-dur-slow) var(--mg-ease-out);
+}
+
+.mg-tile--photo .mg-tile__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--mg-photo-scrim);
+}
+
+.mg-tile--photo :is(.mg-tile__label, .mg-tile__meta) {
+  padding-inline: 0;
+  text-shadow: 0 1px 12px rgb(var(--mg-night-rgb) / 0.6);
+}
+
+.mg-tile--photo .mg-tile__label {
+  color: var(--mg-white);
+}
+
+.mg-tile--photo .mg-tile__meta,
+.mg-tile--photo .mg-tile__meta .mg-price__label {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.mg-tile--photo .mg-tile__meta .mg-price {
+  color: var(--mg-white);
+}
+
+/* Arrow chip in the top corner: nudges and turns red on hover or focus */
+.mg-tile__arrow {
+  position: absolute;
+  inset-block-start: var(--mg-space-3);
+  inset-inline-end: var(--mg-space-3);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mg-radius-pill);
+  background-color: rgb(var(--mg-night-rgb) / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+  color: var(--mg-white);
+  transition:
+    transform var(--mg-dur) var(--mg-ease),
+    background-color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease);
+}
+
+.mg-tile__arrow .mg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (hover: hover) {
+  a.mg-tile--photo:hover {
+    box-shadow: var(--mg-red-edge);
+    transform: translateY(-2px);
+  }
+
+  a.mg-tile--photo:hover .mg-tile__media img {
+    transform: scale(1.06);
+  }
+
+  a.mg-tile--photo:hover .mg-tile__arrow {
+    background-color: var(--mg-red);
+    box-shadow: none;
+    transform: translateX(3px);
+  }
+}
+
+a.mg-tile--photo:focus-visible {
+  outline: 2px solid var(--mg-ink);
+  outline-offset: 2px;
+  box-shadow: var(--mg-red-edge);
+}
+
+a.mg-tile--photo:focus-visible .mg-tile__arrow {
+  background-color: var(--mg-red);
+  box-shadow: none;
+  transform: translateX(3px);
+}
+
+@media screen and (min-width: 750px) {
+  .mg-tile--photo {
+    padding: var(--mg-space-4);
+  }
+
+  .mg-tile--photo .mg-tile__label {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Pause button for moving content (hero slideshow, marquee): pause icon, play icon when pressed */
+.mg-motion-toggle {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--mg-line-strong);
+  border-radius: var(--mg-radius-pill);
+  background-color: transparent;
+  color: var(--mg-ink);
+  cursor: pointer;
+  transition:
+    background-color var(--mg-dur) var(--mg-ease),
+    border-color var(--mg-dur) var(--mg-ease);
+}
+
+.mg-motion-toggle[hidden] {
+  display: none;
+}
+
+/* 44px hit area around the 36px circle */
+.mg-motion-toggle::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+}
+
+.mg-motion-toggle .mg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.mg-motion-toggle .mg-icon--play,
+.mg-motion-toggle[aria-pressed='true'] .mg-icon--pause {
+  display: none;
+}
+
+.mg-motion-toggle[aria-pressed='true'] .mg-icon--play {
+  display: block;
+}
+
+@media (hover: hover) {
+  .mg-motion-toggle:hover {
+    border-color: var(--mg-ink);
+    background-color: rgb(var(--mg-ink-rgb) / 0.08);
+  }
+}
+
+.mg-motion-toggle:focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+/* Buttons: a 1px lift on hover, pressed at .98 */
+.mg-btn {
+  transition:
+    background-color var(--mg-dur) var(--mg-ease),
+    border-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
+}
+
+@media (hover: hover) {
+  .mg-btn:not([disabled], [aria-disabled='true']):hover {
+    transform: translateY(-1px);
+  }
+
+  .mg-btn--primary:not([disabled], [aria-disabled='true']):hover {
+    box-shadow: 0 8px 20px -10px rgb(var(--mg-ink-rgb) / 0.55);
+  }
+}
+
+.mg-btn:not([disabled], [aria-disabled='true']):active {
+  transform: scale(0.98);
+}
+
+/* Card photos drift in a little on hover */
+.mg-card__media img {
+  transition: transform var(--mg-dur-slow) var(--mg-ease-out);
+}
+
+@media (hover: hover) {
+  .mg-card:hover .mg-card__media img {
+    transform: scale(1.04);
+  }
+}
+
+/* One orchestrated load-in (hero copy): set --mg-load-delay per element */
+@keyframes mg-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mg-load-rise {
+    animation: mg-rise 640ms var(--mg-ease-out) both;
+    animation-delay: var(--mg-load-delay, 0ms);
+  }
+}
+
+/*
+ * Scroll reveal (assets/mg-reveal.js). Hidden only once the script has added .mg-reveal-on to
+ * <html>, so the page is complete without JavaScript. Transform and opacity only.
+ */
+html.mg-reveal-on [data-mg-reveal].is-revealed:not(.mg-reveal-done),
+html.mg-reveal-on [data-mg-reveal-stagger].is-revealed:not(.mg-reveal-done) > * {
+  transition:
+    opacity var(--mg-dur-reveal) var(--mg-ease-out),
+    transform var(--mg-dur-reveal) var(--mg-ease-out);
+  transition-delay: calc(var(--mg-i, 0) * 70ms);
+}
+
+html.mg-reveal-on [data-mg-reveal]:not(.is-revealed),
+html.mg-reveal-on [data-mg-reveal-stagger]:not(.is-revealed) > * {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+/* Parallax: the image inside [data-mg-parallax] drifts 5% against the scroll */
+[data-mg-parallax] {
+  overflow: hidden;
+}
+
+@keyframes mg-parallax {
+  from {
+    transform: translate3d(0, -5%, 0) scale(1.12);
+  }
+
+  to {
+    transform: translate3d(0, 5%, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-mg-parallax-js] img {
+    transform: scale(1.12);
+  }
+
+  @supports (animation-timeline: view()) {
+    [data-mg-parallax] img {
+      animation: mg-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+/* =====================================================================
  * 14. Reduced motion
  * ===================================================================== */
 
@@ -1858,5 +2263,23 @@ mg-carousel:defined:not([data-overflow]) .mg-carousel__nav {
 
   .mg-carousel__track {
     scroll-behavior: auto;
+  }
+
+  .mg-tile__arrow,
+  .mg-tile--photo .mg-tile__media img,
+  .mg-card__media img {
+    transition: none;
+  }
+
+  a.mg-tile--photo:is(:hover, :focus-visible),
+  a.mg-tile--photo:is(:hover, :focus-visible) :is(.mg-tile__media img, .mg-tile__arrow),
+  .mg-card:hover .mg-card__media img,
+  .mg-btn:not([disabled], [aria-disabled='true']):is(:hover, :active) {
+    transform: none;
+  }
+
+  html.mg-reveal-on :is([data-mg-reveal], [data-mg-reveal-stagger] > *) {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

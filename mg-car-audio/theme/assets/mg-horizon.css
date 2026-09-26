@@ -136,9 +136,33 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
   --border-bottom-color-mobile: var(--mg-line) !important;
 }
 
-/* Sticky: a soft cool shadow in light, the hairline alone in dark */
+/* Sticky: a soft cool shadow in light, the hairline alone in dark; the bar turns to frosted glass */
+#header-component .header__underlay-closed {
+  transition:
+    height var(--animation-speed-slow, 0.25s) var(--ease-out-cubic, ease-out),
+    box-shadow var(--mg-dur) var(--mg-ease);
+}
+
 #header-component[data-sticky-state='active'] .header__underlay-closed {
   box-shadow: var(--mg-shadow);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  #header-component[data-sticky-state='active'] .header__underlay-closed {
+    --color-background-top-row: rgb(var(--mg-page-rgb) / 0.84);
+    --color-background-bottom-row: rgb(var(--mg-page-rgb) / 0.84);
+    -webkit-backdrop-filter: saturate(1.4) blur(16px);
+    backdrop-filter: saturate(1.4) blur(16px);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  #header-component[data-sticky-state='active'] .header__underlay-closed {
+    --color-background-top-row: var(--mg-page);
+    --color-background-bottom-row: var(--mg-page);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* Text logo (no logo image uploaded): the MG wordmark with a small red mark */

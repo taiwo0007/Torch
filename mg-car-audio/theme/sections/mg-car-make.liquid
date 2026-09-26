@@ -56,43 +56,36 @@
     assign hero_media = section.settings.image
   endif
 
-  # "auto": MG's own BMW or Audi CarPlay photo for those makes, the showroom otherwise
-  assign fallback = section.settings.fallback_image | default: 'auto'
+  # "auto": a dark night-cabin mood photo that shows no car maker's badge (stock, decorative)
+  assign fallback = section.settings.fallback_image | default: 'auto' | remove: '.webp'
   if fallback == 'auto'
-    assign make_lc = make_name | downcase
-    assign fallback = 'mg-showroom.webp'
-    if make_lc contains 'bmw'
-      assign fallback = 'mg-bmw-carplay-screen.webp'
-    elsif make_lc contains 'audi'
-      assign fallback = 'mg-audi-carplay-screen.webp'
-    endif
+    assign fallback = 'mg-img-hero-2'
   endif
   assign fallback_alt = heading
-  assign fallback_w = 1536
-  assign fallback_h = 1024
   capture fallback_map
-    echo 'mg-bmw-carplay-screen.webp~1536~840~BMW widescreen display running Apple CarPlay;'
-    echo 'mg-audi-carplay-screen.webp~1536~1024~Audi dashboard showing Apple CarPlay with a connected iPhone;'
-    echo 'mg-android-auto-dash.webp~1536~1024~Car dashboard screen running Android Auto;'
-    echo 'mg-showroom.webp~1600~1200~MG Car Audio showroom and product wall in Dublin;'
-    echo 'mg-bmw-japan-to-europe.webp~1536~1024~BMW infotainment converted from Japanese to European spec;'
-    echo 'mg-mercedes-japan-to-europe.webp~1536~1024~Mercedes-Benz infotainment converted from Japanese to European spec;'
-    echo 'mg-vw-japan-to-europe.webp~1536~1024~Volkswagen infotainment converted from Japanese to European spec'
+    echo 'mg-bmw-carplay-screen~BMW widescreen display running Apple CarPlay;'
+    echo 'mg-audi-carplay-screen~Audi dashboard showing Apple CarPlay with a connected iPhone;'
+    echo 'mg-android-auto-dash~Car dashboard screen running Android Auto;'
+    echo 'mg-showroom~MG Car Audio showroom and product wall in Dublin;'
+    echo 'mg-bmw-japan-to-europe~BMW infotainment converted from Japanese to European spec;'
+    echo 'mg-mercedes-japan-to-europe~Mercedes-Benz infotainment converted from Japanese to European spec;'
+    echo 'mg-vw-japan-to-europe~Volkswagen infotainment converted from Japanese to European spec'
   endcapture
   assign fallback_entries = fallback_map | split: ';'
   for fallback_entry in fallback_entries
     assign fallback_parts = fallback_entry | split: '~'
     if fallback_parts[0] == fallback
-      assign fallback_w = fallback_parts[1]
-      assign fallback_h = fallback_parts[2]
-      assign fallback_alt = fallback_parts[3]
+      assign fallback_alt = fallback_parts[1]
       break
     endif
   endfor
-  assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
-  # Every built-in photo in the list has an 800px copy for phones
-  assign fallback_small = fallback | replace: '.webp', '-800.webp'
-  assign image_sizes = '(min-width: 1200px) 480px, (min-width: 990px) 40vw, (min-width: 750px) calc(100vw - 112px), calc(100vw - 80px)'
+  assign fallback_prefix = fallback | slice: 0, 7
+  if fallback_prefix == 'mg-img-'
+    assign fallback_alt = ''
+  else
+    assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
+  endif
+  assign image_sizes = '(min-width: 1200px) 720px, (min-width: 990px) 62vw, (min-width: 750px) calc(100vw - 48px), calc(100vw - 32px)'
 
   # Breadcrumb
   assign crumb_current = page.title | default: heading
@@ -303,11 +296,11 @@
         </script>
       {%- endif -%}
 
-      <div class="mg-panel mg-carmake__panel">
+      <div class="mg-panel mg-surface-night mg-cine mg-red-line mg-carmake__panel">
         <div class="mg-carmake__copy">
           <h1
             id="{{ title_id }}"
-            class="mg-h1-banner mg-carmake__title"
+            class="mg-h1-banner mg-carmake__title mg-load-rise"
           >
             {{- heading | escape -}}
           </h1>
@@ -373,7 +366,7 @@
           {%- endif -%}
         </div>
 
-        <div class="mg-carmake__media">
+        <div class="mg-cine__media mg-carmake__media">
           {%- if hero_media != blank -%}
             {%- liquid
               assign image_alt = hero_media.alt | default: heading
@@ -393,17 +386,14 @@
                 style: focal_style
             }}
           {%- else -%}
-            <img
-              class="mg-carmake__img"
-              src="{{ fallback | asset_url }}"
-              srcset="{{ fallback_small | asset_url }} 800w, {{ fallback | asset_url }} {{ fallback_w }}w"
-              sizes="{{ image_sizes }}"
-              alt="{{ fallback_alt | escape }}"
-              width="{{ fallback_w }}"
-              height="{{ fallback_h }}"
-              loading="eager"
-              fetchpriority="high"
-            >
+            {%- render 'mg-asset-image',
+              asset: fallback,
+              sizes: image_sizes,
+              loading: 'eager',
+              priority: 'high',
+              alt: fallback_alt,
+              class: 'mg-carmake__img'
+            -%}
           {%- endif -%}
         </div>
       </div>
@@ -450,7 +440,7 @@
       class="mg-section mg-section--band mg-carmake__fit"
       aria-label="{{ make_name | escape }} compatibility"
     >
-      <div class="mg-container mg-carmake__fit-grid">
+      <div class="mg-container mg-carmake__fit-grid" data-mg-reveal>
         {%- if systems != blank -%}
           <div class="mg-carmake__systems">
             <div class="mg-head">
@@ -533,7 +523,7 @@
       class="mg-section mg-carmake__services"
       aria-label="{{ make_name | escape }} services and prices"
     >
-      <div class="mg-container">
+      <div class="mg-container" data-mg-reveal>
         {%- if services_heading != blank or services_text != blank -%}
           <div class="mg-head">
             <div class="mg-head__text">
@@ -567,7 +557,7 @@
       class="mg-section mg-carmake__shop"
       aria-label="{{ shop_label | escape }}"
     >
-      <div class="mg-container">
+      <div class="mg-container" data-mg-reveal>
         <div class="mg-panel mg-carmake__shop-panel">
           <span
             class="mg-carmake__shop-icon"
@@ -600,7 +590,7 @@
       class="mg-section mg-carmake__content"
       aria-label="About {{ make_name | escape }} upgrades"
     >
-      <div class="mg-container mg-container--narrow">
+      <div class="mg-container mg-container--narrow" data-mg-reveal>
         {%- if content_heading != blank -%}
           <div class="mg-head">
             <h2 class="mg-head__title">{{ content_heading | escape }}</h2>
@@ -619,7 +609,7 @@
       class="mg-section mg-carmake__faq"
       aria-label="{{ make_name | escape }} frequently asked questions"
     >
-      <div class="mg-container mg-container--narrow">
+      <div class="mg-container mg-container--narrow" data-mg-reveal>
         {%- if faq_heading != blank -%}
           <div class="mg-head mg-head--center">
             <h2 class="mg-head__title">{{ faq_heading | escape }}</h2>
@@ -650,7 +640,7 @@
       class="mg-section mg-carmake__cta"
       aria-label="{{ cta_heading | escape }}"
     >
-      <div class="mg-container">
+      <div class="mg-container" data-mg-reveal>
         <div class="mg-panel mg-surface-red mg-carmake__cta-panel">
           <div class="mg-carmake__cta-copy">
             <h2 class="mg-display mg-carmake__cta-title">{{ cta_heading | escape }}</h2>
@@ -841,12 +831,6 @@
   }
 
   .mg-carmake__img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--mg-radius-md);
-    object-fit: cover;
     background-color: var(--mg-band-2);
   }
 
@@ -1235,10 +1219,6 @@
       align-self: flex-start;
     }
 
-    .mg-carmake__img {
-      aspect-ratio: 2 / 1;
-    }
-
     .mg-carmake .mg-carmake__facts {
       grid-template-columns: repeat(var(--mg-carmake-facts, 4), minmax(0, 1fr));
     }
@@ -1281,18 +1261,14 @@
   /* ---------- Desktop ---------- */
   @media screen and (min-width: 990px) {
     .mg-carmake__panel {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       align-items: center;
-      gap: var(--mg-space-7);
+      min-height: 460px;
+      padding-block: var(--mg-space-8);
     }
 
     .mg-carmake__media {
       order: 0;
-    }
-
-    /* Same crop as the home hero banner */
-    .mg-carmake__img {
-      aspect-ratio: 16 / 11;
     }
 
     .mg-carmake__fit-grid {
@@ -1410,7 +1386,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Header image",
-      "info": "Used when the car make entry has no hero image. Landscape, at least 1600px wide, with a focal point set. Cropped to 16:9 on phones, 2:1 on tablets and 16:11 on desktop."
+      "info": "Used when the car make entry has no hero image. Landscape, at least 1600px wide, with a focal point set. It fades into the dark header panel."
     },
     {
       "type": "select",
@@ -1420,7 +1396,23 @@
       "options": [
         {
           "value": "auto",
-          "label": "Match the make (BMW, Audi or showroom photo)"
+          "label": "Night dashboard mood photo (stock)"
+        },
+        {
+          "value": "mg-img-hero-1",
+          "label": "Night drive with dash screen (stock)"
+        },
+        {
+          "value": "mg-img-hero-3",
+          "label": "Cabin with blue ambient light (stock)"
+        },
+        {
+          "value": "mg-img-sys-screens",
+          "label": "Widescreen map display (stock)"
+        },
+        {
+          "value": "mg-img-sys-conversion",
+          "label": "Tokyo street at night (stock)"
         },
         {
           "value": "mg-bmw-carplay-screen.webp",

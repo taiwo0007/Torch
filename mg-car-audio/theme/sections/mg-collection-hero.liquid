@@ -14,39 +14,26 @@
     if section.settings.auto_image
       case collection.handle
         when 'carplay-android-auto'
-          assign asset_name = 'mg-bmw-carplay-screen.webp'
+          assign asset_name = 'mg-img-sys-carplay'
         when 'android-radios'
-          assign asset_name = 'mg-dash-radio.webp'
+          assign asset_name = 'mg-img-sys-android-radio'
         when 'screen-upgrades'
-          assign asset_name = 'mg-audi-carplay-screen.webp'
-        when 'speakers', 'subwoofers', 'amplifiers'
-          assign asset_name = 'mg-door-speaker.webp'
-        when 'dashcams', 'reverse-cameras', 'accessories'
-          assign asset_name = 'mg-dash-radio.webp'
+          assign asset_name = 'mg-img-sys-screens'
+        when 'speakers'
+          assign asset_name = 'mg-img-sys-speakers'
+        when 'subwoofers', 'amplifiers'
+          assign asset_name = 'mg-img-sys-subs-amps'
+        when 'dashcams'
+          assign asset_name = 'mg-img-sys-dashcam'
+        when 'reverse-cameras'
+          assign asset_name = 'mg-img-sys-reverse-camera'
+        when 'japanese-import-conversion', 'conversions'
+          assign asset_name = 'mg-img-sys-conversion'
       endcase
     endif
-
-    assign asset_small = ''
-    case asset_name
-      when 'mg-showroom.webp'
-        assign asset_width = 1600
-        assign asset_height = 1200
-        assign asset_small = 'mg-showroom-800.webp'
-      when 'mg-door-speaker.webp', 'mg-dash-radio.webp'
-        assign asset_width = 1024
-        assign asset_height = 1024
-      when 'mg-bmw-carplay-screen.webp'
-        assign asset_width = 1536
-        assign asset_height = 840
-        assign asset_small = 'mg-bmw-carplay-screen-800.webp'
-      else
-        assign asset_width = 1536
-        assign asset_height = 1024
-        assign asset_small = asset_name | replace: '.webp', '-800.webp'
-    endcase
   endif
 
-  assign image_sizes = '(min-width: 1200px) 420px, (min-width: 990px) 36vw, 40vw'
+  assign image_sizes = '(min-width: 1200px) 650px, (min-width: 990px) 58vw, 100vw'
 
   assign description = collection.description | strip
   if description == blank and section.settings.fallback_text != blank
@@ -78,7 +65,7 @@
     assign show_collections_crumb = true
   endif
 
-  assign panel_classes = 'mg-panel mg-ch__panel'
+  assign panel_classes = 'mg-panel mg-surface-night mg-red-line mg-ch__panel'
   if section.settings.show_image
     assign panel_classes = panel_classes | append: ' mg-ch__panel--media'
   endif
@@ -109,7 +96,7 @@
       <div class="mg-ch__copy">
         <h1
           id="{{ heading_id }}"
-          class="mg-h1-banner mg-ch__title"
+          class="mg-h1-banner mg-ch__title mg-load-rise"
         >
           {{ collection.title | escape }}
         </h1>
@@ -206,19 +193,14 @@
                 class: 'mg-ch__img'
             -}}
           {%- else -%}
-            <img
-              class="mg-ch__img"
-              src="{{ asset_name | asset_url }}"
-              {% if asset_small != blank %}
-                srcset="{{ asset_small | asset_url }} 800w, {{ asset_name | asset_url }} {{ asset_width }}w"
-                sizes="{{ image_sizes }}"
-              {% endif %}
-              width="{{ asset_width }}"
-              height="{{ asset_height }}"
-              alt=""
-              loading="eager"
-              fetchpriority="high"
-            >
+            {%- render 'mg-asset-image',
+              asset: asset_name,
+              sizes: image_sizes,
+              loading: 'eager',
+              priority: 'high',
+              alt: '',
+              class: 'mg-ch__img'
+            -%}
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -508,9 +490,20 @@
     color: var(--mg-whatsapp);
   }
 
-  /* Phones: text only, so the products start in the first screen */
+  /*
+   * The photo sits behind the copy on the night panel. Phones: a faint full-panel backdrop under
+   * a heavy shade, so the panel stays short and the products start in the first screen. From
+   * 990px: it fills the right side and fades left under the copy.
+   */
+  .mg-ch__panel {
+    isolation: isolate;
+    overflow: hidden;
+  }
+
   .mg-ch__media {
-    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     min-width: 0;
   }
 
@@ -518,32 +511,40 @@
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: var(--mg-radius-md);
     object-fit: cover;
     background-color: var(--mg-band-2);
+  }
+
+  .mg-ch__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.96) 0%, rgb(var(--mg-night-rgb) / 0.84) 55%, rgb(var(--mg-night-rgb) / 0.6) 100%);
   }
 
   @media screen and (min-width: 750px) {
     .mg-ch__panel--media {
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-      align-items: stretch;
-      gap: var(--mg-space-6);
-    }
-
-    .mg-ch__media {
-      display: flex;
-      min-height: 220px;
-    }
-
-    .mg-ch__img {
-      flex: 1 1 auto;
+      align-items: center;
+      min-height: 280px;
     }
   }
 
   @media screen and (min-width: 990px) {
     .mg-ch__panel--media {
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-      gap: var(--mg-space-7);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      min-height: 340px;
+    }
+
+    .mg-ch__media {
+      inset: 0 0 0 auto;
+      width: 60%;
+    }
+
+    .mg-ch__media::after {
+      background:
+        linear-gradient(to right, var(--mg-night) 0%, rgb(var(--mg-night-rgb) / 0.76) 24%, rgb(var(--mg-night-rgb) / 0.12) 66%, rgb(var(--mg-night-rgb) / 0) 100%),
+        linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.5), rgb(var(--mg-night-rgb) / 0) 45%);
     }
   }
 
@@ -664,7 +665,7 @@
       "type": "checkbox",
       "id": "auto_image",
       "label": "Match the stock photo to the collection",
-      "info": "For example, speakers get the door speaker photo and CarPlay gets the BMW screen photo.",
+      "info": "For example, speakers get the speaker close-up and CarPlay gets the CarPlay screen photo (stock mood photos).",
       "default": true
     },
     {
@@ -672,6 +673,18 @@
       "id": "fallback_asset",
       "label": "Default stock photo",
       "options": [
+        {
+          "value": "mg-img-hero-3.webp",
+          "label": "Cabin with blue ambient light (stock)"
+        },
+        {
+          "value": "mg-img-hero-2.webp",
+          "label": "Night dashboard and city lights (stock)"
+        },
+        {
+          "value": "mg-img-sys-screens.webp",
+          "label": "Widescreen map display (stock)"
+        },
         {
           "value": "mg-showroom.webp",
           "label": "MG showroom"
@@ -697,7 +710,7 @@
           "label": "Door speaker"
         }
       ],
-      "default": "mg-showroom.webp"
+      "default": "mg-img-hero-3.webp"
     }
   ],
   "presets": [

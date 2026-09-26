@@ -1,0 +1,292 @@
+{%- comment -%}
+  Night-drive CTA band: a full-bleed night photo under a dark shade, a big serif line and the
+  Book and WhatsApp buttons, with the MG red tail-light line along the bottom edge. The photo
+  drifts slightly against the scroll (off under reduced motion).
+{%- endcomment -%}
+
+{%- liquid
+  assign heading_id = 'MgCtaBandHeading-' | append: section.id
+  assign book_url = section.settings.book_url | default: '/pages/book-a-fitting'
+  assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
+
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_enabled and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
+    assign show_whatsapp = true
+  endif
+
+  assign line_1 = section.settings.heading | strip
+  assign line_2 = section.settings.heading_italic | strip
+  assign photo_fallback = section.settings.image_fallback | default: 'mg-img-bg-night-drive'
+-%}
+
+<div
+  class="mg-section mg-cta-band"
+  {% if line_1 != blank or line_2 != blank %}
+    role="region" aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="mg-cta-band__stage mg-surface-night mg-red-line">
+    <div
+      class="mg-cta-band__media"
+      data-mg-parallax
+    >
+      {%- if section.settings.image != blank -%}
+        {%- assign focal_style = 'object-position: ' | append: section.settings.image.presentation.focal_point -%}
+        {{
+          section.settings.image
+          | image_url: width: 2400
+          | image_tag:
+            widths: '600, 900, 1200, 1600, 2000, 2400',
+            sizes: '100vw',
+            loading: 'lazy',
+            alt: '',
+            class: 'mg-cta-band__img',
+            style: focal_style
+        }}
+      {%- else -%}
+        {%- render 'mg-asset-image', asset: photo_fallback, sizes: '100vw', alt: '', class: 'mg-cta-band__img' -%}
+      {%- endif -%}
+    </div>
+
+    <div class="mg-container mg-cta-band__inner">
+      <div
+        class="mg-cta-band__content"
+        data-mg-reveal-stagger
+      >
+        {%- if line_1 != blank or line_2 != blank -%}
+          <h2
+            class="mg-display mg-cta-band__heading"
+            id="{{ heading_id }}"
+          >
+            {%- if line_1 != blank -%}
+              <span class="mg-cta-band__line">{{ line_1 | escape }}</span>
+            {%- endif -%}
+            {%- if line_1 != blank and line_2 != blank %} {% endif -%}
+            {%- if line_2 != blank -%}
+              <em class="mg-cta-band__line">{{ line_2 | escape }}</em>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede mg-cta-band__text">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.book_label != blank or show_whatsapp -%}
+          <div class="mg-actions mg-cta-band__actions">
+            {%- if section.settings.book_label != blank -%}
+              <a
+                class="mg-btn mg-btn--primary mg-btn--lg"
+                href="{{ book_url }}"
+              >
+                {%- render 'mg-icon', icon: 'calendar' -%}
+                <span>{{ section.settings.book_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if show_whatsapp -%}
+              <a
+                class="mg-btn mg-btn--whatsapp mg-btn--lg"
+                href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {%- render 'mg-icon', icon: 'whatsapp' -%}
+                <span>{{ section.settings.whatsapp_label | escape }}</span>
+                <span class="mg-visually-hidden"> (opens WhatsApp)</span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* Layout only: colours come from .mg-surface-night, type from .mg-display and .mg-lede */
+  .mg-cta-band__stage {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 440px;
+    overflow: hidden;
+  }
+
+  .mg-cta-band__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .mg-cta-band__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mg-cta-band__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.92) 0%, rgb(var(--mg-night-rgb) / 0.62) 45%, rgb(var(--mg-night-rgb) / 0.4) 100%);
+  }
+
+  .mg-cta-band__inner {
+    display: flex;
+    align-items: flex-end;
+    padding-block: var(--mg-space-8) var(--mg-space-7);
+  }
+
+  .mg-cta-band__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .mg-cta-band__line {
+    display: block;
+  }
+
+  .mg-cta-band .mg-cta-band__heading {
+    font-size: var(--mg-fs-hero);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .mg-cta-band .mg-cta-band__text {
+    max-width: 46ch;
+  }
+
+  .mg-cta-band__actions {
+    align-self: stretch;
+    margin-top: var(--mg-space-5);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-cta-band__stage {
+      min-height: 480px;
+    }
+
+    .mg-cta-band__inner {
+      align-items: center;
+      padding-block: var(--mg-space-9);
+    }
+
+    .mg-cta-band__actions {
+      align-self: flex-start;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-cta-band__media::after {
+      background:
+        linear-gradient(to right, rgb(var(--mg-night-rgb) / 0.92) 0%, rgb(var(--mg-night-rgb) / 0.66) 38%, rgb(var(--mg-night-rgb) / 0.2) 72%, rgb(var(--mg-night-rgb) / 0.1) 100%);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG night-drive CTA",
+  "tag": "section",
+  "class": "mg-cta-band-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading line 1",
+      "default": "Send your reg tonight."
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading line 2 (italic)",
+      "info": "Shown on its own line in italic. Leave blank for a one-line heading.",
+      "default": "Drive home with CarPlay."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "info": "One short sentence.",
+      "default": "We agree a fixed fitted price first. Most fits take one to two hours at our Dublin 12 workshop."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "book_label",
+      "label": "Booking button label",
+      "info": "Leave blank to hide.",
+      "default": "Book a fitting"
+    },
+    {
+      "type": "url",
+      "id": "book_url",
+      "label": "Booking button link",
+      "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp button label",
+      "default": "WhatsApp us",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "WhatsApp pre-filled message",
+      "info": "Leave blank to use the message from Theme settings.",
+      "visible_if": "{{ section.settings.show_whatsapp }}"
+    },
+    {
+      "type": "header",
+      "content": "Photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "A dark, wide photo (at least 2000px). It sits under a dark shade, so the text stays readable."
+    },
+    {
+      "type": "select",
+      "id": "image_fallback",
+      "label": "Photo to use until one is uploaded",
+      "options": [
+        { "value": "mg-img-bg-night-drive", "label": "Motorway light trails at night (stock)" },
+        { "value": "mg-img-hero-2", "label": "Night dashboard and city lights (stock)" },
+        { "value": "mg-img-hero-3", "label": "Cabin with blue ambient light (stock)" }
+      ],
+      "default": "mg-img-bg-night-drive"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG night-drive CTA",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

@@ -222,7 +222,10 @@
 >
   <div class="mg-container">
     {%- if section.settings.heading != blank or section.settings.intro != blank -%}
-      <div class="mg-head mg-svc-details__head">
+      <div
+        class="mg-head mg-svc-details__head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
@@ -239,7 +242,10 @@
       </div>
     {%- endif -%}
 
-    <div class="mg-svc-details__layout">
+    <div
+      class="mg-svc-details__layout"
+      data-mg-reveal
+    >
       <div class="mg-svc-details__main">
         {%- for block in section.blocks -%}
           {%- case block.type -%}

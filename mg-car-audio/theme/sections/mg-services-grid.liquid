@@ -44,7 +44,10 @@
 <div class="mg-section mg-prices{% if show_image %} mg-prices--image{% endif %}">
   <div class="mg-container">
     {%- if section.settings.heading != blank or section.settings.button_label != blank -%}
-      <div class="mg-head">
+      <div
+        class="mg-head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
@@ -70,9 +73,15 @@
     {%- endif -%}
 
     {%- if card_count > 0 -%}
-      <div class="mg-panel mg-panel--flush mg-prices__panel">
+      <div
+        class="mg-panel mg-panel--flush mg-prices__panel"
+        data-mg-reveal
+      >
         {%- if show_image -%}
-          <div class="mg-prices__media">
+          <div
+            class="mg-prices__media"
+            data-mg-parallax
+          >
             {%- if section.settings.image != blank -%}
               {{
                 section.settings.image
@@ -85,17 +94,20 @@
                   class: 'mg-prices__photo'
               }}
             {%- else -%}
-              <img
-                class="mg-prices__photo"
-                src="{{ 'mg-showroom-800.webp' | asset_url }}"
-                srcset="{{ 'mg-showroom-800.webp' | asset_url }} 800w, {{ 'mg-showroom.webp' | asset_url }} 1600w"
-                sizes="(min-width: 1184px) 373px, 32vw"
-                alt="Car audio and CarPlay kits on the wall of the MG Car Audio showroom"
-                width="800"
-                height="600"
-                loading="lazy"
-                decoding="async"
-              >
+              {%- liquid
+                assign photo_fallback = section.settings.image_fallback | default: 'mg-img-panel-workshop'
+                if photo_fallback == 'mg-showroom'
+                  assign photo_alt = 'Car audio and CarPlay kits on the wall of the MG Car Audio showroom'
+                else
+                  assign photo_alt = ''
+                endif
+              -%}
+              {%- render 'mg-asset-image',
+                asset: photo_fallback,
+                sizes: '(min-width: 1184px) 373px, 32vw',
+                alt: photo_alt,
+                class: 'mg-prices__photo'
+              -%}
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -739,7 +751,17 @@
       "type": "image_picker",
       "id": "image",
       "label": "Photo",
-      "info": "A workshop or showroom photo, shown tall beside the cards. Until one is uploaded, the MG showroom photo is used."
+      "info": "A workshop or showroom photo, shown tall beside the cards."
+    },
+    {
+      "type": "select",
+      "id": "image_fallback",
+      "label": "Photo to use until one is uploaded",
+      "options": [
+        { "value": "mg-img-panel-workshop", "label": "Car on stands in a dark workshop (stock)" },
+        { "value": "mg-showroom", "label": "MG showroom (MG photo)" }
+      ],
+      "default": "mg-img-panel-workshop"
     },
     {
       "type": "header",

@@ -11,35 +11,77 @@
   if section.settings.panel == 'band'
     assign panel_class = ''
   endif
+
+  assign photo_fallback = section.settings.image_fallback | default: 'none'
+  assign has_media = false
+  if section.settings.image != blank or photo_fallback != 'none'
+    assign has_media = true
+  endif
 -%}
 
 <div class="mg-section mg-promise">
   <div class="mg-container">
-    <div class="mg-panel {{ panel_class }} mg-promise__panel">
-      <div class="mg-promise__intro">
-        {%- if section.settings.heading != blank -%}
-          <h2
-            class="mg-display mg-promise__heading"
-            id="{{ heading_id }}"
-          >
-            {{ section.settings.heading }}
-          </h2>
-        {%- endif -%}
-        {%- if section.settings.text != blank -%}
-          <p class="mg-lede">{{ section.settings.text | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.button_label != blank -%}
-          <p class="mg-promise__link">
-            <a
-              class="mg-link"
-              href="{{ button_url }}"
+    <div
+      class="mg-panel {{ panel_class }} mg-promise__panel{% if has_media %} mg-panel--flush mg-promise__panel--media{% endif %}"
+      data-mg-reveal
+    >
+      {%- capture intro -%}
+        <div class="mg-promise__intro">
+          {%- if section.settings.heading != blank -%}
+            <h2
+              class="mg-display mg-promise__heading"
+              id="{{ heading_id }}"
             >
-              {{- section.settings.button_label | escape -}}
-            </a>
-          </p>
-        {%- endif -%}
-      </div>
+              {{ section.settings.heading }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-lede">{{ section.settings.text | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_label != blank -%}
+            <p class="mg-promise__link">
+              <a
+                class="mg-link"
+                href="{{ button_url }}"
+              >
+                {{- section.settings.button_label | escape -}}
+              </a>
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endcapture -%}
 
+      {%- if has_media -%}
+        <div
+          class="mg-promise__media mg-surface-night"
+          data-mg-parallax
+        >
+          {%- if section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1400
+              | image_tag:
+                widths: '500, 700, 900, 1100, 1400',
+                sizes: '(min-width: 1184px) 533px, (min-width: 990px) 48vw, calc(100vw - 32px)',
+                loading: 'lazy',
+                alt: section.settings.image.alt,
+                class: 'mg-promise__img'
+            }}
+          {%- else -%}
+            {%- render 'mg-asset-image',
+              asset: photo_fallback,
+              sizes: '(min-width: 1184px) 533px, (min-width: 990px) 48vw, calc(100vw - 32px)',
+              alt: '',
+              class: 'mg-promise__img'
+            -%}
+          {%- endif -%}
+          {{ intro }}
+        </div>
+      {%- else -%}
+        {{ intro }}
+      {%- endif -%}
+
+      <div class="mg-promise__body">
       {%- if section.blocks.size > 0 -%}
         <div class="mg-card mg-card--raised mg-promise__card">
           <ul
@@ -77,6 +119,7 @@
       {%- elsif request.design_mode -%}
         <p class="mg-help">Add "Item" blocks to build the checklist.</p>
       {%- endif -%}
+      </div>
     </div>
   </div>
 </div>
@@ -92,6 +135,47 @@
 
   .mg-promise__intro {
     min-width: 0;
+  }
+
+  .mg-promise__body {
+    min-width: 0;
+  }
+
+  /* With a photo: the statement sits over the photo's dark shade, the checklist beside it */
+  .mg-promise__panel--media {
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .mg-promise__media {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-height: 340px;
+    padding: var(--mg-panel-pad);
+  }
+
+  .mg-promise__img {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mg-promise__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--mg-photo-scrim);
+  }
+
+  .mg-promise__panel--media .mg-promise__body {
+    padding: var(--mg-space-4);
   }
 
   .mg-promise__link {
@@ -150,6 +234,29 @@
     .mg-promise__intro {
       padding-inline-start: var(--mg-space-5);
     }
+
+    .mg-promise__panel--media {
+      gap: 0;
+    }
+
+    .mg-promise__panel--media .mg-promise__media {
+      min-height: 520px;
+    }
+
+    .mg-promise__panel--media .mg-promise__intro {
+      padding-inline-start: 0;
+    }
+
+    .mg-promise__panel--media .mg-promise__body {
+      align-self: center;
+      padding: var(--mg-panel-pad);
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .mg-promise__panel--media .mg-promise__body {
+      padding: var(--mg-panel-pad);
+    }
   }
 {% endstylesheet %}
 
@@ -187,6 +294,23 @@
       "id": "button_url",
       "label": "Link",
       "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Shown beside the checklist with the heading over it, under a dark shade. Leave blank and pick 'None' below for a panel without a photo."
+    },
+    {
+      "type": "select",
+      "id": "image_fallback",
+      "label": "Photo to use until one is uploaded",
+      "options": [
+        { "value": "mg-img-panel-promise", "label": "Hands wiring a car in warm light (stock)" },
+        { "value": "mg-img-panel-workshop", "label": "Car on stands in a dark workshop (stock)" },
+        { "value": "none", "label": "None" }
+      ],
+      "default": "mg-img-panel-promise"
     },
     {
       "type": "select",

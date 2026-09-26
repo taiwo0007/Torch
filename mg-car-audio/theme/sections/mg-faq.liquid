@@ -51,7 +51,10 @@
   >
     <div class="mg-container mg-container--narrow">
       {%- if heading != blank or section.settings.text != blank -%}
-        <div class="mg-head mg-head--center mg-faq__head">
+        <div
+          class="mg-head mg-head--center mg-faq__head"
+          data-mg-reveal
+        >
           <div class="mg-head__text">
             {%- if heading != blank -%}
               <h2
@@ -69,7 +72,10 @@
       {%- endif -%}
 
       {%- if faq_count > 0 -%}
-        <div class="mg-faq__list">
+        <div
+          class="mg-faq__list"
+          data-mg-reveal
+        >
           {%- for item in faq_items -%}
             {%- liquid
               if use_metaobject
@@ -222,25 +228,33 @@
     text-wrap: pretty;
   }
 
+  /* Chevron in a small round well: turns with an ease-out and fills with the action colour when open */
   .mg-faq__chevron {
+    box-sizing: border-box;
     flex: none;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+    border-radius: var(--mg-radius-pill);
+    background-color: var(--mg-band);
     color: var(--mg-ink-2);
     transition:
-      transform var(--mg-dur) var(--mg-ease),
+      transform 320ms var(--mg-ease-out),
+      background-color var(--mg-dur) var(--mg-ease),
       color var(--mg-dur) var(--mg-ease);
   }
 
   @media (hover: hover) {
     .mg-faq__question:hover .mg-faq__chevron {
+      background-color: var(--mg-band-2);
       color: var(--mg-ink);
     }
   }
 
   .mg-faq__item[open] .mg-faq__chevron {
     transform: rotate(180deg);
-    color: var(--mg-ink);
+    background-color: var(--mg-action);
+    color: var(--mg-on-action);
   }
 
   .mg-faq__item::details-content {

@@ -55,7 +55,7 @@
         "whatsapp_message": "Hi MG Car Audio, I'd like to book a fitting. My reg is: ",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
-        "fallback_image": "mg-showroom.webp",
+        "fallback_image": "mg-img-hero-1.webp",
         "show_rating": true
       }
     },

@@ -112,6 +112,10 @@ serves the repo on a random `127.0.0.1` port while it runs.
 - In full-page screenshots, `position: fixed` elements (the mobile action bar, the floating
   WhatsApp button) show where they sit in the first viewport, so they overlap whatever is there;
   `--fold` shows them in place. Horizon's desktop scroll container is unlocked so the full page
-  can be captured. CSS animations are finished before capture.
+  can be captured. CSS animations are finished before capture, and every scroll reveal
+  (`[data-mg-reveal]`, `[data-mg-reveal-stagger]`) is marked done, so the page shows its settled
+  state. Infinite animations (hero crossfade, marquee) show their first frame. Every image is
+  decoded first, and each full-page shot is taken twice (the first capture primes Chromium's
+  raster; a single capture sometimes left photos far below the fold unpainted).
 - The header is a fake bar that follows the MG tokens (so it switches with the scheme); the real
   Horizon header, drawers and search are not rendered.

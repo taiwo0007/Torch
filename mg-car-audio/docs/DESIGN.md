@@ -4,7 +4,7 @@
 
 **Design read:** a light, friendly, trust-first shop-and-book home page for Irish drivers (mostly on phones). It borrows Back Market's design grammar (light canvas, serif statements, one bold signature colour on big surfaces, black actions, trust strip, carousels, customer-photo reviews), carries MG's own brand (red `#DF3131`, the Prompt font), and uses native Liquid and CSS on Horizon.
 
-Dials (taste skill): DESIGN_VARIANCE 5 · MOTION_INTENSITY 3 · VISUAL_DENSITY 5.
+Dials (taste skill): DESIGN_VARIANCE 5 · MOTION_INTENSITY 5 (v3.1; was 3) · VISUAL_DENSITY 5.
 
 Skills this follows: `.claude/skills/design-taste-frontend`, `.claude/skills/redesign-existing-projects`, `.claude/skills/ui-ux-pro-max` (accessibility and UX rules), and Anthropic's `frontend-design`. Where they conflict with Taiwo's explicit direction (Back Market's grammar), **Taiwo's direction wins**.
 
@@ -104,16 +104,23 @@ Rules: one signature colour (red) for surfaces and highlights, black for actions
 - Radius: `8px` (buttons, inputs, chips), `12px` (cards, tiles), `16px` (panels, hero banner), `999px` (pills: search bar, trust strip, carousel arrows).
 - Z-index: content 1; `--mg-z-float: 40` (WhatsApp float and mobile action bar), below Horizon's drawers and modals.
 
-### Motion
+### Motion (v3.1: "premium car" pass)
 
-Only interaction feedback: 150–200ms on hover, focus and press (`scale(.98)` on press), plus carousel scrolling. The hero may have one gentle fade-in. `prefers-reduced-motion` removes transforms.
+Dial MOTION_INTENSITY 5. Every movement has a job: feedback, a reveal as content arrives, or the hero's mood.
+
+- **Feedback:** 150–200ms on hover, focus and press. Buttons lift 1px on hover and press to `scale(.98)`; cards and photo tiles lift 2px; photos inside cards and tiles zoom slowly (700ms, ease-out) on hover-capable devices only.
+- **Load:** one orchestrated rise on the hero copy (headline, italic line, lede, plate, WhatsApp link, 80ms apart). Inner-page h1s rise once.
+- **Scroll reveal:** sections fade and lift 20px once as they enter (560ms), grids and carousels stagger their children 70ms apart (`assets/mg-reveal.js`, §5.14). Transform and opacity only, no layout shift, nothing hidden without JavaScript.
+- **Ambient:** the hero photo crossfade with a slow Ken Burns zoom, the car-make marquee (the one marquee on the page) and a 5% image parallax on the photo panels. Each pauses off screen and on hover or focus; the hero and marquee have a pause button.
+- **Never:** scroll listeners, scroll-jacking, bounce, animated width/height, motion on every small element.
+- `prefers-reduced-motion`: no reveals, no crossfade (first photo only), no zoom, no parallax, the marquee becomes wrapped chips.
 
 ## 3. Home page v3 (mobile-first order)
 
 1. **Header** (Horizon restyled): white; logo; big rounded search pill "What are you upgrading?"; phone link; cart. A second row with a horizontally scrollable system nav (CarPlay, Screens, Android radios, Speakers, Subs & amps, Dash cams, Reverse cameras, Conversions, Repairs). Thin hairline under it.
-2. **Hero banner** (`mg-hero`): a rounded (16px) **MG red** banner inside the container, like Back Market's lime banner. Left: serif h1 on two lines, e.g. "Your car already has the screen." / *"Add CarPlay."* (the italic line in serif italic), one short sentence, and the **plate input + black "Get a quote" button**. Right: the MG BMW CarPlay photo (rounded, no scrim needed). Mobile: stacked, image on top, banner full width with 16px gutters. White text on red (4.6:1). The button is black on red with white text.
+2. **Hero** (`mg-hero`, v3.1): a full-bleed night photo (optional crossfade of up to three) under a dark scrim, the serif h1 with the italic line in red ink, the plate input + light "Get a quote" button and the WhatsApp link, and a thin MG red tail-light line along the bottom edge. Phones: copy at the bottom, plate in the first screen at 390x844. *(v3 was a rounded MG red banner inside the container:)* Left: serif h1 on two lines, e.g. "Your car already has the screen." / *"Add CarPlay."* (the italic line in serif italic), one short sentence, and the **plate input + black "Get a quote" button**. Right: the MG BMW CarPlay photo (rounded, no scrim needed). Mobile: stacked, image on top, banner full width with 16px gutters. White text on red (4.6:1). The button is black on red with white text.
 3. **Statement + trust strip** (`mg-trust-bar`): a centred serif statement "Ireland's CarPlay and car audio specialist." with the subline "Fixed fitted prices at our Dublin 12 workshop. Backed by our fitting warranty." (keep "warranty" wording as a placeholder until confirmed). Below it, a grey pill strip of 4 items with line icons. Mobile: a 2×2 grid inside a rounded grey panel.
-4. **Shop by system** (`mg-system-grid`, NEW): h2 "Shop by system", with 8 tiles in a 4×2 grid on desktop and 2 columns on mobile. Each tile: `--mg-red-tint` panel, MG photo centred with 12px radius (or a designed icon when no photo exists), label below ("CarPlay & Android Auto"), and a small "From €299 fitted" line in `--mg-red-ink`. The whole tile is the link. Hover: 1px red inset edge and a slight lift.
+4. **Shop by system** (`mg-system-grid`): h2 "Shop by system", with 8 tiles in a 4×2 grid on desktop and 2 columns on mobile. v3.1: full-photo tiles (`.mg-tile--photo`, 4:5, 5:6 from 990px) with a dark bottom scrim, white label and "From €X fitted", an arrow chip, and a red edge glow plus slow zoom on hover or focus. *(v3:)* Each tile: `--mg-red-tint` panel, MG photo centred with 12px radius (or a designed icon when no photo exists), label below ("CarPlay & Android Auto"), and a small "From €299 fitted" line in `--mg-red-ink`. The whole tile is the link. Hover: 1px red inset edge and a slight lift.
 5. **Fitted prices panel** (`mg-services-grid` → Back Market "best deals" pattern): a grey band panel with a rounded photo on the left (desktop) and, on the right, chip tabs plus a horizontal card carousel of services with real prices (€350 BMW CarPlay, €299 BMW Android Auto iD7, €150 Android radio install, €149 iDrive 7 video in motion, €450 BMW Japanese-to-European conversion, others "Price on request"). Mobile: the photo is hidden and chips scroll horizontally above the cards. Round arrow buttons.
 6. **Best sellers** (Horizon `product-list`, restyled as Back Market product cards in `mg-theme.css`).
 7. **What's in every MG fit** (NEW section `mg-promise`, or reuse `mg-how-it-works`): a `--mg-warm` panel with a serif heading on the left and a white checklist card on the right (6 items with icons).
@@ -121,12 +128,15 @@ Only interaction feedback: 150–200ms on hover, focus and press (`scale(.98)` o
 9. **How it works** (4 real steps, numbered, compact row, or merged into section 7 if it duplicates it).
 10. **Reviews** (`mg-reviews` → Back Market style): h2 "What Dublin drivers say" + a rating summary; a carousel of photo cards (install photo top with a name tag top-left, stars, a 3-line quote, "Car: BMW 3 Series" line). Show a "Sample reviews" tag until real ones exist.
 11. **Latest jobs** (`mg-gallery`): an optional compact photo carousel. It may merge with reviews if that reads as repetition.
+11b. **Night-drive CTA band** (`mg-cta-band`, v3.1): full-bleed light-trails photo under a dark shade, a big serif line ("Send your reg tonight." / *"Drive home with CarPlay."*), Book + WhatsApp buttons, the red tail-light line. Sits before the FAQ.
 12. **FAQ** (`mg-faq`): a centred 720px list titled "Questions drivers always ask", rows with chevrons, no boxes.
 13. **Visit the workshop** (`mg-contact-map`): a light card with address, hours, buttons and the map facade.
 14. **Footer**: light grey, clean columns, NAP, policies.
 15. **Mobile action bar** (≤ 749px): white bar with a top hairline; Call · WhatsApp · **Book** (black primary); safe-area padding; the page gets bottom padding. The desktop keeps the floating WhatsApp button.
 
-Inner pages (service, car-make, quote, contact, collection, product) get the same light system: red hero banner or a light header band, black buttons, grey bands, the same cards and chips.
+Inner pages (service, car-make, quote, contact, collection, product) get the same light system: black buttons, grey bands, the same cards and chips. v3.1: the service, book-a-fitting, services, car-make and collection headers are cinematic night panels (`.mg-cine`, §5.14): the photo fades into the dark panel, copy on top, red tail-light line.
+
+**Photos (v3.1).** The `mg-img-*` files are royalty-free stock mood photos (docs/IMAGE_CREDITS.md). They set the scene in heroes, system tiles, panels and the CTA band, carry an empty `alt`, and are never presented as MG's work: "Latest jobs", reviews and anything that claims "our work" keep MG's own `mg-*` photos. Section fallback selects label them "(stock)".
 
 ## 4. Quality bar (pre-flight, every section)
 
@@ -466,6 +476,27 @@ Kept so current sections keep working while they are redone; restyled to the v3 
 | `--mg-bg`, `--mg-surface`, `--mg-surface-2`, `--mg-border`, `--mg-border-strong`, `--mg-text`, `--mg-text-muted`, `--mg-text-subtle` | page, band, band-2, line, line-strong, ink, ink-2, ink-3 | the new names |
 | `--mg-accent`, `--mg-accent-text`, `--mg-accent-hover`, `--mg-accent-soft`, `--mg-on-accent`, `--mg-accent-hover-bg`, `--mg-glow` | red, red-ink, red-ink, red-tint, on-red, red-deep, 1px red ring | the new names (red is never a button fill) |
 | `--mg-radius`, `--mg-page-max`, `--mg-section-space`, `--mg-h1`, `--mg-h2`, `--mg-h3`, `--mg-h1-page`, `--mg-eyebrow-size` | radius-md, container + gutters, section gap, fs-hero, fs-h2, fs-h3, fs-banner, fs-small | the new names |
+
+### 5.14 Photo surfaces and motion (v3.1)
+
+Source: the "13B" block in `mg-theme.css`, `assets/mg-reveal.js`, `snippets/mg-reveal-script.liquid` (rendered once by the layout), `snippets/mg-asset-image.liquid`.
+
+| Class / attribute | Purpose |
+|---|---|
+| `.mg-surface-night` | Fixed dark surface (`--mg-night`) with light ink, light primary buttons, glass secondary buttons and a white focus ring, in both schemes. For content on photos. |
+| `.mg-red-line` | A 2px MG red tail-light line along the element's bottom edge (fades out at both ends). |
+| `.mg-cine` + `.mg-cine__media` | Cinematic panel: use with `.mg-panel.mg-surface-night`. The media (first in the markup) sits on top on phones and fades down into the copy; from 990px it fills the right side (`--mg-cine-media`, default 62%) and fades left. |
+| `.mg-tile--photo` (+ `.mg-tile__arrow`) | Full-photo system tile: the `.mg-tile__media` image covers the tile under `--mg-photo-scrim`, white label and price. Hover (hover devices) and focus-visible: red edge (`--mg-red-edge`), 1.06 zoom, arrow nudge. Ratio via `--mg-tile-ratio`. |
+| `.mg-section--top` | Section that starts flush under the header (full-bleed heroes). |
+| `.mg-load-rise` | One-time rise on load; stagger with `style="--mg-load-delay: 180ms"`. |
+| `[data-mg-reveal]` | Fades and lifts in once when it enters the viewport. Put it on a section's head and main block, not on small elements. |
+| `[data-mg-reveal-stagger]` | The same for each direct child, 70ms apart (max 8 steps). Use on grids, lists and carousel tracks. |
+| `[data-mg-parallax]` | Its `<img>` drifts ±5% against the scroll (CSS scroll-driven animation; a rAF fallback runs only while on screen, fine-pointer devices only). The wrapper clips. |
+| `[data-mg-pause-offscreen]` | Gets `[data-mg-offscreen]` while out of view, so its CSS can pause animations. |
+| `.mg-motion-toggle[data-mg-motion-toggle]` | 36px round pause button (44px hit area) with `aria-controls` and `aria-pressed`; the controlled element gets `[data-mg-user-paused]`. Render it `hidden`: the script shows it (never under reduced motion). Put a `pause` and a `play` `mg-icon` inside. |
+| `{% render 'mg-asset-image', asset: 'mg-img-hero-1', sizes: '100vw', loading: 'eager', priority: 'high', class: '...' %}` | Theme photo with real width/height and a srcset when a smaller copy exists. Knows every `mg-*.webp` in `assets/`. |
+
+Rules: reveals are progressive enhancement (the script adds `.mg-reveal-on` to `<html>` after marking what is already on screen, so nothing flashes); the theme editor and reduced motion get no reveals; one marquee per page.
 
 ### 5.13 Section pre-flight
 

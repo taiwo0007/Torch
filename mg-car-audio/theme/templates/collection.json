@@ -24,7 +24,7 @@
         "help_text": "Not sure what fits your car?",
         "help_link_label": "WhatsApp us",
         "auto_image": true,
-        "fallback_asset": "mg-showroom.webp",
+        "fallback_asset": "mg-img-hero-3.webp",
         "show_image": true
       }
     },

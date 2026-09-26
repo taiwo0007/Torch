@@ -29,7 +29,10 @@
 >
   <div class="mg-container">
     <mg-carousel class="mg-carousel mg-carousel--bleed mg-reviews__carousel">
-      <div class="mg-head">
+      <div
+        class="mg-head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if heading != blank -%}
             <h2
@@ -98,6 +101,7 @@
       {%- if section.blocks.size > 0 -%}
         <ul
           class="mg-carousel__track"
+          data-mg-reveal-stagger
           role="list"
           tabindex="0"
           aria-label="Customer reviews"

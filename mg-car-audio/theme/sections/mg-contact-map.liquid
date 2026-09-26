@@ -87,7 +87,10 @@
 >
   <div class="mg-container">
     {%- if heading != blank or section.settings.text != blank -%}
-      <div class="mg-head">
+      <div
+        class="mg-head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if heading != blank -%}
             <h2
@@ -104,7 +107,10 @@
       </div>
     {%- endif -%}
 
-    <mg-contact-map class="{{ panel_classes }}">
+    <mg-contact-map
+      class="{{ panel_classes }}"
+      data-mg-reveal
+    >
       <div class="mg-contact__info">
         <div class="mg-contact__details">
           <div class="mg-contact__group">

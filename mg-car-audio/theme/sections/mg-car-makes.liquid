@@ -5,15 +5,28 @@
   if section.settings.align_desktop == 'center'
     assign centred = true
   endif
+
+  assign marquee = false
+  if section.settings.layout == 'marquee'
+    assign marquee = true
+  endif
+  assign marquee_id = 'MgMakesMarquee-' | append: section.id
+  assign copies = 1
+  if marquee
+    assign copies = 2
+  endif
 -%}
 
 {%- comment -%} Loads the chip focus helper (a focused chip scrolls clear of the edge fade) {%- endcomment -%}
 {%- render 'mg-carousel-script' -%}
 
-<div class="mg-section mg-makes{% if centred %} mg-makes--center{% endif %}">
+<div class="mg-section mg-makes{% if centred %} mg-makes--center{% endif %}{% if marquee %} mg-makes--marquee{% endif %}">
   <div class="mg-container mg-makes__layout">
     {%- if section.settings.heading != blank or section.settings.view_all_label != blank -%}
-      <div class="mg-head mg-makes__head">
+      <div
+        class="mg-head mg-makes__head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
@@ -27,93 +40,220 @@
             <p class="mg-head__sub">{{ section.settings.text | escape }}</p>
           {%- endif -%}
         </div>
-        {%- if section.settings.view_all_label != blank -%}
-          <a
-            class="mg-link mg-head__link"
-            href="{{ view_all_url }}"
-          >
-            {{- section.settings.view_all_label | escape -}}
-          </a>
+        {%- if section.settings.view_all_label != blank or marquee -%}
+          <div class="mg-head__actions mg-makes__actions">
+            {%- if marquee -%}
+              <button
+                class="mg-motion-toggle"
+                type="button"
+                aria-controls="{{ marquee_id }}"
+                aria-pressed="false"
+                aria-label="Pause the scrolling car makes"
+                data-mg-motion-toggle
+                hidden
+              >
+                {%- render 'mg-icon', icon: 'pause' -%}
+                {%- render 'mg-icon', icon: 'play' -%}
+              </button>
+            {%- endif -%}
+            {%- if section.settings.view_all_label != blank -%}
+              <a
+                class="mg-link mg-head__link"
+                href="{{ view_all_url }}"
+              >
+                {{- section.settings.view_all_label | escape -}}
+              </a>
+            {%- endif -%}
+          </div>
         {%- endif -%}
       </div>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <ul
-        class="mg-chips mg-chips--bleed mg-makes__chips"
-        role="list"
-        {% if section.settings.heading != blank %}
-          aria-labelledby="{{ heading_id }}"
-        {% else %}
-          aria-label="Car makes"
+      <div
+        class="mg-makes__marquee{% unless marquee %} mg-makes__marquee--off{% endunless %}"
+        id="{{ marquee_id }}"
+        style="--mg-makes-loop: {{ section.settings.loop_seconds | default: 50 }}s;"
+        {% if marquee %}
+          data-mg-pause-offscreen
         {% endif %}
+        data-mg-reveal
       >
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'make' -%}
-              {%- liquid
-                assign make_name = block.settings.name | strip
-                if make_name == blank
-                  continue
-                endif
-                assign make_handle = make_name | handleize
-                assign default_make_url = '/pages/' | append: make_handle | append: '-carplay'
-                assign chip_url = block.settings.url | default: default_make_url
-                assign chip_sub = block.settings.subtitle | strip
-              -%}
-              <li {{ block.shopify_attributes }}>
-                <a
-                  class="mg-chip mg-makes__chip"
-                  href="{{ chip_url }}"
-                  {% if request.path == chip_url %}
-                    aria-current="page"
-                  {% endif %}
-                >
-                  {%- if block.settings.image != blank -%}
-                    <span
-                      class="mg-makes__avatar"
-                      aria-hidden="true"
+        <div class="mg-makes__track">
+          {%- for copy in (1..copies) -%}
+            <ul
+              class="mg-chips mg-chips--bleed mg-makes__chips"
+              role="list"
+              {% if copy == 2 %}
+                aria-hidden="true"
+              {% elsif section.settings.heading != blank %}
+                aria-labelledby="{{ heading_id }}"
+              {% else %}
+                aria-label="Car makes"
+              {% endif %}
+            >
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'make' -%}
+                  {%- liquid
+                    assign make_name = block.settings.name | strip
+                    if make_name == blank
+                      continue
+                    endif
+                    assign make_handle = make_name | handleize
+                    assign default_make_url = '/pages/' | append: make_handle | append: '-carplay'
+                    assign chip_url = block.settings.url | default: default_make_url
+                    assign chip_sub = block.settings.subtitle | strip
+                  -%}
+                  <li {% if copy == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                    <a
+                      class="mg-chip mg-makes__chip"
+                      href="{{ chip_url }}"
+                      {% if copy == 2 %}
+                        tabindex="-1"
+                      {% endif %}
+                      {% if request.path == chip_url %}
+                        aria-current="page"
+                      {% endif %}
                     >
-                      {{-
-                        block.settings.image
-                        | image_url: width: 96, height: 96, crop: 'center'
-                        | image_tag: width: 24, height: 24, loading: 'lazy', alt: ''
-                      -}}
-                    </span>
-                  {%- endif -%}
-                  <span class="mg-makes__name">{{ make_name | escape }}</span>
-                  {%- if chip_sub != blank %}
-                    <span class="mg-makes__sub">{{ chip_sub | escape }}</span>
-                  {%- endif -%}
-                </a>
-              </li>
-            {%- when 'link' -%}
-              {%- liquid
-                assign chip_label = block.settings.label | strip
-                if chip_label == blank
-                  continue
-                endif
-                assign chip_url = block.settings.url | default: '/pages/get-a-quote'
-              -%}
-              <li {{ block.shopify_attributes }}>
-                <a
-                  class="mg-chip mg-makes__chip"
-                  href="{{ chip_url }}"
-                  {% if request.path == chip_url %}
-                    aria-current="page"
-                  {% endif %}
-                >
-                  <span class="mg-makes__name">{{ chip_label | escape }}</span>
-                </a>
-              </li>
-          {%- endcase -%}
-        {%- endfor -%}
-      </ul>
+                      {%- if block.settings.image != blank -%}
+                        <span
+                          class="mg-makes__avatar"
+                          aria-hidden="true"
+                        >
+                          {{-
+                            block.settings.image
+                            | image_url: width: 96, height: 96, crop: 'center'
+                            | image_tag: width: 24, height: 24, loading: 'lazy', alt: ''
+                          -}}
+                        </span>
+                      {%- endif -%}
+                      <span class="mg-makes__name">{{ make_name | escape }}</span>
+                      {%- if chip_sub != blank %}
+                        <span class="mg-makes__sub">{{ chip_sub | escape }}</span>
+                      {%- endif -%}
+                    </a>
+                  </li>
+                {%- when 'link' -%}
+                  {%- liquid
+                    assign chip_label = block.settings.label | strip
+                    if chip_label == blank
+                      continue
+                    endif
+                    assign chip_url = block.settings.url | default: '/pages/get-a-quote'
+                  -%}
+                  <li {% if copy == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                    <a
+                      class="mg-chip mg-makes__chip"
+                      href="{{ chip_url }}"
+                      {% if copy == 2 %}
+                        tabindex="-1"
+                      {% endif %}
+                      {% if request.path == chip_url %}
+                        aria-current="page"
+                      {% endif %}
+                    >
+                      <span class="mg-makes__name">{{ chip_label | escape }}</span>
+                    </a>
+                  </li>
+              {%- endcase -%}
+            {%- endfor -%}
+            </ul>
+          {%- endfor -%}
+        </div>
+      </div>
     {%- endif -%}
   </div>
 </div>
 
 {% stylesheet %}
+  /*
+   * Marquee (Layout: marquee): the chip list runs twice in one track (the copy is aria-hidden
+   * and out of the tab order) and the track slides left by half its width, so the loop is
+   * seamless. It pauses on hover, on focus, off screen and with its pause button. Reduced
+   * motion (and Layout: chips): one list, the usual chip row (phones) or wrapped chips.
+   */
+  .mg-makes__track {
+    display: flex;
+    min-width: 0;
+  }
+
+  .mg-makes--marquee .mg-makes__marquee {
+    overflow: hidden;
+    margin-inline: calc(var(--mg-gutter) * -1);
+    -webkit-mask-image: linear-gradient(90deg, transparent, var(--mg-mask) 7%, var(--mg-mask) 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, var(--mg-mask) 7%, var(--mg-mask) 93%, transparent);
+  }
+
+  .mg-makes--marquee .mg-makes__track {
+    width: max-content;
+  }
+
+  /* Each copy is a plain flex row; the trailing padding equals the gap, so both copies match */
+  .mg-makes--marquee .mg-makes__chips {
+    flex: none;
+    flex-wrap: nowrap;
+    overflow: visible;
+    margin: 0;
+    padding-block: 4px;
+    padding-inline: 0 var(--mg-space-2);
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: none;
+  }
+
+  .mg-makes--marquee .mg-makes__chips > li {
+    flex: none;
+  }
+
+  @keyframes mg-makes-marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-makes--marquee .mg-makes__track {
+      animation: mg-makes-marquee var(--mg-makes-loop, 50s) linear infinite;
+    }
+
+    .mg-makes__marquee:is(:hover, :focus-within, [data-mg-offscreen], [data-mg-user-paused]) .mg-makes__track {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-makes--marquee .mg-makes__marquee {
+      margin-inline: 0;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .mg-makes--marquee .mg-makes__track {
+      width: auto;
+    }
+
+    .mg-makes--marquee .mg-makes__chips[aria-hidden] {
+      display: none;
+    }
+
+    .mg-makes--marquee .mg-makes__chips {
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      min-width: 0;
+      padding-inline: 0;
+    }
+  }
+
+  .mg-makes:not(.mg-makes--marquee) .mg-makes__chips {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .mg-makes__actions {
+    gap: var(--mg-space-4);
+  }
+
   .mg-makes__avatar {
     display: block;
     flex: none;
@@ -137,7 +277,11 @@
   }
 
   @media screen and (min-width: 750px) {
-    .mg-makes__chips {
+    .mg-makes--marquee .mg-makes__marquee {
+      margin-inline: 0;
+    }
+
+    .mg-makes:not(.mg-makes--marquee) .mg-makes__chips {
       flex-wrap: wrap;
       overflow: visible;
       -webkit-mask-image: none;
@@ -208,6 +352,28 @@
       "id": "view_all_url",
       "label": "Link",
       "info": "Leave blank to link to /pages/get-a-quote."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "info": "Marquee: one row that scrolls slowly on its own and pauses on hover, on focus and with its pause button. Visitors who turn off motion see the chips wrapped. Use 8 or more makes so the row is full.",
+      "options": [
+        { "value": "marquee", "label": "Marquee" },
+        { "value": "chips", "label": "Chips" }
+      ],
+      "default": "marquee"
+    },
+    {
+      "type": "range",
+      "id": "loop_seconds",
+      "label": "Marquee speed (seconds per loop)",
+      "min": 30,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 50,
+      "visible_if": "{{ section.settings.layout == 'marquee' }}"
     },
     {
       "type": "select",

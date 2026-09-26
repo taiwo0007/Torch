@@ -5,9 +5,11 @@
   assign price_fallback = section.settings.price_fallback | strip
 
   if cols == 3
-    assign img_sizes = '(min-width: 1184px) 352px, (min-width: 750px) calc((100vw - 96px) / 3), calc((100vw - 56px) / 2)'
+    assign img_sizes = '(min-width: 1184px) 368px, (min-width: 750px) calc((100vw - 72px) / 3), calc((100vw - 40px) / 2)'
+  elsif cols == 2
+    assign img_sizes = '(min-width: 1184px) 552px, (min-width: 750px) calc((100vw - 60px) / 2), calc((100vw - 40px) / 2)'
   else
-    assign img_sizes = '(min-width: 1184px) 244px, (min-width: 750px) calc((100vw - 120px) / 4), calc((100vw - 56px) / 2)'
+    assign img_sizes = '(min-width: 1184px) 272px, (min-width: 750px) calc((100vw - 84px) / 4), calc((100vw - 40px) / 2)'
   endif
 -%}
 
@@ -17,7 +19,10 @@
 >
   <div class="mg-container">
     {%- if section.settings.heading != blank or section.settings.link_label != blank -%}
-      <div class="mg-head">
+      <div
+        class="mg-head"
+        data-mg-reveal
+      >
         <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
@@ -46,6 +51,7 @@
       <ul
         class="mg-grid mg-systems__grid"
         role="list"
+        data-mg-reveal-stagger
         {% if section.settings.heading != blank %}
           aria-labelledby="{{ heading_id }}"
         {% endif %}
@@ -64,27 +70,10 @@
             assign asset = block.settings.fallback_asset | default: 'none'
             assign icon = block.settings.icon | default: 'none'
 
-            assign asset_w = 1536
-            assign asset_h = 1024
-            assign asset_small_h = 533
-            assign asset_has_small = true
-            case asset
-              when 'mg-bmw-carplay-screen'
-                assign asset_h = 840
-                assign asset_small_h = 438
-              when 'mg-showroom'
-                assign asset_w = 1600
-                assign asset_h = 1200
-                assign asset_small_h = 600
-              when 'mg-dash-radio', 'mg-door-speaker', 'mg-single-din-radio', 'mg-speaker-pair'
-                assign asset_w = 1024
-                assign asset_h = 1024
-                assign asset_has_small = false
-            endcase
-
             assign media = 'none'
             if block.settings.image != blank
               assign media = 'image'
+              assign focal_style = 'object-position: ' | append: block.settings.image.presentation.focal_point
             elsif asset != 'none'
               assign media = 'asset'
             elsif icon != 'none'
@@ -96,7 +85,7 @@
             {{ block.shopify_attributes }}
           >
             <a
-              class="mg-tile mg-systems__tile{% if media == 'none' %} mg-systems__tile--text{% endif %}"
+              class="mg-tile mg-systems__tile{% if media == 'image' or media == 'asset' %} mg-tile--photo{% endif %}{% if media == 'none' %} mg-systems__tile--text{% endif %}"
               href="{{ tile_url }}"
             >
               {%- case media -%}
@@ -104,44 +93,27 @@
                   <span class="mg-tile__media">
                     {{-
                       block.settings.image
-                      | image_url: width: 800
+                      | image_url: width: 900
                       | image_tag:
-                        widths: '240, 360, 480, 640, 800',
+                        widths: '300, 450, 600, 750, 900',
                         sizes: img_sizes,
                         loading: 'lazy',
-                        alt: ''
+                        alt: '',
+                        style: focal_style
                     -}}
                   </span>
                 {%- when 'asset' -%}
                   <span class="mg-tile__media">
-                    {%- if asset_has_small -%}
-                      {%- assign asset_small = asset | append: '-800.webp' -%}
-                      <img
-                        src="{{ asset_small | asset_url }}"
-                        srcset="{{ asset_small | asset_url }} 800w, {{ asset | append: '.webp' | asset_url }} {{ asset_w }}w"
-                        sizes="{{ img_sizes }}"
-                        width="800"
-                        height="{{ asset_small_h }}"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      >
-                    {%- else -%}
-                      <img
-                        src="{{ asset | append: '.webp' | asset_url }}"
-                        width="{{ asset_w }}"
-                        height="{{ asset_h }}"
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                      >
-                    {%- endif -%}
+                    {%- render 'mg-asset-image', asset: asset, sizes: img_sizes, loading: 'lazy', alt: '' -%}
                   </span>
                 {%- when 'icon' -%}
                   <span class="mg-tile__media mg-systems__media--icon">
                     {%- render 'mg-icon', icon: icon -%}
                   </span>
               {%- endcase -%}
+              {%- if media == 'image' or media == 'asset' -%}
+                <span class="mg-tile__arrow">{% render 'mg-icon', icon: 'arrow-right' %}</span>
+              {%- endif -%}
               <span class="mg-tile__label">{{ title | escape }}</span>
               {% if price != blank -%}
                 <span class="mg-tile__meta">
@@ -185,6 +157,15 @@
     margin-block-start: auto;
   }
 
+  /* Photo tiles: label and price sit together at the bottom, over the scrim */
+  .mg-systems__tile.mg-tile--photo .mg-tile__meta {
+    margin-block-start: 0;
+  }
+
+  .mg-systems__tile.mg-tile--photo .mg-tile__label {
+    margin-block-start: auto;
+  }
+
   /* A tile with no picture keeps its label and price together at the bottom */
   .mg-systems__tile--text .mg-tile__label {
     margin-block-start: auto;
@@ -209,6 +190,13 @@
   @media screen and (min-width: 750px) {
     .mg-systems__grid {
       grid-template-columns: repeat(var(--mg-systems-cols, 4), minmax(0, 1fr));
+    }
+  }
+
+  /* Wide tiles (2 or 3 columns) would get very tall at 4:5 */
+  @media screen and (min-width: 990px) {
+    .mg-systems .mg-tile--photo {
+      --mg-tile-ratio: 5 / 6;
     }
   }
 
@@ -315,15 +303,23 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "Shown at 4:3 with rounded corners. Don't use car-maker logos."
+          "info": "Fills the tile (cropped to about 4:5) under a dark shade. Set a focal point. Don't use car-maker logos."
         },
         {
           "type": "select",
           "id": "fallback_asset",
           "label": "Photo when no image is picked",
-          "info": "Product and install photos suit the tiles best. The Japan-to-Europe graphics carry their own lettering, so a tile without a real photo uses its icon instead. Placeholder: upload a real conversion photo when one exists.",
+          "info": "The stock mood photos suit these full-photo tiles best. The Japan-to-Europe graphics carry their own lettering, so avoid them here.",
           "options": [
             { "value": "none", "label": "None (use the icon)" },
+            { "value": "mg-img-sys-carplay", "label": "CarPlay on a dash screen (stock)" },
+            { "value": "mg-img-sys-screens", "label": "Widescreen map display (stock)" },
+            { "value": "mg-img-sys-android-radio", "label": "Double-DIN head unit (stock)" },
+            { "value": "mg-img-sys-speakers", "label": "Speaker cone close-up (stock)" },
+            { "value": "mg-img-sys-subs-amps", "label": "Boot subwoofer install (stock)" },
+            { "value": "mg-img-sys-dashcam", "label": "Dash cam on a windscreen (stock)" },
+            { "value": "mg-img-sys-reverse-camera", "label": "Reversing camera view (stock)" },
+            { "value": "mg-img-sys-conversion", "label": "Tokyo street at night (stock)" },
             { "value": "mg-audi-carplay-screen", "label": "Audi dash with CarPlay" },
             { "value": "mg-bmw-carplay-screen", "label": "BMW widescreen with CarPlay" },
             { "value": "mg-android-auto-dash", "label": "Dash with Android Auto" },
@@ -337,7 +333,7 @@
             { "value": "mg-vw-japan-to-europe", "label": "VW Japan-to-Europe graphic" },
             { "value": "mg-radio-frequency-conversion", "label": "Radio frequency conversion graphic" }
           ],
-          "default": "none"
+          "default": "mg-img-sys-carplay"
         },
         {
           "type": "select",
@@ -374,7 +370,7 @@
             "price": "€299",
             "price_label": "From",
             "price_suffix": "fitted",
-            "fallback_asset": "mg-audi-carplay-screen",
+            "fallback_asset": "mg-img-sys-carplay",
             "icon": "screen"
           }
         },
@@ -383,7 +379,7 @@
           "settings": {
             "title": "Screen upgrades",
             "url": "/collections/screen-upgrades",
-            "fallback_asset": "mg-android-auto-dash",
+            "fallback_asset": "mg-img-sys-screens",
             "icon": "screen"
           }
         },
@@ -395,7 +391,7 @@
             "price": "€150",
             "price_label": "Fitting from",
             "price_suffix": "",
-            "fallback_asset": "mg-single-din-radio",
+            "fallback_asset": "mg-img-sys-android-radio",
             "icon": "radio"
           }
         },
@@ -404,7 +400,7 @@
           "settings": {
             "title": "Speakers",
             "url": "/collections/speakers",
-            "fallback_asset": "mg-speaker-pair",
+            "fallback_asset": "mg-img-sys-speakers",
             "icon": "speaker"
           }
         },
@@ -413,7 +409,7 @@
           "settings": {
             "title": "Subwoofers & amps",
             "url": "/collections/subwoofers",
-            "fallback_asset": "mg-door-speaker",
+            "fallback_asset": "mg-img-sys-subs-amps",
             "icon": "speaker"
           }
         },
@@ -422,7 +418,7 @@
           "settings": {
             "title": "Dash cams",
             "url": "/collections/dashcams",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-dashcam",
             "icon": "camera"
           }
         },
@@ -431,7 +427,7 @@
           "settings": {
             "title": "Reverse cameras",
             "url": "/collections/reverse-cameras",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-reverse-camera",
             "icon": "car"
           }
         },
@@ -443,7 +439,7 @@
             "price": "€450",
             "price_label": "From",
             "price_suffix": "",
-            "fallback_asset": "none",
+            "fallback_asset": "mg-img-sys-conversion",
             "icon": "globe"
           }
         }

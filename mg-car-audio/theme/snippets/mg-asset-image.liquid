@@ -1,0 +1,111 @@
+{%- doc -%}
+  Renders one of the theme's own photos (assets/mg-*.webp) as an <img> with its real width and
+  height, a srcset when a smaller copy exists, and the right loading hints. Use it for a
+  section's fallback photo when no image is picked in the editor.
+
+  Known files (base names; '.webp' is optional):
+  - MG's own photos: mg-bmw-carplay-screen, mg-audi-carplay-screen, mg-android-auto-dash,
+    mg-showroom, mg-dash-radio, mg-single-din-radio, mg-door-speaker, mg-speaker-pair,
+    mg-speaker-range-banner, mg-bmw-japan-to-europe, mg-mercedes-japan-to-europe,
+    mg-vw-japan-to-europe, mg-radio-frequency-conversion
+  - Stock mood photos (docs/IMAGE_CREDITS.md; never present them as MG's work): mg-img-hero-1,
+    mg-img-hero-2, mg-img-hero-3, mg-img-sys-*, mg-img-panel-workshop, mg-img-panel-promise,
+    mg-img-bg-night-drive, mg-img-gallery-1 to 6
+
+  @param {string} asset - Base file name, e.g. 'mg-img-hero-1'
+  @param {string} [sizes] - The sizes attribute (default '100vw')
+  @param {string} [loading] - 'lazy' (default) or 'eager'
+  @param {string} [priority] - fetchpriority: 'high', 'low' or 'auto' (default)
+  @param {string} [alt] - Alt text (default empty: decorative)
+  @param {string} [class] - Classes for the <img>
+  @param {string} [style] - Inline style, e.g. an object-position
+
+  @example
+  {% render 'mg-asset-image', asset: 'mg-img-hero-1', sizes: '100vw', loading: 'eager', priority: 'high', class: 'mg-hero__img' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign base = asset | default: 'mg-img-hero-1' | remove: '.webp'
+  assign w = 1536
+  assign h = 1024
+  assign small = ''
+  assign small_w = 800
+
+  case base
+    when 'mg-img-hero-1', 'mg-img-hero-2', 'mg-img-hero-3'
+      assign w = 2000
+      assign h = 1125
+      assign small = '-1000'
+      assign small_w = 1000
+    when 'mg-img-panel-workshop', 'mg-img-panel-promise'
+      assign w = 1400
+      assign h = 1050
+      assign small = '-800'
+    when 'mg-img-bg-night-drive'
+      assign w = 2000
+      assign h = 857
+    when 'mg-img-gallery-1', 'mg-img-gallery-2', 'mg-img-gallery-3', 'mg-img-gallery-4', 'mg-img-gallery-5', 'mg-img-gallery-6'
+      assign w = 900
+      assign h = 1125
+    when 'mg-bmw-carplay-screen'
+      assign h = 840
+      assign small = '-800'
+    when 'mg-showroom'
+      assign w = 1600
+      assign h = 1200
+      assign small = '-800'
+    when 'mg-speaker-range-banner'
+      assign w = 1600
+      assign h = 320
+      assign small = '-800'
+    when 'mg-dash-radio', 'mg-single-din-radio', 'mg-door-speaker', 'mg-speaker-pair'
+      assign w = 1024
+      assign h = 1024
+    when 'mg-audi-carplay-screen', 'mg-android-auto-dash', 'mg-bmw-japan-to-europe', 'mg-mercedes-japan-to-europe', 'mg-vw-japan-to-europe', 'mg-radio-frequency-conversion'
+      assign small = '-800'
+  endcase
+
+  assign prefix = base | slice: 0, 11
+  if prefix == 'mg-img-sys-'
+    assign w = 900
+    assign h = 1125
+    assign small = '-600'
+    assign small_w = 600
+  endif
+
+  assign file = base | append: '.webp'
+  assign src_file = file
+  assign src_w = w
+  assign src_h = h
+  if small != blank
+    assign src_file = base | append: small | append: '.webp'
+    assign src_w = small_w
+    assign src_h = h | times: small_w | divided_by: w
+  endif
+
+  assign img_loading = loading | default: 'lazy'
+  assign img_priority = priority | default: 'auto'
+-%}
+<img
+  {% if class != blank %}
+    class="{{ class }}"
+  {% endif %}
+  src="{{ src_file | asset_url }}"
+  {% if small != blank -%}
+    srcset="{{ src_file | asset_url }} {{ small_w }}w, {{ file | asset_url }} {{ w }}w"
+    sizes="{{ sizes | default: '100vw' }}"
+  {%- endif %}
+  width="{{ src_w }}"
+  height="{{ src_h }}"
+  alt="{{ alt | escape }}"
+  loading="{{ img_loading }}"
+  {% if img_priority != 'auto' %}
+    fetchpriority="{{ img_priority }}"
+  {% endif %}
+  {% if img_loading == 'lazy' %}
+    decoding="async"
+  {% endif %}
+  {% if style != blank %}
+    style="{{ style }}"
+  {% endif %}
+>

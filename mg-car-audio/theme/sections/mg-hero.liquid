@@ -14,6 +14,7 @@
 
   assign quote_url = section.settings.quote_url | default: '/pages/get-a-quote'
   assign reg_id = 'MgHeroReg-' | append: section.id
+  assign stage_id = 'MgHeroStage-' | append: section.id
   assign reg_label = section.settings.plate_label | strip | default: 'Your registration'
   assign button_label = section.settings.button_label | strip | default: 'Get a quote'
 
@@ -23,9 +24,6 @@
     assign show_whatsapp = true
   endif
 
-  assign fallback_alt = 'BMW widescreen showing Apple CarPlay, fitted by ' | append: settings.mg_business_name
-  assign image_sizes = '(min-width: 1200px) 520px, (min-width: 990px) 44vw, (min-width: 750px) calc(100vw - 112px), calc(100vw - 80px)'
-
   if is_above_fold
     assign image_loading = 'eager'
     assign image_priority = 'high'
@@ -33,30 +31,154 @@
     assign image_loading = 'lazy'
     assign image_priority = 'auto'
   endif
+
+  # Slides: the first photo always shows; photos 2 and 3 join it when the crossfade is on
+  assign slide_count = 1
+  if section.settings.slideshow
+    if section.settings.image_2 != blank or section.settings.fallback_2 != 'none'
+      assign slide_count = slide_count | plus: 1
+    endif
+    if section.settings.image_3 != blank or section.settings.fallback_3 != 'none'
+      assign slide_count = slide_count | plus: 1
+    endif
+  endif
+  assign slide_seconds = section.settings.slide_seconds | default: 7
 -%}
 
-<div class="mg-section mg-hero">
-  <div class="mg-container">
-    <div class="mg-panel mg-surface-red mg-hero__banner">
+<div
+  class="mg-section mg-section--top mg-hero mg-hero--slides-{{ slide_count }}"
+  style="--mg-hero-slide: {{ slide_seconds }}s;"
+  data-mg-pause-offscreen
+  id="{{ stage_id }}"
+>
+  <div class="mg-hero__stage mg-surface-night mg-red-line">
+    <div class="mg-hero__slides">
+      {%- assign rendered = 0 -%}
+      {%- for i in (1..3) -%}
+        {%- liquid
+          if i == 1
+            assign slide_image = section.settings.image
+            assign slide_fallback = section.settings.fallback_image | default: 'mg-img-hero-1'
+          elsif i == 2
+            unless section.settings.slideshow
+              break
+            endunless
+            assign slide_image = section.settings.image_2
+            assign slide_fallback = section.settings.fallback_2
+          else
+            assign slide_image = section.settings.image_3
+            assign slide_fallback = section.settings.fallback_3
+          endif
+
+          if slide_image == blank and slide_fallback == 'none'
+            continue
+          endif
+          assign rendered = rendered | plus: 1
+
+          case slide_fallback
+            when 'mg-img-hero-1'
+              assign slide_pos = '62% 50%'
+              assign slide_alt = 'Driving at night with the dashboard touchscreen lit up'
+            when 'mg-img-hero-2'
+              assign slide_pos = '55% 50%'
+              assign slide_alt = 'Lit gauges and navigation screen on a night drive'
+            when 'mg-img-hero-3'
+              assign slide_pos = '50% 50%'
+              assign slide_alt = 'Car cabin at night with blue ambient lighting'
+            when 'mg-bmw-carplay-screen'
+              assign slide_pos = '50% 35%'
+              assign slide_alt = 'BMW widescreen showing Apple CarPlay, fitted by ' | append: settings.mg_business_name
+            when 'mg-audi-carplay-screen'
+              assign slide_pos = '50% 50%'
+              assign slide_alt = 'Audi dashboard showing Apple CarPlay, fitted by ' | append: settings.mg_business_name
+            else
+              assign slide_pos = '50% 50%'
+              assign slide_alt = 'Car dashboard with Android Auto, fitted by ' | append: settings.mg_business_name
+          endcase
+
+          assign slide_loading = image_loading
+          assign slide_priority = image_priority
+          if rendered > 1
+            assign slide_loading = 'lazy'
+            assign slide_priority = 'low'
+            assign slide_alt = ''
+          endif
+        -%}
+        <div
+          class="mg-hero__slide"
+          {% if rendered > 1 %}
+            aria-hidden="true"
+          {% endif %}
+        >
+          {%- if slide_image != blank -%}
+            {%- liquid
+              assign focal_style = 'object-position: ' | append: slide_image.presentation.focal_point
+              if rendered == 1
+                assign slide_alt = slide_image.alt | default: slide_alt
+              endif
+            -%}
+            {{
+              slide_image
+              | image_url: width: 2400
+              | image_tag:
+                widths: '600, 800, 1000, 1300, 1600, 2000, 2400',
+                sizes: '100vw',
+                loading: slide_loading,
+                fetchpriority: slide_priority,
+                alt: slide_alt,
+                style: focal_style,
+                class: 'mg-hero__img'
+            }}
+          {%- else -%}
+            {%- assign pos_style = 'object-position: ' | append: slide_pos -%}
+            {%- render 'mg-asset-image',
+              asset: slide_fallback,
+              sizes: '100vw',
+              loading: slide_loading,
+              priority: slide_priority,
+              alt: slide_alt,
+              class: 'mg-hero__img',
+              style: pos_style
+            -%}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="mg-container mg-hero__inner">
       <div class="mg-hero__content">
         {%- if line_1 != blank or line_2 != blank -%}
           <{{ heading_tag }} class="mg-display mg-display--hero mg-hero__title">
             {%- if line_1 != blank -%}
-              <span class="mg-hero__line">{{ line_1 | escape }}</span>
+              <span
+                class="mg-hero__line mg-load-rise"
+                style="--mg-load-delay: 80ms;"
+                >{{ line_1 | escape }}</span
+              >
             {%- endif -%}
             {%- if line_1 != blank and line_2 != blank %} {% endif -%}
             {%- if line_2 != blank -%}
-              <em class="mg-hero__line">{{ line_2 | escape }}</em>
+              <em
+                class="mg-hero__line mg-hero__accent mg-load-rise"
+                style="--mg-load-delay: 180ms;"
+                >{{ line_2 | escape }}</em
+              >
             {%- endif -%}
           </{{ heading_tag }}>
         {%- endif -%}
 
         {%- if section.settings.lede != blank -%}
-          <p class="mg-lede mg-hero__lede">{{ section.settings.lede | escape }}</p>
+          <p
+            class="mg-lede mg-hero__lede mg-load-rise"
+            style="--mg-load-delay: 280ms;"
+          >
+            {{ section.settings.lede | escape }}
+          </p>
         {%- endif -%}
 
         <form
-          class="mg-hero__form"
+          class="mg-hero__form mg-load-rise"
+          style="--mg-load-delay: 380ms;"
           action="{{ quote_url }}"
           method="get"
         >
@@ -88,7 +210,7 @@
               >
             </div>
             <button
-              class="mg-btn mg-btn--on-red mg-btn--lg"
+              class="mg-btn mg-btn--primary mg-btn--lg"
               type="submit"
             >
               {{ button_label | escape }}
@@ -98,7 +220,8 @@
 
         {%- if show_whatsapp -%}
           <a
-            class="mg-link mg-hero__whatsapp"
+            class="mg-link mg-hero__whatsapp mg-load-rise"
+            style="--mg-load-delay: 460ms;"
             href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
             target="_blank"
             rel="noopener"
@@ -110,63 +233,84 @@
         {%- endif -%}
       </div>
 
-      <div class="mg-hero__media">
-        {%- if section.settings.image != blank -%}
-          {%- liquid
-            assign image_alt = section.settings.image.alt | default: fallback_alt
-            assign focal_style = 'object-position: ' | append: section.settings.image.presentation.focal_point
-          -%}
-          {{
-            section.settings.image
-            | image_url: width: 1600
-            | image_tag:
-              widths: '400, 600, 800, 1040, 1300, 1600',
-              sizes: image_sizes,
-              loading: image_loading,
-              fetchpriority: image_priority,
-              alt: image_alt,
-              style: focal_style,
-              class: 'mg-hero__img'
-          }}
-        {%- else -%}
-          <img
-            class="mg-hero__img mg-hero__img--fallback"
-            src="{{ 'mg-bmw-carplay-screen.webp' | asset_url }}"
-            srcset="{{ 'mg-bmw-carplay-screen-800.webp' | asset_url }} 800w, {{ 'mg-bmw-carplay-screen.webp' | asset_url }} 1536w"
-            sizes="{{ image_sizes }}"
-            alt="{{ fallback_alt | escape }}"
-            width="1536"
-            height="840"
-            loading="{{ image_loading }}"
-            fetchpriority="{{ image_priority }}"
-            {% unless is_above_fold %}
-              decoding="async"
-            {% endunless %}
-          >
-        {%- endif -%}
-      </div>
+      {%- if slide_count > 1 -%}
+        <button
+          class="mg-motion-toggle mg-hero__toggle"
+          type="button"
+          aria-controls="{{ stage_id }}"
+          aria-pressed="false"
+          aria-label="Pause background photos"
+          data-mg-motion-toggle
+          hidden
+        >
+          {%- render 'mg-icon', icon: 'pause' -%}
+          {%- render 'mg-icon', icon: 'play' -%}
+        </button>
+      {%- endif -%}
     </div>
   </div>
 </div>
 
 {% stylesheet %}
   /*
-   * MG hero: a rounded MG red banner inside the container (Back Market's banner grammar).
-   * Phones and tablets: photo on top, copy below. From 990px: copy left, photo right.
-   * Colour, type, radius and states come from mg-theme.css (.mg-panel, .mg-surface-red,
-   * .mg-display--hero, .mg-lede, .mg-plate-group, .mg-btn--on-red, .mg-link). Layout only
-   * here; rules that adjust a shared component are scoped under .mg-hero so they win
-   * whatever order the stylesheets load in.
+   * MG hero: a full-bleed night photo (or a slow crossfade of up to three) with a dark scrim,
+   * the serif headline, the Irish plate input and the WhatsApp link on top, and a thin MG red
+   * tail-light line along the bottom edge. Phones: copy at the bottom over the photo, sized so
+   * the plate sits in the first screen at 390x844. From 990px: copy on the left.
+   * Colours come from .mg-surface-night; motion keyframes live here and in mg-theme.css.
    */
-  .mg-hero__banner {
-    display: grid;
-    gap: var(--mg-space-5);
+  .mg-hero__stage {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: clamp(540px, calc(100svh - 196px), 700px);
+    overflow: hidden;
+  }
+
+  .mg-hero__slides,
+  .mg-hero__slide {
+    position: absolute;
+    inset: 0;
+  }
+
+  .mg-hero__slides {
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  /* Photos 2 and 3 stay hidden unless the crossfade runs (no motion: the first photo only) */
+  .mg-hero__slide + .mg-hero__slide {
+    opacity: 0;
+  }
+
+  .mg-hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Scrim: dark at the bottom where the copy sits, a little shade under the header */
+  .mg-hero__slides::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.96) 0%, rgb(var(--mg-night-rgb) / 0.86) 38%, rgb(var(--mg-night-rgb) / 0.3) 70%, rgb(var(--mg-night-rgb) / 0.45) 100%);
+  }
+
+  .mg-hero__inner {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-block: var(--mg-space-7) var(--mg-space-6);
   }
 
   .mg-hero__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
     min-width: 0;
   }
 
@@ -175,7 +319,17 @@
     display: block;
   }
 
+  .mg-hero .mg-hero__title {
+    text-wrap: balance;
+    text-shadow: 0 2px 24px rgb(var(--mg-night-rgb) / 0.5);
+  }
+
+  .mg-hero .mg-hero__accent {
+    color: var(--mg-red-ink);
+  }
+
   .mg-hero .mg-hero__lede {
+    max-width: 44ch;
     text-wrap: balance;
   }
 
@@ -183,12 +337,19 @@
     display: grid;
     gap: var(--mg-space-2);
     align-self: stretch;
+    max-width: 520px;
     margin-top: var(--mg-space-5);
   }
 
-  /* The label sits on red: it follows the banner's text colour */
   .mg-hero .mg-hero__label {
-    color: inherit;
+    color: var(--mg-ink-2);
+  }
+
+  /* Phones: the plate gets the full width, so the whole example reg shows; the button sits below */
+  @media screen and (max-width: 749px) {
+    .mg-hero .mg-plate-group > .mg-plate {
+      flex-basis: 100%;
+    }
   }
 
   .mg-hero__whatsapp {
@@ -205,6 +366,7 @@
     flex: none;
     width: 20px;
     height: 20px;
+    color: var(--mg-whatsapp);
   }
 
   /*
@@ -216,73 +378,139 @@
     text-decoration-color: currentcolor;
   }
 
-  .mg-hero__media {
-    order: -1;
-    min-width: 0;
+  .mg-hero__toggle {
+    position: absolute;
+    inset-block-start: var(--mg-space-4);
+    inset-inline-end: max(var(--mg-gutter), env(safe-area-inset-right, 0px));
+    background-color: rgb(var(--mg-night-rgb) / 0.4);
   }
 
-  .mg-hero__img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--mg-radius-md);
-    object-fit: cover;
-  }
-
-  .mg-hero__img--fallback {
-    object-position: 50% 30%;
-  }
-
-  /* Small phones (under 375px): a tighter banner keeps the WhatsApp link on one line */
+  /* Small phones: a slightly smaller headline keeps the plate in the first screen */
   @media screen and (max-width: 374px) {
-    .mg-hero .mg-hero__banner {
-      padding: var(--mg-space-4);
+    .mg-hero .mg-hero__title {
+      font-size: 2rem;
+    }
+
+    .mg-hero__inner {
+      padding-block-end: var(--mg-space-5);
     }
   }
 
   @media screen and (min-width: 750px) {
-    .mg-hero__banner {
-      gap: var(--mg-space-6);
+    .mg-hero__stage {
+      min-height: clamp(560px, calc(100svh - 200px), 720px);
     }
 
-    .mg-hero__img {
-      aspect-ratio: 2 / 1;
+    .mg-hero__inner {
+      padding-block: var(--mg-space-8);
+    }
+
+    .mg-hero__content {
+      max-width: 600px;
+    }
+
+    .mg-hero__toggle {
+      inset-block-start: auto;
+      inset-block-end: var(--mg-space-5);
     }
   }
 
   @media screen and (min-width: 990px) {
-    /* A wide copy column, so the headline is two lines: line 1, then the italic line 2 */
-    .mg-hero__banner {
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    .mg-hero__inner {
       align-items: center;
-      gap: var(--mg-space-6);
+    }
+
+    /* Scrim: from the left under the copy, plus a soft floor */
+    .mg-hero__slides::after {
+      background:
+        linear-gradient(to right, rgb(var(--mg-night-rgb) / 0.94) 0%, rgb(var(--mg-night-rgb) / 0.78) 30%, rgb(var(--mg-night-rgb) / 0.18) 62%, rgb(var(--mg-night-rgb) / 0) 100%),
+        linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.6) 0%, rgb(var(--mg-night-rgb) / 0) 40%);
     }
 
     .mg-hero__content {
-      container-type: inline-size;
+      max-width: 620px;
+    }
+  }
+
+  /* Motion: a slow settle on the photo, and the crossfade with a gentle Ken Burns zoom */
+  @keyframes mg-hero-settle {
+    from {
+      transform: scale(1.08);
     }
 
-    /*
-     * The hero size follows the copy column: "Your car already has the screen." is about
-     * 13.5 times the font size wide, so 7.2cqi keeps it on one line at every desktop width
-     * (about 44px at 1440, 36px at 990). A longer line 1 wraps. 4.4vw is the fallback.
-     */
-    .mg-hero .mg-hero__title {
-      font-size: min(var(--mg-fs-hero), 4.4vw);
-      font-size: max(2.25rem, min(var(--mg-fs-hero), 7.2cqi));
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes mg-hero-zoom {
+    from {
+      transform: scale(1);
     }
 
-    .mg-hero__media {
-      order: 0;
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes mg-hero-fade-2 {
+    0%,
+    50% {
+      opacity: 0;
     }
 
-    .mg-hero__img {
-      aspect-ratio: 16 / 11;
+    60%,
+    92% {
+      opacity: 1;
     }
 
-    .mg-hero__img--fallback {
-      object-position: 52% 45%;
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes mg-hero-fade-3 {
+    0%,
+    33.3% {
+      opacity: 0;
+    }
+
+    40%,
+    66.7% {
+      opacity: 1;
+    }
+
+    73.3%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-hero--slides-1 .mg-hero__img {
+      animation: mg-hero-settle 9s var(--mg-ease-out) both;
+    }
+
+    .mg-hero--slides-2 .mg-hero__img,
+    .mg-hero--slides-3 .mg-hero__img {
+      animation: mg-hero-zoom calc(var(--mg-hero-slide) * 2) ease-in-out infinite alternate both;
+    }
+
+    .mg-hero--slides-2 .mg-hero__slide:nth-child(2) {
+      animation: mg-hero-fade-2 calc(var(--mg-hero-slide) * 2) linear infinite both;
+    }
+
+    .mg-hero--slides-3 .mg-hero__slide:nth-child(n + 2) {
+      animation: mg-hero-fade-3 calc(var(--mg-hero-slide) * 3) linear infinite both;
+    }
+
+    .mg-hero--slides-3 .mg-hero__slide:nth-child(3) {
+      animation-delay: var(--mg-hero-slide);
+    }
+
+    /* Pause on hover, while the form or a link has focus, offscreen, or when paused by the button */
+    .mg-hero:is(:hover, :focus-within, [data-mg-offscreen], [data-mg-user-paused]) :is(.mg-hero__slide, .mg-hero__img) {
+      animation-play-state: paused;
     }
   }
 {% endstylesheet %}
@@ -310,7 +538,7 @@
       "type": "text",
       "id": "heading_line_2",
       "label": "Heading line 2",
-      "info": "Shown on its own line in italic. Keep it short, two or three words.",
+      "info": "Shown on its own line in red italic. Keep it short, two or three words.",
       "default": "Add CarPlay."
     },
     {
@@ -325,7 +553,7 @@
       "id": "lede",
       "label": "Text under the heading",
       "info": "One short sentence, 20 words or fewer.",
-      "default": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop."
+      "default": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop."
     },
     {
       "type": "header",
@@ -391,10 +619,93 @@
       "content": "Photo"
     },
     {
+      "type": "paragraph",
+      "content": "The photo fills the hero behind a dark shade, so the text stays readable. Use a dark, landscape photo at least 2000px wide and set its focal point. The theme's stock photos are mood shots, not MG's own work."
+    },
+    {
       "type": "image_picker",
       "id": "image",
-      "label": "Photo",
-      "info": "Leave blank to use MG's BMW CarPlay photo. Use a landscape photo at least 1600px wide and set a focal point on the screen. It is cropped to 16:9 on phones and 16:11 on desktop."
+      "label": "Photo"
+    },
+    {
+      "type": "select",
+      "id": "fallback_image",
+      "label": "Photo to use until one is uploaded",
+      "options": [
+        { "value": "mg-img-hero-1", "label": "Night drive with dash screen (stock)" },
+        { "value": "mg-img-hero-2", "label": "Night dashboard and city lights (stock)" },
+        { "value": "mg-img-hero-3", "label": "Cabin with blue ambient light (stock)" },
+        { "value": "mg-bmw-carplay-screen", "label": "BMW CarPlay screen (MG photo)" },
+        { "value": "mg-audi-carplay-screen", "label": "Audi CarPlay with iPhone (MG photo)" },
+        { "value": "mg-android-auto-dash", "label": "Android Auto dash (MG photo)" }
+      ],
+      "default": "mg-img-hero-1"
+    },
+    {
+      "type": "header",
+      "content": "Crossfade"
+    },
+    {
+      "type": "checkbox",
+      "id": "slideshow",
+      "label": "Crossfade between up to 3 photos",
+      "info": "A slow fade with a gentle zoom. It pauses on hover, while someone types their reg, when the hero is off screen and with its pause button. Visitors who turn off motion see the first photo only.",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Photo 2",
+      "visible_if": "{{ section.settings.slideshow }}"
+    },
+    {
+      "type": "select",
+      "id": "fallback_2",
+      "label": "Photo 2 until one is uploaded",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "mg-img-hero-1", "label": "Night drive with dash screen (stock)" },
+        { "value": "mg-img-hero-2", "label": "Night dashboard and city lights (stock)" },
+        { "value": "mg-img-hero-3", "label": "Cabin with blue ambient light (stock)" },
+        { "value": "mg-bmw-carplay-screen", "label": "BMW CarPlay screen (MG photo)" },
+        { "value": "mg-audi-carplay-screen", "label": "Audi CarPlay with iPhone (MG photo)" },
+        { "value": "mg-android-auto-dash", "label": "Android Auto dash (MG photo)" }
+      ],
+      "default": "mg-img-hero-2",
+      "visible_if": "{{ section.settings.slideshow }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Photo 3",
+      "visible_if": "{{ section.settings.slideshow }}"
+    },
+    {
+      "type": "select",
+      "id": "fallback_3",
+      "label": "Photo 3 until one is uploaded",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "mg-img-hero-1", "label": "Night drive with dash screen (stock)" },
+        { "value": "mg-img-hero-2", "label": "Night dashboard and city lights (stock)" },
+        { "value": "mg-img-hero-3", "label": "Cabin with blue ambient light (stock)" },
+        { "value": "mg-bmw-carplay-screen", "label": "BMW CarPlay screen (MG photo)" },
+        { "value": "mg-audi-carplay-screen", "label": "Audi CarPlay with iPhone (MG photo)" },
+        { "value": "mg-android-auto-dash", "label": "Android Auto dash (MG photo)" }
+      ],
+      "default": "mg-img-hero-3",
+      "visible_if": "{{ section.settings.slideshow }}"
+    },
+    {
+      "type": "range",
+      "id": "slide_seconds",
+      "label": "Seconds per photo",
+      "min": 5,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 7,
+      "visible_if": "{{ section.settings.slideshow }}"
     }
   ],
   "presets": [

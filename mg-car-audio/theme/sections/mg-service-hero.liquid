@@ -39,60 +39,51 @@
     endif
   endfor
 
-  assign fallback = section.settings.fallback_image | default: 'mg-bmw-carplay-screen.webp'
-  assign fallback_w = 1536
-  assign fallback_h = 1024
-  assign fallback_small = ''
+  assign fallback = section.settings.fallback_image | default: 'mg-img-hero-3.webp' | remove: '.webp'
+  assign fallback_pos = '50% 50%'
   case fallback
-    when 'mg-bmw-carplay-screen.webp'
+    when 'mg-bmw-carplay-screen'
       assign fallback_alt = 'BMW widescreen display running Apple CarPlay'
-      assign fallback_h = 840
-      assign fallback_small = 'mg-bmw-carplay-screen-800.webp'
-    when 'mg-audi-carplay-screen.webp'
+      assign fallback_pos = '50% 35%'
+    when 'mg-audi-carplay-screen'
       assign fallback_alt = 'Audi dashboard showing Apple CarPlay with a connected iPhone'
-      assign fallback_small = 'mg-audi-carplay-screen-800.webp'
-    when 'mg-android-auto-dash.webp'
+    when 'mg-android-auto-dash'
       assign fallback_alt = 'Car dashboard screen running Android Auto'
-      assign fallback_small = 'mg-android-auto-dash-800.webp'
-    when 'mg-showroom.webp'
+    when 'mg-showroom'
       assign fallback_alt = 'MG Car Audio showroom and product wall in Dublin'
-      assign fallback_w = 1600
-      assign fallback_h = 1200
-      assign fallback_small = 'mg-showroom-800.webp'
-    when 'mg-dash-radio.webp'
+    when 'mg-dash-radio'
       assign fallback_alt = 'Dashboard with an upgraded touchscreen head unit'
-      assign fallback_w = 1024
-      assign fallback_h = 1024
-    when 'mg-single-din-radio.webp'
+    when 'mg-single-din-radio'
       assign fallback_alt = 'Single-DIN car radio'
-      assign fallback_w = 1024
-      assign fallback_h = 1024
-    when 'mg-door-speaker.webp'
+    when 'mg-door-speaker'
       assign fallback_alt = 'Upgraded car door speaker'
-      assign fallback_w = 1024
-      assign fallback_h = 1024
-    when 'mg-speaker-pair.webp'
+    when 'mg-speaker-pair'
       assign fallback_alt = 'Pair of car speakers'
-      assign fallback_w = 1024
-      assign fallback_h = 1024
-    when 'mg-bmw-japan-to-europe.webp'
+    when 'mg-bmw-japan-to-europe'
       assign fallback_alt = 'BMW infotainment converted from Japanese to European spec'
-      assign fallback_small = 'mg-bmw-japan-to-europe-800.webp'
-    when 'mg-mercedes-japan-to-europe.webp'
+    when 'mg-mercedes-japan-to-europe'
       assign fallback_alt = 'Mercedes-Benz infotainment converted from Japanese to European spec'
-      assign fallback_small = 'mg-mercedes-japan-to-europe-800.webp'
-    when 'mg-vw-japan-to-europe.webp'
+    when 'mg-vw-japan-to-europe'
       assign fallback_alt = 'Volkswagen infotainment converted from Japanese to European spec'
-      assign fallback_small = 'mg-vw-japan-to-europe-800.webp'
-    when 'mg-radio-frequency-conversion.webp'
+    when 'mg-radio-frequency-conversion'
       assign fallback_alt = 'Radio frequency conversion for an imported Japanese car'
-      assign fallback_small = 'mg-radio-frequency-conversion-800.webp'
-    else
-      assign fallback_alt = heading
+    when 'mg-img-sys-carplay'
+      assign fallback_pos = '50% 62%'
+    when 'mg-img-sys-conversion'
+      assign fallback_pos = '50% 60%'
+    when 'mg-img-panel-workshop'
+      assign fallback_pos = '60% 55%'
   endcase
-  assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
+  # Stock mood photos (mg-img-*) are decorative: empty alt, and never credited to MG
+  assign fallback_prefix = fallback | slice: 0, 7
+  if fallback_prefix == 'mg-img-'
+    assign fallback_alt = ''
+  else
+    assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
+  endif
+  assign fallback_style = 'object-position: ' | append: fallback_pos
 
-  assign image_sizes = '(min-width: 1200px) 480px, (min-width: 990px) 40vw, (min-width: 750px) calc(100vw - 112px), calc(100vw - 80px)'
+  assign image_sizes = '(min-width: 1200px) 720px, (min-width: 990px) 62vw, (min-width: 750px) calc(100vw - 48px), calc(100vw - 32px)'
   if is_above_fold
     assign image_loading = 'eager'
     assign image_priority = 'high'
@@ -125,9 +116,9 @@
       </nav>
     {%- endif -%}
 
-    <div class="mg-panel mg-svc-hero__panel">
+    <div class="mg-panel mg-surface-night mg-cine mg-red-line mg-svc-hero__panel">
       <div class="mg-svc-hero__content">
-        <h1 class="mg-h1-banner mg-svc-hero__title">{{ heading | escape }}</h1>
+        <h1 class="mg-h1-banner mg-svc-hero__title mg-load-rise">{{ heading | escape }}</h1>
 
         {%- if show_rating -%}
           {%- capture rating_inner -%}
@@ -220,7 +211,7 @@
         {%- endif -%}
       </div>
 
-      <div class="mg-svc-hero__media">
+      <div class="mg-cine__media mg-svc-hero__media">
         {%- if section.settings.image != blank -%}
           {%- liquid
             assign image_alt = section.settings.image.alt | default: heading
@@ -239,22 +230,15 @@
               style: focal_style
           }}
         {%- else -%}
-          <img
-            class="mg-svc-hero__img"
-            src="{{ fallback | asset_url }}"
-            {% if fallback_small != blank %}
-              srcset="{{ fallback_small | asset_url }} 800w, {{ fallback | asset_url }} {{ fallback_w }}w"
-              sizes="{{ image_sizes }}"
-            {% endif %}
-            alt="{{ fallback_alt | escape }}"
-            width="{{ fallback_w }}"
-            height="{{ fallback_h }}"
-            loading="{{ image_loading }}"
-            fetchpriority="{{ image_priority }}"
-            {% unless is_above_fold %}
-              decoding="async"
-            {% endunless %}
-          >
+          {%- render 'mg-asset-image',
+            asset: fallback,
+            sizes: image_sizes,
+            loading: image_loading,
+            priority: image_priority,
+            alt: fallback_alt,
+            class: 'mg-svc-hero__img',
+            style: fallback_style
+          -%}
         {%- endif -%}
       </div>
     </div>
@@ -262,6 +246,7 @@
     {%- if facts_count > 0 -%}
       <ul
         class="mg-trust mg-svc-hero__facts"
+        data-mg-reveal
         role="list"
         style="--mg-svc-facts: {{ facts_count }};"
       >
@@ -305,9 +290,10 @@
 {% stylesheet %}
   /*
    * Inner-page header (service, book-a-fitting, services): breadcrumb on the page, then a
-   * rounded grey panel with the serif h1, rating, lede, fitted price, buttons and a rounded
-   * photo, then the key facts as the shared trust strip. Phones: photo on top. From 990px:
-   * copy left, photo right. Colour, type, radius and states come from mg-theme.css.
+   * cinematic night panel (.mg-cine) with the serif h1, rating, lede, fitted price and buttons
+   * over the fading photo, then the key facts as the shared trust strip. Phones: the photo on
+   * top, fading into the copy. From 990px: copy left, the photo filling the right side.
+   * Colour, type, radius and states come from mg-theme.css.
    */
 
   /* Breadcrumb: one line, the current page shortens with an ellipsis */
@@ -470,12 +456,6 @@
   }
 
   .mg-svc-hero__img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--mg-radius-md);
-    object-fit: cover;
     background-color: var(--mg-band-2);
   }
 
@@ -522,10 +502,6 @@
       display: block;
     }
 
-    .mg-svc-hero__img {
-      aspect-ratio: 2 / 1;
-    }
-
     .mg-svc-hero .mg-svc-hero__facts {
       grid-template-columns: repeat(var(--mg-svc-facts, 4), minmax(0, 1fr));
     }
@@ -533,18 +509,14 @@
 
   @media screen and (min-width: 990px) {
     .mg-svc-hero__panel {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       align-items: center;
-      gap: var(--mg-space-7);
+      min-height: 460px;
+      padding-block: var(--mg-space-8);
     }
 
     .mg-svc-hero__media {
       order: 0;
-    }
-
-    /* Same crop as the home hero banner */
-    .mg-svc-hero__img {
-      aspect-ratio: 16 / 11;
     }
   }
 {% endstylesheet %}
@@ -707,13 +679,26 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image",
-      "info": "Landscape, at least 1600px wide. Set a focal point: it is cropped to 16:9 on phones, 2:1 on tablets and 16:11 on desktop."
+      "info": "Landscape, at least 1600px wide. It fades into the dark panel: on top on phones (16:10), on the right from desktop. Set a focal point."
     },
     {
       "type": "select",
       "id": "fallback_image",
       "label": "Image to use until one is uploaded",
+      "info": "Stock mood photos are marked (stock): they set the scene and are never shown as MG's own work.",
       "options": [
+        { "value": "mg-img-hero-3.webp", "label": "Cabin with blue ambient light (stock)" },
+        { "value": "mg-img-hero-1.webp", "label": "Night drive with dash screen (stock)" },
+        { "value": "mg-img-hero-2.webp", "label": "Night dashboard and city lights (stock)" },
+        { "value": "mg-img-sys-carplay.webp", "label": "CarPlay on a dash screen (stock)" },
+        { "value": "mg-img-sys-screens.webp", "label": "Widescreen map display (stock)" },
+        { "value": "mg-img-sys-android-radio.webp", "label": "Double-DIN head unit (stock)" },
+        { "value": "mg-img-sys-speakers.webp", "label": "Speaker cone close-up (stock)" },
+        { "value": "mg-img-sys-subs-amps.webp", "label": "Boot subwoofer install (stock)" },
+        { "value": "mg-img-sys-dashcam.webp", "label": "Dash cam on a windscreen (stock)" },
+        { "value": "mg-img-sys-reverse-camera.webp", "label": "Reversing camera view (stock)" },
+        { "value": "mg-img-sys-conversion.webp", "label": "Tokyo street at night (stock)" },
+        { "value": "mg-img-panel-workshop.webp", "label": "Car on stands in a dark workshop (stock)" },
         { "value": "mg-audi-carplay-screen.webp", "label": "Audi CarPlay with iPhone" },
         { "value": "mg-bmw-carplay-screen.webp", "label": "BMW CarPlay screen" },
         { "value": "mg-android-auto-dash.webp", "label": "Android Auto dash" },
@@ -727,7 +712,7 @@
         { "value": "mg-vw-japan-to-europe.webp", "label": "VW Japan-to-Europe conversion" },
         { "value": "mg-radio-frequency-conversion.webp", "label": "Radio frequency conversion" }
       ],
-      "default": "mg-bmw-carplay-screen.webp"
+      "default": "mg-img-hero-3.webp"
     },
     {
       "type": "paragraph",

@@ -1,0 +1,14 @@
+{%- doc -%}
+  Loads assets/mg-reveal.js: scroll reveals ([data-mg-reveal], [data-mg-reveal-stagger]),
+  offscreen pausing ([data-mg-pause-offscreen]) and the parallax fallback ([data-mg-parallax]).
+  See docs/DESIGN.md §5.14. The layout renders it once; a section may render it too (it is a
+  module script, so the browser fetches and runs it only once per page).
+
+  @example
+  {% render 'mg-reveal-script' %}
+{%- enddoc -%}
+<script
+  src="{{ 'mg-reveal.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
