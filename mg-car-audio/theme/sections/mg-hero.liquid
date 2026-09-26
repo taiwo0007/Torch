@@ -385,6 +385,52 @@
     background-color: rgb(var(--mg-night-rgb) / 0.4);
   }
 
+  /*
+   * Phones (Radio Masters pattern): the product photo sits on top as a clean band so the screen
+   * is fully visible, and the copy + plate sit below it on the night surface. No scrim over the
+   * screen, just a short fade where the photo meets the copy.
+   */
+  @media screen and (max-width: 749px) {
+    .mg-hero__stage {
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .mg-hero__slides {
+      position: relative;
+      inset: auto;
+      z-index: 0;
+      aspect-ratio: 16 / 11;
+      width: 100%;
+    }
+
+    .mg-hero__slides::after {
+      background: linear-gradient(to top, rgb(var(--mg-night-rgb) / 1) 0%, rgb(var(--mg-night-rgb) / 0) 26%);
+    }
+
+    .mg-hero .mg-hero__img {
+      object-position: 58% 62% !important;
+    }
+
+    .mg-hero__inner {
+      margin-top: calc(var(--mg-space-5) * -1);
+      padding-block: 0 var(--mg-space-6);
+    }
+
+    .mg-hero .mg-hero__title {
+      text-shadow: none;
+    }
+
+    .mg-hero__inner {
+      position: static;
+    }
+
+    .mg-hero__toggle {
+      inset-block-start: var(--mg-space-3);
+      z-index: 1;
+    }
+  }
+
   /* Small phones: a slightly smaller headline keeps the plate in the first screen */
   @media screen and (max-width: 374px) {
     .mg-hero .mg-hero__title {
