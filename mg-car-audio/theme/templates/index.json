@@ -846,75 +846,111 @@
     "reviews": {
       "type": "mg-reviews",
       "blocks": {
-        "review_a": {
+        "review_1": {
           "type": "review",
           "settings": {
             "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review about a BMW CarPlay fit.",
-            "author": "Aoife M.",
-            "car": "BMW 3 Series",
-            "job": "Wireless CarPlay"
+            "text": "Fantastic job adding Apple CarPlay on my BMW, all completed within the hour and very tidy work. Highly recommended.",
+            "author": "Adrian F.",
+            "car": "BMW",
+            "job": "Apple CarPlay"
           }
         },
-        "review_b": {
+        "review_2": {
           "type": "review",
           "settings": {
             "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review about a speaker upgrade.",
-            "author": "Ciarán D.",
-            "car": "Volkswagen Golf",
-            "job": "Speaker upgrade"
+            "text": "Brilliant service from start to finish. They installed Apple CarPlay into my car & it works perfectly, the staff were really nice and helpful and the garage was kept very neat & tidy.",
+            "author": "Kelvin T.",
+            "car": "",
+            "job": "Apple CarPlay"
           }
         },
-        "review_c": {
+        "review_3": {
           "type": "review",
           "settings": {
             "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review about an Audi CarPlay retrofit.",
-            "author": "Niamh K.",
-            "car": "Audi A4",
-            "job": "CarPlay retrofit"
+            "text": "I went in to MG Cars Audio for a carplay activation on my 2017 BMW 330e, the guys were very friendly, fast turnaround, very honest guys.",
+            "author": "Stefan B.",
+            "car": "2017 BMW 330e",
+            "job": "CarPlay activation"
           }
         },
-        "review_d": {
+        "review_4": {
           "type": "review",
           "settings": {
             "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review about an Android Auto screen.",
-            "author": "Darren O.",
-            "car": "Skoda Octavia",
-            "job": "Android Auto screen"
+            "text": "I brought my Japanese import BMW 530e over to the guys to have Apple CarPlay installed.",
+            "author": "Karl S.",
+            "car": "BMW 530e (Japanese import)",
+            "job": "Apple CarPlay"
           }
         },
-        "review_e": {
+        "review_5": {
           "type": "review",
           "settings": {
             "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review about an Android radio fitting.",
-            "author": "Sinéad B.",
-            "car": "Toyota Avensis",
-            "job": "Android radio"
+            "text": "Brilliant job done on car radio and reverse camera, top quality, expertly done, friendly staff. Recommended.",
+            "author": "Peter M.",
+            "car": "",
+            "job": "Radio and reverse camera"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I had a small issue with my new car play screen and they were directly there to help me. The day after I went and in 30 min they replaced everything.",
+            "author": "Charles D.",
+            "car": "",
+            "job": "CarPlay screen"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I needed to upgrade the sound system in my car. I called in to them and met Monica who runs the place. We spoke about what I wanted to achieve and came up with a plan.",
+            "author": "Ken K.",
+            "car": "",
+            "job": "Sound system upgrade"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I recently had a new radio installed in my VW MK7 by MG Car Audio.",
+            "author": "Pushkar D.",
+            "car": "VW Golf MK7",
+            "job": "New radio"
           }
         }
       },
       "block_order": [
-        "review_a",
-        "review_b",
-        "review_c",
-        "review_d",
-        "review_e"
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8"
       ],
       "settings": {
         "heading": "What Dublin drivers say",
         "text": "",
         "show_rating": true,
         "reviews_link_label": "See all reviews",
-        "show_placeholder_note": true,
+        "show_placeholder_note": false,
         "background": "surface"
       }
     },
