@@ -148,8 +148,8 @@
   --mg-dur-reveal: 560ms;
 
   /* Night: the fixed dark surface under photos (cinematic heroes, photo tiles, CTA band) */
-  --mg-night: #0a0e13;
-  --mg-night-rgb: 10 14 19;
+  --mg-night: #080809;
+  --mg-night-rgb: 8 8 9;
   --mg-photo-scrim: linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.94) 0%, rgb(var(--mg-night-rgb) / 0.6) 34%, rgb(var(--mg-night-rgb) / 0) 70%);
   /* MG red as light: a thin tail-light line, and the hover edge on photo tiles */
   --mg-red-line: linear-gradient(90deg, rgb(var(--mg-red-rgb) / 0), rgb(var(--mg-red-rgb) / 0.95) 22%, rgb(var(--mg-red-rgb) / 0.95) 78%, rgb(var(--mg-red-rgb) / 0));
@@ -219,29 +219,29 @@
  * ===================================================================== */
 
 html[data-mg-scheme='dark'] {
-  --mg-page: #0e1319;
-  --mg-page-rgb: 14 19 25;
-  --mg-band: #151b24;
-  --mg-band-2: #1f2733;
-  --mg-card: #1a212c;
-  --mg-card-raised: #202834;
-  --mg-input: #0e1319;
+  --mg-page: #0a0a0b;
+  --mg-page-rgb: 10 10 11;
+  --mg-band: #131314;
+  --mg-band-2: #1c1c1e;
+  --mg-card: #161617;
+  --mg-card-raised: #1e1e20;
+  --mg-input: #0a0a0b;
   /* One slate family in dark: warm and red tints read brown and plum on blue-slate */
   --mg-warm: var(--mg-band);
 
-  --mg-line: #2a3442;
-  --mg-line-rgb: 42 52 66;
-  --mg-line-strong: #3a4556;
-  --mg-line-hover: #3a4556;
-  --mg-line-input: #66728a; /* 3.9:1 on page, 3.3:1 on card */
+  --mg-line: #2a2a2d;
+  --mg-line-rgb: 42 42 45;
+  --mg-line-strong: #3a3a3e;
+  --mg-line-hover: #3a3a3e;
+  --mg-line-input: #6f6f76; /* 3.9:1 on page, 3.3:1 on card */
 
-  --mg-ink: #eef2f6;
-  --mg-ink-rgb: 238 242 246;
-  --mg-ink-2: #b3bdca;
-  --mg-ink-3: #8e99a8;
+  --mg-ink: #f2f2f3;
+  --mg-ink-rgb: 242 242 243;
+  --mg-ink-2: #b9b9be;
+  --mg-ink-3: #909097;
 
   --mg-red-ink: #ff7a74;
-  --mg-red-tint: #1f2733; /* neutral slate step (tiles, step circles, red badges); red stays in the ink */
+  --mg-red-tint: #1c1c1e; /* neutral slate step (tiles, step circles, red badges); red stays in the ink */
 
   --mg-action: #f4f5f7;
   --mg-action-hover: #ffffff;
@@ -250,7 +250,7 @@ html[data-mg-scheme='dark'] {
 
   --mg-success: #5fd07a;
   --mg-selection: rgb(223 49 49 / 0.38);
-  --mg-scrim: linear-gradient(to top, rgb(9 12 16 / 0.82), rgb(9 12 16 / 0));
+  --mg-scrim: linear-gradient(to top, rgb(8 8 9 / 0.82), rgb(8 8 9 / 0));
 
   --mg-shadow: none;
   --mg-shadow-raised: none;
@@ -1852,27 +1852,27 @@ mg-carousel:defined:not([data-overflow]) .mg-carousel__nav {
 
 /* Night surface: fixed dark tokens for content on photos (heroes, CTA band), in both schemes */
 .mg-surface-night {
-  --mg-ink: #f2f5f8;
-  --mg-ink-rgb: 242 245 248;
-  --mg-ink-2: #c9d1db; /* 12:1 on night */
-  --mg-ink-3: #a3adba;
+  --mg-ink: #f4f4f5;
+  --mg-ink-rgb: 244 244 245;
+  --mg-ink-2: #cfcfd4; /* 12:1 on night */
+  --mg-ink-3: #a6a6ac;
   --mg-line: rgb(255 255 255 / 0.14);
   --mg-line-strong: rgb(255 255 255 / 0.3);
   --mg-line-hover: rgb(255 255 255 / 0.3);
-  --mg-band: #151b24;
-  --mg-band-2: #1f2733;
-  --mg-card: #151b24;
-  --mg-card-raised: #1c2430;
+  --mg-band: #131314;
+  --mg-band-2: #1c1c1e;
+  --mg-card: #131314;
+  --mg-card-raised: #1b1b1d;
   --mg-red-ink: #ff7a74;
   --mg-action: #f4f5f7;
   --mg-action-hover: #ffffff;
   --mg-on-action: #0f1115;
   --mg-on-action-rgb: 15 17 21;
   --mg-focus: #ffffff;
-  --mg-star: #f2f5f8;
+  --mg-star: #f4f4f5;
   --mg-star-empty: rgb(255 255 255 / 0.3);
   --mg-btn-2-bg: rgb(255 255 255 / 0.06);
-  --mg-btn-2-ink: #f2f5f8;
+  --mg-btn-2-ink: #f4f4f5;
   --mg-btn-2-line: rgb(255 255 255 / 0.34);
   --mg-btn-2-hover-bg: rgb(255 255 255 / 0.12);
   --mg-btn-2-hover-line: #ffffff;
