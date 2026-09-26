@@ -12,42 +12,50 @@
     "hero": {
       "type": "mg-hero",
       "settings": {
-        "overlay_opacity": 85,
-        "desktop_layout": "split",
-        "eyebrow": "Dublin · Fitted in-house",
-        "heading": "Ireland's CarPlay & Car Audio Specialist",
-        "heading_is_h1": false,
-        "subheading": "Wired and wireless Apple CarPlay and Android Auto, screen upgrades, speakers and sound for BMW, Audi, Mercedes-Benz, VW and more.",
-        "primary_label": "Book a fitting",
+        "heading_line_1": "Your car already has the screen.",
+        "heading_line_2": "Add CarPlay.",
+        "heading_is_h1": true,
+        "lede": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop.",
+        "plate_label": "Enter your reg",
+        "plate_placeholder": "241-D-12345",
+        "button_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
         "show_whatsapp": true,
-        "whatsapp_label": "Get a quote on WhatsApp",
-        "chip_1": "Wired & wireless CarPlay",
-        "chip_2": "OEM-style finish",
-        "chip_3": "BMW CarPlay €350 fitted",
-        "show_call": true,
-        "call_prefix": "Prefer to talk? Call"
+        "whatsapp_text": "Or WhatsApp us a photo of your dash",
+        "whatsapp_message": "Hi MG Car Audio, here's a photo of my dash for a quote. My car is: "
       }
     },
     "trust_bar": {
       "type": "mg-trust-bar",
       "blocks": {
-        "rating": {
-          "type": "rating",
-          "settings": {
-            "count_prefix": "from",
-            "label": "Google reviews"
-          }
-        },
         "item_warranty": {
           "type": "item",
           "settings": {
             "source": "warranty",
             "icon": "shield",
             "title": "",
-            "text": "On every installation"
+            "text": ""
           }
         },
-        "item_address": {
+        "item_prices": {
+          "type": "item",
+          "settings": {
+            "source": "custom",
+            "icon": "tag",
+            "title": "Fixed fitted prices",
+            "text": ""
+          }
+        },
+        "item_factory": {
+          "type": "item",
+          "settings": {
+            "source": "custom",
+            "icon": "car",
+            "title": "Factory features kept",
+            "text": ""
+          }
+        },
+        "item_workshop": {
           "type": "item",
           "settings": {
             "source": "address",
@@ -55,143 +63,136 @@
             "title": "",
             "text": ""
           }
-        },
-        "item_phone": {
-          "type": "item",
-          "settings": {
-            "source": "phone",
-            "icon": "phone",
-            "title": "",
-            "text": ""
-          }
         }
       },
       "block_order": [
-        "rating",
         "item_warranty",
-        "item_address",
-        "item_phone"
+        "item_prices",
+        "item_factory",
+        "item_workshop"
       ],
       "settings": {
-        "background": "surface"
+        "statement": "Ireland's CarPlay and car audio specialist.",
+        "subline": "Fixed fitted prices at our Dublin 12 workshop. Backed by our warranty."
       }
     },
-    "car_makes": {
-      "type": "mg-car-makes",
+    "system_grid": {
+      "type": "mg-system-grid",
       "blocks": {
-        "make_bmw": {
-          "type": "make",
+        "system_carplay": {
+          "type": "system",
           "settings": {
-            "name": "BMW",
-            "subtitle": "CarPlay · iDrive · Audio"
+            "title": "CarPlay & Android Auto",
+            "url": "/collections/carplay-android-auto",
+            "price": "€299",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "mg-audi-carplay-screen",
+            "icon": "screen"
           }
         },
-        "make_audi": {
-          "type": "make",
+        "system_screens": {
+          "type": "system",
           "settings": {
-            "name": "Audi",
-            "subtitle": "CarPlay · MMI · Audio"
+            "title": "Screen upgrades",
+            "url": "/collections/screen-upgrades",
+            "price": "",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "mg-android-auto-dash",
+            "icon": "screen"
           }
         },
-        "make_mercedes_benz": {
-          "type": "make",
+        "system_radios": {
+          "type": "system",
           "settings": {
-            "name": "Mercedes-Benz",
-            "subtitle": "CarPlay · Screens · Audio"
+            "title": "Android radios",
+            "url": "/collections/android-radios",
+            "price": "€150",
+            "price_label": "Fitting from",
+            "price_suffix": "",
+            "fallback_asset": "mg-single-din-radio",
+            "icon": "radio"
           }
         },
-        "make_volkswagen": {
-          "type": "make",
+        "system_speakers": {
+          "type": "system",
           "settings": {
-            "name": "Volkswagen",
-            "subtitle": "CarPlay · Screens · Audio"
+            "title": "Speakers",
+            "url": "/collections/speakers",
+            "price": "",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "mg-speaker-pair",
+            "icon": "speaker"
           }
         },
-        "make_toyota": {
-          "type": "make",
+        "system_subs": {
+          "type": "system",
           "settings": {
-            "name": "Toyota",
-            "subtitle": "CarPlay · Radios · Imports",
-            "url": "/pages/get-a-quote?make=Toyota"
+            "title": "Subwoofers & amps",
+            "url": "/collections/subwoofers",
+            "price": "",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "mg-door-speaker",
+            "icon": "speaker"
           }
         },
-        "make_lexus": {
-          "type": "make",
+        "system_dashcams": {
+          "type": "system",
           "settings": {
-            "name": "Lexus",
-            "subtitle": "CarPlay · Screens · Imports",
-            "url": "/pages/get-a-quote?make=Lexus"
+            "title": "Dash cams",
+            "url": "/collections/dashcams",
+            "price": "",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "none",
+            "icon": "camera"
           }
         },
-        "make_ford": {
-          "type": "make",
+        "system_reverse": {
+          "type": "system",
           "settings": {
-            "name": "Ford",
-            "subtitle": "CarPlay · Radios · Audio",
-            "url": "/pages/get-a-quote?make=Ford"
+            "title": "Reverse cameras",
+            "url": "/collections/reverse-cameras",
+            "price": "",
+            "price_label": "From",
+            "price_suffix": "fitted",
+            "fallback_asset": "none",
+            "icon": "car"
           }
         },
-        "make_nissan": {
-          "type": "make",
+        "system_japan": {
+          "type": "system",
           "settings": {
-            "name": "Nissan",
-            "subtitle": "CarPlay · Radios · Imports",
-            "url": "/pages/get-a-quote?make=Nissan"
-          }
-        },
-        "make_honda": {
-          "type": "make",
-          "settings": {
-            "name": "Honda",
-            "subtitle": "CarPlay · Radios · Imports",
-            "url": "/pages/get-a-quote?make=Honda"
-          }
-        },
-        "make_mazda": {
-          "type": "make",
-          "settings": {
-            "name": "Mazda",
-            "subtitle": "CarPlay · Radios · Imports",
-            "url": "/pages/get-a-quote?make=Mazda"
-          }
-        },
-        "make_hyundai": {
-          "type": "make",
-          "settings": {
-            "name": "Hyundai",
-            "subtitle": "CarPlay · Radios · Audio",
-            "url": "/pages/get-a-quote?make=Hyundai"
-          }
-        },
-        "make_kia": {
-          "type": "make",
-          "settings": {
-            "name": "Kia",
-            "subtitle": "CarPlay · Radios · Audio",
-            "url": "/pages/get-a-quote?make=Kia"
+            "title": "Japanese import conversion",
+            "url": "/products/bmw-japan-to-europe-conversion",
+            "price": "€450",
+            "price_label": "From",
+            "price_suffix": "",
+            "fallback_asset": "none",
+            "icon": "globe"
           }
         }
       },
       "block_order": [
-        "make_bmw",
-        "make_audi",
-        "make_mercedes_benz",
-        "make_volkswagen",
-        "make_toyota",
-        "make_lexus",
-        "make_ford",
-        "make_nissan",
-        "make_honda",
-        "make_mazda",
-        "make_hyundai",
-        "make_kia"
+        "system_carplay",
+        "system_screens",
+        "system_radios",
+        "system_speakers",
+        "system_subs",
+        "system_dashcams",
+        "system_reverse",
+        "system_japan"
       ],
       "settings": {
-        "eyebrow": "Shop by car make",
-        "heading": "Built for the car you drive",
-        "text": "CarPlay, Android Auto, screen upgrades and sound for the makes we fit every week. We also cover Skoda, SEAT, Renault, Peugeot, Citroën, Volvo, Land Rover and many more, including Japanese imports.",
-        "view_all_label": "Other makes? Get a quote",
-        "columns_desktop": 6
+        "heading": "Shop by system",
+        "subheading": "",
+        "link_label": "See all",
+        "link_url": "/collections",
+        "columns_desktop": 4,
+        "price_fallback": ""
       }
     },
     "services": {
@@ -200,91 +201,141 @@
         "service_bmw_carplay": {
           "type": "service",
           "settings": {
-            "title": "Apple CarPlay for BMW",
-            "text": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept.",
+            "title": "BMW Apple CarPlay",
+            "group": "carplay",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen.",
             "price": "€350",
-            "price_label": "from",
-            "fallback_image": "mg-bmw-carplay-screen.webp",
-            "url": "/pages/carplay-installation",
-            "badge": "Most popular"
+            "price_label": "From",
+            "duration": "",
+            "url": "/products/carplay-installation-bmw",
+            "badge": "",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
         "service_bmw_android_auto": {
           "type": "service",
           "settings": {
             "title": "BMW Android Auto (iDrive 7)",
-            "text": "Android Auto switched on for iDrive 7 (ID7) screens. Around an hour in the bay while you wait.",
+            "group": "carplay",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens.",
             "price": "€299",
-            "price_label": "from",
-            "fallback_image": "mg-android-auto-dash.webp",
+            "price_label": "From",
+            "duration": "About 1 hr",
             "url": "/products/android-auto-installation-bmw-id7",
-            "badge": "1 hour"
+            "badge": "",
+            "fallback_image": "mg-android-auto-dash.webp"
           }
         },
         "service_android_radio": {
           "type": "service",
           "settings": {
-            "title": "Android radio fitting",
-            "text": "Android head units fitted properly, with neat wiring and a factory-style finish. About 90 minutes.",
+            "title": "Android radio installation",
+            "group": "radios",
+            "text": "Your Android head unit fitted with neat, hidden wiring.",
             "price": "€150",
-            "price_label": "from",
-            "fallback_image": "mg-dash-radio.webp",
-            "url": "/products/android-radio-installation"
-          }
-        },
-        "service_japan_to_europe": {
-          "type": "service",
-          "settings": {
-            "title": "Japanese-to-European conversion",
-            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. We convert Mercedes-Benz and VW imports too.",
-            "price": "€450",
-            "price_label": "from",
-            "fallback_image": "mg-bmw-japan-to-europe.webp",
-            "url": "/products/bmw-japan-to-europe-conversion"
-          }
-        },
-        "service_screen_upgrades": {
-          "type": "service",
-          "settings": {
-            "title": "Screen upgrades",
-            "text": "Bigger, sharper widescreens for BMW, Mercedes, Audi and VW, with CarPlay and Android Auto built in.",
-            "price": "€X",
-            "price_label": "from",
-            "fallback_image": "mg-audi-carplay-screen.webp",
-            "url": "/collections/screen-upgrades"
-          }
-        },
-        "service_speakers": {
-          "type": "service",
-          "settings": {
-            "title": "Speaker & subwoofer upgrades",
-            "text": "JBL and Harman Kardon speakers, subs and amps, matched to your car for clear, powerful sound.",
-            "price": "€X",
-            "price_label": "from",
-            "fallback_image": "mg-door-speaker.webp",
-            "url": "/pages/get-a-quote?service=speaker"
+            "price_label": "From",
+            "duration": "About 1 hr 30 min",
+            "url": "/products/android-radio-installation",
+            "badge": "",
+            "fallback_image": "mg-dash-radio.webp"
           }
         },
         "service_video_in_motion": {
           "type": "service",
           "settings": {
             "title": "BMW iDrive 7 video in motion",
-            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "group": "screens",
+            "text": "Passengers can keep watching video while the car moves.",
             "price": "€149",
-            "price_label": "from",
-            "fallback_image": "mg-bmw-carplay-screen.webp",
-            "url": "/products/bmw-idrive7-video-in-motion"
+            "price_label": "From",
+            "duration": "",
+            "url": "/products/bmw-idrive7-video-in-motion",
+            "badge": "",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
-        "service_reverse_camera": {
+        "service_screen_upgrades": {
           "type": "service",
           "settings": {
-            "title": "Reverse camera fitting",
-            "text": "A reverse camera that switches on the moment you select reverse, with the wiring hidden. Dashcams hard-wired too.",
-            "price": "€399",
-            "price_label": "from",
-            "fallback_image": "mg-showroom.webp",
-            "url": "/products/reverse-camera-installation"
+            "title": "Screen upgrades",
+            "group": "screens",
+            "text": "Bigger widescreens with CarPlay and Android Auto built in.",
+            "price": "€X",
+            "price_label": "From",
+            "duration": "",
+            "url": "/collections/screen-upgrades",
+            "badge": "",
+            "fallback_image": "mg-audi-carplay-screen.webp"
+          }
+        },
+        "service_bmw_japan": {
+          "type": "service",
+          "settings": {
+            "title": "BMW Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Menus, maps and radio band switched to European spec.",
+            "price": "€450",
+            "price_label": "From",
+            "duration": "About 2 hr",
+            "url": "/products/bmw-japan-to-europe-conversion",
+            "badge": "",
+            "fallback_image": "mg-bmw-japan-to-europe.webp"
+          }
+        },
+        "service_mercedes_japan": {
+          "type": "service",
+          "settings": {
+            "title": "Mercedes Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Infotainment switched to European spec on imported Mercedes.",
+            "price": "",
+            "price_label": "From",
+            "duration": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "badge": "",
+            "fallback_image": "mg-mercedes-japan-to-europe.webp"
+          }
+        },
+        "service_vw_japan": {
+          "type": "service",
+          "settings": {
+            "title": "VW Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Your imported Volkswagen's system set up for Europe.",
+            "price": "",
+            "price_label": "From",
+            "duration": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "badge": "",
+            "fallback_image": "mg-vw-japan-to-europe.webp"
+          }
+        },
+        "service_radio_frequency": {
+          "type": "service",
+          "settings": {
+            "title": "Radio frequency conversion",
+            "group": "conversions",
+            "text": "Irish FM stations on the factory radio of a Japanese import.",
+            "price": "",
+            "price_label": "From",
+            "duration": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "badge": "",
+            "fallback_image": "mg-radio-frequency-conversion.webp"
+          }
+        },
+        "service_speakers": {
+          "type": "service",
+          "settings": {
+            "title": "Speaker and subwoofer upgrades",
+            "group": "audio",
+            "text": "JBL and Harman Kardon speakers, subs and amps for your car.",
+            "price": "€X",
+            "price_label": "From",
+            "duration": "",
+            "url": "/collections/speakers",
+            "badge": "",
+            "fallback_image": "mg-door-speaker.webp"
           }
         }
       },
@@ -292,22 +343,33 @@
         "service_bmw_carplay",
         "service_bmw_android_auto",
         "service_android_radio",
-        "service_japan_to_europe",
-        "service_screen_upgrades",
-        "service_speakers",
         "service_video_in_motion",
-        "service_reverse_camera"
+        "service_screen_upgrades",
+        "service_bmw_japan",
+        "service_mercedes_japan",
+        "service_vw_japan",
+        "service_radio_frequency",
+        "service_speakers"
       ],
       "settings": {
-        "eyebrow": "Popular services",
-        "heading": "Clear prices. Fitted properly.",
-        "text": "Upfront 'from' prices on our most-booked jobs, all fitted at our workshop in Ballymount, Dublin 12. A €50 deposit secures your slot.",
+        "heading": "Fitted prices",
+        "text": "",
         "button_label": "All services",
+        "button_url": "/pages/services",
+        "show_image": true,
+        "show_tabs": true,
+        "tabs_label": "Filter by system",
+        "tab_all": "All",
+        "tab_carplay": "CarPlay",
+        "tab_screens": "Screens",
+        "tab_radios": "Radios",
+        "tab_conversions": "Conversions",
+        "tab_audio": "Audio",
         "price_suffix": "fitted",
+        "on_request_label": "Price on request",
+        "book_label": "Book",
         "quote_label": "Get a quote",
-        "columns_desktop": 4,
-        "background": "surface",
-        "footnote": "Prices shown are starting prices for fitting at our Dublin 12 workshop. Send us your reg and we'll confirm the exact price for your car before you book."
+        "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill."
       }
     },
     "best_sellers": {
@@ -326,7 +388,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 24,
+            "gap": 16,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -348,7 +410,7 @@
           "blocks": {
             "heading_group": {
               "type": "group",
-              "name": "Eyebrow and heading",
+              "name": "Heading",
               "settings": {
                 "content_direction": "column",
                 "vertical_on_mobile": true,
@@ -384,14 +446,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "eyebrow": {
-                  "type": "custom-liquid",
-                  "name": "Eyebrow",
-                  "settings": {
-                    "custom_liquid": "<p class=\"mg-eyebrow\">Shop the range</p>"
-                  },
-                  "blocks": {}
-                },
                 "heading": {
                   "type": "text",
                   "name": "Heading",
@@ -419,7 +473,6 @@
                 }
               },
               "block_order": [
-                "eyebrow",
                 "heading"
               ]
             },
@@ -541,9 +594,202 @@
         "icons_shape": "none",
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
-        "gap": 40,
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "gap": 20,
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
+    },
+    "promise": {
+      "type": "mg-promise",
+      "blocks": {
+        "item_check": {
+          "type": "item",
+          "settings": {
+            "icon": "car",
+            "title": "Compatibility check",
+            "text": "from your reg"
+          }
+        },
+        "item_finish": {
+          "type": "item",
+          "settings": {
+            "icon": "wrench",
+            "title": "OEM-style finish",
+            "text": "with neat, hidden wiring"
+          }
+        },
+        "item_controls": {
+          "type": "item",
+          "settings": {
+            "icon": "screen",
+            "title": "Factory controls kept",
+            "text": "where possible"
+          }
+        },
+        "item_test": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "Full test",
+            "text": "before you drive away"
+          }
+        },
+        "item_warranty": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Workmanship warranty",
+            "text": "on every fitting"
+          }
+        },
+        "item_deposit": {
+          "type": "item",
+          "settings": {
+            "icon": "calendar",
+            "title": "€50 deposit",
+            "text": "secures your slot"
+          }
+        }
+      },
+      "block_order": [
+        "item_check",
+        "item_finish",
+        "item_controls",
+        "item_test",
+        "item_warranty",
+        "item_deposit"
+      ],
+      "settings": {
+        "heading": "What's in every MG fit?",
+        "text": "How we fit, test and stand behind every job at our Dublin 12 workshop.",
+        "button_label": "",
+        "panel": "warm"
+      }
+    },
+    "car_makes": {
+      "type": "mg-car-makes",
+      "blocks": {
+        "make_bmw": {
+          "type": "make",
+          "settings": {
+            "name": "BMW",
+            "subtitle": ""
+          }
+        },
+        "make_audi": {
+          "type": "make",
+          "settings": {
+            "name": "Audi",
+            "subtitle": ""
+          }
+        },
+        "make_mercedes_benz": {
+          "type": "make",
+          "settings": {
+            "name": "Mercedes-Benz",
+            "subtitle": ""
+          }
+        },
+        "make_volkswagen": {
+          "type": "make",
+          "settings": {
+            "name": "Volkswagen",
+            "subtitle": ""
+          }
+        },
+        "make_toyota": {
+          "type": "make",
+          "settings": {
+            "name": "Toyota",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Toyota"
+          }
+        },
+        "make_lexus": {
+          "type": "make",
+          "settings": {
+            "name": "Lexus",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Lexus"
+          }
+        },
+        "make_ford": {
+          "type": "make",
+          "settings": {
+            "name": "Ford",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Ford"
+          }
+        },
+        "make_nissan": {
+          "type": "make",
+          "settings": {
+            "name": "Nissan",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Nissan"
+          }
+        },
+        "make_honda": {
+          "type": "make",
+          "settings": {
+            "name": "Honda",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Honda"
+          }
+        },
+        "make_mazda": {
+          "type": "make",
+          "settings": {
+            "name": "Mazda",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Mazda"
+          }
+        },
+        "make_hyundai": {
+          "type": "make",
+          "settings": {
+            "name": "Hyundai",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Hyundai"
+          }
+        },
+        "make_kia": {
+          "type": "make",
+          "settings": {
+            "name": "Kia",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Kia"
+          }
+        },
+        "link_japanese_imports": {
+          "type": "link",
+          "settings": {
+            "label": "Japanese imports",
+            "url": "/pages/get-a-quote?service=japan-to-europe"
+          }
+        }
+      },
+      "block_order": [
+        "make_bmw",
+        "make_audi",
+        "make_mercedes_benz",
+        "make_volkswagen",
+        "make_toyota",
+        "make_lexus",
+        "make_ford",
+        "make_nissan",
+        "make_honda",
+        "make_mazda",
+        "make_hyundai",
+        "make_kia",
+        "link_japanese_imports"
+      ],
+      "settings": {
+        "heading": "Shop by car",
+        "text": "",
+        "view_all_label": "Other makes",
+        "view_all_url": "/pages/get-a-quote",
+        "align_desktop": "left"
       }
     },
     "how_it_works": {
@@ -552,33 +798,29 @@
         "step_reg": {
           "type": "step",
           "settings": {
-            "icon": "camera",
-            "title": "Send your reg + a dash photo",
-            "text": "WhatsApp us your registration and a quick photo of your dash. That's usually all we need to tell you exactly what fits."
+            "title": "Send your reg",
+            "text": "WhatsApp us your reg and a photo of your dash, or use the quote form."
           }
         },
         "step_quote": {
           "type": "step",
           "settings": {
-            "icon": "message",
-            "title": "Get a fixed quote",
-            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+            "title": "Get a fixed price",
+            "text": "We confirm what fits your car and the fitted price before you commit."
           }
         },
         "step_book": {
           "type": "step",
           "settings": {
-            "icon": "calendar",
-            "title": "Book a slot",
-            "text": "Pick a day and time that suits you. A <strong>€50 deposit</strong> secures your slot at our Ballymount workshop."
+            "title": "Book your slot",
+            "text": "Pick a day that suits you. A <strong>€50 deposit</strong> secures it."
           }
         },
         "step_drive": {
           "type": "step",
           "settings": {
-            "icon": "car",
             "title": "Drive away",
-            "text": "We fit it, test everything with your phone and show you how it all works. Most installs take one to two hours."
+            "text": "We fit it, test it with your phone and show you how it works."
           }
         }
       },
@@ -589,86 +831,16 @@
         "step_drive"
       ],
       "settings": {
-        "eyebrow": "How it works",
-        "heading": "From your reg to CarPlay in four steps",
-        "text": "No guesswork and no chasing call-backs. Send us a couple of details and we'll tell you exactly what fits your car, what it costs and when we can fit it.",
+        "heading": "How it works",
+        "text": "From your reg to driving away, with a fixed price agreed first.",
         "align": "left",
-        "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp us your reg",
-        "button_label": "Book a fitting",
-        "show_phone": true,
-        "phone_prefix": "Rather talk it through? Call",
-        "background": "surface",
-        "spacing": "normal"
-      }
-    },
-    "gallery": {
-      "type": "mg-gallery",
-      "blocks": {
-        "install_bmw": {
-          "type": "image",
-          "settings": {
-            "fallback": "bmw-carplay",
-            "car_label": "BMW · Wireless CarPlay",
-            "caption": "CarPlay added to the factory widescreen, keeping the original controls wherever possible."
-          }
-        },
-        "install_audi": {
-          "type": "image",
-          "settings": {
-            "fallback": "audi-carplay",
-            "car_label": "Audi · CarPlay retrofit",
-            "caption": "An OEM-style fit designed to work with the original MMI controls."
-          }
-        },
-        "install_android_auto": {
-          "type": "image",
-          "settings": {
-            "fallback": "radio-frequency",
-            "car_label": "Japanese imports · Radio conversion",
-            "caption": "Imported cars tuned to Irish FM stations, with menus and maps switched to European spec."
-          }
-        },
-        "install_showroom": {
-          "type": "image",
-          "settings": {
-            "fallback": "showroom",
-            "car_label": "Ballymount showroom",
-            "caption": "Call in to see screens, speakers and head units in person."
-          }
-        },
-        "install_radio": {
-          "type": "image",
-          "settings": {
-            "fallback": "dash-radio",
-            "car_label": "Radio upgrades · Head units",
-            "caption": "From simple radio swaps to full Android screens, finished to a factory standard."
-          }
-        },
-        "install_speakers": {
-          "type": "image",
-          "settings": {
-            "fallback": "door-speaker",
-            "car_label": "Speaker upgrades",
-            "caption": "Clearer vocals and tighter bass, fitted without the door rattle."
-          }
-        }
-      },
-      "block_order": [
-        "install_bmw",
-        "install_audi",
-        "install_android_auto",
-        "install_showroom",
-        "install_radio",
-        "install_speakers"
-      ],
-      "settings": {
-        "eyebrow": "Our work",
-        "heading": "Finished to a factory standard",
-        "text": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way.",
-        "follow_label": "Follow our installs",
         "background": "page",
-        "spacing": "normal"
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "button_label": "Book a fitting",
+        "button_link": "/pages/book-a-fitting",
+        "show_phone": true,
+        "phone_prefix": "Prefer to talk? Call"
       }
     },
     "reviews": {
@@ -677,51 +849,56 @@
         "review_a": {
           "type": "review",
           "settings": {
+            "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a BMW owner on the wireless CarPlay fitting: the quote, the time in the bay and the finish.",
+            "text": "Demo review: replace with a real Google review about a BMW CarPlay fit.",
             "author": "Aoife M.",
-            "car": "BMW · Wireless CarPlay",
-            "source": "Demo"
+            "car": "BMW 3 Series",
+            "job": "Wireless CarPlay"
           }
         },
         "review_b": {
           "type": "review",
           "settings": {
+            "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a speaker upgrade: how the car sounded before, and how it sounds now.",
+            "text": "Demo review: replace with a real Google review about a speaker upgrade.",
             "author": "Ciarán D.",
-            "car": "Volkswagen · Speaker upgrade",
-            "source": "Demo"
+            "car": "Volkswagen Golf",
+            "job": "Speaker upgrade"
           }
         },
         "review_c": {
           "type": "review",
           "settings": {
+            "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a screen fault or upgrade: what the problem was and how it was sorted.",
+            "text": "Demo review: replace with a real Google review about an Audi CarPlay retrofit.",
             "author": "Niamh K.",
-            "car": "Audi · Screen repair",
-            "source": "Demo"
+            "car": "Audi A4",
+            "job": "CarPlay retrofit"
           }
         },
         "review_d": {
           "type": "review",
           "settings": {
+            "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a Japanese import converted to European spec: menus, maps and radio.",
+            "text": "Demo review: replace with a real Google review about an Android Auto screen.",
             "author": "Darren O.",
-            "car": "BMW · Japan-to-Europe conversion",
-            "source": "Demo"
+            "car": "Skoda Octavia",
+            "job": "Android Auto screen"
           }
         },
         "review_e": {
           "type": "review",
           "settings": {
+            "fallback": "none",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, an Android radio fitting: the advice given and how tidy the install was.",
+            "text": "Demo review: replace with a real Google review about an Android radio fitting.",
             "author": "Sinéad B.",
-            "car": "Toyota · Android radio",
-            "source": "Demo"
+            "car": "Toyota Avensis",
+            "job": "Android radio"
           }
         }
       },
@@ -733,14 +910,72 @@
         "review_e"
       ],
       "settings": {
-        "eyebrow": "Reviews",
-        "heading": "Trusted by Dublin drivers",
-        "text": "Honest advice, tidy installs and a fair price agreed up front. Here's what customers tell us after they drive away.",
+        "heading": "What Dublin drivers say",
+        "text": "",
         "show_rating": true,
-        "reviews_link_label": "Read all reviews on Google",
+        "reviews_link_label": "See all reviews",
         "show_placeholder_note": true,
-        "background": "surface",
-        "spacing": "normal"
+        "background": "surface"
+      }
+    },
+    "gallery": {
+      "type": "mg-gallery",
+      "disabled": true,
+      "blocks": {
+        "install_bmw": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "car_label": "BMW",
+            "caption": "Wireless CarPlay"
+          }
+        },
+        "install_audi": {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "car_label": "Audi",
+            "caption": "CarPlay retrofit"
+          }
+        },
+        "install_android_auto": {
+          "type": "image",
+          "settings": {
+            "fallback": "android-auto",
+            "car_label": "Screen upgrade",
+            "caption": "Wireless Android Auto"
+          }
+        },
+        "install_radio": {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "car_label": "Radio upgrade",
+            "caption": "New head unit fitted"
+          }
+        },
+        "install_speakers": {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "car_label": "Speaker upgrade",
+            "caption": "Front door speakers"
+          }
+        }
+      },
+      "block_order": [
+        "install_bmw",
+        "install_audi",
+        "install_android_auto",
+        "install_radio",
+        "install_speakers"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "background": "page"
       }
     },
     "faq": {
@@ -778,7 +1013,7 @@
           "type": "question",
           "settings": {
             "question": "Do I need to pay a deposit to book?",
-            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
           }
         },
         "faq_makes": {
@@ -814,41 +1049,39 @@
         "faq_parts"
       ],
       "settings": {
-        "eyebrow": "FAQ",
-        "heading": "Good questions, straight answers",
-        "text": "What people usually ask us before booking a CarPlay install, screen upgrade or conversion. Can't see your question? Send us a message.",
+        "heading": "Questions drivers always ask",
+        "text": "",
         "show_contact": true,
-        "contact_heading": "Not sure what fits your car?",
-        "open_first": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
         "output_faq_schema": true,
-        "layout": "split",
-        "background": "page",
-        "spacing": "normal"
+        "background": "page"
       }
     },
     "contact_map": {
       "type": "mg-contact-map",
       "settings": {
-        "eyebrow": "Visit the workshop",
-        "heading": "Find us in Ballymount, Dublin 12",
-        "text": "Call in to see screens and speakers in person, drop your car in for a fitting, or message us first to check what suits your car. Sundays are by appointment.",
+        "heading": "Visit the workshop",
+        "text": "See screens and speakers in person, or drop your car in for a fitting.",
         "show_whatsapp": true,
         "map_mode": "facade",
+        "facade_photo": false,
         "dark_map": true,
-        "background": "surface",
-        "spacing": "normal"
+        "background": "page"
       }
     }
   },
   "order": [
     "hero",
     "trust_bar",
-    "car_makes",
+    "system_grid",
     "services",
     "best_sellers",
+    "promise",
+    "car_makes",
     "how_it_works",
-    "gallery",
     "reviews",
+    "gallery",
     "faq",
     "contact_map"
   ]

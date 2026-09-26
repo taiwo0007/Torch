@@ -1,17 +1,24 @@
 {%- liquid
   assign section_classes = 'mg-section mg-quote'
   if section.settings.background == 'surface'
-    assign section_classes = section_classes | append: ' mg-section--surface'
+    assign section_classes = section_classes | append: ' mg-section--band mg-quote--band'
   endif
-  if section.settings.spacing == 'tight'
-    assign section_classes = section_classes | append: ' mg-section--tight'
+
+  # "panel": the inner-page header (breadcrumb, grey panel, serif h1) across the top, as on the
+  # service, car make and collection pages. "plain": the heading sits in the left column.
+  assign is_panel = false
+  if section.settings.header_style == 'panel'
+    assign is_panel = true
+    assign section_classes = section_classes | append: ' mg-quote--panel'
   endif
 
   assign heading_tag = 'h2'
+  assign heading_class = 'mg-head__title mg-quote__heading'
   assign sub_tag = 'h3'
   assign minor_tag = 'h4'
   if section.settings.heading_is_h1
     assign heading_tag = 'h1'
+    assign heading_class = 'mg-h1-banner mg-quote__heading'
     assign sub_tag = 'h2'
     assign minor_tag = 'h3'
   endif
@@ -20,6 +27,21 @@
   if section.settings.use_page_title and page.title != blank
     assign heading = page.title
   endif
+
+  # The page's own content (Online Store > Pages) can stand in for the intro text
+  assign page_intro = ''
+  if section.settings.intro_from_page and page.content != blank
+    assign page_intro_text = page.content | strip_html | strip
+    if page_intro_text != blank
+      assign page_intro = page.content
+    endif
+  endif
+  assign has_intro = false
+  if page_intro != blank or section.settings.intro != blank
+    assign has_intro = true
+  endif
+
+  assign crumb_current = page.title | default: heading
 
   assign uid = 'MgQuote-' | append: section.id
   assign form_id = 'MgQuoteForm-' | append: section.id
@@ -43,7 +65,12 @@
 
 {%- capture photo_step -%}
   <div class="mg-quote__photo">
-    <span class="mg-quote__photo-icon">{%- render 'mg-icon', icon: 'camera' -%}</span>
+    <span
+      class="mg-quote__photo-icon"
+      aria-hidden="true"
+    >
+      {%- render 'mg-icon', icon: 'camera' -%}
+    </span>
     <div class="mg-quote__photo-body">
       {%- if section.settings.photo_text != blank -%}
         <p class="mg-quote__photo-text">{{ section.settings.photo_text | escape }}</p>
@@ -58,10 +85,10 @@
       >
         {%- render 'mg-icon', icon: 'whatsapp' -%}
         <span>{{ section.settings.photo_button_label | default: 'Send photo on WhatsApp' | escape }}</span>
-        <span class="mg-visually-hidden">(opens WhatsApp in a new tab)</span>
+        <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
       </a>
       <p
-        class="mg-quote__photo-note"
+        class="mg-help mg-quote__photo-note"
         id="{{ uid }}-photo-note"
       >
         Opens WhatsApp with your car details filled in. Nothing is sent until you press send.
@@ -76,27 +103,58 @@
     aria-labelledby="{{ heading_id }}"
   {% endif %}
 >
-  <div class="mg-container mg-quote__layout">
-    <header class="mg-quote__intro">
-      {%- if section.settings.eyebrow != blank -%}
-        <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {%- endif -%}
-      {%- if heading != blank -%}
-        <{{ heading_tag }}
-          id="{{ heading_id }}"
-          class="mg-heading mg-quote__heading"
+  {%- capture intro_inner -%}
+    {%- if heading != blank -%}
+      <{{ heading_tag }}
+        id="{{ heading_id }}"
+        class="{{ heading_class }}"
+      >
+        {{- heading | escape -}}
+      </{{ heading_tag }}>
+    {%- endif -%}
+    {%- if page_intro != blank -%}
+      <div class="mg-lede mg-quote__lede mg-quote__rte">{{ page_intro }}</div>
+    {%- elsif section.settings.intro != blank -%}
+      <p class="mg-lede mg-quote__lede">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if is_panel -%}
+    <div class="mg-container">
+      {%- if section.settings.show_breadcrumb and crumb_current != blank -%}
+        <nav
+          class="mg-crumbs"
+          aria-label="Breadcrumb"
         >
-          {{- heading | escape -}}
-        </{{ heading_tag }}>
+          <ol role="list">
+            <li><a href="{{ routes.root_url }}">Home</a></li>
+            <li><span aria-current="page">{{ crumb_current | escape }}</span></li>
+          </ol>
+        </nav>
+        <script type="application/ld+json">
+          {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":{{ request.origin | append: routes.root_url | json }}},{"@type":"ListItem","position":2,"name":{{ crumb_current | json }},"item":{{ request.origin | append: request.path | json }}}]}
+        </script>
       {%- endif -%}
-      {%- if section.settings.intro != blank -%}
-        <p class="mg-lede mg-quote__lede">{{ section.settings.intro }}</p>
+      {%- if heading != blank or has_intro -%}
+        <header class="mg-panel mg-quote__intro mg-quote__intro--panel">
+          {{- intro_inner -}}
+        </header>
       {%- endif -%}
-    </header>
+    </div>
+  {%- endif -%}
+
+  <div class="mg-container mg-quote__layout">
+    {%- unless is_panel -%}
+      {%- if heading != blank or has_intro -%}
+        <header class="mg-quote__intro">
+          {{- intro_inner -}}
+        </header>
+      {%- endif -%}
+    {%- endunless -%}
 
     <div class="mg-quote__main">
       <mg-quote-form
-        class="mg-card mg-quote__card"
+        class="mg-card mg-card--raised mg-quote__card"
         data-section-id="{{ section.id }}"
         data-wa-number="{{ wa_number | escape }}"
         data-wa-message="{{ photo_message | escape }}"
@@ -144,7 +202,12 @@
               data-state="success"
               aria-labelledby="{{ uid }}-success-title"
             >
-              <span class="mg-quote__status-icon">{%- render 'mg-icon', icon: 'check' -%}</span>
+              <span
+                class="mg-quote__status-icon"
+                aria-hidden="true"
+              >
+                {%- render 'mg-icon', icon: 'check' -%}
+              </span>
               <{{ sub_tag }}
                 id="{{ uid }}-success-title"
                 class="mg-quote__status-title"
@@ -157,9 +220,8 @@
 
               {%- if show_photo -%}
                 <div class="mg-quote__status-photo">
-                  <p class="mg-quote__label-row">
-                    <span class="mg-quote__step-no" aria-hidden="true">+</span>
-                    <span>{{ section.settings.photo_heading | default: 'Add a photo of your dash' | escape }}</span>
+                  <p class="mg-quote__legend">
+                    {{- section.settings.photo_heading | default: 'Add a photo of your dash' | escape -}}
                   </p>
                   {{ photo_step }}
                 </div>
@@ -168,7 +230,7 @@
               <div class="mg-quote__status-actions">
                 {%- if settings.mg_phone_e164 != blank -%}
                   <a
-                    class="mg-btn mg-btn--ghost"
+                    class="mg-btn mg-btn--secondary"
                     href="tel:+{{ settings.mg_phone_e164 }}"
                   >
                     {%- render 'mg-icon', icon: 'phone' -%}
@@ -176,7 +238,7 @@
                   </a>
                 {%- endif -%}
                 <a
-                  class="mg-quote__again"
+                  class="mg-link mg-quote__again"
                   href="{{ request.path }}"
                 >
                   Send another request
@@ -191,7 +253,7 @@
               {%- if section.settings.form_text != blank -%}
                 <p class="mg-quote__card-text">{{ section.settings.form_text | escape }}</p>
               {%- endif -%}
-              <p class="mg-quote__required-note">
+              <p class="mg-help mg-quote__required-note">
                 Fields marked <span class="mg-quote__req" aria-hidden="true">*</span
                 ><span class="mg-visually-hidden">with an asterisk</span> are required.
               </p>
@@ -217,22 +279,17 @@
             {%- endif -%}
 
             <fieldset class="mg-quote__group">
-              <legend class="mg-quote__legend">
-                <span class="mg-quote__label-row">
-                  <span class="mg-quote__step-no" aria-hidden="true">01</span>
-                  <span>About you</span>
-                </span>
-              </legend>
+              <legend class="mg-quote__legend">About you</legend>
               <div class="mg-quote__grid">
-                <div class="mg-quote__field mg-quote__field--full">
+                <div class="mg-field mg-quote__field mg-quote__field--full">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-name"
                   >
                     Your name <span class="mg-quote__req" aria-hidden="true">*</span>
                   </label>
                   <input
-                    class="mg-quote__input"
+                    class="mg-input"
                     type="text"
                     id="{{ uid }}-name"
                     name="contact[name]"
@@ -243,15 +300,15 @@
                   >
                 </div>
 
-                <div class="mg-quote__field">
+                <div class="mg-field mg-quote__field">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-phone"
                   >
                     Mobile number <span class="mg-quote__req" aria-hidden="true">*</span>
                   </label>
                   <input
-                    class="mg-quote__input"
+                    class="mg-input"
                     type="tel"
                     id="{{ uid }}-phone"
                     name="contact[phone]"
@@ -264,22 +321,22 @@
                     value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
                   >
                   <p
-                    class="mg-quote__hint"
+                    class="mg-help"
                     id="{{ uid }}-phone-hint"
                   >
                     We'll call or WhatsApp you on this number.
                   </p>
                 </div>
 
-                <div class="mg-quote__field">
+                <div class="mg-field mg-quote__field">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-email"
                   >
                     Email <span class="mg-quote__req" aria-hidden="true">*</span>
                   </label>
                   <input
-                    class="mg-quote__input"
+                    class="mg-input"
                     type="email"
                     id="{{ uid }}-email"
                     name="contact[email]"
@@ -299,7 +356,7 @@
                   >
                   {%- if email_invalid -%}
                     <p
-                      class="mg-quote__field-error"
+                      class="mg-error-text"
                       id="{{ uid }}-email-error"
                     >
                       {{ form.errors.translated_fields.email | capitalize }}
@@ -307,7 +364,7 @@
                     </p>
                   {%- endif -%}
                   <p
-                    class="mg-quote__hint"
+                    class="mg-help"
                     id="{{ uid }}-email-hint"
                   >
                     Your written quote is sent here.
@@ -317,61 +374,55 @@
             </fieldset>
 
             <fieldset class="mg-quote__group">
-              <legend class="mg-quote__legend">
-                <span class="mg-quote__label-row">
-                  <span class="mg-quote__step-no" aria-hidden="true">02</span>
-                  <span>Your car</span>
-                </span>
-              </legend>
+              <legend class="mg-quote__legend">Your car</legend>
               <div class="mg-quote__grid mg-quote__grid--car">
-                <div class="mg-quote__field mg-quote__field--full">
+                <div class="mg-field mg-quote__field mg-quote__field--full">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-reg"
                   >
                     Registration number
                   </label>
-                  <div class="mg-quote__plate">
-                    <div class="mg-quote__plate-inner">
-                      <span
-                        class="mg-quote__plate-band"
-                        aria-hidden="true"
-                      >
-                        <span class="mg-quote__plate-stars"></span>
-                        IRL
-                      </span>
-                      <input
-                        class="mg-quote__input mg-quote__input--plate"
-                        type="text"
-                        id="{{ uid }}-reg"
-                        name="contact[Registration number]"
-                        autocomplete="off"
-                        autocapitalize="characters"
-                        spellcheck="false"
-                        maxlength="16"
-                        aria-describedby="{{ uid }}-reg-hint"
-                        placeholder="181-D-12345"
-                      >
-                    </div>
+                  <div class="mg-plate mg-quote__plate">
+                    <span
+                      class="mg-plate__band"
+                      aria-hidden="true"
+                      >IRL</span
+                    >
+                    <input
+                      class="mg-plate__input"
+                      type="text"
+                      id="{{ uid }}-reg"
+                      name="contact[Registration number]"
+                      autocomplete="off"
+                      autocapitalize="characters"
+                      autocorrect="off"
+                      spellcheck="false"
+                      enterkeyhint="next"
+                      maxlength="16"
+                      aria-describedby="{{ uid }}-reg-hint"
+                      placeholder="241-D-12345"
+                      data-mg-quote-reg
+                    >
                   </div>
                   <p
-                    class="mg-quote__hint"
+                    class="mg-help"
                     id="{{ uid }}-reg-hint"
                   >
                     Irish or UK reg. We use it to check your car's exact spec and factory screen.
                   </p>
                 </div>
 
-                <div class="mg-quote__field">
+                <div class="mg-field mg-quote__field">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-make"
                   >
                     Make
                   </label>
                   <div class="mg-quote__select">
                     <select
-                      class="mg-quote__input mg-quote__input--select"
+                      class="mg-input"
                       id="{{ uid }}-make"
                       name="contact[Car make]"
                       autocomplete="off"
@@ -388,15 +439,15 @@
                   </div>
                 </div>
 
-                <div class="mg-quote__field">
+                <div class="mg-field mg-quote__field">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-model"
                   >
                     Model
                   </label>
                   <input
-                    class="mg-quote__input"
+                    class="mg-input"
                     type="text"
                     id="{{ uid }}-model"
                     name="contact[Car model]"
@@ -405,15 +456,15 @@
                   >
                 </div>
 
-                <div class="mg-quote__field">
+                <div class="mg-field mg-quote__field">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-year"
                   >
                     Year
                   </label>
                   <input
-                    class="mg-quote__input"
+                    class="mg-input"
                     type="text"
                     id="{{ uid }}-year"
                     name="contact[Car year]"
@@ -429,23 +480,18 @@
             </fieldset>
 
             <fieldset class="mg-quote__group">
-              <legend class="mg-quote__legend">
-                <span class="mg-quote__label-row">
-                  <span class="mg-quote__step-no" aria-hidden="true">03</span>
-                  <span>What you need</span>
-                </span>
-              </legend>
+              <legend class="mg-quote__legend">What you need</legend>
               <div class="mg-quote__grid">
-                <div class="mg-quote__field mg-quote__field--full">
+                <div class="mg-field mg-quote__field mg-quote__field--full">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-service"
                   >
                     Service
                   </label>
                   <div class="mg-quote__select">
                     <select
-                      class="mg-quote__input mg-quote__input--select"
+                      class="mg-input"
                       id="{{ uid }}-service"
                       name="contact[Service]"
                       autocomplete="off"
@@ -462,15 +508,15 @@
                   </div>
                 </div>
 
-                <div class="mg-quote__field mg-quote__field--full">
+                <div class="mg-field mg-quote__field mg-quote__field--full">
                   <label
-                    class="mg-quote__label"
+                    class="mg-label"
                     for="{{ uid }}-body"
                   >
                     Anything else we should know?
                   </label>
                   <textarea
-                    class="mg-quote__input mg-quote__input--textarea"
+                    class="mg-input"
                     id="{{ uid }}-body"
                     name="contact[body]"
                     rows="4"
@@ -479,7 +525,7 @@
                     {{- form.body -}}
                   </textarea>
                   <p
-                    class="mg-quote__hint"
+                    class="mg-help"
                     id="{{ uid }}-body-hint"
                   >
                     For example: factory screen with no CarPlay, want it wireless, plus a reversing camera.
@@ -494,15 +540,12 @@
                 role="group"
                 aria-labelledby="{{ uid }}-photo-title"
               >
-                <p class="mg-quote__legend">
-                  <span
-                    class="mg-quote__label-row"
-                    id="{{ uid }}-photo-title"
-                  >
-                    <span class="mg-quote__step-no" aria-hidden="true">04</span>
-                    <span>{{ section.settings.photo_heading | default: 'Add a photo of your dash' | escape }}</span>
-                    <span class="mg-quote__optional">Optional</span>
-                  </span>
+                <p
+                  class="mg-quote__legend"
+                  id="{{ uid }}-photo-title"
+                >
+                  {{ section.settings.photo_heading | default: 'Add a photo of your dash' | escape }}
+                  <span class="mg-label__optional">(optional)</span>
                 </p>
                 {{ photo_step }}
               </div>
@@ -511,16 +554,19 @@
             <div class="mg-quote__submit">
               <button
                 type="submit"
-                class="mg-btn mg-btn--primary mg-btn--block mg-quote__submit-btn"
+                class="mg-btn mg-btn--primary mg-btn--lg mg-btn--block"
               >
-                <span>{{ section.settings.submit_label | default: 'Send quote request' | escape }}</span>
-                {%- render 'mg-icon', icon: 'arrow-right' -%}
+                {{ section.settings.submit_label | default: 'Send quote request' | escape }}
               </button>
               {%- if section.settings.privacy_text != blank -%}
-                <p class="mg-quote__privacy">
+                <p class="mg-help mg-quote__privacy">
                   {{ section.settings.privacy_text | escape }}
                   {%- if shop.privacy_policy.url != blank %}
-                    <a href="{{ shop.privacy_policy.url }}">Privacy policy</a>
+                    <a
+                      class="mg-link"
+                      href="{{ shop.privacy_policy.url }}"
+                      >Privacy policy</a
+                    >
                   {%- endif -%}
                 </p>
               {%- endif -%}
@@ -554,11 +600,10 @@
               {%- if step_title != blank or step_text != blank -%}
                 <li class="mg-quote__step">
                   <span
-                    class="mg-quote__step-marker"
+                    class="mg-quote__step-num"
                     aria-hidden="true"
+                    >{{ i }}</span
                   >
-                    {{- '0' | append: i -}}
-                  </span>
                   <div class="mg-quote__step-body">
                     {%- if step_title != blank -%}
                       <{{ minor_tag }} class="mg-quote__step-title">{{ step_title | escape }}</{{ minor_tag }}>
@@ -575,13 +620,18 @@
       {%- endif -%}
 
       {%- if section.settings.show_contact -%}
-        <div class="mg-quote__contact">
+        <div class="mg-card mg-quote__contact">
           {%- if settings.mg_phone_display != blank and settings.mg_phone_e164 != blank -%}
             <a
               class="mg-quote__phone"
               href="tel:+{{ settings.mg_phone_e164 }}"
             >
-              <span class="mg-quote__phone-icon">{%- render 'mg-icon', icon: 'phone' -%}</span>
+              <span
+                class="mg-quote__phone-icon"
+                aria-hidden="true"
+              >
+                {%- render 'mg-icon', icon: 'phone' -%}
+              </span>
               <span class="mg-quote__phone-text">
                 <span class="mg-quote__phone-label">
                   {{- section.settings.contact_label | default: 'Prefer to talk?' | escape -}}
@@ -593,7 +643,7 @@
           <dl class="mg-quote__hours">
             {%- if settings.mg_hours_weekdays != blank -%}
               <div class="mg-quote__hours-row">
-                <dt>Mon – Fri</dt>
+                <dt>Monday to Friday</dt>
                 <dd>{{ settings.mg_hours_weekdays | escape }}</dd>
               </div>
             {%- endif -%}
@@ -617,38 +667,23 @@
 </section>
 
 {% stylesheet %}
-  .mg-quote {
-    position: relative;
-    isolation: isolate;
-    overflow: clip;
-  }
-
-  /* Soft ignition-red glow behind the heading */
-  .mg-quote::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset: 0 auto auto 0;
-    width: min(900px, 110vw);
-    aspect-ratio: 3 / 2;
-    background: radial-gradient(closest-side, var(--mg-accent-soft), transparent);
-    transform: translate(-35%, -45%);
-    pointer-events: none;
-  }
-
-  /* ---------- Layout ---------- */
-
+  /*
+   * Quote form: intro and "what happens next" on the left, a raised form card on the right
+   * from 990px (stacked on phones: intro, form, then steps). Fields, plate, buttons and
+   * states are the shared components from mg-theme.css; this is layout only.
+   */
   .mg-quote__layout {
     display: grid;
     grid-template-areas:
       'intro'
       'main'
       'details';
-    gap: clamp(32px, 5vw, 56px);
+    gap: var(--mg-space-6);
   }
 
   .mg-quote__intro {
     grid-area: intro;
+    min-width: 0;
   }
 
   .mg-quote__main {
@@ -659,100 +694,90 @@
   .mg-quote__details {
     grid-area: details;
     display: grid;
-    gap: 32px;
+    gap: var(--mg-space-6);
+    align-content: start;
     min-width: 0;
   }
 
-  @media (min-width: 990px) {
-    .mg-quote__layout {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      grid-template-rows: auto 1fr;
-      grid-template-areas:
-        'intro main'
-        'details main';
-      column-gap: clamp(48px, 6vw, 96px);
-      row-gap: 48px;
-    }
-
-    .mg-quote__details {
-      position: sticky;
-      top: calc(var(--header-height, 0px) + 32px);
-      align-self: start;
-    }
+  .mg-quote__heading {
+    max-width: 16ch;
   }
 
-  .mg-quote .mg-quote__heading {
-    font-size: var(--mg-h1-page);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
+  /* Panel header: the heading may run wider, like the other inner-page banners */
+  .mg-quote__intro--panel .mg-quote__heading {
+    max-width: 22ch;
   }
 
-  .mg-quote .mg-quote__lede {
-    margin-top: 1.25rem;
+  .mg-quote--panel .mg-quote__layout {
+    grid-template-areas:
+      'main'
+      'details';
+    margin-block-start: var(--mg-space-6);
+  }
+
+  .mg-quote__rte > * {
+    margin: 0 0 0.75em;
+  }
+
+  .mg-quote__rte > :last-child {
+    margin-bottom: 0;
+  }
+
+  .mg-quote__rte a {
+    color: var(--mg-ink);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: currentcolor;
+    text-underline-offset: 0.22em;
   }
 
   /* ---------- Form card ---------- */
-
   .mg-quote__card {
     display: block;
-    padding: clamp(20px, 4vw, 44px);
-    box-shadow: var(--mg-shadow);
+    padding: var(--mg-space-5) var(--mg-space-4);
     container-type: inline-size;
-  }
-
-  .mg-quote__card::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    inset-inline-start: clamp(20px, 4vw, 44px);
-    width: 56px;
-    height: 2px;
-    background: var(--mg-accent);
   }
 
   .mg-quote__form {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: var(--mg-space-6);
   }
 
   .mg-quote__card-head {
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--mg-border);
+    padding-bottom: var(--mg-space-5);
+    border-bottom: 1px solid var(--mg-line);
   }
 
   .mg-quote__card-title,
   .mg-quote__status-title {
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--mg-h3);
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-h3);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-quote__card-text {
-    margin: 0.5rem 0 0;
+    margin: var(--mg-space-1) 0 0;
     font-size: 0.9375rem;
-    line-height: 1.55;
-    color: var(--mg-text-muted);
+    line-height: 1.5;
+    color: var(--mg-ink-2);
   }
 
   .mg-quote__required-note {
-    margin: 0.75rem 0 0;
-    font-size: 0.8125rem;
-    color: var(--mg-text-subtle);
+    margin-top: var(--mg-space-2);
   }
 
   .mg-quote__req {
-    font-weight: 700;
-    color: var(--mg-accent-text);
+    font-weight: 600;
+    color: var(--mg-red-ink);
   }
 
   /* ---------- Groups and fields ---------- */
-
   .mg-quote__group {
     min-width: 0;
     margin: 0;
@@ -763,60 +788,23 @@
   .mg-quote__legend {
     display: block;
     width: 100%;
-    margin: 0 0 18px;
+    margin: 0 0 var(--mg-space-4);
     padding: 0;
-  }
-
-  .mg-quote__label-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 0;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--mg-text);
-  }
-
-  .mg-quote__label-row::after {
-    content: '';
-    flex: 1 1 24px;
-    min-width: 24px;
-    height: 1px;
-    background: var(--mg-border);
-  }
-
-  .mg-quote__step-no {
-    display: inline-grid;
-    flex: none;
-    place-items: center;
-    min-width: 32px;
-    height: 24px;
-    padding: 0 6px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    font-variant-numeric: tabular-nums;
-    color: var(--mg-accent-text);
-  }
-
-  .mg-quote__optional {
-    flex: none;
-    padding: 2px 8px;
-    border: 1px solid var(--mg-border);
-    border-radius: 999px;
-    font-size: 0.6875rem;
+    font-size: 1.0625rem;
     font-weight: 600;
-    letter-spacing: 0.1em;
-    color: var(--mg-text-subtle);
+    line-height: 1.35;
+    color: var(--mg-ink);
   }
 
+  .mg-quote__legend .mg-label__optional {
+    font-size: var(--mg-fs-small);
+  }
+
+  /* Fields in a row start at the top: a field with a two-line hint must not stretch its neighbour */
   .mg-quote__grid {
     display: grid;
-    gap: 18px 16px;
+    align-items: start;
+    gap: var(--mg-space-4);
   }
 
   @container (min-width: 420px) {
@@ -835,109 +823,32 @@
     }
   }
 
-  .mg-quote__field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 0;
+  /* Autofill keeps the field colours in both schemes */
+  .mg-quote .mg-input:-webkit-autofill {
+    -webkit-text-fill-color: var(--mg-ink);
+    caret-color: var(--mg-ink);
+    box-shadow: 0 0 0 1000px var(--mg-input) inset;
   }
 
-  .mg-quote__label {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-quote__hint {
-    margin: 0;
-    font-size: 0.8125rem;
-    line-height: 1.45;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-quote__field-error {
-    margin: 0;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--mg-accent-text);
-  }
-
-  /* Two-class selectors so these win over Horizon's global input rules */
-  .mg-quote .mg-quote__input {
-    width: 100%;
-    min-height: 52px;
-    margin: 0;
-    padding: 12px 16px;
-    font: inherit;
-    font-size: 1rem;
-    line-height: 1.4;
-    color: var(--mg-text);
-    background-color: var(--mg-bg);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-sm);
-    box-shadow: none;
-    -webkit-appearance: none;
-    appearance: none;
-    transition:
-      border-color 0.2s var(--mg-ease),
-      box-shadow 0.2s var(--mg-ease);
-  }
-
-  .mg-quote .mg-quote__input::placeholder {
-    color: var(--mg-text-subtle);
-    opacity: 1;
-  }
-
-  .mg-quote .mg-quote__input:hover {
-    border-color: var(--mg-border-strong);
-  }
-
-  .mg-quote .mg-quote__input:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-    border-color: var(--mg-accent);
-    box-shadow: 0 0 0 3px var(--mg-accent-soft);
-  }
-
-  .mg-quote .mg-quote__input:-webkit-autofill {
-    -webkit-text-fill-color: var(--mg-text);
-    caret-color: var(--mg-text);
-    box-shadow: 0 0 0 1000px var(--mg-bg) inset;
-  }
-
-  .mg-quote .mg-quote__input:-webkit-autofill:focus {
-    box-shadow:
-      0 0 0 1000px var(--mg-bg) inset,
-      0 0 0 3px var(--mg-accent-soft);
-  }
-
-  .mg-quote .mg-quote__input[aria-invalid='true'] {
-    border-color: var(--mg-accent-hover);
-  }
-
-  .mg-quote .mg-quote__input--textarea {
-    min-height: 128px;
-    padding-block: 14px;
-    resize: vertical;
-  }
-
+  /* Selects: native control without the platform arrow, the MG chevron instead */
   .mg-quote__select {
     position: relative;
   }
 
-  .mg-quote .mg-quote__input--select {
+  .mg-quote__select select.mg-input {
     padding-inline-end: 44px;
+    -webkit-appearance: none;
+    appearance: none;
     cursor: pointer;
   }
 
-  .mg-quote .mg-quote__input--select:has(option[value='']:checked) {
-    color: var(--mg-text-subtle);
+  .mg-quote__select select.mg-input:has(option[value='']:checked) {
+    color: var(--mg-ink-3);
   }
 
-  .mg-quote .mg-quote__input--select option {
-    color: var(--mg-text);
-    background-color: var(--mg-surface);
+  .mg-quote__select option {
+    background-color: var(--mg-card);
+    color: var(--mg-ink);
   }
 
   .mg-quote__select-icon {
@@ -946,132 +857,69 @@
     inset-inline-end: 14px;
     width: 18px;
     height: 18px;
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
     transform: translateY(-50%);
     pointer-events: none;
   }
 
-  /* ---------- Registration plate ---------- */
-
+  /* The plate is a real plate size, not the width of the card */
   .mg-quote__plate {
-    padding: 3px;
-    background: var(--mg-text);
-    border-radius: var(--mg-radius-sm);
-    transition: box-shadow 0.2s var(--mg-ease);
-  }
-
-  .mg-quote__plate:focus-within {
-    outline: 2px solid var(--mg-accent);
-    outline-offset: 3px;
-  }
-
-  .mg-quote__plate-inner {
-    display: flex;
-    align-items: stretch;
-    overflow: hidden;
-    border: 1.5px solid var(--mg-bg);
-    border-radius: 4px;
-  }
-
-  .mg-quote__plate-band {
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
-    width: 42px;
-    padding: 7px 0 6px;
-    font-size: 0.6875rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: var(--mg-text);
-    background: var(--mg-surface-2);
-  }
-
-  .mg-quote__plate-stars {
-    width: 16px;
-    height: 16px;
-    border: 2px dotted var(--mg-star);
-    border-radius: 50%;
-  }
-
-  .mg-quote .mg-quote__input--plate {
-    flex: 1;
-    min-width: 0;
-    min-height: 56px;
-    padding: 8px 14px;
-    font-size: clamp(1.25rem, 5cqi, 1.625rem);
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-align: center;
-    text-transform: uppercase;
-    color: var(--mg-bg);
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-  }
-
-  .mg-quote .mg-quote__input--plate::placeholder {
-    color: color-mix(in srgb, var(--mg-bg) 60%, var(--mg-text));
-  }
-
-  .mg-quote .mg-quote__input--plate:focus {
-    border: 0;
-    box-shadow: none;
+    width: 100%;
+    max-width: 340px;
   }
 
   /* ---------- Dash photo (WhatsApp) ---------- */
-
   .mg-quote__photo {
     display: grid;
-    gap: 16px;
-    padding: 20px;
-    border: 1px dashed var(--mg-border-strong);
-    border-radius: var(--mg-radius);
-    background: color-mix(in srgb, var(--mg-whatsapp) 4%, transparent);
+    gap: var(--mg-space-4);
+    padding: var(--mg-space-4);
+    border-radius: var(--mg-radius-md);
+    background-color: var(--mg-band);
   }
 
+  /* The icon only shows once it can sit beside the text (see the container query below) */
   .mg-quote__photo-icon {
-    display: grid;
+    display: none;
     place-items: center;
-    width: 52px;
-    height: 52px;
-    color: var(--mg-text);
-    background: var(--mg-surface-2);
-    border: 1px solid var(--mg-border);
-    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-card);
+    color: var(--mg-ink);
   }
 
   .mg-quote__photo-icon .mg-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .mg-quote__photo-text {
-    margin: 0 0 16px;
+    margin: 0 0 var(--mg-space-3);
     font-size: 0.9375rem;
     line-height: 1.55;
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
   }
 
+  /* On the grey box the outline button gets a card fill, so it reads as a button */
   .mg-quote .mg-quote__photo-btn {
+    --mg-btn-bg: var(--mg-card);
+    --mg-btn-bg-hover: var(--mg-card-raised);
     width: 100%;
   }
 
   .mg-quote__photo-note {
-    margin: 10px 0 0;
-    font-size: 0.8125rem;
-    line-height: 1.45;
-    color: var(--mg-text-subtle);
+    margin-top: var(--mg-space-2);
   }
 
   @container (min-width: 420px) {
     .mg-quote__photo {
       grid-template-columns: auto minmax(0, 1fr);
       align-items: start;
-      gap: 20px;
-      padding: 24px;
+      padding: var(--mg-space-5);
+    }
+
+    .mg-quote__photo-icon {
+      display: inline-grid;
     }
 
     .mg-quote .mg-quote__photo-btn {
@@ -1080,53 +928,21 @@
   }
 
   /* ---------- Submit ---------- */
-
   .mg-quote__submit {
     display: grid;
-    gap: 14px;
-    padding-top: 24px;
-    border-top: 1px solid var(--mg-border);
+    gap: var(--mg-space-3);
   }
 
-  .mg-quote .mg-quote__submit-btn {
-    min-height: 56px;
-    font-size: 1rem;
-  }
-
-  .mg-quote__submit-btn .mg-icon {
-    transition: transform 0.2s var(--mg-ease);
-  }
-
-  .mg-quote__submit-btn:hover .mg-icon {
-    transform: translateX(3px);
-  }
-
-  .mg-quote__privacy {
-    margin: 0;
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-quote__privacy a,
+  .mg-quote__privacy .mg-link,
   .mg-quote__again {
-    color: var(--mg-text-muted);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-border-strong);
-    text-underline-offset: 4px;
-  }
-
-  .mg-quote__privacy a:hover,
-  .mg-quote__again:hover {
-    color: var(--mg-text);
-    text-decoration-color: var(--mg-accent);
+    text-decoration-color: currentcolor;
   }
 
   /* ---------- Status panels ---------- */
-
   .mg-quote__status {
     display: grid;
-    gap: 14px;
+    justify-items: start;
+    gap: var(--mg-space-3);
   }
 
   .mg-quote__status:focus {
@@ -1134,19 +950,16 @@
   }
 
   .mg-quote__status--error {
-    padding: 16px 18px;
-    color: var(--mg-text);
-    background: var(--mg-accent-soft);
-    border: 1px solid color-mix(in srgb, var(--mg-accent) 55%, transparent);
+    padding: var(--mg-space-4);
+    border: 1px solid var(--mg-red-ink);
     border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-red-tint);
+    color: var(--mg-ink);
   }
 
   .mg-quote__status--error .mg-quote__status-title {
-    font-family: var(--font-body--family);
     font-size: 0.9375rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    text-transform: none;
+    color: var(--mg-red-ink);
   }
 
   .mg-quote__status--error ul {
@@ -1157,171 +970,154 @@
   }
 
   .mg-quote__status-icon {
-    display: grid;
+    display: inline-grid;
     place-items: center;
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--mg-radius-pill);
+    background-color: color-mix(in srgb, var(--mg-success) 14%, transparent);
     color: var(--mg-success);
-    background: color-mix(in srgb, var(--mg-success) 14%, transparent);
-    border: 1px solid color-mix(in srgb, var(--mg-success) 40%, transparent);
-    border-radius: 50%;
   }
 
   .mg-quote__status-icon .mg-icon {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     stroke-width: 2.25;
   }
 
   .mg-quote__status-text {
     margin: 0;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--mg-text-muted);
+    font-size: var(--mg-fs-body);
+    line-height: var(--mg-lh-body);
+    color: var(--mg-ink-2);
   }
 
   .mg-quote__status-photo {
     display: grid;
-    gap: 16px;
-    margin-top: 16px;
+    justify-self: stretch;
+    margin-top: var(--mg-space-3);
   }
 
   .mg-quote__status-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 16px 24px;
-    margin-top: 12px;
-    padding-top: 24px;
-    border-top: 1px solid var(--mg-border);
+    justify-self: stretch;
+    gap: var(--mg-space-3) var(--mg-space-5);
+    margin-top: var(--mg-space-3);
+    padding-top: var(--mg-space-5);
+    border-top: 1px solid var(--mg-line);
   }
 
   .mg-quote__again {
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: var(--mg-tap);
     font-size: 0.9375rem;
-    font-weight: 600;
   }
 
   /* ---------- What happens next ---------- */
-
   .mg-quote__next-title {
-    margin: 0 0 20px;
-    font-family: var(--font-body--family);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--mg-text-muted);
+    margin: 0 0 var(--mg-space-4);
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-h3);
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-quote__steps {
     display: grid;
+    gap: var(--mg-space-5);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .mg-quote__step {
-    position: relative;
     display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
-    gap: 16px;
-    padding-bottom: 24px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--mg-space-4);
+    margin: 0;
   }
 
-  .mg-quote__step:last-child {
-    padding-bottom: 0;
-  }
-
-  .mg-quote__step::before {
-    content: '';
-    position: absolute;
-    top: 50px;
-    bottom: 6px;
-    inset-inline-start: 21.5px;
-    width: 1px;
-    background: var(--mg-border);
-  }
-
-  .mg-quote__step:last-child::before {
-    display: none;
-  }
-
-  .mg-quote__step-marker {
-    display: grid;
+  .mg-quote__step-num {
+    display: inline-grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--mg-radius-pill);
+    background-color: var(--mg-red-tint);
+    color: var(--mg-red-ink);
+    font-size: var(--mg-fs-small);
+    font-weight: 600;
+    line-height: 1;
     font-variant-numeric: tabular-nums;
-    color: var(--mg-text);
-    background: var(--mg-surface);
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
   }
 
-  .mg-quote__step:first-child .mg-quote__step-marker {
-    border-color: var(--mg-accent);
-    box-shadow: var(--mg-glow);
+  .mg-quote--band .mg-quote__step-num {
+    background-color: var(--mg-card);
+  }
+
+  .mg-quote__step-body {
+    display: grid;
+    gap: var(--mg-space-1);
+    min-width: 0;
+    padding-top: 4px;
   }
 
   .mg-quote__step-title {
-    margin: 11px 0 6px;
-    font-family: var(--font-body--family);
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-title);
+    font-weight: 600;
+    line-height: 1.35;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-quote__step-text {
+    max-width: 44ch;
     margin: 0;
     font-size: 0.9375rem;
     line-height: 1.55;
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
+    text-wrap: pretty;
   }
 
   /* ---------- Phone and hours ---------- */
-
   .mg-quote__contact {
     display: grid;
-    gap: 18px;
-    padding: 24px;
-    background: color-mix(in srgb, var(--mg-surface) 70%, transparent);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
+    gap: var(--mg-space-4);
+    padding: var(--mg-space-5);
   }
 
   .mg-quote__phone {
     display: flex;
     align-items: center;
-    gap: 14px;
-    color: var(--mg-text);
-    text-decoration: none;
+    gap: var(--mg-space-3);
     border-radius: var(--mg-radius-sm);
+    color: var(--mg-ink);
+    text-decoration: none;
   }
 
   .mg-quote__phone:focus-visible {
-    outline: 2px solid var(--mg-text);
+    outline: 2px solid var(--mg-focus);
     outline-offset: 4px;
   }
 
   .mg-quote__phone-icon {
-    display: grid;
+    display: inline-grid;
     flex: none;
     place-items: center;
     width: 48px;
     height: 48px;
-    color: var(--mg-text);
-    background: var(--mg-accent);
-    border-radius: 50%;
-    transition: background-color 0.2s var(--mg-ease);
+    border-radius: var(--mg-radius-pill);
+    background-color: var(--mg-action);
+    color: var(--mg-on-action);
+    transition: background-color var(--mg-dur) var(--mg-ease);
   }
 
   .mg-quote__phone-icon .mg-icon {
@@ -1329,68 +1125,100 @@
     height: 22px;
   }
 
-  .mg-quote__phone:hover .mg-quote__phone-icon {
-    background: var(--mg-accent-hover);
+  @media (hover: hover) {
+    .mg-quote__phone:hover .mg-quote__phone-icon {
+      background-color: var(--mg-action-hover);
+    }
+
+    .mg-quote__phone:hover .mg-quote__phone-number {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.2em;
+    }
   }
 
   .mg-quote__phone-label {
     display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mg-text-subtle);
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
   }
 
   .mg-quote__phone-number {
     display: block;
-    margin-top: 2px;
     font-size: 1.375rem;
-    font-weight: 800;
-    letter-spacing: 0.01em;
+    font-weight: 600;
+    line-height: 1.25;
     font-variant-numeric: tabular-nums;
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
   .mg-quote__hours {
     display: grid;
-    gap: 8px;
+    gap: var(--mg-space-2);
     margin: 0;
   }
 
   .mg-quote__phone + .mg-quote__hours {
-    padding-top: 18px;
-    border-top: 1px solid var(--mg-border);
+    padding-top: var(--mg-space-4);
+    border-top: 1px solid var(--mg-line);
   }
 
   .mg-quote__hours-row {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
+    gap: var(--mg-space-4);
     font-size: 0.9375rem;
   }
 
   .mg-quote__hours dt {
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
   }
 
   .mg-quote__hours dd {
     margin: 0;
-    font-weight: 600;
+    font-weight: 500;
     text-align: end;
-    color: var(--mg-text);
+    font-variant-numeric: tabular-nums;
+    color: var(--mg-ink);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-quote__card {
+      padding: var(--mg-space-6);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-quote__layout {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        'intro main'
+        'details main';
+      column-gap: var(--mg-space-8);
+      row-gap: var(--mg-space-7);
+    }
+
+    .mg-quote--panel .mg-quote__layout {
+      grid-template-rows: auto;
+      grid-template-areas: 'details main';
+      margin-block-start: var(--mg-space-7);
+    }
+
+    .mg-quote__details {
+      position: sticky;
+      top: calc(var(--header-height, 0px) + var(--mg-space-6));
+      align-self: start;
+    }
+
+    .mg-quote__card {
+      padding: var(--mg-space-7);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mg-quote .mg-quote__input,
-    .mg-quote__plate,
-    .mg-quote__phone-icon,
-    .mg-quote__submit-btn .mg-icon {
+    .mg-quote__phone-icon {
       transition: none;
-    }
-
-    .mg-quote__submit-btn:hover .mg-icon {
-      transform: none;
     }
   }
 {% endstylesheet %}
@@ -1402,7 +1230,8 @@
      * - builds the WhatsApp "dash photo" message live from the reg, car and service typed
      * - remembers the answers for this tab so the success panel can reuse them and an
      *   error reload does not wipe the custom fields
-     * - pre-selects fields from the URL, e.g. ?service=Dashcam&make=BMW&reg=181-D-12345
+     * - pre-fills fields from the URL, e.g. ?reg=241-D-12345&make=BMW&service=Dashcam (the home
+     *   hero's plate form sends ?reg=; service and make links elsewhere send ?service= and ?make=)
      * - moves focus to the success or error panel after a submit
      */
     class MgQuoteForm extends HTMLElement {
@@ -1518,7 +1347,7 @@
         }
         const map = { reg: 'Registration number', make: 'Car make', model: 'Car model', year: 'Car year', service: 'Service' };
         Object.keys(map).forEach((param) => {
-          const value = (params.get(param) || '').trim();
+          let value = (params.get(param) || '').trim();
           const el = this.field(map[param]);
           if (!value || !el || el.value) return;
           if (el.tagName === 'SELECT') {
@@ -1529,7 +1358,9 @@
               options.find((option) => option.value.toLowerCase().indexOf(query) !== -1);
             if (match) el.value = match.value;
           } else {
-            el.value = value.slice(0, 60);
+            if (param === 'reg') value = value.toUpperCase().replace(/\s+/g, ' ');
+            const max = el.maxLength > 0 ? el.maxLength : 60;
+            el.value = value.slice(0, Math.min(max, 60));
           }
         });
       }
@@ -1584,27 +1415,11 @@
       "options": [
         {
           "value": "default",
-          "label": "Page background"
+          "label": "Page (white or dark)"
         },
         {
           "value": "surface",
-          "label": "Raised surface"
-        }
-      ],
-      "default": "default"
-    },
-    {
-      "type": "select",
-      "id": "spacing",
-      "label": "Vertical spacing",
-      "options": [
-        {
-          "value": "default",
-          "label": "Standard"
-        },
-        {
-          "value": "tight",
-          "label": "Tight"
+          "label": "Grey band"
         }
       ],
       "default": "default"
@@ -1612,12 +1427,6 @@
     {
       "type": "header",
       "content": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "No-obligation quote"
     },
     {
       "type": "text",
@@ -1633,17 +1442,49 @@
       "default": false
     },
     {
+      "type": "select",
+      "id": "header_style",
+      "label": "Heading layout",
+      "info": "Page header: breadcrumb and a grey panel across the top, the same header as the service, car make and collection pages. Use it with the heading as the H1.",
+      "options": [
+        {
+          "value": "plain",
+          "label": "In the left column"
+        },
+        {
+          "value": "panel",
+          "label": "Page header panel"
+        }
+      ],
+      "default": "plain"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "info": "Home / page title, with breadcrumb structured data for Google.",
+      "default": true,
+      "visible_if": "{{ section.settings.header_style == 'panel' }}"
+    },
+    {
       "type": "checkbox",
       "id": "heading_is_h1",
       "label": "Use heading as the page's main title (H1)",
-      "info": "Turn on when this is the main section of the page, for example the Get a quote page. Each page should have only one H1.",
+      "info": "Turn on when this is the main section of the page, for example the Get a quote page. The H1 uses the serif page-title style. Each page should have only one H1.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "intro_from_page",
+      "label": "Use the page's content as the intro",
+      "info": "When the page has content (Online Store > Pages), it is shown under the heading instead of the intro text below.",
       "default": false
     },
     {
       "type": "inline_richtext",
       "id": "intro",
       "label": "Intro text",
-      "default": "Tell us your reg and what you'd like fitted. We'll check the exact spec of your car and come back with a fixed price for parts and fitting, so there are no surprises on the day."
+      "default": "Tell us your reg and what you'd like fitted. We'll check your car and come back with a fixed price for parts and fitting."
     },
     {
       "type": "header",
@@ -1665,7 +1506,7 @@
       "type": "textarea",
       "id": "step_1_text",
       "label": "Step 1 text",
-      "default": "We look up your reg and factory screen to confirm exactly which CarPlay, screen or audio kit suits your car."
+      "default": "We look up your reg and factory screen to confirm which CarPlay, screen or audio kit suits your car."
     },
     {
       "type": "text",
@@ -1690,7 +1531,7 @@
       "id": "step_3_text",
       "label": "Step 3 text",
       "info": "The €50 deposit and 1 to 2 hour fitting times come from MG's current booking page.",
-      "default": "Pick a time that suits you. A €50 deposit holds your slot, and most installs are done in one to two hours."
+      "default": "Pick a time that suits you. A €50 deposit holds your slot, and most installs are done in one to two hours."
     },
     {
       "type": "header",
@@ -1716,7 +1557,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Requests arrive by email at the store's contact address in Shopify admin. Name, mobile and email are required. Reg, car and service are optional but help MG quote first time."
+      "content": "Requests arrive by email at the store's contact address in Shopify admin. Name, mobile and email are required. Reg, car and service are optional but help MG quote first time. The reg, make, model, year and service fill in from the page link, for example /pages/get-a-quote?reg=241-D-12345&service=Dashcam (the home page's reg box sends ?reg=)."
     },
     {
       "type": "text",
@@ -1804,7 +1645,7 @@
       "type": "text",
       "id": "photo_message",
       "label": "WhatsApp message",
-      "info": "The customer's reg, car and service are added after this automatically, e.g. \"Reg: 181-D-12345, Car: 2018 BMW 3 Series, Service: Speaker upgrade\".",
+      "info": "The customer's reg, car and service are added after this automatically, e.g. \"Reg: 241-D-12345, Car: 2018 BMW 3 Series, Service: Speaker upgrade\".",
       "default": "Hi MG Car Audio, here's a photo of my dash.",
       "visible_if": "{{ section.settings.show_whatsapp_photo_step }}"
     },

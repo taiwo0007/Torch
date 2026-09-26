@@ -1,0 +1,303 @@
+{%- comment -%}
+  What's in every MG fit (docs/DESIGN.md §3 item 7): Back Market's guarantee panel.
+  A warm panel with a serif statement on the left and a raised checklist card on the right.
+  Stacks on phones and tablets.
+{%- endcomment -%}
+
+{%- liquid
+  assign heading_id = 'MgPromiseHeading-' | append: section.id
+  assign button_url = section.settings.button_url | default: '/pages/book-a-fitting'
+  assign panel_class = 'mg-panel--warm'
+  if section.settings.panel == 'band'
+    assign panel_class = ''
+  endif
+-%}
+
+<div class="mg-section mg-promise">
+  <div class="mg-container">
+    <div class="mg-panel {{ panel_class }} mg-promise__panel">
+      <div class="mg-promise__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2
+            class="mg-display mg-promise__heading"
+            id="{{ heading_id }}"
+          >
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="mg-lede">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <p class="mg-promise__link">
+            <a
+              class="mg-link"
+              href="{{ button_url }}"
+            >
+              {{- section.settings.button_label | escape -}}
+            </a>
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="mg-card mg-card--raised mg-promise__card">
+          <ul
+            class="mg-promise__list"
+            role="list"
+            {% if section.settings.heading != blank %}
+              aria-labelledby="{{ heading_id }}"
+            {% endif %}
+          >
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign title = block.settings.title | strip
+                assign text = block.settings.text | strip
+                if title == blank and text == blank
+                  continue
+                endif
+                assign icon = block.settings.icon | default: 'check'
+              -%}
+              <li
+                class="mg-promise__item"
+                {{ block.shopify_attributes }}
+              >
+                {%- render 'mg-icon', icon: icon, class: 'mg-promise__icon' -%}
+                <span class="mg-promise__text">
+                  {%- if title != blank -%}
+                    <strong>{{ title | escape }}</strong>
+                  {%- endif -%}
+                  {%- if title != blank and text != blank %} {% endif -%}
+                  {{- text | escape -}}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- elsif request.design_mode -%}
+        <p class="mg-help">Add "Item" blocks to build the checklist.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* Layout only: colour, type, radius and states come from assets/mg-theme.css */
+  .mg-promise__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-space-5);
+    align-items: center;
+  }
+
+  .mg-promise__intro {
+    min-width: 0;
+  }
+
+  .mg-promise__link {
+    margin: var(--mg-space-4) 0 0;
+  }
+
+  .mg-promise__link .mg-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--mg-tap);
+  }
+
+  .mg-promise__card {
+    padding: var(--mg-space-5) var(--mg-space-4);
+  }
+
+  .mg-promise__list {
+    display: grid;
+    gap: var(--mg-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-promise__item {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--mg-space-3);
+    margin: 0;
+    line-height: var(--mg-lh-body);
+  }
+
+  .mg-promise__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mg-promise__text {
+    min-width: 0;
+    text-wrap: pretty;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-promise__card {
+      padding: var(--mg-space-6);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-promise__panel {
+      grid-template-columns: minmax(0, 10fr) minmax(0, 11fr);
+      gap: var(--mg-space-7);
+    }
+
+    .mg-promise__intro {
+      padding-inline-start: var(--mg-space-5);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG what's in every fit",
+  "tag": "section",
+  "class": "mg-promise-section",
+  "max_blocks": 8,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Shown in the serif display type. Keep it to a short question or statement.",
+      "default": "What's in every MG fit?"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Line under the heading",
+      "default": "How we fit, test and stand behind every job at our Dublin 12 workshop."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Link label",
+      "info": "Optional text link under the heading. Leave blank to hide it."
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Link",
+      "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "select",
+      "id": "panel",
+      "label": "Panel colour",
+      "options": [
+        { "value": "warm", "label": "Warm" },
+        { "value": "band", "label": "Grey" }
+      ],
+      "default": "warm"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Tick" },
+            { "value": "car", "label": "Car" },
+            { "value": "wrench", "label": "Wrench" },
+            { "value": "screen", "label": "Screen" },
+            { "value": "radio", "label": "Radio" },
+            { "value": "speaker", "label": "Speaker" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "award", "label": "Award" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "tag", "label": "Price tag" },
+            { "value": "bolt", "label": "Bolt" },
+            { "value": "map-pin", "label": "Map pin" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "message", "label": "Message" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Bold lead",
+          "default": "Full test"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text after the lead",
+          "info": "Keep claims factual. The warranty item is a PLACEHOLDER until MG confirms the terms; match Theme settings > Warranty headline.",
+          "default": "before you drive away"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG what's in every fit",
+      "category": "MG Car Audio",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "car",
+            "title": "Compatibility check",
+            "text": "from your reg"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "wrench",
+            "title": "OEM-style finish",
+            "text": "with neat, hidden wiring"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "screen",
+            "title": "Factory controls kept",
+            "text": "where possible"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "Full test",
+            "text": "before you drive away"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Workmanship warranty",
+            "text": "on every fitting"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "calendar",
+            "title": "€50 deposit",
+            "text": "secures your slot"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

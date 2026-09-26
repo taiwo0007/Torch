@@ -2134,7 +2134,7 @@
         "type": "text",
         "id": "mg_tagline",
         "label": "Tagline",
-        "default": "Ireland's CarPlay & Car Audio Specialist"
+        "default": "Ireland's CarPlay and car audio specialist"
       },
       {
         "type": "text",
@@ -2214,13 +2214,13 @@
         "type": "text",
         "id": "mg_hours_weekdays",
         "label": "Monday to Friday",
-        "default": "9:30am – 7:00pm"
+        "default": "9:30am to 7pm"
       },
       {
         "type": "text",
         "id": "mg_hours_saturday",
         "label": "Saturday",
-        "default": "11:00am – 7:00pm"
+        "default": "11am to 7pm"
       },
       {
         "type": "text",
@@ -2235,8 +2235,9 @@
       {
         "type": "checkbox",
         "id": "mg_whatsapp_enabled",
-        "label": "Show floating WhatsApp button",
-        "default": true
+        "label": "Show WhatsApp buttons",
+        "default": true,
+        "info": "The floating button on tablets and desktops, and the WhatsApp button in the phone action bar."
       },
       {
         "type": "text",
@@ -2283,6 +2284,38 @@
         "label": "Warranty headline",
         "info": "Shown in the trust bar, service pages and product fitting cards. Add the length once MG confirms it, for example: 12-month fitting warranty. PLACEHOLDER until then.",
         "default": "Workmanship warranty"
+      },
+      {
+        "type": "header",
+        "content": "Appearance"
+      },
+      {
+        "type": "select",
+        "id": "mg_theme_mode",
+        "label": "Colour theme",
+        "info": "Auto follows each visitor's phone or computer setting. Visitors can still pick Light or Dark with the theme control.",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Auto (follow device)"
+          },
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ],
+        "default": "auto"
+      },
+      {
+        "type": "checkbox",
+        "id": "mg_show_theme_control",
+        "label": "Show theme control",
+        "info": "The Auto / Light / Dark switch in the footer.",
+        "default": true
       }
     ]
   }

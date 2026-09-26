@@ -18,35 +18,32 @@
     assign show_book = true
   endif
 
-  assign spacing_class = ''
-  if section.settings.spacing == 'tight'
-    assign spacing_class = ' mg-section--tight'
+  assign panel_classes = 'mg-panel mg-svc-cta__panel'
+  if section.settings.style == 'band'
+    assign panel_classes = panel_classes | append: ' mg-svc-cta__panel--band'
+  else
+    assign panel_classes = panel_classes | append: ' mg-surface-red'
   endif
+
+  # WhatsApp is the main action here (the copy asks for a reg and a dash photo); without it, Book is
+  assign book_class = 'mg-btn--secondary'
+  unless show_whatsapp
+    assign book_class = 'mg-btn--primary'
+  endunless
 -%}
 
-<div
-  class="mg-section mg-svc-cta mg-svc-cta--glow-{{ section.settings.glow_position }}{{ spacing_class }}"
-  style="--mg-svc-cta-glow: {{ section.settings.glow_strength }}%;"
->
+<div class="mg-section mg-svc-cta">
   <div class="mg-container">
     <div
-      class="mg-svc-cta__panel"
+      class="{{ panel_classes }}"
       {% if section.settings.heading != blank %}
         role="region" aria-labelledby="{{ heading_id }}"
       {% endif %}
     >
-      <div
-        class="mg-svc-cta__bg"
-        aria-hidden="true"
-      ></div>
-
       <div class="mg-svc-cta__content">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {%- endif -%}
         {%- if section.settings.heading != blank -%}
           <h2
-            class="mg-heading mg-svc-cta__heading"
+            class="mg-display mg-svc-cta__heading"
             id="{{ heading_id }}"
           >
             {{ section.settings.heading | escape }}
@@ -65,9 +62,9 @@
               <li>
                 {%- render 'mg-icon', icon: 'clock' -%}
                 <span>
-                  Mon–Fri {{ settings.mg_hours_weekdays | escape -}}
-                  {%- if settings.mg_hours_saturday != blank %} · Sat {{ settings.mg_hours_saturday | escape }}{% endif -%}
-                  {%- if settings.mg_hours_sunday != blank %} · Sun {{ settings.mg_hours_sunday | downcase | escape }}{% endif -%}
+                  Mon to Fri {{ settings.mg_hours_weekdays | escape -}}
+                  {%- if settings.mg_hours_saturday != blank %}, Sat {{ settings.mg_hours_saturday | escape }}{% endif -%}
+                  {%- if settings.mg_hours_sunday != blank %}, Sun {{ settings.mg_hours_sunday | downcase | escape }}{% endif -%}
                 </span>
               </li>
             {%- endif -%}
@@ -89,19 +86,28 @@
         <div class="mg-svc-cta__actions">
           {%- if show_whatsapp -%}
             <a
-              class="mg-btn mg-btn--whatsapp mg-btn--block mg-svc-cta__btn"
+              class="mg-btn mg-btn--primary mg-btn--lg mg-btn--block"
               href="https://wa.me/{{ settings.mg_whatsapp_number }}?text={{ wa_message | url_encode }}"
               target="_blank"
               rel="noopener"
             >
               {%- render 'mg-icon', icon: 'whatsapp' -%}
               <span>{{ section.settings.whatsapp_label | escape }}</span>
-              <span class="mg-visually-hidden">(opens WhatsApp)</span>
+              <span class="mg-visually-hidden"> (opens WhatsApp)</span>
+            </a>
+          {%- endif -%}
+          {%- if show_book -%}
+            <a
+              class="mg-btn {{ book_class }} mg-btn--lg mg-btn--block"
+              href="{{ book_url }}"
+            >
+              {%- render 'mg-icon', icon: 'calendar' -%}
+              <span>{{ section.settings.book_label | escape }}</span>
             </a>
           {%- endif -%}
           {%- if show_call -%}
             <a
-              class="mg-btn mg-btn--ghost mg-btn--block mg-svc-cta__btn"
+              class="mg-btn mg-btn--secondary mg-btn--lg mg-btn--block"
               href="tel:+{{ settings.mg_phone_e164 }}"
             >
               {%- render 'mg-icon', icon: 'phone' -%}
@@ -109,15 +115,6 @@
                 {{- section.settings.call_label | escape -}}
                 {%- if settings.mg_phone_display != blank %} {{ settings.mg_phone_display | escape }}{% endif -%}
               </span>
-            </a>
-          {%- endif -%}
-          {%- if show_book -%}
-            <a
-              class="mg-btn mg-btn--primary mg-btn--block mg-svc-cta__btn"
-              href="{{ book_url }}"
-            >
-              {%- render 'mg-icon', icon: 'calendar' -%}
-              <span>{{ section.settings.book_label | escape }}</span>
             </a>
           {%- endif -%}
         </div>
@@ -128,88 +125,13 @@
 
 {% stylesheet %}
   /*
-   * Closing call-to-action band. A dark panel lit by a soft red glow from one
-   * corner, with a faint grille texture and a red hairline along the top.
+   * Closing call to action: a rounded MG red panel (or a grey one), statement heading and
+   * text on the left, stacked buttons on the right from 990px. Layout only; colour, type and
+   * button states come from mg-theme.css (.mg-panel, .mg-surface-red, .mg-display, .mg-btn).
    */
-  .mg-svc-cta {
-    --mg-svc-cta-glow: 30%;
-    --mg-svc-cta-x: 100%;
-    --mg-svc-cta-y: 0%;
-    background: var(--mg-bg);
-  }
-
-  .mg-svc-cta--glow-left {
-    --mg-svc-cta-x: 0%;
-  }
-
-  .mg-svc-cta--glow-center {
-    --mg-svc-cta-x: 50%;
-  }
-
   .mg-svc-cta__panel {
-    position: relative;
-    isolation: isolate;
     display: grid;
-    gap: 28px;
-    overflow: hidden;
-    padding: clamp(28px, 5vw, 64px);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-lg);
-    background: linear-gradient(160deg, var(--mg-surface) 0%, var(--mg-bg) 100%);
-    box-shadow: var(--mg-shadow);
-  }
-
-  .mg-svc-cta__panel::after {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      color-mix(in srgb, var(--mg-accent) 80%, transparent) var(--mg-svc-cta-x),
-      transparent 100%
-    );
-  }
-
-  .mg-svc-cta--glow-right .mg-svc-cta__panel::after {
-    background: linear-gradient(90deg, transparent 20%, color-mix(in srgb, var(--mg-accent) 80%, transparent) 100%);
-  }
-
-  .mg-svc-cta--glow-left .mg-svc-cta__panel::after {
-    background: linear-gradient(90deg, color-mix(in srgb, var(--mg-accent) 80%, transparent) 0%, transparent 80%);
-  }
-
-  .mg-svc-cta__bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        70% 90% at var(--mg-svc-cta-x) var(--mg-svc-cta-y),
-        color-mix(in srgb, var(--mg-accent) var(--mg-svc-cta-glow), transparent) 0%,
-        transparent 70%
-      ),
-      radial-gradient(
-        40% 60% at var(--mg-svc-cta-x) 100%,
-        color-mix(in srgb, var(--mg-accent) 6%, transparent) 0%,
-        transparent 70%
-      );
-  }
-
-  /* Grille texture, fading out from the glow */
-  .mg-svc-cta__bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--mg-text) 5%, transparent) 0 1px,
-      transparent 1px 14px
-    );
-    -webkit-mask-image: radial-gradient(60% 80% at var(--mg-svc-cta-x) var(--mg-svc-cta-y), var(--mg-text) 0%, transparent 80%);
-    mask-image: radial-gradient(60% 80% at var(--mg-svc-cta-x) var(--mg-svc-cta-y), var(--mg-text) 0%, transparent 80%);
+    gap: var(--mg-space-5);
   }
 
   .mg-svc-cta__content {
@@ -217,7 +139,7 @@
   }
 
   .mg-svc-cta__heading {
-    max-width: 16ch;
+    max-width: 18ch;
   }
 
   .mg-svc-cta__text {
@@ -225,50 +147,64 @@
   }
 
   .mg-svc-cta__details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem 1.5rem;
-    margin: 1.5rem 0 0;
+    display: grid;
+    gap: var(--mg-space-2);
+    margin: var(--mg-space-5) 0 0;
     padding: 0;
     list-style: none;
-    font-size: 0.875rem;
+    font-size: var(--mg-fs-small);
     line-height: 1.45;
-    color: var(--mg-text-muted);
   }
 
   .mg-svc-cta__details li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--mg-space-2);
   }
 
   .mg-svc-cta__details .mg-icon {
-    width: 17px;
-    height: 17px;
-    flex: none;
+    width: 18px;
+    height: 18px;
     margin-top: 1px;
-    color: var(--mg-text-subtle);
+  }
+
+  /* Grey panel: secondary lines in ink-2 (on red they follow the white text) */
+  .mg-svc-cta__panel--band .mg-svc-cta__details {
+    color: var(--mg-ink-2);
+  }
+
+  .mg-svc-cta__panel--band .mg-svc-cta__details .mg-icon {
+    color: var(--mg-ink-3);
   }
 
   .mg-svc-cta__actions {
     display: grid;
-    gap: 12px;
+    gap: var(--mg-space-3);
     align-content: center;
   }
 
-  .mg-svc-cta__btn {
-    min-height: 54px;
+  @media screen and (min-width: 750px) {
+    .mg-svc-cta__details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--mg-space-2) var(--mg-space-5);
+    }
+
+    .mg-svc-cta__actions {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
   }
 
-  .mg-svc-cta__actions .mg-btn--ghost {
-    background: color-mix(in srgb, var(--mg-bg) 40%, transparent);
-  }
-
-  @media (min-width: 990px) {
+  @media screen and (min-width: 990px) {
     .mg-svc-cta__panel {
-      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 360px);
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
       align-items: center;
-      gap: clamp(40px, 6vw, 96px);
+      gap: var(--mg-space-8);
+    }
+
+    .mg-svc-cta__actions {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 {% endstylesheet %}
@@ -283,10 +219,15 @@
   },
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Quick compatibility check"
+      "type": "select",
+      "id": "style",
+      "label": "Panel",
+      "info": "MG red works as the closing panel of a page. Use grey when the section above is already red.",
+      "options": [
+        { "value": "red", "label": "MG red" },
+        { "value": "band", "label": "Grey" }
+      ],
+      "default": "red"
     },
     {
       "type": "text",
@@ -298,14 +239,14 @@
       "type": "textarea",
       "id": "text",
       "label": "Text",
-      "default": "Send your reg and a photo of your dash on WhatsApp. We'll tell you exactly which CarPlay or Android Auto option suits your car, what it costs and how long the fitting takes."
+      "default": "Send your reg and a photo of your dash on WhatsApp. We'll tell you which option suits your car, what it costs and how long the fitting takes."
     },
     {
       "type": "checkbox",
       "id": "show_details",
       "label": "Show opening hours and location",
-      "info": "From Theme settings > MG Car Audio: business details.",
-      "default": true
+      "info": "From Theme settings > MG Car Audio: business details. Leave off when this banner ends the page: the footer below already lists the hours and address.",
+      "default": false
     },
     {
       "type": "header",
@@ -315,14 +256,14 @@
       "type": "checkbox",
       "id": "show_whatsapp",
       "label": "Show WhatsApp button",
-      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "info": "The main button in this panel. Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
       "default": true
     },
     {
       "type": "text",
       "id": "whatsapp_label",
       "label": "WhatsApp button label",
-      "default": "WhatsApp your reg",
+      "default": "WhatsApp us",
       "visible_if": "{{ section.settings.show_whatsapp }}"
     },
     {
@@ -330,23 +271,8 @@
       "id": "whatsapp_message",
       "label": "WhatsApp pre-filled message",
       "info": "Leave blank to use the message from Theme settings.",
-      "default": "Hi MG Car Audio, can you tell me which CarPlay / Android Auto option fits my car? My reg is: ",
+      "default": "Hi MG Car Audio, can you tell me which CarPlay or Android Auto option fits my car? My reg is: ",
       "visible_if": "{{ section.settings.show_whatsapp }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_call",
-      "label": "Show call button",
-      "info": "Uses the phone number in Theme settings > MG Car Audio: business details.",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "call_label",
-      "label": "Call button label",
-      "info": "The phone number is added after this text.",
-      "default": "Call",
-      "visible_if": "{{ section.settings.show_call }}"
     },
     {
       "type": "text",
@@ -362,39 +288,19 @@
       "info": "Leave blank to link to /pages/book-a-fitting."
     },
     {
-      "type": "header",
-      "content": "Style"
+      "type": "checkbox",
+      "id": "show_call",
+      "label": "Show call button",
+      "info": "Uses the phone number in Theme settings > MG Car Audio: business details.",
+      "default": true
     },
     {
-      "type": "select",
-      "id": "glow_position",
-      "label": "Red glow position",
-      "options": [
-        { "value": "right", "label": "Top right" },
-        { "value": "center", "label": "Top centre" },
-        { "value": "left", "label": "Top left" }
-      ],
-      "default": "right"
-    },
-    {
-      "type": "range",
-      "id": "glow_strength",
-      "label": "Red glow strength",
-      "min": 10,
-      "max": 60,
-      "step": 5,
-      "unit": "%",
-      "default": 30
-    },
-    {
-      "type": "select",
-      "id": "spacing",
-      "label": "Section spacing",
-      "options": [
-        { "value": "normal", "label": "Normal" },
-        { "value": "tight", "label": "Tight" }
-      ],
-      "default": "tight"
+      "type": "text",
+      "id": "call_label",
+      "label": "Call button label",
+      "info": "The phone number is added after this text.",
+      "default": "Call",
+      "visible_if": "{{ section.settings.show_call }}"
     }
   ],
   "presets": [

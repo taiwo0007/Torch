@@ -1,7 +1,8 @@
 {%- doc -%}
-  Floating WhatsApp button, rendered once per page from layout/theme.liquid.
+  Floating WhatsApp button for tablets and desktops (750px and wider), rendered once per page
+  from layout/theme.liquid. Phones get the WhatsApp button in snippets/mg-mobile-action-bar instead.
 
-  Shows only when "Show floating WhatsApp button" is on and a WhatsApp number is set
+  Shows only when "Show WhatsApp buttons" is on and a WhatsApp number is set
   (Theme settings > MG Car Audio: business details). Never shown on the password page or in print.
   On product pages the product title is added to the pre-filled message.
 
@@ -43,14 +44,14 @@
     href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
     target="_blank"
     rel="noopener"
-    aria-label="Chat on WhatsApp with {{ business_name | escape }} (opens in a new tab)"
+    aria-label="WhatsApp us, a chat with {{ business_name | escape }} (opens in a new tab)"
   >
     {%- render 'mg-icon', icon: 'whatsapp', class: 'mg-wa-float__icon' -%}
     <span
       class="mg-wa-float__label"
       aria-hidden="true"
     >
-      Chat on WhatsApp
+      WhatsApp us
     </span>
   </a>
   <script>
@@ -65,78 +66,56 @@
 
 {% stylesheet %}
   .mg-wa-float {
-    --mg-wa-offset: 16px;
-    --mg-wa-lift: 0px;
-    --mg-wa-chat-lift: 0px;
-    position: fixed;
-    right: max(var(--mg-wa-offset), env(safe-area-inset-right, 0px)); /* stylelint-disable-line csstools/use-logical -- pinned to the physical corner in RTL too */
-    bottom: max(var(--mg-wa-offset), env(safe-area-inset-bottom, 0px));
-    z-index: calc(var(--layer-sticky, 8) - 2);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 56px;
-    height: 56px;
-    padding: 0;
-    color: var(--mg-bg);
-    background: var(--mg-whatsapp);
-    border-radius: 999px;
-    box-shadow: var(--mg-shadow);
-    font-family: var(--font-body--family);
-    font-size: 0.9375rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    white-space: nowrap;
-    text-decoration: none;
-    translate: 0 calc((var(--mg-wa-lift) + var(--mg-wa-chat-lift)) * -1);
-    transition:
-      translate 0.3s var(--mg-ease),
-      transform 0.2s var(--mg-ease),
-      box-shadow 0.2s var(--mg-ease);
-  }
-
-  .mg-wa-float:hover {
-    color: var(--mg-bg);
-    transform: translateY(-2px);
-  }
-
-  .mg-wa-float:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
-  }
-
-  .mg-wa-float__icon {
-    flex: none;
-    width: 28px;
-    height: 28px;
-  }
-
-  .mg-wa-float__label {
     display: none;
   }
 
-  @media (min-width: 750px) {
+  @media screen and (min-width: 750px) {
     .mg-wa-float {
       --mg-wa-offset: 24px;
-      width: auto;
+      --mg-wa-lift: 0px;
+      --mg-wa-chat-lift: 0px;
+      position: fixed;
+      right: max(var(--mg-wa-offset), env(safe-area-inset-right, 0px)); /* stylelint-disable-line csstools/use-logical -- pinned to the physical corner in RTL too */
+      bottom: max(var(--mg-wa-offset), env(safe-area-inset-bottom, 0px));
+      z-index: var(--mg-z-float, 7);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
       padding: 0 22px 0 16px;
+      border-radius: var(--mg-radius-pill, 999px);
+      background-color: var(--mg-whatsapp);
+      color: var(--mg-on-whatsapp);
+      box-shadow: var(--mg-shadow-float);
+      font-family: var(--mg-font-ui);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+      translate: 0 calc((var(--mg-wa-lift) + var(--mg-wa-chat-lift)) * -1);
+    }
+
+    .mg-wa-float:hover {
+      background-color: var(--mg-whatsapp-hover);
+      color: var(--mg-on-whatsapp);
+    }
+
+    .mg-wa-float:focus-visible {
+      outline: 2px solid var(--mg-focus);
+      outline-offset: 3px;
     }
 
     .mg-wa-float__icon {
-      width: 26px;
-      height: 26px;
-    }
-
-    .mg-wa-float__label {
-      display: inline;
+      flex: none;
+      width: 24px;
+      height: 24px;
     }
   }
 
-  /* Clear Horizon's sticky add-to-cart bar while it is showing (full width on mobile,
-     a centred 600px pill on desktop that only reaches the corner below 1200px). */
-  @media (max-width: 1199px) {
+  /* Clear Horizon's sticky add-to-cart bar while it is showing (a centred 600px pill on
+     desktop that only reaches the corner below 1200px). */
+  @media screen and (min-width: 750px) and (max-width: 1199px) {
     body:has(sticky-add-to-cart[data-variant-available='true'] .sticky-add-to-cart__bar[data-stuck='true'])
       .mg-wa-float {
       --mg-wa-lift: calc(var(--height-buy-buttons, 3.25rem) + var(--padding-sm, 0.7rem) * 2 + 12px);
@@ -147,26 +126,28 @@
     --mg-wa-chat-lift: 76px;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
+  @media screen and (min-width: 750px) and (prefers-reduced-motion: no-preference) {
     .mg-wa-float {
-      animation: mg-wa-float-in 0.5s var(--mg-ease) 0.6s both;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mg-wa-float {
-      transition: none;
+      transition:
+        translate 0.3s var(--mg-ease),
+        background-color 0.18s var(--mg-ease),
+        transform 0.18s var(--mg-ease);
+      animation: mg-wa-float-in 0.4s var(--mg-ease) 0.6s both;
     }
 
     .mg-wa-float:hover {
-      transform: none;
+      transform: translateY(-2px);
+    }
+
+    .mg-wa-float:active {
+      transform: scale(0.98);
     }
   }
 
   @keyframes mg-wa-float-in {
     from {
       opacity: 0;
-      scale: 0.6;
+      scale: 0.9;
     }
 
     to {

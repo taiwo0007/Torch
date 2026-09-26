@@ -14,60 +14,32 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_carplay": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Wired &amp; wireless CarPlay fitted in Dublin",
-            "link": "/pages/carplay-installation",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "600",
-            "letter_spacing": "loose",
-            "case": "uppercase"
-          },
-          "blocks": {}
-        },
-        "announcement_deposit": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Book online — €50 deposit secures your slot",
-            "link": "/products/booking-deposit",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "600",
-            "letter_spacing": "loose",
-            "case": "uppercase"
-          },
-          "blocks": {}
-        },
         "announcement_phone": {
           "type": "_announcement",
           "settings": {
-            "text": "Call or WhatsApp 087 034 4355",
+            "text": "Not sure what fits? Call 087 034 4355",
             "link": "tel:+353870344355",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "weight": "600",
-            "letter_spacing": "loose",
-            "case": "uppercase"
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "400",
+            "letter_spacing": "normal",
+            "case": "none"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "announcement_carplay",
-        "announcement_deposit",
         "announcement_phone"
       ],
       "name": "Announcement bar",
       "settings": {
         "speed": 5,
         "section_width": "page-width",
-        "background_color": "{{ settings.color_palette.color2 }}",
-        "divider_width": 1,
-        "divider_color": "{{ settings.color_palette.color3 }}",
-        "padding-block-start": 10,
-        "padding-block-end": 10
+        "background_color": "",
+        "divider_width": 0,
+        "divider_color": "",
+        "padding-block-start": 8,
+        "padding-block-end": 8
       }
     },
     "header_section": {
@@ -88,15 +60,19 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "type_font_primary_size": "0.75rem",
-            "menu_font_style": "inverse",
+            "background_color": "",
+            "text_color": "",
+            "type_font_primary_size": "0.875rem",
+            "menu_font_style": "regular",
             "type_font_primary_link": "subheading",
-            "type_case_primary_link": "uppercase",
+            "type_case_primary_link": "none",
             "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
-            "image_border_radius": 10,
+            "image_border_radius": 12,
             "navigation_bar": false,
+            "background_color_navigation_bar": "",
+            "text_color_navigation_bar": "",
             "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": true
@@ -106,39 +82,47 @@
       },
       "settings": {
         "logo_position": "left",
-        "menu_position": "center",
-        "menu_row": "top",
+        "menu_position": "left",
+        "menu_row": "bottom",
         "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
-        "search_position": "right",
+        "search_position": "left",
         "search_row": "top",
         "show_country": false,
         "country_selector_style": false,
         "show_language": false,
-        "localization_font": "subheading",
-        "localization_font_size": "0.75rem",
+        "localization_font": "body",
+        "localization_font_size": "0.875rem",
         "localization_position": "right",
         "localization_row": "top",
         "section_width": "page-width",
         "section_height": "standard",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "scroll-up",
         "divider_width": 0,
-        "divider_size": "page-width",
+        "divider_size": "full-width",
+        "divider_color": "",
         "border_width": 1,
-        "bottom_border_color": "{{ settings.color_palette.color3 }}",
+        "bottom_border_color": "",
         "actions_display_style": "icon",
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "bubble_style": "custom",
-        "bubble_background_color": "{{ settings.color_palette.color1 }}",
-        "bubble_text_color": "#ffffff",
-        "enable_transparent_header_home": true,
+        "background_color_top": "",
+        "text_color_top": "",
+        "background_color_bottom": "",
+        "text_color_bottom": "",
+        "bubble_style": "default",
+        "bubble_background_color": "",
+        "bubble_text_color": "",
+        "enable_transparent_header_home": false,
         "home_inverse_logo": false,
+        "text_color_transparent_home": "",
         "enable_transparent_header_product": false,
         "product_inverse_logo": false,
+        "text_color_transparent_product": "",
         "enable_transparent_header_collection": false,
-        "collection_inverse_logo": false
+        "collection_inverse_logo": false,
+        "text_color_transparent_collection": ""
       }
     }
   },

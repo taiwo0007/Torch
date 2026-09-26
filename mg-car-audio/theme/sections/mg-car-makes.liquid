@@ -1,42 +1,38 @@
 {%- liquid
-  assign view_all_url = section.settings.view_all_url | default: '/pages/get-a-quote'
   assign heading_id = 'MgMakesHeading-' | append: section.id
+  assign view_all_url = section.settings.view_all_url | default: '/pages/get-a-quote'
+  assign centred = false
+  if section.settings.align_desktop == 'center'
+    assign centred = true
+  endif
 -%}
 
-<div
-  class="mg-section mg-makes"
-  style="--mg-makes-cols: {{ section.settings.columns_desktop }};"
->
-  <div class="mg-container">
-    {%- if section.settings.eyebrow != blank
-      or section.settings.heading != blank
-      or section.settings.text != blank
-      or section.settings.view_all_label != blank
-    -%}
-      <div class="mg-section-head mg-section-head--row mg-makes__head">
-        <div class="mg-makes__intro">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-          {%- endif -%}
+{%- comment -%} Loads the chip focus helper (a focused chip scrolls clear of the edge fade) {%- endcomment -%}
+{%- render 'mg-carousel-script' -%}
+
+<div class="mg-section mg-makes{% if centred %} mg-makes--center{% endif %}">
+  <div class="mg-container mg-makes__layout">
+    {%- if section.settings.heading != blank or section.settings.view_all_label != blank -%}
+      <div class="mg-head mg-makes__head">
+        <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
-              class="mg-heading"
+              class="mg-head__title"
               id="{{ heading_id }}"
             >
               {{ section.settings.heading | escape }}
             </h2>
           {%- endif -%}
           {%- if section.settings.text != blank -%}
-            <p class="mg-lede">{{ section.settings.text | escape }}</p>
+            <p class="mg-head__sub">{{ section.settings.text | escape }}</p>
           {%- endif -%}
         </div>
         {%- if section.settings.view_all_label != blank -%}
           <a
-            class="mg-btn mg-btn--ghost mg-makes__all"
+            class="mg-link mg-head__link"
             href="{{ view_all_url }}"
           >
-            <span>{{ section.settings.view_all_label | escape }}</span>
-            {%- render 'mg-icon', icon: 'arrow-right' -%}
+            {{- section.settings.view_all_label | escape -}}
           </a>
         {%- endif -%}
       </div>
@@ -44,68 +40,73 @@
 
     {%- if section.blocks.size > 0 -%}
       <ul
-        class="mg-makes__grid"
+        class="mg-chips mg-chips--bleed mg-makes__chips"
         role="list"
         {% if section.settings.heading != blank %}
           aria-labelledby="{{ heading_id }}"
+        {% else %}
+          aria-label="Car makes"
         {% endif %}
       >
         {%- for block in section.blocks -%}
-          {%- liquid
-            assign make_name = block.settings.name | strip
-            if make_name == blank
-              continue
-            endif
-            assign make_handle = make_name | handleize
-            assign default_make_url = '/pages/' | append: make_handle | append: '-carplay'
-            assign make_url = block.settings.url | default: default_make_url
-            assign make_index = forloop.index | prepend: '0' | slice: -2, 2
-            assign name_length = make_name | size
-          -%}
-          <li
-            class="mg-makes__item"
-            {{ block.shopify_attributes }}
-          >
-            <a
-              class="mg-makes__tile{% if name_length > 7 %} mg-makes__tile--long{% endif %}"
-              href="{{ make_url }}"
-            >
-              {%- if block.settings.image != blank -%}
-                <span
-                  class="mg-makes__media"
-                  aria-hidden="true"
+          {%- case block.type -%}
+            {%- when 'make' -%}
+              {%- liquid
+                assign make_name = block.settings.name | strip
+                if make_name == blank
+                  continue
+                endif
+                assign make_handle = make_name | handleize
+                assign default_make_url = '/pages/' | append: make_handle | append: '-carplay'
+                assign chip_url = block.settings.url | default: default_make_url
+                assign chip_sub = block.settings.subtitle | strip
+              -%}
+              <li {{ block.shopify_attributes }}>
+                <a
+                  class="mg-chip mg-makes__chip"
+                  href="{{ chip_url }}"
+                  {% if request.path == chip_url %}
+                    aria-current="page"
+                  {% endif %}
                 >
-                  {{
-                    block.settings.image
-                    | image_url: width: 800
-                    | image_tag:
-                      widths: '300, 450, 600, 800',
-                      sizes: '(min-width: 1200px) 260px, (min-width: 750px) 33vw, 50vw',
-                      loading: 'lazy',
-                      alt: '',
-                      class: 'mg-makes__img'
-                  }}
-                </span>
-              {%- endif -%}
-              <span
-                class="mg-makes__top"
-                aria-hidden="true"
-              >
-                <span class="mg-makes__index">{{ make_index }}</span>
-                <span class="mg-makes__arrow">
-                  {%- render 'mg-icon', icon: 'arrow-right' -%}
-                </span>
-              </span>
-              <span class="mg-makes__name">{{ make_name | escape }}</span>
-              {%- if block.settings.subtitle != blank -%}
-                <span class="mg-makes__subtitle">{{ block.settings.subtitle | escape }}</span>
-              {%- endif -%}
-              <span
-                class="mg-makes__line"
-                aria-hidden="true"
-              ></span>
-            </a>
-          </li>
+                  {%- if block.settings.image != blank -%}
+                    <span
+                      class="mg-makes__avatar"
+                      aria-hidden="true"
+                    >
+                      {{-
+                        block.settings.image
+                        | image_url: width: 96, height: 96, crop: 'center'
+                        | image_tag: width: 24, height: 24, loading: 'lazy', alt: ''
+                      -}}
+                    </span>
+                  {%- endif -%}
+                  <span class="mg-makes__name">{{ make_name | escape }}</span>
+                  {%- if chip_sub != blank %}
+                    <span class="mg-makes__sub">{{ chip_sub | escape }}</span>
+                  {%- endif -%}
+                </a>
+              </li>
+            {%- when 'link' -%}
+              {%- liquid
+                assign chip_label = block.settings.label | strip
+                if chip_label == blank
+                  continue
+                endif
+                assign chip_url = block.settings.url | default: '/pages/get-a-quote'
+              -%}
+              <li {{ block.shopify_attributes }}>
+                <a
+                  class="mg-chip mg-makes__chip"
+                  href="{{ chip_url }}"
+                  {% if request.path == chip_url %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  <span class="mg-makes__name">{{ chip_label | escape }}</span>
+                </a>
+              </li>
+          {%- endcase -%}
         {%- endfor -%}
       </ul>
     {%- endif -%}
@@ -113,246 +114,69 @@
 </div>
 
 {% stylesheet %}
-  .mg-makes__intro {
-    max-width: 720px;
-  }
-
-  .mg-makes__all {
-    flex: 0 1 auto;
-    max-width: 100%;
-  }
-
-  .mg-makes__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .mg-makes__item {
-    display: flex;
-    min-width: 0;
-  }
-
-  .mg-makes__tile {
-    position: relative;
-    isolation: isolate;
-    container-type: inline-size;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-    min-height: 136px;
-    aspect-ratio: 4 / 3;
-    padding: 14px 16px 16px;
+  .mg-makes__avatar {
+    display: block;
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin-inline-start: -4px;
     overflow: hidden;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
-    background: linear-gradient(160deg, var(--mg-surface-2) 0%, var(--mg-surface) 60%);
-    color: var(--mg-text);
-    text-decoration: none;
-    transition:
-      border-color 0.25s var(--mg-ease),
-      transform 0.25s var(--mg-ease),
-      box-shadow 0.25s var(--mg-ease);
+    border-radius: var(--mg-radius-xs);
   }
 
-  @media (hover: hover) {
-    .mg-makes__tile:hover {
-      border-color: var(--mg-border-strong);
-      transform: translateY(-3px);
-      box-shadow: var(--mg-shadow);
-    }
-
-    .mg-makes__tile:hover .mg-makes__img {
-      opacity: 0.6;
-      transform: scale(1.04);
-    }
-
-    .mg-makes__tile:hover .mg-makes__arrow {
-      border-color: var(--mg-accent);
-      background: var(--mg-accent);
-      color: var(--mg-on-accent);
-      transform: translateX(2px);
-    }
-
-    .mg-makes__tile:hover .mg-makes__line {
-      transform: scaleX(1);
-    }
-  }
-
-  .mg-makes__tile:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
-  }
-
-  .mg-makes__media {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-
-  .mg-makes__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--mg-bg) 55%, transparent) 0%,
-      color-mix(in srgb, var(--mg-bg) 88%, transparent) 100%
-    );
-  }
-
-  .mg-makes__img {
+  .mg-makes__avatar img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.45;
-    filter: grayscale(0.4);
-    transition:
-      opacity 0.35s var(--mg-ease),
-      transform 0.6s var(--mg-ease);
   }
 
-  .mg-makes__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* The subtitle only shows where there is room: tablet and desktop */
+  .mg-makes__sub {
+    display: none;
   }
 
-  .mg-makes__index {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    font-variant-numeric: tabular-nums;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-makes__arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border: 1px solid var(--mg-border);
-    border-radius: 50%;
-    color: var(--mg-text-muted);
-    transition:
-      background-color 0.25s var(--mg-ease),
-      border-color 0.25s var(--mg-ease),
-      color 0.25s var(--mg-ease),
-      transform 0.25s var(--mg-ease);
-  }
-
-  .mg-makes__arrow .mg-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .mg-makes__name {
-    margin-top: auto;
-    font-family: var(--font-heading--family);
-    font-weight: 800;
-    font-size: clamp(1.25rem, 17cqi, 2.375rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    overflow-wrap: break-word;
-  }
-
-  .mg-makes__tile--long .mg-makes__name {
-    font-size: clamp(1rem, 12.5cqi, 1.875rem);
-  }
-
-  .mg-makes__subtitle {
-    margin-top: -6px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1.35;
-    letter-spacing: 0.02em;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-makes__line {
-    position: absolute;
-    inset: auto 0 0;
-    height: 2px;
-    background: var(--mg-accent);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.35s var(--mg-ease);
-  }
-
-  .mg-makes__tile:focus-visible .mg-makes__line {
-    transform: scaleX(1);
-  }
-
-  /* Phones: compact tiles (name and arrow only) so 12 makes don't push the services far down */
-  @media (max-width: 749px) {
-    .mg-makes__tile {
-      gap: 10px;
-      min-height: 92px;
-      aspect-ratio: auto;
-      padding: 12px 14px 14px;
+  @media screen and (min-width: 750px) {
+    .mg-makes__chips {
+      flex-wrap: wrap;
+      overflow: visible;
+      -webkit-mask-image: none;
+      mask-image: none;
+      animation: none;
     }
 
-    .mg-makes__name {
-      font-size: clamp(1.125rem, 13cqi, 1.5rem);
+    .mg-makes--center .mg-makes__head {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
-    .mg-makes__tile--long .mg-makes__name {
-      font-size: clamp(0.9375rem, 10cqi, 1.25rem);
+    .mg-makes--center .mg-makes__head .mg-head__text {
+      flex: none;
+      justify-items: center;
     }
 
-    .mg-makes__subtitle {
-      display: none;
+    .mg-makes--center .mg-makes__chips {
+      justify-content: center;
+    }
+
+    .mg-makes__sub {
+      display: inline;
+      font-size: var(--mg-fs-micro);
+      font-weight: 400;
+      color: var(--mg-ink-2);
+    }
+
+    .mg-makes__chip[aria-current] .mg-makes__sub {
+      color: inherit;
     }
   }
 
-  @media (min-width: 750px) {
-    .mg-makes__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .mg-makes__tile {
-      padding: 16px 18px 18px;
-    }
-
-    .mg-makes__subtitle {
-      font-size: 0.8125rem;
-    }
-  }
-
-  @media (min-width: 1100px) {
-    .mg-makes__grid {
-      grid-template-columns: repeat(var(--mg-makes-cols, 6), minmax(0, 1fr));
-      gap: 16px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mg-makes__tile,
-    .mg-makes__img,
-    .mg-makes__arrow,
-    .mg-makes__line {
-      transition: none;
-    }
-
-    .mg-makes__tile:hover,
-    .mg-makes__tile:hover .mg-makes__img,
-    .mg-makes__tile:hover .mg-makes__arrow {
-      transform: none;
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "MG car makes",
+  "name": "MG shop by car",
   "tag": "section",
   "class": "mg-makes-section",
   "max_blocks": 24,
@@ -362,28 +186,22 @@
   "settings": [
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Shop by car make"
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by car"
     },
     {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Built for the car you drive"
-    },
-    {
-      "type": "textarea",
       "id": "text",
-      "label": "Text",
-      "default": "CarPlay, Android Auto, screen upgrades and sound for the makes we fit every week. We also cover Skoda, SEAT, Renault, Peugeot, Citroën, Volvo, Land Rover and many more, including Japanese imports."
+      "label": "Line under the heading",
+      "info": "Optional. One short sentence."
     },
     {
       "type": "text",
       "id": "view_all_label",
       "label": "Link label",
-      "info": "Leave blank to hide the link.",
-      "default": "Other makes? Get a quote"
+      "info": "Shown on the right of the heading. Leave blank to hide the link.",
+      "default": "Other makes"
     },
     {
       "type": "url",
@@ -392,14 +210,15 @@
       "info": "Leave blank to link to /pages/get-a-quote."
     },
     {
-      "type": "range",
-      "id": "columns_desktop",
-      "label": "Columns on desktop",
-      "info": "Mobile shows 2 columns and tablet shows 3.",
-      "min": 4,
-      "max": 6,
-      "step": 1,
-      "default": 6
+      "type": "select",
+      "id": "align_desktop",
+      "label": "Alignment on tablet and desktop",
+      "info": "The heading and link sit above the chips, as in the other sections. Phones always show one row you can swipe.",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" }
+      ],
+      "default": "left"
     }
   ],
   "blocks": [
@@ -416,8 +235,8 @@
         {
           "type": "text",
           "id": "subtitle",
-          "label": "Subtitle",
-          "default": "CarPlay · Screens · Audio"
+          "label": "Small text after the make",
+          "info": "Optional, e.g. iDrive. Shown on tablet and desktop only."
         },
         {
           "type": "url",
@@ -428,64 +247,53 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Background image",
-          "info": "Optional. Shown dimmed behind the name. Don't use car-maker logos."
+          "label": "Small image",
+          "info": "Optional. Shown as a small square before the make. Don't use car-maker logos."
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Other link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Japanese imports"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Leave blank to link to /pages/get-a-quote."
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "MG car makes",
+      "name": "MG shop by car",
       "category": "MG Car Audio",
       "blocks": [
+        { "type": "make", "settings": { "name": "BMW" } },
+        { "type": "make", "settings": { "name": "Audi" } },
+        { "type": "make", "settings": { "name": "Mercedes-Benz" } },
+        { "type": "make", "settings": { "name": "Volkswagen" } },
+        { "type": "make", "settings": { "name": "Toyota", "url": "/pages/get-a-quote?make=Toyota" } },
+        { "type": "make", "settings": { "name": "Lexus", "url": "/pages/get-a-quote?make=Lexus" } },
+        { "type": "make", "settings": { "name": "Ford", "url": "/pages/get-a-quote?make=Ford" } },
+        { "type": "make", "settings": { "name": "Nissan", "url": "/pages/get-a-quote?make=Nissan" } },
+        { "type": "make", "settings": { "name": "Honda", "url": "/pages/get-a-quote?make=Honda" } },
+        { "type": "make", "settings": { "name": "Mazda", "url": "/pages/get-a-quote?make=Mazda" } },
+        { "type": "make", "settings": { "name": "Hyundai", "url": "/pages/get-a-quote?make=Hyundai" } },
+        { "type": "make", "settings": { "name": "Kia", "url": "/pages/get-a-quote?make=Kia" } },
         {
-          "type": "make",
-          "settings": { "name": "BMW", "subtitle": "CarPlay · iDrive · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Audi", "subtitle": "CarPlay · MMI · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Mercedes-Benz", "subtitle": "CarPlay · Screens · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Volkswagen", "subtitle": "CarPlay · Screens · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Toyota", "subtitle": "CarPlay · Radios · Imports" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Lexus", "subtitle": "CarPlay · Screens · Imports" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Ford", "subtitle": "CarPlay · Radios · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Nissan", "subtitle": "CarPlay · Radios · Imports" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Honda", "subtitle": "CarPlay · Radios · Imports" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Mazda", "subtitle": "CarPlay · Radios · Imports" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Hyundai", "subtitle": "CarPlay · Radios · Audio" }
-        },
-        {
-          "type": "make",
-          "settings": { "name": "Kia", "subtitle": "CarPlay · Radios · Audio" }
+          "type": "link",
+          "settings": {
+            "label": "Japanese imports",
+            "url": "/pages/get-a-quote?service=japan-to-europe"
+          }
         }
       ]
     }

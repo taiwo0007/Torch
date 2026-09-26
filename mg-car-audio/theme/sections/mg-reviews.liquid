@@ -1,657 +1,484 @@
 {%- liquid
+  assign heading = section.settings.heading | strip
+  assign heading_id = 'MgReviewsHeading-' | append: section.id
   assign section_classes = 'mg-section mg-reviews'
   if section.settings.background == 'surface'
-    assign section_classes = section_classes | append: ' mg-section--surface'
+    assign section_classes = section_classes | append: ' mg-section--band'
   endif
-  if section.settings.spacing == 'tight'
-    assign section_classes = section_classes | append: ' mg-section--tight'
-  endif
-
-  assign heading_id = 'MgReviewsHeading-' | append: section.id
-  assign track_id = 'MgReviewsTrack-' | append: section.id
 
   assign rating_text = settings.mg_review_rating | strip
   assign rating_value = rating_text | replace: ',', '.' | plus: 0 | at_least: 0 | at_most: 5
-  assign rating_percent = rating_value | times: 20
   assign review_count = settings.mg_review_count | strip
   assign review_url = settings.mg_review_url
+  assign link_label = section.settings.reviews_link_label | strip
 
   assign show_summary = false
   if section.settings.show_rating and rating_value > 0
     assign show_summary = true
   endif
+  assign show_sample = section.settings.show_placeholder_note
 -%}
+
+{%- render 'mg-carousel-script' -%}
 
 <section
   class="{{ section_classes }}"
-  {% if section.settings.heading != blank %}
+  {% if heading != blank %}
     aria-labelledby="{{ heading_id }}"
   {% endif %}
 >
   <div class="mg-container">
-    <header class="mg-section-head mg-section-head--row mg-reviews__head">
-      <div class="mg-reviews__intro">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
-        {%- if section.settings.text != blank -%}
-          <p class="mg-lede">{{ section.settings.text }}</p>
+    <mg-carousel class="mg-carousel mg-carousel--bleed mg-reviews__carousel">
+      <div class="mg-head">
+        <div class="mg-head__text">
+          {%- if heading != blank -%}
+            <h2
+              id="{{ heading_id }}"
+              class="mg-head__title"
+            >
+              {{ heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if show_summary -%}
+            <p class="mg-head__sub mg-reviews__summary">
+              <span
+                class="mg-stars"
+                style="--mg-rating: {{ rating_value }};"
+                aria-hidden="true"
+              ></span>
+              <span class="mg-visually-hidden">
+                Rated {{ rating_text | escape }} out of 5
+                {%- if review_count != blank %} from {{ review_count | escape }} Google reviews{% else %} on Google{% endif -%}
+              </span>
+              <span aria-hidden="true">
+                <strong class="mg-reviews__score">{{ rating_text | escape }}</strong>/5
+                {%- if review_count != blank %} from {{ review_count | escape }} Google reviews{% else %} on Google{% endif -%}
+              </span>
+              {%- if review_url != blank and link_label != blank -%}
+                <a
+                  class="mg-link"
+                  href="{{ review_url }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {{- link_label | escape -}}
+                  <span class="mg-visually-hidden"> (opens in a new tab)</span>
+                </a>
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-head__sub">{{ section.settings.text }}</p>
+          {%- endif -%}
+        </div>
+        {%- if section.blocks.size > 1 -%}
+          <div class="mg-head__actions mg-reviews__actions">
+            <div class="mg-carousel__nav mg-carousel__nav--desktop">
+              <button
+                class="mg-carousel__btn"
+                type="button"
+                data-mg-carousel-prev
+                aria-label="Previous reviews"
+              >
+                {%- render 'mg-icon', icon: 'chevron-left' -%}
+              </button>
+              <button
+                class="mg-carousel__btn"
+                type="button"
+                data-mg-carousel-next
+                aria-label="Next reviews"
+              >
+                {%- render 'mg-icon', icon: 'chevron-right' -%}
+              </button>
+            </div>
+          </div>
         {%- endif -%}
       </div>
 
-      {%- if show_summary -%}
-        <div class="mg-reviews__summary">
-          <p class="mg-reviews__score" aria-hidden="true">{{ rating_text | escape }}</p>
-          <div class="mg-reviews__summary-body">
-            <span
-              class="mg-reviews__stars mg-reviews__stars--lg"
-              style="--mg-rating: {{ rating_percent }}%;"
-              aria-hidden="true"
-            >
-              <span class="mg-reviews__stars-base">
-                {%- for i in (1..5) -%}
-                  {%- render 'mg-icon', icon: 'star' -%}
-                {%- endfor -%}
-              </span>
-              <span class="mg-reviews__stars-fill">
-                {%- for i in (1..5) -%}
-                  {%- render 'mg-icon', icon: 'star' -%}
-                {%- endfor -%}
-              </span>
-            </span>
-            <p class="mg-reviews__count">
-              <span class="mg-visually-hidden">Rated {{ rating_text | escape }} out of 5</span>
-              {%- if review_count != blank -%}
-                <span class="mg-visually-hidden">, </span>
-                <span>from {{ review_count | escape }} Google reviews</span>
-              {%- else -%}
-                <span>on Google</span>
-              {%- endif -%}
-            </p>
-            {%- if review_url != blank and section.settings.reviews_link_label != blank -%}
-              <a
-                class="mg-reviews__all"
-                href="{{ review_url }}"
-                target="_blank"
-                rel="noopener"
-              >
-                <span>{{ section.settings.reviews_link_label | escape }}</span>
-                {%- render 'mg-icon', icon: 'arrow-right' -%}
-              </a>
-            {%- endif -%}
-          </div>
-        </div>
-      {%- endif -%}
-    </header>
-
-    {%- if section.blocks.size > 0 -%}
-      {%- if section.settings.show_placeholder_note -%}
-        <p class="mg-reviews__demo" role="note">
-          <span class="mg-reviews__demo-tag">Demo</span>
-          <span>Sample text to show the layout. MG's real Google reviews go here.</span>
-        </p>
-      {%- endif -%}
-      <mg-review-carousel class="mg-reviews__carousel">
-        <div
-          id="{{ track_id }}"
-          class="mg-reviews__track"
-          data-mg-track
+      {%- if section.blocks.size > 0 -%}
+        <ul
+          class="mg-carousel__track"
+          role="list"
           tabindex="0"
-          role="region"
           aria-label="Customer reviews"
         >
-          <ul class="mg-reviews__list" role="list" data-mg-list>
-            {%- for block in section.blocks -%}
-              {%- liquid
-                assign bs = block.settings
-                assign author_parts = bs.author | strip | split: ' '
-                assign author_initial = author_parts.first | slice: 0 | upcase
-                if author_parts.size > 1
-                  assign author_last_initial = author_parts.last | slice: 0 | upcase
-                  assign author_initial = author_initial | append: author_last_initial
-                endif
-              -%}
-              <li class="mg-reviews__slide" data-mg-slide {{ block.shopify_attributes }}>
-                <figure class="mg-reviews__card">
-                  <div class="mg-reviews__card-top">
-                    <span class="mg-reviews__rating" role="img" aria-label="Rated {{ bs.rating }} out of 5">
-                      {%- for i in (1..5) -%}
-                        <span class="mg-reviews__star{% if i <= bs.rating %} is-on{% endif %}">
-                          {%- render 'mg-icon', icon: 'star' -%}
-                        </span>
-                      {%- endfor -%}
-                    </span>
-                    {%- if bs.source != blank -%}
-                      <span class="mg-reviews__source">{{ bs.source | escape }}</span>
-                    {%- endif -%}
-                  </div>
-                  <blockquote class="mg-reviews__quote">
-                    <p>{{ bs.text | escape | newline_to_br }}</p>
-                  </blockquote>
-                  {%- if bs.author != blank or bs.car != blank -%}
-                    <figcaption class="mg-reviews__meta">
-                      {%- if author_initial != blank -%}
-                        <span class="mg-reviews__avatar" aria-hidden="true">{{ author_initial | escape }}</span>
-                      {%- endif -%}
-                      <span class="mg-reviews__who">
-                        {%- if bs.author != blank -%}
-                          <span class="mg-reviews__author">{{ bs.author | escape }}</span>
-                        {%- endif -%}
-                        {%- if bs.car != blank -%}
-                          <span class="mg-reviews__car">{{ bs.car | escape }}</span>
-                        {%- endif -%}
-                      </span>
-                    </figcaption>
-                  {%- endif -%}
-                </figure>
-              </li>
-            {%- endfor -%}
-          </ul>
-        </div>
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign bs = block.settings
+              assign rating = bs.rating | default: 5
 
-        <div class="mg-reviews__footer">
-          <div class="mg-reviews__controls" data-mg-controls>
-            <button
-              type="button"
-              class="mg-reviews__arrow"
-              data-mg-prev
-              aria-label="Previous reviews"
-              aria-controls="{{ track_id }}"
-              disabled
+              # Name tag: first name and the initial of the last name ("Aoife Murphy" -> "Aoife M.")
+              assign name_parts = bs.author | strip | split: ' '
+              assign display_name = name_parts.first
+              if name_parts.size > 1
+                assign last_initial = name_parts.last | slice: 0 | upcase
+                assign display_name = display_name | append: ' ' | append: last_initial | append: '.'
+              endif
+
+              # One paragraph: the card clamps the quote to 3 lines
+              assign quote = bs.text | newline_to_br | replace: '<br />', ' ' | strip_newlines | strip
+
+              assign car = bs.car | strip
+              assign job = bs.job | strip
+
+              assign fallback_file = ''
+              case bs.fallback
+                when 'bmw-carplay'
+                  assign fallback_file = 'mg-bmw-carplay-screen'
+                  assign fallback_w = 1536
+                  assign fallback_h = 840
+                  assign fallback_alt = 'BMW widescreen running Apple CarPlay'
+                when 'audi-carplay'
+                  assign fallback_file = 'mg-audi-carplay-screen'
+                  assign fallback_w = 1536
+                  assign fallback_h = 1024
+                  assign fallback_alt = 'Audi dashboard showing Apple CarPlay with an iPhone connected'
+                when 'android-auto'
+                  assign fallback_file = 'mg-android-auto-dash'
+                  assign fallback_w = 1536
+                  assign fallback_h = 1024
+                  assign fallback_alt = 'Dashboard with an Android Auto touchscreen'
+                when 'showroom'
+                  assign fallback_file = 'mg-showroom'
+                  assign fallback_w = 1600
+                  assign fallback_h = 1200
+                  assign fallback_alt = 'MG Car Audio showroom with screens and speakers on display'
+                when 'dash-radio'
+                  assign fallback_file = 'mg-dash-radio'
+                  assign fallback_w = 1024
+                  assign fallback_h = 1024
+                  assign fallback_alt = 'Dashboard with a newly fitted head unit'
+                when 'door-speaker'
+                  assign fallback_file = 'mg-door-speaker'
+                  assign fallback_w = 1024
+                  assign fallback_h = 1024
+                  assign fallback_alt = 'Upgraded speaker fitted in a car door'
+              endcase
+
+              assign has_photo = false
+              if bs.image != blank or fallback_file != blank
+                assign has_photo = true
+              endif
+
+              assign photo_alt = 'Install photo'
+              if car != blank
+                assign photo_alt = 'Install photo: ' | append: car
+              endif
+              if bs.image != blank and bs.image.alt != blank
+                assign photo_alt = bs.image.alt
+              endif
+            -%}
+            <li
+              class="mg-carousel__slide"
+              {{ block.shopify_attributes }}
             >
-              {%- render 'mg-icon', icon: 'chevron-left' -%}
-            </button>
-            <button
-              type="button"
-              class="mg-reviews__arrow"
-              data-mg-next
-              aria-label="Next reviews"
-              aria-controls="{{ track_id }}"
-            >
-              {%- render 'mg-icon', icon: 'chevron-right' -%}
-            </button>
-          </div>
-        </div>
-      </mg-review-carousel>
-    {%- elsif request.design_mode -%}
-      <p class="mg-placeholder-note">Add "Review" blocks to fill the carousel.</p>
-    {%- endif -%}
+              <figure class="mg-card mg-review{% unless has_photo %} mg-review--text{% endunless %}">
+                <div class="mg-card__media mg-review__media">
+                  {%- if bs.image != blank -%}
+                    {{
+                      bs.image
+                      | image_url: width: 1200
+                      | image_tag:
+                        widths: '400, 560, 720, 960, 1200',
+                        sizes: '(min-width: 1184px) 268px, (min-width: 990px) calc((100vw - 112px) / 4), (min-width: 750px) calc((100vw - 80px) / 2.4), 78vw',
+                        loading: 'lazy',
+                        alt: photo_alt,
+                        class: 'mg-review__img'
+                    }}
+                  {%- elsif fallback_file != blank -%}
+                    {%- liquid
+                      assign fallback_src = fallback_file | append: '.webp'
+                      if fallback_w > 1024
+                        assign fallback_small = fallback_file | append: '-800.webp'
+                      else
+                        assign fallback_small = ''
+                      endif
+                    -%}
+                    <img
+                      class="mg-review__img"
+                      src="{{ fallback_src | asset_url }}"
+                      {% if fallback_small != blank %}
+                        srcset="{{ fallback_small | asset_url }} 800w, {{ fallback_src | asset_url }} {{ fallback_w }}w"
+                        sizes="(min-width: 990px) 520px, (min-width: 750px) 60vw, 150vw"
+                      {% endif %}
+                      width="{{ fallback_w }}"
+                      height="{{ fallback_h }}"
+                      alt="{{ fallback_alt | escape }}"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  {%- endif -%}
+
+                  {%- if display_name != blank or show_sample -%}
+                    <div class="mg-review__tags">
+                      {%- if display_name != blank -%}
+                        <span class="mg-badge mg-badge--card mg-review__name">{{ display_name | escape }}</span>
+                      {%- endif -%}
+                      {%- if show_sample -%}
+                        <span class="mg-sample-tag">Sample review</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                  <div class="mg-review__overlay">
+                    {%- if quote != blank -%}
+                      <blockquote class="mg-review__quote">
+                        <p>{{ quote | escape }}</p>
+                      </blockquote>
+                    {%- endif -%}
+                    <p class="mg-review__rating">
+                      <span
+                        class="mg-stars mg-stars--sm"
+                        style="--mg-rating: {{ rating }};"
+                        role="img"
+                        aria-label="Rated {{ rating }} out of 5"
+                      ></span>
+                      <span aria-hidden="true">{{ rating }}/5</span>
+                    </p>
+                  </div>
+                </div>
+
+                {%- if car != blank or job != blank -%}
+                  <figcaption class="mg-review__footer">
+                    <span
+                      class="mg-review__car-icon"
+                      aria-hidden="true"
+                    >
+                      {%- render 'mg-icon', icon: 'car' -%}
+                    </span>
+                    <span class="mg-review__car-text">
+                      {%- if car != blank -%}
+                        <span class="mg-review__car"><span class="mg-visually-hidden">Car: </span>{{ car | escape }}</span>
+                      {%- endif -%}
+                      {%- if job != blank -%}
+                        <span class="mg-review__job"><span class="mg-visually-hidden">Job: </span>{{ job | escape }}</span>
+                      {%- endif -%}
+                    </span>
+                  </figcaption>
+                {%- endif -%}
+              </figure>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- elsif request.design_mode -%}
+        <p class="mg-help">Add "Review" blocks to fill the carousel.</p>
+      {%- endif -%}
+    </mg-carousel>
   </div>
 </section>
 
 {% javascript %}
-  if (!customElements.get('mg-review-carousel')) {
-    class MgReviewCarousel extends HTMLElement {
-      connectedCallback() {
-        this.track = this.querySelector('[data-mg-track]');
-        this.list = this.querySelector('[data-mg-list]');
-        this.prevButton = this.querySelector('[data-mg-prev]');
-        this.nextButton = this.querySelector('[data-mg-next]');
-        this.controls = this.querySelector('[data-mg-controls]');
-        if (!this.track || !this.prevButton || !this.nextButton) return;
-
-        this.frame = null;
-        this.onScroll = () => {
-          if (this.frame) return;
-          this.frame = requestAnimationFrame(() => {
-            this.frame = null;
-            this.update();
-          });
-        };
-        this.onPrev = () => this.go(-1);
-        this.onNext = () => this.go(1);
-
-        this.track.addEventListener('scroll', this.onScroll, { passive: true });
-        this.prevButton.addEventListener('click', this.onPrev);
-        this.nextButton.addEventListener('click', this.onNext);
-
-        if ('ResizeObserver' in window) {
-          this.resizeObserver = new ResizeObserver(this.onScroll);
-          this.resizeObserver.observe(this.track);
-        } else {
-          window.addEventListener('resize', this.onScroll);
-        }
-
-        this.update();
-      }
-
-      disconnectedCallback() {
-        if (!this.track) return;
-        this.track.removeEventListener('scroll', this.onScroll);
-        if (this.prevButton) this.prevButton.removeEventListener('click', this.onPrev);
-        if (this.nextButton) this.nextButton.removeEventListener('click', this.onNext);
-        if (this.resizeObserver) this.resizeObserver.disconnect();
-        window.removeEventListener('resize', this.onScroll);
-        if (this.frame) cancelAnimationFrame(this.frame);
-      }
-
-      stepSize() {
-        const slide = this.track.querySelector('[data-mg-slide]');
-        if (!slide) return this.track.clientWidth;
-        const styles = getComputedStyle(this.list || this.track);
-        const gap = parseFloat(styles.columnGap) || 0;
-        return slide.getBoundingClientRect().width + gap;
-      }
-
-      go(direction) {
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        this.track.scrollBy({
-          left: direction * this.stepSize(),
-          behavior: reduceMotion ? 'auto' : 'smooth',
-        });
-      }
-
-      update() {
-        const max = this.track.scrollWidth - this.track.clientWidth;
-        const position = Math.abs(this.track.scrollLeft);
-        const overflowing = max > 2;
-        const atStart = position <= 2;
-        const atEnd = position >= max - 2;
-
-        if (this.controls) this.controls.hidden = !overflowing;
-
-        const active = document.activeElement;
-        this.prevButton.disabled = !overflowing || atStart;
-        this.nextButton.disabled = !overflowing || atEnd;
-
-        if (active === this.prevButton && this.prevButton.disabled && !this.nextButton.disabled) {
-          this.nextButton.focus();
-        } else if (active === this.nextButton && this.nextButton.disabled && !this.prevButton.disabled) {
-          this.prevButton.focus();
-        }
-      }
-    }
-
-    customElements.define('mg-review-carousel', MgReviewCarousel);
-
+  if (!window.mgReviewsEditorBound) {
+    window.mgReviewsEditorBound = true;
     document.addEventListener('shopify:block:select', (event) => {
       const slide = event.target;
-      if (!(slide instanceof HTMLElement) || !slide.matches('[data-mg-slide]')) return;
-      const track = slide.closest('[data-mg-track]');
-      if (track) track.scrollTo({ left: slide.offsetLeft - (parseFloat(getComputedStyle(track).paddingLeft) || 0), behavior: 'smooth' });
+      if (!(slide instanceof HTMLElement) || !slide.closest('.mg-reviews')) return;
+      const track = slide.closest('.mg-carousel__track');
+      if (!track) return;
+      const offset = slide.getBoundingClientRect().left - track.getBoundingClientRect().left;
+      const inset = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+      track.scrollBy({ left: offset - inset, behavior: 'auto' });
     });
   }
 {% endjavascript %}
 
 {% stylesheet %}
-  .mg-reviews {
-    --mg-reviews-card: var(--mg-surface);
-    --mg-reviews-gap: 16px;
-  }
-
-  .mg-reviews.mg-section--surface {
-    --mg-reviews-card: var(--mg-surface-2);
-  }
-
-  .mg-reviews__intro {
-    max-width: 680px;
-  }
-
-  /* Rating summary */
+  /* Rating summary under the heading */
   .mg-reviews__summary {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 16px 20px;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
-    background: var(--mg-reviews-card);
-  }
-
-  .mg-reviews__score {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: clamp(2.5rem, 5vw, 3rem);
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--mg-text);
-  }
-
-  .mg-reviews__summary-body {
-    display: grid;
-    gap: 6px;
-    justify-items: start;
-  }
-
-  .mg-reviews__stars {
-    position: relative;
-    display: inline-flex;
-    line-height: 0;
-  }
-
-  .mg-reviews__stars-base,
-  .mg-reviews__stars-fill {
-    display: inline-flex;
-    gap: 2px;
-    white-space: nowrap;
-  }
-
-  .mg-reviews__stars-base {
-    color: var(--mg-border-strong);
-  }
-
-  .mg-reviews__stars-fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--mg-rating, 100%);
-    overflow: hidden;
-    color: var(--mg-star);
-  }
-
-  .mg-reviews__stars .mg-icon {
-    flex: none;
-    width: 20px;
-    height: 20px;
-  }
-
-  .mg-reviews__count {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-reviews__all {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-border-strong);
-    text-underline-offset: 0.25em;
-  }
-
-  .mg-reviews__all:hover {
-    text-decoration-color: var(--mg-accent);
-  }
-
-  .mg-reviews__all .mg-icon {
-    flex: none;
-    width: 16px;
-    height: 16px;
-    margin-left: 6px;
-  }
-
-  /* Carousel */
-  .mg-reviews__track {
-    position: relative;
-    margin: 0 calc(var(--mg-gutter) * -1);
-    padding: 4px var(--mg-gutter) 8px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--mg-gutter);
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .mg-reviews__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mg-reviews__track:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 2px;
-    border-radius: var(--mg-radius);
-  }
-
-  .mg-reviews__list {
-    list-style: none;
-    display: flex;
-    gap: var(--mg-reviews-gap);
-    margin: 0;
-    padding: 0;
-  }
-
-  .mg-reviews__slide {
-    flex: 0 0 min(86%, 380px);
-    min-width: 0;
-    scroll-snap-align: start;
-  }
-
-  .mg-reviews__card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin: 0;
-    padding: 24px;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-lg);
-    background: var(--mg-reviews-card);
-    transition: border-color 0.25s var(--mg-ease);
-  }
-
-  .mg-reviews__card:hover {
-    border-color: var(--mg-border-strong);
-  }
-
-  .mg-reviews__card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .mg-reviews__rating {
-    display: inline-flex;
-    gap: 2px;
-    line-height: 0;
-  }
-
-  .mg-reviews__star {
-    display: inline-flex;
-    color: var(--mg-border-strong);
-  }
-
-  .mg-reviews__star.is-on {
-    color: var(--mg-star);
-  }
-
-  .mg-reviews__star .mg-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .mg-reviews__source {
-    padding: 4px 10px;
-    border: 1px solid var(--mg-border);
-    border-radius: 999px;
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-reviews__quote {
-    position: relative;
-    flex: 1 1 auto;
-    margin: 20px 0 0;
-    padding: 0;
-  }
-
-  .mg-reviews__quote::before {
-    content: '\201C';
-    display: block;
-    height: 0.5em;
-    margin-bottom: 4px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 3.5rem;
-    line-height: 1;
-    color: var(--mg-accent);
-  }
-
-  .mg-reviews__quote p {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--mg-text);
-  }
-
-  .mg-reviews__meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 24px;
-    padding-top: 18px;
-    border-top: 1px solid var(--mg-border);
-  }
-
-  .mg-reviews__avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--mg-text);
-  }
-
-  .mg-reviews__who {
-    display: grid;
-    gap: 2px;
-    min-width: 0;
-  }
-
-  .mg-reviews__author {
-    font-weight: 700;
-    font-size: 0.9375rem;
-    color: var(--mg-text);
-  }
-
-  .mg-reviews__car {
-    font-size: 0.8125rem;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-reviews__footer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px 24px;
-    margin-top: 20px;
+    gap: var(--mg-space-1) var(--mg-space-2);
   }
 
-  .mg-reviews__controls {
+  .mg-reviews__score {
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Phones swipe: the arrows (and their slot in the head) only show from 750px */
+  @media screen and (max-width: 749px) {
+    .mg-reviews__actions {
+      display: none;
+    }
+
+    .mg-reviews__summary {
+      font-size: var(--mg-fs-small);
+    }
+  }
+
+  /* Review card: photo with a name tag, the quote over a scrim, the car below */
+  .mg-review {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
   }
 
-  .mg-reviews__controls[hidden] {
-    display: none;
+  .mg-review__media {
+    --mg-media-ratio: 4 / 5;
+    position: relative;
+    flex: none;
   }
 
-  .mg-reviews__arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
+  .mg-review__media .mg-review__img {
+    position: absolute;
+    inset: 0;
+  }
+
+  .mg-review__tags {
+    position: absolute;
+    inset: var(--mg-space-3) var(--mg-space-3) auto;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--mg-space-2);
+  }
+
+  .mg-review__overlay {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 1;
+    display: grid;
+    gap: var(--mg-space-3);
+    padding: var(--mg-space-8) var(--mg-space-4) var(--mg-space-4);
+    background: var(--mg-scrim), var(--mg-scrim);
+    color: var(--mg-white);
+    text-shadow: 0 1px 2px color-mix(in srgb, var(--mg-black) 45%, transparent);
+  }
+
+  .mg-review__quote {
+    margin: 0;
     padding: 0;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    background: transparent;
-    color: var(--mg-text);
-    cursor: pointer;
-    transition:
-      border-color 0.2s var(--mg-ease),
-      background-color 0.2s var(--mg-ease),
-      opacity 0.2s var(--mg-ease);
+    border: 0;
   }
 
-  .mg-reviews__arrow .mg-icon {
+  .mg-review__quote p {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    text-wrap: pretty;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .mg-review__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    margin: 0;
+    font-size: var(--mg-fs-micro);
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-review__overlay .mg-stars {
+    --mg-star: var(--mg-white);
+    --mg-star-empty: color-mix(in srgb, var(--mg-white) 40%, transparent);
+  }
+
+  .mg-review__footer {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--mg-space-3);
+    min-height: 72px;
+    padding: var(--mg-space-3) var(--mg-space-4);
+  }
+
+  .mg-review__car-icon {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-band);
+    color: var(--mg-ink-2);
+  }
+
+  .mg-review__car-icon .mg-icon {
     width: 20px;
     height: 20px;
   }
 
-  .mg-reviews__arrow:hover:not(:disabled) {
-    border-color: var(--mg-text);
-    background: var(--mg-surface-2);
+  .mg-review__car-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
   }
 
-  .mg-reviews__arrow:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
+  .mg-review__car {
+    font-size: var(--mg-fs-small);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--mg-ink);
   }
 
-  .mg-reviews__arrow:disabled {
-    opacity: 0.35;
-    cursor: default;
+  .mg-review__job {
+    font-size: var(--mg-fs-micro);
+    line-height: 1.35;
+    color: var(--mg-ink-2);
   }
 
-  .mg-reviews__demo {
+  /* A review without a photo: no empty picture area. Name tag, the quote in serif and the stars
+     sit in the card's own flow, then the car line; cards in a row still share one height. */
+  .mg-review--text .mg-review__media {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 16px;
-    padding: 10px 14px;
-    border: 1px dashed var(--mg-border-strong);
-    border-radius: var(--mg-radius);
-    font-size: 0.875rem;
-    line-height: 1.45;
-    color: var(--mg-text-muted);
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--mg-space-4);
+    aspect-ratio: auto;
+    padding: var(--mg-space-4);
+    background-color: var(--mg-red-tint);
   }
 
-  .mg-reviews__demo-tag {
+  .mg-review--text .mg-review__tags {
+    position: static;
+  }
+
+  .mg-review--text .mg-review__overlay {
+    position: static;
+    flex: 1 1 auto;
+    align-content: space-between;
+    padding: 0;
+    background: none;
+    color: var(--mg-ink);
+    text-shadow: none;
+  }
+
+  .mg-review--text .mg-review__footer {
     flex: none;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: var(--mg-surface-2);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--mg-text);
   }
 
-  @media (min-width: 750px) {
-    .mg-reviews__track {
-      margin: 0;
-      padding: 4px 0 8px;
-      scroll-padding-inline: 0;
-    }
-
-    .mg-reviews__slide {
-      flex-basis: calc((100% - var(--mg-reviews-gap)) / 2);
-    }
-
-    .mg-reviews__card {
-      padding: 28px;
-    }
+  .mg-review--text .mg-review__quote p {
+    font-family: var(--mg-font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
   }
 
-  @media (min-width: 1100px) {
-    .mg-reviews {
-      --mg-reviews-gap: 20px;
-    }
-
-    .mg-reviews__slide {
-      flex-basis: calc((100% - var(--mg-reviews-gap) * 2) / 3);
-    }
+  .mg-review--text .mg-review__overlay .mg-stars {
+    --mg-star: var(--mg-ink);
+    --mg-star-empty: var(--mg-line-strong);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .mg-reviews__card,
-    .mg-reviews__arrow {
-      transition: none;
-    }
+  .mg-reviews.mg-section--band .mg-review--text .mg-review__media {
+    background-color: var(--mg-card);
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "MG reviews carousel",
+  "name": "MG reviews",
   "tag": "div",
   "class": "mg-reviews-section",
   "disabled_on": {
@@ -665,21 +492,15 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Reviews"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Trusted by Dublin drivers"
+      "default": "What Dublin drivers say"
     },
     {
       "type": "inline_richtext",
       "id": "text",
       "label": "Intro text",
-      "default": "Honest advice, tidy installs and a fair price agreed up front. Here's what customers tell us after they drive away."
+      "info": "Optional. One short line under the rating."
     },
     {
       "type": "header",
@@ -696,17 +517,17 @@
       "type": "text",
       "id": "reviews_link_label",
       "label": "Reviews link label",
-      "default": "Read all reviews on Google"
+      "default": "See all reviews"
     },
     {
       "type": "header",
-      "content": "Demo note"
+      "content": "Sample reviews"
     },
     {
       "type": "checkbox",
       "id": "show_placeholder_note",
-      "label": "Show \"Demo reviews\" banner",
-      "info": "PLACEHOLDER: the preset reviews are demo text, not real customers. Keep this on until every review is a real Google review (copied with the customer's permission), then turn it off.",
+      "label": "Show \"Sample review\" tags",
+      "info": "PLACEHOLDER: the preset reviews are sample text, not real customers. Keep this on until every card is a real Google review (copied with the customer's permission), then turn it off.",
       "default": true
     },
     {
@@ -720,30 +541,14 @@
       "options": [
         {
           "value": "page",
-          "label": "Page background"
+          "label": "Page"
         },
         {
           "value": "surface",
-          "label": "Raised panel"
+          "label": "Grey band"
         }
       ],
       "default": "surface"
-    },
-    {
-      "type": "select",
-      "id": "spacing",
-      "label": "Vertical spacing",
-      "options": [
-        {
-          "value": "normal",
-          "label": "Normal"
-        },
-        {
-          "value": "tight",
-          "label": "Tight"
-        }
-      ],
-      "default": "normal"
     }
   ],
   "blocks": [
@@ -753,7 +558,50 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "PLACEHOLDER: the demo reviews are sample text, not real customers. Replace them with real Google reviews (with the customer's permission), or switch to a reviews app in Phase 2."
+          "content": "PLACEHOLDER: the preset reviews are sample text, not real customers. Replace them with real Google reviews (with the customer's permission), or switch to a reviews app later."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Install photo",
+          "info": "A photo of this customer's car or job. Set a focal point in Files so the crop keeps the screen in view."
+        },
+        {
+          "type": "select",
+          "id": "fallback",
+          "label": "Fallback photo",
+          "info": "Shown when no install photo is uploaded. Choose None for a text-only card.",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "bmw-carplay",
+              "label": "BMW CarPlay screen"
+            },
+            {
+              "value": "audi-carplay",
+              "label": "Audi CarPlay dash"
+            },
+            {
+              "value": "android-auto",
+              "label": "Android Auto dash"
+            },
+            {
+              "value": "dash-radio",
+              "label": "Dash head unit"
+            },
+            {
+              "value": "door-speaker",
+              "label": "Door speaker"
+            },
+            {
+              "value": "showroom",
+              "label": "Showroom"
+            }
+          ],
+          "default": "none"
         },
         {
           "type": "range",
@@ -768,84 +616,90 @@
           "type": "textarea",
           "id": "text",
           "label": "Review text",
-          "info": "PLACEHOLDER in the demo: paste the customer's words exactly as written, with their permission.",
+          "info": "PLACEHOLDER in the demo. Paste the customer's words exactly as written, with their permission. Cards show the first 3 lines.",
           "default": "Demo review: replace with a real Google review."
         },
         {
           "type": "text",
           "id": "author",
           "label": "Customer name",
-          "info": "PLACEHOLDER in the demo. Use first name and initial, for example: Aoife M.",
+          "info": "PLACEHOLDER in the demo. Shown as first name and initial, for example: Aoife M.",
           "default": "Aoife M."
         },
         {
           "type": "text",
           "id": "car",
-          "label": "Car or job",
-          "default": "BMW · CarPlay"
+          "label": "Car",
+          "info": "For example: BMW 3 Series",
+          "default": "BMW 3 Series"
         },
         {
           "type": "text",
-          "id": "source",
-          "label": "Source label",
-          "info": "Small label on the card, for example: Google. The demo reviews use \"Demo\". Leave blank to hide."
+          "id": "job",
+          "label": "Job",
+          "info": "For example: Wireless CarPlay"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "MG reviews carousel",
+      "name": "MG reviews",
       "category": "MG Car Audio",
       "blocks": [
         {
           "type": "review",
           "settings": {
+            "fallback": "bmw-carplay",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a BMW owner on the wireless CarPlay fitting: the quote, the time in the bay and the finish.",
+            "text": "Demo review: replace with a real Google review about a BMW CarPlay fit.",
             "author": "Aoife M.",
-            "car": "BMW · Wireless CarPlay",
-            "source": "Demo"
+            "car": "BMW 3 Series",
+            "job": "Wireless CarPlay"
           }
         },
         {
           "type": "review",
           "settings": {
+            "fallback": "door-speaker",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a speaker upgrade: how the car sounded before, and how it sounds now.",
+            "text": "Demo review: replace with a real Google review about a speaker upgrade.",
             "author": "Ciarán D.",
-            "car": "Volkswagen · Speaker upgrade",
-            "source": "Demo"
+            "car": "Volkswagen Golf",
+            "job": "Speaker upgrade"
           }
         },
         {
           "type": "review",
           "settings": {
+            "fallback": "audi-carplay",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a screen fault or upgrade: what the problem was and how it was sorted.",
+            "text": "Demo review: replace with a real Google review about an Audi CarPlay retrofit.",
             "author": "Niamh K.",
-            "car": "Audi · Screen repair",
-            "source": "Demo"
+            "car": "Audi A4",
+            "job": "CarPlay retrofit"
           }
         },
         {
           "type": "review",
           "settings": {
+            "fallback": "android-auto",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, a Japanese import converted to European spec: menus, maps and radio.",
+            "text": "Demo review: replace with a real Google review about an Android Auto screen.",
             "author": "Darren O.",
-            "car": "BMW · Japan-to-Europe conversion",
-            "source": "Demo"
+            "car": "Skoda Octavia",
+            "job": "Android Auto screen"
           }
         },
         {
           "type": "review",
           "settings": {
+            "fallback": "dash-radio",
             "rating": 5,
-            "text": "Demo review: replace with a real Google review. For example, an Android radio fitting: the advice given and how tidy the install was.",
+            "text": "Demo review: replace with a real Google review about an Android radio fitting.",
             "author": "Sinéad B.",
-            "car": "Toyota · Android radio",
-            "source": "Demo"
+            "car": "Toyota Avensis",
+            "job": "Android radio"
           }
         }
       ]

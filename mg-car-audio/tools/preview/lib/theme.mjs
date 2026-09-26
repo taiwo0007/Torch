@@ -24,14 +24,17 @@ export const THEME_DIR = process.env.MG_THEME_DIR ? path.resolve(process.env.MG_
 export const OUT_DIR = path.join(PREVIEW_DIR, 'out');
 
 export const DEFAULT_TEMPLATES = ['index', 'page.service', 'page.car-make', 'page.quote', 'page.contact'];
+// Home page v3 order (docs/DESIGN.md §3). Types without a section file yet are skipped.
 export const HOME_FALLBACK_SECTIONS = [
   'mg-hero',
   'mg-trust-bar',
-  'mg-car-makes',
+  'mg-system-grid',
   'mg-services-grid',
+  'mg-promise',
+  'mg-car-makes',
   'mg-how-it-works',
-  'mg-gallery',
   'mg-reviews',
+  'mg-gallery',
   'mg-faq',
   'mg-contact-map',
 ];
@@ -386,14 +389,15 @@ function buildGlobals(templateName, settings, fixtures, opts) {
   let product;
   let reqPath = '/';
   if (type === 'page') {
-    const fx = fixtures.pages?.[templateName] ?? fixtures.pages?.page ?? { title: suffix || 'Page', handle: suffix || 'page' };
+    const key = opts?.fixture ?? templateName;
+    const fx = fixtures.pages?.[key] ?? fixtures.pages?.page ?? { title: suffix || 'Page', handle: suffix || 'page' };
     page = makePage({ template_suffix: suffix, ...fx });
     reqPath = page.url;
   } else if (type === 'collection') {
-    collection = makeCollection(fixtures.collections?.[templateName] ?? fixtures.collections?.collection ?? {});
+    collection = makeCollection(fixtures.collections?.[opts?.fixture ?? templateName] ?? fixtures.collections?.collection ?? {});
     reqPath = collection.url;
   } else if (type === 'product') {
-    product = makeProduct(fixtures.products?.[templateName] ?? fixtures.products?.product ?? {});
+    product = makeProduct(fixtures.products?.[opts?.fixture ?? templateName] ?? fixtures.products?.product ?? {});
     reqPath = product.url;
   }
   const shop = {
@@ -478,6 +482,36 @@ function buildGlobals(templateName, settings, fixtures, opts) {
     blogs: new LookupDrop(() => undefined),
     articles: new LookupDrop(() => undefined),
   };
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout hooks                                                         */
+/* ------------------------------------------------------------------ */
+
+// Snippets from layout/theme.liquid that the preview renders for real. Everything else there
+// (meta tags, Horizon scripts, drawers, modals) is skipped.
+const HEAD_SNIPPETS = new Set(['stylesheets', 'theme-styles-variables', 'color-palette']);
+const isPreviewSnippet = (name) => /^mg-/.test(name);
+
+/** `{% render %}` calls in layout/theme.liquid, split into <head> and <body>, in source order. */
+export function layoutHooks(themeDir = THEME_DIR) {
+  const fallback = {
+    head: ['mg-theme-mode', 'mg-fonts', 'stylesheets', 'fonts', 'theme-styles-variables', 'color-palette', 'mg-local-business-schema'],
+    body: ['mg-whatsapp-button', 'mg-mobile-action-bar'],
+  };
+  let src;
+  try {
+    src = fs.readFileSync(path.join(themeDir, 'layout', 'theme.liquid'), 'utf8');
+  } catch {
+    return fallback;
+  }
+  const headEnd = src.indexOf('</head>');
+  const head = [];
+  const body = [];
+  const re = /\{%-?\s*render\s+['"]([\w-]+)['"]/g;
+  let m;
+  while ((m = re.exec(src))) (headEnd < 0 || m.index < headEnd ? head : body).push(m[1]);
+  return head.length ? { head, body } : fallback;
 }
 
 /* ------------------------------------------------------------------ */
@@ -630,14 +664,19 @@ class PageRenderer {
   resolveTemplateSections() {
     const name = this.templateName;
     const file = path.join(this.themeDir, 'templates', `${name}.json`);
+    if (this.opts.gallery) {
+      this.report.source = 'tools/preview/gallery.liquid (component gallery)';
+      return [];
+    }
     if (this.opts.sections?.length) {
       this.report.source = `--sections ${this.opts.sections.join(',')} (preset defaults)`;
       return this.opts.sections.map((type, i) => ({ key: `${type.replace(/^mg-/, '').replace(/-/g, '_')}_${i + 1}`, entry: { type }, usePreset: true }));
     }
     const useHomeFallback = name === 'index' && (this.opts.homeFallback || !fs.existsSync(file));
     if (useHomeFallback) {
-      this.report.source = `home fallback: ${HOME_FALLBACK_SECTIONS.join(', ')} (preset defaults)`;
-      return HOME_FALLBACK_SECTIONS.map((type) => ({ key: type.replace(/^mg-/, '').replace(/-/g, '_'), entry: { type }, usePreset: true }));
+      const types = HOME_FALLBACK_SECTIONS.filter((type) => fs.existsSync(path.join(this.themeDir, 'sections', `${type}.liquid`)));
+      this.report.source = `home fallback: ${types.join(', ')} (preset defaults)`;
+      return types.map((type) => ({ key: type.replace(/^mg-/, '').replace(/-/g, '_'), entry: { type }, usePreset: true }));
     }
     if (!fs.existsSync(file)) {
       if (fs.existsSync(path.join(this.themeDir, 'templates', `${name}.liquid`))) throw new Error(`templates/${name}.liquid is a Liquid template; only JSON templates are supported`);
@@ -745,6 +784,18 @@ class PageRenderer {
       const presetSettings = usePreset ? this.presetSettingsFor(entry.type) : undefined;
       results.push(await this.renderSection({ key, entry, index, location: 'template', presetSettings }));
     }
+    if (this.opts.gallery) {
+      const prev = this.rt.where;
+      this.rt.where = 'gallery';
+      try {
+        const src = preprocessLiquid(fs.readFileSync(path.join(PREVIEW_DIR, 'gallery.liquid'), 'utf8')).body;
+        results.push({ key: 'gallery', type: 'gallery', status: 'ok', html: await this.liquid.parseAndRender(src, {}, { globals: this.globals }) });
+      } catch (err) {
+        results.push({ key: 'gallery', type: 'gallery', status: 'error', error: String(err.message).split('\n')[0], html: sectionError('gallery', 'gallery', 'gallery', err) });
+      } finally {
+        this.rt.where = prev;
+      }
+    }
     this.report.sections = results.map(({ html, ...r }) => r);
 
     // Header (fake) and footer group (mg-* sections real, the rest placeholders)
@@ -758,16 +809,21 @@ class PageRenderer {
     const footer = await this.renderGroup('footer-group', 'footer');
     this.report.footer = footer.results.map(({ html, ...r }) => r);
 
-    // Layout pieces (same order as layout/theme.liquid)
+    // Layout pieces, in the order layout/theme.liquid renders them
     const assets = this.rt.assetBase;
-    const stylesheets = await this.renderSnippetSafe(
-      'stylesheets',
-      `<link href="${assets}/base.css" rel="stylesheet"><link href="${assets}/mg-theme.css" rel="stylesheet">`
-    );
-    const styleVars = await this.renderSnippetSafe('theme-styles-variables');
-    const palette = await this.renderSnippetSafe('color-palette');
-    const localBusiness = await this.renderSnippetSafe('mg-local-business-schema');
-    const whatsapp = await this.renderSnippetSafe('mg-whatsapp-button');
+    const hooks = layoutHooks(this.themeDir);
+    this.report.layout = { head: hooks.head.filter((n) => HEAD_SNIPPETS.has(n) || isPreviewSnippet(n) || n === 'fonts'), body: hooks.body.filter(isPreviewSnippet) };
+    const headParts = [];
+    for (const name of hooks.head) {
+      if (name === 'fonts') headParts.push(this.googleFontLinks(settings));
+      else if (name === 'stylesheets') {
+        headParts.push(`<style id="preview-fallback-vars">${fallbackVars(settings)}</style>`);
+        headParts.push(await this.renderSnippetSafe(name, `<link href="${assets}/base.css" rel="stylesheet"><link href="${assets}/mg-theme.css" rel="stylesheet">`));
+      } else if (HEAD_SNIPPETS.has(name) || isPreviewSnippet(name)) headParts.push(await this.renderSnippetSafe(name));
+    }
+    const bodyParts = [];
+    for (const name of hooks.body) if (isPreviewSnippet(name)) bodyParts.push(await this.renderSnippetSafe(name));
+    const themeMode = ['auto', 'light', 'dark'].includes(settings.mg_theme_mode) ? settings.mg_theme_mode : 'auto';
     const css = this.collectStylesheetTags();
     const js = [...this.rt.jsByFile.entries()]
       .map(([file, parts]) => parts.map((p) => `/* ${file} */\ntry {\n(function () {\n${p}\n})();\n} catch (e) { console.error('[preview] {% javascript %} in ${file} threw', e); }`).join('\n'))
@@ -776,18 +832,14 @@ class PageRenderer {
     const page = this.globals.page;
     const title = `${page?.title || this.globals.page_title} (preview: ${this.templateName})`;
     const html = `<!doctype html>
-<html lang="en" dir="ltr" data-preview-template="${escapeHtml(this.templateName)}">
+<html lang="en" dir="ltr" data-preview-template="${escapeHtml(this.templateName)}" data-mg-theme="${themeMode}" data-mg-scheme="${themeMode === 'dark' ? 'dark' : 'light'}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
     <title>${escapeHtml(title)}</title>
     <meta name="generator" content="mg-theme-preview: local approximation of Shopify rendering">
-    ${this.googleFontLinks(settings)}
-    <style id="preview-fallback-vars">${fallbackVars(settings)}</style>
-    ${stylesheets}
-    ${styleVars}
-    ${palette}
-    ${localBusiness}
+    ${headParts.join('\n    ')}
     <script>window.Shopify = window.Shopify || { designMode: ${Boolean(this.opts.designMode)}, locale: 'en', country: 'IE', currency: { active: 'EUR', rate: '1.0' }, routes: { root: '/' }, shop: 'mg-car-audio.myshopify.com' };</script>
     <style id="preview-stylesheet-tags">
 ${css}
@@ -806,7 +858,7 @@ ${results.map((r) => r.html).join('\n')}
 ${footer.html}
       </footer>
     </div>
-    ${whatsapp}
+    ${bodyParts.join('\n    ')}
     <script id="preview-javascript-tags">
 ${js}
     </script>
@@ -825,8 +877,8 @@ ${js}
 
 function fallbackVars(settings) {
   // Minimal Horizon variables in case theme-styles-variables / color-palette fail to render.
-  const bg = settings.color_palette?.background || '#0b0d10';
-  const fg = settings.color_palette?.foreground || '#f2f4f7';
+  const bg = settings.color_palette?.background || '#ffffff';
+  const fg = settings.color_palette?.foreground || '#0f1115';
   const c = (v) => ColorDrop.parse(v) || new ColorDrop(0, 0, 0);
   const font = (k, dflt) => (settings[k] instanceof FontDrop ? settings[k] : new FontDrop(dflt));
   const body = font('type_body_font', 'inter_n4');
@@ -862,31 +914,32 @@ function fakeHeader(types) {
 }
 
 const CHROME_CSS = `
-  .pv-header { position: relative; z-index: 20; display: flex; align-items: center; gap: 12px 28px; flex-wrap: wrap;
-    padding: 14px clamp(16px, 4vw, 40px); background: #0b0d10; color: #f2f4f7; border-bottom: 1px solid #2a3039;
-    font-family: var(--font-body--family, system-ui, sans-serif); }
+  .pv-header { position: relative; z-index: 6; display: flex; align-items: center; gap: 12px 28px; flex-wrap: wrap;
+    padding: 14px max(var(--mg-gutter, 16px), calc((100% - var(--mg-container, 1120px)) / 2)); background: var(--mg-page, #fff);
+    color: var(--mg-ink, #0f1115); border-bottom: 1px solid var(--mg-line, #e3e6ea); font-family: var(--mg-font-ui, system-ui, sans-serif); }
   .pv-header a { color: inherit; text-decoration: none; }
-  .pv-header__logo { font-weight: 800; font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .pv-header__logo span { color: #e4002b; }
-  .pv-header__nav { display: none; gap: 22px; font-size: 14px; color: #aab3c0; }
+  .pv-header__logo { font-weight: 600; font-size: 18px; }
+  .pv-header__logo span { color: var(--mg-red, #df3131); }
+  .pv-header__nav { display: none; gap: 22px; font-size: 14px; color: var(--mg-ink-2, #4b5360); }
   .pv-header__menu { display: inline-grid; gap: 4px; margin-left: auto; }
-  .pv-header__menu i { display: block; width: 20px; height: 2px; background: #f2f4f7; }
-  .pv-tag { order: 10; flex-basis: 100%; font: 600 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: #7d8796;
-    border: 1px dashed #3a424e; border-radius: 4px; padding: 3px 8px; }
+  .pv-header__menu i { display: block; width: 20px; height: 2px; background: var(--mg-ink, #0f1115); }
+  .pv-tag { order: 10; flex-basis: 100%; font: 600 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--mg-ink-3, #646c79);
+    border: 1px dashed var(--mg-line-strong, #c4c9d0); border-radius: 4px; padding: 3px 8px; }
   @media (min-width: 990px) {
     .pv-header__nav { display: flex; }
     .pv-header__menu { display: none; }
     .pv-tag { order: 0; flex-basis: auto; margin-left: auto; }
   }
-  .pv-placeholder-section { padding: 24px clamp(16px, 4vw, 40px); background: #0b0d10; }
+  .pv-placeholder-section { padding: 24px var(--mg-gutter, 16px); }
   .pv-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-    max-width: 1320px; min-height: 160px; margin: 0 auto; padding: 24px; text-align: center; border: 2px dashed #3a424e;
-    border-radius: 10px; color: #aab3c0; background: repeating-linear-gradient(135deg, #11151a 0 12px, #0d1014 12px 24px);
+    max-width: var(--mg-container, 1120px); min-height: 160px; margin: 0 auto; padding: 24px; text-align: center;
+    border: 2px dashed var(--mg-line-strong, #c4c9d0); border-radius: 12px; color: var(--mg-ink-2, #4b5360);
+    background: repeating-linear-gradient(135deg, var(--mg-band, #f4f5f7) 0 12px, var(--mg-page, #fff) 12px 24px);
     font: 500 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
-  .pv-placeholder__type { font-size: 16px; font-weight: 700; color: #f2f4f7; }
-  .pv-placeholder__meta { font-size: 12px; color: #7d8796; }
-  .pv-error-section { padding: 24px clamp(16px, 4vw, 40px); background: #0b0d10; }
-  .pv-error { max-width: 1320px; margin: 0 auto; padding: 16px 20px; border: 2px solid #ff3b3b; border-radius: 10px;
+  .pv-placeholder__type { font-size: 16px; font-weight: 700; color: var(--mg-ink, #0f1115); }
+  .pv-placeholder__meta { font-size: 12px; color: var(--mg-ink-3, #646c79); }
+  .pv-error-section { padding: 24px var(--mg-gutter, 16px); }
+  .pv-error { max-width: var(--mg-container, 1120px); margin: 0 auto; padding: 16px 20px; border: 2px solid #ff3b3b; border-radius: 10px;
     background: #2a0a0f; color: #ffd7d7; font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
   .pv-error strong { display: block; margin-bottom: 8px; color: #fff; }
   .pv-error pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
@@ -935,6 +988,7 @@ export function formatReport(report, rel = (p) => p) {
     `[${report.template}] ${rel(report.output)}  (${report.sections.length} sections + ${report.footer.length} footer: ${count('ok')} rendered, ${count('placeholder')} placeholder, ${count('error')} error; ${report.ms} ms)`
   );
   lines.push(`  source: ${report.source || '(none)'}`);
+  if (report.layout) lines.push(`  layout: head ${report.layout.head.join(', ')}; body ${report.layout.body.join(', ') || '(none)'}`);
   for (const r of report.sections) lines.push(`  ${r.status === 'ok' ? 'ok   ' : r.status === 'error' ? 'ERROR' : 'stub '} ${r.key} (${r.type})${r.error ? ' - ' + r.error : ''}`);
   for (const r of report.footer) lines.push(`  ${r.status === 'ok' ? 'ok   ' : r.status === 'error' ? 'ERROR' : 'stub '} footer:${r.key} (${r.type})${r.error ? ' - ' + r.error : ''}`);
   for (const n of report.notes) lines.push(`  note  ${n}`);

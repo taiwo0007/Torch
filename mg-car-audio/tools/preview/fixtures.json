@@ -7,10 +7,106 @@
       "content": "<p>Professional wired and wireless Apple CarPlay and Android Auto installation in Dublin.</p>"
     },
     "page.car-make": {
+      "//": "The BMW car_make entry from docs/content/car-make-bmw.md, as QA sees the real page. The fallback (no entry) is the page.car-make--fallback fixture.",
       "title": "BMW CarPlay & Screen Upgrades",
       "handle": "bmw-carplay",
       "content": "",
-      "metafields": {}
+      "metafields": {
+        "custom": {
+          "car_make": {
+            "value": {
+              "name": {
+                "value": "BMW"
+              },
+              "headline": {
+                "value": "BMW CarPlay & Screen Upgrades in Dublin"
+              },
+              "intro": {
+                "value": "Add Apple CarPlay and Android Auto to your BMW's factory iDrive screen, or upgrade to a widescreen display that looks like it left the factory that way. We work on CIC, NBT, NBT EVO and iDrive 7 cars at our Dublin 12 workshop.\n\nYour steering wheel buttons, iDrive controller and reversing camera keep working wherever possible, and we confirm exactly what suits your car before you book. BMW Apple CarPlay is €350 fitted, and Android Auto on iDrive 7 is €299."
+              },
+              "hero_image": {
+                "value": null
+              },
+              "systems": {
+                "value": [
+                  "iDrive CIC",
+                  "iDrive NBT",
+                  "NBT EVO (ID4–ID6)",
+                  "iDrive 7 (ID7)"
+                ]
+              },
+              "models": {
+                "value": [
+                  "1 Series (F20/F21, 2011–2019)",
+                  "2 Series (F22/F23, 2014–2021)",
+                  "3 Series (F30/F31, 2012–2019)",
+                  "3 Series (G20/G21, 2019 on)",
+                  "4 Series (F32/F33/F36, 2013–2020)",
+                  "5 Series (F10/F11, 2010–2017)",
+                  "5 Series (G30/G31, 2017–2023)",
+                  "X1 (F48, 2015–2022)",
+                  "X3 (F25, 2010–2017)",
+                  "X3 (G01, 2017–2024)",
+                  "X5 (F15, 2013–2018)",
+                  "X5 (G05, 2018 on)"
+                ]
+              },
+              "from_price": {
+                "value": "€299"
+              },
+              "services": {
+                "value": [
+                  "Apple CarPlay for iDrive | €350 | /products/carplay-installation-bmw",
+                  "Android Auto for iDrive 7 (ID7) | €299 | /products/android-auto-installation-bmw-id7",
+                  "iDrive 7 video in motion | €149 | /products/bmw-idrive7-video-in-motion",
+                  "Japanese-to-European conversion | €450 | /products/bmw-japan-to-europe-conversion",
+                  "Reverse camera, supplied and fitted | €750 | /products/reverse-camera-installation",
+                  "Widescreen Android display upgrade | | /collections/screen-upgrades"
+                ]
+              },
+              "faqs": {
+                "value": [
+                  {
+                    "question": {
+                      "value": "Can you add Apple CarPlay to my BMW's original screen?"
+                    },
+                    "answer": {
+                      "value": "In most cases, yes. We add Apple CarPlay to the factory iDrive screen, so you keep the original look, the iDrive controller and your steering wheel buttons. Depending on your iDrive version, that's a software activation or a small interface fitted behind the dash. BMW Apple CarPlay installation is €350, and we'll confirm the fitting time for your iDrive system when you book."
+                    }
+                  },
+                  {
+                    "question": {
+                      "value": "Which iDrive system does my BMW have?"
+                    },
+                    "answer": {
+                      "value": "The quickest way to find out is to send us a photo of your screen and the iDrive controller on WhatsApp, and we'll tell you in minutes. As a rough guide: CIC is found on many BMWs up to about 2013, NBT on many cars from about 2013 to 2016, NBT EVO (ID4 to ID6) from about 2016 to 2019, and iDrive 7 on most BMWs built from 2019."
+                    }
+                  },
+                  {
+                    "question": {
+                      "value": "Can you add Android Auto to a BMW with iDrive 7?"
+                    },
+                    "answer": {
+                      "value": "Yes. We enable Android Auto on iDrive 7 (ID7) for €299. It takes about an hour, and you get Google Maps, Waze, Spotify, calls and messages on the factory screen, controlled with the iDrive controller, touchscreen and steering wheel buttons."
+                    }
+                  },
+                  {
+                    "question": {
+                      "value": "My BMW is a Japanese import. Can you convert it to European spec?"
+                    },
+                    "answer": {
+                      "value": "Yes. Our BMW Japan-to-Europe conversion is €450 and takes about two hours. We region-code the iDrive system, install European navigation maps, switch the menus and voice guidance to English, move the FM radio to the European band and set local regional settings. Send us your reg or VIN first and we'll confirm your car is compatible."
+                    }
+                  }
+                ]
+              },
+              "seo_title": {
+                "value": "BMW CarPlay & Screen Upgrades in Dublin | MG Car Audio"
+              }
+            }
+          }
+        }
+      }
     },
     "page.quote": {
       "title": "Get a Quote",
@@ -26,6 +122,13 @@
       "title": "About MG Car Audio",
       "handle": "about",
       "content": "<p>Dublin's CarPlay and car audio specialists.</p>"
+    },
+    "page.car-make--fallback": {
+      "//": "A car make page with no car_make entry linked (a fresh install): node tools/preview/shoot.mjs page.car-make --fixture page.car-make--fallback --name page.car-make-fallback",
+      "title": "BMW CarPlay & Screen Upgrades",
+      "handle": "bmw-carplay",
+      "content": "",
+      "metafields": {}
     }
   },
   "collections": {

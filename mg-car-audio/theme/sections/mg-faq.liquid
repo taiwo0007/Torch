@@ -1,18 +1,10 @@
 {%- liquid
+  assign heading = section.settings.heading | strip
+  assign heading_id = 'MgFaqHeading-' | append: section.id
   assign section_classes = 'mg-section mg-faq'
   if section.settings.background == 'surface'
-    assign section_classes = section_classes | append: ' mg-section--surface'
+    assign section_classes = section_classes | append: ' mg-section--band'
   endif
-  if section.settings.spacing == 'tight'
-    assign section_classes = section_classes | append: ' mg-section--tight'
-  endif
-  if section.settings.layout == 'split'
-    assign section_classes = section_classes | append: ' mg-faq--split'
-  else
-    assign section_classes = section_classes | append: ' mg-faq--stacked'
-  endif
-
-  assign heading_id = 'MgFaqHeading-' | append: section.id
 
   # Source of questions: the section's own blocks, or (when there are none)
   # the FAQs linked to the page's car make metaobject (page.metafields.custom.car_make).
@@ -33,60 +25,51 @@
 
   assign wa_text = settings.mg_whatsapp_message | url_encode
   assign wa_href = 'https://wa.me/' | append: settings.mg_whatsapp_number | append: '?text=' | append: wa_text
+
+  assign show_whatsapp = false
+  if settings.mg_whatsapp_number != blank
+    assign show_whatsapp = true
+  endif
+  assign show_call = false
+  if settings.mg_phone_e164 != blank
+    assign show_call = true
+  endif
+  assign show_contact = false
+  if section.settings.show_contact
+    if show_whatsapp or show_call
+      assign show_contact = true
+    endif
+  endif
 -%}
 
 {%- if faq_count > 0 or request.design_mode -%}
   <section
     class="{{ section_classes }}"
-    {% if section.settings.heading != blank %}
+    {% if heading != blank %}
       aria-labelledby="{{ heading_id }}"
     {% endif %}
   >
-    <div class="mg-container mg-faq__layout">
-      <div class="mg-faq__aside">
-        <header class="mg-section-head mg-faq__head">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-          {%- endif -%}
-          {%- if section.settings.heading != blank -%}
-            <h2 id="{{ heading_id }}" class="mg-heading">{{ section.settings.heading | escape }}</h2>
-          {%- endif -%}
-          {%- if section.settings.text != blank -%}
-            <p class="mg-lede">{{ section.settings.text }}</p>
-          {%- endif -%}
-        </header>
-
-        {%- if section.settings.show_contact -%}
-          <div class="mg-faq__contact">
-            {%- if section.settings.contact_heading != blank -%}
-              <p class="mg-faq__contact-title">{{ section.settings.contact_heading | escape }}</p>
+    <div class="mg-container mg-container--narrow">
+      {%- if heading != blank or section.settings.text != blank -%}
+        <div class="mg-head mg-head--center mg-faq__head">
+          <div class="mg-head__text">
+            {%- if heading != blank -%}
+              <h2
+                id="{{ heading_id }}"
+                class="mg-head__title"
+              >
+                {{ heading | escape }}
+              </h2>
             {%- endif -%}
-            <div class="mg-faq__contact-actions">
-              {%- if settings.mg_whatsapp_number != blank -%}
-                <a
-                  class="mg-btn mg-btn--whatsapp"
-                  href="{{ wa_href }}"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {%- render 'mg-icon', icon: 'whatsapp' -%}
-                  <span>WhatsApp us</span>
-                  <span class="mg-visually-hidden">(opens WhatsApp)</span>
-                </a>
-              {%- endif -%}
-              {%- if settings.mg_phone_e164 != blank -%}
-                <a class="mg-btn mg-btn--ghost" href="tel:+{{ settings.mg_phone_e164 }}">
-                  {%- render 'mg-icon', icon: 'phone' -%}
-                  <span>{{ settings.mg_phone_display | default: 'Call us' | escape }}</span>
-                </a>
-              {%- endif -%}
-            </div>
+            {%- if section.settings.text != blank -%}
+              <p class="mg-head__sub">{{ section.settings.text }}</p>
+            {%- endif -%}
           </div>
-        {%- endif -%}
-      </div>
+        </div>
+      {%- endif -%}
 
-      <div class="mg-faq__list">
-        {%- if faq_count > 0 -%}
+      {%- if faq_count > 0 -%}
+        <div class="mg-faq__list">
           {%- for item in faq_items -%}
             {%- liquid
               if use_metaobject
@@ -112,9 +95,7 @@
               >
                 <summary class="mg-faq__question">
                   <span class="mg-faq__question-text">{{ faq_question | escape }}</span>
-                  <span class="mg-faq__toggle" aria-hidden="true">
-                    {%- render 'mg-icon', icon: 'chevron-down' -%}
-                  </span>
+                  {%- render 'mg-icon', icon: 'chevron-down', class: 'mg-faq__chevron' -%}
                 </summary>
                 <div class="mg-faq__answer">
                   {{ faq_answer }}
@@ -122,13 +103,44 @@
               </details>
             {%- endif -%}
           {%- endfor -%}
-        {%- else -%}
-          <p class="mg-placeholder-note">
-            Add "Question" blocks. On car make pages you can leave this empty: the section then shows the FAQs linked to
-            the page's car make entry.
-          </p>
-        {%- endif -%}
-      </div>
+        </div>
+      {%- else -%}
+        <p class="mg-help mg-faq__empty">
+          Add "Question" blocks. On car make pages you can leave this empty: the section then shows the FAQs linked to
+          the page's car make entry.
+        </p>
+      {%- endif -%}
+
+      {%- if show_contact -%}
+        <div class="mg-faq__contact">
+          {%- if section.settings.contact_heading != blank -%}
+            <p class="mg-faq__contact-title">{{ section.settings.contact_heading | escape }}</p>
+          {%- endif -%}
+          <div class="mg-actions mg-faq__actions">
+            {%- if show_whatsapp -%}
+              <a
+                class="mg-btn mg-btn--whatsapp"
+                href="{{ wa_href }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {%- render 'mg-icon', icon: 'whatsapp' -%}
+                <span>WhatsApp us</span>
+                <span class="mg-visually-hidden">(opens in a new tab)</span>
+              </a>
+            {%- endif -%}
+            {%- if show_call -%}
+              <a
+                class="mg-btn mg-btn--secondary"
+                href="tel:+{{ settings.mg_phone_e164 }}"
+              >
+                {%- render 'mg-icon', icon: 'phone' -%}
+                <span>Call {{ settings.mg_phone_display | default: settings.mg_phone_e164 | escape }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </section>
 
@@ -171,165 +183,72 @@
 {% endjavascript %}
 
 {% stylesheet %}
-  .mg-faq {
-    --mg-faq-panel: var(--mg-surface);
-  }
-
-  .mg-faq.mg-section--surface {
-    --mg-faq-panel: var(--mg-surface-2);
-  }
-
-  .mg-faq__layout {
-    display: grid;
-  }
-
-  /* Mobile and stacked layout: heading, questions, then the contact card. */
-  .mg-faq__aside {
-    display: contents;
-  }
-
-  .mg-faq__head {
-    order: 1;
-  }
-
-  .mg-faq__list {
-    order: 2;
-  }
-
-  .mg-faq--stacked .mg-faq__layout {
-    max-width: 920px;
-  }
-
-  .mg-faq--stacked .mg-faq__head {
-    text-align: center;
-  }
-
-  .mg-faq--stacked .mg-faq__head .mg-lede {
-    margin-inline: auto;
-  }
-
-  /* Contact card */
-  .mg-faq__contact {
-    order: 3;
-    margin-top: 32px;
-    padding: 20px;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
-    background: var(--mg-faq-panel);
-  }
-
-  .mg-faq--stacked .mg-faq__contact {
-    text-align: center;
-  }
-
-  .mg-faq--stacked .mg-faq__contact-actions {
-    justify-content: center;
-  }
-
-  .mg-faq__contact-title {
-    margin: 0 0 14px;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--mg-text);
-  }
-
-  .mg-faq__contact-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .mg-faq__contact-actions .mg-btn {
-    flex: 1 1 180px;
-  }
-
-  .mg-faq--stacked .mg-faq__contact-actions .mg-btn {
-    flex: 0 1 220px;
-  }
-
-  /* Accordion */
-  .mg-faq__list {
-    border-top: 1px solid var(--mg-border);
-  }
-
+  /* Rows: no boxes, a hairline between questions, a chevron on the right */
   .mg-faq__item {
-    border-bottom: 1px solid var(--mg-border);
     interpolate-size: allow-keywords;
+  }
+
+  .mg-faq__item + .mg-faq__item {
+    border-top: 1px solid var(--mg-line);
   }
 
   .mg-faq__question {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 22px 4px;
+    gap: var(--mg-space-4);
+    min-height: 60px;
+    padding: var(--mg-space-3) 0;
+    border-radius: var(--mg-radius-sm);
+    color: var(--mg-ink);
     list-style: none;
     cursor: pointer;
-    color: var(--mg-text);
-    border-radius: var(--mg-radius-sm);
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mg-faq__question::-webkit-details-marker {
     display: none;
   }
 
-  .mg-faq__question:hover {
-    color: var(--mg-text);
-  }
-
   .mg-faq__question:focus-visible {
-    outline: 2px solid var(--mg-text);
+    outline: 2px solid var(--mg-focus);
     outline-offset: 2px;
   }
 
   .mg-faq__question-text {
-    font-family: var(--font-body--family);
-    font-size: clamp(1rem, 1.4vw, 1.125rem);
-    font-weight: 600;
+    font-size: var(--mg-fs-body);
+    font-weight: 500;
     line-height: 1.4;
     text-wrap: pretty;
   }
 
-  .mg-faq__toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .mg-faq__chevron {
     flex: none;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    color: var(--mg-text-muted);
+    width: 20px;
+    height: 20px;
+    color: var(--mg-ink-2);
     transition:
-      transform 0.3s var(--mg-ease),
-      border-color 0.3s var(--mg-ease),
-      color 0.3s var(--mg-ease),
-      background-color 0.3s var(--mg-ease);
+      transform var(--mg-dur) var(--mg-ease),
+      color var(--mg-dur) var(--mg-ease);
   }
 
-  .mg-faq__toggle .mg-icon {
-    width: 18px;
-    height: 18px;
+  @media (hover: hover) {
+    .mg-faq__question:hover .mg-faq__chevron {
+      color: var(--mg-ink);
+    }
   }
 
-  .mg-faq__question:hover .mg-faq__toggle {
-    border-color: var(--mg-text);
-    color: var(--mg-text);
-  }
-
-  .mg-faq__item[open] .mg-faq__toggle {
+  .mg-faq__item[open] .mg-faq__chevron {
     transform: rotate(180deg);
-    border-color: var(--mg-accent);
-    background: var(--mg-accent-soft);
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
   .mg-faq__item::details-content {
     block-size: 0;
     overflow: hidden;
     transition:
-      block-size 0.35s var(--mg-ease),
-      content-visibility 0.35s allow-discrete;
+      block-size 0.25s var(--mg-ease),
+      content-visibility 0.25s allow-discrete;
   }
 
   .mg-faq__item[open]::details-content {
@@ -337,15 +256,11 @@
   }
 
   .mg-faq__answer {
-    max-width: 68ch;
-    padding: 0 56px 24px 4px;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-faq__item[open] .mg-faq__answer {
-    animation: mg-faq-reveal 0.35s var(--mg-ease);
+    max-width: 65ch;
+    padding: 0 var(--mg-space-6) var(--mg-space-5) 0;
+    font-size: var(--mg-fs-body);
+    line-height: 1.6;
+    color: var(--mg-ink-2);
   }
 
   .mg-faq__answer > :first-child {
@@ -356,77 +271,70 @@
     margin-bottom: 0;
   }
 
-  .mg-faq__answer p,
-  .mg-faq__answer ul,
-  .mg-faq__answer ol {
-    margin: 0 0 0.85em;
+  .mg-faq__answer :is(p, ul, ol) {
+    margin: 0 0 0.75em;
   }
 
-  .mg-faq__answer ul,
-  .mg-faq__answer ol {
+  .mg-faq__answer :is(ul, ol) {
     padding-left: 1.25em;
   }
 
-  .mg-faq__answer li + li {
-    margin-top: 0.35em;
-  }
-
   .mg-faq__answer strong {
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
-  .mg-faq .mg-faq__answer a,
-  .mg-faq .mg-faq__answer a:hover {
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-accent);
-    text-underline-offset: 0.2em;
+  .mg-faq__answer a {
+    color: var(--mg-ink);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
   }
 
-  @keyframes mg-faq-reveal {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
+  .mg-faq__answer a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .mg-faq__empty {
+    text-align: center;
+  }
+
+  /* Still have a question? */
+  .mg-faq__contact {
+    display: grid;
+    justify-items: center;
+    gap: var(--mg-space-3);
+    margin-top: var(--mg-space-6);
+    text-align: center;
+  }
+
+  .mg-faq__contact-title {
+    margin: 0;
+    font-size: var(--mg-fs-body);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--mg-ink);
+  }
+
+  .mg-faq__actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-faq__question-text {
+      font-size: 1.0625rem;
     }
 
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @media (max-width: 749px) {
     .mg-faq__answer {
-      padding-right: 4px;
-    }
-  }
-
-  @media (min-width: 990px) {
-    .mg-faq--split .mg-faq__layout {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: clamp(40px, 6vw, 96px);
-      align-items: start;
-    }
-
-    .mg-faq--split .mg-faq__aside {
-      display: block;
-      position: sticky;
-      top: calc(var(--header-height, 72px) + 24px);
-    }
-
-    .mg-faq--split .mg-faq__contact {
-      margin-top: 0;
+      padding-right: var(--mg-space-7);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mg-faq__toggle,
+    .mg-faq__chevron,
     .mg-faq__item::details-content {
       transition: none;
-    }
-
-    .mg-faq__item[open] .mg-faq__answer {
-      animation: none;
     }
   }
 {% endstylesheet %}
@@ -447,37 +355,32 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "FAQ"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Good questions, straight answers"
+      "default": "Questions drivers always ask"
     },
     {
       "type": "inline_richtext",
       "id": "text",
       "label": "Intro text",
-      "default": "What people usually ask us before booking a CarPlay install, screen upgrade or conversion. Can't see your question? Send us a message."
+      "info": "Optional. One short line under the heading."
     },
     {
       "type": "header",
-      "content": "Contact card"
+      "content": "Still have a question?"
     },
     {
       "type": "checkbox",
       "id": "show_contact",
       "label": "Show WhatsApp and call buttons",
+      "info": "Number and message come from Theme settings > MG Car Audio: business details.",
       "default": true
     },
     {
       "type": "text",
       "id": "contact_heading",
-      "label": "Contact card heading",
-      "default": "Not sure what fits your car?"
+      "label": "Line above the buttons",
+      "default": "Still have a question?"
     },
     {
       "type": "header",
@@ -487,7 +390,7 @@
       "type": "checkbox",
       "id": "open_first",
       "label": "Open the first question",
-      "default": true
+      "default": false
     },
     {
       "type": "checkbox",
@@ -506,51 +409,19 @@
     },
     {
       "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        {
-          "value": "split",
-          "label": "Heading beside questions"
-        },
-        {
-          "value": "stacked",
-          "label": "Heading above questions"
-        }
-      ],
-      "default": "split"
-    },
-    {
-      "type": "select",
       "id": "background",
       "label": "Background",
       "options": [
         {
           "value": "page",
-          "label": "Page background"
+          "label": "Page"
         },
         {
           "value": "surface",
-          "label": "Raised panel"
+          "label": "Grey band"
         }
       ],
       "default": "page"
-    },
-    {
-      "type": "select",
-      "id": "spacing",
-      "label": "Vertical spacing",
-      "options": [
-        {
-          "value": "normal",
-          "label": "Normal"
-        },
-        {
-          "value": "tight",
-          "label": "Tight"
-        }
-      ],
-      "default": "normal"
     }
   ],
   "blocks": [
@@ -611,7 +482,7 @@
           "type": "question",
           "settings": {
             "question": "Do I need to pay a deposit to book?",
-            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot and holds the time for you. We'll agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
           }
         },
         {

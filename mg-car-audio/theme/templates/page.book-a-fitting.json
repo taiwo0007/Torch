@@ -6,15 +6,15 @@
         "fact-deposit": {
           "type": "fact",
           "settings": {
-            "icon": "tag",
-            "text": "€50 deposit, off your bill"
+            "icon": "calendar",
+            "text": "Move your date with 48 hours' notice"
           }
         },
         "fact-time": {
           "type": "fact",
           "settings": {
             "icon": "clock",
-            "text": "Most fits in 1–2 hours"
+            "text": "Most fits take 1 to 2 hours"
           }
         },
         "fact-price": {
@@ -28,7 +28,7 @@
           "type": "fact",
           "settings": {
             "icon": "map-pin",
-            "text": "Ballymount, Dublin 12"
+            "text": "Ballymount, Dublin 12"
           }
         }
       },
@@ -42,17 +42,16 @@
         "show_breadcrumb": true,
         "breadcrumb_parent_label": "",
         "breadcrumb_schema": true,
-        "eyebrow": "Book in three steps",
         "heading": "",
-        "intro": "Send us your reg, get a fixed fitted price, then secure your slot with a €50 deposit that comes off your final bill. Most fittings are done in one to two hours at our Ballymount workshop.",
+        "intro": "Send us your reg, agree a fixed fitted price, then pay a €50 deposit online to secure your slot.",
         "price_prefix": "Deposit",
         "price": "€50",
         "price_suffix": "secures your slot",
-        "price_note": "Taken off your final bill. Move your date free with 48 hours' notice.",
-        "primary_label": "Pay the €50 deposit",
+        "price_note": "Taken off your final bill on the day.",
+        "primary_label": "Pay the €50 deposit",
         "primary_url": "/products/booking-deposit",
         "show_whatsapp": true,
-        "whatsapp_label": "Get a price on WhatsApp",
+        "whatsapp_label": "WhatsApp us",
         "whatsapp_message": "Hi MG Car Audio, I'd like to book a fitting. My reg is: ",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
@@ -66,31 +65,27 @@
         "step_reg": {
           "type": "step",
           "settings": {
-            "icon": "camera",
-            "title": "Send your reg + a dash photo",
-            "text": "WhatsApp us your registration and a quick photo of your dash, or use the quote form. That's usually all we need to tell you exactly what fits."
+            "title": "Send your reg and a dash photo",
+            "text": "WhatsApp us your reg and a photo of your dash, or use the quote form. That's usually all we need to tell you what fits."
           }
         },
         "step_quote": {
           "type": "step",
           "settings": {
-            "icon": "message",
-            "title": "Get a fixed quote",
-            "text": "You get a clear fitted price for parts and labour before you commit. No vague estimates and no surprises on the day."
+            "title": "Get a fixed price",
+            "text": "You get one fitted price for parts and labour before you commit, so there are no surprises on the day."
           }
         },
         "step_book": {
           "type": "step",
           "settings": {
-            "icon": "calendar",
-            "title": "Pay the €50 deposit",
-            "text": "The <strong>€50 deposit</strong> secures your slot at our Ballymount workshop and comes off your final bill."
+            "title": "Pay the €50 deposit",
+            "text": "The <strong>€50 deposit</strong> secures your slot at our Ballymount workshop and comes off your final bill."
           }
         },
         "step_drive": {
           "type": "step",
           "settings": {
-            "icon": "car",
             "title": "Drive in, drive away",
             "text": "We fit it, test everything with your phone and show you how it works. The balance is paid when the work is done."
           }
@@ -103,18 +98,16 @@
         "step_drive"
       ],
       "settings": {
-        "eyebrow": "How booking works",
-        "heading": "From your reg to a booked slot",
+        "heading": "How booking works",
         "text": "No app to download and no account to create. Tell us about your car, agree the price, then pay the deposit online.",
         "align": "left",
         "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp us your reg",
+        "whatsapp_label": "WhatsApp us",
         "button_label": "Get a quote",
         "button_link": "/pages/get-a-quote",
         "show_phone": true,
-        "phone_prefix": "Rather talk it through? Call",
-        "background": "surface",
-        "spacing": "normal"
+        "phone_prefix": "Prefer to talk? Call",
+        "background": "surface"
       }
     },
     "fittings": {
@@ -124,11 +117,13 @@
           "type": "service",
           "settings": {
             "title": "BMW Apple CarPlay",
-            "text": "Wired or wireless CarPlay on your factory iDrive screen, with an OEM-style finish.",
+            "group": "carplay",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen.",
             "price": "€350",
-            "price_label": "",
+            "price_label": "From",
+            "duration": "",
             "url": "/products/carplay-installation-bmw",
-            "badge": "Most popular",
+            "badge": "",
             "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
@@ -136,10 +131,13 @@
           "type": "service",
           "settings": {
             "title": "BMW Android Auto (iDrive 7)",
-            "text": "Android Auto switched on for iDrive 7 (ID7) screens. About an hour in the bay.",
+            "group": "carplay",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens.",
             "price": "€299",
-            "price_label": "",
+            "price_label": "From",
+            "duration": "About 1 hr",
             "url": "/products/android-auto-installation-bmw-id7",
+            "badge": "",
             "fallback_image": "mg-android-auto-dash.webp"
           }
         },
@@ -147,10 +145,13 @@
           "type": "service",
           "settings": {
             "title": "Android radio fitting",
-            "text": "You supply the radio, we fit it properly with neat wiring. About 1 hour 30 minutes.",
+            "group": "radios",
+            "text": "You supply the radio, we fit it with neat, hidden wiring.",
             "price": "€150",
-            "price_label": "",
+            "price_label": "From",
+            "duration": "About 1 hr 30 min",
             "url": "/products/android-radio-installation",
+            "badge": "",
             "fallback_image": "mg-dash-radio.webp"
           }
         },
@@ -158,21 +159,27 @@
           "type": "service",
           "settings": {
             "title": "BMW iDrive 7 video in motion",
-            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
+            "group": "screens",
+            "text": "Passengers can keep watching video while the car moves.",
             "price": "€149",
-            "price_label": "",
+            "price_label": "From",
+            "duration": "",
             "url": "/products/bmw-idrive7-video-in-motion",
+            "badge": "",
             "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
         "svc_bmw_japan": {
           "type": "service",
           "settings": {
-            "title": "BMW Japan-to-Europe conversion",
-            "text": "Menus, maps and radio band switched to European spec on imported BMWs. About 2 hours.",
+            "title": "BMW Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Menus, maps and radio band switched to European spec.",
             "price": "€450",
-            "price_label": "",
+            "price_label": "From",
+            "duration": "About 2 hr",
             "url": "/products/bmw-japan-to-europe-conversion",
+            "badge": "",
             "fallback_image": "mg-bmw-japan-to-europe.webp"
           }
         },
@@ -180,11 +187,14 @@
           "type": "service",
           "settings": {
             "title": "Reverse camera, supplied and fitted",
-            "text": "Switches on the moment you select reverse, with the wiring hidden. BMW, Audi, VW and Honda.",
+            "group": "other",
+            "text": "Switches on when you select reverse, with the wiring hidden. BMW, Audi, VW and Honda.",
             "price": "€399",
-            "price_label": "from",
+            "price_label": "From",
+            "duration": "",
             "url": "/products/reverse-camera-installation",
-            "fallback_image": "mg-showroom.webp"
+            "badge": "",
+            "fallback_image": "mg-audi-carplay-screen.webp"
           }
         }
       },
@@ -197,15 +207,23 @@
         "svc_reverse_camera"
       ],
       "settings": {
-        "eyebrow": "Popular fittings",
         "heading": "Book one of these online",
-        "text": "MG's published prices for our most-booked jobs, all fitted at our Dublin 12 workshop. Open a service to see the details and book it.",
+        "text": "",
         "button_label": "All services",
         "button_url": "/pages/services",
+        "show_image": false,
+        "show_tabs": true,
+        "tabs_label": "Filter by system",
+        "tab_all": "All",
+        "tab_carplay": "CarPlay",
+        "tab_screens": "Screens",
+        "tab_radios": "Radios",
+        "tab_conversions": "Conversions",
+        "tab_audio": "Audio",
         "price_suffix": "fitted",
+        "on_request_label": "Price on request",
+        "book_label": "Book",
         "quote_label": "Get a quote",
-        "columns_desktop": 3,
-        "background": "page",
         "footnote": "Something else? Send us your reg and we'll come back with a price and a time."
       }
     },
@@ -225,7 +243,7 @@
         "content_direction": "column",
         "gap": 16,
         "padding-block-start": 0,
-        "padding-block-end": 56
+        "padding-block-end": 0
       }
     },
     "faq": {
@@ -235,7 +253,7 @@
           "type": "question",
           "settings": {
             "question": "Why do I need to pay a deposit?",
-            "answer": "<p>The <strong>€50 deposit</strong> confirms your booking, reserves workshop time for your car and lets us have any parts ready. It's taken off your final bill on the day.</p>"
+            "answer": "<p>The <strong>€50 deposit</strong> confirms your booking, reserves workshop time for your car and lets us have any parts ready. It's taken off your final bill on the day.</p>"
           }
         },
         "faq_reschedule": {
@@ -283,16 +301,13 @@
         "faq_balance"
       ],
       "settings": {
-        "eyebrow": "Booking FAQ",
         "heading": "Before you book",
-        "text": "Deposits, timings and what to bring. Anything else, send us a message.",
+        "text": "Deposits, timings and what to bring.",
         "show_contact": true,
-        "contact_heading": "Not sure what fits your car?",
-        "open_first": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
         "output_faq_schema": true,
-        "layout": "split",
-        "background": "surface",
-        "spacing": "normal"
+        "background": "page"
       }
     }
   },

@@ -1,0 +1,152 @@
+{%- doc -%}
+  Light / dark theme mode.
+
+  Head mode (default): render in <head> right after 'meta-tags' (which holds <meta charset>, and
+  must stay in the first 1024 bytes) and before any stylesheet (layout/theme.liquid). Outputs
+  <meta name="color-scheme"> and a tiny blocking script that, before first paint:
+  - sets <html data-mg-theme="auto|light|dark"> from localStorage 'mg-theme', else from the
+    theme setting "Colour theme" (settings.mg_theme_mode, default auto). In the theme editor the
+    stored choice is ignored so the setting previews as saved;
+  - sets <html data-mg-scheme="light|dark">, the resolved scheme every stylesheet keys off
+    (auto follows prefers-color-scheme and updates live when the system setting changes);
+  - exposes window.mgSetTheme('auto' | 'light' | 'dark'), which stores the visitor's choice and
+    fires a 'mg:themechange' event on document (detail: { mode, scheme });
+  - keeps every theme control on the page in sync (radios marked data-mg-theme-input), and
+    <meta name="theme-color"> in step with the page colour once the DOM and CSS are ready.
+
+  Control mode: {% render 'mg-theme-mode', control: true %} outputs the "Auto / Light / Dark"
+  segmented control (native radios in a labelled radiogroup, styled by .mg-theme-control in
+  assets/mg-theme.css). Outputs nothing when "Show theme control" (settings.mg_show_theme_control)
+  is off. It needs no script of its own.
+
+  @param {boolean} [control] - Output the theme control instead of the head script.
+  @param {string} [id] - Control only: unique id/name prefix when a page shows more than one control. Default 'mg-theme'.
+  @param {string} [label] - Control only: visible group label. Default 'Theme'.
+  @param {boolean} [hide_label] - Control only: keep the label for screen readers only.
+  @param {string} [class] - Control only: extra classes on the control.
+
+  @example
+  {% render 'mg-theme-mode' %}
+  {% render 'mg-theme-mode', control: true, id: 'footer-theme', class: 'my-footer__theme' %}
+{%- enddoc -%}
+
+{%- if control -%}
+  {%- if settings.mg_show_theme_control -%}
+    {%- liquid
+      assign control_id = id | default: 'mg-theme' | handleize
+      assign control_label = label | default: 'Theme'
+      assign saved_mode = settings.mg_theme_mode | default: 'auto'
+      assign theme_modes = 'auto,light,dark' | split: ','
+    -%}
+    <div
+      class="mg-theme-control{% if class != blank %} {{ class }}{% endif %}"
+      role="radiogroup"
+      aria-labelledby="{{ control_id }}-label"
+      data-mg-theme-control
+    >
+      <span
+        class="mg-theme-control__label{% if hide_label %} mg-visually-hidden{% endif %}"
+        id="{{ control_id }}-label"
+      >
+        {{- control_label | escape -}}
+      </span>
+      <span class="mg-theme-control__options">
+        {%- for mode in theme_modes -%}
+          <label class="mg-theme-control__option">
+            <input
+              class="mg-theme-control__input"
+              type="radio"
+              name="{{ control_id }}"
+              value="{{ mode }}"
+              data-mg-theme-input
+              {% if saved_mode == mode %}
+                checked
+              {% endif %}
+            >
+            <span class="mg-theme-control__text">{{ mode | capitalize }}</span>
+          </label>
+        {%- endfor -%}
+      </span>
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var modes = { auto: true, light: true, dark: true };
+      var fallback = {{ settings.mg_theme_mode | default: 'auto' | json }};
+      var persist = {{ request.design_mode | json }} !== true;
+      var query = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+      if (!modes[fallback]) fallback = 'auto';
+
+      function stored() {
+        if (!persist) return null;
+        try {
+          var value = window.localStorage.getItem('mg-theme');
+          return modes[value] ? value : null;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function sync() {
+        var inputs = document.querySelectorAll('[data-mg-theme-input]');
+        for (var i = 0; i < inputs.length; i++) inputs[i].checked = inputs[i].value === root.dataset.mgTheme;
+        if (document.readyState === 'loading') return;
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+        var page = window.getComputedStyle(root).getPropertyValue('--mg-page').trim();
+        if (themeColor && page) themeColor.setAttribute('content', page);
+      }
+
+      function apply(mode) {
+        if (!modes[mode]) mode = fallback;
+        var scheme = mode === 'auto' ? (query && query.matches ? 'dark' : 'light') : mode;
+        var changed = root.dataset.mgScheme !== scheme;
+        if (changed && root.dataset.mgScheme) root.classList.add('mg-theme-switching');
+        root.dataset.mgTheme = mode;
+        root.dataset.mgScheme = scheme;
+        sync();
+        if (changed) {
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              root.classList.remove('mg-theme-switching');
+            });
+          });
+        }
+        return scheme;
+      }
+
+      window.mgSetTheme = function (mode) {
+        if (!modes[mode]) return;
+        if (persist) {
+          try {
+            window.localStorage.setItem('mg-theme', mode);
+          } catch (error) {}
+        }
+        var scheme = apply(mode);
+        document.dispatchEvent(new CustomEvent('mg:themechange', { detail: { mode: mode, scheme: scheme } }));
+      };
+
+      apply(stored() || fallback);
+
+      if (query) {
+        var onSystemChange = function () {
+          if (root.dataset.mgTheme === 'auto') apply('auto');
+        };
+        if (query.addEventListener) query.addEventListener('change', onSystemChange);
+        else if (query.addListener) query.addListener(onSystemChange);
+      }
+
+      document.addEventListener('change', function (event) {
+        var input = event.target;
+        if (input && input.matches && input.matches('[data-mg-theme-input]')) window.mgSetTheme(input.value);
+      });
+      document.addEventListener('DOMContentLoaded', sync);
+      window.addEventListener('load', sync);
+      window.addEventListener('storage', function (event) {
+        if (event.key === 'mg-theme') apply(stored() || fallback);
+      });
+    })();
+  </script>
+{%- endif -%}

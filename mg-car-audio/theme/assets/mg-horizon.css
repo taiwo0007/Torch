@@ -1,0 +1,1180 @@
+/*
+ * MG Car Audio: Horizon polish (design system v3, docs/DESIGN.md §5.11).
+ * Restyles Horizon's own parts (header, search, product cards, collection filters, product page,
+ * cart drawer, inputs, buttons, badges, footer, password page) to the Back Market-style MG system,
+ * in both schemes. Loaded right after mg-theme.css (snippets/stylesheets.liquid).
+ *
+ * Rules
+ * - Colours come from --mg-* tokens only, so every rule works in light and dark.
+ * - Horizon's component CSS comes from {% stylesheet %} tags that load after this file, so a rule
+ *   that must win carries one extra class, element or the #header-component id. Nothing here
+ *   changes Horizon's layout mechanics (grids, drawers, overflow menus); it only reskins them.
+ * - Horizon colour settings stay blank in templates and section groups. Where Horizon prints a
+ *   colour inline (header rows, submenu), the token wins through a custom property.
+ */
+
+/* =====================================================================
+ * 1. Shared Horizon variables (both schemes)
+ * ===================================================================== */
+
+/* Horizon draws borders with its text colour. MG uses hairlines, so every Horizon border
+   (header rows, dividers, accordions, cart rows, search) follows --mg-line. */
+html:root {
+  --color-border: var(--mg-line);
+  --color-border-rgb: var(--mg-line-rgb);
+  --style-border-popover: 1px solid var(--mg-line);
+  --style-border-drawer: 1px solid var(--mg-line);
+  --backdrop-color-rgb: var(--mg-ink-rgb);
+}
+
+html[data-mg-scheme='dark'] {
+  --backdrop-color-rgb: 0 0 0;
+}
+
+/* Horizon primary buttons: black in light (settings), inverted in dark (mg-theme.css bridge).
+   Type matches .mg-btn: Prompt 500, sentence case. */
+:is(.button, .button-secondary, .button-custom):not(.button-unstyled) {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Press feedback on the main Horizon CTAs (not every .button: some are positioned with transforms) */
+:is(.buy-buttons-block .add-to-cart-button, .cart__checkout-button, .email-signup__button, .password-dialog__submit-button, .facets__see-results):not(.button-unstyled):active {
+  transform: scale(0.98);
+}
+
+/* Light-scheme secondary and variant borders: a visible edge, not the faint card hairline */
+html:root {
+  --color-secondary-button-border: var(--mg-line-strong);
+  --color-secondary-button-hover-border: var(--mg-ink);
+  --color-secondary-button-hover-background: transparent;
+  --color-variant-border: var(--mg-line-strong);
+  --color-variant-hover-border: var(--mg-ink);
+  --color-variant-hover-background: var(--mg-card);
+}
+
+/* Inputs: 8px corners (settings), 3:1 border (bridge), MG focus ring */
+.field__input:focus-visible,
+:is(input, textarea, select):not([type='checkbox'], [type='radio'], [type='range'], .mg-input, .mg-plate__input):focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+.field__input::placeholder,
+textarea::placeholder,
+input::placeholder {
+  color: var(--mg-ink-3);
+  opacity: 1;
+}
+
+/* Dividers use the hairline in both schemes (a merchant colour would not switch in dark) */
+.divider .divider__line {
+  border-color: var(--mg-line);
+}
+
+/* =====================================================================
+ * 2. Announcement bar: one quiet line on the grey band
+ * ===================================================================== */
+
+#header-group .announcement-bar {
+  background-color: var(--mg-band);
+  color: var(--mg-ink-2);
+}
+
+#header-group .announcement-bar .announcement-bar__text {
+  color: var(--mg-ink-2);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+/* A single announcement needs no arrow gutters */
+#header-group .announcement-bar__slider:not(:has(slideshow-arrows)) .announcement-bar__slides {
+  width: 100%;
+}
+
+#header-group .announcement-bar__slide:has(.announcement-bar__link) .announcement-bar__text {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color var(--mg-dur) var(--mg-ease), color var(--mg-dur) var(--mg-ease);
+}
+
+#header-group .announcement-bar__slide:has(.announcement-bar__link:hover) .announcement-bar__text {
+  color: var(--mg-ink);
+  text-decoration-color: currentcolor;
+}
+
+#header-group .announcement-bar__link:focus-visible {
+  outline-offset: -2px;
+}
+
+/* =====================================================================
+ * 3. Header: white (light) or slate (dark) rows, hairline, logo, search pill, cart, system nav
+ * ===================================================================== */
+
+/* One h1 per page: on the home page Horizon prints a hidden h1 with the shop name. When the MG
+   hero's heading is the page h1, drop Horizon's (display: none also removes it for screen readers). */
+body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
+  display: none;
+}
+
+#header-component {
+  --cart-bubble-background: var(--mg-red);
+  --cart-bubble-text: var(--mg-on-red);
+}
+
+/* Submenus and the drawer underlay follow the page colour (the block prints a fixed colour) */
+#header-component .header__underlay {
+  --color-submenu: var(--mg-page);
+}
+
+/* Hairlines under the rows (the row prints the mobile colour inline) */
+#header-component .header__row {
+  --border-bottom-color: var(--mg-line) !important;
+  --border-bottom-color-mobile: var(--mg-line) !important;
+}
+
+/* Sticky: a soft cool shadow in light, the hairline alone in dark */
+#header-component[data-sticky-state='active'] .header__underlay-closed {
+  box-shadow: var(--mg-shadow);
+}
+
+/* Text logo (no logo image uploaded): the MG wordmark with a small red mark */
+#header-component .header-logo:not(:has(img)) {
+  gap: var(--mg-space-2);
+  font-family: var(--mg-font-ui);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--mg-ink);
+}
+
+#header-component .header-logo:not(:has(img))::before {
+  content: '';
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: var(--mg-red);
+}
+
+@media screen and (min-width: 750px) {
+  #header-component .header-logo:not(:has(img)) {
+    font-size: 1.25rem;
+  }
+}
+
+/* Header icons (menu, account, cart): ink, 44px targets */
+#header-component .header-actions__action,
+#header-component .header__icon--menu {
+  color: var(--mg-ink);
+}
+
+/* ---------- Search: a big rounded pill, "What are you upgrading?" ---------- */
+
+#header-component .search-action {
+  min-width: 0;
+}
+
+#header-component .search-action .header-actions__action {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  min-height: var(--mg-tap);
+  padding: 0 var(--mg-space-5) 0 var(--mg-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-band);
+  color: var(--mg-ink-2);
+  font-family: var(--mg-font-ui);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.2;
+  opacity: 1;
+  overflow: hidden;
+  transition:
+    border-color var(--mg-dur) var(--mg-ease),
+    background-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease);
+}
+
+/* The visible prompt (the button's name stays "Search") */
+#header-component .search-action .header-actions__action::after {
+  content: 'What are you upgrading?';
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#header-component .search-action .header-actions__action .svg-wrapper {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--mg-ink);
+}
+
+#header-component .search-action .header-actions__action svg {
+  width: 20px;
+  height: 20px;
+}
+
+html[data-mg-scheme='dark'] #header-component .search-action .header-actions__action {
+  border-color: var(--mg-line);
+}
+
+@media (hover: hover) {
+  #header-component .search-action .header-actions__action:hover {
+    border-color: var(--mg-line-strong);
+    color: var(--mg-ink);
+  }
+
+  /* Horizon dims the other icons in a column while one is hovered; the pill stays put */
+  #header-component .header__column .search-action .header-actions__action:not(:hover) {
+    opacity: 1;
+  }
+}
+
+#header-component .search-action .header-actions__action:focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Desktop (menu style): logo | wide pill | actions, then the system nav row ---------- */
+
+@media screen and (min-width: 750px) {
+  #header-component[data-menu-style='menu'] .header__row--top .header__columns {
+    --header-template-columns: minmax(0, 1fr) auto;
+  }
+
+  #header-component[data-menu-style='menu'] .header__row--top .header__column--left {
+    gap: var(--mg-space-6);
+    min-width: 0;
+  }
+
+  #header-component[data-menu-style='menu'] .header__row--top .header__column--left .search-action {
+    flex: 1 1 auto;
+    max-width: 560px;
+    margin-inline: 0;
+  }
+
+  /* A little air between the top row and the nav row when their paddings collapse */
+  #header-component[data-menu-style='menu'].header--collapse-row-paddings .header__row--top .header__columns {
+    --padding-block-end: var(--mg-space-2);
+  }
+
+  #header-component[data-menu-style='menu'] .header__row--bottom .header__columns {
+    --padding-block-start: 0px;
+    --padding-block-end: 0px;
+  }
+}
+
+/* System nav: Prompt 500, ink-2, a 2px red underline for the current section and on hover */
+#header-component .menu-list__link {
+  min-height: var(--mg-tap);
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+#header-component .menu-list__list-item:not([slot='overflow']) .menu-list__link .menu-list__link-title {
+  position: relative;
+  padding-block: var(--mg-space-3);
+}
+
+#header-component .menu-list__list-item:not([slot='overflow']) .menu-list__link .menu-list__link-title::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--gap-sm, 0.7rem);
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--mg-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--mg-dur) var(--mg-ease);
+}
+
+#header-component .menu-list__link--active .menu-list__link-title::after,
+#header-component .menu-list__link[aria-current='page'] .menu-list__link-title::after,
+#header-component .menu-list__list-item:not([slot='overflow']):hover .menu-list__link-title::after {
+  transform: scaleX(1);
+}
+
+/* Optional phone link in the nav row: add "Call 087 034 4355" (tel:+353870344355) as the last
+   main-menu item and it sits on the right with a phone icon */
+#header-component .menu-list__list-item:has(> .menu-list__link[href^='tel:']):not([slot='overflow']) {
+  margin-inline-start: auto;
+}
+
+#header-component .menu-list__link[href^='tel:'] .menu-list__link-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--mg-ink);
+}
+
+#header-component .menu-list__link[href^='tel:'] .menu-list__link-title::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background-color: currentcolor;
+  -webkit-mask: var(--mg-icon-phone) center / contain no-repeat;
+  mask: var(--mg-icon-phone) center / contain no-repeat;
+}
+
+#header-component .menu-list__link[href^='tel:'] .menu-list__link-title::after {
+  content: none;
+}
+
+:root {
+  /* snippets/mg-icon.liquid 'phone', as a mask (alpha only) */
+  --mg-icon-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h3.5l1.8 4.5-2.3 1.4a11 11 0 0 0 6.1 6.1l1.4-2.3L20 15.5V19a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z'/%3E%3C/svg%3E");
+}
+
+/* Mega menu (text style): links in ink-2, headings in ink */
+#header-component .mega-menu__link {
+  font-family: var(--mg-font-ui);
+}
+
+@media (hover: hover) {
+  #header-component .mega-menu__link:hover {
+    color: var(--mg-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+}
+
+/* ---------- Phones and touch tablets (drawer style): logo row, then a full-width search pill ---------- */
+
+/* The extra .header__column step outranks Horizon's own placement rules
+   (#header-component[data-menu-style='drawer'] .header__columns:not(:has(shopify-account)) .search-action). */
+@media screen and (max-width: 749px) {
+  #header-component .header__row--top .header__columns {
+    grid-template-areas:
+      'leftA leftB center rightA rightB'
+      'search search search search search';
+    row-gap: var(--mg-space-1);
+    --padding-block-start: var(--mg-space-1);
+    --padding-block-end: var(--mg-space-3);
+  }
+
+  #header-component .header__row--top .header__columns .header__column .search-action {
+    grid-area: search;
+    margin: 0;
+  }
+
+  #header-component .header__drawer {
+    --header-drawer-min-height: 48px;
+  }
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns {
+  grid-template-areas:
+    'leftA leftB center rightA rightB'
+    'search search search search search';
+  row-gap: var(--mg-space-1);
+  --padding-block-start: var(--mg-space-1);
+  --padding-block-end: var(--mg-space-3);
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns .header__column .search-action {
+  grid-area: search;
+  margin: 0;
+}
+
+#header-component[data-menu-style='drawer'] .header__drawer {
+  --header-drawer-min-height: 48px;
+}
+
+/* Touch tablets hide the inline menu; drop the then-empty nav row */
+#header-component[data-menu-style='drawer'] .header__row--bottom:not(:has(.search-action, .dropdown-localization)) {
+  display: none;
+}
+
+/* ---------- Menu drawer (phones) ---------- */
+
+.menu-drawer .menu-drawer__menu-item {
+  font-family: var(--mg-font-ui);
+  letter-spacing: -0.01em;
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist {
+  font-weight: 500;
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] {
+  color: var(--mg-red-ink);
+}
+
+/* ---------- Search modal ---------- */
+
+.search-modal .predictive-search-form__header {
+  border-color: var(--mg-line);
+  border-radius: var(--mg-radius-pill);
+}
+
+.search-modal .predictive-search-form__header-inner {
+  border-radius: var(--mg-radius-pill);
+}
+
+.search-modal input.search-input {
+  color: var(--mg-ink);
+}
+
+/* Keyboard selection in results keeps a strong outline (Horizon draws it with the border colour) */
+.search-modal .predictive-search-results__card:is([aria-selected='true'].keyboard-focus, :focus-visible, :has(.resource-card:focus-visible)),
+.search-modal .predictive-search-results__card--query:is([aria-selected='true'], :focus-within) .predictive-search-results__pill {
+  outline-color: var(--mg-focus);
+}
+
+/* =====================================================================
+ * 4. Product cards (collection grid, product lists, recommendations)
+ * White card, 12px corners, photo on the band, title 600, tabular price.
+ * ===================================================================== */
+
+product-card .product-grid__card.product-grid__card {
+  --mg-card-pad: var(--mg-space-2);
+  padding-block: max(var(--mg-card-pad), var(--padding-block-start, 0px)) max(var(--mg-space-4), var(--padding-block-end, 0px));
+  padding-inline: max(var(--mg-card-pad), var(--padding-inline-start, 0px)) max(var(--mg-card-pad), var(--padding-inline-end, 0px));
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+  transition:
+    border-color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease),
+    background-color var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
+}
+
+@media screen and (min-width: 750px) {
+  product-card .product-grid__card.product-grid__card {
+    --mg-card-pad: var(--mg-space-3);
+  }
+}
+
+product-card .card-gallery {
+  overflow: hidden;
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-band);
+}
+
+product-card .card-gallery :is(img, .product-media-container) {
+  border-radius: 0;
+}
+
+product-card [ref='productTitleLink'] :is(.text-block, .text-block > *) {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--mg-ink);
+}
+
+@media (hover: hover) {
+  product-card:hover .product-grid__card.product-grid__card {
+    border-color: var(--mg-line-hover);
+    background-color: var(--mg-card-raised);
+    box-shadow: var(--mg-shadow-raised);
+    transform: translateY(-2px);
+  }
+}
+
+product-card:has(.product-card__link:focus-visible) .product-grid__card.product-grid__card {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+/* Ratings: black stars like the MG star component */
+.rating-wrapper {
+  --star-fill-color: var(--mg-star);
+  --star-fill-color-rgb: var(--mg-ink-rgb);
+  font-variant-numeric: tabular-nums;
+}
+
+.rating-wrapper .rating-count,
+.rating-wrapper .rating-text {
+  color: var(--mg-ink-2);
+}
+
+/* ---------- Prices ---------- */
+
+product-price.text-block {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+product-price .price {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  color: var(--mg-ink);
+}
+
+product-price .compare-at-price {
+  font-weight: 400;
+  color: var(--mg-ink-3);
+}
+
+/* Sale price in red ink, whichever order Horizon prints it in */
+product-price .price-item__group.price:has(+ .compare-at-price),
+product-price .compare-at-price + .price-item__group.price {
+  color: var(--mg-red-ink);
+}
+
+.volume-pricing-note,
+product-price .unit-price {
+  color: var(--mg-ink-2);
+}
+
+/* ---------- Badges (Sale, Sold out) ---------- */
+
+.product-badges .product-badges__badge {
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-micro);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---------- Product list section head: matches .mg-head ---------- */
+
+.section-resource-list__header :is(h2, .h2) {
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--mg-ink);
+}
+
+/* "View all" reads as the MG "See all" link, not a second button */
+.section-resource-list__header .button-secondary,
+.section-resource-list__header .button {
+  white-space: nowrap;
+  --button-background-color: transparent;
+  --button-border-width: 0px;
+  --button-color: var(--mg-ink);
+  padding: 0;
+  min-height: var(--mg-tap);
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  box-shadow: none;
+}
+
+.section-resource-list__header .button-secondary:hover,
+.section-resource-list__header .button:hover {
+  --button-background-color: transparent;
+  --button-color: var(--mg-ink);
+  text-decoration-thickness: 2px;
+}
+
+/* Carousel arrows in product lists: MG round buttons */
+.section-resource-list slideshow-arrows .slideshow-control,
+.product-recommendations slideshow-arrows .slideshow-control {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+  box-shadow: none;
+}
+
+.section-resource-list slideshow-arrows .slideshow-control[disabled],
+.product-recommendations slideshow-arrows .slideshow-control[disabled] {
+  background-color: var(--mg-band-2);
+  color: var(--mg-ink-3);
+  opacity: 1;
+}
+
+/* =====================================================================
+ * 5. Collection page: grid gaps, filter chips, filter drawer
+ * ===================================================================== */
+
+.product-grid-container .product-grid {
+  --product-grid-gap: var(--mg-gap);
+}
+
+/* Phones: full-bleed grids get the page gutter back (MG cards have edges) */
+@media screen and (max-width: 749px) {
+  .product-grid-container .main-collection-grid.collection-wrapper--full-width-on-mobile {
+    padding-inline: var(--mg-gutter);
+  }
+}
+
+/* Horizontal filters (750px and up): chip-like summaries, Back Market style */
+@media screen and (min-width: 750px) {
+  .facets--horizontal .facets__summary {
+    box-sizing: border-box;
+    min-height: var(--mg-tap);
+    padding-inline: var(--mg-space-4) var(--mg-space-3);
+    border: 1px solid var(--mg-line-strong);
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-card);
+    color: var(--mg-ink);
+    font-family: var(--mg-font-ui);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    gap: var(--mg-space-2);
+    transition: border-color var(--mg-dur) var(--mg-ease);
+  }
+
+  .facets--horizontal .facets__filters-wrapper:hover .facets__summary,
+  .facets--horizontal .facets__filters-wrapper:has(.facets__panel[open]) .facets__summary {
+    opacity: 1;
+  }
+
+  .facets--horizontal .facets__summary:hover,
+  .facets--horizontal .facets__panel[open] .facets__summary {
+    border-color: var(--mg-ink);
+  }
+
+  .facets--horizontal .facets__panel-content {
+    border: 1px solid var(--mg-line);
+    border-radius: var(--mg-radius-md);
+    background-color: var(--mg-card);
+    box-shadow: var(--mg-shadow-raised);
+  }
+
+  .facets--horizontal .products-count-wrapper {
+    color: var(--mg-ink-2);
+  }
+}
+
+.facets__label,
+.facets__clear-all-link {
+  font-family: var(--mg-font-ui);
+}
+
+.facets .facets__clear-all-link {
+  color: var(--mg-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+/* Phones: the "Filter" toggle is a secondary MG button */
+.facets-toggle .facets-toggle__button {
+  box-sizing: border-box;
+  min-height: var(--mg-tap);
+  padding-inline: var(--mg-space-4);
+  border: 1px solid var(--mg-line-strong);
+  border-radius: var(--mg-radius-sm);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+/* Drawer filters: hairlines between groups, checkbox in action colour */
+.facets--drawer :is(.facets__item, .sorting-filter)::before {
+  border-top-color: var(--mg-line);
+}
+
+.facets .facets__summary {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+/* =====================================================================
+ * 6. Product page: rounded gallery, variant pills, black add to cart
+ * ===================================================================== */
+
+media-gallery .product-media-container {
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-band);
+}
+
+media-gallery .media-gallery__grid {
+  gap: var(--mg-gap);
+}
+
+media-gallery .product-media-container__zoom-button,
+media-gallery slideshow-arrows .slideshow-control {
+  color: var(--mg-ink);
+}
+
+/* Product title and price in the details column */
+.product-details :is(h1, .h1) {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.product-details product-price .price {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.product-details product-price .compare-at-price {
+  font-size: 1rem;
+}
+
+/* Variant pills: 8px chips, strong edge, selected = action fill (colours from the bridge) */
+.variant-picker .variant-option__button-label {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+.variant-picker .variant-option--buttons legend,
+.variant-picker .variant-option--dropdowns > label {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+  color: var(--mg-ink);
+}
+
+.variant-picker .variant-option__select-wrapper {
+  border-radius: var(--mg-radius-sm);
+}
+
+/* Add to cart: always the black primary button, full width in the buy row */
+.buy-buttons-block .add-to-cart-button {
+  --button-color: var(--color-primary-button-text);
+  --button-background-color: var(--color-primary-button-background);
+  --button-border-color: var(--color-primary-button-border);
+  --button-border-width: var(--style-border-width-primary);
+  border-radius: var(--mg-radius-sm);
+  font-size: 1.0625rem;
+}
+
+.buy-buttons-block .add-to-cart-button:hover {
+  --button-color: var(--color-primary-button-hover-text);
+  --button-background-color: var(--color-primary-button-hover-background);
+  --button-border-color: var(--color-primary-button-hover-border);
+}
+
+.buy-buttons-block .quantity-selector {
+  border-radius: var(--mg-radius-sm);
+}
+
+/* Dynamic checkout button (Shop Pay, etc.) keeps the MG corners */
+.buy-buttons-block .shopify-payment-button__button {
+  border-radius: var(--mg-radius-sm);
+  overflow: hidden;
+}
+
+.buy-buttons-block .shopify-payment-button__button--unbranded {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+/* Disclosures / accordions: hairline rows */
+.product-details :is(accordion-custom, .accordion) :is(summary, .details__header) {
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+/* Sticky add-to-cart bar: MG card with a hairline in both schemes */
+.sticky-add-to-cart .sticky-add-to-cart__bar::before {
+  background: linear-gradient(var(--color-background) 0 100%), linear-gradient(var(--mg-line) 0 100%);
+  background-clip: content-box, border-box;
+}
+
+.sticky-add-to-cart .sticky-add-to-cart__price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+ * 7. Drawers (cart, filters, menu) and the cart
+ * ===================================================================== */
+
+.theme-drawer__header .theme-drawer__title {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.theme-drawer__header .theme-drawer__badge {
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+  font-weight: 500;
+}
+
+.cart-items .cart-items__table-row {
+  border-bottom-color: var(--mg-line);
+}
+
+.cart-items .cart-items__media-container {
+  overflow: hidden;
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-band);
+}
+
+.cart-items .cart-items__title {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  color: var(--mg-ink);
+  text-decoration: none;
+}
+
+.cart-items :is(.cart-items__price, .cart-items__price-unit) {
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-items .cart-items__variant {
+  color: var(--mg-ink-2);
+}
+
+.cart-totals .cart-totals__total {
+  font-variant-numeric: tabular-nums;
+}
+
+.cart-totals .cart-totals__total-value,
+.cart-totals .cart-totals__total-label {
+  font-weight: 600;
+}
+
+.cart-actions .cart__checkout-button,
+.cart-drawer__summary .button:not(.button-secondary, .button-unstyled) {
+  border-radius: var(--mg-radius-sm);
+  font-size: 1.0625rem;
+}
+
+.quantity-selector {
+  border-radius: var(--mg-radius-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =====================================================================
+ * 8. Footer: one grey band (light) / band token (dark) with clean columns
+ * Rows: mg-footer-contact (contact), Horizon footer (link columns), mg-footer-contact (bottom).
+ * ===================================================================== */
+
+.page-wrapper > footer {
+  background-color: var(--mg-band);
+  color: var(--mg-ink);
+}
+
+/* A page that ends on a grey band runs into the footer band with a hairline between,
+   instead of a thin white stripe between two grey bands */
+.page-wrapper > main:has(> .shopify-section:last-child > :is(.mg-section--band, .mg-section--surface)) + footer {
+  margin-block-start: calc(var(--mg-section-pad) * -1);
+  border-block-start: 1px solid var(--mg-line);
+}
+
+/* A page that ends on the red call-to-action banner (mg-service-cta, or the car make page's
+   closing panel) already offers WhatsApp, Book and Call right above: the footer's contact row
+   keeps its quote link, address and hours, without repeating the buttons */
+.page-wrapper > main:has(> .shopify-section:last-child :is(.mg-svc-cta, .mg-carmake__cta)) + footer .mg-footer-contact__actions {
+  display: none;
+}
+
+.page-wrapper > main:has(> .shopify-section:last-child :is(.mg-svc-cta, .mg-carmake__cta)) + footer .mg-footer-contact__quote {
+  margin-block-start: 0;
+}
+
+/* Horizon sections inside the band stay transparent (their colour settings are blank) */
+.page-wrapper > footer .section-background {
+  background-color: transparent;
+}
+
+.page-wrapper > footer .footer-content {
+  color: var(--mg-ink);
+}
+
+/* Column headings: Prompt 600, ink, sentence case (Back Market's footer heads) */
+.page-wrapper > footer .footer-content :is(.menu__heading, .text-block.h6, .text-block.h6 > *) {
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-body);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mg-ink);
+}
+
+@media screen and (max-width: 749px) {
+  .page-wrapper > footer .footer-content .menu--accordion .menu__heading {
+    min-height: var(--mg-tap);
+    align-items: center;
+  }
+}
+
+/* Desktop: headings line up with the newsletter heading (no summary padding) */
+@media screen and (min-width: 750px) {
+  .page-wrapper > footer .footer-content .menu__heading {
+    padding-block: 0 var(--mg-space-2);
+  }
+}
+
+.page-wrapper > footer .footer-content .menu__heading__default {
+  font-weight: 600;
+}
+
+/* Links: ink-2, 44px rows on phones, underline on hover */
+.page-wrapper > footer .footer-content .menu__item {
+  font-size: var(--mg-fs-small);
+  line-height: 1.4;
+}
+
+.page-wrapper > footer .footer-content .menu__item a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--mg-ink-2);
+  text-decoration: none;
+  transition: color var(--mg-dur) var(--mg-ease);
+}
+
+@media screen and (max-width: 749px) {
+  .page-wrapper > footer .footer-content .menu__item a {
+    min-height: var(--mg-tap);
+  }
+}
+
+@media (hover: hover) {
+  .page-wrapper > footer .footer-content .menu__item a:hover {
+    color: var(--mg-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+}
+
+.page-wrapper > footer .footer-content .menu__item + .menu__item {
+  margin-block-start: 0;
+}
+
+.page-wrapper > footer .footer-content .text-block.rte,
+.page-wrapper > footer .footer-content .text-block.rte p {
+  font-size: var(--mg-fs-small);
+  line-height: var(--mg-lh-body);
+  color: var(--mg-ink-2);
+}
+
+/* Phones: the link columns become one tight stack of accordion rows; the newsletter
+   group keeps its own space above */
+@media screen and (max-width: 749px) {
+  .page-wrapper > footer .footer-content:has(> .menu--accordion) {
+    row-gap: 0;
+  }
+
+  .page-wrapper > footer .footer-content > :not(.menu--accordion) {
+    margin-block-start: var(--mg-space-6);
+  }
+}
+
+/* Accordion rows on phones: hairlines, chevrons in ink */
+.page-wrapper > footer .footer-content .menu--dividers .menu__details {
+  border-block-end-color: var(--mg-line);
+}
+
+.page-wrapper > footer .footer-content .menu__heading__toggle {
+  color: var(--mg-ink);
+}
+
+/* Email signup: MG field and black button on the band */
+.page-wrapper > footer .email-signup__input {
+  min-height: 48px;
+  background-color: var(--mg-input);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+}
+
+.page-wrapper > footer .email-signup__button:not(.button-unstyled) {
+  min-height: 48px;
+  padding-inline: var(--mg-space-5);
+  border-radius: var(--mg-radius-sm);
+}
+
+.page-wrapper > footer .email-signup__message {
+  color: var(--mg-ink-2);
+}
+
+/* Payment icons: small, calm */
+.page-wrapper > footer .payment-icons__list .icon {
+  width: 38px;
+  height: 24px;
+}
+
+/* Horizon's utilities row (if it is added back): quiet micro text on the band */
+.page-wrapper > footer .footer-utilities .utilities {
+  border-top-color: var(--mg-line);
+  color: var(--mg-ink-2);
+  font-size: var(--mg-fs-micro);
+}
+
+.page-wrapper > footer .footer-utilities .utilities :is(a, button) {
+  color: var(--mg-ink-2);
+}
+
+/* =====================================================================
+ * 9. Password page (templates/password.json): light branded private preview
+ * The password layout has no MG head hooks yet, so it shows the light scheme.
+ * ===================================================================== */
+
+body:has(> .password-main-content) {
+  background-color: var(--mg-page);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+}
+
+/* The section is a centred flex column; the MG block takes the full page width */
+.section-password .layout-panel-flex > div:has(> .mg-password) {
+  align-self: stretch;
+  width: 100%;
+}
+
+.mg-password {
+  display: grid;
+  gap: var(--mg-space-5);
+  padding-block: var(--mg-space-5) var(--mg-space-7);
+}
+
+/* The store's own password message (Online Store > Preferences), if one is set */
+.section-password .password-content {
+  max-width: 60ch;
+  margin-inline: auto;
+  padding-block-end: var(--mg-space-6);
+  font-size: var(--mg-fs-small);
+  color: var(--mg-ink-2);
+}
+
+.mg-password__banner {
+  display: grid;
+  gap: var(--mg-space-5);
+  overflow: hidden;
+}
+
+.mg-password__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mg-space-2);
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mg-password__brand::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: var(--mg-on-red);
+}
+
+.mg-password__copy {
+  display: grid;
+  gap: var(--mg-space-3);
+  align-content: center;
+}
+
+.mg-password__copy .mg-lede {
+  margin: 0;
+}
+
+.mg-password__media {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--mg-radius-md);
+}
+
+.mg-password__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.mg-password__note {
+  margin: 0;
+  font-size: var(--mg-fs-small);
+  line-height: var(--mg-lh-body);
+  color: var(--mg-ink-2);
+  text-align: center;
+}
+
+.mg-password__note a {
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .mg-password__media img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .mg-password {
+    padding-block: var(--mg-space-8);
+  }
+
+  .mg-password__banner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--mg-space-7);
+  }
+
+  .mg-password__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Password dialog (Horizon): page colour, MG field and button */
+.password-dialog {
+  background-color: var(--mg-page);
+  color: var(--mg-ink);
+}
+
+.password-dialog .password-dialog__title {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.password-dialog .email-signup__input-group {
+  gap: var(--mg-space-2);
+}
+
+.password-dialog .field__input {
+  min-height: 48px;
+  border-radius: var(--mg-radius-sm);
+  font-family: var(--mg-font-ui);
+}
+
+.password-dialog .password-dialog__submit-button {
+  min-height: 48px;
+  border-radius: var(--mg-radius-sm);
+}
+
+.password-footer.password-footer {
+  border-top: 1px solid var(--mg-line);
+  background-color: var(--mg-band);
+  color: var(--mg-ink-2);
+  font-size: var(--mg-fs-micro);
+}
+
+.password-footer .password-footer__button {
+  color: var(--mg-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+/* =====================================================================
+ * 10. Reduced motion
+ * ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  product-card .product-grid__card.product-grid__card,
+  #header-component .search-action .header-actions__action,
+  #header-component .menu-list__list-item:not([slot='overflow']) .menu-list__link .menu-list__link-title::after,
+  #header-group .announcement-bar__slide:has(.announcement-bar__link) .announcement-bar__text,
+  .page-wrapper > footer .footer-content .menu__item a,
+  .facets--horizontal .facets__summary {
+    transition: none;
+  }
+
+  product-card:hover .product-grid__card.product-grid__card,
+  :is(.buy-buttons-block .add-to-cart-button, .cart__checkout-button, .email-signup__button, .password-dialog__submit-button, .facets__see-results):active {
+    transform: none;
+  }
+}

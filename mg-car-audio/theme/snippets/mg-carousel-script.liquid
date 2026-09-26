@@ -1,0 +1,13 @@
+{%- doc -%}
+  Loads assets/mg-carousel.js (the <mg-carousel> element) for a section that renders a carousel.
+  Render it once inside each such section. It is a module script, so the browser fetches and runs
+  it only once per page however many sections render this snippet.
+
+  @example
+  {% render 'mg-carousel-script' %}
+{%- enddoc -%}
+<script
+  src="{{ 'mg-carousel.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>

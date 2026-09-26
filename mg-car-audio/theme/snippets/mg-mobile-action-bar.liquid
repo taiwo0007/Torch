@@ -1,0 +1,189 @@
+{%- doc -%}
+  Sticky action bar for phones (749px and narrower): Call, WhatsApp and Book (primary).
+  Rendered once per page from layout/theme.liquid, never on the password page or in print.
+
+  - Call uses "Phone (international, digits only)"; hidden when that setting is blank.
+  - WhatsApp follows "Show WhatsApp buttons" and the WhatsApp number and pre-filled message
+    (Theme settings > MG Car Audio: business details). On product pages the product title is
+    added to the message.
+  - Book links to /pages/book-a-fitting.
+  - Adds bottom padding to <body> so the bar never covers the end of the page, and slides away
+    while a Horizon drawer or dialog is open (html[scroll-lock], the menu drawer), while the
+    sticky add-to-cart bar is showing, and while a form field has focus (on-screen keyboard).
+  - Tablets and desktops get the floating WhatsApp button instead (snippets/mg-whatsapp-button).
+
+  @param {object} [product] - The product object, available globally on product pages.
+
+  @example
+  {% render 'mg-mobile-action-bar' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign show_bar = true
+  if template.name == 'password'
+    assign show_bar = false
+  endif
+
+  if show_bar
+    assign phone = settings.mg_phone_e164 | remove: '+' | remove: ' ' | remove: '-'
+    assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+
+    assign show_whatsapp = false
+    if settings.mg_whatsapp_enabled and wa_number != blank
+      assign show_whatsapp = true
+      assign business_name = settings.mg_business_name | default: shop.name
+      assign fallback_message = 'Hi ' | append: business_name | append: ','
+      assign wa_message = settings.mg_whatsapp_message | strip | default: fallback_message
+      assign wa_text = wa_message | url_encode
+
+      if request.page_type == 'product' and product.title != blank
+        assign product_line = "I'm interested in: " | append: product.title | url_encode
+        assign wa_text = wa_text | append: '%0A' | append: product_line
+      endif
+    endif
+
+    assign book_url = routes.root_url | append: '/pages/book-a-fitting' | replace: '//', '/'
+  endif
+-%}
+
+{%- if show_bar -%}
+  <nav
+    class="mg-action-bar"
+    aria-label="Call, WhatsApp or book a fitting"
+  >
+    <ul
+      class="mg-action-bar__list"
+      role="list"
+    >
+      {%- if phone != blank -%}
+        <li class="mg-action-bar__item">
+          <a
+            class="mg-btn mg-btn--secondary mg-action-bar__btn"
+            href="tel:+{{ phone }}"
+          >
+            {%- render 'mg-icon', icon: 'phone' -%}
+            <span>Call</span>
+            {%- if settings.mg_phone_display != blank -%}
+              <span class="mg-visually-hidden">&nbsp;{{ settings.mg_phone_display | escape }}</span>
+            {%- endif -%}
+          </a>
+        </li>
+      {%- endif -%}
+      {%- if show_whatsapp -%}
+        <li class="mg-action-bar__item">
+          <a
+            class="mg-btn mg-btn--whatsapp mg-action-bar__btn"
+            href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp' -%}
+            <span>WhatsApp</span>
+            <span class="mg-visually-hidden">(opens in a new tab)</span>
+          </a>
+        </li>
+      {%- endif -%}
+      <li class="mg-action-bar__item mg-action-bar__item--primary">
+        <a
+          class="mg-btn mg-btn--primary mg-action-bar__btn"
+          href="{{ book_url }}"
+        >
+          {%- render 'mg-icon', icon: 'calendar' -%}
+          <span>Book<span class="mg-visually-hidden"> a fitting</span></span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+{%- endif -%}
+
+{% stylesheet %}
+  .mg-action-bar {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .mg-action-bar {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+      z-index: var(--mg-z-float, 7);
+      display: block;
+      padding: 8px max(var(--mg-gutter, 16px), env(safe-area-inset-right, 0px))
+        calc(8px + env(safe-area-inset-bottom, 0px)) max(var(--mg-gutter, 16px), env(safe-area-inset-left, 0px));
+      border-top: 1px solid var(--mg-line);
+      background-color: var(--mg-page);
+    }
+
+    .mg-action-bar__list {
+      display: flex;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mg-action-bar__item {
+      display: flex;
+      margin: 0;
+    }
+
+    .mg-action-bar__item--primary {
+      flex: 1 1 auto;
+    }
+
+    .mg-action-bar__btn {
+      --mg-btn-px: 12px;
+      --mg-btn-fs: 0.9375rem;
+      gap: 6px;
+    }
+
+    .mg-action-bar__item--primary .mg-action-bar__btn {
+      width: 100%;
+    }
+
+    /* Page content ends above the bar */
+    body:has(> .mg-action-bar) {
+      padding-bottom: calc(var(--mg-action-bar-h, 65px) + env(safe-area-inset-bottom, 0px));
+      /* The strip under the footer (seen while the bar is slid away) takes the footer band colour */
+      background-image: linear-gradient(var(--mg-band), var(--mg-band));
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: 100% calc(var(--mg-action-bar-h, 65px) + env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Out of the way while a drawer, dialog, the sticky add-to-cart bar or the keyboard is up */
+    html[scroll-lock] .mg-action-bar,
+    body:has(header-drawer details.menu-open) .mg-action-bar,
+    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-action-bar,
+    body:has(:is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), textarea, select):focus)
+      .mg-action-bar {
+      visibility: hidden;
+      transform: translateY(100%);
+    }
+  }
+
+  /* Slide in and out; hiding waits for the slide before visibility flips */
+  @media screen and (max-width: 749px) and (prefers-reduced-motion: no-preference) {
+    .mg-action-bar {
+      transition:
+        transform 0.25s var(--mg-ease),
+        visibility 0s linear 0s;
+    }
+
+    html[scroll-lock] .mg-action-bar,
+    body:has(header-drawer details.menu-open) .mg-action-bar,
+    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-action-bar,
+    body:has(:is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), textarea, select):focus)
+      .mg-action-bar {
+      transition:
+        transform 0.25s var(--mg-ease),
+        visibility 0s linear 0.25s;
+    }
+  }
+
+  @media print {
+    .mg-action-bar {
+      display: none !important;
+    }
+  }
+{% endstylesheet %}

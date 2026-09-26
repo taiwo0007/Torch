@@ -1,332 +1,1744 @@
 /*
- * MG Car Audio design tokens and shared utilities.
- * Loaded after base.css (see snippets/stylesheets.liquid).
- * Section-specific styles live in each mg-* section's {% stylesheet %} tag.
+ * MG Car Audio design system v3: tokens, Horizon bridge and shared components.
+ * Loaded right after base.css (snippets/stylesheets.liquid). Documented in docs/DESIGN.md §5.
+ *
+ * Rules
+ * - Colours come from --mg-* tokens only. Light values live on :root, dark values on
+ *   html[data-mg-scheme='dark'] (set before first paint by snippets/mg-theme-mode.liquid).
+ * - One source of truth per component. Sections compose these classes and keep their own
+ *   {% stylesheet %} for layout only. Sections never add vertical padding or margin to their
+ *   root: .mg-section and its modifiers own the vertical rhythm.
+ * - Horizon's own variables (fonts, page grid, and in dark mode every colour variable) are
+ *   remapped here so native Horizon parts follow the same tokens. Visual polish of Horizon
+ *   components lives in assets/mg-horizon.css.
  */
+
+/* =====================================================================
+ * 1. Tokens (light)
+ * ===================================================================== */
 
 :root {
-  /* Surfaces: near-black graphite stack */
-  --mg-bg: #0b0d10;
-  --mg-surface: #15191f;
-  --mg-surface-2: #1c2129;
-  --mg-border: #2a3039;
-  --mg-border-strong: #3a424e;
+  /* Surfaces */
+  --mg-page: #ffffff;
+  --mg-page-rgb: 255 255 255;
+  --mg-band: #f4f5f7;
+  --mg-band-2: #eceef1;
+  --mg-card: #ffffff;
+  --mg-card-raised: #ffffff;
+  --mg-input: #ffffff;
+  --mg-warm: #f3efea;
 
-  /* Text */
-  --mg-text: #f2f4f7;
-  --mg-text-muted: #aab3c0;
-  --mg-text-subtle: #8a94a3; /* 5.27:1 on surface-2, 6.34:1 on bg */
+  /* Lines */
+  --mg-line: #e3e6ea;
+  --mg-line-rgb: 227 230 234;
+  --mg-line-strong: #c4c9d0;
+  --mg-line-hover: #e3e6ea;
+  --mg-line-input: #828a96; /* 3.4:1 on white, 3.1:1 on band (WCAG 1.4.11) */
 
-  /* Accent: ignition red. Only for primary actions, prices and small highlights. */
-  --mg-accent: #e4002b;
-  --mg-accent-hover: #ff1f47;
-  --mg-accent-soft: rgb(228 0 43 / 0.14);
-  /* Red for small text (eyebrows, labels): 5.59 / 5.07 / 4.64:1 on bg / surface / surface-2 */
-  --mg-accent-text: #ff3d4f;
-  /* Text on a red fill (4.85:1), and the deeper red used behind it on hover (6.08:1) */
-  --mg-on-accent: #fff;
-  --mg-accent-hover-bg: #c70026;
+  /* Ink */
+  --mg-ink: #0f1115;
+  --mg-ink-rgb: 15 17 21;
+  --mg-ink-2: #4b5360; /* 7.8:1 on white */
+  --mg-ink-3: #646c79; /* 5.3:1 on white, 4.9:1 on band, 4.6:1 on warm */
 
-  /* Secondary signal colours */
+  /* MG red: big surfaces, small labels, active accents. Never a button fill. */
+  --mg-red: #df3131;
+  --mg-red-rgb: 223 49 49;
+  --mg-red-deep: #bf2727;
+  --mg-red-ink: #b51f1f; /* red text on light surfaces, 6.6:1 */
+  --mg-red-tint: #f6f1ef; /* a red-warmed neutral, not pink (#fceeec read pink on screen) */
+  --mg-on-red: #ffffff; /* 4.5:1 on --mg-red */
+  --mg-on-red-line: rgb(255 255 255 / 0.72);
+  --mg-on-red-hover: var(--mg-red-deep); /* white text 5.9:1 (a white wash was 3.9:1) */
+
+  /* Actions: black in light, inverted to a light button in dark */
+  --mg-action: #0f1115;
+  --mg-action-hover: #2b3039;
+  --mg-on-action: #ffffff;
+  --mg-on-action-rgb: 255 255 255;
+
+  /* Fixed colours that do not change with the scheme */
+  --mg-white: #ffffff;
+  --mg-black: #0f1115;
+  --mg-black-hover: #23272e;
+
+  /* Signals */
   --mg-whatsapp: #25d366;
   --mg-whatsapp-hover: #3be07a;
-  --mg-on-whatsapp: #06301a;
-  --mg-star: #fbbc04;
-  --mg-success: #2ecc71;
+  --mg-on-whatsapp: #06301a; /* 7.3:1 on --mg-whatsapp */
+  --mg-success: #1e7b34;
+  --mg-error: var(--mg-red-ink);
+  --mg-star: var(--mg-ink);
+  --mg-star-empty: var(--mg-line-strong);
+  --mg-focus: var(--mg-ink);
+  --mg-selection: rgb(223 49 49 / 0.2);
+  --mg-scrim: linear-gradient(to top, rgb(15 17 21 / 0.78), rgb(15 17 21 / 0));
 
-  /* Shape and depth */
-  --mg-radius-sm: 6px;
-  --mg-radius: 10px;
+  /* Number plate (a real plate: white with black text in both schemes) */
+  --mg-plate: #ffffff;
+  --mg-plate-ink: #0f1115;
+  --mg-plate-edge: #0f1115;
+  --mg-plate-blue: #1d4bb0;
+  --mg-plate-star: #ffcc00;
+  --mg-plate-placeholder: #646c79;
+
+  /* Masks (alpha only, not visible colours) */
+  --mg-mask: #000;
+  --mg-eu-stars: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.1L12.4 3.2L13.6 3.3L12.7 4L13 5.2L12 4.5L11 5.2L11.3 4L10.4 3.3L11.6 3.2ZM16.1 3.2L16.5 4.3L17.7 4.4L16.8 5.1L17.1 6.3L16.1 5.6L15.1 6.3L15.4 5.1L14.5 4.4L15.7 4.3ZM19.1 6.2L19.5 7.3L20.7 7.4L19.8 8.1L20.1 9.3L19.1 8.6L18.1 9.3L18.4 8.1L17.5 7.4L18.7 7.3ZM20.2 10.3L20.6 11.4L21.8 11.5L20.9 12.2L21.2 13.4L20.2 12.7L19.2 13.4L19.5 12.2L18.6 11.5L19.8 11.4ZM19.1 14.4L19.5 15.5L20.7 15.6L19.8 16.3L20.1 17.5L19.1 16.8L18.1 17.5L18.4 16.3L17.5 15.6L18.7 15.5ZM16.1 17.4L16.5 18.5L17.7 18.6L16.8 19.3L17.1 20.5L16.1 19.8L15.1 20.5L15.4 19.3L14.5 18.6L15.7 18.5ZM12 18.5L12.4 19.6L13.6 19.7L12.7 20.4L13 21.6L12 20.9L11 21.6L11.3 20.4L10.4 19.7L11.6 19.6ZM7.9 17.4L8.3 18.5L9.5 18.6L8.6 19.3L8.9 20.5L7.9 19.8L6.9 20.5L7.2 19.3L6.3 18.6L7.5 18.5ZM4.9 14.4L5.3 15.5L6.5 15.6L5.6 16.3L5.9 17.5L4.9 16.8L3.9 17.5L4.2 16.3L3.3 15.6L4.5 15.5ZM3.8 10.3L4.2 11.4L5.4 11.5L4.5 12.2L4.8 13.4L3.8 12.7L2.8 13.4L3.1 12.2L2.2 11.5L3.4 11.4ZM4.9 6.2L5.3 7.3L6.5 7.4L5.6 8.1L5.9 9.3L4.9 8.6L3.9 9.3L4.2 8.1L3.3 7.4L4.5 7.3ZM7.9 3.2L8.3 4.3L9.5 4.4L8.6 5.1L8.9 6.3L7.9 5.6L6.9 6.3L7.2 5.1L6.3 4.4L7.5 4.3Z'/%3E%3C/svg%3E");
+  --mg-star-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1L12.4 7.3L19 7.6L13.8 11.7L15.6 18.2L10 14.5L4.4 18.2L6.2 11.7L1 7.6L7.6 7.3Z'/%3E%3C/svg%3E");
+
+  /* Elevation (light only; dark mode uses lines and a lighter surface) */
+  --mg-shadow: 0 1px 2px rgb(15 17 21 / 0.06), 0 8px 24px rgb(15 17 21 / 0.06);
+  --mg-shadow-raised: 0 2px 4px rgb(15 17 21 / 0.06), 0 12px 32px rgb(15 17 21 / 0.1);
+  --mg-shadow-float: 0 4px 12px rgb(15 17 21 / 0.14), 0 12px 32px rgb(15 17 21 / 0.12);
+
+  /* Type */
+  --mg-font-ui: 'Prompt', system-ui, sans-serif;
+  --mg-font-display: 'Source Serif 4', Georgia, serif;
+  --mg-fs-hero: clamp(2.25rem, 6vw, 3.75rem);
+  --mg-fs-statement: clamp(1.875rem, 4.5vw, 3rem);
+  --mg-fs-banner: clamp(2rem, 5vw, 3.25rem);
+  --mg-fs-h2: clamp(1.375rem, 2.6vw, 1.75rem);
+  --mg-fs-h3: 1.25rem;
+  --mg-fs-title: 1rem;
+  --mg-fs-body: 1rem;
+  --mg-fs-lede: 1.0625rem;
+  --mg-fs-small: 0.875rem;
+  --mg-fs-micro: 0.8125rem;
+  --mg-lh-body: 1.55;
+
+  /* Spacing scale (4px base): use only these */
+  --mg-space-1: 4px;
+  --mg-space-2: 8px;
+  --mg-space-3: 12px;
+  --mg-space-4: 16px;
+  --mg-space-5: 24px;
+  --mg-space-6: 32px;
+  --mg-space-7: 48px;
+  --mg-space-8: 64px;
+  --mg-space-9: 96px;
+
+  /* Layout (mobile values; tablet and desktop below) */
+  --mg-container: 1120px;
+  --mg-container-narrow: 720px;
+  --mg-gutter: 16px;
+  --mg-section-gap: 48px; /* space between two plain sections */
+  --mg-section-pad: calc(var(--mg-section-gap) / 2);
+  --mg-band-pad-top: 48px;
+  --mg-band-pad-bottom: 56px;
+  --mg-head-gap: 16px;
+  --mg-gap: 8px;
+  --mg-panel-pad: 24px;
+
+  /* Radius: 4 badges/tags, 8 buttons/inputs/chips, 12 cards/tiles, 16 panels/banners, pill */
+  --mg-radius-xs: 4px;
+  --mg-radius-sm: 8px;
+  --mg-radius-md: 12px;
   --mg-radius-lg: 16px;
-  --mg-shadow: 0 12px 32px rgb(0 0 0 / 0.45);
-  --mg-glow: 0 0 0 1px rgb(228 0 43 / 0.35), 0 10px 30px rgb(228 0 43 / 0.18);
+  --mg-radius-pill: 999px;
 
-  /* Layout */
-  --mg-page-max: 1320px;
-  --mg-gutter: clamp(16px, 4vw, 40px);
-  --mg-section-space: clamp(56px, 8vw, 112px);
+  /* Layers: below Horizon's sticky header (8), overlays (16), menu drawer (18) and modals */
+  --mg-z-float: 7;
 
-  /* Type scale (fluid) */
-  --mg-eyebrow-size: 0.8125rem;
-  --mg-h1: clamp(2.25rem, 5.5vw, 4.25rem);
-  --mg-h2: clamp(1.75rem, 3.6vw, 2.75rem);
-  --mg-h3: clamp(1.25rem, 2vw, 1.5rem);
-  /* Page heroes (service, car make, collection, quote): one H1 scale below the home hero */
-  --mg-h1-page: clamp(2.125rem, 4.6vw, 3.75rem);
-
+  /* Motion and sizes */
   --mg-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --mg-dur: 180ms;
+  --mg-tap: 44px;
+  --mg-action-bar-h: 65px; /* 48px buttons + 8px padding each side + 1px hairline */
+
+  /* Secondary button (contexts such as .mg-surface-red re-point these) */
+  --mg-btn-2-bg: transparent;
+  --mg-btn-2-ink: var(--mg-ink);
+  --mg-btn-2-line: var(--mg-line);
+  --mg-btn-2-hover-bg: rgb(var(--mg-ink-rgb) / 0.05);
+  --mg-btn-2-hover-line: var(--mg-ink);
+
+  /* Backward-compatible aliases (Phase 1 names). New code uses the names above. */
+  --mg-bg: var(--mg-page);
+  --mg-surface: var(--mg-band);
+  --mg-surface-2: var(--mg-band-2);
+  --mg-border: var(--mg-line);
+  --mg-border-strong: var(--mg-line-strong);
+  --mg-text: var(--mg-ink);
+  --mg-text-muted: var(--mg-ink-2);
+  --mg-text-subtle: var(--mg-ink-3);
+  --mg-accent: var(--mg-red);
+  --mg-accent-hover: var(--mg-red-ink);
+  --mg-accent-soft: var(--mg-red-tint);
+  --mg-accent-text: var(--mg-red-ink);
+  --mg-on-accent: var(--mg-on-red);
+  --mg-accent-hover-bg: var(--mg-red-deep);
+  --mg-radius: var(--mg-radius-md);
+  --mg-glow: 0 0 0 1px var(--mg-red);
+  --mg-page-max: calc(var(--mg-container) + var(--mg-gutter) * 2);
+  --mg-section-space: var(--mg-section-gap);
+  --mg-eyebrow-size: var(--mg-fs-small);
+  --mg-h1: var(--mg-fs-hero);
+  --mg-h2: var(--mg-fs-h2);
+  --mg-h3: var(--mg-fs-h3);
+  --mg-h1-page: var(--mg-fs-banner);
 }
 
-/*
- * Share Horizon's page grid: body carries .page-width-<setting>, which defines
- * --page-width and --page-margin (16px on phones, 40px from 750px, plus safe areas),
- * so MG sections line up with the header, product grids and footer.
- * Horizon's h2 preset follows the MG heading scale.
- */
-body {
-  --mg-page-max: var(--page-width, 1320px);
-  --mg-gutter: var(--page-margin, clamp(16px, 4vw, 40px));
-  --font-h2--size: var(--mg-h2);
+@media screen and (min-width: 750px) {
+  :root {
+    --mg-gutter: 24px;
+    --mg-gap: 12px;
+    --mg-panel-pad: 32px;
+  }
 }
 
-/* ---------- Layout helpers ---------- */
+@media screen and (min-width: 990px) {
+  :root {
+    --mg-gutter: 32px;
+    --mg-section-gap: 72px;
+    --mg-band-pad-top: 72px;
+    --mg-band-pad-bottom: 80px;
+    --mg-head-gap: 20px;
+    --mg-gap: 16px;
+    --mg-panel-pad: 48px;
+    --mg-fs-lede: 1.125rem;
+    /* Inner-page h1s share the panel with a photo from here, so they follow a narrower column:
+       46px at 1440 on every inner banner (service, car make, collection, quote, contact) */
+    --mg-fs-banner: clamp(2rem, 3.2vw, 3.25rem);
+  }
+}
 
+/* =====================================================================
+ * 2. Tokens (dark): same layout, swapped values
+ * ===================================================================== */
+
+html[data-mg-scheme='dark'] {
+  --mg-page: #0e1319;
+  --mg-page-rgb: 14 19 25;
+  --mg-band: #151b24;
+  --mg-band-2: #1f2733;
+  --mg-card: #1a212c;
+  --mg-card-raised: #202834;
+  --mg-input: #0e1319;
+  /* One slate family in dark: warm and red tints read brown and plum on blue-slate */
+  --mg-warm: var(--mg-band);
+
+  --mg-line: #2a3442;
+  --mg-line-rgb: 42 52 66;
+  --mg-line-strong: #3a4556;
+  --mg-line-hover: #3a4556;
+  --mg-line-input: #66728a; /* 3.9:1 on page, 3.3:1 on card */
+
+  --mg-ink: #eef2f6;
+  --mg-ink-rgb: 238 242 246;
+  --mg-ink-2: #b3bdca;
+  --mg-ink-3: #8e99a8;
+
+  --mg-red-ink: #ff7a74;
+  --mg-red-tint: #1f2733; /* neutral slate step (tiles, step circles, red badges); red stays in the ink */
+
+  --mg-action: #f4f5f7;
+  --mg-action-hover: #ffffff;
+  --mg-on-action: #0f1115;
+  --mg-on-action-rgb: 15 17 21;
+
+  --mg-success: #5fd07a;
+  --mg-selection: rgb(223 49 49 / 0.38);
+  --mg-scrim: linear-gradient(to top, rgb(9 12 16 / 0.82), rgb(9 12 16 / 0));
+
+  --mg-shadow: none;
+  --mg-shadow-raised: none;
+  --mg-shadow-float: 0 0 0 1px rgb(255 255 255 / 0.08);
+
+  --mg-btn-2-line: var(--mg-line-strong);
+}
+
+/* =====================================================================
+ * 3. Horizon bridge
+ * Specificity (html:root, html[data-mg-scheme]) beats the :root rules that
+ * theme-styles-variables and color-palette print after this file.
+ * ===================================================================== */
+
+/* Both schemes: fonts, heading sizes, page grid, focus, form borders */
+html:root {
+  --font-body--family: var(--mg-font-ui);
+  --font-body--style: normal;
+  --font-body--weight: 400;
+  --font-subheading--family: var(--mg-font-ui);
+  --font-subheading--style: normal;
+  --font-subheading--weight: 500;
+  --font-heading--family: var(--mg-font-ui);
+  --font-heading--style: normal;
+  --font-heading--weight: 600;
+  --font-accent--family: var(--mg-font-ui);
+  --font-accent--style: normal;
+  --font-accent--weight: 600;
+  --font-h1--size: clamp(1.875rem, 4vw, 2.5rem);
+  --font-h2--size: var(--mg-fs-h2);
+  --font-h3--size: var(--mg-fs-h3);
+
+  /* Horizon's "narrow" page width = the MG container, so header, grids and footer line up */
+  --narrow-page-width: var(--mg-container);
+
+  --focus-outline-width: 2px;
+  --focus-outline-offset: 2px;
+  --color-input-border: var(--mg-line-input);
+  --color-error: var(--mg-error);
+  --color-success: var(--mg-success);
+}
+
+body[class*='page-width-'],
+.page-width-content {
+  --page-margin: max(var(--mg-gutter), var(--safe-area-inset-left, 0px), var(--safe-area-inset-right, 0px));
+}
+
+/* Dark scheme: every Horizon colour variable from the MG tokens */
+html[data-mg-scheme='dark'] {
+  --color-background: var(--mg-page);
+  --color-background-rgb: var(--mg-page-rgb);
+  --color-foreground: var(--mg-ink);
+  --color-foreground-rgb: var(--mg-ink-rgb);
+  --color-border: var(--mg-ink);
+  --color-border-rgb: var(--mg-ink-rgb);
+
+  /* brightness-opacities.liquid values for a dark background */
+  --opacity-5-15: 0.15;
+  --opacity-10-25: 0.25;
+  --opacity-35-55: 0.55;
+  --opacity-40-60: 0.6;
+  --opacity-30-60: 0.6;
+
+  --color-primary-button-text: var(--mg-on-action);
+  --color-primary-button-background: var(--mg-action);
+  --color-primary-button-border: var(--mg-action);
+  --color-primary-button-focus-outline: var(--mg-action);
+  --color-primary-button-hover-text: var(--mg-on-action);
+  --color-primary-button-hover-background: var(--mg-action-hover);
+  --color-primary-button-hover-border: var(--mg-action-hover);
+
+  --color-secondary-button-text: var(--mg-ink);
+  --color-secondary-button-background: transparent;
+  --color-secondary-button-border: var(--mg-line-strong);
+  --color-secondary-button-hover-text: var(--mg-ink);
+  --color-secondary-button-hover-background: var(--mg-band);
+  --color-secondary-button-hover-border: var(--mg-ink-3);
+
+  --color-input-background: var(--mg-input);
+  --color-input-text: var(--mg-ink);
+  --color-input-text-rgb: var(--mg-ink-rgb);
+
+  --color-variant-background: var(--mg-card);
+  --color-variant-border: var(--mg-line-strong);
+  --color-variant-text: var(--mg-ink);
+  --color-variant-text-rgb: var(--mg-ink-rgb);
+  --color-variant-hover-background: var(--mg-band-2);
+  --color-variant-hover-text: var(--mg-ink);
+  --color-variant-hover-border: var(--mg-ink-3);
+
+  --color-selected-variant-background: var(--mg-action);
+  --color-selected-variant-border: var(--mg-action);
+  --color-selected-variant-text: var(--mg-on-action);
+  --color-selected-variant-text-rgb: var(--mg-on-action-rgb);
+  --color-selected-variant-hover-background: var(--mg-action-hover);
+  --color-selected-variant-hover-text: var(--mg-on-action);
+  --color-selected-variant-hover-border: var(--mg-action-hover);
+
+  --shadow-drawer: none;
+  --shadow-popover: none;
+  --style-border-popover: 1px solid var(--mg-line);
+  --style-border-drawer: 1px solid var(--mg-line);
+}
+
+/* Surfaces Horizon colours from settings via contrast-override (drawer, popover, badges, quick add) */
+html[data-mg-scheme='dark'] :is(.color-custom-drawer, .color-custom-drawer .text-block, .color-custom-popover, .color-custom-popover .text-block) {
+  --color-background: var(--mg-page);
+  --color-background-rgb: var(--mg-page-rgb);
+  --color: var(--mg-ink);
+  --color-rgb: var(--mg-ink-rgb);
+  --color-foreground: var(--mg-ink);
+  --color-foreground-rgb: var(--mg-ink-rgb);
+  --color-foreground-muted: rgb(var(--mg-ink-rgb) / var(--opacity-muted-text));
+  --color-foreground-subdued: rgb(var(--mg-ink-rgb) / var(--opacity-subdued-text));
+  --color-border: var(--mg-line);
+  --color-border-rgb: var(--mg-line-rgb);
+  /* contrast-override prints these from the light text colour; re-point them at the dark ink */
+  --checkbox-border: 1px solid rgb(var(--mg-ink-rgb) / var(--opacity-35-55));
+  --input-disabled-background-color: rgb(var(--mg-ink-rgb) / var(--opacity-10));
+  --input-disabled-border-color: rgb(var(--mg-ink-rgb) / var(--opacity-5));
+  --input-disabled-text-color: rgb(var(--mg-ink-rgb) / var(--opacity-50));
+  --opacity-5-15: 0.15;
+  --opacity-10-25: 0.25;
+  --opacity-35-55: 0.55;
+  --opacity-40-60: 0.6;
+  --opacity-30-60: 0.6;
+}
+
+html[data-mg-scheme='dark'] :is(.color-custom-popover, .color-custom-popover .text-block) {
+  --color-background: var(--mg-card);
+}
+
+html[data-mg-scheme='dark'] .color-custom-badge-sold-out {
+  --color-background: var(--mg-band-2);
+  --color: var(--mg-ink-2);
+  --color-foreground: var(--mg-ink-2);
+}
+
+html[data-mg-scheme='dark'] .custom-color-quick-add {
+  --quick-add-background: var(--mg-card);
+  --quick-add-foreground: var(--mg-ink);
+}
+
+/* Header rows and cart bubble print settings colours inline; dark mode must win over them */
+html[data-mg-scheme='dark'] #header-component {
+  --color-background-top-row: var(--mg-page) !important;
+  --color-background-bottom-row: var(--mg-page) !important;
+}
+
+html[data-mg-scheme='dark'] .cart-bubble {
+  --cart-bubble-background-fallback: var(--mg-ink) !important;
+  --cart-bubble-text-fallback: var(--mg-page) !important;
+}
+
+/* =====================================================================
+ * 4. Base
+ * ===================================================================== */
+
+html {
+  color-scheme: light;
+  background-color: var(--mg-page);
+  font-synthesis-weight: none;
+}
+
+html[data-mg-scheme='dark'] {
+  color-scheme: dark;
+}
+
+html body {
+  background-color: var(--mg-page);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:where(b, strong) {
+  font-weight: 600;
+}
+
+::selection {
+  background: var(--mg-selection);
+  color: var(--mg-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+input[type='checkbox'],
+input[type='radio'],
+progress {
+  accent-color: var(--mg-action);
+}
+
+/* Set for two frames while the scheme flips, so colours change at once */
+.mg-theme-switching,
+.mg-theme-switching *,
+.mg-theme-switching *::before,
+.mg-theme-switching *::after {
+  transition: none !important;
+}
+
+/* =====================================================================
+ * 5. Layout
+ * ===================================================================== */
+
+/* Every MG section root. Owns ALL vertical rhythm: 48px between sections on phones, 72px on desktop. */
 .mg-section {
-  padding-block: var(--mg-section-space);
-  color: var(--mg-text);
+  position: relative;
+  padding-block: var(--mg-section-pad);
+  color: var(--mg-ink);
 }
 
-.mg-section--tight {
-  padding-block: calc(var(--mg-section-space) * 0.55);
+/* Full-bleed grey band, with its own inner padding and the full gap outside it */
+.mg-section--band,
+.mg-section--warm {
+  margin-block: var(--mg-section-pad);
+  padding-block: var(--mg-band-pad-top) var(--mg-band-pad-bottom);
+  background-color: var(--mg-band);
 }
 
-.mg-section--surface {
-  background: var(--mg-surface);
+.mg-section--warm {
+  background-color: var(--mg-warm);
+}
+
+/* No outer spacing (a section that sits flush against the previous one) */
+.mg-section--flush {
+  margin-block: 0;
+  padding-block: 0;
 }
 
 .mg-container {
+  box-sizing: border-box;
   width: 100%;
-  max-width: var(--mg-page-max);
+  max-width: calc(var(--mg-container) + var(--mg-gutter) * 2);
   margin-inline: auto;
-  padding-inline: var(--mg-gutter);
+  padding-inline: max(var(--mg-gutter), env(safe-area-inset-left, 0px)) max(var(--mg-gutter), env(safe-area-inset-right, 0px));
 }
 
-/* ---------- Section headings ---------- */
+.mg-container--narrow {
+  max-width: calc(var(--mg-container-narrow) + var(--mg-gutter) * 2);
+}
 
-.mg-eyebrow {
-  display: inline-flex;
+/* Rounded panel inside the container (Back Market's best-deals / guarantee panels) */
+.mg-panel {
+  position: relative;
+  padding: var(--mg-panel-pad);
+  border-radius: var(--mg-radius-lg);
+  background-color: var(--mg-band);
+  color: var(--mg-ink);
+}
+
+.mg-panel--warm {
+  background-color: var(--mg-warm);
+}
+
+.mg-panel--tint {
+  background-color: var(--mg-red-tint);
+}
+
+.mg-panel--card {
+  border: 1px solid var(--mg-line);
+  background-color: var(--mg-card);
+}
+
+.mg-panel--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* MG red surface (hero banner, red page banners). Same red in both schemes. */
+.mg-surface-red {
+  --mg-focus: var(--mg-white);
+  --mg-action: var(--mg-black);
+  --mg-action-hover: var(--mg-black-hover);
+  --mg-on-action: var(--mg-white);
+  --mg-btn-2-ink: var(--mg-on-red);
+  --mg-btn-2-line: var(--mg-on-red-line);
+  --mg-btn-2-hover-bg: var(--mg-on-red-hover);
+  --mg-btn-2-hover-line: var(--mg-on-red);
+  background-color: var(--mg-red);
+  color: var(--mg-on-red);
+}
+
+.mg-grid {
+  display: grid;
+  gap: var(--mg-gap);
+}
+
+/* =====================================================================
+ * 6. Type
+ * ===================================================================== */
+
+/* Section head: h2 with an optional link or carousel buttons on the right */
+.mg-head {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
-  margin: 0 0 0.75rem;
-  font-family: var(--font-subheading--family);
-  font-weight: 600;
-  font-size: var(--mg-eyebrow-size);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mg-accent-text);
+  justify-content: space-between;
+  gap: var(--mg-space-2) var(--mg-space-5);
+  margin-block-end: var(--mg-head-gap);
 }
 
-.mg-eyebrow::before {
-  content: '';
-  width: 24px;
-  height: 2px;
-  background: currentColor;
+.mg-head__text {
+  display: grid;
+  flex: 1 1 0;
+  gap: var(--mg-space-1);
+  min-width: 0;
+  max-width: 60ch;
 }
 
+.mg-head__title,
 .mg-heading {
   margin: 0;
-  font-family: var(--font-heading--family);
-  font-weight: var(--font-heading--weight);
-  font-size: var(--mg-h2);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: var(--mg-text);
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: none;
   text-wrap: balance;
+  color: var(--mg-ink);
+}
+
+.mg-head__sub {
+  margin: 0;
+  font-size: var(--mg-fs-body);
+  line-height: 1.5;
+  color: var(--mg-ink-2);
+  text-wrap: pretty;
+}
+
+.mg-head__link {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: var(--mg-tap);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.mg-head__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--mg-space-3);
+}
+
+.mg-head--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mg-head--center .mg-head__text {
+  flex: none;
+  justify-items: center;
+  margin-inline: auto;
+}
+
+/* Serif statement ("Ireland's CarPlay and car audio specialist.") */
+.mg-display {
+  margin: 0;
+  padding-block-end: 0.08em; /* descender room for italic lines */
+  font-family: var(--mg-font-display);
+  font-size: var(--mg-fs-statement);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: inherit;
+}
+
+.mg-display em,
+.mg-display i {
+  font-style: italic;
+}
+
+.mg-display--hero {
+  font-size: var(--mg-fs-hero);
+  line-height: 1.05;
+}
+
+.mg-display--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Inner-page h1 on a red or light banner */
+.mg-h1-banner {
+  margin: 0;
+  padding-block-end: 0.06em;
+  font-family: var(--mg-font-display);
+  font-size: var(--mg-fs-banner);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: inherit;
 }
 
 .mg-lede {
   max-width: 60ch;
-  margin: 1rem 0 0;
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--mg-text-muted);
+  margin: var(--mg-space-3) 0 0;
+  font-size: var(--mg-fs-lede);
+  line-height: var(--mg-lh-body);
+  color: var(--mg-ink-2);
   text-wrap: pretty;
 }
 
-.mg-section-head {
-  margin-bottom: clamp(28px, 4vw, 48px);
+.mg-surface-red .mg-lede,
+.mg-surface-red .mg-head__sub {
+  color: inherit;
 }
 
-.mg-section-head--center {
+.mg-head--center .mg-lede,
+.mg-display--center + .mg-lede {
+  margin-inline: auto;
   text-align: center;
 }
 
-.mg-section-head--center .mg-lede {
-  margin-inline: auto;
-}
-
-.mg-section-head--row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-}
-
-/* ---------- Buttons ---------- */
+/* =====================================================================
+ * 7. Actions
+ * ===================================================================== */
 
 .mg-btn {
+  --mg-btn-bg: transparent;
+  --mg-btn-ink: var(--mg-ink);
+  --mg-btn-line: transparent;
+  --mg-btn-bg-hover: var(--mg-btn-bg);
+  --mg-btn-ink-hover: var(--mg-btn-ink);
+  --mg-btn-line-hover: var(--mg-btn-line);
+  --mg-btn-h: 48px;
+  --mg-btn-px: 20px;
+  --mg-btn-fs: 1rem;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  min-height: 48px;
-  padding: 0.85rem 1.5rem;
-  border: 1px solid transparent;
+  gap: var(--mg-space-2);
+  min-height: var(--mg-btn-h);
+  margin: 0;
+  padding: 0 var(--mg-btn-px);
+  border: 1px solid var(--mg-btn-line);
   border-radius: var(--mg-radius-sm);
-  font-family: var(--font-body--family);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  text-transform: uppercase;
+  background-color: var(--mg-btn-bg);
+  color: var(--mg-btn-ink);
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-btn-fs);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
   text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition:
-    background-color 0.2s var(--mg-ease),
-    border-color 0.2s var(--mg-ease),
-    color 0.2s var(--mg-ease),
-    transform 0.2s var(--mg-ease);
+    background-color var(--mg-dur) var(--mg-ease),
+    border-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
 }
 
 @media (hover: hover) {
   .mg-btn:hover {
-    transform: translateY(-1px);
+    border-color: var(--mg-btn-line-hover);
+    background-color: var(--mg-btn-bg-hover);
+    color: var(--mg-btn-ink-hover);
   }
 }
 
-.mg-btn:focus-visible {
-  outline: 2px solid var(--mg-text);
-  outline-offset: 3px;
+.mg-btn:active {
+  transform: scale(0.98);
 }
 
-.mg-btn svg {
-  width: 1.15em;
-  height: 1.15em;
+.mg-btn:focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+.mg-btn:is([disabled], [aria-disabled='true']) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.mg-btn :is(.mg-icon, svg) {
   flex: none;
+  width: 20px;
+  height: 20px;
 }
 
 .mg-btn--primary {
-  background: var(--mg-accent);
-  color: var(--mg-on-accent);
+  --mg-btn-bg: var(--mg-action);
+  --mg-btn-ink: var(--mg-on-action);
+  --mg-btn-line: var(--mg-action);
+  --mg-btn-bg-hover: var(--mg-action-hover);
+  --mg-btn-line-hover: var(--mg-action-hover);
 }
 
-/* Deepen the red on hover (lightening it drops white text below 4.5:1) */
-.mg-btn--primary:hover {
-  background: var(--mg-accent-hover-bg);
-  color: var(--mg-on-accent);
-}
-
-.mg-btn--ghost {
-  background: transparent;
-  border-color: var(--mg-border-strong);
-  color: var(--mg-text);
-}
-
-.mg-btn--ghost:hover {
-  border-color: var(--mg-text);
-  color: var(--mg-text);
-}
-
+.mg-btn--secondary,
+.mg-btn--ghost,
 .mg-btn--whatsapp {
-  background: var(--mg-whatsapp);
-  color: var(--mg-on-whatsapp);
+  --mg-btn-bg: var(--mg-btn-2-bg);
+  --mg-btn-ink: var(--mg-btn-2-ink);
+  --mg-btn-line: var(--mg-btn-2-line);
+  --mg-btn-bg-hover: var(--mg-btn-2-hover-bg);
+  --mg-btn-line-hover: var(--mg-btn-2-hover-line);
 }
 
-.mg-btn--whatsapp:hover {
-  background: var(--mg-whatsapp-hover);
-  color: var(--mg-on-whatsapp);
+.mg-btn--whatsapp :is(.mg-icon, svg) {
+  color: var(--mg-whatsapp);
+}
+
+/* Black button with white text on the red banner, in both schemes */
+.mg-btn--on-red {
+  --mg-btn-bg: var(--mg-black);
+  --mg-btn-ink: var(--mg-white);
+  --mg-btn-line: var(--mg-black);
+  --mg-btn-bg-hover: var(--mg-black-hover);
+  --mg-btn-line-hover: var(--mg-black-hover);
+}
+
+.mg-btn--on-red:focus-visible {
+  outline-color: var(--mg-white);
+}
+
+.mg-btn--sm {
+  --mg-btn-h: var(--mg-tap);
+  --mg-btn-px: 16px;
+  --mg-btn-fs: 0.9375rem;
+}
+
+.mg-btn--lg {
+  --mg-btn-h: 56px;
+  --mg-btn-px: 24px;
+  --mg-btn-fs: 1.0625rem;
 }
 
 .mg-btn--block {
   width: 100%;
 }
 
-/* ---------- Cards ---------- */
+/* Row of buttons: on phones the buttons share the row and wrap when they must */
+.mg-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mg-space-3);
+}
+
+@media screen and (max-width: 749px) {
+  .mg-actions > .mg-btn {
+    flex: 1 1 auto;
+  }
+}
+
+.mg-link {
+  color: var(--mg-ink);
+  font-weight: 500;
+  text-decoration-line: underline;
+  /* Horizon's base.css sets a { text-decoration-color: transparent } */
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-thickness var(--mg-dur) var(--mg-ease);
+}
+
+.mg-link:hover {
+  color: var(--mg-ink);
+  text-decoration-color: currentcolor;
+  text-decoration-thickness: 2px;
+}
+
+.mg-surface-red .mg-link,
+.mg-surface-red .mg-link:hover {
+  color: inherit;
+}
+
+/* Breadcrumb above an inner-page header panel: one line, the current page shortens with an
+   ellipsis, 44px link targets. Markup: nav.mg-crumbs > ol > li > a | span[aria-current]. */
+.mg-crumbs {
+  margin-block: calc(var(--mg-space-3) * -1) var(--mg-space-1);
+}
+
+.mg-crumbs ol {
+  display: flex;
+  align-items: center;
+  gap: var(--mg-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--mg-fs-micro);
+  line-height: 1.4;
+  color: var(--mg-ink-2);
+}
+
+.mg-crumbs li {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--mg-space-2);
+  min-width: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.mg-crumbs li:last-child {
+  flex: 0 1 auto;
+  overflow: hidden;
+}
+
+.mg-crumbs li + li::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  height: 5px;
+  margin-inline-end: 2px;
+  border-top: 1.5px solid var(--mg-ink-3);
+  border-right: 1.5px solid var(--mg-ink-3);
+  transform: rotate(45deg);
+}
+
+.mg-crumbs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--mg-tap);
+  color: var(--mg-ink-2);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.22em;
+}
+
+.mg-crumbs a:hover {
+  color: var(--mg-ink);
+  text-decoration-color: currentcolor;
+}
+
+.mg-crumbs [aria-current] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--mg-ink);
+  font-weight: 500;
+}
+
+/* =====================================================================
+ * 8. Surfaces
+ * ===================================================================== */
 
 .mg-card {
   position: relative;
-  background: var(--mg-surface);
-  border: 1px solid var(--mg-border);
-  border-radius: var(--mg-radius);
-  transition:
-    border-color 0.25s var(--mg-ease),
-    transform 0.25s var(--mg-ease),
-    box-shadow 0.25s var(--mg-ease);
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+}
+
+.mg-card--raised {
+  background-color: var(--mg-card-raised);
+  box-shadow: var(--mg-shadow);
 }
 
 a.mg-card,
 .mg-card--link {
+  display: block;
   color: inherit;
   text-decoration: none;
+  transition:
+    border-color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease),
+    background-color var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
 }
 
 @media (hover: hover) {
   a.mg-card:hover,
   .mg-card--link:hover {
-    border-color: var(--mg-border-strong);
-    transform: translateY(-3px);
-    box-shadow: var(--mg-shadow);
+    border-color: var(--mg-line-hover);
+    background-color: var(--mg-card-raised);
+    box-shadow: var(--mg-shadow-raised);
+    transform: translateY(-2px);
   }
 }
 
-/* ---------- Price ---------- */
-
-.mg-price-from {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  font-weight: 700;
-  color: var(--mg-text);
+.mg-card__media {
+  display: block;
+  aspect-ratio: var(--mg-media-ratio, 4 / 3);
+  overflow: hidden;
+  border-radius: calc(var(--mg-radius-md) - 1px) calc(var(--mg-radius-md) - 1px) 0 0;
+  background-color: var(--mg-band);
 }
 
-.mg-price-from small {
-  font-size: 0.75rem;
+.mg-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mg-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mg-space-1);
+  padding: var(--mg-space-4);
+}
+
+.mg-card__title {
+  margin: 0;
+  font-size: var(--mg-fs-title);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mg-text-subtle);
+  line-height: 1.35;
+  color: var(--mg-ink);
 }
 
-.mg-price-from strong {
-  font-size: 1.25rem;
-  color: var(--mg-accent);
+.mg-card__meta {
+  margin: 0;
+  font-size: var(--mg-fs-small);
+  line-height: 1.45;
+  color: var(--mg-ink-2);
 }
 
-/* ---------- Chips / badges ---------- */
+/* System tile: tinted panel, photo, label, "From €X fitted". The whole tile is the link. */
+.mg-tile {
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--mg-space-2) var(--mg-space-2) var(--mg-space-3);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-red-tint);
+  color: var(--mg-ink);
+  text-decoration: none;
+  transition:
+    box-shadow var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
+}
 
+.mg-tile--plain {
+  background-color: var(--mg-band);
+}
+
+@media (hover: hover) {
+  a.mg-tile:hover {
+    box-shadow: inset 0 0 0 1px var(--mg-red);
+    transform: translateY(-2px);
+  }
+}
+
+a.mg-tile:active {
+  transform: scale(0.98);
+}
+
+.mg-tile__media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin-block-end: var(--mg-space-2);
+  overflow: hidden;
+  border-radius: var(--mg-radius-sm);
+}
+
+.mg-tile__media :is(img, svg) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mg-tile__media .mg-icon {
+  width: 40%;
+  height: 40%;
+  color: var(--mg-red-ink);
+}
+
+.mg-tile__label {
+  padding-inline: var(--mg-space-1);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.mg-tile__meta {
+  padding-inline: var(--mg-space-1);
+  font-size: var(--mg-fs-micro);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mg-red-ink);
+}
+
+@media screen and (min-width: 750px) {
+  .mg-tile {
+    padding: var(--mg-space-3) var(--mg-space-3) var(--mg-space-4);
+  }
+
+  .mg-tile__label {
+    font-size: 1rem;
+  }
+}
+
+/* =====================================================================
+ * 9. Controls
+ * ===================================================================== */
+
+/* Chip: static label (span/li) or interactive filter (button/a/label, 44px tall) */
 .mg-chip {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid var(--mg-border);
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.03);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--mg-text-muted);
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 12px;
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-small);
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-.mg-placeholder-note {
-  font-size: 0.75rem;
-  color: var(--mg-text-subtle);
+:is(a, button, label).mg-chip {
+  min-height: var(--mg-tap);
+  padding-inline: 16px;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--mg-dur) var(--mg-ease),
+    border-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease);
 }
 
-/* ---------- Grids ---------- */
+@media (hover: hover) {
+  :is(a, button, label).mg-chip:not([aria-pressed='true'], [aria-selected='true'], [aria-current='page'], [aria-current='true'], .is-active, :checked + .mg-chip):hover {
+    border-color: var(--mg-ink-3);
+    color: var(--mg-ink);
+  }
+}
 
-.mg-grid {
+.mg-chip:is([aria-pressed='true'], [aria-selected='true'], [aria-current='page'], [aria-current='true'], .is-active),
+:checked + .mg-chip {
+  border-color: var(--mg-action);
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+}
+
+.mg-chip .mg-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* Scrollable chip row with snap and an edge fade */
+@property --mg-fade-start {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --mg-fade-end {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+.mg-chips {
+  display: flex;
+  gap: var(--mg-space-2);
+  margin: -4px 0;
+  padding: 4px 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  list-style: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, var(--mg-mask) var(--mg-fade-start), var(--mg-mask) calc(100% - var(--mg-fade-end)), transparent);
+  mask-image: linear-gradient(to right, transparent, var(--mg-mask) var(--mg-fade-start), var(--mg-mask) calc(100% - var(--mg-fade-end)), transparent);
+}
+
+.mg-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.mg-chips > * {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+@supports (animation-timeline: scroll()) {
+  .mg-chips {
+    animation: mg-chips-fade auto linear both;
+    animation-timeline: scroll(self inline);
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .mg-chips {
+    --mg-fade-end: 24px;
+  }
+}
+
+@keyframes mg-chips-fade {
+  0% {
+    --mg-fade-start: 0px;
+    --mg-fade-end: 32px;
+  }
+
+  8% {
+    --mg-fade-start: 24px;
+  }
+
+  92% {
+    --mg-fade-end: 32px;
+  }
+
+  100% {
+    --mg-fade-start: 24px;
+    --mg-fade-end: 0px;
+  }
+}
+
+.mg-chips--wrap {
+  flex-wrap: wrap;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+  animation: none;
+}
+
+/* Let a scroller run edge to edge on phones (under the gutters) */
+@media screen and (max-width: 749px) {
+  .mg-chips--bleed,
+  .mg-carousel--bleed .mg-carousel__track {
+    margin-inline: calc(var(--mg-gutter) * -1);
+    padding-inline: var(--mg-gutter);
+    scroll-padding-inline: var(--mg-gutter);
+  }
+}
+
+/* Form fields */
+.mg-field {
   display: grid;
-  gap: clamp(12px, 2vw, 24px);
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
 }
 
-/* ---------- Motion ---------- */
+.mg-label {
+  font-size: var(--mg-fs-small);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mg-ink);
+}
 
-@media (prefers-reduced-motion: reduce) {
-  .mg-btn,
-  .mg-card {
-    transition: none;
-  }
+.mg-label__optional {
+  font-weight: 400;
+  color: var(--mg-ink-2);
+}
 
-  .mg-btn:hover,
-  a.mg-card:hover,
-  .mg-card--link:hover {
-    transform: none;
+/* input.x / :is() keeps these above base.css's input:not([type=checkbox], [type=radio]) rule */
+:is(input, textarea, select).mg-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--mg-line-input);
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-input);
+  color: var(--mg-ink);
+  font-family: var(--mg-font-ui);
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color var(--mg-dur) var(--mg-ease);
+}
+
+textarea.mg-input {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.mg-input::placeholder {
+  color: var(--mg-ink-3);
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .mg-input:hover {
+    border-color: var(--mg-ink-3);
   }
 }
 
-/* ---------- Visually hidden ---------- */
+.mg-input:focus-visible {
+  border-color: var(--mg-ink);
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+.mg-input[aria-invalid='true'] {
+  border-color: var(--mg-error);
+}
+
+.mg-help {
+  margin: 0;
+  font-size: var(--mg-fs-micro);
+  line-height: 1.45;
+  color: var(--mg-ink-2);
+  text-wrap: pretty;
+}
+
+.mg-error-text {
+  margin: 0;
+  font-size: var(--mg-fs-micro);
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--mg-error);
+}
+
+/* Irish number plate input: white plate, blue EU band with 12 stars and IRL */
+.mg-plate {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  height: 56px;
+  border: 2px solid var(--mg-plate-edge);
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-plate);
+  color: var(--mg-plate-ink);
+  overflow: hidden;
+}
+
+.mg-plate:focus-within {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+.mg-plate__band {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 36px;
+  padding: 6px 0 5px;
+  background-color: var(--mg-plate-blue);
+  color: var(--mg-white);
+  font-family: var(--mg-font-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.mg-plate__band::before {
+  content: '';
+  width: 22px;
+  height: 22px;
+  background-color: var(--mg-plate-star);
+  -webkit-mask: var(--mg-eu-stars) center / contain no-repeat;
+  mask: var(--mg-eu-stars) center / contain no-repeat;
+}
+
+input.mg-plate__input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0 var(--mg-space-3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: var(--mg-font-ui);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: none;
+  outline: none; /* the ring is drawn on .mg-plate:focus-within */
+}
+
+.mg-plate__input::placeholder {
+  color: var(--mg-plate-placeholder);
+  opacity: 1;
+}
+
+/* Plate + "Get a quote" button: one row, the button drops below on very narrow screens */
+.mg-plate-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mg-space-2);
+}
+
+.mg-plate-group > .mg-plate {
+  flex: 1 1 200px;
+}
+
+.mg-plate-group > .mg-btn {
+  flex: 1 0 auto;
+  min-height: 56px;
+}
+
+@media screen and (min-width: 750px) {
+  .mg-plate-group > .mg-btn {
+    flex-grow: 0;
+  }
+}
+
+/* Theme control: segmented Auto / Light / Dark (snippets/mg-theme-mode.liquid, control: true) */
+.mg-theme-control {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mg-space-2) var(--mg-space-3);
+  font-size: var(--mg-fs-small);
+  color: var(--mg-ink-2);
+}
+
+.mg-theme-control__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-band-2);
+}
+
+.mg-theme-control__option {
+  position: relative;
+  display: inline-flex;
+}
+
+.mg-theme-control__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.mg-theme-control__text {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--mg-tap);
+  padding: 0 14px;
+  border-radius: var(--mg-radius-pill);
+  color: var(--mg-ink-2);
+  font-weight: 500;
+  pointer-events: none;
+  transition:
+    background-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease);
+}
+
+@media (hover: hover) {
+  .mg-theme-control__option:hover .mg-theme-control__text {
+    color: var(--mg-ink);
+  }
+}
+
+.mg-theme-control__input:checked + .mg-theme-control__text {
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+}
+
+.mg-theme-control__input:focus-visible + .mg-theme-control__text {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+/* =====================================================================
+ * 10. Data
+ * ===================================================================== */
+
+/* Price: tabular numbers; wrap cents in .mg-price__cents (or <sup>) for superscript cents */
+.mg-price {
+  color: var(--mg-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+
+.mg-price :is(.mg-price__cents, sup) {
+  position: relative;
+  top: -0.55em;
+  margin-inline-start: 0.04em;
+  font-size: 0.6em;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+.mg-price__label {
+  font-size: min(0.875em, 0.875rem);
+  font-weight: 400;
+  color: var(--mg-ink-2);
+}
+
+.mg-price--lg {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.mg-price--red,
+.mg-price--red .mg-price__label {
+  color: var(--mg-red-ink);
+}
+
+/* Stars: set --mg-rating (0 to 5) inline; give the element role="img" and an aria-label */
+.mg-stars {
+  --mg-stars-size: 1rem;
+  --mg-rating: 5;
+  display: inline-block;
+  flex: none;
+  align-self: flex-start;
+  justify-self: start;
+  width: calc(var(--mg-stars-size) * 5);
+  height: var(--mg-stars-size);
+  background: linear-gradient(90deg, var(--mg-star) calc(var(--mg-rating) / 5 * 100%), var(--mg-star-empty) 0);
+  vertical-align: -0.125em;
+  -webkit-mask: var(--mg-star-shape) 0 0 / var(--mg-stars-size) var(--mg-stars-size) repeat-x;
+  mask: var(--mg-star-shape) 0 0 / var(--mg-stars-size) var(--mg-stars-size) repeat-x;
+}
+
+.mg-stars--sm {
+  --mg-stars-size: 0.875rem;
+}
+
+.mg-stars--lg {
+  --mg-stars-size: 1.25rem;
+}
+
+/* Small label ("Fitted price", "Best seller", a name tag on a photo) */
+.mg-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  justify-self: start;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: var(--mg-radius-xs);
+  background-color: var(--mg-band);
+  color: var(--mg-ink);
+  font-size: var(--mg-fs-micro);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.mg-badge--red {
+  background-color: var(--mg-red-tint);
+  color: var(--mg-red-ink);
+}
+
+.mg-badge--ink {
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+}
+
+.mg-badge--card {
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+}
+
+.mg-badge .mg-icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* Marks demo content until the real thing exists ("Sample review", "Sample photo") */
+.mg-sample-tag {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  justify-self: start;
+  min-height: 22px;
+  padding: 1px 8px;
+  border: 1px dashed var(--mg-ink-3);
+  border-radius: var(--mg-radius-xs);
+  background-color: var(--mg-card);
+  color: var(--mg-ink-2);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* Trust strip: 2x2 panel on phones, 4 across from 750px, a pill from 990px */
+:is(ul, ol).mg-trust {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--mg-space-3) var(--mg-space-4);
+  margin: 0;
+  padding: var(--mg-space-4);
+  border-radius: var(--mg-radius-lg);
+  background-color: var(--mg-band);
+  list-style: none;
+}
+
+:is(ul, ol).mg-trust > .mg-trust__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  color: var(--mg-ink);
+  font-size: var(--mg-fs-small);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.mg-trust__item a {
+  color: inherit;
+}
+
+.mg-trust__icon {
+  box-sizing: content-box;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 6px;
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+}
+
+/* Phones: an odd item out at the end takes the full row, so the 2x2 panel has no empty cell */
+@media screen and (max-width: 749px) {
+  :is(ul, ol).mg-trust > .mg-trust__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  :is(ul, ol).mg-trust {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: var(--mg-space-3) var(--mg-space-5);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  :is(ul, ol).mg-trust {
+    border-radius: var(--mg-radius-pill);
+  }
+}
+
+/* =====================================================================
+ * 11. Carousel (<mg-carousel>, behaviour in assets/mg-carousel.js)
+ * ===================================================================== */
+
+.mg-carousel {
+  --mg-carousel-mobile: 1.25;
+  --mg-carousel-tablet: 2.4;
+  --mg-carousel-desktop: 4;
+  --mg-carousel-per-view: var(--mg-carousel-mobile);
+  --mg-carousel-gap: var(--mg-gap);
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .mg-carousel {
+    --mg-carousel-per-view: var(--mg-carousel-tablet);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .mg-carousel {
+    --mg-carousel-per-view: var(--mg-carousel-desktop);
+  }
+}
+
+.mg-carousel__track {
+  display: grid;
+  grid-auto-columns: calc((100% - var(--mg-carousel-gap) * (var(--mg-carousel-per-view) - 1)) / var(--mg-carousel-per-view));
+  grid-auto-flow: column;
+  gap: var(--mg-carousel-gap);
+  margin: -4px 0;
+  padding: 4px 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  list-style: none;
+}
+
+.mg-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.mg-carousel__slide {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+/* A card or tile inside a slide fills the slide, so cards in a row share one height */
+.mg-carousel__slide > * {
+  flex: 1 1 auto;
+}
+
+.mg-carousel__slide[hidden] {
+  display: none;
+}
+
+.mg-carousel__nav {
+  display: flex;
+  flex: none;
+  gap: var(--mg-space-2);
+}
+
+/* Buttons do nothing until the element upgrades, and are pointless without overflow */
+mg-carousel:not(:defined) .mg-carousel__nav,
+mg-carousel:defined:not([data-overflow]) .mg-carousel__nav {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .mg-carousel__nav--desktop {
+    display: none;
+  }
+}
+
+.mg-carousel__btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--mg-dur) var(--mg-ease),
+    color var(--mg-dur) var(--mg-ease),
+    transform var(--mg-dur) var(--mg-ease);
+}
+
+/* 44px hit area around the 40px circle */
+.mg-carousel__btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+}
+
+.mg-carousel__btn .mg-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (hover: hover) {
+  .mg-carousel__btn:hover {
+    background-color: var(--mg-action-hover);
+  }
+}
+
+.mg-carousel__btn:active {
+  transform: scale(0.94);
+}
+
+.mg-carousel__btn:disabled {
+  background-color: var(--mg-band-2);
+  color: var(--mg-ink-3);
+  cursor: default;
+  transform: none;
+}
+
+/* =====================================================================
+ * 12. Utilities
+ * ===================================================================== */
 
 .mg-visually-hidden {
   position: absolute !important;
@@ -341,441 +1753,110 @@ a.mg-card,
 }
 
 /* =====================================================================
- * Horizon polish (chrome task, appended). Makes Horizon's own parts
- * (header, cards, prices, filters, product page, cart drawer, inputs,
- * footer, password page) match the MG look.
- *
- * Most Horizon component CSS comes from {% stylesheet %} tags, which load
- * AFTER this file. Rules that must win therefore carry exactly one extra
- * class or element of specificity. Colours are MG tokens only.
+ * 13. Backward-compatible Phase 1 classes, restyled to the v3 look.
+ * Section tasks replace these with the components above; do not use in new code.
  * ===================================================================== */
 
-/* ---------- Page ---------- */
-
-html {
-  color-scheme: dark;
-  background-color: var(--mg-bg);
-  scrollbar-color: var(--mg-border-strong) var(--mg-bg);
+.mg-section--tight {
+  padding-block: calc(var(--mg-section-pad) / 2);
 }
 
-html body {
-  background-color: var(--mg-bg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.mg-section--surface {
+  margin-block: var(--mg-section-pad);
+  padding-block: var(--mg-band-pad-top) var(--mg-band-pad-bottom);
+  background-color: var(--mg-band);
 }
 
-::selection {
-  background: var(--mg-accent);
-  color: var(--mg-on-accent);
-}
-
-:focus-visible {
-  outline-color: var(--mg-accent-hover);
-}
-
-input[type='checkbox'],
-input[type='radio'],
-progress {
-  accent-color: var(--mg-accent);
-}
-
-/* ---------- Header: announcement bar ---------- */
-
-/* Muted by default (skipped when a text colour is set on the announcement) */
-.announcement-bar .announcement-bar__slide:not([style*='--color:']) .announcement-bar__text {
-  color: var(--mg-text-muted);
-  transition: color 0.2s var(--mg-ease);
-}
-
-.announcement-bar .announcement-bar__slide:not([style*='--color:']):has(.announcement-bar__link:hover) .announcement-bar__text {
-  color: var(--mg-text);
-}
-
-/* ---------- Header: bar, logo, menu ---------- */
-
-/* Text logo (no logo image uploaded): heavy uppercase wordmark with a red ignition mark */
-.header .header-logo:not(:has(img)) {
-  gap: 0.6rem;
-  font-family: var(--font-heading--family);
-  font-weight: var(--font-heading--weight);
-  font-size: clamp(1rem, 1.4vw, 1.1875rem);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.header .header-logo:not(:has(img))::before {
-  content: '';
-  flex: none;
-  width: 4px;
-  height: 1.15em;
-  border-radius: 2px;
-  background: var(--mg-accent);
-}
-
-/* Sticky state: slightly translucent graphite with a backdrop blur */
-.header[data-header-rows='single'][data-sticky-state='active'] .header__underlay-closed {
-  background: color-mix(in srgb, var(--color-background-top-row) 80%, transparent);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  backdrop-filter: blur(16px) saturate(1.4);
-  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
-}
-
-/* Transparent home header: soften the hairline while it floats over the hero */
-#header-component[transparent]:not([data-sticky-state='active']) .header__row.header__row--top,
-#header-component[transparent]:not([data-sticky-state='active']) .header__row.header__row--top .header__columns {
-  border-bottom-color: color-mix(in srgb, var(--mg-text) 14%, transparent);
-}
-
-.header .menu-list__link {
-  letter-spacing: 0.08em;
-}
-
-.header .menu-list__link-title {
-  position: relative;
-}
-
-/* Red underline for the current section and on hover (top level only) */
-.header .menu-list__list-item:not([slot='overflow']) > .menu-list__link .menu-list__link-title::after,
-.header .menu-list__list-item:not([slot='overflow']) > .menu-list__trigger .menu-list__link-title::after {
-  content: '';
-  position: absolute;
-  inset-inline: var(--gap-sm, 8px);
-  bottom: -7px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--mg-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.25s var(--mg-ease);
-}
-
-.header .menu-list__link--active .menu-list__link-title::after,
-.header .menu-list__list-item:hover > .menu-list__link .menu-list__link-title::after,
-.header .menu-list__list-item:hover > .menu-list__trigger .menu-list__link-title::after {
-  transform: scaleX(1);
-}
-
-/* "Book a fitting" menu link becomes an outlined pill (matches any link to /pages/book-a-fitting) */
-.header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title {
-  padding: 0.7em 1.1em;
-  border: 1px solid var(--mg-accent);
-  border-radius: var(--mg-radius-sm);
-  color: var(--mg-text);
-  transition: background-color 0.2s var(--mg-ease);
-}
-
-.header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title::after {
-  content: none;
-}
-
-.header .menu-list__link[href*='book-a-fitting']:hover .menu-list__link-title {
-  background: var(--mg-accent-hover-bg);
-  color: var(--mg-on-accent);
-}
-
-/* Mobile drawer: big, confident top-level links */
-.menu-drawer__menu .menu-drawer__menu-item--mainlist {
-  font-family: var(--font-heading--family);
-  font-weight: var(--font-heading--weight);
-  letter-spacing: -0.01em;
-}
-
-.menu-drawer__menu .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] {
-  color: var(--mg-accent-hover);
-}
-
-/* ---------- Buttons (Horizon) ---------- */
-
-:is(.button, .button-secondary):not(.button-unstyled) {
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-
-/* ---------- Product cards ---------- */
-
-product-card .product-grid__card.product-grid__card {
-  padding-block: max(8px, var(--padding-block-start, 0px)) max(16px, var(--padding-block-end, 0px));
-  padding-inline: max(8px, var(--padding-inline-start, 0px)) max(8px, var(--padding-inline-end, 0px));
-  border: 1px solid var(--mg-border);
-  border-radius: var(--mg-radius);
-  background: var(--mg-surface);
-  transition:
-    border-color 0.25s var(--mg-ease),
-    box-shadow 0.25s var(--mg-ease),
-    transform 0.25s var(--mg-ease);
-}
-
-product-card .card-gallery {
-  border-radius: max(var(--mg-radius-sm), var(--border-radius, 0px));
-  background: var(--mg-surface-2);
-}
-
-product-card [ref='productTitleLink'] .text-block {
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--mg-text);
-}
-
-@media (hover: hover) {
-  product-card:hover .product-grid__card.product-grid__card {
-    border-color: var(--mg-border-strong);
-    box-shadow: var(--mg-shadow);
-    transform: translateY(-3px);
-  }
-}
-
-/* ---------- Prices ---------- */
-
-product-price .price {
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  color: var(--mg-text);
-}
-
-/* Sale price in accent, whichever order Horizon renders it in */
-product-price .price-item__group.price:has(+ .compare-at-price),
-product-price .compare-at-price + .price-item__group.price {
-  color: var(--mg-accent-hover);
-}
-
-product-price .compare-at-price {
+.mg-eyebrow {
+  display: block;
+  margin: 0 0 var(--mg-space-2);
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-small);
   font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mg-red-ink);
 }
 
-/* ---------- Collection filters ---------- */
-
-@media screen and (min-width: 750px) {
-  .facets.facets--horizontal {
-    border-block: 1px solid var(--mg-border);
-  }
-
-  .facets.facets--horizontal .facets__summary {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .facets.facets--horizontal .facets__panel-content {
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
-    background-color: var(--mg-surface);
-    box-shadow: var(--mg-shadow);
-  }
+.mg-surface-red .mg-eyebrow {
+  color: inherit;
 }
 
-.facets-toggle .facets-toggle__button {
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.mg-section-head {
+  margin-block-end: var(--mg-head-gap);
 }
 
-/* ---------- Product page ---------- */
-
-media-gallery .product-media-container {
-  background: var(--mg-surface);
-}
-
-/* Variant pills: graphite buttons, selected one gets a red edge */
-.variant-picker {
-  --color-variant-background: var(--mg-surface);
-  --color-variant-border: var(--mg-border-strong);
-  --color-variant-text: var(--mg-text);
-  --color-variant-hover-background: var(--mg-surface-2);
-  --color-variant-hover-border: var(--mg-text-muted);
-  --color-variant-hover-text: var(--mg-text);
-  --color-selected-variant-background: var(--mg-accent-soft);
-  --color-selected-variant-border: var(--mg-accent);
-  --color-selected-variant-text: var(--mg-text);
-  --color-selected-variant-hover-background: var(--mg-accent-soft);
-  --color-selected-variant-hover-border: var(--mg-accent-hover);
-  --color-selected-variant-hover-text: var(--mg-text);
-}
-
-.variant-picker .variant-option__button-label {
-  font-weight: 600;
-}
-
-/* Add to cart uses the accent even when the block is set to the secondary style */
-.buy-buttons-block .add-to-cart-button.button-secondary {
-  --button-color: var(--color-primary-button-text);
-  --button-background-color: var(--color-primary-button-background);
-  --button-border-color: var(--color-primary-button-border);
-  --button-border-width: var(--style-border-width-primary);
-}
-
-.buy-buttons-block .add-to-cart-button.button-secondary:hover {
-  --button-color: var(--color-primary-button-hover-text);
-  --button-background-color: var(--color-primary-button-hover-background);
-  --button-border-color: var(--color-primary-button-hover-border);
-}
-
-/* ---------- Drawers (cart, filters, menu) ---------- */
-
-.theme-drawer__dialog.theme-drawer__dialog {
-  border-inline-start: 1px solid var(--mg-border);
-}
-
-.theme-drawer__header .theme-drawer__title {
-  font-family: var(--font-heading--family);
-  font-weight: var(--font-heading--weight);
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-.theme-drawer__header .theme-drawer__badge {
-  background-color: var(--mg-accent);
-  color: var(--mg-on-accent);
-}
-
-.cart-drawer__items .cart-items__table-row {
-  border-bottom-color: var(--mg-border);
-}
-
-/* ---------- Inputs ---------- */
-
-.field .field__input:focus,
-.field__input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  box-shadow: 0 0 0 1px var(--mg-accent), 0 0 0 4px var(--mg-accent-soft);
-  outline: none;
-}
-
-.field__input::placeholder,
-textarea::placeholder {
-  color: var(--mg-text-subtle);
-}
-
-/* ---------- Footer (Horizon footer + utilities) ---------- */
-
-.footer-content :is(.menu__heading, .text-block.h6) {
-  font-family: var(--font-subheading--family);
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mg-text-subtle);
-}
-
-.footer-content .menu__heading > span {
-  font-weight: 600;
-}
-
-.footer-content .menu__item a {
-  color: var(--mg-text-muted);
-  text-decoration: none;
-  transition: color 0.2s var(--mg-ease);
-}
-
-.footer-content .menu__item a:hover {
-  color: var(--mg-text);
-}
-
-.footer-content .text-block.rte {
-  color: var(--mg-text-muted);
-}
-
-.footer-content .menu--dividers .menu__details {
-  border-block-end-color: var(--mg-border);
-}
-
-.footer-content .payment-icons__list {
-  opacity: 0.85;
-}
-
-.footer-utilities .utilities {
-  color: var(--mg-text-subtle);
-}
-
-.footer-utilities .utilities a:hover {
-  color: var(--mg-text);
-}
-
-/* Leave room for the floating WhatsApp button on phones */
-@media screen and (max-width: 749px) {
-  .footer-utilities {
-    padding-bottom: 72px;
-  }
-}
-
-/* ---------- Password page ---------- */
-
-body:has(.password-main-content) {
-  background:
-    radial-gradient(900px 460px at 50% -8%, var(--mg-accent-soft), transparent 70%),
-    linear-gradient(180deg, color-mix(in srgb, var(--mg-bg) 78%, transparent) 0%, var(--mg-bg) 70%),
-    url('mg-bmw-carplay-screen.webp') center top / cover no-repeat,
-    var(--mg-bg);
-}
-
-.section-password .mg-password__eyebrow {
-  justify-content: center;
-  margin: 0;
-}
-
-.section-password .text-block.h1,
-.section-password .text-block.h1 h1 {
-  font-size: clamp(2.25rem, 7vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-}
-
-.section-password .text-block.rte {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--mg-text-muted);
-}
-
-.mg-password__actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.mg-password__actions .mg-icon {
-  width: 1.15em;
-  height: 1.15em;
-}
-
-.mg-password__chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin: 20px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.mg-password__note {
-  max-width: 48ch;
-  margin: 20px auto 0;
-  font-size: 0.875rem;
-  line-height: 1.6;
+.mg-section-head--center {
   text-align: center;
-  color: var(--mg-text-subtle);
 }
 
-.password-footer.password-footer {
-  border-top: 1px solid var(--mg-border);
-  font-size: 0.8125rem;
-  color: var(--mg-text-subtle);
+.mg-section-head--center .mg-lede {
+  margin-inline: auto;
 }
 
-/* ---------- Motion ---------- */
+.mg-section-head--row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--mg-space-3) var(--mg-space-5);
+}
+
+.mg-price-from {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--mg-ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-price-from small {
+  font-size: var(--mg-fs-small);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mg-ink-2);
+}
+
+.mg-price-from strong {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--mg-ink);
+}
+
+.mg-placeholder-note {
+  font-size: var(--mg-fs-micro);
+  color: var(--mg-ink-3);
+}
+
+/* =====================================================================
+ * 14. Reduced motion
+ * ===================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  product-card .product-grid__card.product-grid__card,
-  .header .menu-list__link-title::after,
-  .header .menu-list__link[href*='book-a-fitting'] .menu-list__link-title,
-  .footer-content .menu__item a {
+  .mg-btn,
+  .mg-card,
+  a.mg-card,
+  .mg-card--link,
+  .mg-tile,
+  .mg-chip,
+  .mg-link,
+  .mg-input,
+  .mg-carousel__btn,
+  .mg-theme-control__text {
     transition: none;
   }
 
-  product-card:hover .product-grid__card.product-grid__card {
+  .mg-btn:is(:hover, :active),
+  a.mg-card:hover,
+  .mg-card--link:hover,
+  a.mg-tile:is(:hover, :active),
+  .mg-carousel__btn:active {
     transform: none;
+  }
+
+  .mg-carousel__track {
+    scroll-behavior: auto;
   }
 }

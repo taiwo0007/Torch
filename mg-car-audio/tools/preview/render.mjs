@@ -19,8 +19,10 @@ export function parseArgs(argv) {
     else if (a === '--design-mode') opts.designMode = true;
     else if (a === '--no-preset-blocks') opts.presetBlocks = false;
     else if (a === '--strict') opts.strict = true;
+    else if (a === '--gallery') opts.gallery = true;
     else if (a === '--sections') opts.sections = argv[++i].split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--name') opts.name = argv[++i];
+    else if (a === '--fixture') opts.fixture = argv[++i];
     else if (a === '--out') opts.outDir = path.resolve(argv[++i]);
     else if (a === '-h' || a === '--help') opts.help = true;
     else if (a.startsWith('--')) throw new Error(`unknown option ${a}`);
@@ -33,7 +35,14 @@ export function parseArgs(argv) {
     opts.templates = [opts.templates[0] || 'index'];
     opts.outputName = opts.name || 'sections';
   }
+  if (opts.gallery) {
+    // Component gallery (tools/preview/gallery.liquid) in the context of the first template (default: index)
+    opts.templates = [opts.templates[0] || 'index'];
+    opts.outputName = opts.name || 'gallery';
+  }
   if (!opts.templates.length) opts.templates = [...DEFAULT_TEMPLATES];
+  // --name on a single template renders it to out/<name>.html (e.g. with --fixture for a variant)
+  if (opts.name && !opts.outputName && opts.templates.length === 1) opts.outputName = opts.name;
   return opts;
 }
 
@@ -46,14 +55,16 @@ export async function renderMany(opts) {
       designMode: opts.designMode,
       presetBlocks: opts.presetBlocks,
       sections: opts.sections,
+      gallery: opts.gallery,
       outputName: opts.outputName,
+      fixture: opts.fixture,
     });
     reports.push(report);
   }
   return reports;
 }
 
-const USAGE = `Usage: node tools/preview/render.mjs [template ...] [--all] [--home-fallback] [--sections a,b --name x] [--design-mode] [--no-preset-blocks] [--out dir] [--strict]
+const USAGE = `Usage: node tools/preview/render.mjs [template ...] [--all] [--home-fallback] [--sections a,b --name x] [--gallery] [--fixture key --name x] [--design-mode] [--no-preset-blocks] [--out dir] [--strict]
 Default templates: ${DEFAULT_TEMPLATES.join(', ')}`;
 
 async function main() {

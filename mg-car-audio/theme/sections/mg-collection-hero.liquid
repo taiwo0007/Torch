@@ -3,14 +3,7 @@
   assign heading_id = 'MgCollectionHeroTitle-' | append: section.id
   assign desc_id = 'MgCollectionHeroDesc-' | append: section.id
 
-  assign section_classes = 'mg-collection-hero'
-  if section.settings.height == 'medium'
-    assign section_classes = section_classes | append: ' mg-collection-hero--medium'
-  endif
-
-  assign overlay = section.settings.overlay | append: '%'
-
-  # Background: collection image, then the section's fallback image, then a theme asset.
+  # Image: collection image, then the section's fallback image, then a theme asset.
   assign hero_image = collection.image
   if hero_image == blank
     assign hero_image = section.settings.fallback_image
@@ -33,21 +26,27 @@
       endcase
     endif
 
+    assign asset_small = ''
     case asset_name
       when 'mg-showroom.webp'
         assign asset_width = 1600
         assign asset_height = 1200
+        assign asset_small = 'mg-showroom-800.webp'
       when 'mg-door-speaker.webp', 'mg-dash-radio.webp'
         assign asset_width = 1024
         assign asset_height = 1024
       when 'mg-bmw-carplay-screen.webp'
         assign asset_width = 1536
         assign asset_height = 840
+        assign asset_small = 'mg-bmw-carplay-screen-800.webp'
       else
         assign asset_width = 1536
         assign asset_height = 1024
+        assign asset_small = asset_name | replace: '.webp', '-800.webp'
     endcase
   endif
+
+  assign image_sizes = '(min-width: 1200px) 420px, (min-width: 990px) 36vw, 40vw'
 
   assign description = collection.description | strip
   if description == blank and section.settings.fallback_text != blank
@@ -73,54 +72,28 @@
     assign wa_message = 'Hi ' | append: business_name | append: ", I'm looking at " | append: collection.title | append: '. What fits my car? My reg is: '
     assign wa_text = wa_message | url_encode
   endif
+
+  assign show_collections_crumb = false
+  if section.settings.breadcrumb_label != blank and collection.handle != 'all'
+    assign show_collections_crumb = true
+  endif
+
+  assign panel_classes = 'mg-panel mg-ch__panel'
+  if section.settings.show_image
+    assign panel_classes = panel_classes | append: ' mg-ch__panel--media'
+  endif
 -%}
 
-<div
-  class="{{ section_classes }}"
-  style="--mg-ch-overlay: {{ overlay }};"
->
-  <div
-    class="mg-collection-hero__media"
-    aria-hidden="true"
-  >
-    {%- if hero_image != blank -%}
-      {%- assign focal_style = 'object-position: ' | append: hero_image.presentation.focal_point -%}
-      {{-
-        hero_image
-        | image_url: width: 2000
-        | image_tag:
-          widths: '640, 960, 1280, 1600, 2000',
-          sizes: '(min-width: 990px) 65vw, 100vw',
-          loading: 'eager',
-          fetchpriority: 'high',
-          alt: '',
-          style: focal_style,
-          class: 'mg-collection-hero__img'
-      -}}
-    {%- else -%}
-      <img
-        class="mg-collection-hero__img mg-collection-hero__img--fallback"
-        src="{{ asset_name | asset_url }}"
-        width="{{ asset_width }}"
-        height="{{ asset_height }}"
-        alt=""
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      >
-    {%- endif -%}
-    <span class="mg-collection-hero__scrim"></span>
-  </div>
-
-  <div class="mg-container mg-collection-hero__inner">
+<div class="mg-section mg-ch">
+  <div class="mg-container">
     {%- if section.settings.show_breadcrumbs -%}
       <nav
-        class="mg-collection-hero__crumbs"
+        class="mg-ch__crumbs"
         aria-label="Breadcrumb"
       >
         <ol role="list">
           <li><a href="{{ routes.root_url }}">Home</a></li>
-          {%- if section.settings.breadcrumb_label != blank and collection.handle != 'all' -%}
+          {%- if show_collections_crumb -%}
             <li>
               <a href="{{ routes.collections_url }}">{{ section.settings.breadcrumb_label | escape }}</a>
             </li>
@@ -132,86 +105,122 @@
       </nav>
     {%- endif -%}
 
-    <div class="mg-collection-hero__content">
-      {%- capture eyebrow_html -%}
-        {{- section.settings.eyebrow | escape -}}
+    <div class="{{ panel_classes }}">
+      <div class="mg-ch__copy">
+        <h1
+          id="{{ heading_id }}"
+          class="mg-h1-banner mg-ch__title"
+        >
+          {{ collection.title | escape }}
+        </h1>
+
         {%- if section.settings.show_count and product_count > 0 -%}
-          {%- if section.settings.eyebrow != blank %} <span aria-hidden="true">·</span> {% endif -%}
-          {{- product_count }}
-          {% if product_count == 1 %}product{% else %}products{% endif -%}
+          <p class="mg-ch__count">
+            {{- product_count }}
+            {% if product_count == 1 %}product{% else %}products{% endif -%}
+          </p>
         {%- endif -%}
-      {%- endcapture -%}
-      {%- if eyebrow_html != blank -%}
-        <p class="mg-eyebrow mg-collection-hero__eyebrow">{{ eyebrow_html }}</p>
-      {%- endif -%}
 
-      <h1
-        id="{{ heading_id }}"
-        class="mg-collection-hero__title"
-      >
-        {{ collection.title | escape }}
-      </h1>
-
-      {%- if description != blank -%}
-        <mg-read-more
-          class="mg-collection-hero__desc-wrap{% if desc_clamped %} is-clamped{% endif %}"
-          data-more="{{ section.settings.read_more_label | default: 'Read more' | escape }}"
-          data-less="{{ section.settings.read_less_label | default: 'Show less' | escape }}"
-        >
-          <div
-            id="{{ desc_id }}"
-            class="mg-collection-hero__desc"
-            data-mg-readmore-content
+        {%- if description != blank -%}
+          <mg-read-more
+            class="mg-ch__desc-wrap{% if desc_clamped %} is-clamped{% endif %}"
+            data-more="{{ section.settings.read_more_label | default: 'Read more' | escape }}"
+            data-less="{{ section.settings.read_less_label | default: 'Show less' | escape }}"
           >
-            {{ description }}
-          </div>
-          {%- if desc_clamped -%}
-            <button
-              type="button"
-              class="mg-collection-hero__more"
-              aria-controls="{{ desc_id }}"
-              aria-expanded="false"
-              data-mg-readmore-toggle
+            <div
+              id="{{ desc_id }}"
+              class="mg-lede mg-ch__desc"
+              data-mg-readmore-content
             >
-              <span data-mg-readmore-label>{{ section.settings.read_more_label | default: 'Read more' | escape }}</span>
-              {%- render 'mg-icon', icon: 'chevron-down' -%}
-            </button>
-          {%- endif -%}
-        </mg-read-more>
-      {%- endif -%}
-
-      {%- if section.settings.chips != blank -%}
-        <ul
-          class="mg-collection-hero__chips"
-          role="list"
-        >
-          {%- for chip in chip_lines -%}
-            {%- assign chip_text = chip | strip -%}
-            {%- if chip_text != blank -%}
-              <li class="mg-chip">
-                {%- render 'mg-icon', icon: 'check' -%}
-                <span>{{ chip_text | escape }}</span>
-              </li>
+              {{ description }}
+            </div>
+            {%- if desc_clamped -%}
+              <button
+                type="button"
+                class="mg-ch__more"
+                aria-controls="{{ desc_id }}"
+                aria-expanded="false"
+                data-mg-readmore-toggle
+              >
+                <span data-mg-readmore-label>{{ section.settings.read_more_label | default: 'Read more' | escape }}</span>
+                {%- render 'mg-icon', icon: 'chevron-down' -%}
+              </button>
             {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
+          </mg-read-more>
+        {%- endif -%}
 
-      {%- if show_help -%}
-        <p class="mg-collection-hero__help">
-          {%- if section.settings.help_text != blank -%}
-            <span>{{ section.settings.help_text | escape }}</span>
-          {%- endif -%}
-          <a
-            href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
-            target="_blank"
-            rel="noopener"
+        {%- if section.settings.chips != blank -%}
+          {%- comment -%} Static facts, not filters: a plain inline list with ticks, no chip outline {%- endcomment -%}
+          <ul
+            class="mg-ch__points"
+            role="list"
           >
-            {%- render 'mg-icon', icon: 'whatsapp' -%}
-            <span>{{ section.settings.help_link_label | escape }}</span>
-            <span class="mg-visually-hidden">(opens WhatsApp in a new tab)</span>
-          </a>
-        </p>
+            {%- for chip in chip_lines -%}
+              {%- assign chip_text = chip | strip -%}
+              {%- if chip_text != blank -%}
+                <li class="mg-ch__point">
+                  {%- render 'mg-icon', icon: 'check' -%}
+                  <span>{{ chip_text | escape }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if show_help -%}
+          <p class="mg-ch__help">
+            {%- if section.settings.help_text != blank -%}
+              {{ section.settings.help_text | escape }}
+            {% endif -%}
+            <a
+              class="mg-link mg-ch__help-link"
+              href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {%- render 'mg-icon', icon: 'whatsapp' -%}
+              <span>{{ section.settings.help_link_label | escape }}</span>
+              <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
+            </a>
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_image -%}
+        <div
+          class="mg-ch__media"
+          aria-hidden="true"
+        >
+          {%- if hero_image != blank -%}
+            {%- assign focal_style = 'object-position: ' | append: hero_image.presentation.focal_point -%}
+            {{-
+              hero_image
+              | image_url: width: 1200
+              | image_tag:
+                widths: '400, 600, 800, 1000, 1200',
+                sizes: image_sizes,
+                loading: 'eager',
+                fetchpriority: 'high',
+                alt: '',
+                style: focal_style,
+                class: 'mg-ch__img'
+            -}}
+          {%- else -%}
+            <img
+              class="mg-ch__img"
+              src="{{ asset_name | asset_url }}"
+              {% if asset_small != blank %}
+                srcset="{{ asset_small | asset_url }} 800w, {{ asset_name | asset_url }} {{ asset_width }}w"
+                sizes="{{ image_sizes }}"
+              {% endif %}
+              width="{{ asset_width }}"
+              height="{{ asset_height }}"
+              alt=""
+              loading="eager"
+              fetchpriority="high"
+            >
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
   </div>
@@ -229,9 +238,17 @@
           "name": "Home",
           "item": {{ request.origin | append: routes.root_url | json }}
         },
+        {%- if show_collections_crumb %}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ section.settings.breadcrumb_label | json }},
+            "item": {{ request.origin | append: routes.collections_url | json }}
+          },
+        {%- endif %}
         {
           "@type": "ListItem",
-          "position": 2,
+          "position": {% if show_collections_crumb %}3{% else %}2{% endif %},
           "name": {{ collection.title | json }},
           "item": {{ request.origin | append: collection.url | json }}
         }
@@ -267,260 +284,271 @@
 {% endjavascript %}
 
 {% stylesheet %}
-  .mg-collection-hero {
-    --mg-ch-overlay: 80%;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    border-bottom: 1px solid var(--mg-border);
-    background: var(--mg-bg);
-    color: var(--mg-text);
+  /*
+   * Collection header: the inner-page header pattern (breadcrumb, grey panel, serif h1),
+   * compact so the products start high. Phones: text only. From 750px: a rounded photo on
+   * the right. Layout only; colour, type and components come from mg-theme.css.
+   */
+  .mg-ch__crumbs {
+    margin-block: calc(var(--mg-space-3) * -1) var(--mg-space-1);
   }
 
-  .mg-collection-hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-
-  .mg-collection-hero__img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 45%;
-  }
-
-  /* Mobile: even wash over the photo, heavier at the bottom where the copy sits */
-  .mg-collection-hero__scrim {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(0deg, var(--mg-bg) 0%, transparent 45%),
-      color-mix(in srgb, var(--mg-bg) var(--mg-ch-overlay), transparent);
-  }
-
-  .mg-collection-hero__inner {
-    position: relative;
+  .mg-ch__crumbs ol {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: clamp(28px, 5vw, 56px);
-    min-height: clamp(300px, 34vw, 400px);
-    padding-block: clamp(20px, 3vw, 32px) clamp(28px, 4.5vw, 56px);
-  }
-
-  .mg-collection-hero--medium .mg-collection-hero__inner {
-    min-height: clamp(380px, 44vw, 540px);
-  }
-
-  .mg-collection-hero__content {
-    max-width: 720px;
-  }
-
-  /* Breadcrumb */
-  .mg-collection-hero__crumbs ol {
-    display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0.25rem 0.5rem;
+    gap: var(--mg-space-2);
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 0.8125rem;
-    color: var(--mg-text-subtle);
+    font-size: var(--mg-fs-micro);
+    line-height: 1.4;
+    color: var(--mg-ink-2);
   }
 
-  .mg-collection-hero__crumbs li {
+  .mg-ch__crumbs li {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .mg-ch__crumbs li:last-child {
+    flex: 0 1 auto;
+    overflow: hidden;
+  }
+
+  .mg-ch__crumbs li + li::before {
+    content: '';
+    flex: none;
+    width: 5px;
+    height: 5px;
+    margin-inline-end: 2px;
+    border-top: 1.5px solid var(--mg-ink-3);
+    border-right: 1.5px solid var(--mg-ink-3);
+    transform: rotate(45deg);
+  }
+
+  .mg-ch__crumbs a {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    min-height: var(--mg-tap);
+    color: var(--mg-ink-2);
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
   }
 
-  .mg-collection-hero__crumbs li + li::before {
-    content: '/';
-    color: var(--mg-border-strong);
+  .mg-ch__crumbs a:hover {
+    color: var(--mg-ink);
+    text-decoration-color: currentcolor;
   }
 
-  .mg-collection-hero__crumbs a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 32px;
-    color: var(--mg-text-muted);
-    text-decoration: none;
+  .mg-ch__crumbs [aria-current] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--mg-ink);
+    font-weight: 500;
   }
 
-  .mg-collection-hero__crumbs a:hover {
-    color: var(--mg-text);
+  .mg-ch__panel {
+    display: grid;
+    gap: var(--mg-space-5);
   }
 
-  .mg-collection-hero__crumbs [aria-current='page'] {
-    color: var(--mg-text);
+  .mg-ch__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
   }
 
-  .mg-collection-hero__eyebrow {
-    margin-bottom: 0.9rem;
+  .mg-ch__title {
+    max-width: 22ch;
   }
 
-  .mg-collection-hero__title {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--mg-h1-page);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    color: var(--mg-text);
-    text-wrap: balance;
+  .mg-ch__count {
+    margin: var(--mg-space-2) 0 0;
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
+    font-variant-numeric: tabular-nums;
   }
 
   /* Description with optional clamp */
-  .mg-collection-hero__desc-wrap {
+  .mg-ch__desc-wrap {
     display: block;
-    margin-top: 1.1rem;
+    align-self: stretch;
   }
 
-  .mg-collection-hero__desc {
-    max-width: 62ch;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--mg-text-muted);
-    text-wrap: pretty;
-  }
-
-  .mg-collection-hero__desc > * {
+  .mg-ch__desc > * {
     margin: 0 0 0.75em;
   }
 
-  .mg-collection-hero__desc > :last-child {
+  .mg-ch__desc > :last-child {
     margin-bottom: 0;
   }
 
-  .mg-collection-hero__desc a {
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .mg-ch__desc a {
+    color: var(--mg-ink);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: currentcolor;
+    text-underline-offset: 0.22em;
   }
 
-  .mg-collection-hero__desc :is(h2, h3, h4) {
+  .mg-ch__desc :is(h2, h3, h4) {
+    font-family: var(--mg-font-ui);
     font-size: 1rem;
-    color: var(--mg-text);
+    font-weight: 600;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
-  .mg-collection-hero__desc-wrap.is-clamped .mg-collection-hero__desc {
-    max-height: 4.8em;
+  .mg-ch__desc-wrap.is-clamped .mg-ch__desc {
+    max-height: calc(3 * var(--mg-lh-body) * 1em);
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
-    mask-image: linear-gradient(180deg, #000 55%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, var(--mg-mask) 55%, transparent);
+    mask-image: linear-gradient(180deg, var(--mg-mask) 55%, transparent);
   }
 
-  .mg-collection-hero__more {
+  .mg-ch__more {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    min-height: 44px;
-    margin-top: 0.25rem;
+    gap: var(--mg-space-1);
+    min-height: var(--mg-tap);
+    margin: 0;
     padding: 0;
     border: 0;
+    border-radius: var(--mg-radius-xs);
     background: none;
+    color: var(--mg-ink);
     font: inherit;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
     cursor: pointer;
   }
 
-  .mg-collection-hero__more[hidden] {
-    display: none;
+  .mg-ch__more span {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
   }
 
-  .mg-collection-hero__more svg {
+  .mg-ch__more:hover span {
+    text-decoration-thickness: 2px;
+  }
+
+  .mg-ch__more:focus-visible {
+    outline: 2px solid var(--mg-focus);
+    outline-offset: 2px;
+  }
+
+  .mg-ch__more .mg-icon {
     width: 16px;
     height: 16px;
-    color: var(--mg-accent);
-    transition: transform 0.2s var(--mg-ease);
+    transition: transform var(--mg-dur) var(--mg-ease);
   }
 
-  .mg-collection-hero__more[aria-expanded='true'] svg {
+  .mg-ch__more[aria-expanded='true'] .mg-icon {
     transform: rotate(180deg);
   }
 
-  .mg-collection-hero__more:hover span {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-
-  /* Chips */
-  .mg-collection-hero__chips {
+  .mg-ch__points {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 1.4rem 0 0;
+    gap: var(--mg-space-2) var(--mg-space-5);
+    margin: var(--mg-space-4) 0 0;
     padding: 0;
     list-style: none;
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--mg-ink);
   }
 
-  .mg-collection-hero__chips .mg-chip {
-    background: color-mix(in srgb, var(--mg-surface) 72%, transparent);
-    color: var(--mg-text);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-  }
-
-  .mg-collection-hero__chips svg {
-    width: 14px;
-    height: 14px;
-    color: var(--mg-accent);
-  }
-
-  .mg-collection-hero__help {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.25rem 0.6rem;
-    margin: 1.1rem 0 0;
-    font-size: 0.9375rem;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-collection-hero__help a {
+  .mg-ch__point {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    min-height: 44px;
-    font-weight: 700;
-    color: var(--mg-whatsapp);
-    text-decoration: none;
+    gap: 6px;
+    margin: 0;
   }
 
-  .mg-collection-hero__help a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
+  .mg-ch__point .mg-icon {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--mg-ink-2);
   }
 
-  .mg-collection-hero__help svg {
+  .mg-ch__help {
+    margin: var(--mg-space-3) 0 0;
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
+  }
+
+  .mg-ch__help-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: var(--mg-tap);
+    vertical-align: middle;
+  }
+
+  /* A flex link does not pass its underline to the text: draw it on the label */
+  .mg-ch__help-link > span {
+    text-decoration: inherit;
+    text-decoration-color: currentcolor;
+  }
+
+  .mg-ch__help-link .mg-icon {
+    flex: none;
     width: 18px;
     height: 18px;
+    color: var(--mg-whatsapp);
   }
 
-  /* Desktop: photo sits right, copy on a solid-to-clear scrim on the left */
-  @media screen and (min-width: 990px) {
-    .mg-collection-hero__media {
-      inset: 0 0 0 auto;
-      width: 68%;
+  /* Phones: text only, so the products start in the first screen */
+  .mg-ch__media {
+    display: none;
+    min-width: 0;
+  }
+
+  .mg-ch__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--mg-radius-md);
+    object-fit: cover;
+    background-color: var(--mg-band-2);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-ch__panel--media {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      align-items: stretch;
+      gap: var(--mg-space-6);
     }
 
-    .mg-collection-hero__scrim {
-      background:
-        linear-gradient(90deg, var(--mg-bg) 0%, color-mix(in srgb, var(--mg-bg) var(--mg-ch-overlay), transparent) 38%, color-mix(in srgb, var(--mg-bg) 30%, transparent) 100%),
-        linear-gradient(0deg, var(--mg-bg) 0%, transparent 35%);
+    .mg-ch__media {
+      display: flex;
+      min-height: 220px;
+    }
+
+    .mg-ch__img {
+      flex: 1 1 auto;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-ch__panel--media {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--mg-space-7);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mg-collection-hero__more svg {
+    .mg-ch__more .mg-icon {
       transition: none;
     }
   }
@@ -543,6 +571,7 @@
       "type": "checkbox",
       "id": "show_breadcrumbs",
       "label": "Show breadcrumbs",
+      "info": "Also adds breadcrumb structured data for Google.",
       "default": true
     },
     {
@@ -551,12 +580,6 @@
       "label": "Breadcrumb: all collections label",
       "info": "Links to the list of all collections. Leave blank to skip this step.",
       "default": "Collections"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Shop"
     },
     {
       "type": "checkbox",
@@ -572,7 +595,7 @@
       "type": "textarea",
       "id": "fallback_text",
       "label": "Text when a collection has no description",
-      "default": "Hand-picked kit that we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part."
+      "default": "Kit we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part."
     },
     {
       "type": "text",
@@ -591,8 +614,8 @@
       "type": "textarea",
       "id": "chips",
       "label": "Highlights",
-      "info": "One per line. Leave blank to hide.",
-      "default": "Fitted in Dublin\nWired & wireless options\nExpert advice on WhatsApp"
+      "info": "One per line, three at most. Shown as a short list with ticks under the description. Leave blank to hide.",
+      "default": "Fitted in Dublin\nWired and wireless options\nAdvice on WhatsApp"
     },
     {
       "type": "header",
@@ -615,11 +638,18 @@
       "type": "text",
       "id": "help_link_label",
       "label": "Help link label",
-      "default": "Ask us on WhatsApp"
+      "default": "WhatsApp us"
     },
     {
       "type": "header",
-      "content": "Background"
+      "content": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "info": "Shown on the right from tablet width. Phones show the text only, so the products start higher.",
+      "default": true
     },
     {
       "type": "paragraph",
@@ -668,32 +698,6 @@
         }
       ],
       "default": "mg-showroom.webp"
-    },
-    {
-      "type": "range",
-      "id": "overlay",
-      "label": "Darken image",
-      "min": 30,
-      "max": 95,
-      "step": 5,
-      "unit": "%",
-      "default": 80
-    },
-    {
-      "type": "select",
-      "id": "height",
-      "label": "Height",
-      "options": [
-        {
-          "value": "compact",
-          "label": "Compact"
-        },
-        {
-          "value": "medium",
-          "label": "Medium"
-        }
-      ],
-      "default": "compact"
     }
   ],
   "presets": [

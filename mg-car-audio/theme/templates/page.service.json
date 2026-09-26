@@ -7,21 +7,21 @@
           "type": "fact",
           "settings": {
             "icon": "clock",
-            "text": "Most fits in 1–2 hours"
+            "text": "Most fits take 1 to 2 hours"
           }
         },
         "fact-connection": {
           "type": "fact",
           "settings": {
             "icon": "screen",
-            "text": "Wired & wireless"
+            "text": "Wired and wireless"
           }
         },
         "fact-finish": {
           "type": "fact",
           "settings": {
             "icon": "shield",
-            "text": "OEM-style finish"
+            "text": "Factory-style finish"
           }
         },
         "fact-makes": {
@@ -43,9 +43,8 @@
         "breadcrumb_parent_label": "Services",
         "breadcrumb_parent_url": "/pages/services",
         "breadcrumb_schema": true,
-        "eyebrow": "Fitted in Dublin 12",
-        "heading": "Apple CarPlay & Android Auto Installation in Dublin",
-        "intro": "Google Maps, Waze, Spotify, calls and messages, right on your car's screen. We fit wired and wireless Apple CarPlay and Android Auto to factory screens or as a complete radio upgrade, with an OEM-style appearance that preserves your original features wherever possible.",
+        "heading": "Apple CarPlay and Android Auto installation in Dublin",
+        "intro": "Maps, music, calls and messages on your car's own screen. Wired or wireless, fitted at our Dublin 12 workshop with your factory features kept.",
         "price_prefix": "From",
         "price": "€299",
         "price_suffix": "fitted",
@@ -53,8 +52,8 @@
         "primary_label": "Book a fitting",
         "primary_url": "/pages/book-a-fitting",
         "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp for a quote",
-        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or Android Auto. My reg is: ",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
         "fallback_image": "mg-bmw-carplay-screen.webp",
@@ -68,7 +67,7 @@
           "type": "text",
           "settings": {
             "title": "Factory screen or full upgrade",
-            "content": "<p>We specialise in professional Apple CarPlay and Android Auto installations for a wide range of vehicles. Whether your car has a factory screen or needs a complete radio upgrade, we bring modern smartphone connectivity to your dash.</p><p>Enjoy safe, hands-free access to Google Maps, Apple Maps, Waze, Spotify, WhatsApp, calls and messages, all on your car's screen. Every installation is designed to integrate seamlessly with your vehicle, keeping an <strong>OEM-style appearance and preserving original features wherever possible</strong>.</p>",
+            "content": "<p>We fit Apple CarPlay and Android Auto to a wide range of cars. Whether your car has a factory screen or needs a complete radio upgrade, we bring your phone's apps to your dash.</p><p>Google Maps, Apple Maps, Waze, Spotify, WhatsApp, calls and messages all show on your car's screen. Every fit keeps an <strong>OEM-style look and your original features wherever possible</strong>.</p>",
             "use_page_content": false
           }
         },
@@ -84,16 +83,8 @@
           "type": "text",
           "settings": {
             "title": "Wired, wireless or OEM retrofit",
-            "content": "<p>We install both <strong>wired and wireless</strong> Apple CarPlay and Android Auto, so your phone connects effortlessly every time you get in. Our technicians complete every job to the highest standard, using quality components for long-lasting performance.</p><p>If your car doesn't support Apple CarPlay or Android Auto yet, we can still help. From <strong>OEM retrofits to complete touchscreen upgrades</strong>, we offer tailored solutions that keep a clean, factory-quality finish.</p>",
+            "content": "<p>We fit both <strong>wired and wireless</strong> Apple CarPlay and Android Auto, so your phone connects every time you get in. We use quality parts that last.</p><p>If your car doesn't support CarPlay or Android Auto yet, we can still help. From <strong>OEM retrofits to complete touchscreen upgrades</strong>, we'll match the kit to your car and keep a factory-style finish.</p>",
             "use_page_content": false
-          }
-        },
-        "benefits": {
-          "type": "benefits",
-          "settings": {
-            "title": "Benefits of Apple CarPlay & Android Auto",
-            "items": "Wireless and wired connectivity available\nApple Maps, Google Maps & Waze navigation\nSpotify, Apple Music & other streaming apps\nHands-free calling and messaging\nSiri and Google Assistant voice control\nImproved driving safety and convenience\nOEM-style integration with your vehicle\nProfessional installation with expert support",
-            "icon": "check"
           }
         },
         "makes": {
@@ -101,7 +92,7 @@
           "settings": {
             "title": "Makes we cover",
             "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
-            "note": "And many more. European, Japanese or imported, we'll recommend the best solution to suit your car and budget.",
+            "note": "And many more. European, Japanese or imported, we'll recommend what suits your car and budget.",
             "link_label": "Check your car",
             "link_url": "/pages/get-a-quote"
           }
@@ -146,7 +137,6 @@
         "text-intro",
         "included",
         "text-options",
-        "benefits",
         "makes",
         "price-bmw-carplay",
         "price-bmw-android-auto",
@@ -154,22 +144,20 @@
         "price-video-in-motion"
       ],
       "settings": {
-        "eyebrow": "What you get",
         "heading": "Smartphone connectivity, fitted properly",
-        "intro": "Whether your car has a factory screen or needs a complete radio upgrade, we'll recommend the right solution for your car and budget, then fit it to the highest standard using quality components.",
+        "intro": "Factory screen or a complete radio upgrade: we'll recommend what suits your car and budget, then fit it with quality parts.",
         "layout": "sidebar",
         "background": "page",
-        "show_numbers": true,
         "show_card": true,
         "sticky_card": true,
         "card_heading": "Fitted prices",
-        "card_text": "Fitted at our unit in Ballymount, Dublin 12. Send us your reg first and we'll confirm exactly what suits your car.",
-        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_text": "Fitted at our unit in Ballymount, Dublin 12. Send us your reg first and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
         "card_button_label": "Book a fitting",
         "card_button_url": "/pages/book-a-fitting",
         "card_show_whatsapp": true,
-        "card_whatsapp_label": "Quote on WhatsApp",
-        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay / Android Auto. My reg is: ",
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or Android Auto. My reg is: ",
         "card_show_contact": true,
         "output_schema": true,
         "schema_name": "",
@@ -197,7 +185,7 @@
           "type": "question",
           "settings": {
             "question": "How much does a CarPlay installation cost?",
-            "answer": "<p>BMW Apple CarPlay is <strong>€350</strong> fitted and BMW Android Auto on iDrive 7 is <strong>€299</strong>. Other makes depend on the screen and system in your car, so send us your reg and we'll give you a fixed price before you book. A <strong>€50 deposit</strong> secures your fitting slot.</p>"
+            "answer": "<p>BMW Apple CarPlay is <strong>€350</strong> fitted and BMW Android Auto on iDrive 7 is <strong>€299</strong>. Other makes depend on the screen and system in your car, so send us your reg and we'll give you a fixed price before you book. A <strong>€50 deposit</strong> secures your fitting slot.</p>"
           }
         },
         "faq_time": {
@@ -223,35 +211,29 @@
         "faq_features"
       ],
       "settings": {
-        "eyebrow": "CarPlay FAQ",
-        "heading": "CarPlay & Android Auto questions",
-        "text": "The things drivers ask us most before booking a CarPlay or Android Auto fitting. Anything else, send us your reg and we'll check your car.",
+        "heading": "CarPlay and Android Auto questions",
+        "text": "What drivers ask us before booking a fitting.",
         "show_contact": false,
-        "contact_heading": "Not sure what fits your car?",
-        "open_first": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
         "output_faq_schema": true,
-        "layout": "split",
-        "background": "surface",
-        "spacing": "normal"
+        "background": "page"
       }
     },
     "cta": {
       "type": "mg-service-cta",
       "settings": {
-        "eyebrow": "Quick compatibility check",
-        "heading": "Not sure what fits your car?",
-        "text": "Send your reg and a photo of your dash on WhatsApp. We'll tell you exactly which CarPlay or Android Auto option suits your car, what it costs and how long the fitting takes.",
-        "show_details": true,
+        "style": "red",
+        "show_details": false,
         "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp your reg",
-        "whatsapp_message": "Hi MG Car Audio, can you tell me which CarPlay / Android Auto option fits my car? My reg is: ",
+        "whatsapp_label": "WhatsApp us",
         "show_call": true,
         "call_label": "Call",
         "book_label": "Book a fitting",
         "book_url": "/pages/book-a-fitting",
-        "glow_position": "right",
-        "glow_strength": 30,
-        "spacing": "tight"
+        "heading": "Not sure what fits your car?",
+        "text": "Send your reg and a photo of your dash on WhatsApp. We'll tell you which CarPlay or Android Auto option suits your car, what it costs and how long the fitting takes.",
+        "whatsapp_message": "Hi MG Car Audio, can you tell me which CarPlay or Android Auto option fits my car? My reg is: "
       }
     }
   },

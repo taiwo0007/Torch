@@ -1,0 +1,524 @@
+{%- comment -%}
+  Component gallery for the MG design system v3 (docs/DESIGN.md §5).
+  Rendered by: node tools/preview/render.mjs --gallery   (or shoot.mjs --gallery)
+  Every block below is the reference markup for a component. Only .pv-gallery-* classes are
+  preview-only (demo layout); everything else is the real Component API from assets/mg-theme.css.
+{%- endcomment -%}
+{%- render 'mg-carousel-script' -%}
+<style>
+  .pv-gallery-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pv-gallery-split { display: grid; gap: var(--mg-space-5); }
+  .pv-gallery-stack { display: grid; gap: var(--mg-space-4); }
+  .pv-gallery-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--mg-space-3); }
+  .pv-gallery-hero { display: grid; gap: var(--mg-space-5); align-items: center; }
+  .pv-gallery-hero img { display: block; width: 100%; height: auto; border-radius: var(--mg-radius-md); }
+  .pv-gallery-check { display: grid; gap: var(--mg-space-3); margin: 0; padding: var(--mg-space-5); list-style: none; }
+  .pv-gallery-check li { display: flex; gap: var(--mg-space-3); align-items: flex-start; }
+  .pv-gallery-check .mg-icon { flex: none; width: 20px; height: 20px; color: var(--mg-red-ink); }
+  .pv-gallery-form { display: grid; gap: var(--mg-space-4); max-width: 480px; }
+  @media (min-width: 750px) {
+    .pv-gallery-split { grid-template-columns: 1fr 1fr; align-items: center; }
+  }
+  @media (min-width: 990px) {
+    .pv-gallery-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .pv-gallery-hero { grid-template-columns: 1.05fr 1fr; }
+  }
+</style>
+
+{%- comment -%} Hero banner: red surface, serif h1, plate input {%- endcomment -%}
+<section class="mg-section">
+  <div class="mg-container">
+    <div class="mg-panel mg-surface-red pv-gallery-hero">
+      <img
+        src="{{ 'mg-bmw-carplay-screen-800.webp' | asset_url }}"
+        alt="BMW widescreen showing Apple CarPlay"
+        width="800"
+        height="533"
+      >
+      <div class="pv-gallery-stack">
+        <h1 class="mg-display mg-display--hero">Your car already has the screen. <em>Add CarPlay.</em></h1>
+        <p class="mg-lede">Wireless CarPlay and Android Auto, fitted in about an hour in Dublin 12.</p>
+        <form
+          class="mg-plate-group"
+          action="/pages/get-a-quote"
+          method="get"
+        >
+          <div class="mg-plate">
+            <span
+              class="mg-plate__band"
+              aria-hidden="true"
+              >IRL</span
+            >
+            <label
+              class="mg-visually-hidden"
+              for="pv-reg"
+              >Your registration</label
+            >
+            <input
+              class="mg-plate__input"
+              id="pv-reg"
+              name="reg"
+              type="text"
+              placeholder="241-D-12345"
+              autocomplete="off"
+              autocapitalize="characters"
+              spellcheck="false"
+              maxlength="12"
+            >
+          </div>
+          <button
+            class="mg-btn mg-btn--on-red mg-btn--lg"
+            type="submit"
+          >
+            Get a quote
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Statement + trust strip {%- endcomment -%}
+<section class="mg-section">
+  <div class="mg-container pv-gallery-stack">
+    <div class="mg-head mg-head--center">
+      <div class="mg-head__text">
+        <h2 class="mg-display">Ireland's CarPlay and car audio specialist.</h2>
+        <p class="mg-head__sub">Fixed fitted prices at our Dublin 12 workshop. Backed by our fitting warranty.</p>
+      </div>
+    </div>
+    <ul
+      class="mg-trust"
+      role="list"
+    >
+      <li class="mg-trust__item">{% render 'mg-icon', icon: 'shield', class: 'mg-trust__icon' %}<span>Fitting warranty</span></li>
+      <li class="mg-trust__item">{% render 'mg-icon', icon: 'tag', class: 'mg-trust__icon' %}<span>Fixed fitted prices</span></li>
+      <li class="mg-trust__item">{% render 'mg-icon', icon: 'check', class: 'mg-trust__icon' %}<span>Factory features kept</span></li>
+      <li class="mg-trust__item">{% render 'mg-icon', icon: 'map-pin', class: 'mg-trust__icon' %}<span>Dublin 12 workshop</span></li>
+    </ul>
+  </div>
+</section>
+
+{%- comment -%} Section head + system tiles {%- endcomment -%}
+<section class="mg-section">
+  <div class="mg-container">
+    <div class="mg-head">
+      <h2 class="mg-head__title">Shop by system</h2>
+      <a
+        class="mg-link mg-head__link"
+        href="/collections/all"
+        >See all</a
+      >
+    </div>
+    <ul
+      class="mg-grid pv-gallery-tiles"
+      role="list"
+      style="margin: 0; padding: 0; list-style: none;"
+    >
+      <li>
+        <a
+          class="mg-tile"
+          href="/collections/carplay-android-auto"
+        >
+          <span class="mg-tile__media"
+            ><img
+              src="{{ 'mg-audi-carplay-screen-800.webp' | asset_url }}"
+              alt=""
+              width="800"
+              height="533"
+              loading="lazy"
+          ></span>
+          <span class="mg-tile__label">CarPlay &amp; Android Auto</span>
+          <span class="mg-tile__meta">From €299 fitted</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="mg-tile"
+          href="/collections/android-radios"
+        >
+          <span class="mg-tile__media"
+            ><img
+              src="{{ 'mg-dash-radio.webp' | asset_url }}"
+              alt=""
+              width="1024"
+              height="1024"
+              loading="lazy"
+          ></span>
+          <span class="mg-tile__label">Android radios</span>
+          <span class="mg-tile__meta">From €150 fitted</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="mg-tile"
+          href="/collections/speakers"
+        >
+          <span class="mg-tile__media"
+            ><img
+              src="{{ 'mg-speaker-pair.webp' | asset_url }}"
+              alt=""
+              width="1024"
+              height="1024"
+              loading="lazy"
+          ></span>
+          <span class="mg-tile__label">Speakers</span>
+          <span class="mg-tile__meta">Price on request</span>
+        </a>
+      </li>
+      <li>
+        <a
+          class="mg-tile"
+          href="/collections/dashcams"
+        >
+          <span class="mg-tile__media">{% render 'mg-icon', icon: 'camera' %}</span>
+          <span class="mg-tile__label">Dash cams</span>
+          <span class="mg-tile__meta">From €X fitted</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+{%- comment -%} Band: chips + carousel of cards {%- endcomment -%}
+<section class="mg-section mg-section--band">
+  <div class="mg-container">
+    <mg-carousel class="mg-carousel">
+      <div class="mg-head">
+        <div class="mg-head__text">
+          <h2 class="mg-head__title">Fitted prices</h2>
+          <p class="mg-head__sub">Real prices for the jobs we do most.</p>
+        </div>
+        <div class="mg-head__actions">
+          <div class="mg-carousel__nav">
+            <button
+              class="mg-carousel__btn"
+              type="button"
+              data-mg-carousel-prev
+              aria-label="Previous"
+            >
+              {% render 'mg-icon', icon: 'chevron-left' %}
+            </button>
+            <button
+              class="mg-carousel__btn"
+              type="button"
+              data-mg-carousel-next
+              aria-label="Next"
+            >
+              {% render 'mg-icon', icon: 'chevron-right' %}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mg-chips mg-chips--bleed"
+        role="group"
+        aria-label="Filter services"
+        style="margin-bottom: var(--mg-head-gap);"
+      >
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="false"
+        >
+          CarPlay
+        </button>
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="false"
+        >
+          Screens
+        </button>
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="false"
+        >
+          Radios
+        </button>
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="false"
+        >
+          Conversions
+        </button>
+        <button
+          class="mg-chip"
+          type="button"
+          aria-pressed="false"
+        >
+          Speakers and subs
+        </button>
+      </div>
+      <ul
+        class="mg-carousel__track"
+        role="list"
+        tabindex="0"
+        aria-label="Fitted prices"
+      >
+        {%- assign pv_cards = 'BMW Apple CarPlay|€350|About 1 hour|mg-bmw-carplay-screen-800.webp,BMW Android Auto (iDrive 7)|€299|About 1 hour|mg-android-auto-dash-800.webp,Android radio install|€150|About 90 minutes|mg-dash-radio.webp,BMW Japanese-to-European conversion|€450|About 2 hours|mg-bmw-japan-to-europe-800.webp,iDrive 7 video in motion|€149|Under an hour|mg-audi-carplay-screen-800.webp,Mercedes Japanese-to-European conversion|Price on request|Half a day|mg-mercedes-japan-to-europe-800.webp' | split: ',' -%}
+        {%- for card in pv_cards -%}
+          {%- assign c = card | split: '|' -%}
+          <li class="mg-carousel__slide">
+            <a
+              class="mg-card mg-card--link"
+              href="/pages/book-a-fitting"
+            >
+              <span class="mg-card__media"
+                ><img
+                  src="{{ c[3] | asset_url }}"
+                  alt=""
+                  width="800"
+                  height="533"
+                  loading="lazy"
+              ></span>
+              <span class="mg-card__body">
+                {%- if forloop.first -%}
+                  <span class="mg-badge mg-badge--red">Most booked</span>
+                {%- endif -%}
+                <span class="mg-card__title">{{ c[0] }}</span>
+                <span class="mg-card__meta">{{ c[2] }}</span>
+                {%- if c[1] contains '€' -%}
+                  <span class="mg-price mg-price--lg"
+                    ><span class="mg-price__label">From </span>{{ c[1] }}<span class="mg-price__cents">00</span
+                    ><span class="mg-price__label"> fitted</span></span
+                  >
+                {%- else -%}
+                  <span class="mg-price">{{ c[1] }}</span>
+                {%- endif -%}
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </mg-carousel>
+  </div>
+</section>
+
+{%- comment -%} Warm panel with a checklist card {%- endcomment -%}
+<section class="mg-section">
+  <div class="mg-container">
+    <div class="mg-panel mg-panel--warm pv-gallery-split">
+      <div class="pv-gallery-stack">
+        <h2 class="mg-display">What's in every <em>MG fit</em></h2>
+        <p class="mg-lede">How we make sure your new screen works like it came from the factory.</p>
+      </div>
+      <div class="mg-card mg-card--raised">
+        <ul
+          class="pv-gallery-check"
+          role="list"
+        >
+          <li>{% render 'mg-icon', icon: 'check' %}<span>Compatibility check from your reg</span></li>
+          <li>{% render 'mg-icon', icon: 'check' %}<span>OEM-style finish</span></li>
+          <li>{% render 'mg-icon', icon: 'check' %}<span>Factory controls kept where possible</span></li>
+          <li>{% render 'mg-icon', icon: 'check' %}<span>Full test before you drive away</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Review card: photo, name tag, stars, sample tag {%- endcomment -%}
+<section class="mg-section">
+  <div class="mg-container">
+    <div class="mg-head">
+      <div class="mg-head__text">
+        <h2 class="mg-head__title">What Dublin drivers say</h2>
+        <p class="mg-head__sub">
+          <span
+            class="mg-stars"
+            style="--mg-rating: 4.9;"
+            role="img"
+            aria-label="Rated 4.9 out of 5"
+          ></span>
+          4.9 from 120 Google reviews
+        </p>
+      </div>
+      <span class="mg-sample-tag">Sample reviews</span>
+    </div>
+    <div class="pv-gallery-split">
+      <article class="mg-card">
+        <span
+          class="mg-card__media"
+          style="position: relative;"
+          ><img
+            src="{{ 'mg-showroom-800.webp' | asset_url }}"
+            alt="Finished install in the workshop"
+            width="800"
+            height="600"
+            loading="lazy"
+          ><span
+            class="mg-badge mg-badge--card"
+            style="position: absolute; top: 12px; left: 12px;"
+            >Aoife K.</span
+          ></span
+        >
+        <div class="mg-card__body">
+          <span
+            class="mg-stars mg-stars--sm"
+            style="--mg-rating: 5;"
+            role="img"
+            aria-label="Rated 5 out of 5"
+          ></span>
+          <p
+            class="mg-card__meta"
+            style="color: var(--mg-ink);"
+          >
+            Demo review: replace with real Google reviews. Wireless CarPlay in my 3 Series, done in an hour.
+          </p>
+          <p class="mg-card__meta">Car: BMW 3 Series</p>
+        </div>
+      </article>
+      <div class="pv-gallery-stack">
+        <div class="pv-gallery-row">
+          <span class="mg-badge">Fitted price</span>
+          <span class="mg-badge mg-badge--red">Best seller</span>
+          <span class="mg-badge mg-badge--ink">New</span>
+          <span class="mg-sample-tag">Sample photo</span>
+        </div>
+        <div class="pv-gallery-row">
+          <span class="mg-price">€350</span>
+          <span class="mg-price mg-price--lg">€149<span class="mg-price__cents">00</span></span>
+          <span class="mg-price mg-price--red"><span class="mg-price__label">From </span>€299<span class="mg-price__label"> fitted</span></span>
+        </div>
+        <div class="pv-gallery-row">
+          <span
+            class="mg-stars mg-stars--lg"
+            style="--mg-rating: 3.5;"
+            role="img"
+            aria-label="Rated 3.5 out of 5"
+          ></span>
+          <span class="mg-chip">Static chip</span>
+          <a
+            class="mg-chip"
+            href="/pages/bmw-carplay"
+            >BMW</a
+          >
+          <a
+            class="mg-chip"
+            href="/pages/audi-carplay"
+            aria-current="page"
+            >Audi</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Buttons, links, fields, theme control {%- endcomment -%}
+<section class="mg-section mg-section--band">
+  <div class="mg-container pv-gallery-split">
+    <div class="pv-gallery-stack">
+      <h2 class="mg-heading">Buttons and links</h2>
+      <div class="mg-actions">
+        <a
+          class="mg-btn mg-btn--primary"
+          href="/pages/book-a-fitting"
+          >{% render 'mg-icon', icon: 'calendar' %}Book a fitting</a
+        >
+        <a
+          class="mg-btn mg-btn--whatsapp"
+          href="https://wa.me/{{ settings.mg_whatsapp_number }}"
+          >{% render 'mg-icon', icon: 'whatsapp' %}WhatsApp us</a
+        >
+      </div>
+      <div class="pv-gallery-row">
+        <a
+          class="mg-btn mg-btn--secondary mg-btn--sm"
+          href="/pages/contact"
+          >Contact</a
+        >
+        <a
+          class="mg-btn mg-btn--primary mg-btn--lg"
+          href="/pages/get-a-quote"
+          >Get a quote</a
+        >
+        <button
+          class="mg-btn mg-btn--primary"
+          type="button"
+          disabled
+        >
+          Disabled
+        </button>
+      </div>
+      <p>Read the <a class="mg-link" href="/pages/faq">fitting FAQ</a> before you book.</p>
+      {% render 'mg-theme-mode', control: true, id: 'pv-theme' %}
+    </div>
+    <form
+      class="mg-card pv-gallery-form"
+      style="padding: var(--mg-space-5);"
+      action="/contact"
+    >
+      <div class="mg-field">
+        <label
+          class="mg-label"
+          for="pv-name"
+          >Your name</label
+        >
+        <input
+          class="mg-input"
+          id="pv-name"
+          name="name"
+          autocomplete="name"
+        >
+      </div>
+      <div class="mg-field">
+        <label
+          class="mg-label"
+          for="pv-phone"
+          >Phone <span class="mg-label__optional">(optional)</span></label
+        >
+        <input
+          class="mg-input"
+          id="pv-phone"
+          name="phone"
+          type="tel"
+          autocomplete="tel"
+          aria-invalid="true"
+          aria-describedby="pv-phone-error"
+        >
+        <p
+          class="mg-error-text"
+          id="pv-phone-error"
+        >
+          Enter a phone number, for example 087 123 4567.
+        </p>
+      </div>
+      <div class="mg-field">
+        <label
+          class="mg-label"
+          for="pv-msg"
+          >What do you need?</label
+        >
+        <textarea
+          class="mg-input"
+          id="pv-msg"
+          name="body"
+          aria-describedby="pv-msg-help"
+        ></textarea>
+        <p
+          class="mg-help"
+          id="pv-msg-help"
+        >
+          Your car, the year and what you would like fitted.
+        </p>
+      </div>
+      <button
+        class="mg-btn mg-btn--primary mg-btn--block"
+        type="submit"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+</section>

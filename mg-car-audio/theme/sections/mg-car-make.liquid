@@ -11,7 +11,7 @@
   assign make_name = car_make.name.value | strip | default: section.settings.fallback_make | strip | default: title_first_word | default: 'BMW'
 
   assign heading_fallback = section.settings.fallback_heading | replace: '[make]', make_name | strip
-  assign heading_pattern = make_name | append: ' CarPlay & Screen Upgrades in Dublin'
+  assign heading_pattern = make_name | append: ' CarPlay and screen upgrades in Dublin'
   assign heading = car_make.headline.value | strip | default: heading_fallback | default: heading_pattern
 
   assign title_id = 'MgCarMakeTitle-' | append: section.id
@@ -90,6 +90,9 @@
     endif
   endfor
   assign fallback_alt = fallback_alt | append: ', fitted by ' | append: settings.mg_business_name
+  # Every built-in photo in the list has an 800px copy for phones
+  assign fallback_small = fallback | replace: '.webp', '-800.webp'
+  assign image_sizes = '(min-width: 1200px) 480px, (min-width: 990px) 40vw, (min-width: 750px) calc(100vw - 112px), calc(100vw - 80px)'
 
   # Breadcrumb
   assign crumb_current = page.title | default: heading
@@ -118,6 +121,13 @@
 
   # Text settings with the [make] token
   assign facts = section.settings.facts | replace: '[make]', make_name | split: '|'
+  assign facts_count = 0
+  for fact in facts
+    assign fact_text = fact | strip
+    if fact_text != blank
+      assign facts_count = facts_count | plus: 1
+    endif
+  endfor
   assign systems_heading = section.settings.systems_heading | replace: '[make]', make_name | strip
   assign systems_text = section.settings.systems_text | replace: '[make]', make_name | strip
   assign models_heading = section.settings.models_heading | replace: '[make]', make_name | strip
@@ -136,7 +146,6 @@
 
 {%- comment -%} Service price cards (captured first so an empty list hides the whole band) {%- endcomment -%}
 {%- capture service_cards -%}
-  {%- assign service_index = 0 -%}
   {%- for line in service_lines -%}
     {%- liquid
       assign parts = line | replace: '[make]', make_name | split: '|'
@@ -144,10 +153,8 @@
       if svc_name == blank
         continue
       endif
-      assign service_index = service_index | plus: 1
-      assign svc_number = service_index | prepend: '0' | slice: -2, 2
 
-      # A leading "From" becomes the small label next to the price
+      # A leading "From" becomes the small label before the price
       assign svc_price_raw = parts[1] | strip
       assign svc_price = svc_price_raw | remove_first: 'From ' | remove_first: 'from ' | strip
 
@@ -159,7 +166,7 @@
       assign svc_cta = 'Get a quote'
       if svc_link_head == '/' or svc_link_scheme == 'http'
         assign svc_href = svc_link
-        assign svc_cta = 'View & book'
+        assign svc_cta = 'View and book'
       endif
 
       # Icon from keywords in the service name
@@ -173,7 +180,7 @@
         assign svc_icon = 'screen'
       elsif svc_lc contains 'video'
         assign svc_icon = 'play'
-      elsif svc_lc contains 'speaker'
+      elsif svc_lc contains 'speaker' or svc_lc contains 'sound'
         assign svc_icon = 'speaker'
       elsif svc_lc contains 'camera'
         assign svc_icon = 'camera'
@@ -185,30 +192,24 @@
         href="{{ svc_href | escape }}"
       >
         <span
-          class="mg-carmake__svc-top"
+          class="mg-carmake__svc-icon"
           aria-hidden="true"
         >
-          <span class="mg-carmake__svc-index">{{ svc_number }}</span>
-          <span class="mg-carmake__svc-icon">
-            {%- render 'mg-icon', icon: svc_icon -%}
-          </span>
+          {%- render 'mg-icon', icon: svc_icon -%}
         </span>
-        <h3 class="mg-carmake__svc-name">{{ svc_name | escape }}</h3>
+        <h3 class="mg-card__title mg-carmake__svc-name">{{ svc_name | escape }}</h3>
         <span class="mg-carmake__svc-foot">
           {%- if svc_price != blank -%}
-            <span class="mg-price-from mg-carmake__svc-price">
+            <span class="mg-price mg-price--lg">
               {%- if svc_price != svc_price_raw -%}
-                <small>From</small>
+                <span class="mg-price__label">From </span>
               {%- endif -%}
-              <strong>{{ svc_price | escape }}</strong>
+              {{- svc_price | escape -}}
             </span>
           {%- else -%}
-            <span class="mg-carmake__svc-price mg-carmake__svc-price--none">Price on request</span>
+            <span class="mg-carmake__svc-request">Price on request</span>
           {%- endif -%}
-          <span class="mg-carmake__svc-cta">
-            <span>{{ svc_cta | escape }}</span>
-            {%- render 'mg-icon', icon: 'arrow-right' -%}
-          </span>
+          <span class="mg-carmake__svc-cta">{{ svc_cta | escape }}</span>
         </span>
       </a>
     </li>
@@ -232,20 +233,10 @@
         assign faq_json = faq_json | append: ',{"@type":"Question","name":' | append: faq_q_json | append: ',"acceptedAnswer":{"@type":"Answer","text":' | append: faq_a_json | append: '}}'
       endif
     -%}
-    <details
-      class="mg-carmake__faq-item"
-      {% if forloop.first %}
-        open
-      {% endif %}
-    >
+    <details class="mg-carmake__faq-item">
       <summary class="mg-carmake__faq-q">
-        <span>{{ faq_q | escape }}</span>
-        <span
-          class="mg-carmake__faq-toggle"
-          aria-hidden="true"
-        >
-          {%- render 'mg-icon', icon: 'chevron-down' -%}
-        </span>
+        <span class="mg-carmake__faq-text">{{ faq_q | escape }}</span>
+        {%- render 'mg-icon', icon: 'chevron-down', class: 'mg-carmake__faq-chevron' -%}
       </summary>
       <div class="mg-carmake__faq-a">
         {%- for faq_a_line in faq_a_lines -%}
@@ -274,19 +265,11 @@
       -%}
       <details
         class="mg-carmake__faq-item"
-        {% if forloop.first %}
-          open
-        {% endif %}
         {{ block.shopify_attributes }}
       >
         <summary class="mg-carmake__faq-q">
-          <span>{{ faq_q | escape }}</span>
-          <span
-            class="mg-carmake__faq-toggle"
-            aria-hidden="true"
-          >
-            {%- render 'mg-icon', icon: 'chevron-down' -%}
-          </span>
+          <span class="mg-carmake__faq-text">{{ faq_q | escape }}</span>
+          {%- render 'mg-icon', icon: 'chevron-down', class: 'mg-carmake__faq-chevron' -%}
         </summary>
         <div class="mg-carmake__faq-a">{{ faq_a_html }}</div>
       </details>
@@ -297,20 +280,9 @@
 <div class="mg-carmake">
   {%- comment -%} ================= HERO ================= {%- endcomment -%}
   <section
-    class="mg-carmake__hero"
+    class="mg-section mg-carmake__hero"
     aria-labelledby="{{ title_id }}"
   >
-    <div
-      class="mg-carmake__glow"
-      aria-hidden="true"
-    ></div>
-    <span
-      class="mg-carmake__watermark"
-      aria-hidden="true"
-    >
-      {{- make_name | escape -}}
-    </span>
-
     <div class="mg-container">
       {%- if section.settings.show_breadcrumb -%}
         <nav
@@ -331,37 +303,21 @@
         </script>
       {%- endif -%}
 
-      <div class="mg-carmake__hero-grid">
-        <div class="mg-carmake__hero-copy">
-          {%- if section.settings.eyebrow != blank -%}
-            <p
-              class="mg-eyebrow mg-carmake__reveal"
-              style="--mg-reveal-i: 0;"
-            >
-              {{ section.settings.eyebrow | replace: '[make]', make_name | escape }}
-            </p>
-          {%- endif -%}
-
+      <div class="mg-panel mg-carmake__panel">
+        <div class="mg-carmake__copy">
           <h1
             id="{{ title_id }}"
-            class="mg-carmake__title mg-carmake__reveal"
-            style="--mg-reveal-i: 1;"
+            class="mg-h1-banner mg-carmake__title"
           >
             {{- heading | escape -}}
           </h1>
 
           {%- if use_page_content -%}
-            <div
-              class="mg-carmake__intro mg-carmake__rte rte mg-carmake__reveal"
-              style="--mg-reveal-i: 2;"
-            >
+            <div class="mg-lede mg-carmake__intro mg-carmake__rte">
               {{ page.content }}
             </div>
           {%- else -%}
-            <div
-              class="mg-carmake__intro mg-carmake__reveal"
-              style="--mg-reveal-i: 2;"
-            >
+            <div class="mg-lede mg-carmake__intro">
               {%- for intro_line in intro_lines -%}
                 <p>{{ intro_line | strip }}</p>
               {%- endfor -%}
@@ -369,189 +325,204 @@
           {%- endif -%}
 
           {%- if from_price != blank or price_note != blank -%}
-            <div
-              class="mg-carmake__offer mg-carmake__reveal"
-              style="--mg-reveal-i: 3;"
-            >
+            <div class="mg-carmake__offer{% if from_price != blank %} mg-carmake__offer--price{% endif %}">
               {%- if from_price != blank -%}
-                <p class="mg-price-from mg-carmake__offer-price">
-                  <small>From</small>
-                  <strong>{{ from_price | escape }}</strong>
-                  <small>fitted</small>
+                <p class="mg-price mg-carmake__price">
+                  <span class="mg-price__label">From </span>
+                  <span class="mg-carmake__amount">{{ from_price | escape }}</span>
+                  <span class="mg-price__label"> fitted</span>
                 </p>
               {%- endif -%}
-              <p class="mg-carmake__offer-note">{{ price_note | escape }}</p>
+              {%- if price_note != blank -%}
+                <p class="mg-help mg-carmake__price-note">{{ price_note | escape }}</p>
+              {%- endif -%}
             </div>
           {%- endif -%}
 
-          <div
-            class="mg-carmake__actions mg-carmake__reveal"
-            style="--mg-reveal-i: 4;"
-          >
-            {%- if book_label != blank -%}
-              <a
-                class="mg-btn mg-btn--primary mg-carmake__btn"
-                href="{{ book_url }}"
-              >
-                {%- render 'mg-icon', icon: 'calendar' -%}
-                <span>{{ book_label | escape }}</span>
-              </a>
-            {%- endif -%}
-            {%- if has_whatsapp and section.settings.show_whatsapp -%}
-              <a
-                class="mg-btn mg-btn--whatsapp mg-carmake__btn"
-                href="{{ wa_href }}"
-                target="_blank"
-                rel="noopener"
-              >
-                {%- render 'mg-icon', icon: 'whatsapp' -%}
-                <span>{{ whatsapp_label | escape }}</span>
-                <span class="mg-visually-hidden">(opens WhatsApp)</span>
-              </a>
-            {%- endif -%}
-          </div>
-
-          {%- if section.settings.facts != blank -%}
-            <ul
-              class="mg-carmake__facts mg-carmake__reveal"
-              style="--mg-reveal-i: 5;"
-              role="list"
-            >
-              {%- for fact in facts -%}
-                <li>
-                  {%- render 'mg-icon', icon: 'check' -%}
-                  <span>{{ fact | strip | escape }}</span>
-                </li>
-              {%- endfor -%}
-            </ul>
+          {%- if book_label != blank or has_whatsapp and section.settings.show_whatsapp -%}
+            <div class="mg-actions mg-carmake__actions">
+              {%- if book_label != blank -%}
+                <a
+                  class="mg-btn mg-btn--primary"
+                  href="{{ book_url }}"
+                >
+                  {%- render 'mg-icon', icon: 'calendar' -%}
+                  <span>{{ book_label | escape }}</span>
+                </a>
+              {%- endif -%}
+              {%- if has_whatsapp and section.settings.show_whatsapp -%}
+                <a
+                  class="mg-btn mg-btn--whatsapp"
+                  href="{{ wa_href }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {%- render 'mg-icon', icon: 'whatsapp' -%}
+                  <span>{{ whatsapp_label | escape }}</span>
+                  <span class="mg-visually-hidden"> (opens WhatsApp)</span>
+                </a>
+              {%- endif -%}
+            </div>
           {%- endif -%}
 
           {%- if request.design_mode and car_make == blank -%}
-            <p class="mg-placeholder-note mg-carmake__editor-note">
+            <p class="mg-help mg-carmake__editor-note">
               Editor note: no car make entry is linked to this page, so the fallback content from this section's
               settings is shown. Link one in the page's "Car make" metafield (custom.car_make).
             </p>
           {%- endif -%}
         </div>
 
-        <div class="mg-carmake__hero-media">
-          <div class="mg-carmake__frame">
-            {%- if hero_media != blank -%}
-              {%- liquid
-                assign image_alt = hero_media.alt | default: heading
-                assign focal_point = hero_media.presentation.focal_point | default: '50% 50%'
-                assign focal_style = 'object-position: ' | append: focal_point | append: ';'
-              -%}
-              {{
-                hero_media
-                | image_url: width: 2200
-                | image_tag:
-                  widths: '600, 800, 1000, 1200, 1500, 1800, 2200',
-                  sizes: '(min-width: 1320px) 640px, (min-width: 990px) 48vw, calc(100vw - 32px)',
-                  loading: 'eager',
-                  fetchpriority: 'high',
-                  alt: image_alt,
-                  class: 'mg-carmake__img',
-                  style: focal_style
-              }}
-            {%- else -%}
-              <img
-                class="mg-carmake__img"
-                src="{{ fallback | asset_url }}"
-                alt="{{ fallback_alt | escape }}"
-                width="{{ fallback_w }}"
-                height="{{ fallback_h }}"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-              >
-            {%- endif -%}
-          </div>
+        <div class="mg-carmake__media">
+          {%- if hero_media != blank -%}
+            {%- liquid
+              assign image_alt = hero_media.alt | default: heading
+              assign focal_point = hero_media.presentation.focal_point | default: '50% 50%'
+              assign focal_style = 'object-position: ' | append: focal_point | append: ';'
+            -%}
+            {{
+              hero_media
+              | image_url: width: 1600
+              | image_tag:
+                widths: '400, 600, 800, 1000, 1300, 1600',
+                sizes: image_sizes,
+                loading: 'eager',
+                fetchpriority: 'high',
+                alt: image_alt,
+                class: 'mg-carmake__img',
+                style: focal_style
+            }}
+          {%- else -%}
+            <img
+              class="mg-carmake__img"
+              src="{{ fallback | asset_url }}"
+              srcset="{{ fallback_small | asset_url }} 800w, {{ fallback | asset_url }} {{ fallback_w }}w"
+              sizes="{{ image_sizes }}"
+              alt="{{ fallback_alt | escape }}"
+              width="{{ fallback_w }}"
+              height="{{ fallback_h }}"
+              loading="eager"
+              fetchpriority="high"
+            >
+          {%- endif -%}
         </div>
       </div>
+
+      {%- if facts_count > 0 -%}
+        <ul
+          class="mg-trust mg-carmake__facts"
+          role="list"
+          style="--mg-carmake-facts: {{ facts_count }};"
+        >
+          {%- for fact in facts -%}
+            {%- liquid
+              assign fact_text = fact | strip
+              if fact_text == blank
+                continue
+              endif
+              assign fact_lc = fact_text | downcase
+              assign fact_icon = 'check'
+              if fact_lc contains 'dublin' or fact_lc contains 'workshop' or fact_lc contains 'in-house'
+                assign fact_icon = 'map-pin'
+              elsif fact_lc contains 'carplay' or fact_lc contains 'wireless' or fact_lc contains 'screen'
+                assign fact_icon = 'screen'
+              elsif fact_lc contains 'finish' or fact_lc contains 'oem' or fact_lc contains 'warranty'
+                assign fact_icon = 'shield'
+              elsif fact_lc contains 'price' or fact_lc contains '€'
+                assign fact_icon = 'tag'
+              elsif fact_lc contains 'hour' or fact_lc contains 'time'
+                assign fact_icon = 'clock'
+              endif
+            -%}
+            <li class="mg-trust__item">
+              {%- render 'mg-icon', icon: fact_icon, class: 'mg-trust__icon' -%}
+              <span>{{ fact_text | escape }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
   </section>
 
   {%- comment -%} ================= SYSTEMS + MODELS ================= {%- endcomment -%}
   {%- if systems != blank or models != blank -%}
     <section
-      class="mg-section mg-section--surface mg-carmake__fit"
+      class="mg-section mg-section--band mg-carmake__fit"
       aria-label="{{ make_name | escape }} compatibility"
     >
-      <div class="mg-container">
-        <p class="mg-eyebrow">Compatibility</p>
-        <div class="mg-carmake__fit-grid">
-          {%- if systems != blank -%}
-            <div class="mg-carmake__systems">
-              {%- if systems_heading != blank -%}
-                <h2 class="mg-heading">{{ systems_heading | escape }}</h2>
-              {%- endif -%}
-              <p class="mg-lede">{{ systems_text | escape }}</p>
-              <ul
-                class="mg-carmake__chips"
-                role="list"
-              >
-                {%- for system in systems -%}
-                  <li class="mg-chip mg-carmake__chip">
-                    {%- render 'mg-icon', icon: 'screen' -%}
-                    <span>{{ system | strip | escape }}</span>
-                  </li>
-                {%- endfor -%}
-              </ul>
+      <div class="mg-container mg-carmake__fit-grid">
+        {%- if systems != blank -%}
+          <div class="mg-carmake__systems">
+            <div class="mg-head">
+              <div class="mg-head__text">
+                {%- if systems_heading != blank -%}
+                  <h2 class="mg-head__title">{{ systems_heading | escape }}</h2>
+                {%- endif -%}
+                {%- if systems_text != blank -%}
+                  <p class="mg-head__sub">{{ systems_text | escape }}</p>
+                {%- endif -%}
+              </div>
             </div>
-          {%- endif -%}
+            <ul
+              class="mg-chips mg-chips--wrap mg-carmake__chips"
+              role="list"
+            >
+              {%- for system in systems -%}
+                <li class="mg-chip">
+                  {%- render 'mg-icon', icon: 'screen' -%}
+                  <span>{{ system | strip | replace: '–', '-' | replace: '—', '-' | escape }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
 
-          {%- if models != blank -%}
-            <div class="mg-carmake__models">
-              {%- if models_heading != blank -%}
-                <h2 class="mg-heading mg-carmake__models-title">{{ models_heading | escape }}</h2>
-              {%- endif -%}
-              <ul
-                class="mg-carmake__models-grid"
-                role="list"
-              >
-                {%- for model in models -%}
-                  {%- liquid
-                    # "3 Series (F30/F31, 2012–2019)" -> "3 Series" + "F30/F31, 2012–2019"
-                    assign model_raw = model | strip
-                    assign model_first = model_raw | split: '(' | first
-                    assign model_name = model_first | strip | default: model_raw
-                    assign model_detail = model_raw | remove_first: model_name | remove_first: '(' | remove: ')' | strip
-                  -%}
-                  <li class="mg-carmake__model">
-                    <span class="mg-carmake__model-icon">
-                      {%- render 'mg-icon', icon: 'car' -%}
-                    </span>
-                    <span class="mg-carmake__model-text">
-                      <span class="mg-carmake__model-name">{{ model_name | escape }}</span>
-                      {%- if model_detail != blank -%}
-                        <span class="mg-carmake__model-detail">{{ model_detail | escape }}</span>
-                      {%- endif -%}
-                    </span>
-                  </li>
-                {%- endfor -%}
-              </ul>
-              {%- if models_note != blank -%}
-                <p class="mg-carmake__models-note">
-                  {%- render 'mg-icon', icon: 'message' -%}
-                  <span>
-                    {{ models_note | escape }}
-                    {%- if has_whatsapp %}
-                      <a
-                        href="{{ wa_href }}"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        WhatsApp us
-                        <span class="mg-visually-hidden">(opens WhatsApp)</span>
-                      </a>
+        {%- if models != blank -%}
+          <div class="mg-carmake__models">
+            {%- if models_heading != blank -%}
+              <div class="mg-head">
+                <h2 class="mg-head__title">{{ models_heading | escape }}</h2>
+              </div>
+            {%- endif -%}
+            <ul
+              class="mg-grid mg-carmake__models-grid"
+              role="list"
+            >
+              {%- for model in models -%}
+                {%- liquid
+                  # "3 Series (F30/F31, 2012-2019)" -> "3 Series" + "F30/F31, 2012-2019"
+                  assign model_raw = model | strip | replace: '–', '-' | replace: '—', '-'
+                  assign model_first = model_raw | split: '(' | first
+                  assign model_name = model_first | strip | default: model_raw
+                  assign model_detail = model_raw | remove_first: model_name | remove_first: '(' | remove: ')' | strip
+                -%}
+                <li class="mg-card mg-carmake__model">
+                  {%- render 'mg-icon', icon: 'car', class: 'mg-carmake__model-icon' -%}
+                  <span class="mg-carmake__model-text">
+                    <span class="mg-carmake__model-name">{{ model_name | escape }}</span>
+                    {%- if model_detail != blank -%}
+                      <span class="mg-carmake__model-detail">{{ model_detail | escape }}</span>
                     {%- endif -%}
                   </span>
-                </p>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- if models_note != blank -%}
+              <p class="mg-carmake__models-note">
+                {{ models_note | escape }}
+                {%- if has_whatsapp %}
+                  <a
+                    class="mg-link"
+                    href="{{ wa_href }}"
+                    target="_blank"
+                    rel="noopener"
+                    >WhatsApp us<span class="mg-visually-hidden"> (opens WhatsApp)</span></a
+                  >
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
     </section>
   {%- endif -%}
@@ -563,26 +534,28 @@
       aria-label="{{ make_name | escape }} services and prices"
     >
       <div class="mg-container">
-        <header class="mg-section-head mg-carmake__head">
-          <p class="mg-eyebrow">Fitted prices</p>
-          {%- if services_heading != blank -%}
-            <h2 class="mg-heading">{{ services_heading | escape }}</h2>
-          {%- endif -%}
-          <p class="mg-lede">{{ services_text | escape }}</p>
-        </header>
+        {%- if services_heading != blank or services_text != blank -%}
+          <div class="mg-head">
+            <div class="mg-head__text">
+              {%- if services_heading != blank -%}
+                <h2 class="mg-head__title">{{ services_heading | escape }}</h2>
+              {%- endif -%}
+              {%- if services_text != blank -%}
+                <p class="mg-head__sub">{{ services_text | escape }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
 
         <ul
-          class="mg-carmake__svc-grid"
+          class="mg-grid mg-carmake__svc-grid"
           role="list"
         >
           {{ service_cards }}
         </ul>
 
         {%- if services_note != blank -%}
-          <p class="mg-carmake__svc-note">
-            {%- render 'mg-icon', icon: 'tag' -%}
-            <span>{{ services_note | escape }}</span>
-          </p>
+          <p class="mg-help mg-carmake__svc-note">{{ services_note | escape }}</p>
         {%- endif -%}
       </div>
     </section>
@@ -591,11 +564,11 @@
   {%- comment -%} ================= SHOP PARTS ================= {%- endcomment -%}
   {%- if section.settings.show_shop and shop_label != blank -%}
     <section
-      class="mg-section mg-section--tight mg-carmake__shop"
+      class="mg-section mg-carmake__shop"
       aria-label="{{ shop_label | escape }}"
     >
       <div class="mg-container">
-        <div class="mg-carmake__shop-panel">
+        <div class="mg-panel mg-carmake__shop-panel">
           <span
             class="mg-carmake__shop-icon"
             aria-hidden="true"
@@ -606,14 +579,15 @@
             {%- if shop_heading != blank -%}
               <h2 class="mg-carmake__shop-title">{{ shop_heading | escape }}</h2>
             {%- endif -%}
-            <p class="mg-carmake__shop-text">{{ shop_text | escape }}</p>
+            {%- if shop_text != blank -%}
+              <p class="mg-carmake__shop-text">{{ shop_text | escape }}</p>
+            {%- endif -%}
           </div>
           <a
-            class="mg-btn mg-btn--ghost mg-carmake__shop-btn"
+            class="mg-btn mg-btn--secondary mg-carmake__shop-btn"
             href="{{ shop_url }}"
           >
-            <span>{{ shop_label | escape }}</span>
-            {%- render 'mg-icon', icon: 'arrow-right' -%}
+            {{- shop_label | escape -}}
           </a>
         </div>
       </div>
@@ -623,12 +597,14 @@
   {%- comment -%} ======= PAGE CONTENT (when the entry supplies the intro) ======= {%- endcomment -%}
   {%- if section.settings.show_page_content and use_page_content == false and page_content_text != blank -%}
     <section
-      class="mg-section mg-section--tight mg-carmake__content"
+      class="mg-section mg-carmake__content"
       aria-label="About {{ make_name | escape }} upgrades"
     >
-      <div class="mg-container">
+      <div class="mg-container mg-container--narrow">
         {%- if content_heading != blank -%}
-          <h2 class="mg-heading mg-carmake__content-title">{{ content_heading | escape }}</h2>
+          <div class="mg-head">
+            <h2 class="mg-head__title">{{ content_heading | escape }}</h2>
+          </div>
         {%- endif -%}
         <div class="mg-carmake__rte rte">
           {{ page.content }}
@@ -640,16 +616,15 @@
   {%- comment -%} ================= FAQ ================= {%- endcomment -%}
   {%- if section.settings.show_faq and faq_items != blank -%}
     <section
-      class="mg-section mg-section--surface mg-carmake__faq"
+      class="mg-section mg-carmake__faq"
       aria-label="{{ make_name | escape }} frequently asked questions"
     >
-      <div class="mg-container mg-carmake__faq-grid">
-        <header class="mg-section-head mg-carmake__faq-head">
-          <p class="mg-eyebrow">FAQ</p>
-          {%- if faq_heading != blank -%}
-            <h2 class="mg-heading">{{ faq_heading | escape }}</h2>
-          {%- endif -%}
-        </header>
+      <div class="mg-container mg-container--narrow">
+        {%- if faq_heading != blank -%}
+          <div class="mg-head mg-head--center">
+            <h2 class="mg-head__title">{{ faq_heading | escape }}</h2>
+          </div>
+        {%- endif -%}
         <div class="mg-carmake__faq-list">
           {{ faq_items }}
         </div>
@@ -665,52 +640,56 @@
 
   {%- comment -%} ================= CLOSING CTA ================= {%- endcomment -%}
   {%- if section.settings.show_cta and cta_heading != blank -%}
+    {%- liquid
+      assign cta_book_class = 'mg-btn--secondary'
+      unless has_whatsapp
+        assign cta_book_class = 'mg-btn--primary'
+      endunless
+    -%}
     <section
       class="mg-section mg-carmake__cta"
       aria-label="{{ cta_heading | escape }}"
     >
       <div class="mg-container">
-        <div class="mg-carmake__cta-panel">
-          <div
-            class="mg-carmake__cta-glow"
-            aria-hidden="true"
-          ></div>
-          <h2 class="mg-heading mg-carmake__cta-title">{{ cta_heading | escape }}</h2>
-          <p class="mg-lede mg-carmake__cta-text">{{ cta_text | escape }}</p>
-          <div class="mg-carmake__cta-actions">
-            {%- if book_label != blank -%}
-              <a
-                class="mg-btn mg-btn--primary"
-                href="{{ book_url }}"
-              >
-                {%- render 'mg-icon', icon: 'calendar' -%}
-                <span>{{ book_label | escape }}</span>
-              </a>
+        <div class="mg-panel mg-surface-red mg-carmake__cta-panel">
+          <div class="mg-carmake__cta-copy">
+            <h2 class="mg-display mg-carmake__cta-title">{{ cta_heading | escape }}</h2>
+            {%- if cta_text != blank -%}
+              <p class="mg-lede mg-carmake__cta-text">{{ cta_text | escape }}</p>
             {%- endif -%}
+          </div>
+          <div class="mg-carmake__cta-actions">
             {%- if has_whatsapp -%}
               <a
-                class="mg-btn mg-btn--whatsapp"
+                class="mg-btn mg-btn--primary mg-btn--lg mg-btn--block"
                 href="{{ wa_href }}"
                 target="_blank"
                 rel="noopener"
               >
                 {%- render 'mg-icon', icon: 'whatsapp' -%}
                 <span>{{ whatsapp_label | escape }}</span>
-                <span class="mg-visually-hidden">(opens WhatsApp)</span>
+                <span class="mg-visually-hidden"> (opens WhatsApp)</span>
+              </a>
+            {%- endif -%}
+            {%- if book_label != blank -%}
+              <a
+                class="mg-btn {{ cta_book_class }} mg-btn--lg mg-btn--block"
+                href="{{ book_url }}"
+              >
+                {%- render 'mg-icon', icon: 'calendar' -%}
+                <span>{{ book_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if settings.mg_phone_e164 != blank -%}
+              <a
+                class="mg-btn mg-btn--secondary mg-btn--lg mg-btn--block"
+                href="tel:+{{ settings.mg_phone_e164 }}"
+              >
+                {%- render 'mg-icon', icon: 'phone' -%}
+                <span>Call {{ settings.mg_phone_display | default: settings.mg_phone_e164 | escape }}</span>
               </a>
             {%- endif -%}
           </div>
-          {%- if settings.mg_phone_e164 != blank -%}
-            <p class="mg-carmake__cta-call">
-              {%- render 'mg-icon', icon: 'phone' -%}
-              <span>
-                Or call
-                <a href="tel:+{{ settings.mg_phone_e164 }}">
-                  {{- settings.mg_phone_display | default: settings.mg_phone_e164 | escape -}}
-                </a>
-              </span>
-            </p>
-          {%- endif -%}
         </div>
       </div>
     </section>
@@ -729,438 +708,226 @@
 
 {% stylesheet %}
   /*
-   * Car make landing page (/pages/<make>-carplay). One section, several bands:
-   * hero, compatibility (systems + models), fitted prices, shop parts,
-   * optional page content, FAQ and a closing call to action.
-   * Optional text renders as an empty <p>, hidden here, to keep Liquid simple.
+   * Car make landing page (/pages/<make>-carplay). One section, several bands, each a
+   * .mg-section: page header (breadcrumb, grey panel, facts strip), compatibility band
+   * (systems and models), fitted prices, shop parts, page content, FAQ, and a red closing
+   * panel. Same header pattern as the service pages (mg-service-hero). Layout only.
    */
-  .mg-carmake p:empty,
-  .mg-carmake__intro:empty,
-  .mg-carmake__actions:empty {
-    display: none;
+
+  /* ---------- Header ---------- */
+  .mg-carmake__crumbs {
+    margin-block: calc(var(--mg-space-3) * -1) var(--mg-space-1);
   }
 
-  /* ---------- Hero ---------- */
-  .mg-carmake__hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-block: clamp(16px, 2.5vw, 28px) clamp(56px, 7vw, 104px);
-    border-bottom: 1px solid var(--mg-border);
-    background: var(--mg-bg);
-    color: var(--mg-text);
-  }
-
-  .mg-carmake__glow {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    pointer-events: none;
-    background:
-      radial-gradient(55% 60% at 82% 28%, color-mix(in srgb, var(--mg-accent) 16%, transparent), transparent 70%),
-      radial-gradient(40% 45% at 0% 100%, color-mix(in srgb, var(--mg-accent) 6%, transparent), transparent 70%);
-  }
-
-  .mg-carmake__glow::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(color-mix(in srgb, var(--mg-text) 4%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in srgb, var(--mg-text) 4%, transparent) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(70% 70% at 75% 35%, var(--mg-text) 0%, transparent 75%);
-    mask-image: radial-gradient(70% 70% at 75% 35%, var(--mg-text) 0%, transparent 75%);
-  }
-
-  /* Oversized outlined make name: typographic, no logos */
-  .mg-carmake__watermark {
-    position: absolute;
-    right: -0.04em;
-    bottom: -0.2em;
-    z-index: -1;
-    font-family: var(--font-heading--family);
-    font-weight: 900;
-    font-size: clamp(7rem, 24vw, 21rem);
-    line-height: 1;
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    color: transparent;
-    -webkit-text-stroke: 1px color-mix(in srgb, var(--mg-text) 9%, transparent);
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* Breadcrumb */
   .mg-carmake__crumbs ol {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0.25rem 0.6rem;
+    gap: var(--mg-space-2);
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 0.8125rem;
+    font-size: var(--mg-fs-micro);
     line-height: 1.4;
-    color: var(--mg-text-subtle);
+    color: var(--mg-ink-2);
   }
 
   .mg-carmake__crumbs li {
     display: inline-flex;
+    flex: none;
     align-items: center;
-    gap: 0.6rem;
+    gap: var(--mg-space-2);
     min-width: 0;
+    white-space: nowrap;
+  }
+
+  .mg-carmake__crumbs li:last-child {
+    flex: 0 1 auto;
+    overflow: hidden;
   }
 
   .mg-carmake__crumbs li + li::before {
-    content: '/';
-    color: var(--mg-border-strong);
+    content: '';
+    flex: none;
+    width: 5px;
+    height: 5px;
+    margin-inline-end: 2px;
+    border-top: 1.5px solid var(--mg-ink-3);
+    border-right: 1.5px solid var(--mg-ink-3);
+    transform: rotate(45deg);
   }
 
   .mg-carmake__crumbs a {
-    display: inline-block;
-    padding-block: 0.5rem;
-    color: var(--mg-text-muted);
-    text-decoration: none;
-    transition: color 0.2s var(--mg-ease);
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--mg-tap);
+    color: var(--mg-ink-2);
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.22em;
   }
 
   .mg-carmake__crumbs a:hover {
-    color: var(--mg-text);
-  }
-
-  .mg-carmake__crumbs a:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 2px;
-    border-radius: 2px;
+    color: var(--mg-ink);
+    text-decoration-color: currentcolor;
   }
 
   .mg-carmake__crumbs [aria-current] {
-    color: var(--mg-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--mg-ink);
+    font-weight: 500;
   }
 
-  .mg-carmake__hero-grid {
+  .mg-carmake__panel {
     display: grid;
-    gap: 32px;
-    margin-top: clamp(8px, 2vw, 24px);
+    gap: var(--mg-space-5);
   }
 
-  .mg-carmake__hero-copy {
+  .mg-carmake__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     min-width: 0;
   }
 
-  .mg-carmake__hero-media {
-    position: relative;
-    order: -1;
-    margin-bottom: 8px;
-  }
-
   .mg-carmake__title {
-    margin: 0;
-    max-width: 16ch;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--mg-h1-page);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    color: var(--mg-text);
-    text-wrap: balance;
+    max-width: 22ch;
   }
 
-  .mg-carmake__intro {
-    max-width: 56ch;
-    margin-top: 1.25rem;
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    color: var(--mg-text-muted);
-    text-wrap: pretty;
-  }
-
-  .mg-carmake__intro p {
-    margin: 0 0 0.85em;
-    color: inherit;
+  .mg-carmake__intro > * {
+    margin: 0 0 0.75em;
   }
 
   .mg-carmake__intro > :last-child {
     margin-bottom: 0;
   }
 
-  /* "From" price panel */
   .mg-carmake__offer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 1.25rem;
-    margin-top: 1.75rem;
-    padding: 1rem 1.25rem;
-    border: 1px solid var(--mg-border);
-    border-left: 2px solid var(--mg-accent);
-    border-radius: var(--mg-radius-sm);
-    background: color-mix(in srgb, var(--mg-surface) 72%, transparent);
+    display: grid;
+    gap: var(--mg-space-1);
+    margin-top: var(--mg-space-5);
   }
 
-  .mg-carmake__offer-price {
+  .mg-carmake__price {
     margin: 0;
-    line-height: 1;
+    line-height: 1.2;
   }
 
-  .mg-carmake__offer-price strong {
-    font-size: clamp(1.875rem, 3vw, 2.5rem);
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
+  .mg-carmake__amount {
+    font-size: var(--mg-fs-h2);
+    letter-spacing: -0.01em;
   }
 
-  .mg-carmake__offer-note {
-    flex: 1 1 220px;
-    margin: 0;
-    font-size: 0.875rem;
-    line-height: 1.45;
-    color: var(--mg-text-muted);
+  .mg-carmake__price-note {
+    max-width: 48ch;
+    font-size: var(--mg-fs-small);
   }
 
   .mg-carmake__actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 1.25rem;
-  }
-
-  .mg-carmake__btn {
-    width: 100%;
-    min-height: 54px;
-  }
-
-  /* Key facts strip */
-  .mg-carmake__facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 22px;
-    margin: 1.5rem 0 0;
-    padding: 1.25rem 0 0;
-    border-top: 1px solid var(--mg-border);
-    list-style: none;
-  }
-
-  .mg-carmake__facts li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--mg-text);
-  }
-
-  .mg-carmake__facts .mg-icon {
-    width: 16px;
-    height: 16px;
-    flex: none;
-    color: var(--mg-accent);
-    stroke-width: 2.5;
+    align-self: stretch;
+    margin-top: var(--mg-space-5);
   }
 
   .mg-carmake__editor-note {
-    margin: 1rem 0 0;
-    padding: 0.6rem 0.8rem;
-    border: 1px dashed var(--mg-border-strong);
+    margin: var(--mg-space-4) 0 0;
+    padding: var(--mg-space-2) var(--mg-space-3);
+    border: 1px dashed var(--mg-ink-3);
     border-radius: var(--mg-radius-sm);
   }
 
-  /* Framed photo with corner brackets, like an infotainment bezel */
-  .mg-carmake__frame {
-    position: relative;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-lg);
-    background: var(--mg-surface);
-    box-shadow: var(--mg-shadow);
-  }
-
-  .mg-carmake__frame::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--mg-text) 6%, transparent);
-    background: linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--mg-bg) 45%, transparent) 100%);
+  .mg-carmake__media {
+    order: -1;
+    min-width: 0;
   }
 
   .mg-carmake__img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--mg-radius-md);
     object-fit: cover;
+    background-color: var(--mg-band-2);
   }
 
-  .mg-carmake__hero-media::before,
-  .mg-carmake__hero-media::after {
-    content: '';
-    position: absolute;
-    z-index: 1;
-    width: 28px;
-    height: 28px;
-    pointer-events: none;
-    border-color: var(--mg-accent);
-    border-style: solid;
+  /* Scoped so it beats mg-theme.css's :is(ul, ol).mg-trust { margin: 0 } */
+  .mg-carmake .mg-carmake__facts {
+    margin-top: var(--mg-space-4);
   }
 
-  .mg-carmake__hero-media::before {
-    top: -7px;
-    left: -7px;
-    border-width: 2px 0 0 2px;
-    border-top-left-radius: 6px;
-  }
-
-  .mg-carmake__hero-media::after {
-    right: -7px;
-    bottom: -7px;
-    border-width: 0 2px 2px 0;
-    border-bottom-right-radius: 6px;
-  }
-
-  /* ---------- Compatibility: systems + models ---------- */
-  .mg-carmake__fit .mg-eyebrow {
-    margin-bottom: 1rem;
-  }
-
+  /* ---------- Compatibility ---------- */
   .mg-carmake__fit-grid {
     display: grid;
-    gap: clamp(40px, 6vw, 64px);
+    gap: var(--mg-space-7);
   }
 
   .mg-carmake__chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 1.75rem 0 0;
+    margin: 0;
     padding: 0;
-    list-style: none;
   }
 
-  .mg-carmake__chip {
-    padding: 0.6rem 1rem;
-    border-color: var(--mg-border-strong);
-    background: var(--mg-bg);
-    font-size: 0.9375rem;
-    color: var(--mg-text);
-  }
-
-  .mg-carmake__chip .mg-icon {
-    width: 16px;
-    height: 16px;
-    flex: none;
-    color: var(--mg-accent);
-  }
-
-  /* Beside the systems column, the models heading steps down a size */
-  .mg-carmake__systems + .mg-carmake__models .mg-carmake__models-title {
-    font-size: var(--mg-h3);
-    line-height: 1.15;
+  .mg-carmake__chips .mg-icon {
+    color: var(--mg-ink-2);
   }
 
   .mg-carmake__models-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
-    gap: 10px;
-    margin: 1.25rem 0 0;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .mg-carmake__model {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--mg-space-3);
     min-width: 0;
-    padding: 14px 16px;
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-sm);
-    background: var(--mg-bg);
-    transition: border-color 0.2s var(--mg-ease);
-  }
-
-  .mg-carmake__model:hover {
-    border-color: var(--mg-border-strong);
+    margin: 0;
+    padding: var(--mg-space-3) var(--mg-space-4);
   }
 
   .mg-carmake__model-icon {
-    display: inline-flex;
-    flex: none;
-    margin-top: 1px;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-carmake__model-icon .mg-icon {
     width: 20px;
     height: 20px;
+    margin-top: 1px;
+    color: var(--mg-ink-3);
   }
 
   .mg-carmake__model-text {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 2px;
     min-width: 0;
   }
 
   .mg-carmake__model-name {
-    font-weight: 700;
     font-size: 0.9375rem;
+    font-weight: 600;
     line-height: 1.35;
-    color: var(--mg-text);
   }
 
   .mg-carmake__model-detail {
-    font-size: 0.8125rem;
+    font-size: var(--mg-fs-micro);
     line-height: 1.4;
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
     font-variant-numeric: tabular-nums;
   }
 
   .mg-carmake__models-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    margin: 1.25rem 0 0;
+    margin: var(--mg-space-4) 0 0;
     font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--mg-text-muted);
+    line-height: 1.55;
+    color: var(--mg-ink-2);
   }
 
-  .mg-carmake__models-note .mg-icon {
-    width: 18px;
-    height: 18px;
-    flex: none;
-    margin-top: 2px;
-    color: var(--mg-text-subtle);
+  .mg-carmake__models-note .mg-link {
+    text-decoration-color: currentcolor;
+    white-space: nowrap;
   }
 
-  .mg-carmake .mg-carmake__models-note a,
-  .mg-carmake .mg-carmake__models-note a:hover {
-    font-weight: 700;
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-accent);
-    text-underline-offset: 4px;
-  }
-
-  .mg-carmake__models-note a:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
-
-  /* ---------- Services price cards ---------- */
-  .mg-carmake__head {
-    max-width: 760px;
-  }
-
+  /* ---------- Fitted prices ---------- */
   .mg-carmake__svc-grid {
-    display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -1169,48 +936,28 @@
   .mg-carmake__svc-item {
     display: flex;
     min-width: 0;
+    margin: 0;
   }
 
-  .mg-carmake__svc {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 18px;
-    padding: 20px 20px 18px;
-    background: linear-gradient(160deg, var(--mg-surface-2) 0%, var(--mg-surface) 55%);
-  }
-
-  .mg-carmake__svc:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
-  }
-
-  .mg-carmake__svc-top {
-    display: flex;
+  /* Icon beside the name, price and link on the bottom edge */
+  .mg-carmake .mg-carmake__svc {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: 40px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
     align-items: center;
-    justify-content: space-between;
-  }
-
-  .mg-carmake__svc-index {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--mg-text-subtle);
-    font-variant-numeric: tabular-nums;
+    gap: var(--mg-space-3);
+    padding: var(--mg-space-4);
   }
 
   .mg-carmake__svc-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-grid;
+    place-items: center;
     width: 40px;
     height: 40px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    color: var(--mg-text-muted);
-    transition:
-      color 0.25s var(--mg-ease),
-      border-color 0.25s var(--mg-ease);
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-band);
+    color: var(--mg-ink);
   }
 
   .mg-carmake__svc-icon .mg-icon {
@@ -1218,114 +965,66 @@
     height: 20px;
   }
 
-  .mg-carmake__svc:hover .mg-carmake__svc-icon {
-    border-color: var(--mg-accent);
-    color: var(--mg-text);
-  }
-
   .mg-carmake__svc-name {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
-    line-height: 1.2;
-    letter-spacing: -0.005em;
-    text-transform: uppercase;
-    color: var(--mg-text);
     text-wrap: balance;
   }
 
+  /* Price and link sit on the card's bottom edge, so a row of cards lines up */
   .mg-carmake__svc-foot {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    grid-column: 1 / -1;
+    align-self: end;
+    align-items: baseline;
     justify-content: space-between;
-    gap: 10px 16px;
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px solid var(--mg-border);
+    gap: var(--mg-space-1) var(--mg-space-3);
+    padding-top: var(--mg-space-3);
+    border-top: 1px solid var(--mg-line);
   }
 
-  .mg-carmake__svc-price strong {
-    font-size: 1.5rem;
-    letter-spacing: -0.01em;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .mg-carmake__svc-price--none {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--mg-text-muted);
+  /* Same line box as a 1.5rem price, so rows with and without a price line up */
+  .mg-carmake__svc-request {
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+    line-height: calc(1.5rem * 1.2);
+    color: var(--mg-ink-2);
   }
 
   .mg-carmake__svc-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
   }
 
-  .mg-carmake__svc-cta .mg-icon {
-    width: 16px;
-    height: 16px;
-    transition: transform 0.25s var(--mg-ease);
-  }
-
-  .mg-carmake__svc:hover .mg-carmake__svc-cta .mg-icon {
-    transform: translateX(3px);
+  @media (hover: hover) {
+    .mg-carmake__svc:hover .mg-carmake__svc-cta {
+      text-decoration-thickness: 2px;
+    }
   }
 
   .mg-carmake__svc-note {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
     max-width: 72ch;
-    margin: 1.5rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.55;
-    color: var(--mg-text-muted);
+    margin: var(--mg-space-4) 0 0;
   }
 
-  .mg-carmake__svc-note .mg-icon {
-    width: 18px;
-    height: 18px;
-    flex: none;
-    margin-top: 1px;
-    color: var(--mg-text-subtle);
-  }
-
-  /* ---------- Shop parts band ---------- */
-  .mg-carmake__services + .mg-carmake__shop {
-    padding-top: 0;
-  }
-
+  /* ---------- Shop parts ---------- */
   .mg-carmake__shop-panel {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     align-items: center;
-    gap: 16px 20px;
-    padding: clamp(20px, 3vw, 32px);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-lg);
-    background:
-      radial-gradient(60% 120% at 100% 0%, color-mix(in srgb, var(--mg-accent) 10%, transparent), transparent 70%),
-      var(--mg-surface);
+    gap: var(--mg-space-4);
   }
 
   .mg-carmake__shop-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: var(--mg-radius);
-    background: var(--mg-bg);
-    color: var(--mg-text);
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--mg-radius-md);
+    background-color: var(--mg-card);
+    color: var(--mg-ink);
   }
 
   .mg-carmake__shop-icon .mg-icon {
@@ -1335,48 +1034,40 @@
 
   .mg-carmake__shop-title {
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--mg-h3);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-h3);
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-carmake__shop-text {
-    margin: 0.4rem 0 0;
+    margin: var(--mg-space-1) 0 0;
     font-size: 0.9375rem;
     line-height: 1.55;
-    color: var(--mg-text-muted);
+    color: var(--mg-ink-2);
   }
 
   .mg-carmake__shop-btn {
     grid-column: 1 / -1;
-    width: 100%;
   }
 
   /* ---------- Page content ---------- */
-  .mg-carmake__content-title {
-    max-width: 24ch;
-    margin-bottom: 1.25rem;
-  }
-
   .mg-carmake__rte {
-    max-width: 72ch;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--mg-text-muted);
+    font-size: var(--mg-fs-body);
+    line-height: 1.65;
+    color: var(--mg-ink-2);
   }
 
   .mg-carmake__rte :is(h2, h3, h4) {
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--mg-h3);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    margin: 1.5em 0 0.5em;
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-h3);
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-carmake__rte p {
@@ -1384,105 +1075,83 @@
     color: inherit;
   }
 
+  .mg-carmake__rte > :last-child {
+    margin-bottom: 0;
+  }
+
   .mg-carmake__rte strong {
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
-  .mg-carmake .mg-carmake__rte a,
-  .mg-carmake .mg-carmake__rte a:hover {
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-accent);
-    text-underline-offset: 0.2em;
+  .mg-carmake .mg-carmake__rte a {
+    color: var(--mg-ink);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: currentcolor;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
   }
 
-  .mg-carmake__intro.mg-carmake__rte {
-    font-size: 1.0625rem;
-  }
-
-  /* ---------- FAQ ---------- */
-  .mg-carmake__faq-grid {
-    display: grid;
-  }
-
-  .mg-carmake__faq-list {
-    border-top: 1px solid var(--mg-border);
-  }
-
+  /* ---------- FAQ: centred rows, a hairline between questions, no boxes ---------- */
   .mg-carmake__faq-item {
-    border-bottom: 1px solid var(--mg-border);
     interpolate-size: allow-keywords;
+  }
+
+  .mg-carmake__faq-item + .mg-carmake__faq-item {
+    border-top: 1px solid var(--mg-line);
   }
 
   .mg-carmake__faq-q {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 22px 4px;
+    gap: var(--mg-space-4);
+    min-height: 60px;
+    padding: var(--mg-space-3) 0;
+    border-radius: var(--mg-radius-sm);
+    color: var(--mg-ink);
     list-style: none;
     cursor: pointer;
-    font-family: var(--font-body--family);
-    font-size: clamp(1rem, 1.4vw, 1.125rem);
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--mg-text);
-    border-radius: var(--mg-radius-sm);
+    -webkit-tap-highlight-color: transparent;
   }
 
   .mg-carmake__faq-q::-webkit-details-marker {
     display: none;
   }
 
-  .mg-carmake__faq-q:hover {
-    color: var(--mg-text);
-  }
-
   .mg-carmake__faq-q:focus-visible {
-    outline: 2px solid var(--mg-text);
+    outline: 2px solid var(--mg-focus);
     outline-offset: 2px;
   }
 
-  .mg-carmake__faq-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .mg-carmake__faq-text {
+    font-size: var(--mg-fs-body);
+    font-weight: 500;
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+
+  .mg-carmake__faq-chevron {
     flex: none;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    color: var(--mg-text-muted);
+    width: 20px;
+    height: 20px;
+    color: var(--mg-ink-2);
     transition:
-      transform 0.3s var(--mg-ease),
-      border-color 0.3s var(--mg-ease),
-      background-color 0.3s var(--mg-ease),
-      color 0.3s var(--mg-ease);
+      transform var(--mg-dur) var(--mg-ease),
+      color var(--mg-dur) var(--mg-ease);
   }
 
-  .mg-carmake__faq-toggle .mg-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .mg-carmake__faq-q:hover .mg-carmake__faq-toggle {
-    border-color: var(--mg-text);
-    color: var(--mg-text);
-  }
-
-  .mg-carmake__faq-item[open] .mg-carmake__faq-toggle {
+  .mg-carmake__faq-item[open] .mg-carmake__faq-chevron {
     transform: rotate(180deg);
-    border-color: var(--mg-accent);
-    background: var(--mg-accent-soft);
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
   .mg-carmake__faq-item::details-content {
     block-size: 0;
     overflow: hidden;
     transition:
-      block-size 0.35s var(--mg-ease),
-      content-visibility 0.35s allow-discrete;
+      block-size 0.25s var(--mg-ease),
+      content-visibility 0.25s allow-discrete;
   }
 
   .mg-carmake__faq-item[open]::details-content {
@@ -1490,15 +1159,15 @@
   }
 
   .mg-carmake__faq-a {
-    max-width: 68ch;
-    padding: 0 4px 24px;
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--mg-text-muted);
+    max-width: 65ch;
+    padding: 0 var(--mg-space-6) var(--mg-space-5) 0;
+    font-size: var(--mg-fs-body);
+    line-height: 1.6;
+    color: var(--mg-ink-2);
   }
 
-  .mg-carmake__faq-a p {
-    margin: 0 0 0.85em;
+  .mg-carmake__faq-a :is(p, ul, ol) {
+    margin: 0 0 0.75em;
     color: inherit;
   }
 
@@ -1507,250 +1176,169 @@
   }
 
   .mg-carmake__faq-a strong {
-    color: var(--mg-text);
+    color: var(--mg-ink);
   }
 
-  .mg-carmake .mg-carmake__faq-a a,
-  .mg-carmake .mg-carmake__faq-a a:hover {
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-accent);
-    text-underline-offset: 0.2em;
+  .mg-carmake .mg-carmake__faq-a a {
+    color: var(--mg-ink);
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-color: currentcolor;
+    text-underline-offset: 0.22em;
   }
 
-  /* ---------- Closing CTA ---------- */
+  /* ---------- Closing panel ---------- */
   .mg-carmake__cta-panel {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding: clamp(36px, 6vw, 72px) clamp(16px, 5vw, 64px);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius-lg);
-    background: var(--mg-surface);
-    text-align: center;
+    display: grid;
+    gap: var(--mg-space-5);
   }
 
-  .mg-carmake__cta-glow {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(60% 90% at 50% 0%, color-mix(in srgb, var(--mg-accent) 18%, transparent), transparent 70%),
-      radial-gradient(40% 60% at 50% 100%, color-mix(in srgb, var(--mg-accent) 6%, transparent), transparent 70%);
+  .mg-carmake__cta-copy {
+    min-width: 0;
   }
 
   .mg-carmake__cta-title {
-    max-width: 20ch;
-    margin-inline: auto;
+    max-width: 18ch;
   }
 
   .mg-carmake__cta-text {
-    margin-inline: auto;
+    max-width: 52ch;
   }
 
   .mg-carmake__cta-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 1.75rem;
+    display: grid;
+    gap: var(--mg-space-3);
+    align-content: center;
   }
 
-  .mg-carmake__cta-actions .mg-btn {
-    padding-inline: 0.75rem;
-    font-size: 0.875rem;
-    letter-spacing: 0.04em;
+  /* ---------- Phones: price straight after the heading, as on the service pages ---------- */
+  @media screen and (max-width: 749px) {
+    .mg-carmake__offer--price {
+      order: 1;
+      margin-top: var(--mg-space-4);
+    }
+
+    .mg-carmake__copy:has(> .mg-carmake__offer--price) > :is(.mg-carmake__intro, .mg-carmake__actions, .mg-carmake__editor-note) {
+      order: 2;
+    }
   }
 
-  .mg-carmake__cta-call {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 1.25rem 0 0;
-    font-size: 0.9375rem;
-    color: var(--mg-text-muted);
-  }
-
-  .mg-carmake__cta-call .mg-icon {
-    width: 18px;
-    height: 18px;
-    flex: none;
-    color: var(--mg-text-subtle);
-  }
-
-  .mg-carmake .mg-carmake__cta-call a {
-    font-weight: 700;
-    color: var(--mg-text);
-    text-decoration: underline;
-    text-decoration-color: var(--mg-border-strong);
-    text-underline-offset: 4px;
-    transition: text-decoration-color 0.2s var(--mg-ease);
-  }
-
-  .mg-carmake .mg-carmake__cta-call a:hover {
-    color: var(--mg-text);
-    text-decoration-color: var(--mg-accent);
-  }
-
-  .mg-carmake__cta-call a:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
-    border-radius: 2px;
+  @media screen and (max-width: 374px) {
+    .mg-carmake .mg-carmake__panel {
+      padding: var(--mg-space-4);
+    }
   }
 
   /* ---------- Tablet ---------- */
-  @media (min-width: 750px) {
-    .mg-carmake__actions,
-    .mg-carmake__cta-actions {
-      flex-direction: row;
-      flex-wrap: wrap;
+  @media screen and (min-width: 750px) {
+    .mg-carmake__actions {
+      align-self: flex-start;
     }
 
-    .mg-carmake__cta-actions {
-      justify-content: center;
+    .mg-carmake__img {
+      aspect-ratio: 2 / 1;
     }
 
-    /* Side by side when they fit; if they wrap, each fills the row */
-    .mg-carmake__btn {
-      flex: 1 1 auto;
-      width: auto;
-    }
-
-    .mg-carmake__cta-actions .mg-btn {
-      padding-inline: 1.5rem;
-      font-size: 0.9375rem;
-      letter-spacing: 0.06em;
+    .mg-carmake .mg-carmake__facts {
+      grid-template-columns: repeat(var(--mg-carmake-facts, 4), minmax(0, 1fr));
     }
 
     .mg-carmake__svc-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .mg-carmake__svc {
-      min-height: 196px;
+    /* An odd card out at the end takes the full row (tablet) */
+    .mg-carmake__svc-item:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+
+    .mg-carmake .mg-carmake__svc {
+      padding: var(--mg-space-5);
     }
 
     .mg-carmake__shop-panel {
       grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: var(--mg-space-5);
     }
 
     .mg-carmake__shop-btn {
       grid-column: auto;
-      width: auto;
+    }
+
+    .mg-carmake__cta-actions {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .mg-carmake__faq-text {
+      font-size: 1.0625rem;
+    }
+
+    .mg-carmake__faq-a {
+      padding-right: var(--mg-space-7);
     }
   }
 
   /* ---------- Desktop ---------- */
-  @media (min-width: 990px) {
-    .mg-carmake__hero-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  @media screen and (min-width: 990px) {
+    .mg-carmake__panel {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       align-items: center;
-      gap: clamp(40px, 5vw, 80px);
+      gap: var(--mg-space-7);
     }
 
-    .mg-carmake__hero-media {
+    .mg-carmake__media {
       order: 0;
-      margin-bottom: 0;
     }
 
-    .mg-carmake__frame {
-      aspect-ratio: 3 / 2;
+    /* Same crop as the home hero banner */
+    .mg-carmake__img {
+      aspect-ratio: 16 / 11;
     }
 
     .mg-carmake__fit-grid {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: clamp(40px, 6vw, 96px);
       align-items: start;
+      gap: var(--mg-space-8);
     }
 
     .mg-carmake__fit-grid > :only-child {
       grid-column: 1 / -1;
     }
 
-    .mg-carmake__systems + .mg-carmake__models {
-      padding-top: 0.35rem;
-    }
-
-    .mg-carmake__faq-grid {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      gap: clamp(40px, 6vw, 96px);
-      align-items: start;
-    }
-
-    .mg-carmake__faq-head {
-      position: sticky;
-      top: calc(var(--header-height, 72px) + 24px);
-      margin-bottom: 0;
-    }
-  }
-
-  @media (min-width: 1100px) {
+    /* Three across on a 6-track grid; a short last row stretches, so there's never a hole */
     .mg-carmake__svc-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  /* ---------- Motion ---------- */
-  @media (prefers-reduced-motion: no-preference) {
-    .mg-carmake__reveal {
-      animation: mg-carmake-rise 0.7s var(--mg-ease) both;
-      animation-delay: calc(var(--mg-reveal-i, 0) * 80ms + 100ms);
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 
-    .mg-carmake__frame .mg-carmake__img {
-      animation: mg-carmake-settle 1.4s var(--mg-ease) both;
+    .mg-carmake__svc-item,
+    .mg-carmake__svc-item:last-child:nth-child(odd) {
+      grid-column: span 2;
     }
 
-    .mg-carmake__faq-item[open] .mg-carmake__faq-a {
-      animation: mg-carmake-fade 0.35s var(--mg-ease);
+    .mg-carmake__svc-item:last-child:nth-child(3n + 1) {
+      grid-column: 1 / -1;
+    }
+
+    .mg-carmake__svc-item:nth-last-child(2):nth-child(3n + 1),
+    .mg-carmake__svc-item:last-child:nth-child(3n + 2) {
+      grid-column: span 3;
+    }
+
+    .mg-carmake__cta-panel {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+      align-items: center;
+      gap: var(--mg-space-8);
+    }
+
+    .mg-carmake__cta-actions {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mg-carmake__svc-icon,
-    .mg-carmake__svc-cta .mg-icon,
-    .mg-carmake__faq-toggle,
-    .mg-carmake__faq-item::details-content,
-    .mg-carmake__model {
+    .mg-carmake__faq-chevron,
+    .mg-carmake__faq-item::details-content {
       transition: none;
-    }
-
-    .mg-carmake__svc:hover .mg-carmake__svc-cta .mg-icon {
-      transform: none;
-    }
-  }
-
-  @keyframes mg-carmake-rise {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes mg-carmake-settle {
-    from {
-      transform: scale(1.04);
-    }
-
-    to {
-      transform: scale(1);
-    }
-  }
-
-  @keyframes mg-carmake-fade {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
     }
   }
 {% endstylesheet %}
@@ -1783,32 +1371,33 @@
       "type": "text",
       "id": "fallback_heading",
       "label": "Main heading (H1)",
-      "info": "Used when the car make entry has no headline.",
-      "default": "[make] CarPlay & Screen Upgrades in Dublin"
+      "info": "Used when the car make entry has no headline. Sentence case.",
+      "default": "[make] CarPlay and screen upgrades in Dublin"
     },
     {
       "type": "textarea",
       "id": "fallback_intro",
       "label": "Intro",
-      "info": "Used when the car make entry has no intro and the page has no content. Each line becomes a paragraph.",
-      "default": "Wired and wireless Apple CarPlay, Android Auto and full screen upgrades for your [make], fitted in-house at our Dublin 12 workshop. We work with your factory screen and controls wherever possible, so the finish looks like it left the factory that way.\nSend us your reg and a photo of your dash and we'll confirm exactly what fits, with the fitted price agreed before you book."
+      "info": "Used when the car make entry has no intro and the page has no content. Each line becomes a paragraph. One sentence of about 25 words reads best above the price and buttons.",
+      "default": "Wired and wireless Apple CarPlay, Android Auto and screen upgrades for your [make], fitted at our Dublin 12 workshop with your factory screen and controls kept."
     },
     {
       "type": "text",
       "id": "fallback_from_price",
       "label": "From price",
-      "info": "Used only when no car make entry is linked. Leave blank to hide the price in the hero (the safe choice: MG's real prices differ by make, so put them on the car make entry instead)."
+      "info": "Used only when no car make entry is linked. €299 is the site-wide CarPlay and Android Auto 'from' price shown on the home page (MG's real BMW Android Auto, iDrive 7, price). Put each make's own price on its car make entry (from_price). Leave blank to hide.",
+      "default": "€299"
     },
     {
       "type": "textarea",
       "id": "fallback_services",
       "label": "Services",
-      "info": "Used when the car make entry has no services, so it must suit any make. One per line: Service name | Price | /link. Price and link are optional: no price shows 'Price on request', no link opens the quote page. €150 is MG's real Android radio fitting price. Put make-specific prices (for example BMW CarPlay €350) on the car make entry, not here.",
-      "default": "[make] wireless CarPlay & Android Auto | | /pages/carplay-installation\nWidescreen Android display upgrade\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nReverse camera fitting\nSpeaker & sound upgrade"
+      "info": "Used when the car make entry has no services, so it must suit any make. One per line: Service name | Price | /link. Price and link are optional: no price shows 'Price on request', no link opens the quote page. €150 is MG's real Android radio fitting price and 'From €299' the site-wide CarPlay and Android Auto price from the home page. Put make-specific prices (for example BMW CarPlay €350) on the car make entry, not here. The cards fill the grid whatever the number: a short last row stretches to the full width.",
+      "default": "[make] wireless CarPlay and Android Auto | From €299 | /pages/carplay-installation\nWidescreen Android display upgrade\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nReverse camera fitting\nSpeaker and sound upgrade"
     },
     {
       "type": "header",
-      "content": "Hero"
+      "content": "Header"
     },
     {
       "type": "checkbox",
@@ -1820,8 +1409,8 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Hero image",
-      "info": "Used when the car make entry has no hero image. Landscape, at least 1600px wide."
+      "label": "Header image",
+      "info": "Used when the car make entry has no hero image. Landscape, at least 1600px wide, with a focal point set. Cropped to 16:9 on phones, 2:1 on tablets and 16:11 on desktop."
     },
     {
       "type": "select",
@@ -1866,22 +1455,16 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Car makes"
-    },
-    {
-      "type": "text",
       "id": "price_note",
-      "label": "Note beside the from price",
+      "label": "Note under the from price",
       "info": "The from price comes from the car make entry (from_price). The €50 deposit is MG's real booking deposit.",
-      "default": "Fitted price agreed before you book. A €50 deposit secures your slot."
+      "default": "A €50 deposit secures your slot."
     },
     {
       "type": "text",
       "id": "book_label",
       "label": "Booking button label",
-      "info": "Also used in the closing call to action. Leave blank to hide.",
+      "info": "Also used in the closing panel. Leave blank to hide.",
       "default": "Book a fitting"
     },
     {
@@ -1893,7 +1476,7 @@
     {
       "type": "checkbox",
       "id": "show_whatsapp",
-      "label": "Show WhatsApp button in hero",
+      "label": "Show WhatsApp button in the header",
       "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
       "default": true
     },
@@ -1901,7 +1484,8 @@
       "type": "text",
       "id": "whatsapp_label",
       "label": "WhatsApp button label",
-      "default": "Get a quote on WhatsApp"
+      "info": "Also used in the closing panel.",
+      "default": "WhatsApp us"
     },
     {
       "type": "text",
@@ -1914,8 +1498,8 @@
       "type": "text",
       "id": "facts",
       "label": "Highlights",
-      "info": "Separate each highlight with a | character.",
-      "default": "Fitted in-house, Dublin 12 | Wired & wireless CarPlay | OEM-style finish"
+      "info": "Shown as a strip of short facts under the header. Separate each one with a | character, up to four.",
+      "default": "Fitted in-house, Dublin 12 | Wired and wireless CarPlay | Factory-style finish"
     },
     {
       "type": "header",
@@ -1942,7 +1526,7 @@
       "type": "text",
       "id": "systems_text",
       "label": "Systems text",
-      "default": "The factory infotainment systems we retrofit with Apple CarPlay, Android Auto or a bigger screen. Not sure which one your [make] has? Send us a photo of your dash.",
+      "default": "The factory systems we retrofit with CarPlay, Android Auto or a bigger screen. Not sure which one your [make] has? Send us a photo of your dash.",
       "visible_if": "{{ section.settings.show_systems }}"
     },
     {
@@ -1980,14 +1564,14 @@
       "type": "text",
       "id": "services_heading",
       "label": "Heading",
-      "default": "[make] services",
+      "default": "[make] fitted prices",
       "visible_if": "{{ section.settings.show_services }}"
     },
     {
       "type": "text",
       "id": "services_text",
       "label": "Text",
-      "default": "The jobs we do most on [make] models, all fitted at our Dublin 12 workshop, with the fitted price agreed before you book.",
+      "default": "The jobs we do most on [make] models, fitted at our Dublin 12 workshop, with the price agreed before you book.",
       "visible_if": "{{ section.settings.show_services }}"
     },
     {
@@ -2001,7 +1585,7 @@
       "type": "text",
       "id": "services_note",
       "label": "Note under prices",
-      "default": "A €50 deposit secures your booking slot. \"From\" prices depend on your exact model and system, and we'll confirm yours before you book.",
+      "default": "A €50 deposit secures your booking slot. We confirm the fitted price for your exact model and system before you book.",
       "visible_if": "{{ section.settings.show_services }}"
     },
     {
@@ -2011,7 +1595,7 @@
     {
       "type": "checkbox",
       "id": "show_shop",
-      "label": "Show shop parts banner",
+      "label": "Show shop parts panel",
       "info": "The button opens /collections/all filtered by the product metafield custom.car_make. Add a Car make filter in the Search & Discovery app so the filter applies.",
       "default": true
     },
@@ -2044,7 +1628,7 @@
       "type": "checkbox",
       "id": "show_page_content",
       "label": "Show the page's own content",
-      "info": "When the car make entry supplies the intro, the page's content (Online Store > Pages) is shown here. Without an entry intro, the page content is used as the hero intro instead.",
+      "info": "When the car make entry supplies the intro, the page's content (Online Store > Pages) is shown here. Without an entry intro, the page content is used as the header intro instead.",
       "default": true
     },
     {
@@ -2085,13 +1669,13 @@
     },
     {
       "type": "header",
-      "content": "Closing call to action"
+      "content": "Closing panel"
     },
     {
       "type": "checkbox",
       "id": "show_cta",
-      "label": "Show closing call to action",
-      "info": "Uses the booking button, WhatsApp and phone number set above and in Theme settings.",
+      "label": "Show closing panel",
+      "info": "An MG red panel with WhatsApp, booking and call buttons (set above and in Theme settings).",
       "default": true
     },
     {
@@ -2163,14 +1747,14 @@
           "type": "question",
           "settings": {
             "question": "How long does the fitting take?",
-            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours at our Dublin 12 workshop. Japanese-to-European conversions take around two hours. We'll confirm the time when you book.</p>"
+            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours at our Dublin 12 workshop. Japanese-to-European conversions take around two hours. We'll confirm the time when you book.</p>"
           }
         },
         {
           "type": "question",
           "settings": {
             "question": "Do I need to pay a deposit?",
-            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot. We agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot. We agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
           }
         }
       ]

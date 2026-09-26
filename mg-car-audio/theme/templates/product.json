@@ -161,7 +161,6 @@
               "settings": {
                 "thickness": 1,
                 "corner_radius": "square",
-                "divider_color": "{{ settings.color_palette.color3 }}",
                 "width_percent": 100,
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -221,15 +220,15 @@
               "name": "Fitting CTA",
               "settings": {
                 "heading": "Need it fitted?",
-                "subheading": "Professional installation in Dublin",
+                "subheading": "Fitted at our Dublin 12 workshop",
                 "price_label": "Fitted from",
                 "point_1": "Fitted in-house",
-                "point_2": "OEM-style finish",
+                "point_2": "Factory-style finish",
                 "show_warranty": true,
                 "book_label": "Book fitting",
                 "book_style": "ghost",
                 "show_whatsapp": true,
-                "whatsapp_label": "Ask on WhatsApp",
+                "whatsapp_label": "WhatsApp us",
                 "whatsapp_message": "Hi MG Car Audio, I'd like a fitting quote for: [product]. My reg is: ",
                 "hide_on_installation": true,
                 "padding-block-start": 8,

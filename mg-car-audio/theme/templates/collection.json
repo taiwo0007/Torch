@@ -15,19 +15,17 @@
       "settings": {
         "show_breadcrumbs": true,
         "breadcrumb_label": "Collections",
-        "eyebrow": "Shop",
         "show_count": true,
-        "fallback_text": "Hand-picked kit that we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part.",
+        "fallback_text": "Kit we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part.",
         "read_more_label": "Read more",
         "read_less_label": "Show less",
-        "chips": "Fitted in Dublin\nWired & wireless options\nExpert advice on WhatsApp",
+        "chips": "Fitted in Dublin\nWired and wireless options\nAdvice on WhatsApp",
         "show_help": true,
         "help_text": "Not sure what fits your car?",
-        "help_link_label": "Ask us on WhatsApp",
+        "help_link_label": "WhatsApp us",
         "auto_image": true,
         "fallback_asset": "mg-showroom.webp",
-        "overlay": 80,
-        "height": "compact"
+        "show_image": true
       }
     },
     "main": {
@@ -154,7 +152,7 @@
         "product_card_size": "medium",
         "mobile_product_card_size": "small",
         "product_grid_width": "centered",
-        "full_width_on_mobile": true,
+        "full_width_on_mobile": false,
         "columns_gap_horizontal": 16,
         "columns_gap_vertical": 24,
         "padding-inline-start": 0,

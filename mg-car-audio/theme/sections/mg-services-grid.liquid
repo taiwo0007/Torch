@@ -1,401 +1,693 @@
+{%- comment -%}
+  Fitted prices (docs/DESIGN.md §3 item 5): Back Market's "best deals" panel.
+  A band panel with a workshop photo on the left (desktop) and, on the right, filter tabs
+  plus a carousel of service cards with real fitted prices. Tabs are built from the "Tab"
+  setting of the services present; without JavaScript every card shows and the tabs stay hidden.
+{%- endcomment -%}
+
 {%- liquid
+  assign sid = 'MgPrices-' | append: section.id
+  assign heading_id = sid | append: '-heading'
   assign button_url = section.settings.button_url | default: '/pages/services'
-  assign heading_id = 'MgServicesHeading-' | append: section.id
+  assign price_suffix = section.settings.price_suffix | strip
+  assign on_request_label = section.settings.on_request_label | default: 'Price on request'
+  assign book_label = section.settings.book_label | strip
+  assign quote_label = section.settings.quote_label | strip
+
+  assign group_keys = 'carplay,screens,radios,conversions,audio' | split: ','
+  assign present = ','
+  assign card_count = 0
+  for block in section.blocks
+    assign title = block.settings.title | strip
+    if title != blank
+      assign card_count = card_count | plus: 1
+      assign present = present | append: block.settings.group | append: ','
+    endif
+  endfor
+
+  assign tab_count = 0
+  for key in group_keys
+    assign probe = ',' | append: key | append: ','
+    if present contains probe
+      assign tab_count = tab_count | plus: 1
+    endif
+  endfor
+
+  assign show_tabs = false
+  if section.settings.show_tabs and tab_count > 1
+    assign show_tabs = true
+  endif
+
+  assign show_image = section.settings.show_image
 -%}
 
-<div
-  class="mg-section mg-services mg-services--{{ section.settings.background }}"
-  style="--mg-services-cols: {{ section.settings.columns_desktop }};"
->
+<div class="mg-section mg-prices{% if show_image %} mg-prices--image{% endif %}">
   <div class="mg-container">
-    {%- if section.settings.eyebrow != blank
-      or section.settings.heading != blank
-      or section.settings.text != blank
-      or section.settings.button_label != blank
-    -%}
-      <div class="mg-section-head mg-section-head--row mg-services__head">
-        <div class="mg-services__intro">
-          {%- if section.settings.eyebrow != blank -%}
-            <p class="mg-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-          {%- endif -%}
+    {%- if section.settings.heading != blank or section.settings.button_label != blank -%}
+      <div class="mg-head">
+        <div class="mg-head__text">
           {%- if section.settings.heading != blank -%}
             <h2
-              class="mg-heading"
+              class="mg-head__title"
               id="{{ heading_id }}"
             >
               {{ section.settings.heading | escape }}
             </h2>
           {%- endif -%}
           {%- if section.settings.text != blank -%}
-            <p class="mg-lede">{{ section.settings.text | escape }}</p>
+            <p class="mg-head__sub">{{ section.settings.text | escape }}</p>
           {%- endif -%}
         </div>
         {%- if section.settings.button_label != blank -%}
           <a
-            class="mg-btn mg-btn--ghost mg-services__all"
+            class="mg-link mg-head__link"
             href="{{ button_url }}"
           >
-            <span>{{ section.settings.button_label | escape }}</span>
-            {%- render 'mg-icon', icon: 'arrow-right' -%}
+            {{- section.settings.button_label | escape -}}
           </a>
         {%- endif -%}
       </div>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <ul
-        class="mg-services__track"
-        role="list"
-        {% if section.settings.heading != blank %}
-          aria-labelledby="{{ heading_id }}"
-        {% endif %}
-      >
-        {%- for block in section.blocks -%}
-          {%- liquid
-            if block.settings.title == blank
-              continue
-            endif
-            assign card_url = block.settings.url | default: '/pages/get-a-quote'
-            assign price = block.settings.price | strip
+    {%- if card_count > 0 -%}
+      <div class="mg-panel mg-panel--flush mg-prices__panel">
+        {%- if show_image -%}
+          <div class="mg-prices__media">
+            {%- if section.settings.image != blank -%}
+              {{
+                section.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  widths: '400, 600, 800, 1000, 1200',
+                  sizes: '(min-width: 1184px) 373px, 32vw',
+                  loading: 'lazy',
+                  alt: section.settings.image.alt,
+                  class: 'mg-prices__photo'
+              }}
+            {%- else -%}
+              <img
+                class="mg-prices__photo"
+                src="{{ 'mg-showroom-800.webp' | asset_url }}"
+                srcset="{{ 'mg-showroom-800.webp' | asset_url }} 800w, {{ 'mg-showroom.webp' | asset_url }} 1600w"
+                sizes="(min-width: 1184px) 373px, 32vw"
+                alt="Car audio and CarPlay kits on the wall of the MG Car Audio showroom"
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              >
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
-            assign fallback = block.settings.fallback_image | default: 'mg-showroom.webp'
-            case fallback
-              when 'mg-showroom.webp'
-                assign fallback_w = 1600
-                assign fallback_h = 1200
-              when 'mg-single-din-radio.webp', 'mg-door-speaker.webp', 'mg-speaker-pair.webp', 'mg-dash-radio.webp'
-                assign fallback_w = 1024
-                assign fallback_h = 1024
-              when 'mg-speaker-range-banner.webp'
-                assign fallback_w = 1600
-                assign fallback_h = 320
-              when 'mg-bmw-carplay-screen.webp'
-                assign fallback_w = 1536
-                assign fallback_h = 840
-              else
-                assign fallback_w = 1536
-                assign fallback_h = 1024
-            endcase
-          -%}
-          <li
-            class="mg-services__item"
-            {{ block.shopify_attributes }}
-          >
-            <a
-              class="mg-card mg-services__card"
-              href="{{ card_url }}"
+        <mg-price-tabs class="mg-prices__content">
+          {%- if show_tabs -%}
+            <div
+              class="mg-chips mg-chips--bleed mg-prices__tabs"
+              role="tablist"
+              aria-label="{{ section.settings.tabs_label | default: 'Filter by system' | escape }}"
+              hidden
+              data-mg-prices-tabs
             >
-              <div class="mg-services__media">
-                {%- if block.settings.image != blank -%}
-                  {{
-                    block.settings.image
-                    | image_url: width: 1000
-                    | image_tag:
-                      widths: '360, 480, 640, 800, 1000',
-                      sizes: '(min-width: 1320px) 310px, (min-width: 990px) 25vw, (min-width: 750px) 46vw, 80vw',
-                      loading: 'lazy',
-                      alt: '',
-                      class: 'mg-services__img'
-                  }}
-                {%- else -%}
-                  {%- comment -%} Wide theme photos ship an -800 copy for card-sized slots {%- endcomment -%}
-                  <img
-                    class="mg-services__img"
-                    src="{{ fallback | asset_url }}"
-                    {% if fallback_w > 1024 %}
-                      srcset="{{ fallback | replace: '.webp', '-800.webp' | asset_url }} 800w, {{ fallback | asset_url }} {{ fallback_w }}w"
-                      sizes="(min-width: 1320px) 310px, (min-width: 990px) 25vw, (min-width: 750px) 46vw, 80vw"
-                    {% endif %}
-                    alt=""
-                    width="{{ fallback_w }}"
-                    height="{{ fallback_h }}"
-                    loading="lazy"
-                    decoding="async"
-                  >
-                {%- endif -%}
-                {%- if block.settings.badge != blank -%}
-                  <span class="mg-services__badge">{{ block.settings.badge | escape }}</span>
-                {%- endif -%}
-              </div>
+              <button
+                class="mg-chip"
+                type="button"
+                role="tab"
+                id="{{ sid }}-tab-all"
+                aria-selected="true"
+                aria-controls="{{ sid }}-panel"
+                data-mg-tab="all"
+              >
+                {{- section.settings.tab_all | default: 'All' | escape -}}
+              </button>
+              {%- for key in group_keys -%}
+                {%- liquid
+                  assign probe = ',' | append: key | append: ','
+                  unless present contains probe
+                    continue
+                  endunless
+                  assign label_id = 'tab_' | append: key
+                  assign tab_label = section.settings[label_id] | default: key
+                -%}
+                <button
+                  class="mg-chip"
+                  type="button"
+                  role="tab"
+                  id="{{ sid }}-tab-{{ key }}"
+                  aria-selected="false"
+                  aria-controls="{{ sid }}-panel"
+                  tabindex="-1"
+                  data-mg-tab="{{ key }}"
+                >
+                  {{- tab_label | escape -}}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
 
-              <div class="mg-services__body">
-                <h3 class="mg-services__title">{{ block.settings.title | escape }}</h3>
-                {%- if block.settings.text != blank -%}
-                  <p class="mg-services__text">{{ block.settings.text | escape }}</p>
-                {%- endif -%}
+          <div
+            class="mg-prices__panel-body"
+            id="{{ sid }}-panel"
+            data-mg-prices-panel
+          >
+            {%- render 'mg-carousel-script' -%}
+            <mg-carousel class="mg-carousel mg-carousel--bleed mg-prices__carousel">
+              <ul
+                class="mg-carousel__track"
+                role="list"
+                tabindex="0"
+                {% if section.settings.heading != blank %}
+                  aria-labelledby="{{ heading_id }}"
+                {% else %}
+                  aria-label="Fitted prices"
+                {% endif %}
+              >
+                {%- for block in section.blocks -%}
+                  {%- liquid
+                    assign title = block.settings.title | strip
+                    if title == blank
+                      continue
+                    endif
 
-                <div class="mg-services__foot">
-                  {%- if price != blank -%}
-                    <span class="mg-price-from mg-services__price">
-                      {%- if block.settings.price_label != blank %}
-                        <small>{{ block.settings.price_label | escape }}</small>
-                      {% endif -%}
-                      <strong>{{ price | escape }}</strong>
-                      {%- if section.settings.price_suffix != blank %}
-                        <small>{{ section.settings.price_suffix | escape }}</small>
-                      {%- endif -%}
-                    </span>
-                  {%- else -%}
-                    <span class="mg-services__quote">{{ section.settings.quote_label | default: 'Get a quote' | escape }}</span>
-                  {%- endif -%}
-                  <span
-                    class="mg-services__arrow"
-                    aria-hidden="true"
+                    assign card_id = sid | append: '-' | append: block.id
+                    assign card_url = block.settings.url | default: '/pages/get-a-quote'
+                    assign group = block.settings.group | default: 'other'
+                    assign price = block.settings.price | strip
+                    assign price_label = block.settings.price_label | strip
+                    assign price_label_first = price_label | slice: 0 | upcase
+                    assign price_label_rest = price_label | slice: 1, 60
+                    assign price_label_cap = price_label_first | append: price_label_rest
+                    assign duration = block.settings.duration | strip
+                    assign badge = block.settings.badge | strip
+
+                    assign price_main = price
+                    assign price_cents = ''
+                    if price contains '.'
+                      assign price_parts = price | split: '.'
+                      assign price_main = price_parts.first
+                      assign price_cents = price_parts.last
+                    endif
+
+                    assign fallback = block.settings.fallback_image | default: 'mg-showroom.webp'
+                    assign fallback_small = fallback | replace: '.webp', '-800.webp'
+                    assign fallback_w = 1536
+                    assign fallback_h = 1024
+                    assign small_h = 533
+                    assign has_small = true
+                    case fallback
+                      when 'mg-showroom.webp'
+                        assign fallback_w = 1600
+                        assign fallback_h = 1200
+                        assign small_h = 600
+                      when 'mg-bmw-carplay-screen.webp'
+                        assign fallback_h = 840
+                        assign small_h = 438
+                      when 'mg-speaker-range-banner.webp'
+                        assign fallback_w = 1600
+                        assign fallback_h = 320
+                        assign small_h = 160
+                      when 'mg-single-din-radio.webp', 'mg-door-speaker.webp', 'mg-speaker-pair.webp', 'mg-dash-radio.webp'
+                        assign fallback_w = 1024
+                        assign fallback_h = 1024
+                        assign has_small = false
+                    endcase
+                  -%}
+                  <li
+                    class="mg-carousel__slide"
+                    data-mg-group="{{ group }}"
+                    {{ block.shopify_attributes }}
                   >
-                    {%- render 'mg-icon', icon: 'arrow-right' -%}
-                  </span>
+                    <a
+                      class="mg-card mg-card--link mg-prices__card"
+                      href="{{ card_url }}"
+                      aria-labelledby="{{ card_id }}-title {{ card_id }}-price"
+                      {% if block.settings.text != blank %}
+                        aria-describedby="{{ card_id }}-text"
+                      {% endif %}
+                    >
+                      <div class="mg-card__media mg-prices__media-card">
+                        {%- if block.settings.image != blank -%}
+                          {{
+                            block.settings.image
+                            | image_url: width: 800
+                            | image_tag:
+                              widths: '400, 600, 800',
+                              sizes: '(min-width: 990px) 260px, (min-width: 750px) 270px, 76vw',
+                              loading: 'lazy',
+                              alt: ''
+                          }}
+                        {%- elsif has_small -%}
+                          <img
+                            src="{{ fallback_small | asset_url }}"
+                            srcset="{{ fallback_small | asset_url }} 800w, {{ fallback | asset_url }} {{ fallback_w }}w"
+                            sizes="(min-width: 990px) 260px, (min-width: 750px) 270px, 76vw"
+                            alt=""
+                            width="800"
+                            height="{{ small_h }}"
+                            loading="lazy"
+                            decoding="async"
+                          >
+                        {%- else -%}
+                          <img
+                            src="{{ fallback | asset_url }}"
+                            alt=""
+                            width="{{ fallback_w }}"
+                            height="{{ fallback_h }}"
+                            loading="lazy"
+                            decoding="async"
+                          >
+                        {%- endif -%}
+                      </div>
+
+                      <div class="mg-card__body mg-prices__body">
+                        <h3
+                          class="mg-card__title"
+                          id="{{ card_id }}-title"
+                        >
+                          {{ title | escape }}
+                        </h3>
+                        {%- if block.settings.text != blank -%}
+                          <p
+                            class="mg-card__meta mg-prices__text"
+                            id="{{ card_id }}-text"
+                          >
+                            {{ block.settings.text | escape }}
+                          </p>
+                        {%- endif -%}
+
+                        {%- if duration != blank or badge != blank -%}
+                          <p class="mg-prices__facts">
+                            {%- if duration != blank -%}
+                              <span class="mg-card__meta mg-prices__time">
+                                {%- render 'mg-icon', icon: 'clock' -%}
+                                {{- duration | escape -}}
+                              </span>
+                            {%- endif -%}
+                            {%- if badge != blank -%}
+                              <span class="mg-badge mg-badge--red">{{ badge | escape }}</span>
+                            {%- endif -%}
+                          </p>
+                        {%- endif -%}
+
+                        <div class="mg-prices__foot-card">
+                          {%- if price != blank -%}
+                            <p
+                              class="mg-price mg-price--lg mg-prices__price"
+                              id="{{ card_id }}-price"
+                            >
+                              {%- if price_label != blank -%}
+                                <span class="mg-price__label">{{ price_label_cap | escape }} </span>
+                              {%- endif -%}
+                              {{- price_main | escape -}}
+                              {%- if price_cents != blank -%}
+                                <span class="mg-price__cents">{{ price_cents | escape }}</span>
+                              {%- endif -%}
+                              {%- if price_suffix != blank -%}
+                                <span class="mg-price__label"> {{ price_suffix | escape }}</span>
+                              {%- endif -%}
+                            </p>
+                            {%- if book_label != blank -%}
+                              <span
+                                class="mg-link mg-prices__cta"
+                                aria-hidden="true"
+                              >
+                                {{- book_label | escape -}}
+                              </span>
+                            {%- endif -%}
+                          {%- else -%}
+                            <p
+                              class="mg-price mg-prices__price mg-prices__price--request"
+                              id="{{ card_id }}-price"
+                            >
+                              {{ on_request_label | escape }}
+                            </p>
+                            {%- if quote_label != blank -%}
+                              <span
+                                class="mg-link mg-prices__cta"
+                                aria-hidden="true"
+                              >
+                                {{- quote_label | escape -}}
+                              </span>
+                            {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+              <div class="mg-prices__foot">
+                {%- if section.settings.footnote != blank -%}
+                  <p class="mg-help mg-prices__note">{{ section.settings.footnote | escape }}</p>
+                {%- endif -%}
+                <div class="mg-carousel__nav mg-carousel__nav--desktop mg-prices__nav">
+                  <button
+                    class="mg-carousel__btn"
+                    type="button"
+                    data-mg-carousel-prev
+                    aria-label="Previous services"
+                  >
+                    {%- render 'mg-icon', icon: 'chevron-left' -%}
+                  </button>
+                  <button
+                    class="mg-carousel__btn"
+                    type="button"
+                    data-mg-carousel-next
+                    aria-label="Next services"
+                  >
+                    {%- render 'mg-icon', icon: 'chevron-right' -%}
+                  </button>
                 </div>
               </div>
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
+            </mg-carousel>
+          </div>
 
-    {%- if section.settings.footnote != blank -%}
-      <p class="mg-services__note">{{ section.settings.footnote | escape }}</p>
+          {%- if show_tabs -%}
+            <p
+              class="mg-visually-hidden"
+              role="status"
+              data-mg-prices-status
+              data-one="Showing 1 service"
+              data-many="Showing [count] services"
+            ></p>
+          {%- endif -%}
+        </mg-price-tabs>
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="mg-help">Add "Service" blocks to show fitted prices.</p>
     {%- endif -%}
   </div>
 </div>
 
+{% javascript %}
+  if (!customElements.get('mg-price-tabs')) {
+    /* Filter tabs for the Fitted prices carousel (sections/mg-services-grid.liquid).
+       WAI-ARIA tabs: one tabpanel (the carousel) whose slides are filtered by data-mg-group. */
+    class MgPriceTabs extends HTMLElement {
+      connectedCallback() {
+        this.tablist = this.querySelector('[data-mg-prices-tabs]');
+        this.panel = this.querySelector('[data-mg-prices-panel]');
+        if (!this.tablist || !this.panel) return;
+
+        this.tabs = Array.from(this.tablist.querySelectorAll('[role="tab"]'));
+        this.slides = Array.from(this.panel.querySelectorAll('[data-mg-group]'));
+        this.carousel = this.panel.querySelector('mg-carousel');
+        this.status = this.querySelector('[data-mg-prices-status]');
+
+        this.onClick = (event) => {
+          const tab = event.target.closest('[role="tab"]');
+          if (tab && this.tablist.contains(tab)) this.select(tab);
+        };
+        this.onKeydown = (event) => {
+          const index = this.tabs.indexOf(document.activeElement);
+          if (index < 0) return;
+          let next = -1;
+          if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % this.tabs.length;
+          else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + this.tabs.length) % this.tabs.length;
+          else if (event.key === 'Home') next = 0;
+          else if (event.key === 'End') next = this.tabs.length - 1;
+          if (next < 0) return;
+          event.preventDefault();
+          this.select(this.tabs[next], { focus: true });
+        };
+        this.onBlockSelect = (event) => {
+          const slide = event.target;
+          if (!(slide instanceof HTMLElement) || !this.slides.includes(slide)) return;
+          if (slide.hidden) this.select(this.tabs[0], { announce: false });
+          requestAnimationFrame(() => slide.scrollIntoView({ block: 'nearest', inline: 'start' }));
+        };
+
+        this.tablist.addEventListener('click', this.onClick);
+        this.tablist.addEventListener('keydown', this.onKeydown);
+        document.addEventListener('shopify:block:select', this.onBlockSelect);
+
+        this.panel.setAttribute('role', 'tabpanel');
+        this.tablist.hidden = false;
+        const current = this.tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || this.tabs[0];
+        this.select(current, { announce: false, keepScroll: true });
+      }
+
+      disconnectedCallback() {
+        if (!this.tablist) return;
+        this.tablist.removeEventListener('click', this.onClick);
+        this.tablist.removeEventListener('keydown', this.onKeydown);
+        document.removeEventListener('shopify:block:select', this.onBlockSelect);
+      }
+
+      select(tab, { focus = false, announce = true, keepScroll = false } = {}) {
+        if (!tab) return;
+        const group = tab.dataset.mgTab;
+        this.tabs.forEach((item) => {
+          const selected = item === tab;
+          item.setAttribute('aria-selected', String(selected));
+          item.tabIndex = selected ? 0 : -1;
+        });
+        this.panel.setAttribute('aria-labelledby', tab.id);
+
+        let count = 0;
+        this.slides.forEach((slide) => {
+          const show = group === 'all' || slide.dataset.mgGroup === group;
+          slide.hidden = !show;
+          if (show) count += 1;
+        });
+
+        if (focus) tab.focus();
+        const row = this.tablist;
+        const start = tab.offsetLeft - row.offsetLeft;
+        if (start < row.scrollLeft || start + tab.offsetWidth > row.scrollLeft + row.clientWidth) {
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          row.scrollTo({ left: Math.max(0, start - 24), behavior: reduce ? 'auto' : 'smooth' });
+        }
+
+        if (!keepScroll) this.rewind();
+
+        if (announce && this.status) {
+          const template = count === 1 ? this.status.dataset.one : this.status.dataset.many;
+          this.status.textContent = (template || '').replace('[count]', String(count));
+        }
+      }
+
+      /* Back to the first card straight away. The track scrolls smoothly (CSS), and after a filter
+         the browser re-snaps to the card that was snapped before, so jump without animation. */
+      rewind() {
+        const track = this.carousel && this.carousel.querySelector('.mg-carousel__track');
+        if (!track) return;
+        const behavior = track.style.scrollBehavior;
+        track.style.scrollBehavior = 'auto';
+        track.scrollLeft = 0;
+        track.style.scrollBehavior = behavior;
+        customElements.whenDefined('mg-carousel').then(() => {
+          if (typeof this.carousel.reset === 'function') this.carousel.reset();
+        });
+      }
+    }
+
+    customElements.define('mg-price-tabs', MgPriceTabs);
+  }
+{% endjavascript %}
+
 {% stylesheet %}
-  .mg-services--surface {
-    background: var(--mg-surface);
+  /* Layout only: colour, type, radius and states come from assets/mg-theme.css */
+  .mg-prices mg-price-tabs {
+    display: block;
   }
 
-  .mg-services--surface .mg-services__card {
-    background: var(--mg-surface-2);
-  }
-
-  .mg-services__intro {
-    max-width: 680px;
-  }
-
-  .mg-services__all {
-    flex: 0 1 auto;
-    max-width: 100%;
-  }
-
-  /* Mobile: horizontal scroll-snap rail with a visible peek of the next card */
-  .mg-services__track {
+  /* Phones: the panel runs edge to edge as a band; from 750px it is a rounded panel */
+  .mg-prices__panel {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 80%;
-    gap: 14px;
-    margin: 0 calc(var(--mg-gutter) * -1);
-    padding: 4px var(--mg-gutter) 12px;
-    list-style: none;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--mg-gutter);
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    grid-template-columns: minmax(0, 1fr);
+    margin-inline: calc(var(--mg-gutter) * -1);
+    border-radius: 0;
   }
 
-  .mg-services__track::-webkit-scrollbar {
+  .mg-prices__media {
     display: none;
   }
 
-  .mg-services__item {
-    display: flex;
+  .mg-prices__content {
     min-width: 0;
-    scroll-snap-align: start;
+    padding: var(--mg-space-5) var(--mg-gutter);
   }
 
-  .mg-services__card {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    overflow: hidden;
+  .mg-prices__tabs[hidden] {
+    display: none;
   }
 
-  .mg-services__card:focus-visible {
-    outline: 2px solid var(--mg-text);
-    outline-offset: 3px;
+  .mg-prices__tabs {
+    margin-block-end: var(--mg-space-4);
   }
 
-  .mg-services__media {
-    position: relative;
-    display: block;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--mg-surface-2);
+  /* Cards: about 80% of a phone screen with the next card peeking in */
+  .mg-prices .mg-prices__carousel {
+    --mg-carousel-mobile: 1.2;
+    --mg-carousel-tablet: 2.4;
+    --mg-carousel-desktop: 2.9;
   }
 
-  .mg-services__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--mg-bg) 55%, transparent) 100%);
-    pointer-events: none;
+  /* Beside the photo: a little over two cards. Cards stay 250px or wider so price and link share a line. */
+  .mg-prices--image .mg-prices__carousel {
+    --mg-carousel-desktop: 2.15;
   }
 
-  .mg-services__img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s var(--mg-ease);
-  }
+  @media screen and (min-width: 1200px) {
+    .mg-prices .mg-prices__carousel {
+      --mg-carousel-desktop: 3.4;
+    }
 
-  @media (hover: hover) {
-    .mg-services__card:hover .mg-services__img {
-      transform: scale(1.04);
+    .mg-prices--image .mg-prices__carousel {
+      --mg-carousel-desktop: 2.4;
     }
   }
 
-  .mg-services__badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 1;
-    padding: 0.35rem 0.65rem;
-    border-radius: 999px;
-    background: var(--mg-accent);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    text-transform: uppercase;
-    color: var(--mg-on-accent);
-  }
-
-  .mg-services__body {
+  .mg-prices .mg-prices__card {
     display: flex;
-    flex: 1;
     flex-direction: column;
-    gap: 8px;
-    padding: 18px 18px 16px;
   }
 
-  .mg-services__title {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: 800;
-    font-size: 1.0625rem;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+  .mg-prices__media-card {
+    --mg-media-ratio: 3 / 2;
   }
 
-  .mg-services__text {
+  .mg-prices__body {
+    flex: 1 1 auto;
+  }
+
+  .mg-prices__body .mg-card__title {
+    text-wrap: balance;
+  }
+
+  .mg-prices__text {
     display: -webkit-box;
-    margin: 0;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: var(--mg-text-muted);
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
-  .mg-services__foot {
+  .mg-prices__facts {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: auto;
-    padding-top: 14px;
-    border-top: 1px solid var(--mg-border);
+    gap: var(--mg-space-2);
+    margin: var(--mg-space-1) 0 0;
   }
 
-  .mg-services__quote {
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--mg-text);
-  }
-
-  .mg-services__arrow {
+  .mg-prices__time {
     display: inline-flex;
-    flex: none;
     align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border: 1px solid var(--mg-border-strong);
-    border-radius: 50%;
-    color: var(--mg-text-muted);
-    transition:
-      background-color 0.25s var(--mg-ease),
-      border-color 0.25s var(--mg-ease),
-      color 0.25s var(--mg-ease),
-      transform 0.25s var(--mg-ease);
+    gap: 6px;
   }
 
-  .mg-services__arrow .mg-icon {
+  .mg-prices__time .mg-icon {
+    flex: none;
     width: 16px;
     height: 16px;
   }
 
+  /* Price and link sit on the card's bottom edge, so a row of cards lines up */
+  .mg-prices__foot-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--mg-space-1) var(--mg-space-3);
+    margin-block-start: auto;
+    padding-block-start: var(--mg-space-3);
+  }
+
+  .mg-prices__price {
+    margin: 0;
+  }
+
+  /* Same line box as a 1.5rem price, so "Price on request" sits on the same line as the prices beside it */
+  .mg-prices__price--request {
+    font-size: var(--mg-fs-small);
+    line-height: 1.8rem;
+  }
+
+  .mg-prices__cta {
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+
   @media (hover: hover) {
-    .mg-services__card:hover .mg-services__arrow {
-      border-color: var(--mg-accent);
-      background: var(--mg-accent);
-      color: var(--mg-on-accent);
-      transform: translateX(2px);
+    .mg-prices__card:hover .mg-prices__cta {
+      text-decoration-thickness: 2px;
     }
   }
 
-  .mg-services__note {
-    max-width: 72ch;
-    margin: 20px 0 0;
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--mg-text-subtle);
+  /* The panel clips its children, so draw the track's own focus ring inside it */
+  .mg-prices__carousel .mg-carousel__track:focus-visible {
+    outline-offset: -2px;
   }
 
-  /* Tablet: a two-column grid (a rail with hidden scrollbars can't be scrolled with a mouse) */
-  @media (min-width: 750px) {
-    .mg-services__track {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-auto-columns: auto;
-      gap: 18px;
-      margin: 0;
-      padding: 0;
-      overflow: visible;
-      scroll-snap-type: none;
+  .mg-prices__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mg-space-3) var(--mg-space-5);
+    margin-block-start: var(--mg-space-4);
+  }
+
+  .mg-prices__note {
+    max-width: 60ch;
+  }
+
+  .mg-prices__nav {
+    margin-inline-start: auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-prices__panel {
+      margin-inline: 0;
+      border-radius: var(--mg-radius-lg);
+    }
+
+    .mg-prices__content {
+      padding: var(--mg-panel-pad);
+    }
+
+    /* The track runs to the panel's right edge, so the next card is cut by the panel, not the padding.
+       4px at the start keeps the first card's (and first tab's) focus ring clear of the scroll edge. */
+    .mg-prices__carousel .mg-carousel__track {
+      margin-inline: -4px calc(var(--mg-panel-pad) * -1);
+      padding-inline: 4px var(--mg-panel-pad);
+      scroll-padding-inline: 4px var(--mg-panel-pad);
+    }
+
+    .mg-prices__tabs {
+      margin-inline: -4px;
+      padding-inline: 4px;
+      scroll-padding-inline: 4px;
     }
   }
 
-  @media (min-width: 990px) {
-    .mg-services__track {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(var(--mg-services-cols, 4), minmax(0, 1fr));
-      grid-auto-columns: auto;
-      gap: 20px;
-      margin: 0;
-      padding: 0;
-      overflow: visible;
-      scroll-snap-type: none;
+  @media screen and (min-width: 990px) {
+    .mg-prices--image .mg-prices__panel {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     }
 
-    .mg-services__note {
-      margin-top: 28px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .mg-services__img,
-    .mg-services__arrow {
-      transition: none;
+    .mg-prices--image .mg-prices__media {
+      position: relative;
+      display: block;
+      min-height: 100%;
     }
 
-    .mg-services__card:hover .mg-services__img,
-    .mg-services__card:hover .mg-services__arrow {
-      transform: none;
+    .mg-prices__photo {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "MG services grid",
+  "name": "MG fitted prices",
   "tag": "section",
   "class": "mg-services-section",
   "max_blocks": 12,
@@ -404,35 +696,103 @@
   },
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Popular services"
+      "type": "header",
+      "content": "Heading"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Clear prices. Fitted properly."
+      "default": "Fitted prices"
     },
     {
-      "type": "textarea",
+      "type": "text",
       "id": "text",
-      "label": "Text",
-      "default": "Upfront 'from' prices on our most-booked jobs, all fitted at our workshop in Ballymount, Dublin 12. A €50 deposit secures your slot."
+      "label": "Line under the heading",
+      "info": "Optional. One short sentence."
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button label",
-      "info": "Leave blank to hide the button.",
+      "label": "Link label",
+      "info": "Shown to the right of the heading. Leave blank to hide it.",
       "default": "All services"
     },
     {
       "type": "url",
       "id": "button_url",
-      "label": "Button link",
+      "label": "Link",
       "info": "Leave blank to link to /pages/services."
+    },
+    {
+      "type": "header",
+      "content": "Photo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show a photo beside the cards",
+      "info": "Desktop only. Phones and tablets show the cards on their own.",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "A workshop or showroom photo, shown tall beside the cards. Until one is uploaded, the MG showroom photo is used."
+    },
+    {
+      "type": "header",
+      "content": "Filter tabs"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show filter tabs",
+      "info": "Tabs come from each service's Tab setting and only show when services use two or more tabs.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tabs_label",
+      "label": "Tabs name for screen readers",
+      "default": "Filter by system"
+    },
+    {
+      "type": "text",
+      "id": "tab_all",
+      "label": "Tab for every service",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "tab_carplay",
+      "label": "CarPlay tab",
+      "default": "CarPlay"
+    },
+    {
+      "type": "text",
+      "id": "tab_screens",
+      "label": "Screens tab",
+      "default": "Screens"
+    },
+    {
+      "type": "text",
+      "id": "tab_radios",
+      "label": "Radios tab",
+      "default": "Radios"
+    },
+    {
+      "type": "text",
+      "id": "tab_conversions",
+      "label": "Conversions tab",
+      "default": "Conversions"
+    },
+    {
+      "type": "text",
+      "id": "tab_audio",
+      "label": "Audio tab",
+      "default": "Audio"
     },
     {
       "type": "header",
@@ -446,42 +806,30 @@
     },
     {
       "type": "text",
-      "id": "quote_label",
+      "id": "on_request_label",
       "label": "Text when a service has no price",
+      "default": "Price on request"
+    },
+    {
+      "type": "text",
+      "id": "book_label",
+      "label": "Link text on cards with a price",
+      "info": "Leave blank to hide it. The whole card is the link.",
+      "default": "Book"
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Link text on cards without a price",
+      "info": "Leave blank to hide it.",
       "default": "Get a quote"
-    },
-    {
-      "type": "range",
-      "id": "columns_desktop",
-      "label": "Columns on desktop",
-      "info": "Mobile shows a swipeable row with the next card peeking in.",
-      "min": 3,
-      "max": 4,
-      "step": 1,
-      "default": 4
-    },
-    {
-      "type": "select",
-      "id": "background",
-      "label": "Background",
-      "options": [
-        {
-          "value": "page",
-          "label": "Page background"
-        },
-        {
-          "value": "surface",
-          "label": "Raised panel"
-        }
-      ],
-      "default": "page"
     },
     {
       "type": "textarea",
       "id": "footnote",
-      "label": "Footnote",
-      "info": "Small print under the cards. Leave blank to hide.",
-      "default": "Prices shown are starting prices for fitting at our Dublin 12 workshop. Send us your reg and we'll confirm the exact price for your car before you book."
+      "label": "Note under the cards",
+      "info": "Leave blank to hide it.",
+      "default": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill."
     }
   ],
   "blocks": [
@@ -493,27 +841,47 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Apple CarPlay for BMW"
+          "default": "BMW Apple CarPlay"
+        },
+        {
+          "type": "select",
+          "id": "group",
+          "label": "Tab",
+          "options": [
+            { "value": "carplay", "label": "CarPlay" },
+            { "value": "screens", "label": "Screens" },
+            { "value": "radios", "label": "Radios" },
+            { "value": "conversions", "label": "Conversions" },
+            { "value": "audio", "label": "Audio" },
+            { "value": "other", "label": "None (shows under All only)" }
+          ],
+          "default": "carplay"
         },
         {
           "type": "textarea",
           "id": "text",
           "label": "Text",
-          "info": "One or two short lines.",
-          "default": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept."
+          "info": "One short sentence. Cards show two lines.",
+          "default": "Wired or wireless CarPlay on your factory iDrive screen."
         },
         {
           "type": "text",
           "id": "price",
           "label": "Price",
-          "info": "For example €350. Leave blank to show 'Get a quote'. PLACEHOLDER: '€X' on the demo means the price is still to come from MG.",
+          "info": "For example €350. Leave blank to show the 'no price' text. PLACEHOLDER: €X means MG still has to confirm the price.",
           "default": "€350"
         },
         {
           "type": "text",
           "id": "price_label",
           "label": "Text before the price",
-          "default": "from"
+          "default": "From"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Time in the workshop",
+          "info": "Only fill this in when MG has confirmed it, for example About 1 hr 30 min."
         },
         {
           "type": "url",
@@ -525,13 +893,13 @@
           "type": "text",
           "id": "badge",
           "label": "Badge",
-          "info": "Optional, e.g. Most popular."
+          "info": "Optional short label, for example New."
         },
         {
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "Landscape works best (shown at 4:3)."
+          "info": "Landscape works best (shown at 3:2)."
         },
         {
           "type": "select",
@@ -559,17 +927,17 @@
   ],
   "presets": [
     {
-      "name": "MG services grid",
+      "name": "MG fitted prices",
       "category": "MG Car Audio",
       "blocks": [
         {
           "type": "service",
           "settings": {
-            "title": "Apple CarPlay for BMW",
-            "text": "Wired or wireless CarPlay on your factory iDrive screen. OEM-style finish, original features kept.",
+            "title": "BMW Apple CarPlay",
+            "group": "carplay",
+            "text": "Wired or wireless CarPlay on your factory iDrive screen.",
             "price": "€350",
-            "url": "/pages/carplay-installation",
-            "badge": "Most popular",
+            "url": "/products/carplay-installation-bmw",
             "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
@@ -577,19 +945,22 @@
           "type": "service",
           "settings": {
             "title": "BMW Android Auto (iDrive 7)",
-            "text": "Android Auto switched on for iDrive 7 (ID7) screens. Around an hour in the bay while you wait.",
+            "group": "carplay",
+            "text": "Android Auto switched on for iDrive 7 (ID7) screens.",
             "price": "€299",
+            "duration": "About 1 hr",
             "url": "/products/android-auto-installation-bmw-id7",
-            "badge": "1 hour",
             "fallback_image": "mg-android-auto-dash.webp"
           }
         },
         {
           "type": "service",
           "settings": {
-            "title": "Android radio fitting",
-            "text": "Android head units fitted properly, with neat wiring and a factory-style finish. About 90 minutes.",
+            "title": "Android radio installation",
+            "group": "radios",
+            "text": "Your Android head unit fitted with neat, hidden wiring.",
             "price": "€150",
+            "duration": "About 1 hr 30 min",
             "url": "/products/android-radio-installation",
             "fallback_image": "mg-dash-radio.webp"
           }
@@ -597,18 +968,20 @@
         {
           "type": "service",
           "settings": {
-            "title": "Japanese-to-European conversion",
-            "text": "Imported BMW? Menus, maps and radio bands switched to European spec. We convert Mercedes-Benz and VW imports too.",
-            "price": "€450",
-            "url": "/pages/get-a-quote",
-            "fallback_image": "mg-bmw-japan-to-europe.webp"
+            "title": "BMW iDrive 7 video in motion",
+            "group": "screens",
+            "text": "Passengers can keep watching video while the car moves.",
+            "price": "€149",
+            "url": "/products/bmw-idrive7-video-in-motion",
+            "fallback_image": "mg-bmw-carplay-screen.webp"
           }
         },
         {
           "type": "service",
           "settings": {
             "title": "Screen upgrades",
-            "text": "Bigger, sharper widescreens for BMW, Mercedes, Audi and VW, with CarPlay and Android Auto built in.",
+            "group": "screens",
+            "text": "Bigger widescreens with CarPlay and Android Auto built in.",
             "price": "€X",
             "url": "/collections/screen-upgrades",
             "fallback_image": "mg-audi-carplay-screen.webp"
@@ -617,31 +990,57 @@
         {
           "type": "service",
           "settings": {
-            "title": "Speaker & subwoofer upgrades",
-            "text": "JBL and Harman Kardon speakers, subs and amps, matched to your car for clear, powerful sound.",
+            "title": "BMW Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Menus, maps and radio band switched to European spec.",
+            "price": "€450",
+            "duration": "About 2 hr",
+            "url": "/products/bmw-japan-to-europe-conversion",
+            "fallback_image": "mg-bmw-japan-to-europe.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Mercedes Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Infotainment switched to European spec on imported Mercedes.",
+            "price": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "fallback_image": "mg-mercedes-japan-to-europe.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "VW Japanese-to-European conversion",
+            "group": "conversions",
+            "text": "Your imported Volkswagen's system set up for Europe.",
+            "price": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "fallback_image": "mg-vw-japan-to-europe.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Radio frequency conversion",
+            "group": "conversions",
+            "text": "Irish FM stations on the factory radio of a Japanese import.",
+            "price": "",
+            "url": "/pages/get-a-quote?service=Japan-to-Europe",
+            "fallback_image": "mg-radio-frequency-conversion.webp"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Speaker and subwoofer upgrades",
+            "group": "audio",
+            "text": "JBL and Harman Kardon speakers, subs and amps for your car.",
             "price": "€X",
             "url": "/collections/speakers",
             "fallback_image": "mg-door-speaker.webp"
-          }
-        },
-        {
-          "type": "service",
-          "settings": {
-            "title": "BMW iDrive 7 video in motion",
-            "text": "Lets passengers keep watching video on the iDrive 7 screen while the car is moving.",
-            "price": "€149",
-            "url": "/pages/get-a-quote",
-            "fallback_image": "mg-bmw-carplay-screen.webp"
-          }
-        },
-        {
-          "type": "service",
-          "settings": {
-            "title": "Dashcam & reverse camera fitting",
-            "text": "Hard-wired dashcams and reverse cameras, cables hidden and powered safely from the fuse box.",
-            "price": "€X",
-            "url": "/collections/dashcams",
-            "fallback_image": "mg-showroom.webp"
           }
         }
       ]

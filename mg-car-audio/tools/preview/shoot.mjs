@@ -1,9 +1,16 @@
 #!/usr/bin/env node
-// Usage: node tools/preview/shoot.mjs [template ...] [render options] [--only mobile|desktop]
+// Usage: node tools/preview/shoot.mjs [template ...] [render options] [--modes light,dark] [--widths 390,1440] [--only mobile|desktop|<width>]
 // Renders the templates (default: index, page.service, page.car-make, page.quote, page.contact),
-// serves the repo over a local http server and writes full-page screenshots:
-//   tools/preview/out/<template>-mobile.png   (390x844 viewport, full page)
-//   tools/preview/out/<template>-desktop.png  (1440x900 viewport, full page)
+// serves the repo over a local http server and writes one full-page screenshot per width and scheme:
+//   tools/preview/out/<template>-<width>-<mode>.png   e.g. index-390-light.png, index-1440-dark.png
+// --modes   light,dark (default both). The scheme is chosen the way a visitor would: localStorage
+//           'mg-theme' is set before the page loads (and prefers-color-scheme is emulated), so the
+//           theme's own head script applies it. Falls back to setting the <html> attributes.
+// --widths  comma list of viewport widths (default 390,1440). Heights: 844 below 750px, 1024 up
+//           to 989px, 900 from 990px. Below 990px the page is emulated as a touch device.
+// --only    one width; 'mobile' = 390 and 'desktop' = 1440 (kept from the first version).
+// --fold    also save <template>-<width>-<mode>-fold.png: the first viewport only, with fixed
+//           bars (mobile action bar, WhatsApp button) where a visitor sees them.
 // Render options are the same as render.mjs (--all, --home-fallback, --sections a,b --name x, ...).
 
 import fs from 'node:fs';
@@ -42,10 +49,22 @@ async function routeFonts(context) {
   });
 }
 
-const VIEWPORTS = {
-  mobile: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true },
-  desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
-};
+const WIDTH_ALIASES = { mobile: 390, desktop: 1440 };
+const DEFAULT_WIDTHS = [390, 1440];
+const DEFAULT_MODES = ['light', 'dark'];
+
+function device(width) {
+  const height = width < 750 ? 844 : width < 990 ? 1024 : 900;
+  const touch = width < 990;
+  return { viewport: { width, height }, deviceScaleFactor: 1, isMobile: touch, hasTouch: touch };
+}
+
+function parseWidths(value) {
+  return String(value)
+    .split(',')
+    .map((w) => WIDTH_ALIASES[w.trim()] ?? Number(w.trim()))
+    .filter((w) => Number.isInteger(w) && w >= 240 && w <= 3840);
+}
 
 // Horizon locks <html> to 100dvh and scrolls inside .page-wrapper on desktop, which would make a
 // "full page" screenshot only one viewport tall. Unlock it for screenshots only.
@@ -96,12 +115,19 @@ async function settle(page) {
 
 async function main() {
   const argv = process.argv.slice(2);
-  let only = null;
+  let widths = DEFAULT_WIDTHS;
+  let modes = DEFAULT_MODES;
+  let fold = false;
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--only') only = argv[++i];
+    if (argv[i] === '--only') widths = parseWidths(argv[++i]);
+    else if (argv[i] === '--widths') widths = parseWidths(argv[++i]);
+    else if (argv[i] === '--fold') fold = true;
+    else if (argv[i] === '--modes') modes = argv[++i].split(',').map((m) => m.trim()).filter((m) => m === 'light' || m === 'dark');
     else rest.push(argv[i]);
   }
+  if (!widths.length) widths = DEFAULT_WIDTHS;
+  if (!modes.length) modes = DEFAULT_MODES;
   const opts = parseArgs(rest);
   const rel = (p) => path.relative(process.cwd(), p) || p;
 
@@ -123,30 +149,65 @@ async function main() {
 
   const shots = [];
   const problems = [];
+  const fontsSeen = new Map();
   try {
     for (const report of reports) {
       const base = path.basename(report.output, '.html');
       const url = `${server.url}/${path.relative(REPO_DIR, report.output).split(path.sep).join('/')}`;
-      for (const [name, device] of Object.entries(VIEWPORTS)) {
-        if (only && only !== name) continue;
-        const context = await browser.newContext({ ...device, ignoreHTTPSErrors: true });
-        await routeFonts(context);
-        const page = await context.newPage();
-        const issues = [];
-        page.on('pageerror', (e) => issues.push(`page error: ${e.message.split('\n')[0]}`));
-        page.on('console', (m) => m.type() === 'error' && issues.push(`console: ${m.text().split('\n')[0]}`));
-        page.on('requestfailed', (r) => issues.push(`request failed: ${r.url().slice(0, 140)} (${r.failure()?.errorText})`));
-        page.on('response', (r) => r.status() >= 400 && r.url().startsWith(server.url) && issues.push(`HTTP ${r.status()}: ${r.url().replace(server.url, '')}`));
-        await page.goto(url, { waitUntil: 'load', timeout: 60000 });
-        await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
-        await settle(page);
-        const out = path.join(path.dirname(report.output), `${base}-${name}.png`);
-        await page.screenshot({ path: out, fullPage: true, animations: 'disabled' });
-        const dims = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.scrollHeight]);
-        shots.push({ out, dims, name });
-        const uniq = [...new Set(issues)];
-        if (uniq.length) problems.push({ page: `${base} (${name})`, issues: uniq });
-        await context.close();
+      for (const width of widths) {
+        for (const mode of modes) {
+          const context = await browser.newContext({ ...device(width), colorScheme: mode, ignoreHTTPSErrors: true });
+          await context.addInitScript((m) => {
+            try {
+              window.localStorage.setItem('mg-theme', m);
+            } catch {
+              /* storage blocked: the attribute fallback below still applies the scheme */
+            }
+          }, mode);
+          await routeFonts(context);
+          const page = await context.newPage();
+          const issues = [];
+          const label = `${base} (${width} ${mode})`;
+          page.on('pageerror', (e) => issues.push(`page error: ${e.message.split('\n')[0]}`));
+          page.on('console', (m) => m.type() === 'error' && issues.push(`console: ${m.text().split('\n')[0]}`));
+          page.on('requestfailed', (r) => issues.push(`request failed: ${r.url().slice(0, 140)} (${r.failure()?.errorText})`));
+          page.on('response', (r) => r.status() >= 400 && r.url().startsWith(server.url) && issues.push(`HTTP ${r.status()}: ${r.url().replace(server.url, '')}`));
+          await page.goto(url, { waitUntil: 'load', timeout: 60000 });
+          await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
+          const applied = await page.evaluate((m) => {
+            const root = document.documentElement;
+            if (root.dataset.mgScheme === m) return true;
+            root.dataset.mgTheme = m;
+            root.dataset.mgScheme = m;
+            return false;
+          }, mode);
+          if (!applied) issues.push(`theme-mode script did not apply "${mode}"; attributes were set directly`);
+          await settle(page);
+          const out = path.join(path.dirname(report.output), `${base}-${width}-${mode}.png`);
+          await page.screenshot({ path: out, fullPage: true, animations: 'disabled' });
+          if (fold) {
+            // First viewport only, with fixed bars where a visitor sees them
+            await page.evaluate(() => (document.querySelector('.page-wrapper') || document.scrollingElement).scrollTo(0, 0));
+            await page.screenshot({ path: out.replace(/\.png$/, '-fold.png'), fullPage: false, animations: 'disabled' });
+          }
+          const info = await page.evaluate(() => {
+            const shown = (el) => {
+              const cs = getComputedStyle(el);
+              return cs.display !== 'none' && cs.visibility !== 'hidden' && el.getClientRects().length > 0;
+            };
+            return {
+              dims: [document.documentElement.scrollWidth, document.documentElement.scrollHeight],
+              fonts: [...document.fonts].filter((f) => f.status === 'loaded').map((f) => `${f.family.replace(/["']/g, '')} ${f.weight}${f.style === 'normal' ? '' : ' ' + f.style}`),
+              floating: [...document.querySelectorAll('.mg-action-bar, .mg-wa-float')].filter(shown).map((el) => el.classList[0]),
+            };
+          });
+          if (!fontsSeen.has(base)) fontsSeen.set(base, new Set());
+          info.fonts.forEach((f) => fontsSeen.get(base).add(f));
+          shots.push({ out, width, mode, ...info });
+          const uniq = [...new Set(issues)];
+          if (uniq.length) problems.push({ page: label, issues: uniq });
+          await context.close();
+        }
       }
     }
   } finally {
@@ -156,9 +217,12 @@ async function main() {
 
   console.log('Screenshots:');
   for (const s of shots) {
-    const overflow = s.name === 'mobile' && s.dims[0] > 390 ? `  <- horizontal overflow: page is ${s.dims[0]}px wide` : '';
-    console.log(`  ${rel(s.out)}  (${s.dims[0]}x${s.dims[1]} css px)${overflow}`);
+    const overflow = s.dims[0] > s.width ? `  <- horizontal overflow: page is ${s.dims[0]}px wide` : '';
+    const floating = s.floating.length ? `  [${s.floating.join(', ')}]` : '';
+    console.log(`  ${rel(s.out)}  (${s.dims[0]}x${s.dims[1]} css px)${floating}${overflow}`);
   }
+  console.log('\nFonts loaded:');
+  for (const [base, set] of fontsSeen) console.log(`  ${base}: ${[...set].sort().join(', ') || '(none)'}`);
   if (problems.length) {
     console.log('\nBrowser issues:');
     for (const p of problems) {

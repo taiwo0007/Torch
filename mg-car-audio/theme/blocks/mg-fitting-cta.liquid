@@ -22,7 +22,7 @@
   assign fitted_price = product_resource.metafields.custom.fitted_price.value | default: block_settings.fallback_price | strip
   assign book_url = block_settings.book_url | default: '/pages/book-a-fitting'
 
-  assign book_class = 'mg-btn--ghost'
+  assign book_class = 'mg-btn--secondary'
   if block_settings.book_style == 'primary'
     assign book_class = 'mg-btn--primary'
   endif
@@ -63,9 +63,14 @@
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
-    <div class="mg-fit">
+    <div class="mg-card mg-fit">
       <div class="mg-fit__top">
-        <span class="mg-fit__icon">{%- render 'mg-icon', icon: 'wrench' -%}</span>
+        <span
+          class="mg-fit__icon"
+          aria-hidden="true"
+        >
+          {%- render 'mg-icon', icon: 'wrench' -%}
+        </span>
         <div class="mg-fit__copy">
           {%- if block_settings.heading != blank -%}
             <p class="mg-fit__title">{{ block_settings.heading | escape }}</p>
@@ -75,9 +80,11 @@
           {%- endif -%}
         </div>
         {%- if fitted_price != blank -%}
-          <p class="mg-fit__price mg-price-from">
-            <small>{{ block_settings.price_label | default: 'Fitted from' | escape }}</small>
-            <strong>{{ fitted_price | escape }}</strong>
+          <p class="mg-price mg-fit__price">
+            {%- if block_settings.price_label != blank -%}
+              <span class="mg-price__label mg-fit__price-label">{{ block_settings.price_label | escape }}</span>
+            {%- endif -%}
+            <span class="mg-fit__amount">{{ fitted_price | escape }}</span>
           </p>
         {%- endif -%}
       </div>
@@ -88,13 +95,13 @@
           role="list"
         >
           {%- if block_settings.point_1 != blank -%}
-            <li>{%- render 'mg-icon', icon: 'check' -%}{{ block_settings.point_1 | escape }}</li>
+            <li>{%- render 'mg-icon', icon: 'check' -%}<span>{{ block_settings.point_1 | escape }}</span></li>
           {%- endif -%}
           {%- if block_settings.point_2 != blank -%}
-            <li>{%- render 'mg-icon', icon: 'check' -%}{{ block_settings.point_2 | escape }}</li>
+            <li>{%- render 'mg-icon', icon: 'check' -%}<span>{{ block_settings.point_2 | escape }}</span></li>
           {%- endif -%}
           {%- if block_settings.show_warranty and settings.mg_warranty_text != blank -%}
-            <li>{%- render 'mg-icon', icon: 'shield' -%}{{ settings.mg_warranty_text | escape }}</li>
+            <li>{%- render 'mg-icon', icon: 'shield' -%}<span>{{ settings.mg_warranty_text | escape }}</span></li>
           {%- endif -%}
         </ul>
       {%- endif -%}
@@ -103,7 +110,7 @@
         <div class="mg-fit__actions">
           {%- if block_settings.book_label != blank -%}
             <a
-              class="mg-btn {{ book_class }} mg-fit__btn"
+              class="mg-btn {{ book_class }} mg-btn--sm mg-fit__btn"
               href="{{ book_url }}"
             >
               {%- render 'mg-icon', icon: 'calendar' -%}
@@ -112,14 +119,14 @@
           {%- endif -%}
           {%- if show_whatsapp -%}
             <a
-              class="mg-btn mg-btn--whatsapp mg-fit__btn"
+              class="mg-btn mg-btn--whatsapp mg-btn--sm mg-fit__btn"
               href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
               target="_blank"
               rel="noopener"
             >
               {%- render 'mg-icon', icon: 'whatsapp' -%}
               <span>{{ block_settings.whatsapp_label | default: 'WhatsApp' | escape }}</span>
-              <span class="mg-visually-hidden">(opens WhatsApp in a new tab)</span>
+              <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
             </a>
           {%- endif -%}
         </div>
@@ -129,122 +136,127 @@
 {%- endif -%}
 
 {% stylesheet %}
+  /*
+   * Compact fitting card inside Horizon's product information column. Layout only; the card,
+   * price, buttons and tokens come from mg-theme.css, so it follows light and dark.
+   */
   .mg-fit-wrap {
     width: 100%;
   }
 
   .mg-fit {
     display: grid;
-    gap: 16px;
-    padding: 18px;
-    color: var(--mg-text);
-    background: var(--mg-surface);
-    border: 1px solid var(--mg-border);
-    border-radius: var(--mg-radius);
+    gap: var(--mg-space-3);
+    padding: var(--mg-space-4);
   }
 
   .mg-fit__top {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
     align-items: center;
-    gap: 12px 14px;
+    gap: var(--mg-space-3);
   }
 
   .mg-fit__icon {
-    display: grid;
-    flex: none;
+    display: inline-grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    color: var(--mg-text);
-    background: var(--mg-surface-2);
-    border: 1px solid var(--mg-border);
-    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-band);
+    color: var(--mg-ink);
   }
 
   .mg-fit__icon .mg-icon {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 
   .mg-fit__copy {
-    flex: 1 1 160px;
     min-width: 0;
   }
 
   .mg-fit .mg-fit__title {
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: var(--font-heading--weight);
-    font-size: 1.0625rem;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-    color: var(--mg-text);
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-title);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--mg-ink);
   }
 
   .mg-fit .mg-fit__sub {
-    margin: 3px 0 0;
-    font-size: 0.875rem;
-    line-height: 1.45;
-    color: var(--mg-text-muted);
+    margin: 2px 0 0;
+    font-size: var(--mg-fs-small);
+    line-height: 1.4;
+    color: var(--mg-ink-2);
   }
 
   .mg-fit .mg-fit__price {
-    flex-direction: column;
-    align-items: flex-end;
+    display: grid;
+    justify-items: end;
     gap: 2px;
-    margin: 0 0 0 auto;
+    margin: 0;
     text-align: end;
+  }
+
+  .mg-fit__price-label {
+    font-size: var(--mg-fs-micro);
+    line-height: 1.2;
+  }
+
+  .mg-fit__amount {
+    font-size: 1.25rem;
+    line-height: 1.1;
   }
 
   .mg-fit__points {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 18px;
+    gap: var(--mg-space-1) var(--mg-space-4);
     margin: 0;
-    padding: 12px 0 0;
+    padding: 0;
     list-style: none;
-    border-top: 1px solid var(--mg-border);
   }
 
   .mg-fit__points li {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--mg-text-muted);
+    margin: 0;
+    font-size: var(--mg-fs-micro);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--mg-ink-2);
   }
 
   .mg-fit__points .mg-icon {
     flex: none;
-    width: 15px;
-    height: 15px;
-    stroke-width: 2.25;
-    color: var(--mg-accent-hover);
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
+    color: var(--mg-ink);
   }
 
   .mg-fit__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--mg-space-2);
   }
 
   .mg-fit .mg-fit__btn {
     flex: 1 1 150px;
-    min-height: 48px;
-    padding-inline: 1rem;
-    font-size: 0.875rem;
   }
 
   .mg-fit-note {
     width: 100%;
-    padding: 12px 14px;
-    font-size: 0.8125rem;
-    color: var(--mg-text-muted);
-    border: 1px dashed var(--mg-border-strong);
+    padding: var(--mg-space-3);
+    border: 1px dashed var(--mg-ink-3);
     border-radius: var(--mg-radius-sm);
+    color: var(--mg-ink-2);
+    font-size: var(--mg-fs-micro);
   }
 {% endstylesheet %}
 
@@ -271,7 +283,7 @@
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Professional installation in Dublin"
+      "default": "Fitted at our Dublin 12 workshop"
     },
     {
       "type": "header",
@@ -307,7 +319,7 @@
       "type": "text",
       "id": "point_2",
       "label": "Highlight 2",
-      "default": "OEM-style finish"
+      "default": "Factory-style finish"
     },
     {
       "type": "checkbox",
@@ -345,7 +357,7 @@
         },
         {
           "value": "primary",
-          "label": "Solid red"
+          "label": "Solid (black, light in dark mode)"
         }
       ],
       "default": "ghost"
@@ -365,7 +377,7 @@
       "type": "text",
       "id": "whatsapp_label",
       "label": "Label",
-      "default": "Ask on WhatsApp",
+      "default": "WhatsApp us",
       "visible_if": "{{ block.settings.show_whatsapp }}"
     },
     {

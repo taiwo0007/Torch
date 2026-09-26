@@ -4,8 +4,8 @@
       "type": "mg-quote-form",
       "settings": {
         "background": "default",
-        "spacing": "default",
-        "eyebrow": "No-obligation quote",
+        "header_style": "panel",
+        "show_breadcrumb": true,
         "heading": "Get a fixed quote",
         "use_page_title": false,
         "heading_is_h1": true,
@@ -14,5 +14,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

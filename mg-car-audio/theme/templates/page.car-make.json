@@ -28,14 +28,14 @@
           "type": "question",
           "settings": {
             "question": "How long does the fitting take?",
-            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours at our Dublin 12 workshop. Japanese-to-European conversions take around two hours. We'll confirm the time when you book.</p>"
+            "answer": "<p>Most CarPlay and Android Auto installs take one to two hours at our Dublin 12 workshop. Japanese-to-European conversions take around two hours. We'll confirm the time when you book.</p>"
           }
         },
         "faq-deposit": {
           "type": "question",
           "settings": {
             "question": "Do I need to pay a deposit?",
-            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot. We agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your fitting slot. We agree the full fitted price with you before you book, so there are no surprises on the day.</p>"
           }
         }
       },
@@ -48,29 +48,28 @@
       ],
       "settings": {
         "fallback_make": "",
-        "fallback_heading": "[make] CarPlay & Screen Upgrades in Dublin",
-        "fallback_intro": "Wired and wireless Apple CarPlay, Android Auto and full screen upgrades for your [make], fitted in-house at our Dublin 12 workshop. We work with your factory screen and controls wherever possible, so the finish looks like it left the factory that way.\nSend us your reg and a photo of your dash and we'll confirm exactly what fits, with the fitted price agreed before you book.",
-        "fallback_from_price": "",
-        "fallback_services": "[make] wireless CarPlay & Android Auto | | /pages/carplay-installation\nWidescreen Android display upgrade\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nReverse camera fitting\nSpeaker & sound upgrade",
+        "fallback_heading": "[make] CarPlay and screen upgrades in Dublin",
+        "fallback_intro": "Wired and wireless Apple CarPlay, Android Auto and screen upgrades for your [make], fitted at our Dublin 12 workshop with your factory screen and controls kept.",
+        "fallback_from_price": "€299",
+        "fallback_services": "[make] wireless CarPlay and Android Auto | From €299 | /pages/carplay-installation\nWidescreen Android display upgrade\nAndroid touchscreen radio fitting | €150 | /products/android-radio-installation\nReverse camera fitting\nSpeaker and sound upgrade",
         "show_breadcrumb": true,
         "fallback_image": "auto",
-        "eyebrow": "Car makes",
-        "price_note": "Fitted price agreed before you book. A €50 deposit secures your slot.",
+        "price_note": "A €50 deposit secures your slot.",
         "book_label": "Book a fitting",
         "show_whatsapp": true,
-        "whatsapp_label": "Get a quote on WhatsApp",
+        "whatsapp_label": "WhatsApp us",
         "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or a screen upgrade on my [make]. My reg is: ",
-        "facts": "Fitted in-house, Dublin 12 | Wired & wireless CarPlay | OEM-style finish",
+        "facts": "Fitted in-house, Dublin 12 | Wired and wireless CarPlay | Factory-style finish",
         "show_systems": true,
         "systems_heading": "Systems we upgrade",
-        "systems_text": "The factory infotainment systems we retrofit with Apple CarPlay, Android Auto or a bigger screen. Not sure which one your [make] has? Send us a photo of your dash.",
+        "systems_text": "The factory systems we retrofit with CarPlay, Android Auto or a bigger screen. Not sure which one your [make] has? Send us a photo of your dash.",
         "show_models": true,
         "models_heading": "Models we fit",
         "models_note": "Don't see your model? Send us your reg and we'll check what fits.",
         "show_services": true,
-        "services_heading": "[make] services",
-        "services_text": "The jobs we do most on [make] models, all fitted at our Dublin 12 workshop, with the fitted price agreed before you book.",
-        "services_note": "A €50 deposit secures your booking slot. \"From\" prices depend on your exact model and system, and we'll confirm yours before you book.",
+        "services_heading": "[make] fitted prices",
+        "services_text": "The jobs we do most on [make] models, fitted at our Dublin 12 workshop, with the price agreed before you book.",
+        "services_note": "A €50 deposit secures your booking slot. We confirm the fitted price for your exact model and system before you book.",
         "show_shop": true,
         "shop_heading": "Parts for your [make]",
         "shop_text": "CarPlay interfaces, screens and fitting kits for [make] models. Buy online, or book a fitting and we'll install it for you.",

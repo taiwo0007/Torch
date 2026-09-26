@@ -5,6 +5,8 @@
   {% endif %}
   lang="{{ request.locale.iso_code }}"
   dir="{{ request.locale.direction | default: 'ltr' }}"
+  data-mg-theme="{{ settings.mg_theme_mode | default: 'auto' }}"
+  data-mg-scheme="{% if settings.mg_theme_mode == 'dark' %}dark{% else %}light{% endif %}"
 >
   <head>
     {%- if settings.favicon != blank -%}
@@ -18,6 +20,8 @@
     {%- render 'view-transition-opt-in' -%}
 
     {%- render 'meta-tags' -%}
+    {%- render 'mg-theme-mode' -%}
+    {%- render 'mg-fonts' -%}
     {%- render 'stylesheets' -%}
     {%- render 'card-hover-effect-styles' -%}
     {%- render 'fonts' -%}
@@ -172,6 +176,7 @@
     {% render 'search-modal' %}
 
     {% render 'mg-whatsapp-button' %}
+    {% render 'mg-mobile-action-bar' %}
 
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}

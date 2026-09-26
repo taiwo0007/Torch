@@ -3,36 +3,11 @@
     "main": {
       "type": "main-page",
       "blocks": {
-        "eyebrow": {
+        "title": {
           "type": "custom-liquid",
-          "name": "Eyebrow",
+          "name": "Page title",
           "settings": {
-            "custom_liquid": "<p class=\"mg-eyebrow\" style=\"margin: 0\">Fitted in Dublin 12</p>"
-          },
-          "blocks": {}
-        },
-        "heading": {
-          "type": "text",
-          "name": "t:names.title",
-          "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "custom_liquid": "<h1 class=\"mg-h1-banner\">{{ page.title | escape }}</h1>"
           },
           "blocks": {}
         },
@@ -43,15 +18,14 @@
         }
       },
       "block_order": [
-        "eyebrow",
-        "heading",
+        "title",
         "page-content"
       ],
       "settings": {
         "content_direction": "column",
         "gap": 16,
-        "padding-block-start": 56,
-        "padding-block-end": 0
+        "padding-block-start": 36,
+        "padding-block-end": 36
       }
     },
     "gallery": {
@@ -61,48 +35,48 @@
           "type": "image",
           "settings": {
             "fallback": "bmw-carplay",
-            "car_label": "BMW · Wireless CarPlay",
-            "caption": "CarPlay added to the factory widescreen, keeping the original controls wherever possible."
+            "car_label": "BMW",
+            "caption": "Wireless CarPlay on the factory widescreen"
           }
         },
         "install_audi": {
           "type": "image",
           "settings": {
             "fallback": "audi-carplay",
-            "car_label": "Audi · CarPlay retrofit",
-            "caption": "An OEM-style fit designed to work with the original MMI controls."
+            "car_label": "Audi",
+            "caption": "CarPlay retrofit"
           }
         },
         "install_android_auto": {
           "type": "image",
           "settings": {
-            "fallback": "radio-frequency",
-            "car_label": "Japanese imports · Radio conversion",
-            "caption": "Imported cars tuned to Irish FM stations, with menus and maps switched to European spec."
-          }
-        },
-        "install_showroom": {
-          "type": "image",
-          "settings": {
-            "fallback": "showroom",
-            "car_label": "Ballymount showroom",
-            "caption": "Call in to see screens, speakers and head units in person."
+            "fallback": "android-auto",
+            "car_label": "Screen upgrade",
+            "caption": "Wireless Android Auto"
           }
         },
         "install_radio": {
           "type": "image",
           "settings": {
             "fallback": "dash-radio",
-            "car_label": "Radio upgrades · Head units",
-            "caption": "From simple radio swaps to full Android screens, finished to a factory standard."
+            "car_label": "Radio upgrade",
+            "caption": "New head unit fitted"
           }
         },
         "install_speakers": {
           "type": "image",
           "settings": {
             "fallback": "door-speaker",
-            "car_label": "Speaker upgrades",
-            "caption": "Clearer vocals and tighter bass, fitted without the door rattle."
+            "car_label": "Speaker upgrade",
+            "caption": "Front door speakers"
+          }
+        },
+        "install_showroom": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "car_label": "Our Ballymount showroom",
+            "caption": "Screens and speakers on display"
           }
         }
       },
@@ -110,36 +84,31 @@
         "install_bmw",
         "install_audi",
         "install_android_auto",
-        "install_showroom",
         "install_radio",
-        "install_speakers"
+        "install_speakers",
+        "install_showroom"
       ],
       "settings": {
-        "eyebrow": "",
-        "heading": "Finished to a factory standard",
-        "text": "CarPlay retrofits, screen upgrades and sound systems fitted in Ballymount. Every job is finished to look like it left the factory that way.",
+        "heading": "Latest jobs",
+        "text": "",
         "follow_label": "Follow our installs",
-        "background": "page",
-        "spacing": "normal"
+        "background": "page"
       }
     },
     "cta": {
       "type": "mg-service-cta",
       "settings": {
-        "eyebrow": "Like what you see?",
-        "heading": "Let's upgrade your car next",
-        "text": "Send your reg and a photo of your dash on WhatsApp and we'll come back with the right option for your car and a fitted price.",
-        "show_details": true,
+        "style": "red",
+        "show_details": false,
         "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp your reg",
-        "whatsapp_message": "Hi MG Car Audio, I saw your work on the website. Can you tell me what fits my car? My reg is: ",
+        "whatsapp_label": "WhatsApp us",
         "show_call": true,
         "call_label": "Call",
         "book_label": "Book a fitting",
         "book_url": "/pages/book-a-fitting",
-        "glow_position": "right",
-        "glow_strength": 30,
-        "spacing": "tight"
+        "heading": "Let's upgrade your car next",
+        "text": "Send your reg and a photo of your dash on WhatsApp and we'll come back with the right option for your car and a fitted price.",
+        "whatsapp_message": "Hi MG Car Audio, I saw your work on the website. Can you tell me what fits my car? My reg is: "
       }
     }
   },
