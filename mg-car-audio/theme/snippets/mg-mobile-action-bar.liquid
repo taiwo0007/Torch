@@ -287,8 +287,24 @@
       color: var(--mg-on-action);
     }
 
+    /* WhatsApp: a green tinted pill and a green label, so it reads as WhatsApp at a glance
+       while Book keeps the one solid indicator. The label green is darkened in light mode
+       for contrast on the white bar (5.4:1); in dark it is WhatsApp green (10:1). */
+    .mg-tabbar__item--wa .mg-tabbar__tab {
+      --mg-tab-wa-ink: #0a7a38;
+      color: var(--mg-tab-wa-ink);
+      font-weight: 600;
+    }
+
+    html[data-mg-scheme='dark'] .mg-tabbar__item--wa .mg-tabbar__tab {
+      --mg-tab-wa-ink: var(--mg-whatsapp);
+    }
+
     .mg-tabbar__item--wa .mg-tabbar__icon {
-      color: var(--mg-whatsapp);
+      width: 52px;
+      background-color: rgb(37 211 102 / 0.16);
+      box-shadow: inset 0 0 0 1px rgb(37 211 102 / 0.35);
+      color: var(--mg-tab-wa-ink);
     }
 
     .mg-tabbar__tab:active .mg-tabbar__icon {

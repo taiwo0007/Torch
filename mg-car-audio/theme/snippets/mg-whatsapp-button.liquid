@@ -1,6 +1,6 @@
 {%- doc -%}
-  Floating WhatsApp button for tablets and desktops (750px and wider): a 56px round button
-  whose "WhatsApp us" label slides out on hover and focus. Rendered once per page
+  Floating WhatsApp button for tablets and desktops (750px and wider): an always-visible green
+  "WhatsApp us" pill (icon and label) pinned to the bottom-right corner. Rendered once per page
   from layout/theme.liquid. Phones get the WhatsApp button in snippets/mg-mobile-action-bar instead.
 
   Shows only when "Show WhatsApp buttons" is on and a WhatsApp number is set
@@ -45,15 +45,10 @@
     href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
     target="_blank"
     rel="noopener"
-    aria-label="WhatsApp us, a chat with {{ business_name | escape }} (opens in a new tab)"
   >
     {%- render 'mg-icon', icon: 'whatsapp', class: 'mg-wa-float__icon' -%}
-    <span
-      class="mg-wa-float__label"
-      aria-hidden="true"
-    >
-      WhatsApp us
-    </span>
+    <span class="mg-wa-float__label">WhatsApp us</span>
+    <span class="mg-visually-hidden">, a chat with {{ business_name | escape }} (opens in a new tab)</span>
   </a>
   <script>
     /* Shopify Inbox registers <shopify-chat> only when the app is installed; its bubble also sits bottom-right. */
@@ -82,16 +77,20 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 56px;
-      height: 56px;
-      padding: 0;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px 0 16px;
       border-radius: var(--mg-radius-pill, 999px);
       background-color: var(--mg-whatsapp);
       color: var(--mg-on-whatsapp);
-      box-shadow: var(--mg-shadow-float);
+      box-shadow:
+        0 0 0 1px rgb(0 0 0 / 0.06),
+        0 6px 16px -4px rgb(6 48 26 / 0.45),
+        0 14px 36px -10px rgb(0 0 0 / 0.55);
       font-family: var(--mg-font-ui);
-      font-size: 0.9375rem;
-      font-weight: 500;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.005em;
       line-height: 1;
       white-space: nowrap;
       text-decoration: none;
@@ -110,37 +109,12 @@
 
     .mg-wa-float__icon {
       flex: none;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
     }
 
-    /* A round button that stays outside the 1120px content column; the "WhatsApp us" label
-       slides out to its left on hover and keyboard focus */
     .mg-wa-float__label {
-      position: absolute;
-      right: calc(100% + 10px); /* stylelint-disable-line csstools/use-logical -- pinned to the physical corner */
-      top: 50%;
-      padding: 9px 14px;
-      border: 1px solid var(--mg-line);
-      border-radius: var(--mg-radius-pill, 999px);
-      background-color: var(--mg-card-raised);
-      color: var(--mg-ink);
-      box-shadow: var(--mg-shadow-float);
-      font-size: var(--mg-fs-small);
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(6px, -50%);
-    }
-
-    .mg-wa-float:is(:hover, :focus-visible) .mg-wa-float__label {
-      opacity: 1;
-      transform: translate(0, -50%);
-    }
-  }
-
-  @media screen and (min-width: 750px) and (prefers-reduced-motion: no-preference) {
-    .mg-wa-float__label {
-      transition: opacity 0.18s var(--mg-ease), transform 0.18s var(--mg-ease);
+      padding-block-end: 1px;
     }
   }
 

@@ -264,7 +264,8 @@
 
 {% stylesheet %}
   /*
-   * MG hero: one headline, one line of copy, two actions (shop, book) and a WhatsApp link,
+   * MG hero: a two-line headline, one line of copy and two actions (see prices, book); WhatsApp
+   * is the floating pill and the phone tab bar (an optional text link can be turned on here),
    * beside a big product-in-action photo (or a slow crossfade of up to three). Phones and
    * tablets: the photo is a clean band on top with the screen fully in view, the copy below.
    * From 990px: the copy on the left of the night surface, the photo filling the right 64% and
@@ -335,7 +336,7 @@
   .mg-hero .mg-hero__title {
     margin: 0;
     font-family: var(--mg-font-ui);
-    font-size: clamp(2rem, 8.6vw, 2.5rem);
+    font-size: clamp(2rem, 9.6vw, 2.75rem);
     font-weight: 600;
     line-height: 1.04;
     letter-spacing: -0.025em;
@@ -483,7 +484,7 @@
     }
 
     .mg-hero .mg-hero__title {
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
 
     .mg-hero__actions {
@@ -541,7 +542,7 @@
     }
 
     .mg-hero .mg-hero__title {
-      font-size: clamp(3rem, 4.2vw, 3.75rem);
+      font-size: clamp(3.25rem, 4.6vw, 4.25rem);
       letter-spacing: -0.03em;
     }
 
@@ -682,13 +683,13 @@
       "type": "text",
       "id": "heading_line_1",
       "label": "Heading line 1",
-      "default": "Your car already has the screen."
+      "default": "Keep your dash."
     },
     {
       "type": "text",
       "id": "heading_line_2",
       "label": "Heading line 2",
-      "info": "Shown on its own line in MG red. Keep it short, two or three words.",
+      "info": "Shown on its own line in MG red. Keep each line to about 15 characters so the heading stays on two lines.",
       "default": "Add CarPlay."
     },
     {
@@ -703,7 +704,7 @@
       "id": "lede",
       "label": "Text under the heading",
       "info": "One short sentence, 20 words or fewer.",
-      "default": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop."
+      "default": "Wireless CarPlay and Android Auto on the screen your car came with. No phone mount, no dangling cable."
     },
     {
       "type": "header",
@@ -714,7 +715,7 @@
       "id": "primary_label",
       "label": "Main button",
       "info": "Leave blank to hide it.",
-      "default": "Shop CarPlay & radios"
+      "default": "See fitted prices"
     },
     {
       "type": "url",
@@ -743,8 +744,8 @@
       "type": "checkbox",
       "id": "show_whatsapp",
       "label": "Show WhatsApp link",
-      "info": "Uses the WhatsApp number in Theme settings > MG Car Audio: business details. Hidden when 'Show WhatsApp buttons' is off there.",
-      "default": true
+      "info": "A text link under the buttons. Off by default: the floating 'WhatsApp us' button and the phone tab bar already show in the first screen. Uses the WhatsApp number in Theme settings > MG Car Audio: business details.",
+      "default": false
     },
     {
       "type": "text",
