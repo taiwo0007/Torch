@@ -801,14 +801,22 @@
 
   .mg-footer-contact__bottom {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--mg-space-4);
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--mg-space-1) var(--mg-space-5);
     padding-block-start: var(--mg-space-5);
     border-top: 1px solid var(--mg-line);
     font-size: var(--mg-fs-micro);
     line-height: 1.45;
     color: var(--mg-ink-2);
+  }
+
+  @media screen and (max-width: 749px) {
+    .mg-footer-contact__payments,
+    .mg-footer-contact__theme {
+      flex-basis: 100%;
+      margin-block-start: var(--mg-space-3);
+    }
   }
 
   .mg-footer-contact__copyright {
@@ -853,13 +861,10 @@
   @media screen and (min-width: 750px) {
     /* Room below the row for the floating WhatsApp button at the end of the page */
     .mg-footer-contact--bottom {
-      padding-block-end: calc(var(--mg-space-5) + 76px);
+      padding-block-end: calc(var(--mg-space-5) + 64px);
     }
 
     .mg-footer-contact__bottom {
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
       gap: var(--mg-space-2) var(--mg-space-6);
     }
 
@@ -979,9 +984,19 @@
     display: grid;
   }
 
-  /* Phones: accordion rows with hairlines */
+  /* Phones: accordion rows with hairlines (the bottom row draws the last one) */
   .mg-footer-cols__accordion {
     border-bottom: 1px solid var(--mg-line);
+  }
+
+  .mg-footer-cols__accordion:last-child {
+    border-bottom: 0;
+  }
+
+  /* The bottom row follows straight on */
+  .mg-footer-contact--columns + .mg-footer-contact--bottom,
+  .mg-footer-contact-section:has(.mg-footer-contact--columns) + .mg-footer-contact-section .mg-footer-contact--bottom {
+    padding-block-start: 0;
   }
 
   .mg-footer-cols__summary {
@@ -1337,7 +1352,6 @@
       "type": "link_list",
       "id": "col3_menu",
       "label": "Menu",
-      "default": "footer",
       "visible_if": "{{ section.settings.row == 'columns' }}"
     },
     {

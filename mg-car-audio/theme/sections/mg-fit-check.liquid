@@ -7,50 +7,50 @@
   assign chips_label = section.settings.chips_label | strip
 -%}
 
-<div class="mg-section mg-fit">
+<div class="mg-section mg-fitcheck">
   <div class="mg-container">
     <div
-      class="mg-panel mg-fit__panel"
+      class="mg-panel mg-fitcheck__panel"
       data-mg-reveal
     >
-      <div class="mg-fit__intro">
+      <div class="mg-fitcheck__intro">
         <span
-          class="mg-fit__icon"
+          class="mg-fitcheck__icon"
           aria-hidden="true"
         >
           {%- render 'mg-icon', icon: 'car' -%}
         </span>
-        <div class="mg-fit__copy">
+        <div class="mg-fitcheck__copy">
           {%- if heading != blank -%}
             <h2
-              class="mg-fit__title"
+              class="mg-fitcheck__title"
               id="{{ uid }}-title"
             >
               {{ heading | escape }}
             </h2>
           {%- endif -%}
           {%- if section.settings.text != blank -%}
-            <p class="mg-fit__text">{{ section.settings.text | escape }}</p>
+            <p class="mg-fitcheck__text">{{ section.settings.text | escape }}</p>
           {%- endif -%}
         </div>
       </div>
 
       <form
-        class="mg-fit__form"
+        class="mg-fitcheck__form"
         action="{{ quote_url }}"
         method="get"
         {% if heading != blank %}
           aria-labelledby="{{ uid }}-title"
         {% endif %}
       >
-        <div class="mg-field mg-fit__field mg-fit__field--plate">
+        <div class="mg-field mg-fitcheck__field mg-fitcheck__field--plate">
           <label
             class="mg-label"
             for="{{ uid }}-reg"
           >
             {{- section.settings.plate_label | default: 'Your reg' | escape -}}
           </label>
-          <div class="mg-plate mg-fit__plate">
+          <div class="mg-plate mg-fitcheck__plate">
             <span
               class="mg-plate__band"
               aria-hidden="true"
@@ -72,16 +72,16 @@
           </div>
         </div>
 
-        <div class="mg-field mg-fit__field mg-fit__field--make">
+        <div class="mg-field mg-fitcheck__field mg-fitcheck__field--make">
           <label
             class="mg-label"
             for="{{ uid }}-make"
           >
-            {{- section.settings.make_label | default: 'Make' | escape -}}
+            {{- section.settings.make_label | default: 'Make' | escape }}
             <span class="mg-label__optional">(optional)</span>
           </label>
           <select
-            class="mg-input mg-fit__select"
+            class="mg-input mg-fitcheck__select"
             id="{{ uid }}-make"
             name="make"
           >
@@ -96,7 +96,7 @@
         </div>
 
         <button
-          class="mg-btn mg-btn--primary mg-fit__submit"
+          class="mg-btn mg-btn--primary mg-fitcheck__submit"
           type="submit"
         >
           {{- button_label | escape -}}
@@ -105,17 +105,17 @@
       </form>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="mg-fit__makes">
+        <div class="mg-fitcheck__makes">
           {%- if chips_label != blank -%}
             <p
-              class="mg-fit__makes-label"
+              class="mg-fitcheck__makes-label"
               id="{{ uid }}-makes"
             >
               {{ chips_label | escape }}
             </p>
           {%- endif -%}
           <ul
-            class="mg-chips mg-chips--bleed mg-fit__chips"
+            class="mg-chips mg-chips--bleed mg-fitcheck__chips"
             role="list"
             {% if chips_label != blank %}
               aria-labelledby="{{ uid }}-makes"
@@ -155,21 +155,21 @@
    * optional make, sent to the quote page as ?reg=...&make=..., plus a row of make links.
    * Desktop: copy on the left, the form on the right, makes below. Phones: stacked.
    */
-  .mg-fit__panel {
+  .mg-fitcheck__panel {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--mg-space-5);
     border: 1px solid var(--mg-line);
   }
 
-  .mg-fit__intro {
+  .mg-fitcheck__intro {
     display: flex;
     align-items: flex-start;
     gap: var(--mg-space-4);
     min-width: 0;
   }
 
-  .mg-fit__icon {
+  .mg-fitcheck__icon {
     display: grid;
     flex: none;
     place-items: center;
@@ -180,16 +180,16 @@
     color: var(--mg-red);
   }
 
-  .mg-fit__icon .mg-icon {
+  .mg-fitcheck__icon .mg-icon {
     width: 24px;
     height: 24px;
   }
 
-  .mg-fit__copy {
+  .mg-fitcheck__copy {
     min-width: 0;
   }
 
-  .mg-fit .mg-fit__title {
+  .mg-fitcheck .mg-fitcheck__title {
     margin: 0;
     font-family: var(--mg-font-ui);
     font-size: clamp(1.25rem, 2.4vw, 1.625rem);
@@ -201,7 +201,7 @@
     text-wrap: balance;
   }
 
-  .mg-fit__text {
+  .mg-fitcheck__text {
     max-width: 46ch;
     margin: var(--mg-space-2) 0 0;
     font-size: var(--mg-fs-small);
@@ -210,66 +210,91 @@
     text-wrap: pretty;
   }
 
-  .mg-fit__form {
+  /* Phones: the plate on its own row, then the make and the button side by side */
+  .mg-fitcheck__form {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: var(--mg-space-3);
     align-items: end;
     min-width: 0;
   }
 
-  .mg-fit__plate {
+  .mg-fitcheck__field--plate {
+    grid-column: 1 / -1;
+  }
+
+  @media screen and (max-width: 374px) {
+    .mg-fitcheck__form {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .mg-fitcheck__icon {
+      display: none;
+    }
+
+    .mg-fitcheck .mg-fitcheck__submit {
+      padding-inline: var(--mg-space-4);
+    }
+  }
+
+  .mg-fitcheck__plate {
     width: 100%;
   }
 
-  .mg-fit .mg-fit__select {
+  .mg-fitcheck .mg-fitcheck__select {
     height: 56px;
   }
 
-  .mg-fit .mg-fit__submit {
+  .mg-fitcheck .mg-fitcheck__submit {
     --mg-btn-h: 56px;
     white-space: nowrap;
   }
 
-  .mg-fit__submit .mg-icon {
+  .mg-fitcheck__submit .mg-icon {
     width: 18px;
     height: 18px;
   }
 
-  .mg-fit__makes {
+  .mg-fitcheck__makes {
     display: flex;
     flex-direction: column;
     gap: var(--mg-space-2);
     min-width: 0;
   }
 
-  .mg-fit__makes-label {
+  .mg-fitcheck__makes-label {
     margin: 0;
     font-size: var(--mg-fs-micro);
     font-weight: 500;
     color: var(--mg-ink-2);
   }
 
-  .mg-fit__chips > li {
+  .mg-fitcheck__chips > li {
     flex: none;
     margin: 0;
   }
 
   @media screen and (min-width: 750px) {
-    .mg-fit__form {
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    .mg-fitcheck__form {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto;
+    }
+
+    .mg-fitcheck__field--plate {
+      grid-column: auto;
     }
   }
 
   @media screen and (min-width: 990px) {
-    .mg-fit__panel {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    .mg-fitcheck__panel {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
       gap: var(--mg-space-5) var(--mg-space-7);
       align-items: center;
       padding: var(--mg-space-6) var(--mg-space-7);
     }
 
-    .mg-fit__makes {
+    .mg-fitcheck__makes {
       grid-column: 1 / -1;
       flex-direction: row;
       align-items: center;
@@ -278,7 +303,7 @@
       border-block-start: 1px solid var(--mg-line);
     }
 
-    .mg-fit__makes-label {
+    .mg-fitcheck__makes-label {
       flex: none;
     }
   }
@@ -288,7 +313,7 @@
 {
   "name": "MG fit check",
   "tag": "section",
-  "class": "mg-fit-section",
+  "class": "mg-fitcheck-section",
   "max_blocks": 12,
   "disabled_on": {
     "groups": ["header", "footer"]

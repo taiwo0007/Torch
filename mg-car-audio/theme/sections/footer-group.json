@@ -26,7 +26,7 @@
         "col2_parent": "Car makes",
         "col2_fallback": "BMW | /pages/bmw-carplay\nMercedes-Benz | /pages/mercedes-benz-carplay\nAudi | /pages/audi-carplay\nVolkswagen | /pages/volkswagen-carplay\nJapanese imports | /pages/japanese-import-conversion",
         "col3_heading": "Help",
-        "col3_menu": "footer",
+        "col3_menu": "",
         "col3_parent": "",
         "col3_fallback": "FAQ | /pages/faq\nWarranty & returns | /pages/warranty-returns\nBook a fitting | /pages/book-a-fitting\nShipping & collection | /pages/shipping\nGet a quote | /pages/get-a-quote\nContact | /pages/contact",
         "address_heading": "Visit us",

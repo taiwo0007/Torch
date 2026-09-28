@@ -273,7 +273,7 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign chip_label = block.settings.label | strip
-            assign chip_values = block.settings.makes | default: block.settings.label | split: ','
+            assign chip_values = block.settings.makes | default: block.settings.label | replace: ', ', ',' | split: ','
             if chip_label == blank
               continue
             endif
@@ -776,6 +776,13 @@
     font-weight: 500;
     line-height: 1.35;
     color: var(--mg-ink);
+  }
+
+  /* Phones: the highlights repeat the trust strip; skip them so products start sooner */
+  @media screen and (max-width: 749px) {
+    .mg-ch__points {
+      display: none;
+    }
   }
 
   .mg-ch__point {

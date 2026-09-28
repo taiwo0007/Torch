@@ -1,5 +1,6 @@
 {%- doc -%}
-  Floating WhatsApp button for tablets and desktops (750px and wider), rendered once per page
+  Floating WhatsApp button for tablets and desktops (750px and wider): a 56px round button
+  whose "WhatsApp us" label slides out on hover and focus. Rendered once per page
   from layout/theme.liquid. Phones get the WhatsApp button in snippets/mg-mobile-action-bar instead.
 
   Shows only when "Show WhatsApp buttons" is on and a WhatsApp number is set
@@ -80,9 +81,10 @@
       z-index: var(--mg-z-float, 7);
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      min-height: 52px;
-      padding: 0 22px 0 16px;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      padding: 0;
       border-radius: var(--mg-radius-pill, 999px);
       background-color: var(--mg-whatsapp);
       color: var(--mg-on-whatsapp);
@@ -108,8 +110,37 @@
 
     .mg-wa-float__icon {
       flex: none;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
+    }
+
+    /* A round button that stays outside the 1120px content column; the "WhatsApp us" label
+       slides out to its left on hover and keyboard focus */
+    .mg-wa-float__label {
+      position: absolute;
+      right: calc(100% + 10px); /* stylelint-disable-line csstools/use-logical -- pinned to the physical corner */
+      top: 50%;
+      padding: 9px 14px;
+      border: 1px solid var(--mg-line);
+      border-radius: var(--mg-radius-pill, 999px);
+      background-color: var(--mg-card-raised);
+      color: var(--mg-ink);
+      box-shadow: var(--mg-shadow-float);
+      font-size: var(--mg-fs-small);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(6px, -50%);
+    }
+
+    .mg-wa-float:is(:hover, :focus-visible) .mg-wa-float__label {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+  }
+
+  @media screen and (min-width: 750px) and (prefers-reduced-motion: no-preference) {
+    .mg-wa-float__label {
+      transition: opacity 0.18s var(--mg-ease), transform 0.18s var(--mg-ease);
     }
   }
 

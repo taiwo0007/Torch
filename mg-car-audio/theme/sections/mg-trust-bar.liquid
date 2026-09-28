@@ -3,7 +3,7 @@
   assign subline = section.settings.subline
 -%}
 
-<div class="mg-section mg-section--flush mg-trust-bar">
+<div class="mg-section mg-section--flush mg-trust-bar{% if section.settings.attach %} mg-trust-bar--attach{% endif %}">
   {%- if statement != blank or subline != blank -%}
     <div class="mg-container">
       <div
@@ -170,6 +170,11 @@
    * reference layout, moved below the header so phones keep a short header). 4 items in a row
    * with hairline dividers from 750px; a compact 2 by 2 grid on phones. Optional heading above.
    */
+  /* Pulls the strip up against the section above (it cancels that section's bottom spacing) */
+  .mg-trust-bar--attach {
+    margin-block-start: calc(var(--mg-section-pad) * -1);
+  }
+
   .mg-trust-bar__head {
     padding-block: var(--mg-space-7) var(--mg-space-5);
   }
@@ -323,7 +328,9 @@
   "class": "mg-trust-section",
   "max_blocks": 6,
   "disabled_on": {
-    "groups": ["header"]
+    "groups": [
+      "header"
+    ]
   },
   "settings": [
     {
@@ -336,8 +343,14 @@
       "type": "inline_richtext",
       "id": "subline",
       "label": "Subline",
-      "info": "PLACEHOLDER: confirm the warranty wording with MG before launch. The strip's warranty item shows the warranty text from Theme settings, so keep the two consistent. You can add a link, for example to a warranty page.",
-      "default": "Fixed fitted prices at our Dublin 12 workshop. Backed by our warranty."
+      "info": "PLACEHOLDER: confirm the warranty wording with MG before launch. The strip's warranty item shows the warranty text from Theme settings, so keep the two consistent. You can add a link, for example to a warranty page."
+    },
+    {
+      "type": "checkbox",
+      "id": "attach",
+      "label": "Sit flush under the section above",
+      "info": "On for the home page, so the strip joins the bottom of the hero.",
+      "default": true
     },
     {
       "type": "paragraph",
@@ -408,26 +421,86 @@
           "id": "icon",
           "label": "Icon",
           "options": [
-            { "value": "shield", "label": "Shield" },
-            { "value": "tag", "label": "Price tag" },
-            { "value": "car", "label": "Car" },
-            { "value": "map-pin", "label": "Map pin" },
-            { "value": "wrench", "label": "Wrench" },
-            { "value": "check", "label": "Tick" },
-            { "value": "screen", "label": "Screen" },
-            { "value": "radio", "label": "Radio" },
-            { "value": "speaker", "label": "Speaker" },
-            { "value": "camera", "label": "Camera" },
-            { "value": "phone", "label": "Phone" },
-            { "value": "whatsapp", "label": "WhatsApp" },
-            { "value": "message", "label": "Message" },
-            { "value": "mail", "label": "Email" },
-            { "value": "clock", "label": "Clock" },
-            { "value": "calendar", "label": "Calendar" },
-            { "value": "star", "label": "Star" },
-            { "value": "award", "label": "Award" },
-            { "value": "bolt", "label": "Lightning bolt" },
-            { "value": "globe", "label": "Globe" }
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "tag",
+              "label": "Price tag"
+            },
+            {
+              "value": "car",
+              "label": "Car"
+            },
+            {
+              "value": "map-pin",
+              "label": "Map pin"
+            },
+            {
+              "value": "wrench",
+              "label": "Wrench"
+            },
+            {
+              "value": "check",
+              "label": "Tick"
+            },
+            {
+              "value": "screen",
+              "label": "Screen"
+            },
+            {
+              "value": "radio",
+              "label": "Radio"
+            },
+            {
+              "value": "speaker",
+              "label": "Speaker"
+            },
+            {
+              "value": "camera",
+              "label": "Camera"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "whatsapp",
+              "label": "WhatsApp"
+            },
+            {
+              "value": "message",
+              "label": "Message"
+            },
+            {
+              "value": "mail",
+              "label": "Email"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendar"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "bolt",
+              "label": "Lightning bolt"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            }
           ],
           "default": "shield"
         },

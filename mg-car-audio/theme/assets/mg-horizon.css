@@ -125,6 +125,26 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
   --cart-bubble-text: var(--mg-on-red);
 }
 
+/* The header runs the full width (section width "Full width") so the logo, a wide search pill,
+   the nav and the Book button fit on one bar; on very wide screens it stops at --mg-chrome-max,
+   and the contact strip (sections/mg-topbar.liquid) and mega menu panels line up with it. */
+:root {
+  --mg-chrome-max: 1440px;
+}
+
+#header-component .header__row > .header__columns,
+#header-component .menu-list__submenu .mega-menu > .mega-menu__grid {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--mg-chrome-max);
+  margin-inline: auto;
+}
+
+#header-component .menu-list__submenu .mega-menu > .mega-menu__grid {
+  max-width: calc(var(--mg-chrome-max) - var(--mg-gutter) * 2);
+  padding-inline: 0;
+}
+
 /* Submenus and the drawer underlay follow the page colour (the block prints a fixed colour) */
 #header-component .header__underlay {
   --color-submenu: var(--mg-page);
@@ -149,8 +169,8 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
 
 @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
   #header-component[data-sticky-state='active'] .header__underlay-closed {
-    --color-background-top-row: rgb(var(--mg-page-rgb) / 0.84);
-    --color-background-bottom-row: rgb(var(--mg-page-rgb) / 0.84);
+    --color-background-top-row: rgb(var(--mg-page-rgb) / 0.92);
+    --color-background-bottom-row: rgb(var(--mg-page-rgb) / 0.92);
     -webkit-backdrop-filter: saturate(1.4) blur(16px);
     backdrop-filter: saturate(1.4) blur(16px);
   }
@@ -162,6 +182,21 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
     --color-background-bottom-row: var(--mg-page);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+}
+
+/* Phones: the sticky header slides out of the way while you scroll down and comes back as soon
+   as you scroll up (the header is set to "Always" sticky so desktops keep the bar). A transform
+   moves it without changing the page layout, so nothing below jumps. */
+@media screen and (max-width: 749px) {
+  #header-component[data-sticky-state='active'][data-scroll-direction='down']:not(:has(details[open])) {
+    transform: translateY(calc(-100% - 2px));
+  }
+}
+
+@media screen and (max-width: 749px) and (prefers-reduced-motion: no-preference) {
+  #header-component[sticky] {
+    transition: transform 0.28s var(--mg-ease);
   }
 }
 
@@ -283,8 +318,10 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
     min-width: 0;
   }
 
+  /* The nav takes the width it needs first; the pill takes what is left (up to 560px) */
   #header-component[data-menu-style='menu'] .header__row--top .header__column--left .search-action {
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    min-width: 240px;
     max-width: 560px;
     margin-inline: 0;
   }
@@ -297,6 +334,51 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
   #header-component[data-menu-style='menu'] .header__row--bottom .header__columns {
     --padding-block-start: 0px;
     --padding-block-end: 0px;
+  }
+}
+
+/* Smaller desktops (up to 1365px): the pill folds to a round search button so the nav and the
+   Book button keep one line; below 1200px the nav and logo also tighten a little */
+@media screen and (min-width: 750px) and (max-width: 1365px) {
+  #header-component[data-menu-style='menu'] .header__row--top .header__column--left .search-action {
+    flex: none;
+    min-width: 0;
+  }
+
+  #header-component[data-menu-style='menu'] .search-action .header-actions__action {
+    justify-content: center;
+    width: var(--mg-tap);
+    padding: 0;
+  }
+
+  #header-component[data-menu-style='menu'] .search-action .header-actions__action::after {
+    content: none;
+  }
+
+  #header-component[data-menu-style='menu'] .menu-list {
+    --menu-horizontal-gap: var(--mg-space-4);
+  }
+}
+
+@media screen and (min-width: 750px) and (max-width: 1199px) {
+  #header-component[data-menu-style='menu'] .menu-list {
+    --menu-horizontal-gap: var(--mg-space-3);
+  }
+
+  #header-component[data-menu-style='menu'] .menu-list__link {
+    font-size: 0.875rem;
+  }
+
+  #header-component .menu-list__list-item:not([slot='overflow']) > .menu-list__link[href*='book-a-fitting'] .menu-list__link-title {
+    padding-inline: var(--mg-space-3);
+  }
+
+  #header-component[data-menu-style='menu'] .header__row--top .header__column--left {
+    gap: var(--mg-space-4);
+  }
+
+  #header-component[data-menu-style='menu'] .header-logo:not(:has(img)) {
+    font-size: 1.125rem;
   }
 }
 
@@ -441,8 +523,9 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
   --mg-mega-promo: 300px;
 }
 
-#header-component .menu-list__submenu .menu-list__submenu-inner {
+#header-component .menu-list__list-item:not([slot='overflow']) .menu-list__submenu .menu-list__submenu-inner {
   padding-block: var(--mg-space-6) var(--mg-space-7);
+  padding-inline: 0;
 }
 
 #header-component .menu-list__list-item:not([slot='overflow']) .mega-menu__grid {
@@ -583,8 +666,8 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
 /* Shop's card shows a CarPlay screen instead of the workshop */
 #header-component .menu-list__list-item:has(> .menu-list__trigger > .menu-list__link[href^='/collections']) .mega-menu__column .mega-menu__link[href*='book-a-fitting'] {
   background:
-    linear-gradient(to top, rgb(8 8 9 / 0.94) 0%, rgb(8 8 9 / 0.55) 48%, rgb(8 8 9 / 0.1) 100%),
-    url('mg-img-sys-carplay-600.webp') center 30% / cover no-repeat,
+    linear-gradient(to top, rgb(8 8 9 / 0.96) 0%, rgb(8 8 9 / 0.78) 45%, rgb(8 8 9 / 0.12) 100%),
+    url('mg-img-sys-screens-600.webp') center 35% / cover no-repeat,
     var(--mg-night);
 }
 
@@ -704,9 +787,23 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
 
 .menu-drawer .menu-drawer__menu-item--child {
   min-height: 48px;
+  padding-inline-start: var(--mg-space-4);
   font-size: 1rem;
   font-weight: 400;
   color: var(--mg-ink-2);
+}
+
+.menu-drawer .menu-drawer__menu--childlist {
+  margin-inline-start: 2px;
+  border-inline-start: 1px solid var(--mg-line);
+}
+
+.menu-drawer summary .icon-plus {
+  transition: transform var(--mg-dur) var(--mg-ease), color var(--mg-dur) var(--mg-ease);
+}
+
+.menu-drawer details[open] > summary .icon-plus {
+  transform: rotate(45deg);
 }
 
 .menu-drawer .menu-drawer__menu-item--child:is(:hover, [aria-current='page']) {

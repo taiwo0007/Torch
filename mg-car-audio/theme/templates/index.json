@@ -80,7 +80,8 @@
         "item_warranty"
       ],
       "settings": {
-        "statement": ""
+        "statement": "",
+        "attach": true
       }
     },
     "system_grid": {
@@ -291,7 +292,7 @@
                     "font_size": "",
                     "line_height": "normal",
                     "letter_spacing": "normal",
-                    "case": "uppercase",
+                    "case": "none",
                     "wrap": "balance",
                     "background": false,
                     "background_color": "#00000026",
@@ -430,7 +431,10 @@
         "gap": 24,
         "padding-block-start": 36,
         "padding-block-end": 36
-      }
+      },
+      "custom_css": [
+        ".section-resource-list__header h2 {font-size: clamp(1.5rem, 3.4vw, 2.25rem); line-height: 1.05; text-transform: uppercase;}"
+      ]
     },
     "services": {
       "type": "mg-services-grid",
@@ -604,7 +608,7 @@
         "tab_audio": "Audio",
         "price_suffix": "fitted",
         "on_request_label": "Price on request",
-        "book_label": "Book",
+        "book_label": "",
         "quote_label": "Get a quote",
         "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill."
       }

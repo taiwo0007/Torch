@@ -762,7 +762,7 @@ html .product-details .variant-option--buttons .variant-option__button-label:has
  * 5. Cart drawer
  * ===================================================================== */
 
-.cart-drawer__inner .theme-drawer__header {
+.cart-drawer__inner:not(.cart-drawer--empty) .theme-drawer__header {
   border-bottom: 1px solid var(--mg-line);
 }
 
@@ -832,4 +832,9 @@ html .product-details .variant-option--buttons .variant-option__button-label:has
   .collection-card:hover .collection-card__image img {
     transform: none;
   }
+}
+
+/* A search with no results and no filters already says so above the grid: skip the second box */
+.collection-wrapper:not(:has(.facets)) .main-collection-grid__empty {
+  display: none;
 }
