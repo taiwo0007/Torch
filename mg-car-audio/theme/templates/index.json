@@ -31,7 +31,7 @@
         "fallback_image": "mg-img-hero-1",
         "slideshow": true,
         "fallback_2": "mg-img-hero-2",
-        "slide_seconds": 4,
+        "slide_seconds": 3,
         "fallback_3": "mg-bmw-carplay-screen"
       }
     },
