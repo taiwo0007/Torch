@@ -252,12 +252,14 @@
             assign col_menu = section.settings[menu_key]
             assign col_parent = section.settings[parent_key] | handleize
             assign col_links = nil
+            assign col_parent_url = nil
 
             if col_menu != blank
               if col_parent != blank
                 for menu_link in col_menu.links
                   if menu_link.handle == col_parent and menu_link.links.size > 0
                     assign col_links = menu_link.links
+                    assign col_parent_url = menu_link.url
                     break
                   endif
                 endfor
@@ -287,6 +289,13 @@
                 >
                   {%- if col_links != nil -%}
                     {%- for link in col_links -%}
+                      {%- comment -%} The header's promo and see-all links stay out of the footer lists {%- endcomment -%}
+                      {%- if col_parent_url != nil and link.url == col_parent_url -%}
+                        {%- continue -%}
+                      {%- endif -%}
+                      {%- if col_parent_url != nil and link.url contains 'book-a-fitting' -%}
+                        {%- continue -%}
+                      {%- endif -%}
                       <li>
                         <a
                           href="{{ link.url }}"

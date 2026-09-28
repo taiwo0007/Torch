@@ -1587,6 +1587,12 @@ body:has(> .password-main-content) {
  * ===================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
+  #header-component .mega-menu__link,
+  #header-component .mega-menu__link::after,
+  #header-component .mega-menu__column .mega-menu__link[href*='book-a-fitting'],
+  #header-component .menu-list__list-item .menu-list__link-title,
+  #header-component .menu-list__list-item .menu-list__link-title::before,
+  .menu-drawer summary .icon-plus,
   product-card .product-grid__card.product-grid__card,
   #header-component .search-action .header-actions__action,
   #header-component .menu-list__list-item:not([slot='overflow']) .menu-list__link .menu-list__link-title::after,

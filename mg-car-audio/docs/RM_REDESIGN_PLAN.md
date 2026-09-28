@@ -37,3 +37,35 @@ Shared: `assets/mg-theme.css` (tokens and components) may only be **appended** t
 - Screenshots in light **and** dark (dark first) at 360, 390, 768 and 1440 via `tools/preview/shoot.mjs`: no horizontal overflow, CTAs on one line.
 - AA contrast. Focus rings. Tap targets ≥ 44px. `prefers-reduced-motion` respected.
 - `shopify theme check` shows 0 errors and no new warnings. `tools/validate_templates.py` passes.
+
+## Menus for the v4 header
+
+Set these up in **Content → Menus** (older admins: **Online Store → Navigation**). The header reads `main-menu`: each top-level item with children becomes a desktop mega menu and an expandable group in the phone menu. Drag a child under its parent to nest it. Keep the titles short; the header has one line.
+
+### main-menu
+
+| Item | Link | Children (title → link) |
+|---|---|---|
+| Shop | `/collections/all` | CarPlay & Android Auto → `/collections/carplay-android-auto` · Android radios → `/collections/android-radios` · Screen upgrades → `/collections/screen-upgrades` · Speakers → `/collections/speakers` · Subwoofers → `/collections/subwoofers` · Amplifiers → `/collections/amplifiers` · Dash cams → `/collections/dashcams` · Reverse cameras → `/collections/reverse-cameras` · Accessories → `/collections/accessories` · All products → `/collections/all` · Book a fitting → `/pages/book-a-fitting` |
+| Services | `/pages/services` | CarPlay installation → `/pages/carplay-installation` · Screen upgrades → `/pages/screen-upgrades` · Android radio fitting → `/products/android-radio-installation` · Sound upgrades → `/pages/sound-upgrades` · Dash cam & reverse camera fitting → `/pages/camera-fitting` · Japanese import conversion → `/pages/japanese-import-conversion` · Repairs & radio code → `/pages/repairs` · All services → `/pages/services` · Book a fitting → `/pages/book-a-fitting` |
+| Car makes | `/pages/bmw-carplay` | BMW → `/pages/bmw-carplay` · Mercedes-Benz → `/pages/mercedes-benz-carplay` · Audi → `/pages/audi-carplay` · Volkswagen → `/pages/volkswagen-carplay` · Japanese imports → `/pages/japanese-import-conversion` |
+| Latest jobs | `/pages/gallery` | – |
+| About | `/pages/about` | – |
+| Contact | `/pages/contact` | – |
+| Book a fitting | `/pages/book-a-fitting` | – |
+
+How the theme uses the links (all CSS on Horizon's own markup, `assets/mg-horizon.css`):
+
+- **Book a fitting as the last top-level item** shows as the header's primary button on desktop and in red in the phone menu. Leave it out and the bar simply ends at Contact.
+- **Book a fitting as the last child** of Shop and Services becomes the photo promo card on the right of that mega menu (Shop: screen photo, Services: workshop photo). Remove it to drop the card.
+- **All products / All services** (a child that links back to the parent) reads as a quieter "see all" row. Keep it: in the phone menu the group title opens the group, so this is the way to reach the parent page there.
+- Service pages that don't exist yet (`screen-upgrades`, `sound-upgrades`, `camera-fitting`, `japanese-import-conversion`, `repairs`, `about`) 404 until the pages task's templates are assigned to real pages with those handles. Until then, point those items at `/pages/services` (or the matching collection) and change them later.
+- Menu items with a `tel:` link (for example "Call 087 034 4355" → `tel:+353870344355`) get a phone icon and sit on the right. Not needed now: the contact strip above the header has the number.
+
+### footer (the Help column)
+
+The footer's **Help** column lists its own fallback links (FAQ, Warranty & returns, Book a fitting, Shipping & collection, Get a quote, Contact) until a menu is picked for it in **Theme editor → Footer → Footer columns → Column 3 → Menu**. The **Systems** and **Shop by car** columns follow the `main-menu` items **Shop** and **Car makes** automatically, and fall back to the same lists when those items have no children. Policies (privacy, refunds, terms) show in the footer's bottom row from **Settings → Policies**.
+
+### Header settings used (sections/header-group.json)
+
+Contact strip (`mg-topbar`) above the header; header section width **Full width**, menu in the **top** row (one bar: logo, search pill, nav, Book, account, cart), sticky **Always**. Phones: the header slides away while scrolling down and returns on scroll up; the phone tab bar (Shop, Search, Book, Call, WhatsApp) stays.

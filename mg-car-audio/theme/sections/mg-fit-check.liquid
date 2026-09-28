@@ -210,7 +210,7 @@
     text-wrap: pretty;
   }
 
-  /* Phones: the plate on its own row, then the make and the button side by side */
+  /* Phones: plate, make and button stacked; from 750px one row */
   .mg-fitcheck__form {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -223,7 +223,7 @@
     grid-column: 1 / -1;
   }
 
-  @media screen and (max-width: 374px) {
+  @media screen and (max-width: 749px) {
     .mg-fitcheck__form {
       grid-template-columns: minmax(0, 1fr);
     }

@@ -305,6 +305,21 @@
     }
   }
 
+  /* Tablet: four across is tight, so only the titles show */
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .mg-trust-bar__meta {
+      display: none;
+    }
+
+    .mg-trust-bar__item {
+      padding-inline: var(--mg-space-2);
+    }
+
+    .mg-trust-bar__title .mg-stars {
+      display: none;
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .mg-trust-bar .mg-trust-bar__icon {
       width: 24px;
