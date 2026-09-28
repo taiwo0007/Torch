@@ -1,0 +1,31 @@
+{%- doc -%}
+  Icon in front of a top-level item in the phone menu drawer, picked from the link's URL or handle.
+  Renders nothing for links it doesn't recognise.
+
+  @param {object} link - The menu link
+
+  @example
+  {% render 'mg-drawer-icon', link: link %}
+{%- enddoc -%}
+{%- liquid
+  assign url = link.url | downcase
+  assign icon = ''
+  if url contains 'book-a-fitting'
+    assign icon = 'calendar'
+  elsif url contains '/collections'
+    assign icon = 'shop'
+  elsif link.handle == 'services' or url contains '/pages/services'
+    assign icon = 'wrench'
+  elsif link.handle contains 'car-make' or url contains '-carplay'
+    assign icon = 'car'
+  elsif url contains 'gallery' or link.handle contains 'jobs'
+    assign icon = 'camera'
+  elsif url contains 'about'
+    assign icon = 'award'
+  elsif url contains 'contact'
+    assign icon = 'message'
+  endif
+-%}
+{%- if icon != blank -%}
+  <span class="mg-drawer-icon" aria-hidden="true">{% render 'mg-icon', icon: icon %}</span>
+{%- endif -%}

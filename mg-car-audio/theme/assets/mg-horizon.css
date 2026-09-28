@@ -799,6 +799,233 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
   }
 }
 
+/* ---------- MG phone menu: badge and car chips on top, condensed icon rows, workshop card below ----------
+   Markup: snippets/mg-drawer-extras.liquid and snippets/mg-drawer-icon.liquid inside header-drawer. */
+.mg-drawer-top {
+  position: relative;
+  display: grid;
+  gap: var(--mg-space-2);
+  padding: var(--mg-space-2) var(--mg-space-5) var(--mg-space-4);
+}
+
+.mg-drawer-top__brand {
+  position: absolute;
+  inset-block-start: calc(var(--mg-space-3) * -1 - 30px);
+  inset-inline-end: var(--mg-space-5);
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--mg-line);
+}
+
+.mg-drawer-top__brand img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.mg-drawer-top__label {
+  margin: var(--mg-space-3) 0 0;
+  font-size: var(--mg-fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mg-ink-3);
+}
+
+.mg-drawer-top__chips {
+  display: flex;
+  gap: var(--mg-space-2);
+  margin: 0 calc(var(--mg-space-5) * -1);
+  padding: 0 var(--mg-space-5) var(--mg-space-1);
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mg-drawer-top__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.mg-drawer-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding-inline: var(--mg-space-4);
+  border: 1px solid var(--mg-line-strong);
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-band);
+  color: var(--mg-ink);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.mg-drawer-chip:is(:hover, :focus-visible) {
+  border-color: var(--mg-red);
+}
+
+/* Top-level rows: Barlow Condensed caps with a red icon tile */
+.menu-drawer .menu-drawer__menu-item--mainlist {
+  gap: var(--mg-space-3);
+  font-family: var(--mg-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist .menu-drawer__menu-item-text {
+  flex: 1 1 auto;
+}
+
+.mg-drawer-icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: var(--mg-band);
+  color: var(--mg-red);
+}
+
+.mg-drawer-icon .mg-icon,
+.mg-drawer-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.menu-drawer details[open] > summary .mg-drawer-icon {
+  background-color: var(--mg-red);
+  color: var(--mg-on-red);
+}
+
+/* Children line up with the label, after the icon tile */
+.menu-drawer .menu-drawer__menu--childlist {
+  margin-inline-start: calc(38px + var(--mg-space-3));
+  border-inline-start: 0;
+}
+
+.menu-drawer .menu-drawer__menu-item--child {
+  font-family: var(--mg-font-ui);
+  text-transform: none;
+}
+
+/* "Book a fitting" at the top level: a full-width red button */
+.menu-drawer .menu-drawer__list-item--divider:has(> .menu-drawer__menu-item--mainlist[href*='book-a-fitting']) {
+  border: 0;
+  padding-block-start: var(--mg-space-4);
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] {
+  justify-content: center;
+  min-height: 56px;
+  border-radius: var(--mg-radius-pill);
+  background-color: var(--mg-red);
+  color: var(--mg-on-red);
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] .menu-drawer__menu-item-text {
+  flex: none;
+}
+
+.menu-drawer .menu-drawer__menu-item--mainlist[href*='book-a-fitting'] .mg-drawer-icon {
+  width: auto;
+  height: auto;
+  background: none;
+  color: inherit;
+}
+
+/* Workshop card */
+.mg-drawer-card {
+  display: grid;
+  gap: var(--mg-space-3);
+  margin: var(--mg-space-5) var(--mg-space-5) 0;
+  padding: var(--mg-space-5);
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-band);
+}
+
+.mg-drawer-card__title {
+  margin: 0;
+  font-family: var(--mg-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--mg-ink);
+}
+
+.mg-drawer-card__facts {
+  display: grid;
+  gap: var(--mg-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--mg-fs-small);
+  color: var(--mg-ink-2);
+}
+
+.mg-drawer-card__facts li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mg-space-2);
+}
+
+.mg-drawer-card__facts :is(.mg-icon, svg) {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-block-start: 2px;
+  color: var(--mg-ink-3);
+}
+
+.mg-drawer-card__facts .mg-drawer-card__star {
+  color: var(--mg-red);
+}
+
+.mg-drawer-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--mg-space-2);
+  margin-block-start: var(--mg-space-1);
+}
+
+.mg-drawer-card__btn {
+  justify-content: center;
+  width: 100%;
+}
+
+.mg-drawer-card__btn.mg-btn--whatsapp {
+  --mg-btn-bg: var(--mg-whatsapp);
+  --mg-btn-ink: var(--mg-on-whatsapp);
+  --mg-btn-line: var(--mg-whatsapp);
+  --mg-btn-bg-hover: var(--mg-whatsapp-hover);
+  --mg-btn-line-hover: var(--mg-whatsapp-hover);
+}
+
+.mg-drawer-card__btn.mg-btn--whatsapp :is(.mg-icon, svg) {
+  color: currentcolor;
+}
+
+/* Keep the card clear of the phone tab bar at the end of the scroll */
+@media screen and (max-width: 749px) {
+  .mg-drawer-card {
+    margin-block-end: calc(var(--mg-tabbar-h, 64px) + env(safe-area-inset-bottom, 0px) + var(--mg-space-5));
+  }
+}
+
+@media screen and (min-width: 750px) and (hover: hover) {
+  .mg-drawer-top,
+  .mg-drawer-card {
+    display: none;
+  }
+}
+
 /* ---------- Search modal ---------- */
 
 .search-modal .predictive-search-form__header {

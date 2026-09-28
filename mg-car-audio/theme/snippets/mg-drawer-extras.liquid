@@ -1,0 +1,77 @@
+{%- doc -%}
+  MG additions to the phone menu drawer (snippets/header-drawer.liquid).
+
+  - part 'top': the MG badge and a "Shop by car" chip row, built from the children of the
+    "Car makes" item in the menu (hidden when that item has no children).
+  - part 'bottom': a workshop card with today's opening hours, the Google rating and big Call and
+    WhatsApp buttons, using the business details in Theme settings → MG Car Audio.
+
+  @param {string} part - 'top' or 'bottom'
+  @param {object} [linklist] - The drawer's menu (needed for part 'top')
+
+  @example
+  {% render 'mg-drawer-extras', part: 'top', linklist: linklist %}
+{%- enddoc -%}
+{%- liquid
+  assign business_name = settings.mg_business_name | default: shop.name
+-%}
+{%- if part == 'top' -%}
+  {%- liquid
+    assign makes_link = nil
+    for l in linklist.links
+      if l.handle contains 'car-make' and l.links != blank
+        assign makes_link = l
+        break
+      endif
+    endfor
+  -%}
+  <div class="mg-drawer-top">
+    <a class="mg-drawer-top__brand" href="{{ routes.root_url }}" aria-label="{{ business_name | escape }}">
+      <img src="{{ 'mg-logo-512.webp' | asset_url }}" alt="" width="44" height="44" loading="lazy">
+    </a>
+    {%- if makes_link -%}
+      <p class="mg-drawer-top__label" id="MgDrawerCars">Find parts for your car</p>
+      <ul class="mg-drawer-top__chips" role="list" aria-labelledby="MgDrawerCars">
+        {%- for m in makes_link.links -%}
+          <li><a class="mg-drawer-chip" href="{{ m.url }}">{{ m.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+{%- else -%}
+  {%- liquid
+    assign phone = settings.mg_phone_e164 | remove: ' ' | remove: '-'
+    assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+    assign wa_message = settings.mg_whatsapp_message | strip | default: 'Hi MG Car Audio,' | url_encode
+  -%}
+  <div class="mg-drawer-card">
+    <p class="mg-drawer-card__title">Talk to the workshop</p>
+    <ul class="mg-drawer-card__facts" role="list">
+      {%- if settings.mg_hours_weekdays != blank -%}
+        <li>{% render 'mg-icon', icon: 'clock' %}<span>Mon to Fri {{ settings.mg_hours_weekdays | escape }}</span></li>
+      {%- endif -%}
+      {%- if settings.mg_hours_saturday != blank -%}
+        <li>{% render 'mg-icon', icon: 'clock' %}<span>Saturday {{ settings.mg_hours_saturday | escape }}</span></li>
+      {%- endif -%}
+      {%- if settings.mg_locality != blank -%}
+        <li>{% render 'mg-icon', icon: 'map-pin' %}<span>{{ settings.mg_street | escape }}{% if settings.mg_street != blank %}, {% endif %}{{ settings.mg_locality | escape }}</span></li>
+      {%- endif -%}
+      {%- if settings.mg_review_rating != blank -%}
+        <li>{% render 'mg-icon', icon: 'star', class: 'mg-drawer-card__star' %}<span><strong>{{ settings.mg_review_rating | escape }}</strong> from {{ settings.mg_review_count | escape }} Google reviews</span></li>
+      {%- endif -%}
+    </ul>
+    <div class="mg-drawer-card__actions">
+      {%- if phone != blank -%}
+        <a class="mg-btn mg-btn--secondary mg-drawer-card__btn" href="tel:{{ phone }}">
+          {% render 'mg-icon', icon: 'phone' %}<span>Call</span>
+        </a>
+      {%- endif -%}
+      {%- if settings.mg_whatsapp_enabled and wa_number != blank -%}
+        <a class="mg-btn mg-btn--whatsapp mg-drawer-card__btn" href="https://wa.me/{{ wa_number }}?text={{ wa_message }}" target="_blank" rel="noopener">
+          {% render 'mg-icon', icon: 'whatsapp' %}<span>WhatsApp</span>
+          <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
