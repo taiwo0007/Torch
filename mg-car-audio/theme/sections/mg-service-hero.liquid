@@ -21,6 +21,20 @@
   assign crumb_parent_url = section.settings.breadcrumb_parent_url | default: '/collections/installation-services'
 
   assign book_url = section.settings.primary_url | default: '/pages/book-a-fitting'
+  assign quote_url = section.settings.quote_url | default: '/pages/get-a-quote'
+  assign quote_service = section.settings.quote_service | strip
+  if quote_service != blank
+    assign quote_join = '?service='
+    if quote_url contains '?'
+      assign quote_join = '&service='
+    endif
+    assign quote_service_enc = quote_service | url_encode
+    assign quote_url = quote_url | append: quote_join | append: quote_service_enc
+  endif
+  assign title_class = 'mg-pg-h1'
+  if section.settings.title_style == 'serif'
+    assign title_class = 'mg-h1-banner'
+  endif
   assign wa_message = section.settings.whatsapp_message | default: settings.mg_whatsapp_message
   assign show_whatsapp = false
   if section.settings.show_whatsapp and settings.mg_whatsapp_number != blank and section.settings.whatsapp_label != blank
@@ -118,7 +132,7 @@
 
     <div class="mg-panel mg-surface-night mg-cine mg-red-line mg-svc-hero__panel">
       <div class="mg-svc-hero__content">
-        <h1 class="mg-h1-banner mg-svc-hero__title mg-load-rise">{{ heading | escape }}</h1>
+        <h1 class="{{ title_class }} mg-svc-hero__title mg-load-rise">{{ heading | escape }}</h1>
 
         {%- if show_rating -%}
           {%- capture rating_inner -%}
@@ -152,7 +166,7 @@
           <p class="mg-lede mg-svc-hero__lede">{{ section.settings.intro | escape | newline_to_br }}</p>
         {%- endif -%}
 
-        {%- if section.settings.price != blank or section.settings.price_note != blank -%}
+        {%- if section.settings.price != blank or section.settings.price_note != blank or section.settings.duration != blank -%}
           <div class="mg-svc-hero__offer{% if section.settings.price != blank %} mg-svc-hero__offer--price{% endif %}">
             {%- if section.settings.price != blank -%}
               <p class="mg-price mg-svc-hero__price">
@@ -165,13 +179,19 @@
                 {%- endif -%}
               </p>
             {%- endif -%}
+            {%- if section.settings.duration != blank -%}
+              <p class="mg-svc-hero__duration">
+                {%- render 'mg-icon', icon: 'clock' -%}
+                <span>{{ section.settings.duration | escape }}</span>
+              </p>
+            {%- endif -%}
             {%- if section.settings.price_note != blank -%}
               <p class="mg-help mg-svc-hero__price-note">{{ section.settings.price_note | escape }}</p>
             {%- endif -%}
           </div>
         {%- endif -%}
 
-        {%- if section.settings.primary_label != blank or show_whatsapp -%}
+        {%- if section.settings.primary_label != blank or section.settings.quote_label != blank or show_whatsapp -%}
           <div class="mg-actions mg-svc-hero__actions">
             {%- if section.settings.primary_label != blank -%}
               <a
@@ -180,6 +200,15 @@
               >
                 {%- render 'mg-icon', icon: 'calendar' -%}
                 <span>{{ section.settings.primary_label | escape }}</span>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.quote_label != blank -%}
+              <a
+                class="mg-btn mg-btn--secondary"
+                href="{{ quote_url }}"
+              >
+                {%- render 'mg-icon', icon: 'message' -%}
+                <span>{{ section.settings.quote_label | escape }}</span>
               </a>
             {%- endif -%}
             {%- if show_whatsapp -%}
@@ -377,6 +406,16 @@
     max-width: 22ch;
   }
 
+  .mg-svc-hero__title.mg-pg-h1 {
+    max-width: 16ch;
+  }
+
+  /* The fitted price reads big, like a price tag */
+  .mg-svc-hero__offer--price .mg-svc-hero__amount {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    line-height: 1;
+  }
+
   .mg-svc-hero__rating {
     display: inline-flex;
     flex-wrap: wrap;
@@ -422,6 +461,22 @@
   .mg-svc-hero__amount {
     font-size: var(--mg-fs-h2);
     letter-spacing: -0.01em;
+  }
+
+  .mg-svc-hero__duration {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+    color: var(--mg-ink);
+  }
+
+  .mg-svc-hero__duration .mg-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--mg-red-ink);
   }
 
   .mg-svc-hero__price-note {
@@ -478,6 +533,19 @@
 
     .mg-svc-hero__content:has(> .mg-svc-hero__offer--price) > :is(.mg-svc-hero__lede, .mg-svc-hero__actions, .mg-svc-hero__call) {
       order: 2;
+    }
+  }
+
+  /* Phones with three buttons: Book across the full width, Quote and WhatsApp share a row */
+  @media screen and (max-width: 749px) {
+    .mg-svc-hero__actions:has(> .mg-btn:nth-child(3)) > .mg-btn:first-child {
+      flex-basis: 100%;
+    }
+
+    .mg-svc-hero__actions:has(> .mg-btn:nth-child(3)) > .mg-btn:not(:first-child) {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: var(--mg-space-3);
     }
   }
 
@@ -575,6 +643,16 @@
       "info": "Leave blank to use the page title. Sentence case, with the service and 'Dublin' for local search. Keep it under about 55 characters so it fits on two lines."
     },
     {
+      "type": "select",
+      "id": "title_style",
+      "label": "Heading style",
+      "options": [
+        { "value": "caps", "label": "Bold capitals" },
+        { "value": "serif", "label": "Serif" }
+      ],
+      "default": "caps"
+    },
+    {
       "type": "textarea",
       "id": "intro",
       "label": "Intro",
@@ -613,6 +691,12 @@
     },
     {
       "type": "text",
+      "id": "duration",
+      "label": "Fitting time",
+      "info": "For example 'About 1 hour'. Leave blank to hide."
+    },
+    {
+      "type": "text",
       "id": "price_note",
       "label": "Price note",
       "info": "Real prices from MG's booking page.",
@@ -634,6 +718,25 @@
       "id": "primary_url",
       "label": "Booking button link",
       "info": "Leave blank to link to /pages/book-a-fitting."
+    },
+    {
+      "type": "text",
+      "id": "quote_label",
+      "label": "Quote button label",
+      "info": "Leave blank to hide.",
+      "default": "Get a quote"
+    },
+    {
+      "type": "url",
+      "id": "quote_url",
+      "label": "Quote button link",
+      "info": "Leave blank to link to /pages/get-a-quote."
+    },
+    {
+      "type": "text",
+      "id": "quote_service",
+      "label": "Service to pre-select on the quote form",
+      "info": "Optional. Must match a line in the quote form's service list, for example 'Reverse camera installation'."
     },
     {
       "type": "checkbox",
@@ -741,7 +844,11 @@
             { "value": "award", "label": "Award" },
             { "value": "tag", "label": "Price tag" },
             { "value": "map-pin", "label": "Map pin" },
-            { "value": "phone", "label": "Phone" }
+            { "value": "phone", "label": "Phone" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "speaker", "label": "Speaker" },
+            { "value": "globe", "label": "Globe" },
+            { "value": "radio", "label": "Radio" }
           ],
           "default": "check"
         },

@@ -1,0 +1,507 @@
+{%- liquid
+  assign heading = section.settings.heading | strip
+  assign heading_id = 'MgSvcTilesHeading-' | append: section.id
+  assign cols = section.settings.columns_desktop | default: 3
+  assign book_default = section.settings.book_url | default: '/pages/book-a-fitting'
+
+  assign section_classes = 'mg-section mg-svc-tiles'
+  if section.settings.mosaic
+    assign section_classes = section_classes | append: ' mg-svc-tiles--mosaic'
+  endif
+
+  if cols == 4
+    assign img_sizes = '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 100vw'
+  else
+    assign img_sizes = '(min-width: 990px) 34vw, (min-width: 750px) 50vw, 100vw'
+  endif
+-%}
+
+<div
+  class="{{ section_classes }}"
+  style="--mg-svc-tiles-cols: {{ cols }};"
+>
+  {%- if heading != blank or section.settings.subheading != blank -%}
+    <div class="mg-container">
+      <div
+        class="mg-head mg-svc-tiles__head"
+        data-mg-reveal
+      >
+        <div class="mg-head__text">
+          {%- if heading != blank -%}
+            <h2
+              class="mg-head__title mg-pg-caps"
+              id="{{ heading_id }}"
+            >
+              {{ heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p class="mg-head__sub">{{ section.settings.subheading | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="mg-svc-tiles__wrap{% unless section.settings.mosaic %} mg-container{% endunless %}">
+    {%- if section.blocks.size > 0 -%}
+      <ul
+        class="mg-svc-tiles__grid"
+        role="list"
+        data-mg-reveal-stagger
+        {% if heading != blank %}
+          aria-labelledby="{{ heading_id }}"
+        {% endif %}
+      >
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign bs = block.settings
+            assign title = bs.title | strip
+            if title == blank
+              continue
+            endif
+            assign details_url = bs.details_url | default: '/collections/all'
+            assign book_url = bs.book_url | default: book_default
+            assign price = bs.price | strip
+            assign price_note = bs.price_note | strip
+            assign asset = bs.fallback_asset | default: 'mg-img-sys-carplay'
+          -%}
+          <li
+            class="mg-svc-tiles__item"
+            {{ block.shopify_attributes }}
+          >
+            <div class="mg-tile mg-tile--photo mg-svc-tile">
+              <span class="mg-tile__media">
+                {%- if bs.image != blank -%}
+                  {%- assign focal_style = 'object-position: ' | append: bs.image.presentation.focal_point -%}
+                  {{-
+                    bs.image
+                    | image_url: width: 1200
+                    | image_tag:
+                      widths: '400, 600, 800, 1000, 1200',
+                      sizes: img_sizes,
+                      loading: 'lazy',
+                      alt: '',
+                      style: focal_style
+                  -}}
+                {%- else -%}
+                  {%- render 'mg-asset-image', asset: asset, sizes: img_sizes, loading: 'lazy', alt: '' -%}
+                {%- endif -%}
+              </span>
+
+              <h3 class="mg-svc-tile__title">
+                <a
+                  class="mg-svc-tile__link"
+                  href="{{ details_url }}"
+                >
+                  {{- title | escape -}}
+                </a>
+              </h3>
+
+              {%- if price != blank -%}
+                <p class="mg-svc-tile__price">
+                  {%- if bs.price_label != blank %}{{ bs.price_label | escape }} {% endif -%}
+                  <span class="mg-price">{{ price | escape }}</span>
+                  {%- if bs.price_suffix != blank %} {{ bs.price_suffix | escape }}{% endif -%}
+                </p>
+              {%- elsif price_note != blank -%}
+                <p class="mg-svc-tile__price">{{ price_note | escape }}</p>
+              {%- endif -%}
+
+              <div class="mg-svc-tile__actions">
+                <span
+                  class="mg-svc-tile__btn mg-svc-tile__btn--ghost"
+                  aria-hidden="true"
+                >
+                  {{- section.settings.details_label | default: 'Details' | escape -}}
+                  {%- render 'mg-icon', icon: 'arrow-right' -%}
+                </span>
+                {%- if section.settings.show_book and section.settings.book_label != blank -%}
+                  <a
+                    class="mg-svc-tile__btn mg-svc-tile__btn--solid"
+                    href="{{ book_url }}"
+                  >
+                    {{- section.settings.book_label | escape -}}
+                    <span class="mg-visually-hidden">: {{ title | escape }}</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- elsif request.design_mode -%}
+      <p class="mg-help">Add "Service" blocks to build the grid.</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  /*
+   * Services hub tiles: the full-photo tile (.mg-tile--photo in mg-theme.css) with a big
+   * uppercase label, the fitted price and two actions. The label is a link stretched over the
+   * whole tile (Details); Book sits above it. Mosaic: edge to edge with no gutters.
+   * Phones: one tile per row (two buttons need the width). Tablet: 2. Desktop: 3 or 4.
+   */
+  .mg-svc-tiles__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-svc-tiles--mosaic .mg-svc-tiles__grid {
+    gap: 0;
+  }
+
+  .mg-svc-tiles__item {
+    display: flex;
+    min-width: 0;
+  }
+
+  .mg-svc-tiles .mg-svc-tile {
+    position: relative;
+    flex: 1 1 auto;
+    gap: var(--mg-space-2);
+    --mg-tile-ratio: 16 / 10;
+    padding: var(--mg-space-5);
+  }
+
+  .mg-svc-tiles--mosaic .mg-svc-tile {
+    border-radius: 0;
+  }
+
+  .mg-svc-tile__title {
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: clamp(1.625rem, 6.5vw, 2rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--mg-white);
+    text-shadow: 0 1px 14px rgb(var(--mg-night-rgb) / 0.6);
+    max-width: 14ch;
+  }
+
+  .mg-svc-tile__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .mg-svc-tile__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .mg-svc-tile__link:focus-visible {
+    outline: none;
+  }
+
+  .mg-svc-tile:has(.mg-svc-tile__link:focus-visible) {
+    outline: 2px solid var(--mg-ink);
+    outline-offset: 2px;
+    box-shadow: var(--mg-red-edge);
+  }
+
+  .mg-svc-tile__price {
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    line-height: 1.35;
+    color: rgb(255 255 255 / 0.82);
+    text-shadow: 0 1px 12px rgb(var(--mg-night-rgb) / 0.6);
+  }
+
+  .mg-svc-tile__price .mg-price {
+    font-size: 1.0625rem;
+    color: var(--mg-white);
+  }
+
+  .mg-svc-tile__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mg-space-2);
+    margin-top: var(--mg-space-2);
+  }
+
+  .mg-svc-tile__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--mg-space-2);
+    min-height: var(--mg-tap);
+    padding: 0 var(--mg-space-4);
+    border-radius: var(--mg-radius-sm);
+    font-size: var(--mg-fs-micro);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background-color var(--mg-dur) var(--mg-ease),
+      border-color var(--mg-dur) var(--mg-ease),
+      color var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-svc-tile__btn .mg-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-svc-tile__btn--ghost {
+    border: 1px solid rgb(255 255 255 / 0.7);
+    color: var(--mg-white);
+    background-color: rgb(var(--mg-night-rgb) / 0.25);
+  }
+
+  .mg-svc-tile__btn--solid {
+    position: relative;
+    z-index: 2;
+    border: 1px solid var(--mg-red);
+    background-color: var(--mg-red);
+    color: var(--mg-on-red);
+  }
+
+  .mg-svc-tile__btn--solid:hover {
+    border-color: var(--mg-red-deep);
+    background-color: var(--mg-red-deep);
+  }
+
+  .mg-svc-tile__btn--solid:focus-visible {
+    outline: 2px solid var(--mg-white);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    .mg-svc-tile:hover {
+      box-shadow: var(--mg-red-edge);
+    }
+
+    .mg-svc-tile:hover .mg-tile__media img {
+      transform: scale(1.06);
+    }
+
+    .mg-svc-tile:hover .mg-svc-tile__btn--ghost {
+      border-color: var(--mg-white);
+      background-color: rgb(255 255 255 / 0.12);
+    }
+
+    .mg-svc-tile:hover .mg-svc-tile__btn--ghost .mg-icon {
+      transform: translateX(3px);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-svc-tiles__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mg-svc-tiles .mg-svc-tile {
+      --mg-tile-ratio: 5 / 4;
+      padding: var(--mg-space-6);
+    }
+
+    .mg-svc-tile__title {
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-svc-tiles__grid {
+      grid-template-columns: repeat(var(--mg-svc-tiles-cols, 3), minmax(0, 1fr));
+    }
+
+    .mg-svc-tiles[style*='--mg-svc-tiles-cols: 4'] .mg-svc-tile__title {
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+    }
+
+    .mg-svc-tiles .mg-svc-tile {
+      --mg-tile-ratio: 6 / 5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-svc-tile__btn,
+    .mg-svc-tile__btn .mg-icon {
+      transition: none;
+    }
+
+    .mg-svc-tile:hover .mg-tile__media img,
+    .mg-svc-tile:hover .mg-svc-tile__btn--ghost .mg-icon {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG service tiles",
+  "tag": "section",
+  "class": "mg-service-tiles-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Photo tiles, one per service: big label, fitted price, Details and Book. The whole tile opens the Details link."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What we fit"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Line under the heading",
+      "default": "Every job done in-house at our Dublin 12 workshop."
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Tiles per row on desktop",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "checkbox",
+      "id": "mosaic",
+      "label": "Edge to edge, no gaps",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "details_label",
+      "label": "Details label",
+      "default": "Details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_book",
+      "label": "Show Book button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "book_label",
+      "label": "Book button label",
+      "default": "Book"
+    },
+    {
+      "type": "url",
+      "id": "book_url",
+      "label": "Book link",
+      "info": "Leave blank to link to /pages/book-a-fitting. Each tile can override it."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Service",
+          "default": "CarPlay & Android Auto"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Landscape works best. Set a focal point."
+        },
+        {
+          "type": "select",
+          "id": "fallback_asset",
+          "label": "Photo to use until one is uploaded",
+          "info": "Stock mood photos are marked (stock). They set the scene and are never shown as MG's own work.",
+          "options": [
+            { "value": "mg-img-sys-carplay", "label": "CarPlay on a dash screen (stock)" },
+            { "value": "mg-img-sys-screens", "label": "Widescreen map display (stock)" },
+            { "value": "mg-img-sys-android-radio", "label": "Double-DIN head unit (stock)" },
+            { "value": "mg-img-sys-speakers", "label": "Speaker cone close-up (stock)" },
+            { "value": "mg-img-sys-subs-amps", "label": "Boot subwoofer install (stock)" },
+            { "value": "mg-img-sys-dashcam", "label": "Dash cam on a windscreen (stock)" },
+            { "value": "mg-img-sys-reverse-camera", "label": "Reversing camera view (stock)" },
+            { "value": "mg-img-sys-conversion", "label": "Tokyo street at night (stock)" },
+            { "value": "mg-img-panel-workshop", "label": "Car in a dark workshop (stock)" },
+            { "value": "mg-img-panel-promise", "label": "Hands on wiring (stock)" },
+            { "value": "mg-showroom", "label": "MG showroom" },
+            { "value": "mg-dash-radio", "label": "Dash with head unit" },
+            { "value": "mg-door-speaker", "label": "Door speaker" }
+          ],
+          "default": "mg-img-sys-carplay"
+        },
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "Text before price",
+          "default": "From"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "info": "Leave blank when there's no fixed price: the note below shows instead.",
+          "default": "€299"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Text after price",
+          "default": "fitted"
+        },
+        {
+          "type": "text",
+          "id": "price_note",
+          "label": "Note when there's no price",
+          "default": "Price on request"
+        },
+        {
+          "type": "url",
+          "id": "details_url",
+          "label": "Details link",
+          "info": "Usually the service page, for example /pages/carplay-installation."
+        },
+        {
+          "type": "url",
+          "id": "book_url",
+          "label": "Book link",
+          "info": "Leave blank to use the section's Book link."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG service tiles",
+      "category": "MG Car Audio",
+      "blocks": [
+        { "type": "service", "settings": { "title": "CarPlay & Android Auto", "fallback_asset": "mg-img-sys-carplay", "price": "€299" } },
+        { "type": "service", "settings": { "title": "Screen upgrades", "fallback_asset": "mg-img-sys-screens", "price": "" } },
+        { "type": "service", "settings": { "title": "Android radio fitting", "fallback_asset": "mg-img-sys-android-radio", "price": "€150" } },
+        { "type": "service", "settings": { "title": "Speakers & sound upgrades", "fallback_asset": "mg-img-sys-speakers", "price": "" } },
+        { "type": "service", "settings": { "title": "Subwoofers & amps", "fallback_asset": "mg-img-sys-subs-amps", "price": "" } },
+        { "type": "service", "settings": { "title": "Dash cam fitting", "fallback_asset": "mg-img-sys-dashcam", "price": "" } },
+        { "type": "service", "settings": { "title": "Reverse cameras", "fallback_asset": "mg-img-sys-reverse-camera", "price": "" } },
+        { "type": "service", "settings": { "title": "Japanese import conversions", "fallback_asset": "mg-img-sys-conversion", "price": "€450" } },
+        { "type": "service", "settings": { "title": "Repairs & radio code", "fallback_asset": "mg-img-panel-workshop", "price": "" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

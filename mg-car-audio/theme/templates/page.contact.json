@@ -1,25 +1,32 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
+    "contact": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Contact us",
+        "heading_is_h1": true,
+        "text": "Call, WhatsApp or drop in to our workshop in Ballymount, Dublin 12.",
+        "show_whatsapp": true,
+        "show_big_phone": true,
+        "big_phone_label": "Call or WhatsApp",
+        "big_phone_note": "Quickest for a quote: send your reg and a photo of your dash.",
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    },
     "form": {
       "type": "mg-quote-form",
       "settings": {
-        "background": "default",
-        "header_style": "panel",
-        "show_breadcrumb": true,
-        "heading": "Contact us",
-        "use_page_title": true,
-        "heading_is_h1": true,
-        "intro_from_page": true,
-        "intro": "Call, WhatsApp or visit our workshop in Ballymount, Dublin 12. Or send us a message and we'll come back to you.",
+        "background": "surface",
+        "header_style": "plain",
+        "show_breadcrumb": false,
+        "heading": "Send us a message",
+        "use_page_title": false,
+        "heading_is_h1": false,
+        "intro_from_page": false,
+        "intro": "Tell us about your car and what you'd like done. We'll come back to you with a price.",
         "steps_heading": "What happens next",
         "step_1_title": "We check your car",
         "step_1_text": "We look up your reg and factory screen to confirm which CarPlay, screen or audio kit suits your car.",
@@ -27,7 +34,7 @@
         "step_2_text": "One clear price for parts and fitting, sent by phone, WhatsApp or email before any work starts.",
         "step_3_title": "Book your slot",
         "step_3_text": "Pick a time that suits you. A €50 deposit holds your slot, and most installs are done in one to two hours.",
-        "show_contact": true,
+        "show_contact": false,
         "contact_label": "Prefer to talk? Call us",
         "form_heading": "Your message",
         "form_text": "Name, mobile and email are all we need. The car details help us answer faster.",
@@ -44,22 +51,10 @@
         "success_heading": "Thanks, your message is in",
         "success_text": "We'll get back to you by phone, WhatsApp or email. Need an answer sooner? Give us a call."
       }
-    },
-    "map": {
-      "type": "mg-contact-map",
-      "settings": {
-        "heading": "Visit the workshop",
-        "text": "See screens and speakers in person, or drop your car in for a fitting.",
-        "show_whatsapp": true,
-        "map_mode": "facade",
-        "facade_photo": true,
-        "dark_map": true,
-        "background": "page"
-      }
     }
   },
   "order": [
-    "form",
-    "map"
+    "contact",
+    "form"
   ]
 }

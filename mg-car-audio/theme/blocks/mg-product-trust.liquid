@@ -1,0 +1,160 @@
+{%- doc -%}
+  MG product trust row: three short reasons to buy under the buy box (fitted at the workshop,
+  the warranty, the Google rating). Values come from Theme settings > MG Car Audio: business
+  details (locality, warranty headline, review rating, count and link). Blank items are skipped.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+
+  assign fitted_text = block_settings.fitted_text | replace: '[locality]', settings.mg_locality | strip
+  assign warranty_text = settings.mg_warranty_text | strip
+  if block_settings.show_warranty == false
+    assign warranty_text = ''
+  endif
+
+  assign rating = settings.mg_review_rating | strip
+  assign review_count = settings.mg_review_count | strip
+  assign show_rating = false
+  if block_settings.show_rating and rating != blank
+    assign show_rating = true
+  endif
+-%}
+
+<div
+  class="mg-ptrust-wrap spacing-style"
+  style="{% render 'spacing-style', settings: block_settings %}"
+  {{ block.shopify_attributes }}
+>
+  <ul
+    class="mg-ptrust"
+    role="list"
+  >
+    {%- if fitted_text != blank -%}
+      <li class="mg-ptrust__item">
+        {%- render 'mg-icon', icon: 'wrench' -%}
+        <span>{{ fitted_text | escape }}</span>
+      </li>
+    {%- endif -%}
+    {%- if warranty_text != blank -%}
+      <li class="mg-ptrust__item">
+        {%- render 'mg-icon', icon: 'shield' -%}
+        <span>{{ warranty_text | escape }}</span>
+      </li>
+    {%- endif -%}
+    {%- if show_rating -%}
+      <li class="mg-ptrust__item">
+        {%- render 'mg-icon', icon: 'star' -%}
+        {%- if settings.mg_review_url != blank -%}
+          <a
+            class="mg-ptrust__link"
+            href="{{ settings.mg_review_url }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {{- rating }} on Google
+            {%- if review_count != blank %} ({{ review_count }} reviews){% endif -%}
+            <span class="mg-visually-hidden"> (opens in a new tab)</span>
+          </a>
+        {%- else -%}
+          <span>
+            {{- rating }} on Google
+            {%- if review_count != blank %} ({{ review_count }} reviews){% endif -%}
+          </span>
+        {%- endif -%}
+      </li>
+    {%- endif -%}
+  </ul>
+</div>
+
+{% stylesheet %}
+  /* Layout only; colour and type in mg-shop.css */
+  .mg-ptrust-wrap {
+    width: 100%;
+  }
+
+  .mg-ptrust {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    gap: var(--mg-space-2) var(--mg-space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-ptrust__item {
+    display: flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .mg-ptrust__item .mg-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG trust row",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Three short reasons to buy. The warranty and Google rating come from Theme settings > MG Car Audio: business details."
+    },
+    {
+      "type": "text",
+      "id": "fitted_text",
+      "label": "Fitting text",
+      "info": "[locality] is replaced with your locality (Dublin 12). Leave blank to hide.",
+      "default": "Fitted in [locality]"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_warranty",
+      "label": "Show warranty",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Google rating",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Space above",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Space below",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG trust row",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

@@ -1,15 +1,22 @@
 {%- doc -%}
-  Sticky action bar for phones (749px and narrower): Call, WhatsApp and Book (primary).
+  Phone tab bar (749px and narrower): Shop · Search · Book (primary, centre) · Call · WhatsApp.
   Rendered once per page from layout/theme.liquid, never on the password page or in print.
 
-  - Call uses "Phone (international, digits only)"; hidden when that setting is blank.
-  - WhatsApp follows "Show WhatsApp buttons" and the WhatsApp number and pre-filled message
+  - Five equal tabs, icon over a short label, 56px tall plus the home-indicator safe area.
+    Book sits in the centre (easiest thumb reach) with a filled indicator, the one primary action.
+  - Shop links to /collections/all and shows as current on collection, product and
+    collection-list pages; Book shows as current on /pages/book-a-fitting.
+  - Search opens Horizon's search modal (#search-modal) when the header has one, and falls back
+    to /search without JavaScript.
+  - Call uses "Phone (international, digits only)"; the tab is left out when that setting is
+    blank. WhatsApp follows "Show WhatsApp buttons" and the WhatsApp number and pre-filled message
     (Theme settings > MG Car Audio: business details). On product pages the product title is
     added to the message.
-  - Book links to /pages/book-a-fitting.
-  - Adds bottom padding to <body> so the bar never covers the end of the page, and slides away
-    while a Horizon drawer or dialog is open (html[scroll-lock], the menu drawer), while the
+  - Adds bottom padding to <body> so the bar never covers the end of the page. Slides away while
+    a Horizon drawer or dialog is open (cart, search, filters: html[scroll-lock]), while the
     sticky add-to-cart bar is showing, and while a form field has focus (on-screen keyboard).
+    While the menu drawer is open it stays up, above the drawer, so Call, WhatsApp and Book sit
+    at the foot of the menu.
   - Tablets and desktops get the floating WhatsApp button instead (snippets/mg-whatsapp-button).
 
   @param {object} [product] - The product object, available globally on product pages.
@@ -42,121 +49,275 @@
       endif
     endif
 
-    assign book_url = routes.root_url | append: '/pages/book-a-fitting' | replace: '//', '/'
+    assign root = routes.root_url | remove_last: '/'
+    assign shop_url = routes.all_products_collection_url
+    assign book_url = root | append: '/pages/book-a-fitting'
+
+    assign shop_current = false
+    if request.page_type == 'collection' or request.page_type == 'product' or request.page_type == 'list-collections'
+      assign shop_current = true
+    endif
+
+    assign book_current = false
+    if request.page_type == 'page' and page.handle == 'book-a-fitting'
+      assign book_current = true
+    endif
+
+    assign search_current = false
+    if request.page_type == 'search'
+      assign search_current = true
+    endif
   endif
 -%}
 
 {%- if show_bar -%}
   <nav
-    class="mg-action-bar"
-    aria-label="Call, WhatsApp or book a fitting"
+    class="mg-tabbar"
+    aria-label="Shop, search, book, call or WhatsApp"
   >
     <ul
-      class="mg-action-bar__list"
+      class="mg-tabbar__list"
       role="list"
     >
+      <li class="mg-tabbar__item">
+        <a
+          class="mg-tabbar__tab"
+          href="{{ shop_url }}"
+          {% if shop_current %}
+            aria-current="page"
+          {% endif %}
+        >
+          <span class="mg-tabbar__icon">{% render 'mg-icon', icon: 'shop' %}</span>
+          <span class="mg-tabbar__label">Shop</span>
+        </a>
+      </li>
+      <li class="mg-tabbar__item">
+        <a
+          class="mg-tabbar__tab"
+          href="{{ routes.search_url }}"
+          data-mg-tab-search
+          {% if search_current %}
+            aria-current="page"
+          {% endif %}
+        >
+          <span class="mg-tabbar__icon">{% render 'mg-icon', icon: 'search' %}</span>
+          <span class="mg-tabbar__label">Search</span>
+        </a>
+      </li>
+      <li class="mg-tabbar__item mg-tabbar__item--primary">
+        <a
+          class="mg-tabbar__tab"
+          href="{{ book_url }}"
+          {% if book_current %}
+            aria-current="page"
+          {% endif %}
+        >
+          <span class="mg-tabbar__icon">{% render 'mg-icon', icon: 'calendar' %}</span>
+          <span class="mg-tabbar__label">Book<span class="mg-visually-hidden"> a fitting</span></span>
+        </a>
+      </li>
       {%- if phone != blank -%}
-        <li class="mg-action-bar__item">
+        <li class="mg-tabbar__item">
           <a
-            class="mg-btn mg-btn--secondary mg-action-bar__btn"
+            class="mg-tabbar__tab"
             href="tel:+{{ phone }}"
           >
-            {%- render 'mg-icon', icon: 'phone' -%}
-            <span>Call</span>
-            {%- if settings.mg_phone_display != blank -%}
-              <span class="mg-visually-hidden">&nbsp;{{ settings.mg_phone_display | escape }}</span>
-            {%- endif -%}
+            <span class="mg-tabbar__icon">{% render 'mg-icon', icon: 'phone' %}</span>
+            <span class="mg-tabbar__label">
+              Call
+              {%- if settings.mg_phone_display != blank -%}
+                <span class="mg-visually-hidden">&nbsp;{{ settings.mg_phone_display | escape }}</span>
+              {%- endif -%}
+            </span>
           </a>
         </li>
       {%- endif -%}
       {%- if show_whatsapp -%}
-        <li class="mg-action-bar__item">
+        <li class="mg-tabbar__item mg-tabbar__item--wa">
           <a
-            class="mg-btn mg-btn--whatsapp mg-action-bar__btn"
+            class="mg-tabbar__tab"
             href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
             target="_blank"
             rel="noopener"
           >
-            {%- render 'mg-icon', icon: 'whatsapp' -%}
-            <span>WhatsApp</span>
-            <span class="mg-visually-hidden">(opens in a new tab)</span>
+            <span class="mg-tabbar__icon">{% render 'mg-icon', icon: 'whatsapp' %}</span>
+            <span class="mg-tabbar__label">WhatsApp<span class="mg-visually-hidden"> (opens in a new tab)</span></span>
           </a>
         </li>
       {%- endif -%}
-      <li class="mg-action-bar__item mg-action-bar__item--primary">
-        <a
-          class="mg-btn mg-btn--primary mg-action-bar__btn"
-          href="{{ book_url }}"
-        >
-          {%- render 'mg-icon', icon: 'calendar' -%}
-          <span>Book<span class="mg-visually-hidden"> a fitting</span></span>
-        </a>
-      </li>
     </ul>
   </nav>
+  <script>
+    (function () {
+      var tab = document.querySelector('.mg-tabbar [data-mg-tab-search]');
+      if (!tab) return;
+      tab.addEventListener('click', function (event) {
+        var modal = document.getElementById('search-modal');
+        if (!modal || typeof modal.showDialog !== 'function') return;
+        event.preventDefault();
+        var drawer = document.querySelector('header-drawer');
+        if (drawer && typeof drawer.close === 'function' && drawer.querySelector('details[open]')) drawer.close();
+        modal.showDialog();
+      });
+    })();
+  </script>
 {%- endif -%}
 
 {% stylesheet %}
-  .mg-action-bar {
+  .mg-tabbar {
     display: none;
   }
 
   @media screen and (max-width: 749px) {
-    .mg-action-bar {
+    :root {
+      --mg-tabbar-h: 57px; /* 56px tabs + 1px hairline */
+    }
+
+    .mg-tabbar {
       position: fixed;
       inset-inline: 0;
       bottom: 0;
       z-index: var(--mg-z-float, 7);
       display: block;
-      padding: 8px max(var(--mg-gutter, 16px), env(safe-area-inset-right, 0px))
-        calc(8px + env(safe-area-inset-bottom, 0px)) max(var(--mg-gutter, 16px), env(safe-area-inset-left, 0px));
+      padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
       border-top: 1px solid var(--mg-line);
       background-color: var(--mg-page);
+      color: var(--mg-ink-2);
     }
 
-    .mg-action-bar__list {
-      display: flex;
-      gap: 8px;
-      margin: 0;
+    @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+      .mg-tabbar {
+        background-color: rgb(var(--mg-page-rgb) / 0.88);
+        -webkit-backdrop-filter: saturate(1.4) blur(16px);
+        backdrop-filter: saturate(1.4) blur(16px);
+      }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .mg-tabbar {
+        background-color: var(--mg-page);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+    }
+
+    .mg-tabbar__list {
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+      margin: 0 auto;
       padding: 0;
+      max-width: 520px;
       list-style: none;
     }
 
-    .mg-action-bar__item {
+    .mg-tabbar__item {
       display: flex;
       margin: 0;
     }
 
-    .mg-action-bar__item--primary {
+    .mg-tabbar__tab {
+      position: relative;
+      display: flex;
       flex: 1 1 auto;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      min-width: 0;
+      min-height: 56px;
+      padding: 6px 2px 5px;
+      color: inherit;
+      font-family: var(--mg-font-ui);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
-    .mg-action-bar__btn {
-      --mg-btn-px: 12px;
-      --mg-btn-fs: 0.9375rem;
-      gap: 6px;
+    .mg-tabbar__icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 28px;
+      border-radius: var(--mg-radius-pill);
+      transition: background-color var(--mg-dur) var(--mg-ease), transform var(--mg-dur) var(--mg-ease);
     }
 
-    .mg-action-bar__item--primary .mg-action-bar__btn {
-      width: 100%;
+    .mg-tabbar__icon .mg-icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .mg-tabbar__label {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Current page: ink label, red dot above the icon */
+    .mg-tabbar__tab[aria-current='page'] {
+      color: var(--mg-ink);
+    }
+
+    .mg-tabbar__tab[aria-current='page']::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 20px;
+      height: 2px;
+      margin-left: -10px;
+      border-radius: 0 0 2px 2px;
+      background-color: var(--mg-red);
+    }
+
+    /* Book: the primary action, a filled indicator (black in light, light in dark) */
+    .mg-tabbar__item--primary .mg-tabbar__tab {
+      color: var(--mg-ink);
+    }
+
+    .mg-tabbar__item--primary .mg-tabbar__icon {
+      width: 52px;
+      background-color: var(--mg-action);
+      color: var(--mg-on-action);
+    }
+
+    .mg-tabbar__item--wa .mg-tabbar__icon {
+      color: var(--mg-whatsapp);
+    }
+
+    .mg-tabbar__tab:active .mg-tabbar__icon {
+      transform: scale(0.94);
+    }
+
+    .mg-tabbar__tab:focus-visible {
+      outline: 2px solid var(--mg-focus);
+      outline-offset: -4px;
+      border-radius: var(--mg-radius-sm);
     }
 
     /* Page content ends above the bar */
-    body:has(> .mg-action-bar) {
-      padding-bottom: calc(var(--mg-action-bar-h, 65px) + env(safe-area-inset-bottom, 0px));
-      /* The strip under the footer (seen while the bar is slid away) takes the footer band colour */
-      background-image: linear-gradient(var(--mg-band), var(--mg-band));
-      background-repeat: no-repeat;
-      background-position: bottom;
-      background-size: 100% calc(var(--mg-action-bar-h, 65px) + env(safe-area-inset-bottom, 0px));
+    body:has(> .mg-tabbar) {
+      padding-bottom: calc(var(--mg-tabbar-h) + env(safe-area-inset-bottom, 0px));
     }
 
-    /* Out of the way while a drawer, dialog, the sticky add-to-cart bar or the keyboard is up */
-    html[scroll-lock] .mg-action-bar,
-    body:has(header-drawer details.menu-open) .mg-action-bar,
-    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-action-bar,
+    /* Over the menu drawer: the drawer's own foot gets matching padding (assets/mg-horizon.css) */
+    body:has(header-drawer details.menu-open) .mg-tabbar,
+    body:has(header-drawer details[open]) .mg-tabbar {
+      z-index: calc(var(--layer-menu-drawer, 18) + 1);
+    }
+
+    /* Out of the way while a drawer or dialog other than the menu, the sticky add-to-cart bar
+       or the keyboard is up */
+    html[scroll-lock] body:not(:has(header-drawer details[open])) .mg-tabbar,
+    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-tabbar,
     body:has(:is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), textarea, select):focus)
-      .mg-action-bar {
+      .mg-tabbar {
       visibility: hidden;
       transform: translateY(100%);
     }
@@ -164,25 +325,30 @@
 
   /* Slide in and out; hiding waits for the slide before visibility flips */
   @media screen and (max-width: 749px) and (prefers-reduced-motion: no-preference) {
-    .mg-action-bar {
+    .mg-tabbar {
       transition:
         transform 0.25s var(--mg-ease),
         visibility 0s linear 0s;
     }
 
-    html[scroll-lock] .mg-action-bar,
-    body:has(header-drawer details.menu-open) .mg-action-bar,
-    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-action-bar,
+    html[scroll-lock] body:not(:has(header-drawer details[open])) .mg-tabbar,
+    body:has(sticky-add-to-cart .sticky-add-to-cart__bar[data-stuck='true']) .mg-tabbar,
     body:has(:is(input:not([type='checkbox'], [type='radio'], [type='submit'], [type='button'], [type='hidden']), textarea, select):focus)
-      .mg-action-bar {
+      .mg-tabbar {
       transition:
         transform 0.25s var(--mg-ease),
         visibility 0s linear 0.25s;
     }
   }
 
+  @media screen and (max-width: 749px) and (prefers-reduced-motion: reduce) {
+    .mg-tabbar__icon {
+      transition: none;
+    }
+  }
+
   @media print {
-    .mg-action-bar {
+    .mg-tabbar {
       display: none !important;
     }
   }

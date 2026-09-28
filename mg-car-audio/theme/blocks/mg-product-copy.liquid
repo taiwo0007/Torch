@@ -1,0 +1,186 @@
+{%- doc -%}
+  MG product copy: one part of the product description, for the product page accordions.
+
+  Product descriptions are written in parts, each under an h3 ("Why drivers choose it",
+  "What's included", "Compatibility", "Good to know", "Fitted at our Dublin 12 workshop").
+  This block shows either:
+  - "Overview": the description without the parts named in "Headings" (those get their own rows), or
+  - "Only these parts": just the parts whose h3 contains one of the "Headings" words (the h3
+    itself is dropped, since the accordion row has its own heading).
+  Matching ignores case and is a "contains" match, so "included" matches "What's included".
+  When nothing matches, the fallback text shows (or nothing, when the fallback is blank).
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+  assign description = product_resource.description | default: ''
+
+  assign keywords = block_settings.headings | downcase | split: ','
+  assign only_parts = false
+  if block_settings.mode == 'parts'
+    assign only_parts = true
+  endif
+
+  assign normalised = description | replace: '<H3', '<h3' | replace: '</H3>', '</h3>'
+  assign chunks = normalised | split: '<h3'
+
+  capture output
+    for chunk in chunks
+      if forloop.first
+        # Text before the first h3: the intro. Part of the overview only.
+        unless only_parts
+          echo chunk
+        endunless
+        continue
+      endif
+
+      assign head_and_body = chunk | split: '</h3>'
+      assign head_html = head_and_body | first
+      assign head_text = head_html | split: '>' | last | strip_html | strip | downcase
+      assign body = chunk | remove_first: head_html | remove_first: '</h3>'
+
+      assign matched = false
+      for keyword in keywords
+        assign word = keyword | strip
+        if word != blank and head_text contains word
+          assign matched = true
+          break
+        endif
+      endfor
+
+      if only_parts
+        if matched
+          echo body
+        endif
+      else
+        unless matched
+          echo '<h3' | append: chunk
+        endunless
+      endif
+    endfor
+  endcapture
+
+  assign output_text = output | strip_html | strip
+  if block_settings.extra_text != blank
+    assign has_extra = true
+  endif
+-%}
+
+{%- if output_text != blank or block_settings.fallback_text != blank or has_extra -%}
+  <div
+    class="mg-copy rte spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if output_text != blank -%}
+      {{ output }}
+    {%- elsif block_settings.fallback_text != blank -%}
+      {{ block_settings.fallback_text }}
+    {%- endif -%}
+    {%- if has_extra -%}
+      {{ block_settings.extra_text }}
+    {%- endif -%}
+  </div>
+{%- elsif request.design_mode -%}
+  <div
+    class="mg-fit-note"
+    {{ block.shopify_attributes }}
+  >
+    Nothing to show: this product's description has no matching part and the fallback text is blank.
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Layout only; type and colour in mg-shop.css */
+  .mg-copy {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mg-copy > :first-child {
+    margin-top: 0;
+  }
+
+  .mg-copy > :last-child {
+    margin-bottom: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG product copy",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows part of the product description, split at its h3 headings. Use it inside the product page accordion rows."
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Show",
+      "options": [
+        {
+          "value": "overview",
+          "label": "Overview (without the parts below)"
+        },
+        {
+          "value": "parts",
+          "label": "Only these parts"
+        }
+      ],
+      "default": "overview"
+    },
+    {
+      "type": "text",
+      "id": "headings",
+      "label": "Headings",
+      "info": "Words from the h3 headings, separated by commas. For example: included, compatibility",
+      "default": "included, compatibility, good to know, fitted at"
+    },
+    {
+      "type": "richtext",
+      "id": "fallback_text",
+      "label": "Fallback text",
+      "info": "Shown when the description has no matching part."
+    },
+    {
+      "type": "richtext",
+      "id": "extra_text",
+      "label": "Text after",
+      "info": "Always shown after the description part, for example your warranty terms."
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Space above",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Space below",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG product copy",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

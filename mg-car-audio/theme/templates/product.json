@@ -16,27 +16,25 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
-            "image_gap": 4,
-            "large_first_image": false,
+            "media_presentation": "carousel",
             "icons_style": "arrow",
-            "slideshow_controls_style": "counter",
+            "slideshow_controls_style": "thumbnails",
             "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
-            "thumbnail_width": 44,
-            "aspect_ratio": "adapt",
+            "thumbnail_position": "bottom",
+            "thumbnail_width": 64,
+            "aspect_ratio": "1",
             "constrain_to_viewport": true,
             "media_fit": "contain",
-            "media_radius": 0,
+            "media_radius": 12,
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
-            "hide_variants": true,
+            "hide_variants": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "thumbnail_radius": 8
           },
           "blocks": {}
         },
@@ -50,8 +48,8 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "details_position": "flex-start",
-            "gap": 28,
-            "sticky_details_desktop": true,
+            "gap": 20,
+            "sticky_details_desktop": false,
             "background_media": "none",
             "video_position": "cover",
             "background_image_position": "cover",
@@ -59,8 +57,8 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "padding-block-start": 24,
-            "padding-block-end": 24,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -76,7 +74,7 @@
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
                 "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
+                "gap": 8,
                 "width": "fill",
                 "custom_width": 100,
                 "width_mobile": "fill",
@@ -111,7 +109,7 @@
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
-                    "type_preset": "h3",
+                    "type_preset": "h2",
                     "font": "var(--font-body--family)",
                     "font_size": "1rem",
                     "line_height": "normal",
@@ -132,7 +130,7 @@
                   "type": "price",
                   "settings": {
                     "show_sale_price_first": true,
-                    "show_installments": true,
+                    "show_installments": false,
                     "show_tax_info": true,
                     "type_preset": "paragraph",
                     "width": "100%",
@@ -148,24 +146,24 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "review_mg": {
+                  "type": "review",
+                  "settings": {
+                    "stars_style": "shaded",
+                    "show_number": true,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left"
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
                 "text_xpVMaM",
+                "review_mg",
                 "price_tVjtKg"
               ]
-            },
-            "divider_VJhene": {
-              "type": "_divider",
-              "name": "t:names.divider",
-              "settings": {
-                "thickness": 1,
-                "corner_radius": "square",
-                "width_percent": 100,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
             },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
@@ -176,7 +174,9 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "variant_style_class": "default",
+                "selected_variant_style_class": "default"
               },
               "blocks": {}
             },
@@ -231,44 +231,245 @@
                 "whatsapp_label": "WhatsApp us",
                 "whatsapp_message": "Hi MG Car Audio, I'd like a fitting quote for: [product]. My reg is: ",
                 "hide_on_installation": true,
-                "padding-block-start": 8,
+                "padding-block-start": 0,
                 "padding-block-end": 0
               },
               "blocks": {}
             },
-            "text_aEtTtq": {
-              "type": "text",
-              "name": "t:names.product_description",
+            "mg_fit_card": {
+              "type": "mg-fit-info",
+              "name": "Will it fit (card)",
               "settings": {
-                "text": "{{ closest.product.description }}",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
+                "layout": "card",
+                "heading": "Will it fit?",
+                "max_models": 4,
+                "makes_label": "Fits",
+                "models_label": "Models",
+                "show_screen": true,
+                "screen_label": "Screen",
+                "universal_label": "Most cars",
+                "universal_text": "Fits most cars with a standard radio slot or a factory screen with wired CarPlay. Send us your reg and we'll confirm.",
+                "full_note": "",
+                "show_whatsapp": true,
+                "whatsapp_label": "Not sure? Send your reg on WhatsApp",
+                "whatsapp_message": "Hi MG Car Audio, will [product] fit my car? My reg is: ",
                 "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "mg_trust": {
+              "type": "mg-product-trust",
+              "name": "Trust row",
+              "settings": {
+                "fitted_text": "Fitted in [locality]",
+                "show_warranty": true,
+                "show_rating": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "mg_accordion": {
+              "type": "accordion",
+              "name": "Product details",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "type_preset": "h6",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 8,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
-              "blocks": {}
+              "blocks": {
+                "row_overview": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Overview",
+                    "open_by_default": true,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "copy_overview": {
+                      "type": "mg-product-copy",
+                      "settings": {
+                        "mode": "overview",
+                        "headings": "included, compatibility, good to know, fitted at, collect or have",
+                        "fallback_text": "",
+                        "extra_text": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "copy_overview"
+                  ]
+                },
+                "row_fit": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Will it fit?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "fit_full": {
+                      "type": "mg-fit-info",
+                      "name": "Will it fit (full list)",
+                      "settings": {
+                        "layout": "full",
+                        "heading": "",
+                        "max_models": 12,
+                        "makes_label": "Fits",
+                        "models_label": "Models",
+                        "show_screen": true,
+                        "screen_label": "Screen",
+                        "universal_label": "Most cars",
+                        "universal_text": "",
+                        "full_note": "Your model not listed? Many other cars take it with a different harness. Send us your reg and a photo of your screen and we'll tell you.",
+                        "show_whatsapp": true,
+                        "whatsapp_label": "Not sure? Send your reg on WhatsApp",
+                        "whatsapp_message": "Hi MG Car Audio, will [product] fit my car? My reg is: ",
+                        "padding-block-start": 0,
+                        "padding-block-end": 8
+                      },
+                      "blocks": {}
+                    },
+                    "copy_compat": {
+                      "type": "mg-product-copy",
+                      "settings": {
+                        "mode": "parts",
+                        "headings": "compatibility",
+                        "fallback_text": "",
+                        "extra_text": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "fit_full",
+                    "copy_compat"
+                  ]
+                },
+                "row_box": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "What's in the box",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "copy_box": {
+                      "type": "mg-product-copy",
+                      "settings": {
+                        "mode": "parts",
+                        "headings": "included",
+                        "fallback_text": "<p>Everything you need for your car is listed in the overview. Ask us on WhatsApp if you want to check before you order.</p>",
+                        "extra_text": "",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "copy_box"
+                  ]
+                },
+                "row_fitting": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Fitting and warranty",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "copy_fitting": {
+                      "type": "mg-product-copy",
+                      "settings": {
+                        "mode": "parts",
+                        "headings": "fitted at, good to know, collect or have",
+                        "fallback_text": "<p>We fit it at our workshop in Ballymount, Dublin 12, with a neat, factory-style finish and everything tested before you drive away. Book a slot online with a €50 deposit, which comes off your final bill.</p>",
+                        "extra_text": "<p>Every fitting comes with our workmanship warranty: if a connection or fitting we did develops a fault, bring the car back and we'll put it right free of charge. Parts we supply are covered by the maker's warranty, and we handle the claim for you. <a href=\"/pages/warranty-returns\">Warranty and returns</a></p>",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "copy_fitting"
+                  ]
+                },
+                "row_delivery": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Delivery and returns",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_delivery": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We deliver across the Republic of Ireland, or you can collect free from our Dublin 12 workshop. Fitted products and services need no delivery: we fit them on the day of your booking.</p><p>Bought online and not fitted? You have 14 days from delivery to change your mind. Items must be unused and in their original packaging. <a href=\"/pages/shipping\">Shipping and collection</a> and <a href=\"/pages/warranty-returns\">warranty and returns</a> have the details.</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_delivery"
+                  ]
+                }
+              },
+              "block_order": [
+                "row_overview",
+                "row_fit",
+                "row_box",
+                "row_fitting",
+                "row_delivery"
+              ]
             }
           },
           "block_order": [
             "group_icgrde",
-            "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "mg_trust",
             "mg_fitting_cta",
-            "text_aEtTtq"
+            "mg_fit_card",
+            "mg_accordion"
           ]
         },
         "disclosures": {
@@ -286,11 +487,12 @@
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
-        "equal_columns": false,
+        "equal_columns": true,
         "limit_details_width": false,
         "gap": 48,
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-start": 24,
+        "padding-block-end": 0,
+        "enable_sticky_add_to_cart": true
       }
     },
     "product_recommendations_qggXJq": {
@@ -300,11 +502,11 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h2>You may also like </h2>",
+            "text": "<h2>Also fits your car</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h4",
+            "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "",
             "line_height": "normal",
@@ -418,14 +620,14 @@
         "max_products": 4,
         "columns": 4,
         "mobile_columns": "2",
-        "columns_gap": 12,
-        "rows_gap": 24,
+        "columns_gap": 16,
+        "rows_gap": 16,
         "icons_style": "arrow",
         "icons_shape": "none",
         "section_width": "page-width",
-        "gap": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "gap": 20,
+        "padding-block-start": 72,
+        "padding-block-end": 24
       }
     }
   },

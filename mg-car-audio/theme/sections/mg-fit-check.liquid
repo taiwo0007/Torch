@@ -1,0 +1,396 @@
+{%- liquid
+  assign uid = 'MgFit-' | append: section.id
+  assign heading = section.settings.heading | strip
+  assign quote_url = section.settings.quote_url | default: '/pages/get-a-quote'
+  assign button_label = section.settings.button_label | strip | default: 'Check my car'
+  assign make_lines = section.settings.make_list | newline_to_br | split: '<br />'
+  assign chips_label = section.settings.chips_label | strip
+-%}
+
+<div class="mg-section mg-fit">
+  <div class="mg-container">
+    <div
+      class="mg-panel mg-fit__panel"
+      data-mg-reveal
+    >
+      <div class="mg-fit__intro">
+        <span
+          class="mg-fit__icon"
+          aria-hidden="true"
+        >
+          {%- render 'mg-icon', icon: 'car' -%}
+        </span>
+        <div class="mg-fit__copy">
+          {%- if heading != blank -%}
+            <h2
+              class="mg-fit__title"
+              id="{{ uid }}-title"
+            >
+              {{ heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-fit__text">{{ section.settings.text | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <form
+        class="mg-fit__form"
+        action="{{ quote_url }}"
+        method="get"
+        {% if heading != blank %}
+          aria-labelledby="{{ uid }}-title"
+        {% endif %}
+      >
+        <div class="mg-field mg-fit__field mg-fit__field--plate">
+          <label
+            class="mg-label"
+            for="{{ uid }}-reg"
+          >
+            {{- section.settings.plate_label | default: 'Your reg' | escape -}}
+          </label>
+          <div class="mg-plate mg-fit__plate">
+            <span
+              class="mg-plate__band"
+              aria-hidden="true"
+              >IRL</span
+            >
+            <input
+              class="mg-plate__input"
+              id="{{ uid }}-reg"
+              name="reg"
+              type="text"
+              placeholder="{{ section.settings.plate_placeholder | escape }}"
+              autocomplete="off"
+              autocapitalize="characters"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="go"
+              maxlength="12"
+            >
+          </div>
+        </div>
+
+        <div class="mg-field mg-fit__field mg-fit__field--make">
+          <label
+            class="mg-label"
+            for="{{ uid }}-make"
+          >
+            {{- section.settings.make_label | default: 'Make' | escape -}}
+            <span class="mg-label__optional">(optional)</span>
+          </label>
+          <select
+            class="mg-input mg-fit__select"
+            id="{{ uid }}-make"
+            name="make"
+          >
+            <option value="">Select make</option>
+            {%- for line in make_lines -%}
+              {%- assign make = line | strip -%}
+              {%- if make != blank -%}
+                <option value="{{ make | escape }}">{{ make | escape }}</option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+
+        <button
+          class="mg-btn mg-btn--primary mg-fit__submit"
+          type="submit"
+        >
+          {{- button_label | escape -}}
+          {%- render 'mg-icon', icon: 'arrow-right' -%}
+        </button>
+      </form>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="mg-fit__makes">
+          {%- if chips_label != blank -%}
+            <p
+              class="mg-fit__makes-label"
+              id="{{ uid }}-makes"
+            >
+              {{ chips_label | escape }}
+            </p>
+          {%- endif -%}
+          <ul
+            class="mg-chips mg-chips--bleed mg-fit__chips"
+            role="list"
+            {% if chips_label != blank %}
+              aria-labelledby="{{ uid }}-makes"
+            {% else %}
+              aria-label="Shop by car"
+            {% endif %}
+          >
+            {%- for block in section.blocks -%}
+              {%- liquid
+                assign make_name = block.settings.name | strip
+                if make_name == blank
+                  continue
+                endif
+                assign make_handle = make_name | handleize
+                assign default_make_url = '/pages/' | append: make_handle | append: '-carplay'
+                assign chip_url = block.settings.url | default: default_make_url
+              -%}
+              <li {{ block.shopify_attributes }}>
+                <a
+                  class="mg-chip"
+                  href="{{ chip_url }}"
+                >
+                  {{- make_name | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /*
+   * Fit check: a compact band, not a hero. "Not sure what fits?" with the Irish plate and an
+   * optional make, sent to the quote page as ?reg=...&make=..., plus a row of make links.
+   * Desktop: copy on the left, the form on the right, makes below. Phones: stacked.
+   */
+  .mg-fit__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-space-5);
+    border: 1px solid var(--mg-line);
+  }
+
+  .mg-fit__intro {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--mg-space-4);
+    min-width: 0;
+  }
+
+  .mg-fit__icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--mg-radius-md);
+    background-color: var(--mg-card);
+    color: var(--mg-red);
+  }
+
+  .mg-fit__icon .mg-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mg-fit__copy {
+    min-width: 0;
+  }
+
+  .mg-fit .mg-fit__title {
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--mg-ink);
+    text-wrap: balance;
+  }
+
+  .mg-fit__text {
+    max-width: 46ch;
+    margin: var(--mg-space-2) 0 0;
+    font-size: var(--mg-fs-small);
+    line-height: 1.5;
+    color: var(--mg-ink-2);
+    text-wrap: pretty;
+  }
+
+  .mg-fit__form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-space-3);
+    align-items: end;
+    min-width: 0;
+  }
+
+  .mg-fit__plate {
+    width: 100%;
+  }
+
+  .mg-fit .mg-fit__select {
+    height: 56px;
+  }
+
+  .mg-fit .mg-fit__submit {
+    --mg-btn-h: 56px;
+    white-space: nowrap;
+  }
+
+  .mg-fit__submit .mg-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mg-fit__makes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mg-space-2);
+    min-width: 0;
+  }
+
+  .mg-fit__makes-label {
+    margin: 0;
+    font-size: var(--mg-fs-micro);
+    font-weight: 500;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-fit__chips > li {
+    flex: none;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-fit__form {
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-fit__panel {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: var(--mg-space-5) var(--mg-space-7);
+      align-items: center;
+      padding: var(--mg-space-6) var(--mg-space-7);
+    }
+
+    .mg-fit__makes {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      gap: var(--mg-space-4);
+      padding-block-start: var(--mg-space-4);
+      border-block-start: 1px solid var(--mg-line);
+    }
+
+    .mg-fit__makes-label {
+      flex: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG fit check",
+  "tag": "section",
+  "class": "mg-fit-section",
+  "max_blocks": 12,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "A compact reg and make checker. It sends visitors to the quote page with their reg and make filled in, for example /pages/get-a-quote?reg=241-D-12345&make=BMW."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Not sure what fits your car?"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Send us your reg and we'll check what fits, then quote one fixed fitted price."
+    },
+    {
+      "type": "text",
+      "id": "plate_label",
+      "label": "Label above the plate",
+      "default": "Your reg"
+    },
+    {
+      "type": "text",
+      "id": "plate_placeholder",
+      "label": "Example reg inside the plate",
+      "default": "241-D-12345"
+    },
+    {
+      "type": "text",
+      "id": "make_label",
+      "label": "Label above the make",
+      "default": "Make"
+    },
+    {
+      "type": "textarea",
+      "id": "make_list",
+      "label": "Car makes",
+      "info": "One make per line. Shown in the make dropdown. Keep it the same as the quote form's list, so the make carries over.",
+      "default": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover\nOther"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Check my car"
+    },
+    {
+      "type": "url",
+      "id": "quote_url",
+      "label": "Quote page",
+      "info": "Leave blank to use /pages/get-a-quote."
+    },
+    {
+      "type": "header",
+      "content": "Make links"
+    },
+    {
+      "type": "text",
+      "id": "chips_label",
+      "label": "Text before the make links",
+      "info": "Add Make blocks to show a row of links to the car make pages.",
+      "default": "Or shop by car"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "make",
+      "name": "Make",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Make",
+          "default": "BMW"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "Leave blank to link to /pages/[make]-carplay, for example /pages/bmw-carplay."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG fit check",
+      "category": "MG Car Audio",
+      "blocks": [
+        { "type": "make", "settings": { "name": "BMW" } },
+        { "type": "make", "settings": { "name": "Audi" } },
+        { "type": "make", "settings": { "name": "Mercedes-Benz" } },
+        { "type": "make", "settings": { "name": "Volkswagen" } },
+        { "type": "make", "settings": { "name": "Toyota", "url": "/pages/get-a-quote?make=Toyota" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -2293,7 +2293,7 @@
         "type": "select",
         "id": "mg_theme_mode",
         "label": "Colour theme",
-        "info": "Auto follows each visitor's phone or computer setting. Visitors can still pick Light or Dark with the theme control.",
+        "info": "Dark is the MG look. Auto follows each visitor's phone or computer setting. Visitors can still pick Auto, Light or Dark with the theme control.",
         "options": [
           {
             "value": "auto",
@@ -2308,7 +2308,7 @@
             "label": "Dark"
           }
         ],
-        "default": "auto"
+        "default": "dark"
       },
       {
         "type": "checkbox",

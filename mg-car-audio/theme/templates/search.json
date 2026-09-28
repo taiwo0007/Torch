@@ -39,14 +39,14 @@
           "static": true,
           "settings": {
             "width": "custom",
-            "custom_width": 50
+            "custom_width": 60
           },
           "blocks": {}
         }
       },
       "settings": {
         "alignment": "flex-start",
-        "padding-block-start": 40,
+        "padding-block-start": 32,
         "padding-block-end": 0
       }
     },
@@ -64,12 +64,12 @@
             "show_swatch_label": false,
             "show_filter_label": false,
             "enable_sorting": true,
-            "enable_grid_density": true,
-            "padding-block-start": 8,
+            "enable_grid_density": false,
+            "padding-block-start": 0,
             "padding-block-end": 8,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
-            "facets_margin_bottom": 8,
+            "facets_margin_bottom": 16,
             "facets_margin_right": 20
           },
           "blocks": {}
@@ -78,7 +78,7 @@
           "type": "_product-card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 6,
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -91,9 +91,8 @@
           "blocks": {
             "product_card_gallery_cFExAi": {
               "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "square",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -105,11 +104,11 @@
               },
               "blocks": {}
             },
-            "product_title_j7qXTx": {
+            "mgcard_title": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
-                "width": "fit-content",
+                "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "paragraph",
@@ -129,9 +128,27 @@
               },
               "blocks": {}
             },
-            "price_fYkUgG": {
+            "mgcard_fit": {
+              "type": "custom-liquid",
+              "name": "Fitment line and badge",
+              "settings": {
+                "custom_liquid": "{%- liquid\n  assign p = closest.product\n  assign makes = p.metafields.custom.car_make.value\n  assign screen = p.metafields.custom.screen_size.value | strip\n  assign names = ''\n  assign universal = false\n  assign make_count = 0\n  for make in makes\n    assign make_down = make | strip | downcase\n    if make_down == 'universal'\n      assign universal = true\n    elsif make_down != blank\n      assign make_count = make_count | plus: 1\n      if make_count <= 2\n        if names != blank\n          assign names = names | append: ', '\n        endif\n        assign names = names | append: make\n      endif\n    endif\n  endfor\n  assign extra_makes = make_count | minus: 2\n  assign badge = ''\n  for tag in p.tags\n    if tag contains 'badge:'\n      assign badge = tag | remove_first: 'badge:' | strip\n      break\n    endif\n  endfor\n-%}\n{%- if names != blank or universal or screen != blank -%}\n  <p class=\"mg-card-fit\">\n    {%- if names != blank -%}\n      <span>Fits {{ names | escape }}{% if extra_makes > 0 %} +{{ extra_makes }}{% endif %}</span>\n    {%- elsif universal -%}\n      <span>Fits most cars</span>\n    {%- endif -%}\n    {%- if screen != blank -%}\n      <span>{{ screen | escape }} screen</span>\n    {%- endif -%}\n  </p>\n{%- endif -%}\n{%- if badge != blank -%}\n  <span class=\"mg-card-badge\">{{ badge | escape }}</span>\n{%- endif -%}"
+              },
+              "blocks": {}
+            },
+            "mgcard_review": {
+              "type": "review",
+              "settings": {
+                "stars_style": "shaded",
+                "show_number": true,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "mgcard_price": {
               "type": "price",
-              "name": "t:names.product_price",
               "settings": {
                 "show_sale_price_first": true,
                 "show_installments": false,
@@ -144,18 +161,29 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "padding-block-start": 0,
+                "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "mgcard_fitted": {
+              "type": "custom-liquid",
+              "name": "Fitted price line",
+              "settings": {
+                "custom_liquid": "{%- liquid\n  assign p = closest.product\n  assign fitted = p.metafields.custom.fitted_price.value | strip\n  assign product_type = p.type | strip | downcase\n-%}\n{%- if p.tags contains 'booking-deposit' -%}\n  <p class=\"mg-card-fitted\">Comes off your final bill</p>\n{%- elsif product_type == 'installation' -%}\n  <p class=\"mg-card-fitted mg-card-fitted--service\">Fitted at our {{ settings.mg_locality | default: 'Dublin 12' | escape }} workshop</p>\n{%- elsif fitted != blank -%}\n  <p class=\"mg-card-fitted\">or <strong>{{ fitted | escape }}</strong> fitted</p>\n{%- endif -%}"
               },
               "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_cFExAi",
-            "product_title_j7qXTx",
-            "price_fYkUgG"
+            "mgcard_title",
+            "mgcard_fit",
+            "mgcard_review",
+            "mgcard_price",
+            "mgcard_fitted"
           ]
         }
       },
@@ -164,13 +192,13 @@
         "product_card_size": "medium",
         "mobile_product_card_size": "small",
         "product_grid_width": "centered",
-        "full_width_on_mobile": true,
+        "full_width_on_mobile": false,
         "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
+        "columns_gap_vertical": 16,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 24,
+        "padding-block-end": 48
       }
     }
   },

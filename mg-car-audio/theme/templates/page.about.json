@@ -1,0 +1,294 @@
+{
+  "sections": {
+    "story": {
+      "type": "mg-about-story",
+      "blocks": {
+        "stat_rating": {
+          "type": "stat",
+          "settings": {
+            "source": "rating",
+            "value": "4.9★",
+            "label": "Google rating"
+          }
+        },
+        "stat_reviews": {
+          "type": "stat",
+          "settings": {
+            "source": "count",
+            "value": "57",
+            "label": "Google reviews"
+          }
+        },
+        "stat_makes": {
+          "type": "stat",
+          "settings": {
+            "source": "custom",
+            "value": "19+",
+            "label": "Makes we fit"
+          }
+        },
+        "stat_workshop": {
+          "type": "stat",
+          "settings": {
+            "source": "custom",
+            "value": "D12",
+            "label": "Ballymount workshop"
+          }
+        }
+      },
+      "block_order": [
+        "stat_rating",
+        "stat_reviews",
+        "stat_makes",
+        "stat_workshop"
+      ],
+      "settings": {
+        "heading": "Ireland's CarPlay and car audio specialist",
+        "heading_is_h1": true,
+        "text": "<p>At MG Car Audio we make the car you already love feel brand new inside. From Apple CarPlay and Android Auto on your factory screen to widescreen upgrades and premium sound, we bring the latest in-car technology to your dashboard with a clean, factory-quality finish.</p><p>We specialise in CarPlay and screen installations for <strong>BMW and Mercedes-Benz</strong>, and we upgrade Audi, Volkswagen and all major makes too.</p>",
+        "fallback_asset": "mg-showroom",
+        "image_side": "left",
+        "background": "page",
+        "button_label": "Get a quote",
+        "button_url": "/pages/get-a-quote",
+        "button_2_label": "Our services",
+        "button_2_url": "/pages/services"
+      }
+    },
+    "beliefs": {
+      "type": "mg-about-story",
+      "settings": {
+        "heading": "Every drive should feel like a concert",
+        "heading_is_h1": false,
+        "text": "<p>We're a Dublin car audio and in-car technology team dedicated to one thing: a better drive. Our range includes trusted brands such as JBL and Harman Kardon.</p><p><strong>Quality you can see and hear.</strong> Clear product information, honest advice and installations tailored to your car.</p><p><strong>You come first.</strong> We keep improving what we offer so our products and service don't just meet your expectations, they exceed them.</p>",
+        "fallback_asset": "mg-bmw-carplay-screen",
+        "image_side": "right",
+        "background": "surface",
+        "button_label": "",
+        "button_2_label": ""
+      }
+    },
+    "promise": {
+      "type": "mg-promise",
+      "blocks": {
+        "item_check": {
+          "type": "item",
+          "settings": {
+            "icon": "car",
+            "title": "Compatibility check",
+            "text": "from your reg"
+          }
+        },
+        "item_finish": {
+          "type": "item",
+          "settings": {
+            "icon": "wrench",
+            "title": "OEM-style finish",
+            "text": "with neat, hidden wiring"
+          }
+        },
+        "item_controls": {
+          "type": "item",
+          "settings": {
+            "icon": "screen",
+            "title": "Factory controls kept",
+            "text": "where possible"
+          }
+        },
+        "item_test": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "Full test",
+            "text": "before you drive away"
+          }
+        },
+        "item_warranty": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Workmanship warranty",
+            "text": "on every fitting"
+          }
+        },
+        "item_deposit": {
+          "type": "item",
+          "settings": {
+            "icon": "calendar",
+            "title": "€50 deposit",
+            "text": "secures your slot"
+          }
+        }
+      },
+      "block_order": [
+        "item_check",
+        "item_finish",
+        "item_controls",
+        "item_test",
+        "item_warranty",
+        "item_deposit"
+      ],
+      "settings": {
+        "heading": "What's in every MG fit?",
+        "text": "How we fit, test and stand behind every job at our Dublin 12 workshop.",
+        "button_label": "",
+        "panel": "warm",
+        "image_fallback": "mg-img-panel-promise"
+      }
+    },
+    "reviews": {
+      "type": "mg-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "Fantastic job adding Apple CarPlay on my BMW, all completed within the hour and very tidy work. Highly recommended.",
+            "author": "Adrian F.",
+            "car": "BMW",
+            "job": "Apple CarPlay"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "Brilliant service from start to finish. They installed Apple CarPlay into my car & it works perfectly, the staff were really nice and helpful and the garage was kept very neat & tidy.",
+            "author": "Kelvin T.",
+            "car": "",
+            "job": "Apple CarPlay"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I went in to MG Cars Audio for a carplay activation on my 2017 BMW 330e, the guys were very friendly, fast turnaround, very honest guys.",
+            "author": "Stefan B.",
+            "car": "2017 BMW 330e",
+            "job": "CarPlay activation"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I brought my Japanese import BMW 530e over to the guys to have Apple CarPlay installed.",
+            "author": "Karl S.",
+            "car": "BMW 530e (Japanese import)",
+            "job": "Apple CarPlay"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "Brilliant job done on car radio and reverse camera, top quality, expertly done, friendly staff. Recommended.",
+            "author": "Peter M.",
+            "car": "",
+            "job": "Radio and reverse camera"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I had a small issue with my new car play screen and they were directly there to help me. The day after I went and in 30 min they replaced everything.",
+            "author": "Charles D.",
+            "car": "",
+            "job": "CarPlay screen"
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I needed to upgrade the sound system in my car. I called in to them and met Monica who runs the place. We spoke about what I wanted to achieve and came up with a plan.",
+            "author": "Ken K.",
+            "car": "",
+            "job": "Sound system upgrade"
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I recently had a new radio installed in my VW MK7 by MG Car Audio.",
+            "author": "Pushkar D.",
+            "car": "VW Golf MK7",
+            "job": "New radio"
+          }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "I went to 3-4 different garages to fix my multimedia system in Audi and no one could do it. MG CAR AUDIO fixed my screen in no time. They were HONEST & fixed my multimedia system.",
+            "author": "Hajer D.",
+            "car": "Audi",
+            "job": "Multimedia screen repair"
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "fallback": "none",
+            "rating": 5,
+            "text": "Had a car radio upgrade from this garage. Have to say the quality and fitting was second to none. Very friendly, helpful and well priced.",
+            "author": "Alan C.",
+            "car": "",
+            "job": "Car radio upgrade"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_9",
+        "review_2",
+        "review_10",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8"
+      ],
+      "settings": {
+        "heading": "What Dublin drivers say",
+        "text": "",
+        "show_rating": true,
+        "reviews_link_label": "See all reviews",
+        "show_placeholder_note": false,
+        "background": "surface"
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": false,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "story",
+    "beliefs",
+    "promise",
+    "reviews",
+    "visit"
+  ]
+}

@@ -6,22 +6,22 @@
         "fact_1": {
           "type": "fact",
           "settings": {
-            "icon": "clock",
-            "text": "Most fits take 1 to 2 hours"
+            "icon": "camera",
+            "text": "Reverse and dash cams"
           }
         },
         "fact_2": {
           "type": "fact",
           "settings": {
             "icon": "screen",
-            "text": "Wired and wireless"
+            "text": "On your own screen"
           }
         },
         "fact_3": {
           "type": "fact",
           "settings": {
-            "icon": "shield",
-            "text": "Factory-style finish"
+            "icon": "wrench",
+            "text": "Hidden wiring"
           }
         },
         "fact_4": {
@@ -43,26 +43,26 @@
         "breadcrumb_parent_label": "Services",
         "breadcrumb_parent_url": "/pages/services",
         "breadcrumb_schema": true,
-        "heading": "CarPlay and Android Auto fitting in Dublin",
+        "heading": "Reverse camera and dash cam fitting",
         "title_style": "caps",
-        "intro": "Maps, music, calls and messages on your car's own screen. Wired or wireless, fitted at our Dublin 12 workshop with your factory features kept.",
+        "intro": "HD reversing cameras on your factory or aftermarket screen, and dash cams hard-wired with no trailing cables.",
         "show_rating": true,
         "price_prefix": "From",
-        "price": "€299",
+        "price": "€399",
         "price_suffix": "fitted",
-        "duration": "About 1 hour",
-        "price_note": "BMW Android Auto (iDrive 7). BMW Apple CarPlay €350. Other cars priced from your reg.",
+        "duration": "",
+        "price_note": "Reverse camera supplied and fitted: Honda from €399. Dash cams priced on request.",
         "primary_label": "Book a fitting",
         "primary_url": "/pages/book-a-fitting",
         "quote_label": "Get a quote",
         "quote_url": "/pages/get-a-quote",
-        "quote_service": "CarPlay",
+        "quote_service": "camera",
         "show_whatsapp": true,
         "whatsapp_label": "WhatsApp us",
-        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or Android Auto. My reg is: ",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for a camera fitting. My reg is: ",
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
-        "fallback_image": "mg-img-sys-carplay.webp"
+        "fallback_image": "mg-img-sys-reverse-camera.webp"
       }
     },
     "fit": {
@@ -74,7 +74,7 @@
             "title": "Which cars we fit",
             "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
             "chip_links": true,
-            "chip_service": "CarPlay",
+            "chip_service": "camera",
             "note": "Not listed? Most makes and imports are covered: tap your make or send us your reg.",
             "link_label": "Check your car",
             "link_url": "/pages/get-a-quote"
@@ -84,43 +84,52 @@
           "type": "included",
           "settings": {
             "title": "What's included",
-            "items": "Compatibility check from your reg and a photo of your dash\nInterface matched to your car's screen and system\nWired or wireless CarPlay and Android Auto, set up and paired\nMicrophone fitted for Siri, Google Assistant and calls\nFactory screen, controls and features kept wherever possible\nFull function test and a walkthrough before you drive away",
+            "items": "Camera matched to your car and screen\nSwitches on when you select reverse\nDash cams hard-wired to the fuse box, no trailing cables\nWiring hidden behind the trim\nFull test with you before you drive away",
             "show_warranty": true
           }
         },
         "price_1": {
           "type": "price_row",
           "settings": {
-            "label": "BMW Apple CarPlay",
-            "price": "€350",
-            "note": "Factory iDrive screen",
-            "url": "/products/carplay-installation-bmw"
+            "label": "Reverse camera, Honda",
+            "price": "€399",
+            "note": "Supplied and fitted",
+            "url": "/products/reverse-camera-installation"
           }
         },
         "price_2": {
           "type": "price_row",
           "settings": {
-            "label": "BMW Android Auto (iDrive 7)",
-            "price": "€299",
-            "note": "About 1 hour",
-            "url": "/products/android-auto-installation-bmw-id7"
+            "label": "Reverse camera, Volkswagen",
+            "price": "€650",
+            "note": "Supplied and fitted",
+            "url": "/products/reverse-camera-installation"
           }
         },
         "price_3": {
           "type": "price_row",
           "settings": {
-            "label": "BMW iDrive 7 video in motion",
-            "price": "€149",
-            "note": "iDrive 7 (ID7) systems",
-            "url": "/products/bmw-idrive7-video-in-motion"
+            "label": "Reverse camera, Audi",
+            "price": "€699",
+            "note": "Supplied and fitted",
+            "url": "/products/reverse-camera-installation"
           }
         },
         "price_4": {
           "type": "price_row",
           "settings": {
-            "label": "Other makes",
+            "label": "Reverse camera, BMW",
+            "price": "€750",
+            "note": "Supplied and fitted",
+            "url": "/products/reverse-camera-installation"
+          }
+        },
+        "price_5": {
+          "type": "price_row",
+          "settings": {
+            "label": "Dash cam, hard-wired",
             "price": "On request",
-            "note": "Priced from your reg"
+            "note": "Front or front and rear"
           }
         }
       },
@@ -130,11 +139,12 @@
         "price_1",
         "price_2",
         "price_3",
-        "price_4"
+        "price_4",
+        "price_5"
       ],
       "settings": {
         "heading": "Fixed prices, fitted properly",
-        "intro": "Tap your make to start a quote. Factory screen or a full radio upgrade, we'll recommend what suits your car.",
+        "intro": "Tap your make to start a quote.",
         "layout": "sidebar",
         "background": "page",
         "show_card": true,
@@ -146,11 +156,11 @@
         "card_button_url": "/pages/book-a-fitting",
         "card_show_whatsapp": true,
         "card_whatsapp_label": "WhatsApp us",
-        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for CarPlay or Android Auto. My reg is: ",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for a camera fitting. My reg is: ",
         "card_show_contact": false,
         "output_schema": true,
-        "schema_name": "Apple CarPlay and Android Auto installation",
-        "schema_description": "Wired and wireless Apple CarPlay and Android Auto installation in Dublin 12, on factory screens or with a new screen, with an OEM-style finish on BMW, Audi, Mercedes-Benz, Volkswagen and most other makes."
+        "schema_name": "Reverse camera and dash cam fitting",
+        "schema_description": "Reverse camera and dash cam installation in Dublin 12, on factory or aftermarket screens, with hidden wiring."
       }
     },
     "jobs": {
@@ -159,28 +169,28 @@
         "job_1": {
           "type": "image",
           "settings": {
-            "fallback": "bmw-carplay",
-            "system": "carplay",
-            "car_label": "BMW",
-            "caption": "wireless CarPlay on the iDrive screen"
+            "fallback": "none",
+            "system": "cameras",
+            "car_label": "Your car",
+            "caption": "reverse camera fitted"
           }
         },
         "job_2": {
           "type": "image",
           "settings": {
-            "fallback": "audi-carplay",
-            "system": "carplay",
-            "car_label": "Audi",
-            "caption": "CarPlay on the factory screen"
+            "fallback": "none",
+            "system": "cameras",
+            "car_label": "Your car",
+            "caption": "dash cam hard-wired"
           }
         },
         "job_3": {
           "type": "image",
           "settings": {
-            "fallback": "dash-radio",
-            "system": "radios",
-            "car_label": "Radio upgrade",
-            "caption": "new head unit fitted"
+            "fallback": "none",
+            "system": "cameras",
+            "car_label": "Your car",
+            "caption": "camera view on the factory screen"
           }
         }
       },
@@ -197,7 +207,8 @@
         "layout": "strip",
         "show_filters": false,
         "background": "surface"
-      }
+      },
+      "disabled": true
     },
     "faq": {
       "type": "mg-faq",
@@ -205,48 +216,32 @@
         "q_1": {
           "type": "question",
           "settings": {
-            "question": "Will CarPlay work on my car's original screen?",
-            "answer": "<p>In most cases, yes. We fit an interface so Apple CarPlay and Android Auto show on the original display, and your factory menus are still there when you want them. If your car has an older radio or no screen, we'll recommend a touchscreen upgrade instead.</p>"
+            "question": "Will the camera show on my factory screen?",
+            "answer": "<p>On most cars with a screen, yes. We match the camera and interface to your car.</p>"
           }
         },
         "q_2": {
           "type": "question",
           "settings": {
-            "question": "Does it work with Android phones as well as iPhone?",
-            "answer": "<p>Yes. We fit Apple CarPlay for iPhone and Android Auto for Android phones, wired or wireless. Most systems we fit support both, so everyone who drives the car can connect.</p>"
+            "question": "What does hard-wired mean for a dash cam?",
+            "answer": "<p>We power the camera from the fuse box and hide the cable behind the trim, so nothing trails across the dash and it starts with the car.</p>"
           }
         },
         "q_3": {
           "type": "question",
           "settings": {
-            "question": "How much does it cost?",
-            "answer": "<p>BMW Apple CarPlay is <strong>€350</strong> fitted and BMW Android Auto on iDrive 7 is <strong>€299</strong>. Other makes depend on the screen and system in your car, so send us your reg for a fixed price before you book.</p>"
-          }
-        },
-        "q_4": {
-          "type": "question",
-          "settings": {
-            "question": "How long does the fitting take?",
-            "answer": "<p>Most CarPlay and Android Auto fits take one to two hours. BMW Android Auto on iDrive 7 takes about an hour.</p>"
-          }
-        },
-        "q_5": {
-          "type": "question",
-          "settings": {
-            "question": "Will I keep my steering wheel controls and reverse camera?",
-            "answer": "<p>Wherever possible, yes. If anything on your car can't be kept, we'll tell you before you book, not after.</p>"
+            "question": "How much is a reverse camera?",
+            "answer": "<p>Supplied and fitted: Honda <strong>€399</strong>, Volkswagen <strong>€650</strong>, Audi <strong>€699</strong>, BMW <strong>€750</strong>. Other makes on request.</p>"
           }
         }
       },
       "block_order": [
         "q_1",
         "q_2",
-        "q_3",
-        "q_4",
-        "q_5"
+        "q_3"
       ],
       "settings": {
-        "heading": "CarPlay and Android Auto questions",
+        "heading": "Camera questions",
         "text": "What drivers ask us before booking.",
         "show_contact": true,
         "contact_heading": "Still have a question?",
@@ -262,35 +257,17 @@
         "text_1": {
           "type": "text",
           "settings": {
-            "title": "Factory screen or full upgrade",
-            "content": "<p>We fit Apple CarPlay and Android Auto to a wide range of cars. Whether your car has a factory screen or needs a complete radio upgrade, we bring your phone's apps to your dash: Google Maps, Apple Maps, Waze, Spotify, WhatsApp, calls and messages.</p><p>Every fit keeps an <strong>OEM-style look and your original features wherever possible</strong>.</p>",
+            "title": "Safer parking, a record of every drive",
+            "content": "<p>A reversing camera makes tight spaces easier, and a dash cam keeps a record if something happens on the road. We fit both with the wiring out of sight.</p>",
             "use_page_content": false
-          }
-        },
-        "text_2": {
-          "type": "text",
-          "settings": {
-            "title": "Wired or wireless",
-            "content": "<p>Wired CarPlay starts when you plug your phone in. Wireless connects a few seconds after you start the car, so your phone can stay in your pocket. We fit both, with quality parts that last.</p>",
-            "use_page_content": false
-          }
-        },
-        "benefits": {
-          "type": "benefits",
-          "settings": {
-            "title": "What you get on the road",
-            "items": "Apple Maps, Google Maps and Waze\nSpotify, Apple Music and other apps\nHands-free calls and messages\nSiri and Google Assistant voice control",
-            "icon": "check"
           }
         }
       },
       "block_order": [
-        "text_1",
-        "text_2",
-        "benefits"
+        "text_1"
       ],
       "settings": {
-        "heading": "About CarPlay and Android Auto retrofits",
+        "heading": "About camera fitting",
         "intro": "",
         "layout": "stacked",
         "background": "page",

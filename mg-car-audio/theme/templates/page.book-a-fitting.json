@@ -56,7 +56,11 @@
         "show_call": true,
         "call_prefix": "Prefer to talk? Call",
         "fallback_image": "mg-img-hero-1.webp",
-        "show_rating": true
+        "show_rating": true,
+        "title_style": "caps",
+        "quote_label": "Get a quote first",
+        "quote_url": "/pages/get-a-quote",
+        "duration": ""
       }
     },
     "how_it_works": {

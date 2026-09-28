@@ -1,0 +1,281 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "speaker",
+            "text": "Speakers, subs and amps"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "wrench",
+            "text": "Fitted properly"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "award",
+            "text": "JBL and Harman Kardon"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/pages/services",
+        "breadcrumb_schema": true,
+        "heading": "Speaker and sound upgrades in Dublin",
+        "title_style": "caps",
+        "intro": "Clearer vocals and tighter bass from quality speakers, subwoofers and amplifiers, fitted properly in your car.",
+        "show_rating": true,
+        "price_prefix": "From",
+        "price": "",
+        "price_suffix": "fitted",
+        "duration": "",
+        "price_note": "Price on request: tell us your car and what you listen to.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "quote_service": "Speaker upgrade",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for a sound upgrade. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-img-sys-speakers.webp"
+      }
+    },
+    "fit": {
+      "type": "mg-service-details",
+      "blocks": {
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Which cars we fit",
+            "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
+            "chip_links": true,
+            "chip_service": "Speaker upgrade",
+            "note": "Not listed? Most makes and imports are covered: tap your make or send us your reg.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "A chat about what you listen to and your budget\nSpeakers matched to your door and dash sizes\nSubwoofer and amplifier sized for your car\nClean power wiring, fused and hidden\nSound tuned and tested with you before you drive away",
+            "show_warranty": true
+          }
+        },
+        "price_1": {
+          "type": "price_row",
+          "settings": {
+            "label": "Speaker upgrade, fitted",
+            "price": "On request",
+            "note": "Front, rear or full set"
+          }
+        },
+        "price_2": {
+          "type": "price_row",
+          "settings": {
+            "label": "Subwoofer, fitted",
+            "price": "On request"
+          }
+        },
+        "price_3": {
+          "type": "price_row",
+          "settings": {
+            "label": "Amplifier, fitted",
+            "price": "On request"
+          }
+        }
+      },
+      "block_order": [
+        "makes",
+        "included",
+        "price_1",
+        "price_2",
+        "price_3"
+      ],
+      "settings": {
+        "heading": "Fixed prices, fitted properly",
+        "intro": "Tap your make to start a quote. We will suggest a set that suits your car and budget.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fixed prices, fitted at our unit in Ballymount, Dublin 12. Send us your reg and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/pages/book-a-fitting",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for a sound upgrade. My reg is: ",
+        "card_show_contact": false,
+        "output_schema": true,
+        "schema_name": "Car speaker and sound upgrades",
+        "schema_description": "Car speaker, subwoofer and amplifier upgrades fitted in Dublin 12, with brands including JBL and Harman Kardon."
+      }
+    },
+    "jobs": {
+      "type": "mg-gallery",
+      "blocks": {
+        "job_1": {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "system": "sound",
+            "car_label": "Speaker upgrade",
+            "caption": "front door speakers"
+          }
+        },
+        "job_2": {
+          "type": "image",
+          "settings": {
+            "fallback": "speaker-pair",
+            "system": "sound",
+            "car_label": "Component set",
+            "caption": "matched speaker pair"
+          }
+        },
+        "job_3": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "system": "other",
+            "car_label": "Our showroom",
+            "caption": "speakers on demo in Dublin 12"
+          }
+        }
+      },
+      "block_order": [
+        "job_1",
+        "job_2",
+        "job_3"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "layout": "strip",
+        "show_filters": false,
+        "background": "surface"
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need an amplifier?",
+            "answer": "<p>Not always. Good speakers make a big difference on their own. We will tell you if an amplifier is worth it for your car and the sound you want.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I keep my factory radio?",
+            "answer": "<p>Usually, yes. Most speaker and subwoofer upgrades work with the original radio.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Which brands do you fit?",
+            "answer": "<p>Our range includes trusted brands such as JBL and Harman Kardon.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3"
+      ],
+      "settings": {
+        "heading": "Sound upgrade questions",
+        "text": "What drivers ask us before booking.",
+        "show_contact": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
+        "output_faq_schema": true,
+        "show_group_nav": false,
+        "background": "page"
+      }
+    },
+    "about": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Every drive should sound better",
+            "content": "<p>Factory speakers are often the weakest part of a car. We upgrade speakers, add subwoofers and amplifiers, and fit them so they sound clear and look tidy.</p>",
+            "use_page_content": false
+          }
+        }
+      },
+      "block_order": [
+        "text_1"
+      ],
+      "settings": {
+        "heading": "About sound upgrades",
+        "intro": "",
+        "layout": "stacked",
+        "background": "page",
+        "show_card": false,
+        "sticky_card": false,
+        "card_heading": "",
+        "card_text": "",
+        "deposit_text": "",
+        "card_button_label": "",
+        "card_show_whatsapp": false,
+        "card_show_contact": false,
+        "output_schema": false
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "fit",
+    "jobs",
+    "faq",
+    "about",
+    "visit"
+  ]
+}

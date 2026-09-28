@@ -1,1 +1,835 @@
-/* MG shop styles: collection, product page, product cards, cart. Owned by the shop task. */
+/*
+ * MG shop styles: product cards, collection and search pages, product page, cart drawer.
+ * Owned by the shop task. Loaded after mg-horizon.css (snippets/stylesheets.liquid), so it
+ * extends the Horizon polish there. Tokens only (mg-theme.css), both schemes, mobile first.
+ *
+ * 1. Product cards        (collection, search, product lists, recommendations)
+ * 2. Collection + search  (toolbar, sticky filter pill, empty states, collection list tiles)
+ * 3. Product page         (gallery, buy box, radio-card variants, MG blocks, accordions)
+ * 4. Sticky add to cart
+ * 5. Cart drawer
+ * 6. Reduced motion
+ */
+
+/* =====================================================================
+ * 1. Product cards
+ * The card itself (edge, radius, hover lift) comes from mg-horizon.css §4.
+ * ===================================================================== */
+
+/* Blocks that print nothing (custom liquid with no fitment, no reviews) take no gap */
+product-card .product-grid__card > div:not(:has(*)) {
+  display: none;
+}
+
+/* The badge is placed over the photo */
+product-card .product-grid__card:has(.mg-card-badge) {
+  position: relative;
+}
+
+/* Photos sit on a quiet panel; product shots are usually cut out on white, so contain them */
+product-card .card-gallery :is(img, .product-media img) {
+  object-fit: contain;
+}
+
+/* Title: two lines at most, so rows of cards line up */
+product-card [ref='productTitleLink'] .text-block > * {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+@media screen and (min-width: 750px) {
+  product-card [ref='productTitleLink'] .text-block > * {
+    font-size: 1rem;
+  }
+}
+
+@media (hover: hover) {
+  product-card:hover [ref='productTitleLink'] .text-block > * {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+}
+
+/* Fitment line: "Fits BMW, Audi +2", "10.25" screen" */
+.mg-card-fit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px var(--mg-space-2);
+  margin: 0;
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-micro);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--mg-ink-2);
+}
+
+.mg-card-fit > span + span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mg-space-2);
+}
+
+.mg-card-fit > span + span::before {
+  content: '';
+  width: 1px;
+  height: 0.9em;
+  background-color: var(--mg-line-strong);
+}
+
+/* Price: bold, a touch bigger than the title */
+product-card product-price .price {
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+/* "or €350 fitted" / "Fitted at our Dublin 12 workshop" */
+.mg-card-fitted {
+  margin: 0;
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-micro);
+  line-height: 1.35;
+  color: var(--mg-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.mg-card-fitted strong {
+  font-weight: 600;
+  color: var(--mg-red-ink);
+}
+
+.mg-card-fitted--service::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  background-color: var(--mg-red);
+  vertical-align: 0.1em;
+}
+
+/* Custom badge from a product tag "badge:Fitted in 1 hr", top left over the photo */
+.mg-card-badge {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: calc(var(--mg-card-pad, 8px) + 8px);
+  inset-inline-start: calc(var(--mg-card-pad, 8px) + 8px);
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: var(--mg-radius-xs);
+  background-color: var(--mg-action);
+  color: var(--mg-on-action);
+  font-family: var(--mg-font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+/* A Horizon badge (Sale, Sold out) is already top left: sit under it */
+product-card:has(.product-badges__badge) .mg-card-badge {
+  inset-block-start: calc(var(--mg-card-pad, 8px) + 40px);
+}
+
+/* Horizon badges: Sale in MG red, Sold out quiet */
+product-card .product-badges .product-badges__badge {
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: var(--mg-radius-xs);
+}
+
+product-card .product-badges .color-custom-badge-sale {
+  --color-background: var(--mg-red);
+  --color: var(--mg-on-red);
+  background-color: var(--mg-red);
+  color: var(--mg-on-red);
+}
+
+/* Sold out cards stay readable (not RM's half-transparent card) */
+product-card:has(.color-custom-badge-sold-out) .card-gallery img {
+  opacity: 0.6;
+}
+
+/* Stars on cards only when a product has reviews (Horizon prints nothing otherwise) */
+product-card .rating-wrapper {
+  font-size: var(--mg-fs-micro);
+}
+
+/* =====================================================================
+ * 2. Collection and search pages
+ * ===================================================================== */
+
+/* Toolbar: count, sort and filter chips on one calm row with a hairline under it */
+@media screen and (min-width: 750px) {
+  .product-grid-container .facets-block-wrapper--horizontal .facets--horizontal {
+    padding-block-end: var(--mg-space-3);
+    border-bottom: 1px solid var(--mg-line);
+  }
+}
+
+.product-grid-container .products-count-wrapper {
+  font-size: var(--mg-fs-small);
+  color: var(--mg-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Active filter pills */
+.product-grid-container .facets__form .pills__pill,
+.product-grid-container .facets-remove .pills__pill {
+  border-radius: var(--mg-radius-sm);
+  font-family: var(--mg-font-ui);
+  font-weight: 500;
+}
+
+/* Phones: "Filter & sort" as a pill that sticks to the top of the screen while the grid scrolls
+   (the header hides on scroll down and covers it when it comes back) */
+@media screen and (max-width: 749px) {
+  .product-grid-container .facets-toggle {
+    position: sticky;
+    z-index: 3;
+    inset-block-start: 0;
+    height: auto;
+    margin-block-end: var(--mg-space-3);
+    padding-block: var(--mg-space-2);
+    padding-inline: 0;
+    background: linear-gradient(var(--mg-page) 70%, rgb(var(--mg-page-rgb) / 0));
+  }
+
+  .product-grid-container .facets-toggle .facets-toggle__button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-height: var(--mg-tap);
+    padding-inline: var(--mg-space-4) var(--mg-space-5);
+    border: 1px solid var(--mg-action);
+    border-radius: var(--mg-radius-pill);
+    background-color: var(--mg-action);
+    color: var(--mg-on-action);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  /* Generated text is part of the button's accessible name: "Filter & sort" */
+  .product-grid-container .facets-toggle .facets-toggle__button::after {
+    content: '\00a0& sort';
+    order: 1;
+  }
+
+  .product-grid-container .facets-toggle .facets-toggle__button .filter-count-bubble {
+    order: 2;
+  }
+
+  .product-grid-container .facets-toggle .facets-toggle__button .svg-wrapper {
+    color: currentcolor;
+  }
+}
+
+/* Filter drawer (phones and "More filters"): MG drawer, 44px rows */
+.facets--drawer .facets__summary {
+  min-height: var(--mg-tap);
+  color: var(--mg-ink);
+}
+
+.facets--drawer .facets__label {
+  color: var(--mg-ink);
+}
+
+/* Filtered to nothing (Horizon's own state): a quiet card, not a big heading */
+.main-collection-grid__empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--mg-space-2);
+  margin-block: var(--mg-space-5);
+  padding: var(--mg-space-6) var(--mg-space-5);
+  border: 1px dashed var(--mg-line-strong);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-band);
+  color: var(--mg-ink-2);
+  text-align: center;
+}
+
+.main-collection-grid__empty .main-collection-grid__empty-title {
+  margin: 0;
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-h3);
+  font-weight: 600;
+  color: var(--mg-ink);
+}
+
+.main-collection-grid__empty p {
+  margin: 0;
+}
+
+.main-collection-grid__empty a {
+  color: var(--mg-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+/* A collection with no products at all: the MG header shows its own empty state */
+body:has(.mg-ch-empty) results-list.product-grid-container {
+  display: none;
+}
+
+
+/* Collection list (/collections): photo tiles with a big bold label, like the home system grid */
+.collection-card {
+  --mg-tile-radius: var(--mg-radius-md);
+}
+
+.collection-card :is(.collection-card__image, .resource-image) {
+  overflow: hidden;
+  border-radius: var(--mg-tile-radius);
+  background-color: var(--mg-night);
+}
+
+.collection-card .collection-card__image img {
+  transition: transform var(--mg-dur-slow) var(--mg-ease-out);
+}
+
+@media (hover: hover) {
+  .collection-card:hover .collection-card__image img {
+    transform: scale(1.04);
+  }
+}
+
+/* No collection image yet: a night photo instead of Horizon's apparel drawing */
+.collection-card .collection-card__image--placeholder {
+  background:
+    linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.92), rgb(var(--mg-night-rgb) / 0.35)),
+    url('mg-img-hero-3.webp') center / cover no-repeat,
+    var(--mg-night);
+}
+
+.collection-card .collection-card__image--placeholder svg {
+  visibility: hidden;
+}
+
+.collection-card :is(h1, h2, h3, h4, h5, h6, p, .text-block) {
+  font-family: var(--mg-font-ui);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.collection-card .collection-card__content,
+.collection-card .collection-card__content :is(h1, h2, h3, h4, h5, h6, p, .text-block) {
+  color: var(--mg-white);
+}
+
+.collection-card:has(.collection-card__link:focus-visible) {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+  border-radius: var(--mg-tile-radius);
+}
+
+/* =====================================================================
+ * 3. Product page
+ * ===================================================================== */
+
+/* Gallery: sticks beside the buy box on desktop */
+@media screen and (min-width: 990px) {
+  .product-information__grid .product-information__media {
+    position: sticky;
+    inset-block-start: var(--mg-space-5);
+    align-self: start;
+    transition: inset-block-start var(--mg-dur) var(--mg-ease);
+  }
+
+  body:has(#header-component[data-sticky-state='active']) .product-information__grid .product-information__media {
+    inset-block-start: calc(var(--header-height, 0px) + var(--mg-space-5));
+  }
+}
+
+/* Photos on a quiet panel, thumbnails with MG corners and a clear selected edge */
+media-gallery .product-media-container {
+  border: 1px solid var(--mg-line);
+}
+
+media-gallery .slideshow-controls__thumbnail {
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-band);
+  overflow: hidden;
+}
+
+media-gallery .slideshow-controls__thumbnail[aria-selected='true'] {
+  border-color: var(--mg-ink);
+  box-shadow: inset 0 0 0 1px var(--mg-ink);
+}
+
+/* Phones: swipe dots in ink */
+media-gallery .slideshow-controls__dots button,
+media-gallery .slideshow-control--dot {
+  --color-foreground: var(--mg-ink);
+}
+
+/* Buy box type */
+.product-details :is(h1, .h1) {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.product-details .rating-wrapper {
+  font-size: var(--mg-fs-small);
+}
+
+.product-details product-price .price {
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+}
+
+.product-details product-price :is(.tax-note, .installments) {
+  font-size: var(--mg-fs-micro);
+  color: var(--mg-ink-2);
+}
+
+/* ---------- Variant picker as radio cards ----------
+ * One card per value: a radio dot, the value in full (wraps, never runs off screen). The dot
+ * and the edge turn MG red / ink when selected. Replaces Horizon's sliding pill.
+ */
+html .product-details .variant-picker .variant-option--buttons:not(.variant-option--swatches) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+  gap: var(--mg-space-2);
+}
+
+html .product-details .variant-picker .variant-option--buttons:not(.variant-option--swatches) legend {
+  grid-column: 1 / -1;
+  margin-block-end: var(--mg-space-2);
+  font-size: var(--mg-fs-small);
+  font-weight: 600;
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch) {
+  justify-content: flex-start;
+  gap: var(--mg-space-3);
+  min-width: 0;
+  min-height: 56px;
+  padding: var(--mg-space-3) var(--mg-space-4);
+  border: 1px solid var(--mg-line-strong);
+  border-radius: var(--mg-radius-md);
+  background-color: var(--mg-card);
+  color: var(--mg-ink);
+  white-space: normal;
+  text-align: start;
+  transition:
+    border-color var(--mg-dur) var(--mg-ease),
+    background-color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease);
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch)::before {
+  content: '';
+  position: relative;
+  inset: auto;
+  z-index: 2;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1.5px solid var(--mg-line-input);
+  border-radius: 50%;
+  background-color: transparent;
+  clip-path: none;
+  transition:
+    border-color var(--mg-dur) var(--mg-ease),
+    box-shadow var(--mg-dur) var(--mg-ease);
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch)::after,
+html .product-details .variant-option--buttons .variant-option__button-label .variant-option__button-label__pill {
+  display: none;
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label .variant-option__button-label__text {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: start;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+@media (hover: hover) {
+  html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch):hover {
+    border-color: var(--mg-ink-3);
+    background-color: var(--mg-card-raised);
+    color: var(--mg-ink);
+  }
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch):has(:checked) {
+  border-color: var(--mg-ink);
+  background-color: var(--mg-card-raised);
+  box-shadow: inset 0 0 0 1px var(--mg-ink);
+  color: var(--mg-ink);
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch):has(:checked)::before {
+  border-color: var(--mg-red);
+  box-shadow: inset 0 0 0 4px var(--mg-card-raised), inset 0 0 0 10px var(--mg-red);
+}
+
+/* Unavailable: dashed edge and muted text instead of Horizon's diagonal strike */
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch):has([data-option-available='false']) {
+  border-width: 1px;
+  border-style: dashed;
+  color: var(--mg-ink-3);
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch) svg {
+  display: none;
+}
+
+html .product-details .variant-option--buttons .variant-option__button-label:has(:focus-visible) {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+/* Single-value options ("Title: Default" style rows) read as a quiet line */
+.product-details .variant-option[data-testid='variant-option-single'] {
+  font-size: var(--mg-fs-small);
+  color: var(--mg-ink-2);
+}
+
+/* ---------- Buy buttons ---------- */
+.product-details .buy-buttons-block .add-to-cart-button {
+  min-height: 52px;
+  font-weight: 600;
+}
+
+.product-details .buy-buttons-block .shopify-payment-button__button {
+  min-height: 48px;
+}
+
+.product-details .buy-buttons-block .shopify-payment-button__more-options {
+  color: var(--mg-ink-2);
+  font-size: var(--mg-fs-small);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+/* ---------- MG blocks in the buy box ---------- */
+
+/* Trust row: small ink icons, secondary text */
+.mg-ptrust__item {
+  font-size: var(--mg-fs-micro);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--mg-ink-2);
+}
+
+.mg-ptrust__item .mg-icon {
+  color: var(--mg-ink);
+}
+
+.mg-ptrust__item:last-child .mg-icon {
+  color: var(--mg-red);
+}
+
+.mg-ptrust__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--mg-tap);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--mg-line-strong);
+  text-underline-offset: 0.22em;
+}
+
+.mg-ptrust__link:hover {
+  color: var(--mg-ink);
+  text-decoration-color: currentcolor;
+}
+
+@media screen and (min-width: 750px) {
+  .mg-ptrust__link {
+    min-height: 0;
+  }
+}
+
+/* Will it fit? card on the band, so it reads as help, not a second buy box */
+.mg-fitinfo--card .mg-fitinfo__inner.mg-card {
+  border-color: var(--mg-line);
+  background-color: var(--mg-band);
+  box-shadow: none;
+}
+
+.mg-fitinfo--card .mg-fitinfo__chip {
+  background-color: var(--mg-card);
+}
+
+.mg-fitinfo .mg-fitinfo__chip--make {
+  border-color: var(--mg-line-strong);
+  font-weight: 600;
+}
+
+.mg-fitinfo--full .mg-fitinfo__inner {
+  padding-block-end: var(--mg-space-2);
+}
+
+.mg-fit-note {
+  width: 100%;
+  padding: var(--mg-space-3);
+  border: 1px dashed var(--mg-ink-3);
+  border-radius: var(--mg-radius-sm);
+  color: var(--mg-ink-2);
+  font-size: var(--mg-fs-micro);
+}
+
+/* ---------- Accordions (Overview, Will it fit?, What's in the box, Fitting, Delivery) ---------- */
+.product-details .accordion {
+  --color-border: var(--mg-line);
+  border-top: 1px solid var(--mg-line);
+}
+
+.product-details .accordion .details__header {
+  min-height: 56px;
+  padding-block: var(--mg-space-3);
+  font-family: var(--mg-font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--mg-ink);
+  text-transform: none;
+}
+
+.product-details .accordion .details__header:focus-visible {
+  outline: 2px solid var(--mg-focus);
+  outline-offset: 2px;
+}
+
+.product-details .accordion .details__icon {
+  color: var(--mg-ink-2);
+}
+
+.product-details .accordion .details-content {
+  padding-block-end: var(--mg-space-5);
+  color: var(--mg-ink-2);
+}
+
+/* Description copy inside the rows */
+.product-details :is(.mg-copy, .rte) {
+  font-size: 0.9375rem;
+  line-height: var(--mg-lh-body);
+  color: var(--mg-ink-2);
+}
+
+.product-details :is(.mg-copy, .rte) :is(h2, h3, h4) {
+  margin: var(--mg-space-5) 0 var(--mg-space-2);
+  font-family: var(--mg-font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mg-ink);
+}
+
+.product-details :is(.mg-copy, .rte) > :first-child {
+  margin-top: 0;
+}
+
+.product-details :is(.mg-copy, .rte) :is(strong, b) {
+  color: var(--mg-ink);
+}
+
+.product-details :is(.mg-copy, .rte) p {
+  margin: 0 0 var(--mg-space-3);
+}
+
+/* Lists as tick rows */
+.product-details :is(.mg-copy, .rte) ul {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 var(--mg-space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.product-details :is(.mg-copy, .rte) ul > li {
+  position: relative;
+  margin: 0;
+  padding-inline-start: 26px;
+}
+
+.product-details :is(.mg-copy, .rte) ul > li::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0.35em;
+  inset-inline-start: 2px;
+  width: 12px;
+  height: 7px;
+  border-bottom: 2px solid var(--mg-red);
+  border-left: 2px solid var(--mg-red);
+  transform: rotate(-45deg);
+}
+
+.product-details :is(.mg-copy, .rte) a {
+  color: var(--mg-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+}
+
+/* Spec tables in descriptions: stacked label and value on phones (no mid-word breaks) */
+@media screen and (max-width: 749px) {
+  .product-details :is(.mg-copy, .rte) table,
+  .product-details :is(.mg-copy, .rte) tbody,
+  .product-details :is(.mg-copy, .rte) tr,
+  .product-details :is(.mg-copy, .rte) td,
+  .product-details :is(.mg-copy, .rte) th {
+    display: block;
+    width: auto;
+  }
+
+  .product-details :is(.mg-copy, .rte) tr {
+    padding-block: var(--mg-space-2);
+    border-bottom: 1px solid var(--mg-line);
+  }
+
+  .product-details :is(.mg-copy, .rte) :is(td, th):first-child {
+    font-size: var(--mg-fs-micro);
+    color: var(--mg-ink-3);
+  }
+}
+
+/* ---------- "Also fits your car" ---------- */
+.product-recommendations :is(h2, .h2, .h3) {
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-h2);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--mg-ink);
+}
+
+/* =====================================================================
+ * 4. Sticky add to cart (Horizon): an MG bar. On phones it replaces the action bar while it
+ *    shows (the chrome task's mg-mobile-action-bar hides itself then).
+ * ===================================================================== */
+
+.sticky-add-to-cart .sticky-add-to-cart__bar {
+  border: 1px solid var(--mg-line);
+  border-radius: var(--mg-radius-lg);
+  background-color: var(--mg-card);
+  box-shadow: var(--mg-shadow-float);
+}
+
+.sticky-add-to-cart .sticky-add-to-cart__title {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  color: var(--mg-ink);
+}
+
+.sticky-add-to-cart .sticky-add-to-cart__variant {
+  color: var(--mg-ink-2);
+}
+
+.sticky-add-to-cart .sticky-add-to-cart__image {
+  overflow: hidden;
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-band);
+}
+
+.sticky-add-to-cart .sticky-add-to-cart__button {
+  border-radius: var(--mg-radius-sm);
+  font-weight: 600;
+}
+
+@media screen and (max-width: 749px) {
+  .sticky-add-to-cart .sticky-add-to-cart__bar {
+    width: calc(100% - var(--mg-gutter) * 2);
+    bottom: max(var(--mg-space-2), var(--safe-area-inset-bottom, 0px));
+  }
+}
+
+/* =====================================================================
+ * 5. Cart drawer
+ * ===================================================================== */
+
+.cart-drawer__inner .theme-drawer__header {
+  border-bottom: 1px solid var(--mg-line);
+}
+
+.cart-items .cart-items__title {
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+
+@media (hover: hover) {
+  .cart-items a.cart-items__title:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
+/* The option (for example the iDrive system, or the car make for a fitting) stays visible */
+.cart-items .cart-items__variant {
+  font-size: var(--mg-fs-micro);
+  line-height: 1.4;
+}
+
+.cart-items .cart-items__price {
+  font-weight: 600;
+  color: var(--mg-ink);
+}
+
+.cart-items .cart-items__remove {
+  color: var(--mg-ink-2);
+}
+
+.cart-drawer__summary {
+  border-top: 1px solid var(--mg-line);
+  background-color: var(--mg-page);
+}
+
+/* Fitting in the basket and no deposit yet: one quiet line about booking the slot */
+.cart-drawer__inner:has(.cart-items__title[href*='installation'], .cart-items__title[href*='conversion'], .cart-items__title[href*='video-in-motion']):not(:has(.cart-items__title[href*='booking-deposit'])) .cart-drawer__summary::before {
+  content: 'Fitting in your basket? A \20AC 50 deposit secures your fitting slot and comes off your final bill.';
+  display: block;
+  margin-block-end: var(--mg-space-3);
+  padding: var(--mg-space-3);
+  border-radius: var(--mg-radius-sm);
+  background-color: var(--mg-band);
+  color: var(--mg-ink-2);
+  font-family: var(--mg-font-ui);
+  font-size: var(--mg-fs-micro);
+  line-height: 1.45;
+}
+
+/* Empty basket */
+.cart-drawer--empty .cart-items__empty-button {
+  border-radius: var(--mg-radius-sm);
+}
+
+/* =====================================================================
+ * 6. Reduced motion
+ * ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .collection-card .collection-card__image img,
+  .product-information__grid .product-information__media,
+  html .product-details .variant-option--buttons .variant-option__button-label,
+  html .product-details .variant-option--buttons .variant-option__button-label::before {
+    transition: none;
+  }
+
+  .collection-card:hover .collection-card__image img {
+    transform: none;
+  }
+}

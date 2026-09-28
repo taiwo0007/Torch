@@ -11,35 +11,18 @@
   "type": "header",
   "name": "Header",
   "sections": {
-    "header_announcements_9jGBFp": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_phone": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Not sure what fits? Call 087 034 4355",
-            "link": "tel:+353870344355",
-            "font": "var(--font-body--family)",
-            "font_size": "0.875rem",
-            "weight": "400",
-            "letter_spacing": "normal",
-            "case": "none"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_phone"
-      ],
-      "name": "Announcement bar",
+    "mg_topbar": {
+      "type": "mg-topbar",
       "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "background_color": "",
-        "divider_width": 0,
-        "divider_color": "",
-        "padding-block-start": 8,
-        "padding-block-end": 8
+        "show_phone": true,
+        "show_whatsapp": true,
+        "show_location": true,
+        "location_label": "Ballymount, Dublin 12",
+        "show_reviews": true,
+        "show_hours": true,
+        "show_sunday": false,
+        "mobile_display": "rating",
+        "region_label": "Contact and opening hours"
       }
     },
     "header_section": {
@@ -83,7 +66,7 @@
       "settings": {
         "logo_position": "left",
         "menu_position": "left",
-        "menu_row": "bottom",
+        "menu_row": "top",
         "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "left",
@@ -95,9 +78,9 @@
         "localization_font_size": "0.875rem",
         "localization_position": "right",
         "localization_row": "top",
-        "section_width": "page-width",
+        "section_width": "full-width",
         "section_height": "standard",
-        "enable_sticky_header": "scroll-up",
+        "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "full-width",
         "divider_color": "",
@@ -127,7 +110,7 @@
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
+    "mg_topbar",
     "header_section"
   ]
 }

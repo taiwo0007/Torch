@@ -1,0 +1,283 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "screen",
+            "text": "Widescreen, factory look"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "check",
+            "text": "CarPlay and Android Auto built in"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "shield",
+            "text": "Factory controls kept"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "BMW, Mercedes, Audi, VW"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/pages/services",
+        "breadcrumb_schema": true,
+        "heading": "Screen upgrades in Dublin",
+        "title_style": "caps",
+        "intro": "An OEM-style widescreen with CarPlay and Android Auto built in, made for your dash. BMW, Mercedes-Benz, Audi and Volkswagen.",
+        "show_rating": true,
+        "price_prefix": "From",
+        "price": "",
+        "price_suffix": "fitted",
+        "duration": "",
+        "price_note": "Price on request: send your reg and we quote a fixed fitted price.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "quote_service": "Screen upgrade",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for a screen upgrade. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-img-sys-screens.webp"
+      }
+    },
+    "fit": {
+      "type": "mg-service-details",
+      "blocks": {
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Which cars we fit",
+            "makes": "BMW\nMercedes-Benz\nAudi\nVolkswagen",
+            "chip_links": true,
+            "chip_service": "Screen upgrade",
+            "note": "Other makes: send us your reg and we will check what fits.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "Screen matched to your car's system and dash trim\nCarPlay and Android Auto set up and paired\nFactory controls, camera and menus kept wherever possible\nNeat, hidden wiring with no cut looms\nFull function test and a walkthrough before you drive away",
+            "show_warranty": true
+          }
+        },
+        "price_1": {
+          "type": "price_row",
+          "settings": {
+            "label": "Screen upgrade, fitted",
+            "price": "On request",
+            "note": "Depends on the car and screen size"
+          }
+        },
+        "price_2": {
+          "type": "price_row",
+          "settings": {
+            "label": "BMW iDrive 7 video in motion",
+            "price": "€149",
+            "note": "iDrive 7 (ID7) systems",
+            "url": "/products/bmw-idrive7-video-in-motion"
+          }
+        }
+      },
+      "block_order": [
+        "makes",
+        "included",
+        "price_1",
+        "price_2"
+      ],
+      "settings": {
+        "heading": "Fixed prices, fitted properly",
+        "intro": "Tap your make to start a quote. We match the screen to your car's system and trim.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fixed prices, fitted at our unit in Ballymount, Dublin 12. Send us your reg and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/pages/book-a-fitting",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for a screen upgrade. My reg is: ",
+        "card_show_contact": false,
+        "output_schema": true,
+        "schema_name": "Car screen upgrades",
+        "schema_description": "OEM-style widescreen upgrades with Apple CarPlay and Android Auto for BMW, Mercedes-Benz, Audi and Volkswagen, fitted in Dublin 12."
+      }
+    },
+    "jobs": {
+      "type": "mg-gallery",
+      "blocks": {
+        "job_1": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "system": "screens",
+            "car_label": "BMW",
+            "caption": "widescreen with CarPlay"
+          }
+        },
+        "job_2": {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "system": "screens",
+            "car_label": "Audi",
+            "caption": "CarPlay on the dash screen"
+          }
+        },
+        "job_3": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "system": "other",
+            "car_label": "Our showroom",
+            "caption": "screens on display in Dublin 12"
+          }
+        }
+      },
+      "block_order": [
+        "job_1",
+        "job_2",
+        "job_3"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "layout": "strip",
+        "show_filters": false,
+        "background": "surface"
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Will the new screen look factory fitted?",
+            "answer": "<p>That is the aim. We use screens made for your model, so they sit in the original dash position and match the trim.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Do I keep my iDrive, MMI or steering wheel controls?",
+            "answer": "<p>In most cases, yes. We choose screens that work with your car's original controls and reversing camera. If anything can't be kept, we tell you before you book.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "How much does a screen upgrade cost?",
+            "answer": "<p>It depends on your car and the screen size, so we price it from your reg. You get one fixed fitted price before you book.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "How long does it take?",
+            "answer": "<p>Most screen upgrades are done the same day. We confirm the time when you book.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4"
+      ],
+      "settings": {
+        "heading": "Screen upgrade questions",
+        "text": "What drivers ask us before booking.",
+        "show_contact": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
+        "output_faq_schema": true,
+        "show_group_nav": false,
+        "background": "page"
+      }
+    },
+    "about": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "A bigger screen that fits your dash",
+            "content": "<p>Older factory screens are small and slow. An upgrade gives you a modern widescreen with Apple CarPlay and Android Auto built in, fitted so it looks like it left the factory that way. We specialise in BMW and Mercedes-Benz, and upgrade Audi and Volkswagen too.</p>",
+            "use_page_content": false
+          }
+        }
+      },
+      "block_order": [
+        "text_1"
+      ],
+      "settings": {
+        "heading": "About screen upgrades",
+        "intro": "",
+        "layout": "stacked",
+        "background": "page",
+        "show_card": false,
+        "sticky_card": false,
+        "card_heading": "",
+        "card_text": "",
+        "deposit_text": "",
+        "card_button_label": "",
+        "card_show_whatsapp": false,
+        "card_show_contact": false,
+        "output_schema": false
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "fit",
+    "jobs",
+    "faq",
+    "about",
+    "visit"
+  ]
+}

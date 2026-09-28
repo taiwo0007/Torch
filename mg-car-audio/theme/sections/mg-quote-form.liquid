@@ -13,12 +13,12 @@
   endif
 
   assign heading_tag = 'h2'
-  assign heading_class = 'mg-head__title mg-quote__heading'
+  assign heading_class = 'mg-head__title mg-pg-caps mg-quote__heading'
   assign sub_tag = 'h3'
   assign minor_tag = 'h4'
   if section.settings.heading_is_h1
     assign heading_tag = 'h1'
-    assign heading_class = 'mg-h1-banner mg-quote__heading'
+    assign heading_class = 'mg-pg-h1 mg-quote__heading mg-load-rise'
     assign sub_tag = 'h2'
     assign minor_tag = 'h3'
   endif
@@ -136,7 +136,7 @@
         </script>
       {%- endif -%}
       {%- if heading != blank or has_intro -%}
-        <header class="mg-panel mg-quote__intro mg-quote__intro--panel">
+        <header class="mg-panel mg-surface-night mg-red-line mg-quote__intro mg-quote__intro--panel">
           {{- intro_inner -}}
         </header>
       {%- endif -%}
@@ -705,7 +705,11 @@
 
   /* Panel header: the heading may run wider, like the other inner-page banners */
   .mg-quote__intro--panel .mg-quote__heading {
-    max-width: 22ch;
+    max-width: 18ch;
+  }
+
+  .mg-quote__intro--panel {
+    overflow: hidden;
   }
 
   .mg-quote--panel .mg-quote__layout {
@@ -757,7 +761,7 @@
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.005em;
-    text-transform: none;
+    text-transform: uppercase;
     color: var(--mg-ink);
   }
 
@@ -789,7 +793,8 @@
     display: block;
     width: 100%;
     margin: 0 0 var(--mg-space-4);
-    padding: 0;
+    padding: 0 0 0 var(--mg-space-3);
+    border-left: 3px solid var(--mg-red);
     font-size: 1.0625rem;
     font-weight: 600;
     line-height: 1.35;
@@ -1470,7 +1475,7 @@
       "type": "checkbox",
       "id": "heading_is_h1",
       "label": "Use heading as the page's main title (H1)",
-      "info": "Turn on when this is the main section of the page, for example the Get a quote page. The H1 uses the serif page-title style. Each page should have only one H1.",
+      "info": "Turn on when this is the main section of the page, for example the Get a quote page. The H1 uses the bold capitals page-title style. Each page should have only one H1.",
       "default": false
     },
     {

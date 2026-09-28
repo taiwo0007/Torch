@@ -1,0 +1,276 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "text": "About 1 hr 30 min"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "wrench",
+            "text": "Neat, hidden wiring"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "check",
+            "text": "Controls set up"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/pages/services",
+        "breadcrumb_schema": true,
+        "heading": "Android radio fitting in Dublin",
+        "title_style": "caps",
+        "intro": "Bring your Android radio, fascia and harness and we fit it properly, with neat hidden wiring and your controls set up.",
+        "show_rating": true,
+        "price_prefix": "From",
+        "price": "€150",
+        "price_suffix": "fitted",
+        "duration": "About 1 hr 30 min",
+        "price_note": "When you supply the radio, fascia kit and harness.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "quote_service": "Android radio",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for Android radio fitting. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-img-sys-android-radio.webp"
+      }
+    },
+    "fit": {
+      "type": "mg-service-details",
+      "blocks": {
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Which cars we fit",
+            "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
+            "chip_links": true,
+            "chip_service": "Android radio",
+            "note": "Not listed? Most makes and imports are covered: tap your make or send us your reg.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "Radio, fascia and harness checked before we start\nFitted with neat, hidden wiring\nSteering wheel controls set up where your kit supports them\nCarPlay and Android Auto set up and paired\nFull function test before you drive away",
+            "show_warranty": true
+          }
+        },
+        "price_1": {
+          "type": "price_row",
+          "settings": {
+            "label": "Android radio system install",
+            "price": "€150",
+            "note": "About 1 hr 30 min, you supply the radio",
+            "url": "/products/android-radio-installation"
+          }
+        },
+        "price_2": {
+          "type": "price_row",
+          "settings": {
+            "label": "Radio supplied and fitted",
+            "price": "On request",
+            "note": "Shop Android radios, then book fitting",
+            "url": "/collections/android-radios"
+          }
+        }
+      },
+      "block_order": [
+        "makes",
+        "included",
+        "price_1",
+        "price_2"
+      ],
+      "settings": {
+        "heading": "Fixed prices, fitted properly",
+        "intro": "Tap your make to start a quote. Not sure your radio suits your car? Send us the link first.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fixed prices, fitted at our unit in Ballymount, Dublin 12. Send us your reg and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/pages/book-a-fitting",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for Android radio fitting. My reg is: ",
+        "card_show_contact": false,
+        "output_schema": true,
+        "schema_name": "Android radio fitting",
+        "schema_description": "Android car radio fitting in Dublin 12 for radios you supply, with the fascia and harness, neat wiring and steering wheel controls set up."
+      }
+    },
+    "jobs": {
+      "type": "mg-gallery",
+      "blocks": {
+        "job_1": {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "system": "radios",
+            "car_label": "Radio upgrade",
+            "caption": "Android head unit fitted"
+          }
+        },
+        "job_2": {
+          "type": "image",
+          "settings": {
+            "fallback": "single-din-radio",
+            "system": "radios",
+            "car_label": "Single-DIN",
+            "caption": "radio swapped for a modern unit"
+          }
+        },
+        "job_3": {
+          "type": "image",
+          "settings": {
+            "fallback": "showroom",
+            "system": "other",
+            "car_label": "Our showroom",
+            "caption": "radios on display in Dublin 12"
+          }
+        }
+      },
+      "block_order": [
+        "job_1",
+        "job_2",
+        "job_3"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "layout": "strip",
+        "show_filters": false,
+        "background": "surface"
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "Can I bring my own radio?",
+            "answer": "<p>Yes. Fitting is <strong>€150</strong> when you supply the radio, fascia kit and harness.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Will my steering wheel controls work?",
+            "answer": "<p>Usually, if your radio and harness support them. Send us the radio details and your reg and we will check first.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "How long does it take?",
+            "answer": "<p>About an hour and a half for most cars.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3"
+      ],
+      "settings": {
+        "heading": "Android radio questions",
+        "text": "What drivers ask us before booking.",
+        "show_contact": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
+        "output_faq_schema": true,
+        "show_group_nav": false,
+        "background": "page"
+      }
+    },
+    "about": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Fitted properly, first time",
+            "content": "<p>An Android radio is only as good as the fitting. We check the fascia and harness suit your car, route the wiring out of sight, set up the controls and test everything with your phone before you leave.</p>",
+            "use_page_content": false
+          }
+        }
+      },
+      "block_order": [
+        "text_1"
+      ],
+      "settings": {
+        "heading": "About Android radio fitting",
+        "intro": "",
+        "layout": "stacked",
+        "background": "page",
+        "show_card": false,
+        "sticky_card": false,
+        "card_heading": "",
+        "card_text": "",
+        "deposit_text": "",
+        "card_button_label": "",
+        "card_show_whatsapp": false,
+        "card_show_contact": false,
+        "output_schema": false
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "fit",
+    "jobs",
+    "faq",
+    "about",
+    "visit"
+  ]
+}

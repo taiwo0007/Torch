@@ -60,6 +60,17 @@
     assign show_phone_line = true
   endif
 
+  assign show_big_phone = false
+  if section.settings.show_big_phone and settings.mg_phone_e164 != blank and settings.mg_phone_display != blank
+    assign show_big_phone = true
+  endif
+  assign heading_tag = 'h2'
+  assign heading_class = 'mg-head__title mg-pg-caps'
+  if section.settings.heading_is_h1
+    assign heading_tag = 'h1'
+    assign heading_class = 'mg-pg-h1 mg-load-rise'
+  endif
+
   assign contact_label = 'Phone'
   if show_phone_line and settings.mg_email != blank
     assign contact_label = 'Phone and email'
@@ -93,12 +104,12 @@
       >
         <div class="mg-head__text">
           {%- if heading != blank -%}
-            <h2
+            <{{ heading_tag }}
               id="{{ heading_id }}"
-              class="mg-head__title"
+              class="{{ heading_class }}"
             >
               {{ heading | escape }}
-            </h2>
+            </{{ heading_tag }}>
           {%- endif -%}
           {%- if section.settings.text != blank -%}
             <p class="mg-head__sub">{{ section.settings.text }}</p>
@@ -112,6 +123,20 @@
       data-mg-reveal
     >
       <div class="mg-contact__info">
+        {%- if show_big_phone -%}
+          <div class="mg-contact__call">
+            <p class="mg-pg-label">{{ section.settings.big_phone_label | default: 'Call us' | escape }}</p>
+            <a
+              class="mg-contact__big-phone"
+              href="tel:+{{ settings.mg_phone_e164 }}"
+            >
+              {{- settings.mg_phone_display | escape -}}
+            </a>
+            {%- if section.settings.big_phone_note != blank -%}
+              <p class="mg-help">{{ section.settings.big_phone_note | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
         <div class="mg-contact__details">
           <div class="mg-contact__group">
             <h3 class="mg-contact__label">
@@ -201,7 +226,7 @@
 
         {%- if settings.mg_phone_e164 != blank or show_whatsapp -%}
           <div class="mg-actions mg-contact__actions">
-            {%- if settings.mg_phone_e164 != blank -%}
+            {%- if settings.mg_phone_e164 != blank and show_big_phone == false -%}
               <a
                 class="mg-btn mg-btn--primary"
                 href="tel:+{{ settings.mg_phone_e164 }}"
@@ -212,7 +237,7 @@
             {%- endif -%}
             {%- if show_whatsapp -%}
               <a
-                class="mg-btn mg-btn--whatsapp"
+                class="mg-btn {% if show_big_phone %}mg-btn--primary{% else %}mg-btn--whatsapp{% endif %}"
                 href="{{ wa_href }}"
                 target="_blank"
                 rel="noopener"
@@ -435,6 +460,44 @@
     align-items: center;
     min-height: var(--mg-tap);
     font-size: var(--mg-fs-small);
+  }
+
+  /* Contact page: the number as the biggest thing on the page, one tap to call */
+  .mg-contact__call {
+    display: grid;
+    gap: var(--mg-space-1);
+    padding-bottom: var(--mg-space-5);
+    border-bottom: 1px solid var(--mg-line);
+  }
+
+  .mg-contact__big-phone {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: var(--mg-tap);
+    font-size: clamp(2rem, 8.5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--mg-ink);
+    text-decoration: none;
+    background-image: linear-gradient(var(--mg-red), var(--mg-red));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 3px;
+    transition: background-size var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-contact__big-phone:hover {
+    background-size: 100% 6px;
+  }
+
+  .mg-contact__big-phone:focus-visible {
+    outline: 2px solid var(--mg-focus);
+    outline-offset: 4px;
+    border-radius: var(--mg-radius-xs);
   }
 
   /* Opening hours, today's row highlighted */
@@ -679,9 +742,41 @@
     },
     {
       "type": "checkbox",
+      "id": "heading_is_h1",
+      "label": "Heading is the page's main heading (H1)",
+      "info": "Turn on for the Contact page only.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
       "id": "show_whatsapp",
       "label": "Show WhatsApp button",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Big phone number"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_big_phone",
+      "label": "Show the phone number large",
+      "info": "For the Contact page. Replaces the Call button with a big tap-to-call number.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "big_phone_label",
+      "label": "Label above the number",
+      "default": "Call or WhatsApp",
+      "visible_if": "{{ section.settings.show_big_phone }}"
+    },
+    {
+      "type": "text",
+      "id": "big_phone_note",
+      "label": "Line under the number",
+      "default": "Quickest for a quote: send your reg and a photo of your dash.",
+      "visible_if": "{{ section.settings.show_big_phone }}"
     },
     {
       "type": "header",

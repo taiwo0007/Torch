@@ -44,7 +44,7 @@
       <div class="mg-svc-cta__content">
         {%- if section.settings.heading != blank -%}
           <h2
-            class="mg-display mg-svc-cta__heading"
+            class="mg-pg-caps mg-svc-cta__heading"
             id="{{ heading_id }}"
           >
             {{ section.settings.heading | escape }}
@@ -141,6 +141,9 @@
 
   .mg-svc-cta__heading {
     max-width: 18ch;
+    margin: 0;
+    font-size: clamp(1.75rem, 4.4vw, 2.75rem);
+    line-height: 1.02;
   }
 
   .mg-svc-cta__text {

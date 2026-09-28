@@ -129,6 +129,61 @@
       "handle": "bmw-carplay",
       "content": "",
       "metafields": {}
+    },
+    "page.services": {
+      "title": "Our Services",
+      "handle": "services",
+      "content": ""
+    },
+    "page.about": {
+      "title": "About MG Car Audio",
+      "handle": "about",
+      "content": ""
+    },
+    "page.faq": {
+      "title": "Frequently Asked Questions",
+      "handle": "faq",
+      "content": ""
+    },
+    "page.gallery": {
+      "title": "Latest Jobs",
+      "handle": "gallery",
+      "content": ""
+    },
+    "page.service-screens": {
+      "title": "Screen Upgrades",
+      "handle": "screen-upgrades",
+      "content": ""
+    },
+    "page.service-android-radio": {
+      "title": "Android Radio Fitting",
+      "handle": "android-radio-fitting",
+      "content": ""
+    },
+    "page.service-sound": {
+      "title": "Speaker & Sound Upgrades",
+      "handle": "sound-upgrades",
+      "content": ""
+    },
+    "page.service-cameras": {
+      "title": "Reverse Camera Fitting",
+      "handle": "reverse-camera-fitting",
+      "content": ""
+    },
+    "page.service-conversion": {
+      "title": "Japanese Import Conversion",
+      "handle": "japanese-import-conversion",
+      "content": ""
+    },
+    "page.service-repairs": {
+      "title": "Car Radio Repairs",
+      "handle": "car-radio-repairs",
+      "content": ""
+    },
+    "page.book-a-fitting": {
+      "title": "Book a Fitting",
+      "handle": "book-a-fitting",
+      "content": ""
     }
   },
   "collections": {

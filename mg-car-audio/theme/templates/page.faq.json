@@ -1,0 +1,244 @@
+{
+  "sections": {
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "topic_1": {
+          "type": "group",
+          "settings": {
+            "title": "CarPlay and screens"
+          }
+        },
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "How much does it cost to add Apple CarPlay to my car?",
+            "answer": "<p>It depends on your car and its screen. For BMW, Apple CarPlay installation is <strong>€350</strong>, and Android Auto on iDrive 7 is <strong>€299</strong>. For other makes, send us your reg and a photo of your dash on WhatsApp and we'll give you a fixed fitted price before you book.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "Wired or wireless CarPlay: which should I choose?",
+            "answer": "<p>Wired CarPlay starts when you plug your phone in with a USB cable. Wireless connects automatically a few seconds after you start the car, so your phone can stay in your pocket or bag. We fit both, and we'll tell you which options suit your car.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "My car already has wired CarPlay. Can it be made wireless?",
+            "answer": "<p>Usually, yes, and often without any fitting at all: a plug-and-play wireless adapter goes into the USB port your car already uses for CarPlay.</p>"
+          }
+        },
+        "q_4": {
+          "type": "question",
+          "settings": {
+            "question": "Will I keep my steering wheel controls, reversing camera and microphone?",
+            "answer": "<p>In most cases, yes. We choose parts that work with your car's original screen, steering wheel buttons, reversing camera and microphone wherever possible. If anything on your car can't be kept, we'll tell you before you book, not after.</p>"
+          }
+        },
+        "topic_2": {
+          "type": "group",
+          "settings": {
+            "title": "Android radios"
+          }
+        },
+        "q_5": {
+          "type": "question",
+          "settings": {
+            "question": "Can I bring my own radio or screen for you to fit?",
+            "answer": "<p>Yes. Our Android radio fitting service is <strong>€150</strong> when you supply the radio, fascia kit and harness. For CarPlay interfaces and screen upgrades we recommend buying the parts through us, so we can check they suit your car and stand over the whole job.</p>"
+          }
+        },
+        "q_6": {
+          "type": "question",
+          "settings": {
+            "question": "How long does an Android radio fitting take?",
+            "answer": "<p>About an hour and a half for most cars.</p>"
+          }
+        },
+        "topic_3": {
+          "type": "group",
+          "settings": {
+            "title": "Sound"
+          }
+        },
+        "q_7": {
+          "type": "question",
+          "settings": {
+            "question": "Which speaker brands do you fit?",
+            "answer": "<p>Our range includes trusted brands such as JBL and Harman Kardon. Tell us what you listen to and we will suggest a set that suits your car.</p>"
+          }
+        },
+        "q_8": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need an amplifier?",
+            "answer": "<p>Not always. Good speakers make a big difference on their own. We will tell you if an amplifier is worth it for your car.</p>"
+          }
+        },
+        "topic_4": {
+          "type": "group",
+          "settings": {
+            "title": "Cameras"
+          }
+        },
+        "q_9": {
+          "type": "question",
+          "settings": {
+            "question": "How much is a reverse camera?",
+            "answer": "<p>Supplied and fitted: Honda <strong>€399</strong>, Volkswagen <strong>€650</strong>, Audi <strong>€699</strong>, BMW <strong>€750</strong>. Other makes on request.</p>"
+          }
+        },
+        "q_10": {
+          "type": "question",
+          "settings": {
+            "question": "Can you hard-wire a dash cam?",
+            "answer": "<p>Yes. We power it from the fuse box and hide the cable behind the trim, so nothing trails across the dash.</p>"
+          }
+        },
+        "topic_5": {
+          "type": "group",
+          "settings": {
+            "title": "Japanese imports and repairs"
+          }
+        },
+        "q_11": {
+          "type": "question",
+          "settings": {
+            "question": "Can you convert my Japanese import?",
+            "answer": "<p>Yes. We convert BMW (<strong>€450</strong>), Mercedes-Benz and Volkswagen imports to European spec, including the menu language, navigation maps and radio band. If you only need Irish radio stations, our radio frequency conversion moves a Japanese radio to the European FM band. Send us your reg first and we'll confirm your car is compatible.</p>"
+          }
+        },
+        "q_12": {
+          "type": "question",
+          "settings": {
+            "question": "My radio is asking for a code. Can you help?",
+            "answer": "<p>Yes. Radio codes often come up after a battery change. We also diagnose no-sound faults and black screens, and give you a price before we fix anything.</p>"
+          }
+        },
+        "topic_6": {
+          "type": "group",
+          "settings": {
+            "title": "Fitting, warranty and booking"
+          }
+        },
+        "q_13": {
+          "type": "question",
+          "settings": {
+            "question": "How long does a fitting take?",
+            "answer": "<p>Most CarPlay and Android Auto installations take one to two hours. An Android radio fitting takes about an hour and a half, and Japan-to-Europe conversions about two hours. We'll confirm the time when you book.</p>"
+          }
+        },
+        "q_14": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to pay a deposit?",
+            "answer": "<p>Yes. A <strong>€50 deposit</strong> secures your slot and comes off your final bill. It's non-refundable if you don't attend or cancel with less than 48 hours' notice, and if you need to reschedule with at least 48 hours' notice we'll move it to a new date. The balance is paid when the work is done.</p>"
+          }
+        },
+        "q_15": {
+          "type": "question",
+          "settings": {
+            "question": "What do you need from me to give a quote?",
+            "answer": "<p>Your registration number, a photo of your dash and screen, and what you'd like done. WhatsApp is quickest, or use our <a href=\"/pages/get-a-quote\">quote form</a>.</p>"
+          }
+        },
+        "q_16": {
+          "type": "question",
+          "settings": {
+            "question": "Which cars do you work on?",
+            "answer": "<p>Most makes, including BMW, Audi, Volkswagen, Mercedes-Benz, Toyota, Honda, Nissan, Lexus, Ford, Mazda, Hyundai, Kia, Skoda, SEAT, Renault, Peugeot, Citroën, Volvo and Land Rover, as well as Japanese and other imported cars.</p>"
+          }
+        },
+        "q_17": {
+          "type": "question",
+          "settings": {
+            "question": "Is my installation covered by a warranty?",
+            "answer": "<p>Yes. Our fitting work is covered by a <strong>workmanship warranty</strong>, and the parts we supply carry their manufacturer's warranty. See <a href=\"/pages/warranty-returns\">Warranty and returns</a> for the details.</p>"
+          }
+        },
+        "q_18": {
+          "type": "question",
+          "settings": {
+            "question": "Will an upgrade affect my car's warranty?",
+            "answer": "<p>Fitting aftermarket equipment doesn't automatically void your car's manufacturer warranty, but a manufacturer can refuse a claim for a fault caused by that equipment. If your car is still under warranty, tell us and we'll talk you through the options.</p>"
+          }
+        },
+        "q_19": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return something I bought online?",
+            "answer": "<p>Yes. If it hasn't been fitted, you have 14 days from delivery to change your mind. See <a href=\"/pages/warranty-returns\">Warranty and returns</a>.</p>"
+          }
+        },
+        "q_20": {
+          "type": "question",
+          "settings": {
+            "question": "Where are you, and when are you open?",
+            "answer": "<p>Unit 3, Ballymount Business Centre, Ballymount Road Lower, Dublin 12, D12 YX27. Monday to Friday 9:30am to 7pm, Saturday 11am to 7pm, and Sunday by appointment.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "topic_1",
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "topic_2",
+        "q_5",
+        "q_6",
+        "topic_3",
+        "q_7",
+        "q_8",
+        "topic_4",
+        "q_9",
+        "q_10",
+        "topic_5",
+        "q_11",
+        "q_12",
+        "topic_6",
+        "q_13",
+        "q_14",
+        "q_15",
+        "q_16",
+        "q_17",
+        "q_18",
+        "q_19",
+        "q_20"
+      ],
+      "settings": {
+        "heading": "Questions drivers ask",
+        "heading_is_h1": true,
+        "text": "Prices, fitting times, deposits, warranty and imports. Pick a topic or scroll.",
+        "show_contact": false,
+        "contact_heading": "Still have a question?",
+        "open_first": true,
+        "show_group_nav": true,
+        "output_faq_schema": true,
+        "background": "page"
+      }
+    },
+    "cta": {
+      "type": "mg-service-cta",
+      "settings": {
+        "style": "red",
+        "heading": "Ask us about your car",
+        "text": "Send your reg and a photo of your dash on WhatsApp and we'll tell you what fits and what it costs.",
+        "show_details": false,
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I have a question about my car. My reg is: ",
+        "book_label": "Get a quote",
+        "book_url": "/pages/get-a-quote",
+        "show_call": true,
+        "call_label": "Call"
+      }
+    }
+  },
+  "order": [
+    "faq",
+    "cta"
+  ]
+}

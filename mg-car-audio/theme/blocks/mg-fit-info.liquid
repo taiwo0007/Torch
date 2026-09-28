@@ -1,0 +1,438 @@
+{%- doc -%}
+  MG "Will it fit?": the car makes and models a product fits, read from the product metafields
+  custom.car_make and custom.car_model (lists of single line text), plus custom.screen_size.
+  Ends with a WhatsApp link ("Not sure? Send your reg") with the product title in the message.
+
+  Two layouts: "Card" (compact, for the buy box: makes plus the first few models) and "Full list"
+  (inside the "Will it fit?" accordion row: every model). A product with neither metafield shows
+  nothing (a short note in the theme editor only). Make "Universal" reads as "Most cars".
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+
+  assign makes = product_resource.metafields.custom.car_make.value
+  assign models = product_resource.metafields.custom.car_model.value
+  assign screen_size = product_resource.metafields.custom.screen_size.value | strip
+
+  assign is_universal = false
+  assign real_makes = ''
+  for make in makes
+    assign make_text = make | strip
+    if make_text == blank
+      continue
+    endif
+    assign make_down = make_text | downcase
+    if make_down == 'universal'
+      assign is_universal = true
+    else
+      assign real_makes = real_makes | append: make_text | append: '|||'
+    endif
+  endfor
+  assign real_makes = real_makes | split: '|||'
+
+  assign model_count = 0
+  for model in models
+    if model != blank
+      assign model_count = model_count | plus: 1
+    endif
+  endfor
+
+  assign has_data = false
+  if real_makes.size > 0 or model_count > 0 or is_universal
+    assign has_data = true
+  endif
+
+  assign is_card = true
+  if block_settings.layout == 'full'
+    assign is_card = false
+  endif
+
+  assign model_limit = model_count
+  if is_card
+    assign model_limit = block_settings.max_models
+  endif
+  assign hidden_models = model_count | minus: model_limit
+
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign show_whatsapp = false
+  if block_settings.show_whatsapp and settings.mg_whatsapp_enabled and wa_number != blank and block_settings.whatsapp_label != blank
+    assign show_whatsapp = true
+    assign product_title = product_resource.title | default: 'this product'
+    assign wa_template = block_settings.whatsapp_message | default: "Hi MG Car Audio, will [product] fit my car? My reg is: "
+    assign wa_text = wa_template | replace: '[product]', product_title | url_encode
+  endif
+
+  assign heading_id = 'MgFit-' | append: block.id
+-%}
+
+{%- if has_data -%}
+  <div
+    class="mg-fitinfo mg-fitinfo--{{ block_settings.layout }} spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <div
+      class="mg-fitinfo__inner{% if is_card %} mg-card{% endif %}"
+      {% if is_card and block_settings.heading != blank %}
+        role="group"
+        aria-labelledby="{{ heading_id }}"
+      {% endif %}
+    >
+      {%- if is_card and block_settings.heading != blank -%}
+        <p
+          id="{{ heading_id }}"
+          class="mg-fitinfo__title"
+        >
+          {%- render 'mg-icon', icon: 'car' -%}
+          <span>{{ block_settings.heading | escape }}</span>
+        </p>
+      {%- endif -%}
+
+      <dl class="mg-fitinfo__list">
+        {%- if real_makes.size > 0 or is_universal -%}
+          <div class="mg-fitinfo__row">
+            <dt>{{ block_settings.makes_label | default: 'Makes' | escape }}</dt>
+            <dd>
+              <ul
+                class="mg-fitinfo__chips"
+                role="list"
+              >
+                {%- for make in real_makes -%}
+                  <li class="mg-chip mg-fitinfo__chip mg-fitinfo__chip--make">{{ make | escape }}</li>
+                {%- endfor -%}
+                {%- if is_universal -%}
+                  <li class="mg-chip mg-fitinfo__chip mg-fitinfo__chip--make">
+                    {{- block_settings.universal_label | default: 'Most cars' | escape -}}
+                  </li>
+                {%- endif -%}
+              </ul>
+            </dd>
+          </div>
+        {%- endif -%}
+
+        {%- if model_count > 0 -%}
+          <div class="mg-fitinfo__row">
+            <dt>{{ block_settings.models_label | default: 'Models' | escape }}</dt>
+            <dd>
+              <ul
+                class="mg-fitinfo__chips"
+                role="list"
+              >
+                {%- for model in models limit: model_limit -%}
+                  {%- if model != blank -%}
+                    <li class="mg-chip mg-fitinfo__chip">{{ model | strip | escape }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- if hidden_models > 0 -%}
+                  <li class="mg-fitinfo__more">
+                    {%- if hidden_models == 1 -%}
+                      and 1 more model
+                    {%- else -%}
+                      and {{ hidden_models }} more models
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
+              </ul>
+            </dd>
+          </div>
+        {%- endif -%}
+
+        {%- if screen_size != blank and block_settings.show_screen -%}
+          <div class="mg-fitinfo__row mg-fitinfo__row--inline">
+            <dt>{{ block_settings.screen_label | default: 'Screen' | escape }}</dt>
+            <dd>{{ screen_size | escape }}</dd>
+          </div>
+        {%- endif -%}
+      </dl>
+
+      {%- if is_universal and block_settings.universal_text != blank -%}
+        <p class="mg-fitinfo__note">{{ block_settings.universal_text | escape }}</p>
+      {%- elsif is_card == false and block_settings.full_note != blank -%}
+        <p class="mg-fitinfo__note">{{ block_settings.full_note | escape }}</p>
+      {%- endif -%}
+
+      {%- if show_whatsapp -%}
+        <a
+          class="mg-link mg-fitinfo__wa"
+          href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {%- render 'mg-icon', icon: 'whatsapp' -%}
+          <span>{{ block_settings.whatsapp_label | escape }}</span>
+          <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- elsif request.design_mode -%}
+  <div
+    class="mg-fit-note"
+    {{ block.shopify_attributes }}
+  >
+    "Will it fit?" is hidden: this product has no car make or model yet. Fill in the product metafields Car make
+    and Car model to show it.
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Layout only; chips, card, link and tokens come from mg-theme.css, finish in mg-shop.css. */
+  .mg-fitinfo {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mg-fitinfo__inner {
+    display: grid;
+    gap: var(--mg-space-3);
+    min-width: 0;
+  }
+
+  .mg-fitinfo--card .mg-fitinfo__inner {
+    padding: var(--mg-space-4);
+  }
+
+  .mg-fitinfo .mg-fitinfo__title {
+    display: flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    margin: 0;
+    font-size: var(--mg-fs-title);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--mg-ink);
+  }
+
+  .mg-fitinfo__title .mg-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-fitinfo__list {
+    display: grid;
+    gap: var(--mg-space-3);
+    margin: 0;
+  }
+
+  .mg-fitinfo__row {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .mg-fitinfo__row--inline {
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: var(--mg-space-2);
+  }
+
+  .mg-fitinfo__row dt {
+    font-size: var(--mg-fs-micro);
+    font-weight: 500;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-fitinfo__row dd {
+    min-width: 0;
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+    color: var(--mg-ink);
+  }
+
+  /* Chips wrap (never run off the screen) and long model names break inside the chip */
+  .mg-fitinfo__chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-fitinfo .mg-fitinfo__chip {
+    max-width: 100%;
+    margin: 0;
+    white-space: normal;
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  .mg-fitinfo__more {
+    margin: 0;
+    font-size: var(--mg-fs-micro);
+    color: var(--mg-ink-2);
+  }
+
+  .mg-fitinfo .mg-fitinfo__note {
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    line-height: 1.5;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-fitinfo__wa {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 6px;
+    min-height: var(--mg-tap);
+    font-size: var(--mg-fs-small);
+    font-weight: 500;
+  }
+
+  .mg-fitinfo__wa > span {
+    text-decoration: inherit;
+  }
+
+  .mg-fitinfo__wa .mg-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: var(--mg-whatsapp);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG will it fit",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the car makes and models from the product metafields Car make (custom.car_make) and Car model (custom.car_model). Hidden on products without them."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "card",
+          "label": "Card (buy box)"
+        },
+        {
+          "value": "full",
+          "label": "Full list (accordion)"
+        }
+      ],
+      "default": "card"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Card layout only.",
+      "default": "Will it fit?"
+    },
+    {
+      "type": "range",
+      "id": "max_models",
+      "label": "Models shown on the card",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "makes_label",
+      "label": "Makes label",
+      "default": "Fits"
+    },
+    {
+      "type": "text",
+      "id": "models_label",
+      "label": "Models label",
+      "default": "Models"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_screen",
+      "label": "Show screen size",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "screen_label",
+      "label": "Screen size label",
+      "default": "Screen"
+    },
+    {
+      "type": "text",
+      "id": "universal_label",
+      "label": "Label for make Universal",
+      "default": "Most cars"
+    },
+    {
+      "type": "textarea",
+      "id": "universal_text",
+      "label": "Note for universal products",
+      "default": "Fits most cars with a standard radio slot or a factory screen with wired CarPlay. Send us your reg and we'll confirm."
+    },
+    {
+      "type": "textarea",
+      "id": "full_note",
+      "label": "Note under the full list",
+      "default": "Your model not listed? Many other cars take it with a different harness. Send us your reg and a photo of your screen and we'll tell you."
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "Label",
+      "default": "Not sure? Send your reg on WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Pre-filled message",
+      "info": "[product] is replaced with the product name.",
+      "default": "Hi MG Car Audio, will [product] fit my car? My reg is: "
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Space above",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Space below",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG will it fit",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

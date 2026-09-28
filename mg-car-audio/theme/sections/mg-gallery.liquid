@@ -7,6 +7,26 @@
   endif
 
   assign item_count = section.blocks.size
+  assign layout = section.settings.layout | default: 'carousel'
+  assign section_classes = section_classes | append: ' mg-gallery--' | append: layout
+
+  # Filter chips (grid layout only): one chip per system used by at least one job, in the
+  # order they first appear
+  assign system_keys = ''
+  if layout == 'grid' and section.settings.show_filters
+    for block in section.blocks
+      assign sys_key = block.settings.system | default: 'other'
+      assign sys_marker = '|' | append: sys_key | append: '|'
+      unless system_keys contains sys_marker
+        assign system_keys = system_keys | append: sys_marker
+      endunless
+    endfor
+  endif
+  assign system_list = system_keys | remove_first: '|' | split: '||'
+  assign show_filters = false
+  if system_list.size > 1
+    assign show_filters = true
+  endif
 
   assign follow_link = section.settings.follow_link
   assign follow_label = section.settings.follow_label | strip
@@ -34,14 +54,21 @@
   <div class="mg-container">
     <mg-carousel
       class="mg-carousel mg-carousel--bleed mg-gallery__carousel"
-      style="--mg-carousel-mobile: 1.6; --mg-carousel-tablet: 2.6;"
+      {% if layout == 'strip' %}
+        style="--mg-carousel-mobile: 1.25; --mg-carousel-tablet: 2.2; --mg-carousel-desktop: 3;"
+      {% else %}
+        style="--mg-carousel-mobile: 1.6; --mg-carousel-tablet: 2.6;"
+      {% endif %}
+      {% if show_filters %}
+        data-mg-gallery-filterable
+      {% endif %}
     >
       <div class="mg-head">
         <div class="mg-head__text">
           {%- if heading != blank -%}
             <h2
               id="{{ heading_id }}"
-              class="mg-head__title"
+              class="mg-head__title mg-pg-caps"
             >
               {{ heading | escape }}
             </h2>
@@ -54,7 +81,11 @@
         {%- if follow_link != blank and follow_label != blank -%}
           {%- assign show_follow = true -%}
         {%- endif -%}
-        {%- if show_follow or item_count > 1 -%}
+        {%- assign show_nav = false -%}
+        {%- if item_count > 1 and layout != 'grid' -%}
+          {%- assign show_nav = true -%}
+        {%- endif -%}
+        {%- if show_follow or show_nav -%}
           <div class="mg-head__actions{% unless show_follow %} mg-gallery__actions--nav{% endunless %}">
             {%- if show_follow -%}
               <a
@@ -70,8 +101,8 @@
                 {%- endif -%}
               </a>
             {%- endif -%}
-            {%- if item_count > 1 -%}
-              <div class="mg-carousel__nav mg-carousel__nav--desktop">
+            {%- if show_nav -%}
+              <div class="mg-carousel__nav{% if layout != 'strip' %} mg-carousel__nav--desktop{% endif %}">
                 <button
                   class="mg-carousel__btn"
                   type="button"
@@ -93,6 +124,44 @@
           </div>
         {%- endif -%}
       </div>
+
+      {%- if show_filters -%}
+        <div
+          class="mg-chips mg-chips--bleed mg-gallery__filters"
+          role="group"
+          aria-label="Filter jobs by system"
+        >
+          <button
+            class="mg-chip"
+            type="button"
+            aria-pressed="true"
+            data-mg-filter="all"
+          >
+            All
+          </button>
+          {%- for key in system_list -%}
+            {%- assign key = key | remove: '|' -%}
+            {%- if key == blank -%}{%- continue -%}{%- endif -%}
+            <button
+              class="mg-chip"
+              type="button"
+              aria-pressed="false"
+              data-mg-filter="{{ key }}"
+            >
+              {%- case key -%}
+                {%- when 'carplay' -%}CarPlay &amp; Android Auto
+                {%- when 'screens' -%}Screen upgrades
+                {%- when 'radios' -%}Android radios
+                {%- when 'sound' -%}Sound
+                {%- when 'cameras' -%}Cameras
+                {%- when 'conversions' -%}Japanese imports
+                {%- when 'repairs' -%}Repairs
+                {%- else -%}Other
+              {%- endcase -%}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
 
       {%- if item_count > 0 -%}
         <ul
@@ -129,7 +198,17 @@
                 endif
               endif
 
-              if cell_class contains 'tall'
+              if layout != 'carousel'
+                assign cell_class = ''
+              endif
+
+              if layout == 'grid'
+                assign img_sizes = '(min-width: 1184px) 368px, (min-width: 990px) 33vw, 50vw'
+                assign img_widths = '320, 400, 560, 720, 960'
+              elsif layout == 'strip'
+                assign img_sizes = '(min-width: 1184px) 368px, (min-width: 990px) 33vw, (min-width: 750px) 45vw, 80vw'
+                assign img_widths = '320, 400, 560, 720, 960'
+              elsif cell_class contains 'tall'
                 assign img_sizes = '(min-width: 1184px) 552px, (min-width: 990px) 50vw, (min-width: 750px) 40vw, 64vw'
                 assign img_widths = '400, 560, 720, 960, 1200, 1600'
               else
@@ -288,6 +367,7 @@
 
             <li
               class="mg-carousel__slide mg-gallery__item{{ cell_class }}"
+              data-mg-system="{{ bs.system | default: 'other' }}"
               {{ block.shopify_attributes }}
             >
               <figure class="mg-gallery__figure">
@@ -334,6 +414,8 @@
                     {{ media_image }}
                     {%- if block.type == 'video' and request.design_mode -%}
                       <span class="mg-badge mg-badge--card mg-gallery__hint">Add a video or a YouTube or Vimeo link</span>
+                    {%- elsif request.design_mode and picked_image == blank -%}
+                      <span class="mg-sample-tag mg-gallery__hint">Sample photo: upload a real job photo</span>
                     {%- endif -%}
                   </div>
                 {%- endif -%}
@@ -341,7 +423,8 @@
                 {%- if car != blank or job != blank -%}
                   <figcaption class="mg-gallery__caption">
                     {%- if car != blank -%}
-                      <span class="mg-gallery__car">{{ car | escape }}</span>
+                      <strong class="mg-gallery__car">{{ car | escape }}</strong>
+                      {%- if job != blank %}, {% endif -%}
                     {%- endif -%}
                     {%- if job != blank -%}
                       <span class="mg-gallery__job">{{ job | escape }}</span>
@@ -352,6 +435,13 @@
             </li>
           {%- endfor -%}
         </ul>
+        {%- if show_filters -%}
+          <p
+            class="mg-visually-hidden"
+            role="status"
+            data-mg-filter-status
+          ></p>
+        {%- endif -%}
       {%- elsif request.design_mode -%}
         <p class="mg-help">Add "Image" or "Video" blocks to show recent jobs.</p>
       {%- endif -%}
@@ -398,6 +488,28 @@
     }
 
     customElements.define('mg-gallery-video', MgGalleryVideo);
+  }
+
+  if (!window.mgGalleryFilterBound) {
+    window.mgGalleryFilterBound = true;
+    document.addEventListener('click', (event) => {
+      const chip = event.target instanceof Element ? event.target.closest('[data-mg-filter]') : null;
+      if (!chip) return;
+      const root = chip.closest('[data-mg-gallery-filterable]');
+      if (!root) return;
+      const value = chip.getAttribute('data-mg-filter');
+      root.querySelectorAll('[data-mg-filter]').forEach((other) => {
+        other.setAttribute('aria-pressed', other === chip ? 'true' : 'false');
+      });
+      root.querySelectorAll('[data-mg-system]').forEach((item) => {
+        item.hidden = value !== 'all' && item.getAttribute('data-mg-system') !== value;
+      });
+      const status = root.querySelector('[data-mg-filter-status]');
+      if (status) {
+        const shown = root.querySelectorAll('[data-mg-system]:not([hidden])').length;
+        status.textContent = shown + (shown === 1 ? ' job shown' : ' jobs shown');
+      }
+    });
   }
 
   if (!window.mgGalleryEditorBound) {
@@ -468,23 +580,56 @@
     white-space: normal;
   }
 
+  /* "Make Model, what we fitted": one line of text, the car in bold */
   .mg-gallery__caption {
-    display: grid;
-    gap: 2px;
     padding-inline: var(--mg-space-1);
+    font-size: var(--mg-fs-small);
+    line-height: 1.4;
+    color: var(--mg-ink-2);
+    text-wrap: pretty;
   }
 
   .mg-gallery__car {
-    font-size: var(--mg-fs-small);
     font-weight: 600;
-    line-height: 1.3;
     color: var(--mg-ink);
   }
 
-  .mg-gallery__job {
+  .mg-gallery__filters {
+    margin-bottom: var(--mg-space-5);
+  }
+
+  .mg-gallery__item[hidden] {
+    display: none;
+  }
+
+  /* Grid (the jobs archive): 2 up on phones, 3 up from 990px, every job shown */
+  .mg-gallery--grid .mg-gallery__grid {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-columns: auto;
+    column-gap: var(--mg-gap);
+    row-gap: var(--mg-space-5);
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .mg-gallery--grid .mg-gallery__caption {
     font-size: var(--mg-fs-micro);
-    line-height: 1.35;
-    color: var(--mg-ink-2);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-gallery--grid .mg-gallery__caption {
+      font-size: var(--mg-fs-small);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-gallery--grid .mg-gallery__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: var(--mg-space-6);
+    }
   }
 
   /* Video facade: nothing loads until the play button is pressed */
@@ -566,13 +711,13 @@
     display: none;
   }
 
-  /* Desktop: a bento grid instead of the swipe row */
+  /* Desktop: a bento grid instead of the swipe row (carousel layout) */
   @media screen and (min-width: 990px) {
-    .mg-gallery {
+    .mg-gallery--carousel {
       --mg-gallery-row: 232px;
     }
 
-    .mg-gallery .mg-gallery__grid {
+    .mg-gallery--carousel .mg-gallery__grid {
       grid-auto-flow: row;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-auto-columns: auto;
@@ -595,7 +740,7 @@
       grid-row: span 2;
     }
 
-    .mg-gallery .mg-gallery__media {
+    .mg-gallery--carousel .mg-gallery__media {
       flex: 1 1 0;
       min-height: 0;
       aspect-ratio: auto;
@@ -621,7 +766,7 @@
   "disabled_on": {
     "groups": ["header", "footer"]
   },
-  "max_blocks": 12,
+  "max_blocks": 24,
   "settings": [
     {
       "type": "paragraph",
@@ -662,6 +807,24 @@
     },
     {
       "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "carousel", "label": "Swipe row, photo mosaic on desktop" },
+        { "value": "strip", "label": "Strip of 3 (service pages)" },
+        { "value": "grid", "label": "Full grid with filters (jobs page)" }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filter chips by system",
+      "info": "Full grid only. A chip appears for each system used by at least one job.",
+      "default": true
+    },
+    {
+      "type": "select",
       "id": "background",
       "label": "Background",
       "options": [
@@ -686,7 +849,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "Upload a photo of a real job. Until you do, the fallback image below is shown."
+          "info": "Upload a photo of a real job (blur number plates). Until you do, the fallback below is shown: MG's own product and showroom photos, never stock."
         },
         {
           "type": "select",
@@ -750,10 +913,27 @@
           "default": "bmw-carplay"
         },
         {
+          "type": "select",
+          "id": "system",
+          "label": "System",
+          "info": "Used by the filter chips on the jobs page.",
+          "options": [
+            { "value": "carplay", "label": "CarPlay & Android Auto" },
+            { "value": "screens", "label": "Screen upgrades" },
+            { "value": "radios", "label": "Android radios" },
+            { "value": "sound", "label": "Sound" },
+            { "value": "cameras", "label": "Cameras" },
+            { "value": "conversions", "label": "Japanese imports" },
+            { "value": "repairs", "label": "Repairs" },
+            { "value": "other", "label": "Other" }
+          ],
+          "default": "carplay"
+        },
+        {
           "type": "text",
           "id": "car_label",
           "label": "Car",
-          "info": "Short, for example: BMW 3 Series",
+          "info": "Make and model, for example: BMW 3 Series. Shown in bold before the job.",
           "default": "BMW 3 Series"
         },
         {
@@ -850,6 +1030,23 @@
           "default": "showroom"
         },
         {
+          "type": "select",
+          "id": "system",
+          "label": "System",
+          "info": "Used by the filter chips on the jobs page.",
+          "options": [
+            { "value": "carplay", "label": "CarPlay & Android Auto" },
+            { "value": "screens", "label": "Screen upgrades" },
+            { "value": "radios", "label": "Android radios" },
+            { "value": "sound", "label": "Sound" },
+            { "value": "cameras", "label": "Cameras" },
+            { "value": "conversions", "label": "Japanese imports" },
+            { "value": "repairs", "label": "Repairs" },
+            { "value": "other", "label": "Other" }
+          ],
+          "default": "carplay"
+        },
+        {
           "type": "text",
           "id": "car_label",
           "label": "Car",
@@ -889,6 +1086,7 @@
           "type": "image",
           "settings": {
             "fallback": "android-auto",
+            "system": "screens",
             "car_label": "Screen upgrade",
             "caption": "Wireless Android Auto"
           }
@@ -897,6 +1095,7 @@
           "type": "image",
           "settings": {
             "fallback": "dash-radio",
+            "system": "radios",
             "car_label": "Radio upgrade",
             "caption": "New head unit fitted"
           }
@@ -905,6 +1104,7 @@
           "type": "image",
           "settings": {
             "fallback": "door-speaker",
+            "system": "sound",
             "car_label": "Speaker upgrade",
             "caption": "Front door speakers"
           }

@@ -1,0 +1,742 @@
+{%- liquid
+  assign uid = 'MgVisit-' | append: section.id
+  assign form_id = 'MgCallbackForm-' | append: section.id
+  assign heading = section.settings.heading | strip
+  assign heading_id = uid | append: '-heading'
+  assign business_name = settings.mg_business_name | default: shop.name
+
+  assign map_query = settings.mg_map_query
+  if map_query == blank
+    assign map_query = business_name | append: ', ' | append: settings.mg_street | append: ', ' | append: settings.mg_postcode
+  endif
+  assign map_query_encoded = map_query | url_encode
+  assign directions_href = 'https://www.google.com/maps/dir/?api=1&destination=' | append: map_query_encoded
+
+  assign street_lines = settings.mg_street | split: ', '
+
+  assign show_whatsapp = false
+  if settings.mg_whatsapp_enabled and settings.mg_whatsapp_number != blank
+    assign show_whatsapp = true
+  endif
+  assign wa_text = settings.mg_whatsapp_message | url_encode
+  assign wa_href = 'https://wa.me/' | append: settings.mg_whatsapp_number | append: '?text=' | append: wa_text
+
+  assign photo_alt = section.settings.image.alt
+  if section.settings.image == blank
+    assign photo_alt = 'Screens, speakers and head units on display in the ' | append: business_name | append: ' showroom'
+  endif
+-%}
+
+<section
+  class="mg-section mg-visit"
+  {% if heading != blank %}
+    aria-labelledby="{{ heading_id }}"
+  {% endif %}
+>
+  <div class="mg-container mg-visit__layout">
+    <div
+      class="mg-visit__media"
+      data-mg-reveal
+    >
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1600
+          | image_tag:
+            widths: '500, 800, 1100, 1400, 1600',
+            sizes: '(min-width: 1184px) 544px, (min-width: 990px) 46vw, 100vw',
+            loading: 'lazy',
+            alt: photo_alt,
+            class: 'mg-visit__img'
+        }}
+      {%- else -%}
+        {%- render 'mg-asset-image',
+          asset: 'mg-showroom',
+          sizes: '(min-width: 1184px) 544px, (min-width: 990px) 46vw, 100vw',
+          loading: 'lazy',
+          alt: photo_alt,
+          class: 'mg-visit__img'
+        -%}
+      {%- endif -%}
+      {%- if section.settings.photo_caption != blank -%}
+        <span class="mg-visit__caption">
+          {%- render 'mg-icon', icon: 'map-pin' -%}
+          {{- section.settings.photo_caption | escape -}}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div
+      class="mg-visit__info"
+      data-mg-reveal
+    >
+      <div class="mg-visit__group">
+        <h3 class="mg-visit__label">Workshop and showroom</h3>
+        <address class="mg-visit__address">
+          <strong>{{ business_name | escape }}</strong>
+          {%- for line in street_lines -%}
+            <br>{{ line | escape }}
+          {%- endfor -%}
+          {%- if settings.mg_locality != blank or settings.mg_postcode != blank -%}
+            <br>
+            {{- settings.mg_locality | escape -}}
+            {%- if settings.mg_locality != blank and settings.mg_postcode != blank %}, {% endif -%}
+            {{- settings.mg_postcode | escape -}}
+          {%- endif -%}
+        </address>
+        <a
+          class="mg-link mg-visit__directions"
+          href="{{ directions_href | escape }}"
+          target="_blank"
+          rel="noopener"
+        >
+          Get directions
+          <span class="mg-visually-hidden">(opens Google Maps in a new tab)</span>
+        </a>
+      </div>
+
+      <div class="mg-visit__group">
+        <h3 class="mg-visit__label">Opening hours</h3>
+        <dl class="mg-visit__hours">
+          <div>
+            <dt>Mon to Fri</dt>
+            <dd>{{ settings.mg_hours_weekdays | default: 'Closed' | escape }}</dd>
+          </div>
+          <div>
+            <dt>Saturday</dt>
+            <dd>{{ settings.mg_hours_saturday | default: 'Closed' | escape }}</dd>
+          </div>
+          <div>
+            <dt>Sunday</dt>
+            <dd>{{ settings.mg_hours_sunday | default: 'Closed' | escape }}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="mg-visit__group mg-visit__group--contact">
+        <h3 class="mg-visit__label">Talk to us</h3>
+        {%- if settings.mg_phone_e164 != blank and settings.mg_phone_display != blank -%}
+          <a
+            class="mg-visit__phone"
+            href="tel:+{{ settings.mg_phone_e164 }}"
+          >
+            {%- render 'mg-icon', icon: 'phone' -%}
+            <span>{{ settings.mg_phone_display | escape }}</span>
+          </a>
+        {%- endif -%}
+        {%- if show_whatsapp -%}
+          <a
+            class="mg-link mg-visit__wa"
+            href="{{ wa_href }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp' -%}
+            <span>WhatsApp us</span>
+            <span class="mg-visually-hidden"> (opens WhatsApp)</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.mg_email != blank -%}
+          <a
+            class="mg-link mg-visit__mail"
+            href="mailto:{{ settings.mg_email | escape }}"
+          >
+            {%- render 'mg-icon', icon: 'mail' -%}
+            <span>{{ settings.mg_email | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div
+      class="mg-visit__form-wrap"
+      data-mg-reveal
+    >
+      <div class="mg-head mg-head--caps mg-visit__head">
+        <div class="mg-head__text">
+          {%- if heading != blank -%}
+            <h2
+              class="mg-head__title"
+              id="{{ heading_id }}"
+            >
+              {{ heading | escape }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}
+            <p class="mg-head__sub">{{ section.settings.text | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="mg-card mg-visit__card">
+        {%- form 'contact', id: form_id, class: 'mg-visit__form' -%}
+          {%- liquid
+            assign form_matches = false
+            if form.id == form_id or form.id == blank
+              assign form_matches = true
+            endif
+            assign is_success = false
+            if form.posted_successfully? and form_matches
+              assign is_success = true
+            endif
+            assign has_errors = false
+            if form.errors and form_matches
+              assign has_errors = true
+            endif
+          -%}
+          <input
+            type="hidden"
+            name="contact[Enquiry]"
+            value="{{ section.settings.enquiry_type | default: 'Callback request (home page)' | escape }}"
+          >
+
+          {%- if is_success -%}
+            <div
+              class="mg-visit__status mg-visit__status--success"
+              tabindex="-1"
+              autofocus
+              role="status"
+            >
+              <span
+                class="mg-visit__status-icon"
+                aria-hidden="true"
+              >
+                {%- render 'mg-icon', icon: 'check' -%}
+              </span>
+              <p class="mg-visit__status-title">
+                {{- section.settings.success_heading | default: 'Thanks, we will call you back' | escape -}}
+              </p>
+              {%- if section.settings.success_text != blank -%}
+                <p class="mg-visit__status-text">{{ section.settings.success_text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            {%- if has_errors -%}
+              <div
+                class="mg-visit__status mg-visit__status--error"
+                tabindex="-1"
+                autofocus
+                role="alert"
+              >
+                <p class="mg-visit__status-title">We couldn't send that yet. Please check the details below.</p>
+                {{ form.errors | default_errors }}
+              </div>
+            {%- endif -%}
+
+            <div class="mg-visit__grid">
+              <div class="mg-field">
+                <label
+                  class="mg-label"
+                  for="{{ uid }}-name"
+                >
+                  Name
+                </label>
+                <input
+                  class="mg-input"
+                  type="text"
+                  id="{{ uid }}-name"
+                  name="contact[name]"
+                  autocomplete="name"
+                  required
+                  value="{{ form.name }}"
+                >
+              </div>
+
+              <div class="mg-field">
+                <label
+                  class="mg-label"
+                  for="{{ uid }}-phone"
+                >
+                  Mobile number
+                </label>
+                <input
+                  class="mg-input"
+                  type="tel"
+                  id="{{ uid }}-phone"
+                  name="contact[phone]"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  required
+                  placeholder="087 123 4567"
+                  value="{{ form.phone }}"
+                >
+              </div>
+
+              <div class="mg-field">
+                <label
+                  class="mg-label"
+                  for="{{ uid }}-email"
+                >
+                  Email
+                </label>
+                <input
+                  class="mg-input"
+                  type="email"
+                  id="{{ uid }}-email"
+                  name="contact[email]"
+                  autocomplete="email"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  required
+                  aria-describedby="{{ uid }}-email-help"
+                  value="{{ form.email }}"
+                >
+                <p
+                  class="mg-help"
+                  id="{{ uid }}-email-help"
+                >
+                  For your quote in writing.
+                </p>
+              </div>
+
+              <div class="mg-field">
+                <label
+                  class="mg-label"
+                  for="{{ uid }}-reg"
+                >
+                  Reg <span class="mg-label__optional">(optional)</span>
+                </label>
+                <input
+                  class="mg-input mg-visit__reg"
+                  type="text"
+                  id="{{ uid }}-reg"
+                  name="contact[Registration number]"
+                  autocomplete="off"
+                  autocapitalize="characters"
+                  spellcheck="false"
+                  maxlength="12"
+                  placeholder="241-D-12345"
+                >
+              </div>
+
+              <div class="mg-field mg-visit__field--full">
+                <label
+                  class="mg-label"
+                  for="{{ uid }}-need"
+                >
+                  What do you need?
+                </label>
+                <textarea
+                  class="mg-input mg-visit__textarea"
+                  id="{{ uid }}-need"
+                  name="contact[body]"
+                  rows="3"
+                  required
+                  placeholder="{{ section.settings.message_placeholder | escape }}"
+                >{{ form.body }}</textarea>
+              </div>
+            </div>
+
+            <button
+              class="mg-btn mg-btn--primary mg-btn--lg mg-btn--block mg-visit__submit"
+              type="submit"
+            >
+              {{- section.settings.button_label | default: 'Request a callback' | escape -}}
+            </button>
+            {%- if section.settings.form_note != blank -%}
+              <p class="mg-help mg-visit__note">{{ section.settings.form_note | escape }}</p>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  /*
+   * Visit + callback: the home page closer. The real MG showroom photo with the address, hours
+   * and contact links, beside a short callback form (Shopify contact form: name, mobile, email,
+   * reg, what you need). Phones: photo, form, then the visit details.
+   */
+  .mg-visit__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'media'
+      'form'
+      'info';
+    gap: var(--mg-space-6);
+  }
+
+  .mg-visit__media {
+    position: relative;
+    grid-area: media;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--mg-radius-lg);
+    background-color: var(--mg-band);
+  }
+
+  .mg-visit .mg-visit__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mg-visit__caption {
+    position: absolute;
+    inset-block-end: var(--mg-space-3);
+    inset-inline-start: var(--mg-space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    padding: var(--mg-space-2) var(--mg-space-3);
+    border-radius: var(--mg-radius-pill);
+    background-color: rgb(var(--mg-night-rgb) / 0.78);
+    color: var(--mg-white);
+    font-size: var(--mg-fs-micro);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .mg-visit__caption .mg-icon {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    color: var(--mg-red);
+  }
+
+  .mg-visit__info {
+    display: grid;
+    grid-area: info;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-space-5);
+  }
+
+  .mg-visit__group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mg-space-2);
+    min-width: 0;
+  }
+
+  .mg-visit .mg-visit__label {
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mg-ink-3);
+  }
+
+  .mg-visit__address {
+    font-size: var(--mg-fs-small);
+    font-style: normal;
+    line-height: 1.55;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-visit__address strong {
+    font-weight: 600;
+    color: var(--mg-ink);
+  }
+
+  .mg-visit__directions,
+  .mg-visit__wa,
+  .mg-visit__mail {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-height: var(--mg-tap);
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-visit__wa > span,
+  .mg-visit__mail > span {
+    text-decoration: inherit;
+    text-decoration-color: currentcolor;
+  }
+
+  .mg-visit__wa .mg-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--mg-whatsapp);
+  }
+
+  .mg-visit__mail .mg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mg-visit__hours {
+    display: grid;
+    gap: var(--mg-space-1);
+    width: 100%;
+    max-width: 280px;
+    margin: 0;
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-visit__hours > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--mg-space-4);
+  }
+
+  .mg-visit__hours dt {
+    color: var(--mg-ink-2);
+  }
+
+  .mg-visit__hours dd {
+    margin: 0;
+    font-weight: 500;
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-visit__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-height: var(--mg-tap);
+    border-radius: var(--mg-radius-xs);
+    color: var(--mg-ink);
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-visit__phone .mg-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--mg-red);
+  }
+
+  @media (hover: hover) {
+    .mg-visit__phone:hover span {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  .mg-visit__form-wrap {
+    grid-area: form;
+    min-width: 0;
+  }
+
+  .mg-visit .mg-visit__head {
+    margin-block-end: var(--mg-space-4);
+  }
+
+  .mg-visit__card {
+    padding: var(--mg-space-5);
+  }
+
+  .mg-visit__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--mg-space-4);
+    margin-block-end: var(--mg-space-5);
+  }
+
+  .mg-visit .mg-visit__reg {
+    text-transform: uppercase;
+  }
+
+  .mg-visit .mg-visit__textarea {
+    height: auto;
+    min-height: 104px;
+    padding-block: var(--mg-space-3);
+    resize: vertical;
+  }
+
+  .mg-visit__note {
+    margin-block-start: var(--mg-space-3);
+    text-align: center;
+  }
+
+  .mg-visit__status {
+    display: grid;
+    gap: var(--mg-space-2);
+    padding: var(--mg-space-4);
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-band);
+  }
+
+  .mg-visit__status--error {
+    margin-block-end: var(--mg-space-4);
+    border-inline-start: 3px solid var(--mg-error);
+  }
+
+  .mg-visit__status--error ul {
+    margin: 0;
+    padding-inline-start: 1.2em;
+    color: var(--mg-error);
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-visit__status-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--mg-radius-pill);
+    background-color: var(--mg-success);
+    color: var(--mg-page);
+  }
+
+  .mg-visit__status-icon .mg-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .mg-visit__status-title {
+    margin: 0;
+    font-weight: 600;
+    color: var(--mg-ink);
+  }
+
+  .mg-visit__status-text {
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-visit__info {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mg-visit__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .mg-visit__field--full {
+      grid-column: 1 / -1;
+    }
+
+    .mg-visit__card {
+      padding: var(--mg-space-6);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-visit__layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'media form'
+        'info form';
+      grid-template-rows: auto 1fr;
+      gap: var(--mg-space-6) var(--mg-space-8);
+    }
+
+    .mg-visit__info {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+    }
+
+    .mg-visit__group--contact {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--mg-space-2) var(--mg-space-5);
+    }
+
+    .mg-visit__group--contact .mg-visit__label {
+      flex-basis: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG visit and callback",
+  "tag": "div",
+  "class": "mg-visit-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "The address, opening hours, phone, WhatsApp and email come from Theme settings > MG Car Audio: business details. Requests arrive by email at the store's contact address in Shopify admin."
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Request a callback"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Tell us your car and what you need. We'll call you back with a fixed fitted price."
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Example in the message box",
+      "default": "For example: wireless CarPlay for a 2017 BMW 3 Series"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Request a callback"
+    },
+    {
+      "type": "text",
+      "id": "form_note",
+      "label": "Note under the button",
+      "info": "Leave blank to hide it.",
+      "default": "We call back during opening hours."
+    },
+    {
+      "type": "text",
+      "id": "enquiry_type",
+      "label": "Enquiry type (email label)",
+      "info": "Not shown on the site. Added to the notification email so MG can tell callbacks from quote requests.",
+      "default": "Callback request (home page)"
+    },
+    {
+      "type": "text",
+      "id": "success_heading",
+      "label": "Thank-you heading",
+      "default": "Thanks, we'll call you back"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Thank-you text",
+      "default": "We'll ring you on the number you gave during opening hours. Need us sooner? Call or WhatsApp us."
+    },
+    {
+      "type": "header",
+      "content": "Photo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Workshop or showroom photo",
+      "info": "Leave blank to use MG's showroom photo. Use MG's own premises, not a stock photo."
+    },
+    {
+      "type": "text",
+      "id": "photo_caption",
+      "label": "Label on the photo",
+      "info": "Leave blank to hide it.",
+      "default": "Our Dublin 12 showroom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG visit and callback",
+      "category": "MG Car Audio"
+    }
+  ]
+}
+{% endschema %}

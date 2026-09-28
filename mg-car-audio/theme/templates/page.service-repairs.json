@@ -1,0 +1,283 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "wrench",
+            "text": "Fault found and fixed"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "screen",
+            "text": "Screens and head units"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "speaker",
+            "text": "No-sound faults"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "car",
+            "text": "Most makes covered"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/pages/services",
+        "breadcrumb_schema": true,
+        "heading": "Car audio repairs and radio codes",
+        "title_style": "caps",
+        "intro": "No sound, a black screen or a radio asking for a code? We find the fault and fix it at our Dublin 12 workshop.",
+        "show_rating": true,
+        "price_prefix": "From",
+        "price": "",
+        "price_suffix": "fitted",
+        "duration": "",
+        "price_note": "Price on request: tell us what is happening and your reg.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "quote_service": "repair",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for a repair. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-img-panel-workshop.webp"
+      }
+    },
+    "fit": {
+      "type": "mg-service-details",
+      "blocks": {
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Which cars we fit",
+            "makes": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover",
+            "chip_links": true,
+            "chip_service": "repair",
+            "note": "Not listed? Most makes and imports are covered: tap your make or send us your reg.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "Fault diagnosis before any work starts\nPrice agreed before we fix it\nFuses, wiring, amplifiers and head units checked\nRadio codes recovered where possible\nFull test before you drive away",
+            "show_warranty": true
+          }
+        },
+        "price_1": {
+          "type": "price_row",
+          "settings": {
+            "label": "No-sound repair",
+            "price": "On request",
+            "note": "Diagnosis first"
+          }
+        },
+        "price_2": {
+          "type": "price_row",
+          "settings": {
+            "label": "Black-screen repair",
+            "price": "On request",
+            "note": "Diagnosis first"
+          }
+        },
+        "price_3": {
+          "type": "price_row",
+          "settings": {
+            "label": "Radio password or code",
+            "price": "On request"
+          }
+        }
+      },
+      "block_order": [
+        "makes",
+        "included",
+        "price_1",
+        "price_2",
+        "price_3"
+      ],
+      "settings": {
+        "heading": "Fixed prices, fitted properly",
+        "intro": "Tap your make to start a quote.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fixed prices, fitted at our unit in Ballymount, Dublin 12. Send us your reg and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/pages/book-a-fitting",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for a repair. My reg is: ",
+        "card_show_contact": false,
+        "output_schema": true,
+        "schema_name": "Car audio and screen repairs",
+        "schema_description": "Car audio, head unit and screen repairs in Dublin 12: no-sound faults, black screens and radio codes."
+      }
+    },
+    "jobs": {
+      "type": "mg-gallery",
+      "blocks": {
+        "job_1": {
+          "type": "image",
+          "settings": {
+            "fallback": "none",
+            "system": "repairs",
+            "car_label": "Your car",
+            "caption": "screen repaired"
+          }
+        },
+        "job_2": {
+          "type": "image",
+          "settings": {
+            "fallback": "none",
+            "system": "repairs",
+            "car_label": "Your car",
+            "caption": "sound restored"
+          }
+        },
+        "job_3": {
+          "type": "image",
+          "settings": {
+            "fallback": "none",
+            "system": "repairs",
+            "car_label": "Your car",
+            "caption": "radio code recovered"
+          }
+        }
+      },
+      "block_order": [
+        "job_1",
+        "job_2",
+        "job_3"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "layout": "strip",
+        "show_filters": false,
+        "background": "surface"
+      },
+      "disabled": true
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "My radio is asking for a code. Can you help?",
+            "answer": "<p>Yes. Radio codes often come up after a battery change. Bring the car in and we will get it working again.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "My screen stays black or keeps restarting.",
+            "answer": "<p>We diagnose and repair head units and screens. You get a price before we start.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "No sound from my speakers.",
+            "answer": "<p>We trace the fault, from fuses and wiring to amplifiers, and fix it.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3"
+      ],
+      "settings": {
+        "heading": "Repair questions",
+        "text": "What drivers ask us before booking.",
+        "show_contact": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
+        "output_faq_schema": true,
+        "show_group_nav": false,
+        "background": "page"
+      }
+    },
+    "about": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Honest diagnosis first",
+            "content": "<p>We find out what is wrong before we quote, so you only pay for the fix you need.</p>",
+            "use_page_content": false
+          }
+        }
+      },
+      "block_order": [
+        "text_1"
+      ],
+      "settings": {
+        "heading": "About repairs",
+        "intro": "",
+        "layout": "stacked",
+        "background": "page",
+        "show_card": false,
+        "sticky_card": false,
+        "card_heading": "",
+        "card_text": "",
+        "deposit_text": "",
+        "card_button_label": "",
+        "card_show_whatsapp": false,
+        "card_show_contact": false,
+        "output_schema": false
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "fit",
+    "jobs",
+    "faq",
+    "about",
+    "visit"
+  ]
+}

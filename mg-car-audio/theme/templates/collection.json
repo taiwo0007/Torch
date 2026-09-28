@@ -19,14 +19,76 @@
         "fallback_text": "Kit we fit ourselves at our Dublin 12 workshop, with honest advice on what suits your car. Not sure where to start? Send us your reg and we'll point you to the right part.",
         "read_more_label": "Read more",
         "read_less_label": "Show less",
-        "chips": "Fitted in Dublin\nWired and wireless options\nAdvice on WhatsApp",
+        "chips": "Fitted in Dublin 12\nFixed fitted prices\nAdvice on WhatsApp",
         "show_help": true,
         "help_text": "Not sure what fits your car?",
         "help_link_label": "WhatsApp us",
         "auto_image": true,
         "fallback_asset": "mg-img-hero-3.webp",
-        "show_image": true
-      }
+        "show_image": true,
+        "show_from_price": true,
+        "from_label": "From",
+        "fitted_label": "fitted",
+        "cars_label": "Shop by car",
+        "empty_heading": "New kit is on its way",
+        "empty_text": "We're adding products to this range now. Tell us your car and what you'd like fitted, and we'll send you a fixed fitted price today.",
+        "empty_primary_label": "Get a quote",
+        "empty_primary_url": "",
+        "empty_link_label": "See our services",
+        "empty_link_url": ""
+      },
+      "blocks": {
+        "bmw": {
+          "type": "make",
+          "settings": {
+            "label": "BMW",
+            "makes": "BMW"
+          }
+        },
+        "merc": {
+          "type": "make",
+          "settings": {
+            "label": "Mercedes-Benz",
+            "makes": "Mercedes-Benz"
+          }
+        },
+        "audi": {
+          "type": "make",
+          "settings": {
+            "label": "Audi",
+            "makes": "Audi"
+          }
+        },
+        "vw": {
+          "type": "make",
+          "settings": {
+            "label": "VW",
+            "makes": "Volkswagen"
+          }
+        },
+        "toyota": {
+          "type": "make",
+          "settings": {
+            "label": "Toyota",
+            "makes": "Toyota"
+          }
+        },
+        "jp": {
+          "type": "make",
+          "settings": {
+            "label": "Japanese imports",
+            "makes": "Toyota, Lexus, Nissan, Honda, Mazda"
+          }
+        }
+      },
+      "block_order": [
+        "bmw",
+        "merc",
+        "audi",
+        "vw",
+        "toyota",
+        "jp"
+      ]
     },
     "main": {
       "type": "main-collection",
@@ -42,12 +104,12 @@
             "show_swatch_label": false,
             "show_filter_label": false,
             "enable_sorting": true,
-            "enable_grid_density": true,
-            "padding-block-start": 8,
+            "enable_grid_density": false,
+            "padding-block-start": 0,
             "padding-block-end": 8,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
-            "facets_margin_bottom": 8,
+            "facets_margin_bottom": 16,
             "facets_margin_right": 20
           },
           "blocks": {}
@@ -56,7 +118,7 @@
           "type": "_product-card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 6,
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -82,7 +144,7 @@
               },
               "blocks": {}
             },
-            "product_title_4nY4eT": {
+            "mgcard_title": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
@@ -106,7 +168,26 @@
               },
               "blocks": {}
             },
-            "price_EzJzMm": {
+            "mgcard_fit": {
+              "type": "custom-liquid",
+              "name": "Fitment line and badge",
+              "settings": {
+                "custom_liquid": "{%- liquid\n  assign p = closest.product\n  assign makes = p.metafields.custom.car_make.value\n  assign screen = p.metafields.custom.screen_size.value | strip\n  assign names = ''\n  assign universal = false\n  assign make_count = 0\n  for make in makes\n    assign make_down = make | strip | downcase\n    if make_down == 'universal'\n      assign universal = true\n    elsif make_down != blank\n      assign make_count = make_count | plus: 1\n      if make_count <= 2\n        if names != blank\n          assign names = names | append: ', '\n        endif\n        assign names = names | append: make\n      endif\n    endif\n  endfor\n  assign extra_makes = make_count | minus: 2\n  assign badge = ''\n  for tag in p.tags\n    if tag contains 'badge:'\n      assign badge = tag | remove_first: 'badge:' | strip\n      break\n    endif\n  endfor\n-%}\n{%- if names != blank or universal or screen != blank -%}\n  <p class=\"mg-card-fit\">\n    {%- if names != blank -%}\n      <span>Fits {{ names | escape }}{% if extra_makes > 0 %} +{{ extra_makes }}{% endif %}</span>\n    {%- elsif universal -%}\n      <span>Fits most cars</span>\n    {%- endif -%}\n    {%- if screen != blank -%}\n      <span>{{ screen | escape }} screen</span>\n    {%- endif -%}\n  </p>\n{%- endif -%}\n{%- if badge != blank -%}\n  <span class=\"mg-card-badge\">{{ badge | escape }}</span>\n{%- endif -%}"
+              },
+              "blocks": {}
+            },
+            "mgcard_review": {
+              "type": "review",
+              "settings": {
+                "stars_style": "shaded",
+                "show_number": true,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
+            "mgcard_price": {
               "type": "price",
               "settings": {
                 "show_sale_price_first": true,
@@ -120,30 +201,29 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "padding-block-start": 0,
+                "padding-block-start": 4,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
               "blocks": {}
             },
-            "swatches": {
-              "type": "swatches",
-              "name": "t:names.swatches",
+            "mgcard_fitted": {
+              "type": "custom-liquid",
+              "name": "Fitted price line",
               "settings": {
-                "product_swatches_alignment": "flex-start",
-                "product_swatches_padding_top": 4,
-                "product_swatches_padding_bottom": 0,
-                "product_swatches_padding_left": 0,
-                "product_swatches_padding_right": 0
-              }
+                "custom_liquid": "{%- liquid\n  assign p = closest.product\n  assign fitted = p.metafields.custom.fitted_price.value | strip\n  assign product_type = p.type | strip | downcase\n-%}\n{%- if p.tags contains 'booking-deposit' -%}\n  <p class=\"mg-card-fitted\">Comes off your final bill</p>\n{%- elsif product_type == 'installation' -%}\n  <p class=\"mg-card-fitted mg-card-fitted--service\">Fitted at our {{ settings.mg_locality | default: 'Dublin 12' | escape }} workshop</p>\n{%- elsif fitted != blank -%}\n  <p class=\"mg-card-fitted\">or <strong>{{ fitted | escape }}</strong> fitted</p>\n{%- endif -%}"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "card-gallery",
-            "product_title_4nY4eT",
-            "price_EzJzMm",
-            "swatches"
+            "mgcard_title",
+            "mgcard_fit",
+            "mgcard_review",
+            "mgcard_price",
+            "mgcard_fitted"
           ]
         }
       },
@@ -154,11 +234,12 @@
         "product_grid_width": "centered",
         "full_width_on_mobile": false,
         "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
+        "columns_gap_vertical": 16,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
-        "padding-block-start": 16,
-        "padding-block-end": 56
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "enable_infinite_scroll": true
       }
     }
   },

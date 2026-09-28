@@ -65,6 +65,57 @@
     assign show_collections_crumb = true
   endif
 
+  # "From €X fitted": the collection metafield custom.from_price (text, e.g. €299), else the lowest
+  # custom.fitted_price among the first 50 products. Hidden when neither exists.
+  assign from_price = ''
+  if section.settings.show_from_price
+    assign from_price = collection.metafields.custom.from_price.value | strip
+    if from_price == blank
+      assign min_cents = 0
+      for item in collection.products limit: 50
+        assign fp = item.metafields.custom.fitted_price.value | remove: '€' | remove: ',' | strip
+        if fp == blank
+          continue
+        endif
+        assign fp_cents = fp | times: 100 | round
+        if fp_cents > 0
+          if min_cents == 0 or fp_cents < min_cents
+            assign min_cents = fp_cents
+          endif
+        endif
+      endfor
+      if min_cents > 0
+        assign from_price = min_cents | money_without_trailing_zeros
+      endif
+    endif
+  endif
+
+  # Shop by car: storefront filter on custom.car_make when it is enabled (Search & Discovery),
+  # else the product tag make:<Make> (single make) or a product search (a group of makes).
+  assign make_filter = nil
+  for filter in collection.filters
+    if filter.param_name == 'filter.p.m.custom.car_make'
+      assign make_filter = filter
+      break
+    endif
+  endfor
+  assign base_url = collection.url | default: routes.all_products_collection_url
+
+  # No products at all (not a filtered empty result): show the MG empty state instead of Horizon's
+  assign store_empty = false
+  if collection.all_products_count == 0 or collection.all_products_count == nil
+    assign active_filter_count = 0
+    for filter in collection.filters
+      assign active_filter_count = active_filter_count | plus: filter.active_values.size
+      if filter.min_value.value != nil or filter.max_value.value != nil
+        assign active_filter_count = active_filter_count | plus: 1
+      endif
+    endfor
+    if active_filter_count == 0 and collection.products_count == 0
+      assign store_empty = true
+    endif
+  endif
+
   assign panel_classes = 'mg-panel mg-surface-night mg-red-line mg-ch__panel'
   if section.settings.show_image
     assign panel_classes = panel_classes | append: ' mg-ch__panel--media'
@@ -101,10 +152,21 @@
           {{ collection.title | escape }}
         </h1>
 
-        {%- if section.settings.show_count and product_count > 0 -%}
-          <p class="mg-ch__count">
-            {{- product_count }}
-            {% if product_count == 1 %}product{% else %}products{% endif -%}
+        {%- if from_price != blank or section.settings.show_count and product_count > 0 -%}
+          <p class="mg-ch__meta">
+            {%- if from_price != blank -%}
+              <span class="mg-price mg-ch__from">
+                <span class="mg-price__label">{{ section.settings.from_label | default: 'From' | escape }}</span>
+                {{ from_price }}
+                <span class="mg-price__label">{{ section.settings.fitted_label | default: 'fitted' | escape }}</span>
+              </span>
+            {%- endif -%}
+            {%- if section.settings.show_count and product_count > 0 -%}
+              <span class="mg-ch__count">
+                {{- product_count }}
+                {% if product_count == 1 %}product{% else %}products{% endif -%}
+              </span>
+            {%- endif -%}
           </p>
         {%- endif -%}
 
@@ -205,6 +267,151 @@
         </div>
       {%- endif -%}
     </div>
+
+    {%- if section.blocks.size > 0 and store_empty == false -%}
+      {%- capture make_chips -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign chip_label = block.settings.label | strip
+            assign chip_values = block.settings.makes | default: block.settings.label | split: ','
+            if chip_label == blank
+              continue
+            endif
+
+            assign chip_url = ''
+            assign chip_active = false
+
+            if make_filter
+              assign query = ''
+              assign found = 0
+              assign active_found = 0
+              for raw_value in chip_values
+                assign wanted = raw_value | strip | downcase
+                for filter_value in make_filter.values
+                  assign have = filter_value.value | downcase
+                  if have == wanted
+                    assign found = found | plus: 1
+                    if filter_value.active
+                      assign active_found = active_found | plus: 1
+                    endif
+                    assign encoded_value = filter_value.value | url_encode
+                    assign query = query | append: '&' | append: make_filter.param_name | append: '=' | append: encoded_value
+                  endif
+                endfor
+              endfor
+              if found == 0
+                continue
+              endif
+              if active_found == found
+                assign chip_active = true
+                assign chip_url = make_filter.url_to_remove
+              else
+                assign chip_url = base_url | append: '?' | append: query | replace_first: '?&', '?'
+              endif
+            else
+              if chip_values.size > 1
+                assign search_terms = chip_values | join: ' OR '
+                assign encoded_terms = search_terms | url_encode
+                assign chip_url = routes.search_url | append: '?type=product&q=' | append: encoded_terms
+              else
+                assign tag_handle = 'make-' | append: chip_values.first | strip | handleize
+                assign chip_url = base_url | append: '/' | append: tag_handle
+                for current_tag in current_tags
+                  assign current_handle = current_tag | handleize
+                  if current_handle == tag_handle
+                    assign chip_active = true
+                    assign chip_url = base_url
+                  endif
+                endfor
+              endif
+            endif
+          -%}
+          <li {{ block.shopify_attributes }}>
+            <a
+              class="mg-chip mg-ch__make"
+              href="{{ chip_url | escape }}"
+              {% if chip_active %}
+                aria-current="true"
+              {% endif %}
+            >
+              {{- chip_label | escape -}}
+              {%- if chip_active -%}
+                {%- render 'mg-icon', icon: 'x' -%}
+                <span class="mg-visually-hidden"> (remove filter)</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endcapture -%}
+
+      {%- if make_chips != blank -%}
+        <nav
+          class="mg-ch__cars"
+          aria-labelledby="MgShopByCar-{{ section.id }}"
+        >
+          <p
+            id="MgShopByCar-{{ section.id }}"
+            class="mg-ch__cars-label"
+          >
+            {{ section.settings.cars_label | default: 'Shop by car' | escape }}
+          </p>
+          <ul
+            class="mg-chips mg-ch__chips"
+            role="list"
+          >
+            {{ make_chips }}
+          </ul>
+        </nav>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if store_empty -%}
+      <div class="mg-card mg-ch-empty">
+        <span
+          class="mg-ch-empty__icon"
+          aria-hidden="true"
+        >
+          {%- render 'mg-icon', icon: 'wrench' -%}
+        </span>
+        <div class="mg-ch-empty__copy">
+          <h2 class="mg-ch-empty__title">{{ section.settings.empty_heading | escape }}</h2>
+          {%- if section.settings.empty_text != blank -%}
+            <p class="mg-ch-empty__text">{{ section.settings.empty_text | escape }}</p>
+          {%- endif -%}
+        </div>
+        <div class="mg-actions mg-ch-empty__actions">
+          {%- if section.settings.empty_primary_label != blank -%}
+            <a
+              class="mg-btn mg-btn--primary"
+              href="{{ section.settings.empty_primary_url | default: '/pages/get-a-quote' }}"
+            >
+              {{- section.settings.empty_primary_label | escape -}}
+            </a>
+          {%- endif -%}
+          {%- if wa_number != blank and settings.mg_whatsapp_enabled -%}
+            {%- assign empty_wa = 'Hi ' | append: business_name | append: ", I'm looking for " | append: collection.title | append: '. My reg is: ' | url_encode -%}
+            <a
+              class="mg-btn mg-btn--whatsapp"
+              href="https://wa.me/{{ wa_number }}?text={{ empty_wa }}"
+              target="_blank"
+              rel="noopener"
+            >
+              {%- render 'mg-icon', icon: 'whatsapp' -%}
+              <span>WhatsApp us</span>
+              <span class="mg-visually-hidden"> (opens WhatsApp in a new tab)</span>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.empty_link_label != blank -%}
+            <a
+              class="mg-link mg-ch-empty__link"
+              href="{{ section.settings.empty_link_url | default: '/pages/services' }}"
+            >
+              {{- section.settings.empty_link_label | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -350,11 +557,133 @@
     max-width: 22ch;
   }
 
-  .mg-ch__count {
+  .mg-ch__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--mg-space-1) var(--mg-space-4);
     margin: var(--mg-space-2) 0 0;
+  }
+
+  .mg-ch__from {
+    font-size: 1.125rem;
+  }
+
+  .mg-ch__from .mg-price__label {
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-ch__count {
     font-size: var(--mg-fs-small);
     color: var(--mg-ink-2);
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Shop by car: label then a chip row (scrolls on phones, wraps from 750px) */
+  .mg-ch__cars {
+    display: grid;
+    gap: var(--mg-space-2);
+    margin-block-start: var(--mg-space-4);
+  }
+
+  .mg-ch__cars-label {
+    margin: 0;
+    font-size: var(--mg-fs-small);
+    font-weight: 600;
+    color: var(--mg-ink);
+  }
+
+  .mg-ch__chips {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-ch__chips > li {
+    margin: 0;
+  }
+
+  .mg-ch__make .mg-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-ch__cars {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: var(--mg-space-4);
+    }
+
+    .mg-ch__chips.mg-chips {
+      flex-wrap: wrap;
+      overflow: visible;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  /* Empty collection */
+  .mg-ch-empty {
+    display: grid;
+    justify-items: start;
+    gap: var(--mg-space-4);
+    margin-block-start: var(--mg-space-5);
+    padding: var(--mg-space-5);
+  }
+
+  .mg-ch-empty__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--mg-radius-sm);
+    background-color: var(--mg-band-2);
+    color: var(--mg-ink);
+  }
+
+  .mg-ch-empty__icon .mg-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mg-ch-empty .mg-ch-empty__title {
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-h3);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--mg-ink);
+  }
+
+  .mg-ch-empty .mg-ch-empty__text {
+    max-width: 56ch;
+    margin: var(--mg-space-2) 0 0;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-ch-empty__actions {
+    align-items: center;
+  }
+
+  .mg-ch-empty__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--mg-tap);
+    padding-inline: var(--mg-space-2);
+  }
+
+  @media screen and (min-width: 750px) {
+    .mg-ch-empty {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      gap: var(--mg-space-4) var(--mg-space-5);
+      padding: var(--mg-space-6);
+    }
+
+    .mg-ch-empty__actions {
+      grid-column: 2;
+    }
   }
 
   /* Description with optional clamp */
@@ -526,14 +855,14 @@
     .mg-ch__panel--media {
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
       align-items: center;
-      min-height: 280px;
+      min-height: 240px;
     }
   }
 
   @media screen and (min-width: 990px) {
     .mg-ch__panel--media {
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      min-height: 340px;
+      min-height: 280px;
     }
 
     .mg-ch__media {
@@ -561,7 +890,9 @@
   "tag": "section",
   "class": "mg-collection-hero-section",
   "enabled_on": {
-    "templates": ["collection"]
+    "templates": [
+      "collection"
+    ]
   },
   "settings": [
     {
@@ -587,6 +918,25 @@
       "id": "show_count",
       "label": "Show product count",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_from_price",
+      "label": "Show \"From €X fitted\"",
+      "info": "Uses the collection metafield custom.from_price (for example €299), else the lowest product fitted price (custom.fitted_price).",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "from_label",
+      "label": "Text before the price",
+      "default": "From"
+    },
+    {
+      "type": "text",
+      "id": "fitted_label",
+      "label": "Text after the price",
+      "default": "fitted"
     },
     {
       "type": "header",
@@ -711,12 +1061,144 @@
         }
       ],
       "default": "mg-img-hero-3.webp"
+    },
+    {
+      "type": "header",
+      "content": "Shop by car"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add a Car make block for each chip. With the Car make filter switched on in the Search & Discovery app, chips filter this collection. Without it, they use the product tag make:<Make>."
+    },
+    {
+      "type": "text",
+      "id": "cars_label",
+      "label": "Label",
+      "default": "Shop by car"
+    },
+    {
+      "type": "header",
+      "content": "Empty collection"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shown instead of the product grid when a collection has no products yet."
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Heading",
+      "default": "New kit is on its way"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "Text",
+      "default": "We're adding products to this range now. Tell us your car and what you'd like fitted, and we'll send you a fixed fitted price today."
+    },
+    {
+      "type": "text",
+      "id": "empty_primary_label",
+      "label": "Button label",
+      "default": "Get a quote"
+    },
+    {
+      "type": "url",
+      "id": "empty_primary_url",
+      "label": "Button link",
+      "info": "Leave blank to link to /pages/get-a-quote."
+    },
+    {
+      "type": "text",
+      "id": "empty_link_label",
+      "label": "Link label",
+      "default": "See our services"
+    },
+    {
+      "type": "url",
+      "id": "empty_link_url",
+      "label": "Link",
+      "info": "Leave blank to link to /pages/services."
     }
   ],
   "presets": [
     {
       "name": "MG collection header",
-      "category": "Collection"
+      "category": "Collection",
+      "blocks": {
+        "bmw": {
+          "type": "make",
+          "settings": {
+            "label": "BMW",
+            "makes": "BMW"
+          }
+        },
+        "merc": {
+          "type": "make",
+          "settings": {
+            "label": "Mercedes-Benz",
+            "makes": "Mercedes-Benz"
+          }
+        },
+        "audi": {
+          "type": "make",
+          "settings": {
+            "label": "Audi",
+            "makes": "Audi"
+          }
+        },
+        "vw": {
+          "type": "make",
+          "settings": {
+            "label": "VW",
+            "makes": "Volkswagen"
+          }
+        },
+        "toyota": {
+          "type": "make",
+          "settings": {
+            "label": "Toyota",
+            "makes": "Toyota"
+          }
+        },
+        "jp": {
+          "type": "make",
+          "settings": {
+            "label": "Japanese imports",
+            "makes": "Toyota, Lexus, Nissan, Honda, Mazda"
+          }
+        }
+      },
+      "block_order": [
+        "bmw",
+        "merc",
+        "audi",
+        "vw",
+        "toyota",
+        "jp"
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "make",
+      "name": "Car make",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Chip label",
+          "default": "BMW"
+        },
+        {
+          "type": "text",
+          "id": "makes",
+          "label": "Car make values",
+          "info": "As written in the product Car make field. Separate several with commas, for example Toyota, Lexus, Nissan. Leave blank to use the label."
+        }
+      ]
     }
   ]
 }

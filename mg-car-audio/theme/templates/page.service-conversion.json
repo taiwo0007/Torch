@@ -1,0 +1,291 @@
+{
+  "sections": {
+    "hero": {
+      "type": "mg-service-hero",
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "icon": "globe",
+            "text": "English menus"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "icon": "map-pin",
+            "text": "European maps"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "icon": "radio",
+            "text": "Irish radio stations"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "icon": "clock",
+            "text": "About 2 hours (BMW)"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4"
+      ],
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent_label": "Services",
+        "breadcrumb_parent_url": "/pages/services",
+        "breadcrumb_schema": true,
+        "heading": "Japanese import conversions",
+        "title_style": "caps",
+        "intro": "European maps, English menus and the European radio band for imported BMW, Mercedes-Benz and Volkswagen cars.",
+        "show_rating": true,
+        "price_prefix": "From",
+        "price": "€450",
+        "price_suffix": "fitted",
+        "duration": "About 2 hours",
+        "price_note": "BMW Japanese-to-European conversion. Mercedes-Benz and VW on request.",
+        "primary_label": "Book a fitting",
+        "primary_url": "/pages/book-a-fitting",
+        "quote_label": "Get a quote",
+        "quote_url": "/pages/get-a-quote",
+        "quote_service": "Japan-to-Europe",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "Hi MG Car Audio, I'd like a quote for a Japanese import conversion. My reg is: ",
+        "show_call": true,
+        "call_prefix": "Prefer to talk? Call",
+        "fallback_image": "mg-img-sys-conversion.webp"
+      }
+    },
+    "fit": {
+      "type": "mg-service-details",
+      "blocks": {
+        "makes": {
+          "type": "makes",
+          "settings": {
+            "title": "Which cars we fit",
+            "makes": "BMW\nMercedes-Benz\nVolkswagen\nLexus\nToyota\nNissan\nHonda",
+            "chip_links": true,
+            "chip_service": "Japan-to-Europe",
+            "note": "Other imports: send us your reg and we will check.",
+            "link_label": "Check your car",
+            "link_url": "/pages/get-a-quote"
+          }
+        },
+        "included": {
+          "type": "included",
+          "settings": {
+            "title": "What's included",
+            "items": "System check from your reg before you book\nMenus switched to English\nEuropean navigation maps\nRadio moved to the European FM band\nFull test before you drive away",
+            "show_warranty": true
+          }
+        },
+        "price_1": {
+          "type": "price_row",
+          "settings": {
+            "label": "BMW Japanese-to-European conversion",
+            "price": "€450",
+            "note": "About 2 hours",
+            "url": "/products/bmw-japan-to-europe-conversion"
+          }
+        },
+        "price_2": {
+          "type": "price_row",
+          "settings": {
+            "label": "Mercedes-Benz conversion",
+            "price": "On request"
+          }
+        },
+        "price_3": {
+          "type": "price_row",
+          "settings": {
+            "label": "Volkswagen conversion",
+            "price": "On request"
+          }
+        },
+        "price_4": {
+          "type": "price_row",
+          "settings": {
+            "label": "Radio frequency conversion",
+            "price": "On request",
+            "note": "Japanese radio to the European FM band"
+          }
+        }
+      },
+      "block_order": [
+        "makes",
+        "included",
+        "price_1",
+        "price_2",
+        "price_3",
+        "price_4"
+      ],
+      "settings": {
+        "heading": "Fixed prices, fitted properly",
+        "intro": "Tap your make to start a quote. Send us your reg first so we can confirm your system.",
+        "layout": "sidebar",
+        "background": "page",
+        "show_card": true,
+        "sticky_card": true,
+        "card_heading": "Fitted prices",
+        "card_text": "Fixed prices, fitted at our unit in Ballymount, Dublin 12. Send us your reg and we'll confirm what suits your car.",
+        "deposit_text": "A €50 deposit secures your fitting slot",
+        "card_button_label": "Book a fitting",
+        "card_button_url": "/pages/book-a-fitting",
+        "card_show_whatsapp": true,
+        "card_whatsapp_label": "WhatsApp us",
+        "card_whatsapp_message": "Hi MG Car Audio, I'd like a quote for a Japanese import conversion. My reg is: ",
+        "card_show_contact": false,
+        "output_schema": true,
+        "schema_name": "Japanese import conversion",
+        "schema_description": "Japanese-to-European conversions for imported BMW, Mercedes-Benz and Volkswagen cars in Dublin 12: English menus, European maps and the European radio band."
+      }
+    },
+    "jobs": {
+      "type": "mg-gallery",
+      "blocks": {
+        "job_1": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-japan",
+            "system": "conversions",
+            "car_label": "BMW",
+            "caption": "Japanese to European conversion"
+          }
+        },
+        "job_2": {
+          "type": "image",
+          "settings": {
+            "fallback": "mercedes-japan",
+            "system": "conversions",
+            "car_label": "Mercedes-Benz",
+            "caption": "Japanese to European conversion"
+          }
+        },
+        "job_3": {
+          "type": "image",
+          "settings": {
+            "fallback": "radio-frequency",
+            "system": "conversions",
+            "car_label": "Japanese import",
+            "caption": "radio moved to the European band"
+          }
+        }
+      },
+      "block_order": [
+        "job_1",
+        "job_2",
+        "job_3"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "layout": "strip",
+        "show_filters": false,
+        "background": "surface"
+      }
+    },
+    "faq": {
+      "type": "mg-faq",
+      "blocks": {
+        "q_1": {
+          "type": "question",
+          "settings": {
+            "question": "What does a conversion change?",
+            "answer": "<p>The menu language, the navigation maps and the radio band, so the car works like a European one.</p>"
+          }
+        },
+        "q_2": {
+          "type": "question",
+          "settings": {
+            "question": "How much is it?",
+            "answer": "<p>BMW conversions are <strong>€450</strong> and take about two hours. Mercedes-Benz and Volkswagen are priced on request.</p>"
+          }
+        },
+        "q_3": {
+          "type": "question",
+          "settings": {
+            "question": "Can you add CarPlay at the same time?",
+            "answer": "<p>Often, yes. Ask when you book and we will quote both together.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3"
+      ],
+      "settings": {
+        "heading": "Conversion questions",
+        "text": "What drivers ask us before booking.",
+        "show_contact": true,
+        "contact_heading": "Still have a question?",
+        "open_first": false,
+        "output_faq_schema": true,
+        "show_group_nav": false,
+        "background": "page"
+      }
+    },
+    "about": {
+      "type": "mg-service-details",
+      "blocks": {
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "title": "Make your import feel at home",
+            "content": "<p>Imported cars often arrive with Japanese menus, Japanese maps and a radio that misses Irish stations. We convert BMW, Mercedes-Benz and Volkswagen systems to European spec.</p>",
+            "use_page_content": false
+          }
+        }
+      },
+      "block_order": [
+        "text_1"
+      ],
+      "settings": {
+        "heading": "About Japanese import conversions",
+        "intro": "",
+        "layout": "stacked",
+        "background": "page",
+        "show_card": false,
+        "sticky_card": false,
+        "card_heading": "",
+        "card_text": "",
+        "deposit_text": "",
+        "card_button_label": "",
+        "card_show_whatsapp": false,
+        "card_show_contact": false,
+        "output_schema": false
+      }
+    },
+    "visit": {
+      "type": "mg-contact-map",
+      "settings": {
+        "heading": "Visit the workshop",
+        "text": "Drop in to see screens and speakers working, or bring your car for a fitting.",
+        "show_whatsapp": true,
+        "map_mode": "facade",
+        "facade_photo": true,
+        "dark_map": true,
+        "background": "page"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "fit",
+    "jobs",
+    "faq",
+    "about",
+    "visit"
+  ]
+}

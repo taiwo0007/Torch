@@ -1,221 +1,212 @@
 {%- liquid
   assign statement = section.settings.statement | strip
   assign subline = section.settings.subline
-
-  assign item_count = 0
-  for block in section.blocks
-    if block.type == 'rating'
-      if settings.mg_review_rating != blank
-        assign item_count = item_count | plus: 1
-      endif
-    else
-      assign item_count = item_count | plus: 1
-    endif
-  endfor
-  assign tablet_cols = item_count | at_least: 1
-  if tablet_cols > 4
-    assign tablet_cols = 3
-  endif
-  assign desktop_cols = item_count | at_least: 1
 -%}
 
-<div class="mg-section mg-trust-bar">
-  <div class="mg-container">
-    {%- if statement != blank or subline != blank -%}
+<div class="mg-section mg-section--flush mg-trust-bar">
+  {%- if statement != blank or subline != blank -%}
+    <div class="mg-container">
       <div
         class="mg-head mg-head--center mg-trust-bar__head"
         data-mg-reveal
       >
-        <div class="mg-head__text mg-trust-bar__text">
+        <div class="mg-head__text">
           {%- if statement != blank -%}
-            <h2 class="mg-display mg-display--center">{{ statement | escape }}</h2>
+            <h2 class="mg-head__title">{{ statement | escape }}</h2>
           {%- endif -%}
           {%- if subline != blank -%}
-            <p class="mg-lede mg-trust-bar__sub">{{ subline }}</p>
+            <p class="mg-head__sub mg-trust-bar__sub">{{ subline }}</p>
           {%- endif -%}
         </div>
       </div>
-    {%- endif -%}
+    </div>
+  {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <ul
-        class="mg-trust mg-trust-bar__list"
-        data-mg-reveal
-        role="list"
-        style="--mg-trust-bar-tablet: {{ tablet_cols }}; --mg-trust-bar-desktop: {{ desktop_cols }};"
-      >
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'rating' -%}
-              {%- liquid
-                assign rating = settings.mg_review_rating | strip
-                assign rating_value = rating | plus: 0 | at_most: 5 | at_least: 0
-                assign rating_url = block.settings.url | default: settings.mg_review_url
+  {%- if section.blocks.size > 0 -%}
+    <div class="mg-trust-bar__strip">
+      <div class="mg-container">
+        <ul
+          class="mg-trust-bar__list"
+          role="list"
+        >
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'rating' -%}
+                {%- liquid
+                  assign rating = settings.mg_review_rating | strip
+                  assign rating_value = rating | replace: ',', '.' | plus: 0 | at_most: 5 | at_least: 0
+                  assign rating_url = block.settings.url | default: settings.mg_review_url
 
-                assign review_line = block.settings.label | strip
-                if settings.mg_review_count != blank
-                  assign count_part = settings.mg_review_count | strip
-                  if block.settings.count_prefix != blank
-                    assign count_part = block.settings.count_prefix | strip | append: ' ' | append: count_part
+                  assign review_line = block.settings.label | strip
+                  if settings.mg_review_count != blank
+                    assign count_part = settings.mg_review_count | strip
+                    if block.settings.count_prefix != blank
+                      assign count_part = block.settings.count_prefix | strip | append: ' ' | append: count_part
+                    endif
+                    assign review_line = count_part | append: ' ' | append: review_line | strip
                   endif
-                  assign review_line = count_part | append: ' ' | append: review_line | strip
-                endif
-              -%}
-              {%- if rating != blank -%}
-                <li
-                  class="mg-trust__item mg-trust-bar__item"
-                  {{ block.shopify_attributes }}
-                >
-                  {%- if rating_url != blank -%}
-                    <a
-                      class="mg-trust-bar__inner mg-trust-bar__inner--link"
-                      href="{{ rating_url }}"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                  {%- else -%}
-                    <span class="mg-trust-bar__inner">
-                  {%- endif -%}
-                  <span
-                    class="mg-trust__icon mg-trust-bar__score"
-                    aria-hidden="true"
+                -%}
+                {%- if rating != blank -%}
+                  <li
+                    class="mg-trust-bar__item"
+                    {{ block.shopify_attributes }}
                   >
-                    {{- rating | escape -}}
-                  </span>
-                  <span class="mg-trust-bar__body">
-                    <span
-                      class="mg-stars mg-stars--sm"
-                      style="--mg-rating: {{ rating_value }};"
-                      role="img"
-                      aria-label="Rated {{ rating | escape }} out of 5"
-                    ></span>
-                    {%- if review_line != blank -%}
-                      <span class="mg-trust-bar__meta">{{ review_line | escape }}</span>
-                    {%- endif -%}
                     {%- if rating_url != blank -%}
-                      <span class="mg-visually-hidden"> (opens in a new tab)</span>
+                      <a
+                        class="mg-trust-bar__inner mg-trust-bar__inner--link"
+                        href="{{ rating_url }}"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                    {%- else -%}
+                      <span class="mg-trust-bar__inner">
                     {%- endif -%}
-                  </span>
-                  {%- if rating_url != blank -%}
-                    </a>
-                  {%- else -%}
+                    {%- render 'mg-icon', icon: 'star', class: 'mg-trust-bar__icon' -%}
+                    <span class="mg-trust-bar__body">
+                      <span class="mg-trust-bar__title">
+                        <span class="mg-trust-bar__score">{{ rating | escape }}</span>
+                        <span
+                          class="mg-stars mg-stars--sm"
+                          style="--mg-rating: {{ rating_value }};"
+                          role="img"
+                          aria-label="Rated {{ rating | escape }} out of 5"
+                        ></span>
+                      </span>
+                      {%- if review_line != blank -%}
+                        <span class="mg-trust-bar__meta">{{ review_line | escape }}</span>
+                      {%- endif -%}
+                      {%- if rating_url != blank -%}
+                        <span class="mg-visually-hidden"> (opens in a new tab)</span>
+                      {%- endif -%}
                     </span>
-                  {%- endif -%}
-                </li>
-              {%- endif -%}
+                    {%- if rating_url != blank -%}
+                      </a>
+                    {%- else -%}
+                      </span>
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
 
-            {%- when 'item' -%}
-              {%- liquid
-                assign title = block.settings.title | strip
-                assign text = block.settings.text | strip
-                assign url = block.settings.url
-                assign is_external = false
-                assign external_note = ''
+              {%- when 'item' -%}
+                {%- liquid
+                  assign title = block.settings.title | strip
+                  assign text = block.settings.text | strip
+                  assign url = block.settings.url
+                  assign is_external = false
+                  assign external_note = ''
 
-                case block.settings.source
-                  when 'warranty'
-                    assign title = title | default: settings.mg_warranty_text
-                  when 'phone'
-                    assign title = title | default: settings.mg_phone_display
-                    if settings.mg_hours_weekdays != blank
-                      assign hours_text = 'Mon to Fri, ' | append: settings.mg_hours_weekdays
-                      assign text = text | default: hours_text
-                    endif
-                    if url == blank and settings.mg_phone_e164 != blank
-                      assign url = 'tel:+' | append: settings.mg_phone_e164
-                    endif
-                  when 'address'
-                    if settings.mg_locality != blank
-                      # Spaces become no-break spaces (U+00A0) so 'Dublin 12' never splits over two lines
-                      assign locality_title = settings.mg_locality | strip | replace: ' ', ' ' | append: ' workshop'
-                      assign title = title | default: locality_title
-                    endif
-                    if url == blank and settings.mg_map_query != blank
-                      assign map_query = settings.mg_map_query | url_encode
-                      assign url = 'https://www.google.com/maps/search/?api=1&query=' | append: map_query
-                      assign is_external = true
-                      assign external_note = ' (opens Google Maps in a new tab)'
-                    endif
-                endcase
-              -%}
-              {%- if title != blank or text != blank -%}
-                <li
-                  class="mg-trust__item mg-trust-bar__item"
-                  {{ block.shopify_attributes }}
-                >
-                  {%- if url != blank -%}
-                    <a
-                      class="mg-trust-bar__inner mg-trust-bar__inner--link"
-                      href="{{ url }}"
-                      {% if is_external %}
-                        target="_blank" rel="noopener"
-                      {% endif %}
-                    >
-                  {%- else -%}
-                    <span class="mg-trust-bar__inner">
-                  {%- endif -%}
-                  {%- render 'mg-icon', icon: block.settings.icon, class: 'mg-trust__icon' -%}
-                  <span class="mg-trust-bar__body">
-                    {%- if title != blank -%}
-                      <span class="mg-trust-bar__title">{{ title | escape }}</span>
+                  case block.settings.source
+                    when 'warranty'
+                      assign title = title | default: settings.mg_warranty_text
+                    when 'phone'
+                      assign title = title | default: settings.mg_phone_display
+                      if settings.mg_hours_weekdays != blank
+                        assign hours_text = 'Mon to Fri, ' | append: settings.mg_hours_weekdays
+                        assign text = text | default: hours_text
+                      endif
+                      if url == blank and settings.mg_phone_e164 != blank
+                        assign url = 'tel:+' | append: settings.mg_phone_e164
+                      endif
+                    when 'address'
+                      if settings.mg_locality != blank
+                        # Spaces become no-break spaces (U+00A0) so 'Dublin 12' never splits over two lines
+                        assign locality_title = settings.mg_locality | strip | replace: ' ', ' ' | append: ' workshop'
+                        assign title = title | default: locality_title
+                      endif
+                      if url == blank and settings.mg_map_query != blank
+                        assign map_query = settings.mg_map_query | url_encode
+                        assign url = 'https://www.google.com/maps/search/?api=1&query=' | append: map_query
+                        assign is_external = true
+                        assign external_note = ' (opens Google Maps in a new tab)'
+                      endif
+                  endcase
+                -%}
+                {%- if title != blank or text != blank -%}
+                  <li
+                    class="mg-trust-bar__item"
+                    {{ block.shopify_attributes }}
+                  >
+                    {%- if url != blank -%}
+                      <a
+                        class="mg-trust-bar__inner mg-trust-bar__inner--link"
+                        href="{{ url }}"
+                        {% if is_external %}
+                          target="_blank" rel="noopener"
+                        {% endif %}
+                      >
+                    {%- else -%}
+                      <span class="mg-trust-bar__inner">
                     {%- endif -%}
-                    {%- if text != blank -%}
-                      <span class="mg-trust-bar__meta">{{ text | escape }}</span>
-                    {%- endif -%}
-                    {%- if is_external -%}
-                      <span class="mg-visually-hidden">{{ external_note }}</span>
-                    {%- endif -%}
-                  </span>
-                  {%- if url != blank -%}
-                    </a>
-                  {%- else -%}
+                    {%- render 'mg-icon', icon: block.settings.icon, class: 'mg-trust-bar__icon' -%}
+                    <span class="mg-trust-bar__body">
+                      {%- if title != blank -%}
+                        <span class="mg-trust-bar__title">{{ title | escape }}</span>
+                      {%- endif -%}
+                      {%- if text != blank -%}
+                        <span class="mg-trust-bar__meta">{{ text | escape }}</span>
+                      {%- endif -%}
+                      {%- if is_external -%}
+                        <span class="mg-visually-hidden">{{ external_note }}</span>
+                      {%- endif -%}
                     </span>
-                  {%- endif -%}
-                </li>
-              {%- endif -%}
-          {%- endcase -%}
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
-  </div>
+                    {%- if url != blank -%}
+                      </a>
+                    {%- else -%}
+                      </span>
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 {% stylesheet %}
   /*
-   * MG trust bar: centred serif statement and subline, then the trust strip.
-   * The strip is the shared ul.mg-trust (2x2 band panel on phones, a row from 750px,
-   * a pill from 990px). Only layout lives here; rules that adjust a shared component are
-   * scoped under .mg-trust-bar so they win whatever order the stylesheets load in.
+   * MG trust strip: a slim full-bleed band straight under the hero (the info strip of the
+   * reference layout, moved below the header so phones keep a short header). 4 items in a row
+   * with hairline dividers from 750px; a compact 2 by 2 grid on phones. Optional heading above.
    */
-  .mg-trust-bar .mg-trust-bar__head {
-    margin-block-end: var(--mg-space-5);
+  .mg-trust-bar__head {
+    padding-block: var(--mg-space-7) var(--mg-space-5);
   }
 
-  .mg-trust-bar .mg-trust-bar__text {
-    max-width: none;
-  }
-
-  .mg-trust-bar .mg-trust-bar__sub {
-    max-width: 44ch;
+  .mg-trust-bar__sub {
+    max-width: 52ch;
     text-wrap: balance;
   }
 
-  /* Links added in the subline (rich text) look like .mg-link */
   .mg-trust-bar__sub a {
     color: inherit;
     font-weight: 500;
     text-decoration-line: underline;
     text-decoration-color: currentcolor;
-    text-decoration-thickness: 1px;
     text-underline-offset: 0.22em;
   }
 
-  .mg-trust-bar__sub a:hover {
-    color: var(--mg-ink);
-    text-decoration-thickness: 2px;
+  .mg-trust-bar__strip {
+    border-block-end: 1px solid var(--mg-line);
+    background-color: var(--mg-band);
   }
 
-  /* An odd last item spans the row on phones, so the 2x2 panel never has a hole */
+  .mg-trust-bar__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 var(--mg-space-3);
+    margin: 0;
+    padding: var(--mg-space-2) 0;
+    list-style: none;
+  }
+
+  .mg-trust-bar__item {
+    display: flex;
+    min-width: 0;
+    margin: 0;
+  }
+
   .mg-trust-bar__item:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
@@ -224,78 +215,103 @@
     display: flex;
     flex: 1;
     align-items: center;
-    gap: inherit; /* the icon-to-text gap of .mg-trust__item */
+    gap: var(--mg-space-3);
     min-width: 0;
-    min-height: var(--mg-tap);
+    min-height: 52px;
     border-radius: var(--mg-radius-sm);
-    color: inherit;
+    color: var(--mg-ink);
     text-decoration: none;
+  }
+
+  .mg-trust-bar .mg-trust-bar__icon {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    color: var(--mg-red);
   }
 
   .mg-trust-bar__body {
     display: flex;
     flex-direction: column;
-    gap: var(--mg-space-1);
+    gap: 2px;
     min-width: 0;
   }
 
   .mg-trust-bar__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--mg-space-1) var(--mg-space-2);
+    font-size: var(--mg-fs-small);
+    font-weight: 600;
+    line-height: 1.25;
     text-wrap: pretty;
   }
 
+  .mg-trust-bar__score {
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
   .mg-trust-bar__meta {
-    font-size: var(--mg-fs-micro);
-    font-weight: 400;
-    line-height: 1.35;
+    font-size: 0.75rem;
+    line-height: 1.3;
     color: var(--mg-ink-2);
   }
 
-  /* The rating score sits in the icon square and may be wider than an icon ("4.85") */
-  .mg-trust-bar .mg-trust-bar__score {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    min-width: 20px;
-    font-size: var(--mg-fs-micro);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-  }
-
   @media (hover: hover) {
-    .mg-trust-bar__inner--link:hover :is(.mg-trust-bar__title, .mg-trust-bar__meta) {
+    .mg-trust-bar__inner--link:hover .mg-trust-bar__meta {
+      color: var(--mg-ink);
       text-decoration-line: underline;
-      text-decoration-thickness: 1px;
       text-underline-offset: 0.22em;
     }
   }
 
+  @media screen and (max-width: 374px) {
+    .mg-trust-bar__title .mg-stars {
+      display: none;
+    }
+  }
+
   @media screen and (min-width: 750px) {
-    .mg-trust-bar .mg-trust-bar__head {
-      margin-block-end: var(--mg-space-6);
-    }
-
-    .mg-trust-bar .mg-trust-bar__sub {
-      max-width: none;
-    }
-
-    .mg-trust-bar .mg-trust-bar__list {
-      grid-template-columns: repeat(var(--mg-trust-bar-tablet, 4), minmax(0, 1fr));
+    .mg-trust-bar__list {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      grid-auto-flow: column;
+      gap: 0;
+      padding: 0;
     }
 
     .mg-trust-bar__item:last-child:nth-child(odd) {
       grid-column: auto;
     }
+
+    .mg-trust-bar__item {
+      justify-content: center;
+      padding-inline: var(--mg-space-4);
+    }
+
+    .mg-trust-bar__item + .mg-trust-bar__item {
+      border-inline-start: 1px solid var(--mg-line);
+    }
+
+    .mg-trust-bar__inner {
+      flex: 0 1 auto;
+      min-height: 72px;
+    }
   }
 
   @media screen and (min-width: 990px) {
-    .mg-trust-bar .mg-trust-bar__head {
-      margin-block-end: var(--mg-space-7);
+    .mg-trust-bar .mg-trust-bar__icon {
+      width: 24px;
+      height: 24px;
     }
 
-    .mg-trust-bar .mg-trust-bar__list {
-      grid-template-columns: repeat(var(--mg-trust-bar-desktop, 4), minmax(0, 1fr));
+    .mg-trust-bar__title {
+      font-size: 0.9375rem;
+    }
+
+    .mg-trust-bar__meta {
+      font-size: var(--mg-fs-micro);
     }
   }
 {% endstylesheet %}
@@ -314,8 +330,7 @@
       "type": "text",
       "id": "statement",
       "label": "Statement",
-      "info": "A short centred line in the display serif. Leave blank (with the subline) to show the trust strip on its own.",
-      "default": "Ireland's CarPlay and car audio specialist."
+      "info": "Optional short line above the strip. Leave blank (with the subline) for the slim strip on its own, as on the home page."
     },
     {
       "type": "inline_richtext",
@@ -326,7 +341,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Works best with 4 items. The phone, location, rating and warranty text come from Theme settings > MG Car Audio: business details. PLACEHOLDER: copy the Google rating and review count from MG's Google profile, and confirm the warranty wording, before launch."
+      "content": "A slim strip under the hero: 4 items in a row on desktop, 2 by 2 on phones. Works best with 4 items. The phone, location, rating and warranty text come from Theme settings > MG Car Audio: business details. PLACEHOLDER: copy the Google rating and review count from MG's Google profile, and confirm the warranty wording, before launch."
     }
   ],
   "blocks": [
@@ -444,11 +459,16 @@
       "category": "MG Car Audio",
       "blocks": [
         {
+          "type": "rating",
+          "settings": {}
+        },
+        {
           "type": "item",
           "settings": {
-            "source": "warranty",
-            "icon": "shield",
-            "title": ""
+            "source": "address",
+            "icon": "map-pin",
+            "title": "Fitted in Dublin 12",
+            "text": "Most jobs in 1 to 2 hours"
           }
         },
         {
@@ -456,23 +476,17 @@
           "settings": {
             "source": "custom",
             "icon": "tag",
-            "title": "Fixed fitted prices"
+            "title": "Fixed fitted prices",
+            "text": "Agreed before we start"
           }
         },
         {
           "type": "item",
           "settings": {
-            "source": "custom",
-            "icon": "car",
-            "title": "Factory features kept"
-          }
-        },
-        {
-          "type": "item",
-          "settings": {
-            "source": "address",
-            "icon": "map-pin",
-            "title": ""
+            "source": "warranty",
+            "icon": "shield",
+            "title": "",
+            "text": "On every fitting"
           }
         }
       ]

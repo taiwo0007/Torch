@@ -1,0 +1,390 @@
+{%- comment -%}
+  Contact strip above the header (header group). Answers "can I call them now, are they
+  any good, are they open?" before any scrolling, in one thin line.
+
+  - Tablets and desktops (750px and up): Call (tap to call) and WhatsApp on the left; the Google
+    rating and the opening hours on the right.
+  - Phones: one slim line with the rating and the workshop location (or nothing, see the
+    "On phones" setting). Call, WhatsApp and Book live in the phone tab bar instead
+    (snippets/mg-mobile-action-bar.liquid), so the header stays short.
+  - Everything comes from Theme settings > MG Car Audio: business details. The strip scrolls
+    away with the page; the sticky header takes its place.
+{%- endcomment -%}
+
+{%- liquid
+  assign business_name = settings.mg_business_name | default: shop.name
+
+  assign phone = settings.mg_phone_e164 | remove: '+' | remove: ' ' | remove: '-'
+  assign phone_display = settings.mg_phone_display | default: phone
+
+  assign wa_number = settings.mg_whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+  assign show_whatsapp = false
+  if section.settings.show_whatsapp and settings.mg_whatsapp_enabled and wa_number != blank
+    assign show_whatsapp = true
+    assign wa_fallback = 'Hi ' | append: business_name | append: ','
+    assign wa_message = settings.mg_whatsapp_message | strip | default: wa_fallback
+    assign wa_text = wa_message | url_encode
+  endif
+
+  assign show_reviews = false
+  if section.settings.show_reviews and settings.mg_review_rating != blank
+    assign show_reviews = true
+  endif
+
+  assign hours = ''
+  if section.settings.show_hours
+    if settings.mg_hours_weekdays != blank
+      assign hours = 'Mon to Fri ' | append: settings.mg_hours_weekdays
+    endif
+    if settings.mg_hours_saturday != blank
+      if hours != blank
+        assign hours = hours | append: ' · '
+      endif
+      assign hours = hours | append: 'Sat ' | append: settings.mg_hours_saturday
+    endif
+    if section.settings.show_sunday and settings.mg_hours_sunday != blank
+      if hours != blank
+        assign hours = hours | append: ' · '
+      endif
+      assign hours = hours | append: 'Sun ' | append: settings.mg_hours_sunday
+    endif
+  endif
+
+  assign map_query = settings.mg_map_query
+  if map_query == blank
+    assign map_query = business_name | append: ', ' | append: settings.mg_street | append: ', ' | append: settings.mg_postcode
+  endif
+
+  assign location = section.settings.location_label
+  if location == blank
+    assign location = settings.mg_locality
+  endif
+
+  assign mobile = section.settings.mobile_display
+-%}
+
+<div
+  class="mg-topbar mg-topbar--mobile-{{ mobile }}"
+  role="region"
+  aria-label="{{ section.settings.region_label | default: 'Contact and opening hours' | escape }}"
+>
+  <div class="mg-container mg-topbar__inner">
+    <ul
+      class="mg-topbar__group mg-topbar__group--start"
+      role="list"
+    >
+      {%- if section.settings.show_phone and phone != blank -%}
+        <li class="mg-topbar__item mg-topbar__item--desktop">
+          <a
+            class="mg-topbar__link mg-topbar__link--strong"
+            href="tel:+{{ phone }}"
+          >
+            {%- render 'mg-icon', icon: 'phone', class: 'mg-topbar__icon' -%}
+            <span><span class="mg-visually-hidden">Call </span>{{ phone_display | escape }}</span>
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- if show_whatsapp -%}
+        <li class="mg-topbar__item mg-topbar__item--desktop">
+          <a
+            class="mg-topbar__link"
+            href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'whatsapp', class: 'mg-topbar__icon mg-topbar__icon--wa' -%}
+            <span>WhatsApp<span class="mg-visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+      {%- endif -%}
+
+      {%- if section.settings.show_location and location != blank -%}
+        <li class="mg-topbar__item mg-topbar__item--location">
+          <a
+            class="mg-topbar__link"
+            href="https://www.google.com/maps/search/?api=1&amp;query={{ map_query | url_encode }}"
+            target="_blank"
+            rel="noopener"
+          >
+            {%- render 'mg-icon', icon: 'map-pin', class: 'mg-topbar__icon' -%}
+            <span>{{ location | escape }}<span class="mg-visually-hidden"> (opens Google Maps in a new tab)</span></span>
+          </a>
+        </li>
+      {%- endif -%}
+    </ul>
+
+    <ul
+      class="mg-topbar__group mg-topbar__group--end"
+      role="list"
+    >
+      {%- if show_reviews -%}
+        <li class="mg-topbar__item mg-topbar__item--rating">
+          {%- capture rating_inner -%}
+            {%- render 'mg-icon', icon: 'star', class: 'mg-topbar__icon mg-topbar__icon--star' -%}
+            <span>
+              <strong class="mg-topbar__score">{{ settings.mg_review_rating | escape }}</strong>
+              {%- if settings.mg_review_count != blank %}
+                <span class="mg-topbar__muted">· {{ settings.mg_review_count | escape }} Google reviews</span>
+              {%- else %}
+                <span class="mg-topbar__muted">on Google</span>
+              {%- endif -%}
+            </span>
+          {%- endcapture -%}
+          {%- if settings.mg_review_url != blank -%}
+            <a
+              class="mg-topbar__link"
+              href="{{ settings.mg_review_url }}"
+              target="_blank"
+              rel="noopener"
+              aria-label="Rated {{ settings.mg_review_rating | escape }} out of 5{% if settings.mg_review_count != blank %} from {{ settings.mg_review_count | escape }} Google reviews{% endif %} (opens in a new tab)"
+            >
+              {{- rating_inner -}}
+            </a>
+          {%- else -%}
+            <span class="mg-topbar__link">{{ rating_inner }}</span>
+          {%- endif -%}
+        </li>
+      {%- endif -%}
+
+      {%- if hours != blank -%}
+        <li class="mg-topbar__item mg-topbar__item--desktop mg-topbar__item--hours">
+          <span class="mg-topbar__link">
+            {%- render 'mg-icon', icon: 'clock', class: 'mg-topbar__icon' -%}
+            <span>{{ hours | escape }}</span>
+          </span>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .mg-topbar {
+    position: relative;
+    z-index: 1;
+    border-block-end: 1px solid var(--mg-line);
+    background-color: var(--mg-band);
+    color: var(--mg-ink-2);
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-micro);
+    line-height: 1.2;
+  }
+
+  .mg-topbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mg-space-4);
+    min-height: 32px;
+  }
+
+  .mg-topbar__group {
+    display: flex;
+    align-items: center;
+    gap: var(--mg-space-5);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-topbar__item {
+    display: flex;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .mg-topbar__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--mg-dur) var(--mg-ease);
+  }
+
+  a.mg-topbar__link:hover {
+    color: var(--mg-ink);
+  }
+
+  a.mg-topbar__link:focus-visible {
+    outline: 2px solid var(--mg-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .mg-topbar__link--strong {
+    font-weight: 500;
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-topbar__icon {
+    flex: none;
+    width: 15px;
+    height: 15px;
+  }
+
+  .mg-topbar__icon--wa {
+    color: var(--mg-whatsapp);
+  }
+
+  .mg-topbar__icon--star {
+    color: var(--mg-red);
+  }
+
+  .mg-topbar__score {
+    font-weight: 600;
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mg-topbar__muted {
+    color: var(--mg-ink-2);
+  }
+
+  /* Phones: one slim line (rating left, location right), or nothing */
+  @media screen and (max-width: 749px) {
+    .mg-topbar--mobile-none {
+      display: none;
+    }
+
+    .mg-topbar__item--desktop {
+      display: none;
+    }
+
+    .mg-topbar__inner {
+      min-height: 30px;
+    }
+
+    .mg-topbar__link {
+      min-height: 30px;
+    }
+
+    /* Rating first on phones: it is the one trust signal worth the space */
+    .mg-topbar__group--end {
+      order: -1;
+    }
+  }
+
+  /* Tablets: drop the location to keep one line */
+  @media screen and (min-width: 750px) {
+    .mg-topbar__inner {
+      min-height: 36px;
+    }
+
+    .mg-topbar__link {
+      min-height: 36px;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 1099px) {
+    .mg-topbar__item--location,
+    .mg-topbar__item--hours {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-topbar__link {
+      transition: none;
+    }
+  }
+
+  @media print {
+    .mg-topbar {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "MG contact strip",
+  "tag": "div",
+  "class": "mg-topbar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Phone, WhatsApp, rating, address and hours come from Theme settings > MG Car Audio: business details."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp",
+      "info": "Also needs Show WhatsApp buttons turned on in the business details.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_location",
+      "label": "Show location link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "location_label",
+      "label": "Location label",
+      "info": "Opens Google Maps. Leave blank to use the town / city.",
+      "default": "Ballymount, Dublin 12"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show Google rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hours",
+      "label": "Show opening hours",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sunday",
+      "label": "Include Sunday hours",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "mobile_display",
+      "label": "On phones",
+      "options": [
+        {
+          "value": "rating",
+          "label": "One slim line: rating and location"
+        },
+        {
+          "value": "none",
+          "label": "Hide the strip"
+        }
+      ],
+      "default": "rating"
+    },
+    {
+      "type": "text",
+      "id": "region_label",
+      "label": "Label for screen readers",
+      "default": "Contact and opening hours"
+    }
+  ],
+  "presets": [
+    {
+      "name": "MG contact strip"
+    }
+  ]
+}
+{% endschema %}

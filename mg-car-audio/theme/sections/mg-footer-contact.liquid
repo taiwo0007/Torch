@@ -1,6 +1,6 @@
 {%- liquid
   assign business_name = settings.mg_business_name | default: shop.name
-  assign row = section.settings.row | default: 'contact'
+  assign row = section.settings.row | default: 'columns'
 
   # Contact row: the home and contact pages already end with the map, address, hours and the
   # Call / WhatsApp buttons (mg-contact-map), so there the row slims down to the name and tagline.
@@ -101,6 +101,20 @@
           </nav>
         {%- endif -%}
 
+        {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+          <div class="mg-footer-contact__payments">
+            <span class="mg-visually-hidden">Payment methods</span>
+            <ul
+              class="mg-footer-contact__payment-list"
+              role="list"
+            >
+              {%- for type in shop.enabled_payment_types -%}
+                <li>{{ type | payment_type_svg_tag: class: 'mg-footer-contact__payment-icon' }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
         {%- if section.settings.show_theme_control -%}
           {%- assign theme_control_id = 'mg-footer-theme-' | append: section.id -%}
           {%- render 'mg-theme-mode',
@@ -111,6 +125,340 @@
           -%}
         {%- endif -%}
       </div>
+    </div>
+  </div>
+{%- elsif row == 'columns' -%}
+  {%- comment -%}
+    Four columns: three link lists (Systems, Shop by car, Help) and Visit us (address, hours,
+    directions, Call and WhatsApp). Phones: each column is an accordion row; Visit us starts open.
+    A link column reads the children of one main-menu item (for example the "Shop" item) so the
+    footer follows the header menu; with no menu match it shows the fallback links.
+  {%- endcomment -%}
+  {%- liquid
+    assign review_rating = settings.mg_review_rating
+    assign review_count = settings.mg_review_count
+    assign socials = 'instagram,facebook,tiktok' | split: ','
+    assign has_socials = false
+    for social in socials
+      assign social_key = 'social_' | append: social
+      if section.settings[social_key] != blank
+        assign has_socials = true
+      endif
+    endfor
+  -%}
+  <div class="{{ section_classes }}">
+    <div class="mg-container">
+      <div class="mg-footer-cols__brand">
+        <div class="mg-footer-cols__brand-copy">
+          <p class="mg-footer-cols__logo">
+            <a href="{{ routes.root_url }}">{{ business_name | escape }}</a>
+          </p>
+          {%- if section.settings.show_tagline and settings.mg_tagline != blank -%}
+            <p class="mg-footer-cols__tagline">{{ settings.mg_tagline | escape }}</p>
+          {%- endif -%}
+          {%- if review_rating != blank -%}
+            {%- capture rating_badge -%}
+              {%- render 'mg-icon', icon: 'star', class: 'mg-footer-cols__star' -%}
+              <strong>{{ review_rating | escape }}</strong>
+              {%- if review_count != blank %}
+                <span>from {{ review_count | escape }} Google reviews</span>
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- if settings.mg_review_url != blank -%}
+              <a
+                class="mg-footer-cols__rating"
+                href="{{ settings.mg_review_url }}"
+                target="_blank"
+                rel="noopener"
+              >
+                {{- rating_badge -}}
+                <span class="mg-visually-hidden"> (opens in a new tab)</span>
+              </a>
+            {%- else -%}
+              <p class="mg-footer-cols__rating">{{ rating_badge }}</p>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_newsletter -%}
+          <div class="mg-footer-cols__news">
+            {%- assign news_id = 'MgFooterNews-' | append: section.id -%}
+            {%- form 'customer', id: news_id, class: 'mg-footer-cols__news-form' -%}
+              <input
+                type="hidden"
+                name="contact[tags]"
+                value="newsletter"
+              >
+              <label
+                class="mg-footer-cols__news-label"
+                for="{{ news_id }}-email"
+              >
+                {{- section.settings.newsletter_heading | default: 'Offers and open fitting slots' | escape -}}
+              </label>
+              {%- if form.posted_successfully? -%}
+                <p
+                  class="mg-footer-cols__news-note"
+                  role="status"
+                >
+                  Thanks, you're on the list.
+                </p>
+              {%- else -%}
+                <div class="mg-footer-cols__news-row">
+                  <input
+                    class="mg-input mg-footer-cols__news-input"
+                    id="{{ news_id }}-email"
+                    type="email"
+                    name="contact[email]"
+                    autocomplete="email"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    placeholder="Email address"
+                    required
+                    {% if form.errors %}
+                      aria-invalid="true"
+                      aria-describedby="{{ news_id }}-error"
+                    {% endif %}
+                  >
+                  <button
+                    class="mg-btn mg-btn--secondary mg-footer-cols__news-btn"
+                    type="submit"
+                  >
+                    Sign up
+                  </button>
+                </div>
+                {%- if form.errors -%}
+                  <p
+                    class="mg-footer-cols__news-note mg-footer-cols__news-note--error"
+                    id="{{ news_id }}-error"
+                  >
+                    Please check the email address.
+                  </p>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="mg-footer-cols__grid">
+        {%- for i in (1..3) -%}
+          {%- liquid
+            assign heading_key = 'col' | append: i | append: '_heading'
+            assign menu_key = 'col' | append: i | append: '_menu'
+            assign parent_key = 'col' | append: i | append: '_parent'
+            assign fallback_key = 'col' | append: i | append: '_fallback'
+
+            assign col_heading = section.settings[heading_key]
+            assign col_menu = section.settings[menu_key]
+            assign col_parent = section.settings[parent_key] | handleize
+            assign col_links = nil
+
+            if col_menu != blank
+              if col_parent != blank
+                for menu_link in col_menu.links
+                  if menu_link.handle == col_parent and menu_link.links.size > 0
+                    assign col_links = menu_link.links
+                    break
+                  endif
+                endfor
+              elsif col_menu.links.size > 0
+                assign col_links = col_menu.links
+              endif
+            endif
+
+            assign fallback_lines = section.settings[fallback_key] | newline_to_br | split: '<br />'
+          -%}
+          {%- if col_heading == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- capture col_children -%}
+            <details
+              class="mg-footer-cols__col"
+              open
+            >
+              <summary class="mg-footer-cols__summary">
+                <span class="mg-footer-cols__heading">{{ col_heading | escape }}</span>
+                {%- render 'mg-icon', icon: 'chevron-down', class: 'mg-footer-cols__chevron' -%}
+              </summary>
+              <div class="details-content mg-footer-cols__panel">
+                <ul
+                  class="mg-footer-cols__links"
+                  role="list"
+                >
+                  {%- if col_links != nil -%}
+                    {%- for link in col_links -%}
+                      <li>
+                        <a
+                          href="{{ link.url }}"
+                          {% if link.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{- link.title | escape -}}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for line in fallback_lines -%}
+                      {%- assign parts = line | strip | split: '|' -%}
+                      {%- assign link_title = parts[0] | strip -%}
+                      {%- assign link_url = parts[1] | strip -%}
+                      {%- if link_title != blank and link_url != blank -%}
+                        <li>
+                          <a
+                            href="{{ link_url | escape }}"
+                            {% if request.path == link_url %}
+                              aria-current="page"
+                            {% endif %}
+                          >
+                            {{- link_title | escape -}}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                </ul>
+              </div>
+            </details>
+          {%- endcapture -%}
+          {%- render 'accordion-custom-component',
+            children: col_children,
+            class: 'mg-footer-cols__accordion',
+            open_by_default_on_desktop: true,
+            disable_on_desktop: true
+          -%}
+        {%- endfor -%}
+
+        {%- capture visit_children -%}
+          <details
+            class="mg-footer-cols__col mg-footer-cols__col--visit"
+            open
+          >
+            <summary class="mg-footer-cols__summary">
+              <span class="mg-footer-cols__heading">
+                {{- section.settings.address_heading | default: 'Visit us' | escape -}}
+              </span>
+              {%- render 'mg-icon', icon: 'chevron-down', class: 'mg-footer-cols__chevron' -%}
+            </summary>
+            <div class="details-content mg-footer-cols__panel">
+              <address class="mg-footer-cols__address">
+                <strong>{{ business_name | escape }}</strong><br>
+                {%- for line in street_lines -%}
+                  {{ line | strip | escape }}<br>
+                {%- endfor -%}
+                {%- if settings.mg_locality != blank -%}
+                  {{ settings.mg_locality | escape }}
+                  {%- if settings.mg_postcode != blank %} {{ settings.mg_postcode | escape }}{% endif -%}
+                {%- elsif settings.mg_postcode != blank -%}
+                  {{ settings.mg_postcode | escape }}
+                {%- endif -%}
+              </address>
+
+              {%- if section.settings.show_hours and has_hours -%}
+                <dl class="mg-footer-cols__hours">
+                  <div>
+                    <dt>Mon to Fri</dt>
+                    <dd>{{ settings.mg_hours_weekdays | default: 'Closed' | escape }}</dd>
+                  </div>
+                  <div>
+                    <dt>Saturday</dt>
+                    <dd>{{ settings.mg_hours_saturday | default: 'Closed' | escape }}</dd>
+                  </div>
+                  <div>
+                    <dt>Sunday</dt>
+                    <dd>{{ settings.mg_hours_sunday | default: 'Closed' | escape }}</dd>
+                  </div>
+                </dl>
+              {%- endif -%}
+
+              <ul
+                class="mg-footer-cols__links mg-footer-cols__links--visit"
+                role="list"
+              >
+                {%- if section.settings.directions_label != blank -%}
+                  <li>
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&amp;destination={{ map_query_encoded }}"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      {%- render 'mg-icon', icon: 'map-pin' -%}
+                      {{- section.settings.directions_label | escape -}}
+                      <span class="mg-visually-hidden"> (opens Google Maps in a new tab)</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.mg_email != blank -%}
+                  <li>
+                    <a href="mailto:{{ settings.mg_email | escape }}">
+                      {%- render 'mg-icon', icon: 'mail' -%}
+                      {{- settings.mg_email | escape -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+
+              <div class="mg-footer-cols__actions">
+                {%- if phone_e164 != blank -%}
+                  <a
+                    class="mg-btn mg-btn--primary mg-btn--sm"
+                    href="tel:+{{ phone_e164 }}"
+                  >
+                    {%- render 'mg-icon', icon: 'phone' -%}
+                    <span>
+                      {{- section.settings.call_label | default: 'Call' | escape -}}
+                      {%- if settings.mg_phone_display != blank %} {{ settings.mg_phone_display | escape }}{% endif -%}
+                    </span>
+                  </a>
+                {%- endif -%}
+                {%- if show_whatsapp -%}
+                  <a
+                    class="mg-btn mg-btn--whatsapp mg-btn--sm"
+                    href="https://wa.me/{{ wa_number }}?text={{ wa_text }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    {%- render 'mg-icon', icon: 'whatsapp' -%}
+                    <span>{{ section.settings.whatsapp_label | default: 'WhatsApp us' | escape }}</span>
+                    <span class="mg-visually-hidden">(opens in a new tab)</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          </details>
+        {%- endcapture -%}
+        {%- render 'accordion-custom-component',
+          children: visit_children,
+          class: 'mg-footer-cols__accordion mg-footer-cols__accordion--visit',
+          open_by_default_on_desktop: true,
+          open_by_default_on_mobile: section.settings.visit_open_on_mobile,
+          disable_on_desktop: true
+        -%}
+      </div>
+
+      {%- if has_socials -%}
+        <ul
+          class="mg-footer-cols__socials"
+          role="list"
+        >
+          {%- for social in socials -%}
+            {%- assign social_key = 'social_' | append: social -%}
+            {%- if section.settings[social_key] != blank -%}
+              <li>
+                <a
+                  class="mg-footer-cols__social"
+                  href="{{ section.settings[social_key] }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {%- render 'mg-icon', icon: social -%}
+                  <span class="mg-visually-hidden">{{ business_name | escape }} on {{ social | capitalize }} (opens in a new tab)</span>
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
   </div>
 {%- else -%}
@@ -519,26 +867,376 @@
       margin-inline-start: auto;
     }
   }
+
+  /* ---------- Columns row: brand strip, four columns (accordions on phones), socials ---------- */
+  .mg-footer-contact--columns {
+    padding-block: var(--mg-space-7) var(--mg-space-2);
+  }
+
+  .mg-footer-cols__brand {
+    display: grid;
+    gap: var(--mg-space-5);
+    padding-block-end: var(--mg-space-6);
+    border-bottom: 1px solid var(--mg-line);
+  }
+
+  .mg-footer-cols__logo {
+    margin: 0;
+    font-family: var(--mg-font-ui);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .mg-footer-cols__logo a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    color: var(--mg-ink);
+    text-decoration: none;
+  }
+
+  .mg-footer-cols__logo a::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background-color: var(--mg-red);
+  }
+
+  .mg-footer-cols__tagline {
+    max-width: 44ch;
+    margin: var(--mg-space-2) 0 0;
+    font-size: var(--mg-fs-small);
+    line-height: var(--mg-lh-body);
+    color: var(--mg-ink-2);
+  }
+
+  .mg-footer-cols__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: var(--mg-tap);
+    margin: var(--mg-space-2) 0 0;
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
+    text-decoration: none;
+  }
+
+  .mg-footer-cols__rating strong {
+    font-weight: 600;
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  a.mg-footer-cols__rating:hover span {
+    color: var(--mg-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .mg-footer-cols__star {
+    width: 16px;
+    height: 16px;
+    color: var(--mg-red);
+  }
+
+  .mg-footer-cols__news-label {
+    display: block;
+    margin-block-end: var(--mg-space-2);
+    font-size: var(--mg-fs-body);
+    font-weight: 600;
+    color: var(--mg-ink);
+  }
+
+  .mg-footer-cols__news-row {
+    display: flex;
+    gap: var(--mg-space-2);
+  }
+
+  .mg-footer-cols__news-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 48px;
+  }
+
+  .mg-footer-cols__news-btn {
+    flex: none;
+  }
+
+  .mg-footer-cols__news-note {
+    margin: var(--mg-space-2) 0 0;
+    font-size: var(--mg-fs-small);
+    color: var(--mg-ink-2);
+  }
+
+  .mg-footer-cols__news-note--error {
+    color: var(--mg-red-ink);
+  }
+
+  .mg-footer-cols__grid {
+    display: grid;
+  }
+
+  /* Phones: accordion rows with hairlines */
+  .mg-footer-cols__accordion {
+    border-bottom: 1px solid var(--mg-line);
+  }
+
+  .mg-footer-cols__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--mg-space-3);
+    min-height: 56px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mg-footer-cols__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mg-footer-cols__summary:focus-visible {
+    outline: 2px solid var(--mg-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .mg-footer-cols__heading {
+    font-family: var(--mg-font-ui);
+    font-size: var(--mg-fs-body);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--mg-ink);
+  }
+
+  .mg-footer-cols__chevron {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--mg-ink-2);
+    transition: transform var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-footer-cols__col[open] .mg-footer-cols__chevron {
+    transform: rotate(180deg);
+  }
+
+  .mg-footer-cols__panel {
+    padding-block-end: var(--mg-space-4);
+  }
+
+  .mg-footer-cols__links {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-footer-cols__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mg-space-2);
+    min-height: var(--mg-tap);
+    color: var(--mg-ink-2);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-footer-cols__links a .mg-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  .mg-footer-cols__links a[aria-current='page'] {
+    color: var(--mg-ink);
+  }
+
+  @media (hover: hover) {
+    .mg-footer-cols__links a:hover {
+      color: var(--mg-ink);
+      text-decoration: underline;
+      text-underline-offset: 0.22em;
+    }
+  }
+
+  .mg-footer-cols__address {
+    font-style: normal;
+    font-size: var(--mg-fs-small);
+    line-height: 1.6;
+    color: var(--mg-ink-2);
+  }
+
+  .mg-footer-cols__address strong {
+    font-weight: 500;
+    color: var(--mg-ink);
+  }
+
+  .mg-footer-cols__hours {
+    display: grid;
+    gap: var(--mg-space-1);
+    margin: var(--mg-space-4) 0 var(--mg-space-1);
+    font-size: var(--mg-fs-small);
+  }
+
+  .mg-footer-cols__hours > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--mg-space-4);
+  }
+
+  .mg-footer-cols__hours dt {
+    color: var(--mg-ink-2);
+  }
+
+  .mg-footer-cols__hours dd {
+    margin: 0;
+    font-weight: 500;
+    color: var(--mg-ink);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  .mg-footer-cols__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mg-space-2);
+    margin-block-start: var(--mg-space-3);
+  }
+
+  .mg-footer-cols__socials {
+    display: flex;
+    gap: var(--mg-space-2);
+    margin: var(--mg-space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-footer-cols__social {
+    display: grid;
+    place-items: center;
+    width: var(--mg-tap);
+    height: var(--mg-tap);
+    border: 1px solid var(--mg-line);
+    border-radius: var(--mg-radius-pill);
+    color: var(--mg-ink);
+    transition: border-color var(--mg-dur) var(--mg-ease);
+  }
+
+  .mg-footer-cols__social:hover {
+    border-color: var(--mg-line-strong);
+  }
+
+  .mg-footer-cols__social .mg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Tablets and up: brand strip in a row, four columns always open */
+  @media screen and (min-width: 750px) {
+    .mg-footer-contact--columns {
+      padding-block-start: var(--mg-space-8);
+    }
+
+    .mg-footer-cols__brand {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+      align-items: end;
+      gap: var(--mg-space-7);
+      padding-block-end: var(--mg-space-7);
+    }
+
+    .mg-footer-cols__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--mg-space-6) var(--mg-space-6);
+      padding-block-start: var(--mg-space-7);
+    }
+
+    .mg-footer-cols__accordion {
+      border-bottom: 0;
+    }
+
+    .mg-footer-cols__summary {
+      min-height: 0;
+      margin-block-end: var(--mg-space-3);
+      cursor: default;
+    }
+
+    .mg-footer-cols__chevron {
+      display: none;
+    }
+
+    .mg-footer-cols__panel {
+      padding-block-end: 0;
+    }
+
+    .mg-footer-cols__links a {
+      min-height: 34px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .mg-footer-cols__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 1.3fr);
+      gap: var(--mg-space-7);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mg-footer-cols__chevron,
+    .mg-footer-cols__links a {
+      transition: none;
+    }
+  }
+
+  /* ---------- Bottom row: payment icons ---------- */
+  .mg-footer-contact__payment-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mg-footer-contact__payment-list li {
+    display: flex;
+  }
+
+  .mg-footer-contact__payment-icon {
+    width: 38px;
+    height: 24px;
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "MG footer: contact",
+  "name": "MG footer",
   "tag": "div",
   "class": "mg-footer-contact-section",
   "disabled_on": {
-    "groups": ["header"]
+    "groups": [
+      "header"
+    ]
   },
   "settings": [
     {
       "type": "paragraph",
-      "content": "Name, tagline, phone, WhatsApp, address and hours come from Theme settings > MG Car Audio: business details. Add this section twice to the footer: once as the contact row at the top and once as the bottom row."
+      "content": "Name, tagline, phone, WhatsApp, address, hours and rating come from Theme settings > MG Car Audio: business details. Use one Columns row and one Bottom row."
     },
     {
       "type": "select",
       "id": "row",
       "label": "Row",
       "options": [
+        {
+          "value": "columns",
+          "label": "Columns: links, visit us and newsletter"
+        },
         {
           "value": "contact",
           "label": "Contact: name, buttons, address and hours"
@@ -548,14 +1246,166 @@
           "label": "Bottom: copyright, policies and theme control"
         }
       ],
-      "default": "contact"
+      "default": "columns"
+    },
+    {
+      "type": "header",
+      "content": "Column 1",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col1_heading",
+      "label": "Heading",
+      "info": "Leave blank to hide the column.",
+      "default": "Systems",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "link_list",
+      "id": "col1_menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col1_parent",
+      "label": "Menu item to list",
+      "info": "Lists the links under this item of the menu, for example Shop. Leave blank to list the whole menu.",
+      "default": "Shop",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "col1_fallback",
+      "label": "Links when the menu has none",
+      "info": "One link per line: Title | /url",
+      "default": "CarPlay & Android Auto | /collections/carplay-android-auto\nAndroid radios | /collections/android-radios\nScreen upgrades | /collections/screen-upgrades\nSpeakers | /collections/speakers\nSubwoofers | /collections/subwoofers\nAmplifiers | /collections/amplifiers\nDash cams | /collections/dashcams\nReverse cameras | /collections/reverse-cameras",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "header",
+      "content": "Column 2",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col2_heading",
+      "label": "Heading",
+      "info": "Leave blank to hide the column.",
+      "default": "Shop by car",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "link_list",
+      "id": "col2_menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col2_parent",
+      "label": "Menu item to list",
+      "info": "Lists the links under this item of the menu, for example Shop. Leave blank to list the whole menu.",
+      "default": "Car makes",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "col2_fallback",
+      "label": "Links when the menu has none",
+      "info": "One link per line: Title | /url",
+      "default": "BMW | /pages/bmw-carplay\nMercedes-Benz | /pages/mercedes-benz-carplay\nAudi | /pages/audi-carplay\nVolkswagen | /pages/volkswagen-carplay\nJapanese imports | /pages/japanese-import-conversion",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "header",
+      "content": "Column 3",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col3_heading",
+      "label": "Heading",
+      "info": "Leave blank to hide the column.",
+      "default": "Help",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "link_list",
+      "id": "col3_menu",
+      "label": "Menu",
+      "default": "footer",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "col3_parent",
+      "label": "Menu item to list",
+      "info": "Lists the links under this item of the menu, for example Shop. Leave blank to list the whole menu.",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "col3_fallback",
+      "label": "Links when the menu has none",
+      "info": "One link per line: Title | /url",
+      "default": "FAQ | /pages/faq\nWarranty & returns | /pages/warranty-returns\nBook a fitting | /pages/book-a-fitting\nShipping & collection | /pages/shipping\nGet a quote | /pages/get-a-quote\nContact | /pages/contact",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "header",
+      "content": "Visit us and extras",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "visit_open_on_mobile",
+      "label": "Open Visit us on phones",
+      "default": true,
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show email signup",
+      "info": "Adds the email to Customers with the tag newsletter.",
+      "default": true,
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Email signup label",
+      "default": "Offers and open fitting slots",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "Instagram link",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "Facebook link",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "TikTok link",
+      "visible_if": "{{ section.settings.row == 'columns' }}"
     },
     {
       "type": "checkbox",
       "id": "show_tagline",
       "label": "Show tagline",
       "default": true,
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "textarea",
@@ -570,7 +1420,7 @@
       "label": "Call button label",
       "info": "The phone number is added after this text.",
       "default": "Call",
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "checkbox",
@@ -578,14 +1428,14 @@
       "label": "Show WhatsApp",
       "info": "Also needs Show WhatsApp buttons turned on in the business details.",
       "default": true,
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "text",
       "id": "whatsapp_label",
       "label": "WhatsApp button label",
       "default": "WhatsApp us",
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "text",
@@ -607,7 +1457,7 @@
       "id": "address_heading",
       "label": "Address heading",
       "default": "Visit us",
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "text",
@@ -615,14 +1465,14 @@
       "label": "Directions link label",
       "info": "Opens Google Maps using the map search in the business details. Leave blank to hide.",
       "default": "Get directions",
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "checkbox",
       "id": "show_hours",
       "label": "Show opening hours",
       "default": true,
-      "visible_if": "{{ section.settings.row == 'contact' }}"
+      "visible_if": "{{ section.settings.row != 'bottom' }}"
     },
     {
       "type": "text",
@@ -655,6 +1505,13 @@
     },
     {
       "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true,
+      "visible_if": "{{ section.settings.row == 'bottom' }}"
+    },
+    {
+      "type": "checkbox",
       "id": "show_theme_control",
       "label": "Show the Auto / Light / Dark control",
       "info": "Also needs Show theme control turned on in Theme settings > MG Car Audio: business details.",
@@ -671,8 +1528,18 @@
   ],
   "presets": [
     {
+      "name": "MG footer: columns",
+      "category": "Footer",
+      "settings": {
+        "row": "columns"
+      }
+    },
+    {
       "name": "MG footer: contact row",
-      "category": "Footer"
+      "category": "Footer",
+      "settings": {
+        "row": "contact"
+      }
     },
     {
       "name": "MG footer: bottom row",

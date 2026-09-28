@@ -1,1 +1,44 @@
 /* MG page styles: services hub, service pages, latest jobs, about, contact, FAQ. Owned by the pages task. */
+
+/*
+ * Bold uppercase heading (v4): Prompt 600, tight tracking, for page h1s, big tile labels and
+ * section heads on inner pages. Sentence-case copy stays as it is; CSS does the uppercasing so
+ * screen readers read the words normally.
+ */
+.mg-pg-caps {
+  font-family: var(--mg-font-ui);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+h2.mg-pg-caps,
+.mg-head__title.mg-pg-caps {
+  font-size: clamp(1.375rem, 2.8vw, 2rem);
+  line-height: 1.08;
+}
+
+/* Page h1 in the cinematic headers and page intros */
+.mg-pg-h1 {
+  margin: 0;
+  font-family: var(--mg-font-ui);
+  font-size: clamp(2rem, 7.4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--mg-ink);
+}
+
+/* Small uppercase label above a big value (stats, phone number, hero facts) */
+.mg-pg-label {
+  margin: 0;
+  font-size: var(--mg-fs-micro);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mg-ink-2);
+}

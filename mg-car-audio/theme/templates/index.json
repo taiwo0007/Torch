@@ -15,14 +15,19 @@
         "heading_line_1": "Your car already has the screen.",
         "heading_line_2": "Add CarPlay.",
         "heading_is_h1": true,
-        "lede": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop.",
-        "plate_label": "Enter your reg",
-        "plate_placeholder": "241-D-12345",
-        "button_label": "Get a quote",
-        "quote_url": "/pages/get-a-quote",
+        "lede": "Wireless CarPlay and Android Auto on your factory screen, fitted at our Dublin 12 workshop.",
+        "primary_label": "Shop CarPlay & radios",
+        "primary_url": "/collections/carplay-android-auto",
+        "secondary_label": "Book a fitting",
+        "secondary_url": "/pages/book-a-fitting",
         "show_whatsapp": true,
         "whatsapp_text": "Or WhatsApp us a photo of your dash",
         "whatsapp_message": "Hi MG Car Audio, here's a photo of my dash for a quote. My car is: ",
+        "show_promo": true,
+        "promo_title": "BMW CarPlay",
+        "promo_price": "€350",
+        "promo_note": "fitted",
+        "promo_url": "/products/carplay-installation-bmw",
         "fallback_image": "mg-img-hero-1",
         "slideshow": true,
         "fallback_2": "mg-img-hero-2",
@@ -33,13 +38,20 @@
     "trust_bar": {
       "type": "mg-trust-bar",
       "blocks": {
-        "item_warranty": {
+        "rating_google": {
+          "type": "rating",
+          "settings": {
+            "count_prefix": "from",
+            "label": "Google reviews"
+          }
+        },
+        "item_workshop": {
           "type": "item",
           "settings": {
-            "source": "warranty",
-            "icon": "shield",
-            "title": "",
-            "text": ""
+            "source": "address",
+            "icon": "map-pin",
+            "title": "Fitted in Dublin 12",
+            "text": "Most jobs in 1 to 2 hours"
           }
         },
         "item_prices": {
@@ -48,37 +60,27 @@
             "source": "custom",
             "icon": "tag",
             "title": "Fixed fitted prices",
-            "text": ""
+            "text": "Agreed before we start"
           }
         },
-        "item_factory": {
+        "item_warranty": {
           "type": "item",
           "settings": {
-            "source": "custom",
-            "icon": "car",
-            "title": "Factory features kept",
-            "text": ""
-          }
-        },
-        "item_workshop": {
-          "type": "item",
-          "settings": {
-            "source": "address",
-            "icon": "map-pin",
+            "source": "warranty",
+            "icon": "shield",
             "title": "",
-            "text": ""
+            "text": "On every fitting"
           }
         }
       },
       "block_order": [
-        "item_warranty",
+        "rating_google",
+        "item_workshop",
         "item_prices",
-        "item_factory",
-        "item_workshop"
+        "item_warranty"
       ],
       "settings": {
-        "statement": "Ireland's CarPlay and car audio specialist.",
-        "subline": "Fixed fitted prices at our Dublin 12 workshop. Backed by our warranty."
+        "statement": ""
       }
     },
     "system_grid": {
@@ -171,7 +173,7 @@
         "system_japan": {
           "type": "system",
           "settings": {
-            "title": "Japanese import conversion",
+            "title": "Japanese imports",
             "url": "/products/bmw-japan-to-europe-conversion",
             "price": "€450",
             "price_label": "From",
@@ -183,8 +185,8 @@
       },
       "block_order": [
         "system_carplay",
-        "system_screens",
         "system_radios",
+        "system_screens",
         "system_speakers",
         "system_subs",
         "system_dashcams",
@@ -196,8 +198,238 @@
         "subheading": "",
         "link_label": "See all",
         "link_url": "/collections",
-        "columns_desktop": 4,
+        "feature_first": true,
+        "columns_desktop": 3,
+        "full_width": true,
+        "cta_label": "Shop now",
         "price_fallback": ""
+      }
+    },
+    "best_sellers": {
+      "type": "product-list",
+      "name": "Best sellers",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "name": "Header",
+          "static": true,
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "space-between",
+            "vertical_alignment": "flex-end",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "heading_group": {
+              "type": "group",
+              "name": "Heading",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 0,
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "heading": {
+                  "type": "text",
+                  "name": "Heading",
+                  "settings": {
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h2",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "uppercase",
+                    "wrap": "balance",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "text": "<h2>Best sellers</h2>"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "heading"
+              ]
+            },
+            "product_list_button": {
+              "type": "_product-list-button",
+              "name": "View all button",
+              "settings": {
+                "label": "View all",
+                "open_in_new_tab": false,
+                "style_class": "button-secondary",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "heading_group",
+            "product_list_button"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product-card-gallery": {
+              "type": "_product-card-gallery",
+              "name": "Product card media",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "product_title": {
+              "type": "product-title",
+              "name": "Product title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "price": {
+              "type": "price",
+              "name": "Price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": [
+            "product-card-gallery",
+            "product_title",
+            "price"
+          ]
+        }
+      },
+      "block_order": [],
+      "settings": {
+        "collection": "best-sellers",
+        "layout_type": "carousel",
+        "carousel_on_mobile": true,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 16,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+        "gap": 24,
+        "padding-block-start": 36,
+        "padding-block-end": 36
       }
     },
     "services": {
@@ -358,7 +590,7 @@
       ],
       "settings": {
         "heading": "Fitted prices",
-        "text": "",
+        "text": "One price for parts and fitting at our Dublin 12 workshop.",
         "button_label": "All services",
         "button_url": "/pages/services",
         "show_image": true,
@@ -374,482 +606,7 @@
         "on_request_label": "Price on request",
         "book_label": "Book",
         "quote_label": "Get a quote",
-        "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill.",
-        "image_fallback": "mg-img-panel-workshop"
-      }
-    },
-    "best_sellers": {
-      "type": "product-list",
-      "name": "Best sellers",
-      "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "Header",
-          "static": true,
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "heading_group": {
-              "type": "group",
-              "name": "Heading",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 0,
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "heading": {
-                  "type": "text",
-                  "name": "Heading",
-                  "settings": {
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h2",
-                    "font": "var(--font-heading--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "balance",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
-                    "text": "<h2>Best sellers</h2>"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "heading"
-              ]
-            },
-            "product_list_button": {
-              "type": "_product-list-button",
-              "name": "View all button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "heading_group",
-            "product_list_button"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "Product card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 8,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product-card-gallery": {
-              "type": "_product-card-gallery",
-              "name": "Product card media",
-              "settings": {
-                "image_ratio": "square",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            },
-            "product_title": {
-              "type": "product-title",
-              "name": "Product title",
-              "settings": {
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            },
-            "price": {
-              "type": "price",
-              "name": "Price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            }
-          },
-          "block_order": [
-            "product-card-gallery",
-            "product_title",
-            "price"
-          ]
-        }
-      },
-      "block_order": [],
-      "settings": {
-        "collection": "best-sellers",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 16,
-        "rows_gap": 16,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 20,
-        "padding-block-start": 36,
-        "padding-block-end": 36
-      }
-    },
-    "promise": {
-      "type": "mg-promise",
-      "blocks": {
-        "item_check": {
-          "type": "item",
-          "settings": {
-            "icon": "car",
-            "title": "Compatibility check",
-            "text": "from your reg"
-          }
-        },
-        "item_finish": {
-          "type": "item",
-          "settings": {
-            "icon": "wrench",
-            "title": "OEM-style finish",
-            "text": "with neat, hidden wiring"
-          }
-        },
-        "item_controls": {
-          "type": "item",
-          "settings": {
-            "icon": "screen",
-            "title": "Factory controls kept",
-            "text": "where possible"
-          }
-        },
-        "item_test": {
-          "type": "item",
-          "settings": {
-            "icon": "check",
-            "title": "Full test",
-            "text": "before you drive away"
-          }
-        },
-        "item_warranty": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "title": "Workmanship warranty",
-            "text": "on every fitting"
-          }
-        },
-        "item_deposit": {
-          "type": "item",
-          "settings": {
-            "icon": "calendar",
-            "title": "€50 deposit",
-            "text": "secures your slot"
-          }
-        }
-      },
-      "block_order": [
-        "item_check",
-        "item_finish",
-        "item_controls",
-        "item_test",
-        "item_warranty",
-        "item_deposit"
-      ],
-      "settings": {
-        "heading": "What's in every MG fit?",
-        "text": "How we fit, test and stand behind every job at our Dublin 12 workshop.",
-        "button_label": "",
-        "panel": "warm",
-        "image_fallback": "mg-img-panel-promise"
-      }
-    },
-    "car_makes": {
-      "type": "mg-car-makes",
-      "blocks": {
-        "make_bmw": {
-          "type": "make",
-          "settings": {
-            "name": "BMW",
-            "subtitle": ""
-          }
-        },
-        "make_audi": {
-          "type": "make",
-          "settings": {
-            "name": "Audi",
-            "subtitle": ""
-          }
-        },
-        "make_mercedes_benz": {
-          "type": "make",
-          "settings": {
-            "name": "Mercedes-Benz",
-            "subtitle": ""
-          }
-        },
-        "make_volkswagen": {
-          "type": "make",
-          "settings": {
-            "name": "Volkswagen",
-            "subtitle": ""
-          }
-        },
-        "make_toyota": {
-          "type": "make",
-          "settings": {
-            "name": "Toyota",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Toyota"
-          }
-        },
-        "make_lexus": {
-          "type": "make",
-          "settings": {
-            "name": "Lexus",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Lexus"
-          }
-        },
-        "make_ford": {
-          "type": "make",
-          "settings": {
-            "name": "Ford",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Ford"
-          }
-        },
-        "make_nissan": {
-          "type": "make",
-          "settings": {
-            "name": "Nissan",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Nissan"
-          }
-        },
-        "make_honda": {
-          "type": "make",
-          "settings": {
-            "name": "Honda",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Honda"
-          }
-        },
-        "make_mazda": {
-          "type": "make",
-          "settings": {
-            "name": "Mazda",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Mazda"
-          }
-        },
-        "make_hyundai": {
-          "type": "make",
-          "settings": {
-            "name": "Hyundai",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Hyundai"
-          }
-        },
-        "make_kia": {
-          "type": "make",
-          "settings": {
-            "name": "Kia",
-            "subtitle": "",
-            "url": "/pages/get-a-quote?make=Kia"
-          }
-        },
-        "link_japanese_imports": {
-          "type": "link",
-          "settings": {
-            "label": "Japanese imports",
-            "url": "/pages/get-a-quote?service=japan-to-europe"
-          }
-        }
-      },
-      "block_order": [
-        "make_bmw",
-        "make_audi",
-        "make_mercedes_benz",
-        "make_volkswagen",
-        "make_toyota",
-        "make_lexus",
-        "make_ford",
-        "make_nissan",
-        "make_honda",
-        "make_mazda",
-        "make_hyundai",
-        "make_kia",
-        "link_japanese_imports"
-      ],
-      "settings": {
-        "heading": "Shop by car",
-        "text": "",
-        "view_all_label": "Other makes",
-        "view_all_url": "/pages/get-a-quote",
-        "align_desktop": "left",
-        "layout": "marquee",
-        "loop_seconds": 50
-      }
-    },
-    "how_it_works": {
-      "type": "mg-how-it-works",
-      "blocks": {
-        "step_reg": {
-          "type": "step",
-          "settings": {
-            "title": "Send your reg",
-            "text": "WhatsApp us your reg and a photo of your dash, or use the quote form."
-          }
-        },
-        "step_quote": {
-          "type": "step",
-          "settings": {
-            "title": "Get a fixed price",
-            "text": "We confirm what fits your car and the fitted price before you commit."
-          }
-        },
-        "step_book": {
-          "type": "step",
-          "settings": {
-            "title": "Book your slot",
-            "text": "Pick a day that suits you. A <strong>€50 deposit</strong> secures it."
-          }
-        },
-        "step_drive": {
-          "type": "step",
-          "settings": {
-            "title": "Drive away",
-            "text": "We fit it, test it with your phone and show you how it works."
-          }
-        }
-      },
-      "block_order": [
-        "step_reg",
-        "step_quote",
-        "step_book",
-        "step_drive"
-      ],
-      "settings": {
-        "heading": "How it works",
-        "text": "From your reg to driving away, with a fixed price agreed first.",
-        "align": "left",
-        "background": "page",
-        "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp us",
-        "button_label": "Book a fitting",
-        "button_link": "/pages/book-a-fitting",
-        "show_phone": true,
-        "phone_prefix": "Prefer to talk? Call"
+        "footnote": "Prices include fitting at our Dublin 12 workshop. A €50 deposit secures your slot and comes off your bill."
       }
     },
     "reviews": {
@@ -982,70 +739,353 @@
         "heading": "What Dublin drivers say",
         "text": "",
         "show_rating": true,
-        "reviews_link_label": "See all reviews",
+        "reviews_link_label": "Read our Google reviews",
         "show_placeholder_note": false,
-        "background": "surface"
+        "background": "photo"
       }
     },
-    "gallery": {
-      "type": "mg-gallery",
-      "disabled": true,
+    "fit_check": {
+      "type": "mg-fit-check",
       "blocks": {
-        "install_bmw": {
-          "type": "image",
+        "make_bmw": {
+          "type": "make",
           "settings": {
-            "fallback": "bmw-carplay",
-            "car_label": "BMW",
-            "caption": "Wireless CarPlay"
+            "name": "BMW"
           }
         },
-        "install_audi": {
-          "type": "image",
+        "make_audi": {
+          "type": "make",
           "settings": {
-            "fallback": "audi-carplay",
-            "car_label": "Audi",
-            "caption": "CarPlay retrofit"
+            "name": "Audi"
           }
         },
-        "install_android_auto": {
-          "type": "image",
+        "make_mercedes_benz": {
+          "type": "make",
           "settings": {
-            "fallback": "android-auto",
-            "car_label": "Screen upgrade",
-            "caption": "Wireless Android Auto"
+            "name": "Mercedes-Benz"
           }
         },
-        "install_radio": {
-          "type": "image",
+        "make_volkswagen": {
+          "type": "make",
           "settings": {
-            "fallback": "dash-radio",
-            "car_label": "Radio upgrade",
-            "caption": "New head unit fitted"
+            "name": "Volkswagen"
           }
         },
-        "install_speakers": {
-          "type": "image",
+        "make_toyota": {
+          "type": "make",
           "settings": {
-            "fallback": "door-speaker",
-            "car_label": "Speaker upgrade",
-            "caption": "Front door speakers"
+            "name": "Toyota",
+            "url": "/pages/get-a-quote?make=Toyota"
+          }
+        },
+        "make_lexus": {
+          "type": "make",
+          "settings": {
+            "name": "Lexus",
+            "url": "/pages/get-a-quote?make=Lexus"
+          }
+        },
+        "make_nissan": {
+          "type": "make",
+          "settings": {
+            "name": "Nissan",
+            "url": "/pages/get-a-quote?make=Nissan"
+          }
+        },
+        "make_ford": {
+          "type": "make",
+          "settings": {
+            "name": "Ford",
+            "url": "/pages/get-a-quote?make=Ford"
           }
         }
       },
       "block_order": [
-        "install_bmw",
-        "install_audi",
-        "install_android_auto",
-        "install_radio",
-        "install_speakers"
+        "make_bmw",
+        "make_audi",
+        "make_mercedes_benz",
+        "make_volkswagen",
+        "make_toyota",
+        "make_lexus",
+        "make_nissan",
+        "make_ford"
       ],
       "settings": {
-        "heading": "Latest jobs",
-        "text": "Recent fits from our Dublin 12 workshop.",
-        "follow_label": "See all jobs",
-        "follow_link": "/pages/gallery",
-        "background": "page"
+        "heading": "Not sure what fits your car?",
+        "text": "Send us your reg and we'll check what fits, then quote one fixed fitted price.",
+        "plate_label": "Your reg",
+        "plate_placeholder": "241-D-12345",
+        "make_label": "Make",
+        "make_list": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover\nOther",
+        "button_label": "Check my car",
+        "quote_url": "/pages/get-a-quote",
+        "chips_label": "Or shop by car"
       }
+    },
+    "car_makes": {
+      "type": "mg-car-makes",
+      "blocks": {
+        "make_bmw": {
+          "type": "make",
+          "settings": {
+            "name": "BMW",
+            "subtitle": ""
+          }
+        },
+        "make_audi": {
+          "type": "make",
+          "settings": {
+            "name": "Audi",
+            "subtitle": ""
+          }
+        },
+        "make_mercedes_benz": {
+          "type": "make",
+          "settings": {
+            "name": "Mercedes-Benz",
+            "subtitle": ""
+          }
+        },
+        "make_volkswagen": {
+          "type": "make",
+          "settings": {
+            "name": "Volkswagen",
+            "subtitle": ""
+          }
+        },
+        "make_toyota": {
+          "type": "make",
+          "settings": {
+            "name": "Toyota",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Toyota"
+          }
+        },
+        "make_lexus": {
+          "type": "make",
+          "settings": {
+            "name": "Lexus",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Lexus"
+          }
+        },
+        "make_ford": {
+          "type": "make",
+          "settings": {
+            "name": "Ford",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Ford"
+          }
+        },
+        "make_nissan": {
+          "type": "make",
+          "settings": {
+            "name": "Nissan",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Nissan"
+          }
+        },
+        "make_honda": {
+          "type": "make",
+          "settings": {
+            "name": "Honda",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Honda"
+          }
+        },
+        "make_mazda": {
+          "type": "make",
+          "settings": {
+            "name": "Mazda",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Mazda"
+          }
+        },
+        "make_hyundai": {
+          "type": "make",
+          "settings": {
+            "name": "Hyundai",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Hyundai"
+          }
+        },
+        "make_kia": {
+          "type": "make",
+          "settings": {
+            "name": "Kia",
+            "subtitle": "",
+            "url": "/pages/get-a-quote?make=Kia"
+          }
+        },
+        "link_japanese_imports": {
+          "type": "link",
+          "settings": {
+            "label": "Japanese imports",
+            "url": "/pages/get-a-quote?service=japan-to-europe"
+          }
+        }
+      },
+      "block_order": [
+        "make_bmw",
+        "make_audi",
+        "make_mercedes_benz",
+        "make_volkswagen",
+        "make_toyota",
+        "make_lexus",
+        "make_ford",
+        "make_nissan",
+        "make_honda",
+        "make_mazda",
+        "make_hyundai",
+        "make_kia",
+        "link_japanese_imports"
+      ],
+      "settings": {
+        "heading": "Shop by car",
+        "text": "",
+        "view_all_label": "Other makes",
+        "view_all_url": "/pages/get-a-quote",
+        "align_desktop": "left",
+        "layout": "marquee",
+        "loop_seconds": 50
+      },
+      "disabled": true
+    },
+    "promise": {
+      "type": "mg-promise",
+      "blocks": {
+        "item_check": {
+          "type": "item",
+          "settings": {
+            "icon": "car",
+            "title": "Compatibility check",
+            "text": "from your reg"
+          }
+        },
+        "item_finish": {
+          "type": "item",
+          "settings": {
+            "icon": "wrench",
+            "title": "OEM-style finish",
+            "text": "with neat, hidden wiring"
+          }
+        },
+        "item_controls": {
+          "type": "item",
+          "settings": {
+            "icon": "screen",
+            "title": "Factory controls kept",
+            "text": "where possible"
+          }
+        },
+        "item_test": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "Full test",
+            "text": "before you drive away"
+          }
+        },
+        "item_warranty": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "Workmanship warranty",
+            "text": "on every fitting"
+          }
+        },
+        "item_deposit": {
+          "type": "item",
+          "settings": {
+            "icon": "calendar",
+            "title": "€50 deposit",
+            "text": "secures your slot"
+          }
+        }
+      },
+      "block_order": [
+        "item_check",
+        "item_finish",
+        "item_controls",
+        "item_test",
+        "item_warranty",
+        "item_deposit"
+      ],
+      "settings": {
+        "heading": "What's in every MG fit?",
+        "text": "How we fit, test and stand behind every job at our Dublin 12 workshop.",
+        "button_label": "",
+        "panel": "warm",
+        "image_fallback": "mg-img-panel-promise"
+      },
+      "disabled": true
+    },
+    "how_it_works": {
+      "type": "mg-how-it-works",
+      "blocks": {
+        "step_reg": {
+          "type": "step",
+          "settings": {
+            "title": "Send your reg",
+            "text": "WhatsApp us your reg and a photo of your dash, or use the quote form."
+          }
+        },
+        "step_quote": {
+          "type": "step",
+          "settings": {
+            "title": "Get a fixed price",
+            "text": "We confirm what fits your car and the fitted price before you commit."
+          }
+        },
+        "step_book": {
+          "type": "step",
+          "settings": {
+            "title": "Book your slot",
+            "text": "Pick a day that suits you. A <strong>€50 deposit</strong> secures it."
+          }
+        },
+        "step_drive": {
+          "type": "step",
+          "settings": {
+            "title": "Drive away",
+            "text": "We fit it, test it with your phone and show you how it works."
+          }
+        }
+      },
+      "block_order": [
+        "step_reg",
+        "step_quote",
+        "step_book",
+        "step_drive"
+      ],
+      "settings": {
+        "heading": "How it works",
+        "text": "From your reg to driving away, with a fixed price agreed first.",
+        "align": "left",
+        "background": "page",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "button_label": "Book a fitting",
+        "button_link": "/pages/book-a-fitting",
+        "show_phone": true,
+        "phone_prefix": "Prefer to talk? Call"
+      },
+      "disabled": true
+    },
+    "cta_band": {
+      "type": "mg-cta-band",
+      "settings": {
+        "heading": "Send your reg tonight.",
+        "heading_italic": "Drive home with CarPlay.",
+        "text": "We agree a fixed fitted price first. Most fits take one to two hours at our Dublin 12 workshop.",
+        "book_label": "Book a fitting",
+        "book_url": "/pages/book-a-fitting",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "whatsapp_message": "",
+        "image_fallback": "mg-img-bg-night-drive"
+      },
+      "disabled": true
     },
     "faq": {
       "type": "mg-faq",
@@ -1125,6 +1165,81 @@
         "open_first": false,
         "output_faq_schema": true,
         "background": "page"
+      },
+      "disabled": true
+    },
+    "visit_callback": {
+      "type": "mg-visit-callback",
+      "settings": {
+        "heading": "Request a callback",
+        "text": "Tell us your car and what you need. We'll call you back with a fixed fitted price.",
+        "message_placeholder": "For example: wireless CarPlay for a 2017 BMW 3 Series",
+        "button_label": "Request a callback",
+        "form_note": "We call back during opening hours.",
+        "enquiry_type": "Callback request (home page)",
+        "success_heading": "Thanks, we'll call you back",
+        "success_text": "We'll ring you on the number you gave during opening hours. Need us sooner? Call or WhatsApp us.",
+        "photo_caption": "Our Dublin 12 showroom"
+      }
+    },
+    "gallery": {
+      "type": "mg-gallery",
+      "disabled": true,
+      "blocks": {
+        "install_bmw": {
+          "type": "image",
+          "settings": {
+            "fallback": "bmw-carplay",
+            "car_label": "BMW",
+            "caption": "Wireless CarPlay"
+          }
+        },
+        "install_audi": {
+          "type": "image",
+          "settings": {
+            "fallback": "audi-carplay",
+            "car_label": "Audi",
+            "caption": "CarPlay retrofit"
+          }
+        },
+        "install_android_auto": {
+          "type": "image",
+          "settings": {
+            "fallback": "android-auto",
+            "car_label": "Screen upgrade",
+            "caption": "Wireless Android Auto"
+          }
+        },
+        "install_radio": {
+          "type": "image",
+          "settings": {
+            "fallback": "dash-radio",
+            "car_label": "Radio upgrade",
+            "caption": "New head unit fitted"
+          }
+        },
+        "install_speakers": {
+          "type": "image",
+          "settings": {
+            "fallback": "door-speaker",
+            "car_label": "Speaker upgrade",
+            "caption": "Front door speakers"
+          }
+        }
+      },
+      "block_order": [
+        "install_bmw",
+        "install_audi",
+        "install_android_auto",
+        "install_radio",
+        "install_speakers"
+      ],
+      "settings": {
+        "heading": "Latest jobs",
+        "text": "Recent fits from our Dublin 12 workshop.",
+        "follow_label": "See all jobs",
+        "follow_link": "/pages/gallery",
+        "background": "page"
       }
     },
     "contact_map": {
@@ -1137,36 +1252,25 @@
         "facade_photo": false,
         "dark_map": true,
         "background": "page"
-      }
-    },
-    "cta_band": {
-      "type": "mg-cta-band",
-      "settings": {
-        "heading": "Send your reg tonight.",
-        "heading_italic": "Drive home with CarPlay.",
-        "text": "We agree a fixed fitted price first. Most fits take one to two hours at our Dublin 12 workshop.",
-        "book_label": "Book a fitting",
-        "book_url": "/pages/book-a-fitting",
-        "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp us",
-        "whatsapp_message": "",
-        "image_fallback": "mg-img-bg-night-drive"
-      }
+      },
+      "disabled": true
     }
   },
   "order": [
     "hero",
     "trust_bar",
     "system_grid",
-    "services",
     "best_sellers",
-    "promise",
-    "car_makes",
-    "how_it_works",
+    "services",
     "reviews",
-    "gallery",
+    "fit_check",
+    "car_makes",
+    "promise",
+    "how_it_works",
     "cta_band",
     "faq",
+    "visit_callback",
+    "gallery",
     "contact_map"
   ]
 }

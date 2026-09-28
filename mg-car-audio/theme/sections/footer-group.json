@@ -11,240 +11,36 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "mg_footer_contact": {
+    "mg_footer_columns": {
       "type": "mg-footer-contact",
-      "name": "Contact row",
+      "name": "Footer columns",
       "settings": {
-        "row": "contact",
+        "row": "columns",
         "show_tagline": true,
-        "text": "Send us your reg and we'll tell you what fits, with a fixed fitted price.",
-        "call_label": "Call",
-        "show_whatsapp": true,
-        "whatsapp_label": "WhatsApp us",
-        "quote_label": "Get a quote",
-        "quote_url": "/pages/get-a-quote",
+        "col1_heading": "Systems",
+        "col1_menu": "main-menu",
+        "col1_parent": "Shop",
+        "col1_fallback": "CarPlay & Android Auto | /collections/carplay-android-auto\nAndroid radios | /collections/android-radios\nScreen upgrades | /collections/screen-upgrades\nSpeakers | /collections/speakers\nSubwoofers | /collections/subwoofers\nAmplifiers | /collections/amplifiers\nDash cams | /collections/dashcams\nReverse cameras | /collections/reverse-cameras",
+        "col2_heading": "Shop by car",
+        "col2_menu": "main-menu",
+        "col2_parent": "Car makes",
+        "col2_fallback": "BMW | /pages/bmw-carplay\nMercedes-Benz | /pages/mercedes-benz-carplay\nAudi | /pages/audi-carplay\nVolkswagen | /pages/volkswagen-carplay\nJapanese imports | /pages/japanese-import-conversion",
+        "col3_heading": "Help",
+        "col3_menu": "footer",
+        "col3_parent": "",
+        "col3_fallback": "FAQ | /pages/faq\nWarranty & returns | /pages/warranty-returns\nBook a fitting | /pages/book-a-fitting\nShipping & collection | /pages/shipping\nGet a quote | /pages/get-a-quote\nContact | /pages/contact",
         "address_heading": "Visit us",
         "directions_label": "Get directions",
         "show_hours": true,
-        "hours_heading": "Opening hours",
-        "compact_on_contact_pages": true
-      }
-    },
-    "footer": {
-      "type": "footer",
-      "blocks": {
-        "menu_main": {
-          "type": "menu",
-          "name": "Explore menu",
-          "settings": {
-            "menu": "main-menu",
-            "heading": "Explore",
-            "menu_spacing": 4,
-            "show_as_accordion": true,
-            "accordion_icon": "caret",
-            "accordion_dividers": true,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "menu_services": {
-          "type": "menu",
-          "name": "Services menu",
-          "settings": {
-            "menu": "services",
-            "heading": "Services",
-            "menu_spacing": 4,
-            "show_as_accordion": true,
-            "accordion_icon": "caret",
-            "accordion_dividers": true,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "menu_footer": {
-          "type": "menu",
-          "name": "Help menu",
-          "settings": {
-            "menu": "footer",
-            "heading": "Help and info",
-            "menu_spacing": 4,
-            "show_as_accordion": true,
-            "accordion_icon": "caret",
-            "accordion_dividers": true,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "group_newsletter": {
-          "type": "group",
-          "name": "Newsletter and payments",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "flex-start",
-            "gap": 8,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "newsletter_heading": {
-              "type": "text",
-              "name": "Heading",
-              "settings": {
-                "text": "<p>Offers and new kit</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h6",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "newsletter_text": {
-              "type": "text",
-              "name": "Text",
-              "settings": {
-                "text": "<p>An occasional email with fitting offers, new CarPlay kits and open slots. Unsubscribe any time.</p>",
-                "width": "100%",
-                "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "newsletter_signup": {
-              "type": "email-signup",
-              "name": "Email signup",
-              "settings": {
-                "width": "fill",
-                "custom_width": 100,
-                "heading": "",
-                "heading_preset": "h3",
-                "border_style": "all",
-                "input_style": "default",
-                "border_width": 1,
-                "border_radius": 8,
-                "input_type_preset": "paragraph",
-                "style_class": "button",
-                "display_type": "text",
-                "label": "Sign up",
-                "integrated_button": false,
-                "button_type_preset": "paragraph",
-                "padding-block-start": 8,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "newsletter_payments": {
-              "type": "payment-icons",
-              "name": "Payment icons",
-              "settings": {
-                "horizontal_alignment": "flex-start",
-                "gap": 8,
-                "padding-block-start": 16,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "newsletter_heading",
-            "newsletter_text",
-            "newsletter_signup",
-            "newsletter_payments"
-          ]
-        }
-      },
-      "block_order": [
-        "menu_main",
-        "menu_services",
-        "menu_footer",
-        "group_newsletter"
-      ],
-      "name": "Footer links",
-      "settings": {
-        "section_width": "page-width",
-        "gap": 32,
-        "background_color": "",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "call_label": "Call",
+        "show_whatsapp": true,
+        "whatsapp_label": "WhatsApp us",
+        "visit_open_on_mobile": true,
+        "show_newsletter": true,
+        "newsletter_heading": "Offers and open fitting slots",
+        "social_instagram": "",
+        "social_facebook": "",
+        "social_tiktok": ""
       }
     },
     "mg_footer_bottom": {
@@ -254,13 +50,13 @@
         "row": "bottom",
         "bottom_links_label": "Policies",
         "show_theme_control": true,
-        "theme_label": "Theme"
+        "theme_label": "Theme",
+        "show_payment_icons": true
       }
     }
   },
   "order": [
-    "mg_footer_contact",
-    "footer",
+    "mg_footer_columns",
     "mg_footer_bottom"
   ]
 }
