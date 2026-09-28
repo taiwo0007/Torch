@@ -7,8 +7,8 @@ Skills applied: copywriting (+ copy-frameworks, natural-transitions), cro, marke
 
 | Element | Copy |
 |---|---|
-| Heading line 1 | Keep your dash. |
-| Heading line 2 (MG red) | Add CarPlay. |
+| Heading line 1 | Big screens. Better sound. |
+| Heading line 2 (MG red) | Fitted in Dublin 12. |
 | Text under the heading (17 words) | Wireless CarPlay and Android Auto on the screen your car came with. No phone mount, no dangling cable. |
 | Main button | See fitted prices (links to `/collections/carplay-android-auto`, Liquid fallback when blank) |
 | Second button | Book a fitting (`/pages/book-a-fitting`) |
@@ -83,3 +83,13 @@ Scored 1 to 5 on: **Clarity** (understood in 5 seconds, cold visitor) · **Speci
 - Headline: "Keep your dash. / Add CarPlay." vs "Phone mount out. / CarPlay in."
 - Main CTA: "See fitted prices" vs "Book a fitting" as the filled button.
 - Hero WhatsApp text link on vs off (watch WhatsApp taps from the float and tab bar).
+
+
+## Update (Sep 2026): headline covers the whole range
+
+Taiwo asked for a headline that shows everything MG fits, not only CarPlay. Live now:
+**Big screens. Better sound. / Fitted in Dublin 12.** with the lede "Widescreen displays, wireless
+CarPlay and Android Auto, and premium audio for your car, fitted at our workshop for a fixed price."
+Pattern: two short stacked benefit claims plus a local proof line (the style big electronics and
+car brands use for range headlines). Alternatives kept for testing: "Make your car feel new. /
+Without changing cars." and "Upgrade your dash. / Fitted in Dublin 12."
