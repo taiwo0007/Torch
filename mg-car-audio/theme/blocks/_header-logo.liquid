@@ -55,6 +55,17 @@
     {% endif %}
     data-testid="header-logo"
   >
+    {%- if settings.logo == blank -%}
+      {%- comment -%} MG: the round MG Car Audio badge from theme assets until a logo is uploaded in Theme settings {%- endcomment -%}
+      <img
+        src="{{ 'mg-logo-512.webp' | asset_url }}"
+        alt="{{ shop.name | escape }}"
+        class="header-logo__image mg-logo-badge"
+        width="512"
+        height="512"
+        fetchpriority="high"
+      >
+    {%- else -%}
     {% render 'image',
       image: settings.logo,
       class: 'header-logo__image',
@@ -63,6 +74,7 @@
       text_fallback: shop.name,
       style: logo_style
     %}
+    {%- endif -%}
   </span>
 
   {% if use_inverse_logo %}

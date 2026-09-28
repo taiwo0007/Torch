@@ -227,6 +227,24 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
   }
 }
 
+/* Round MG badge logo (assets/mg-logo-512.webp): a hairline ring keeps the black disc visible on the near-black header */
+#header-component .mg-logo-badge {
+  display: block;
+  width: 56px;
+  height: 56px;
+  max-width: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--mg-line);
+  object-fit: contain;
+}
+
+@media screen and (max-width: 749px) {
+  #header-component .mg-logo-badge {
+    width: 46px;
+    height: 46px;
+  }
+}
+
 /* Header icons (menu, account, cart): ink, 44px targets */
 #header-component .header-actions__action,
 #header-component .header__icon--menu {
@@ -802,8 +820,32 @@ html[data-mg-scheme='dark'] #header-component .search-action .header-actions__ac
   transition: transform var(--mg-dur) var(--mg-ease), color var(--mg-dur) var(--mg-ease);
 }
 
+/* Open group: the plus turns into a clear minus (no rotation, which left only a thin slash) */
+.menu-drawer summary .icon-plus svg {
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+  --icon-stroke-width: 1.75px;
+}
+
+.menu-drawer summary .icon-plus :is(.horizontal, .vertical) {
+  opacity: 1;
+  transform-origin: 50% 50%;
+  transition: transform var(--mg-dur) var(--mg-ease), opacity var(--mg-dur) var(--mg-ease);
+}
+
 .menu-drawer details[open] > summary .icon-plus {
-  transform: rotate(45deg);
+  transform: none;
+}
+
+.menu-drawer details[open] > summary .icon-plus .horizontal {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.menu-drawer details[open] > summary .icon-plus .vertical {
+  opacity: 1;
+  transform: none;
 }
 
 .menu-drawer .menu-drawer__menu-item--child:is(:hover, [aria-current='page']) {
