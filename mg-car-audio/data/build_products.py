@@ -15,7 +15,10 @@ List metafields (list.single_line_text_field) hold one value per line inside the
 Shopify's own product export writes them. Edit this script, not the CSV, then re-run it.
 
 PLACEHOLDERS: every hardware price, spec line and "fitted from" price on a product tagged
-`demo-placeholder` is invented for the demo. Service prices are MG's real prices (see PRICE_SOURCES).
+`demo-placeholder` is invented for the demo (own-label "MG Select" names, no third-party model numbers).
+Products tagged `mg-shop` are MG's real Wix shop listings (real title, price and copy). Installation
+services are MG's real prices (see PRICE_SOURCES), except those tagged `demo-price`.
+Image sources and credits: see the IMG / UNSPLASH_CREDITS comments and data/PRODUCTS_README.md.
 """
 
 import csv
@@ -178,9 +181,9 @@ ALT = {
     "mg_vw_reverse_screen": "Reversing camera picture with parking guidelines on a Volkswagen dashboard screen",
     "mg_bmw_red": "Red BMW coupé parked in a showroom",
     "mg_honda_red": "Red Honda hatchback seen from the front",
-    "th_hero_1": "Large widescreen head unit glowing in a dark car interior at night",
+    "th_hero_1": "Apple CarPlay Now Playing screen on an in-dash display",
     "th_hero_2": "Widescreen dashboard display with a split-screen CarPlay layout under a starry sky",
-    "th_hero_3": "Apple CarPlay Now Playing screen in a dark dashboard with teal-lit trim",
+    "th_hero_3": "Large widescreen head unit glowing in a dark car interior at night",
     "th_carplay": "Apple CarPlay navigation on an in-dash screen with a phone cable plugged in",
     "th_screens": "Widescreen infotainment display showing a map in a dark cabin",
     "th_android_radio": "Aftermarket double-DIN touchscreen radio glowing in a dark dashboard",
@@ -211,6 +214,10 @@ PRICE_SOURCES = {
     "vw-japan-to-europe-conversion": "€350, 2 hr, mgcaraudio.ie/service-page/vw-japan-to-europe-conversion (spec §5 says price on request: CONFIRM)",
     "radio-frequency-conversion-japan-to-europe": "€150, 1 hr, mgcaraudio.ie/service-page/radio-frequency-conversion-japan-to-europe (spec §5 says price on request: CONFIRM)",
     "reverse-camera-installation": "BMW €750, Audi €699, VW €650, Honda €399, mgcaraudio.ie/category/reverse-camera-installation-service",
+    # MG's real Wix shop products (mgcaraudio.ie/category/all-products, product JSON-LD, 28 Sep 2026)
+    "jbl-stadium-52cf-speakers-set": "€189, mgcaraudio.ie/product-page/jbl-stadium-52cf-speakers-set",
+    "coaxial-speaker-pair": "€90, mgcaraudio.ie/product-page/coaxial-speaker-pair",
+    "compact-single-din": "€199, mgcaraudio.ie/product-page/compact-single-din",
 }
 
 
@@ -298,7 +305,7 @@ PRODUCTS = [
             ("NBT EVO ID4 (approx. 2016–2017)", "249.00", "MG-IF-BMW-EVO4"),
             ("NBT EVO ID5 / ID6 (approx. 2017–2019)", "249.00", "MG-IF-BMW-EVO56"),
         ],
-        images=["th_hero_3", "bmw_carplay"],
+        images=["th_hero_1", "bmw_carplay"],
         shipping=True, weight_g=450, inventory=10,
         metafields=dict(
             car_make=["BMW"],
@@ -1391,7 +1398,7 @@ PRODUCTS += [
         option_name="Original iDrive",
         variants=[("CIC (approx. 2010–2013)", "599.00", "MG-SCR-BMW-F10-CIC"),
                   ("NBT (approx. 2013–2017)", "599.00", "MG-SCR-BMW-F10-NBT")],
-        images=["th_hero_1"],
+        images=["th_hero_3"],
         shipping=True, weight_g=1800, inventory=5,
         metafields=mf(make=["BMW"], models=["5 Series (F10/F11)"], screen="10.25\"", fitted="€749"),
     ),
@@ -2435,29 +2442,41 @@ PRODUCTS += [
 # CSV writer
 # ---------------------------------------------------------------------------------------------
 
+def image_list(p):
+    """[(url, alt)] for a product. Entries are an IMG key, or (IMG key, product-specific alt text)."""
+    out = []
+    for entry in p["images"]:
+        key, alt = entry if isinstance(entry, tuple) else (entry, ALT[entry])
+        out.append((IMG[key], alt))
+    return out
+
+
 def product_rows(p, with_metafields=True):
     rows = []
     header = TEMPLATE_HEADER + (list(METAFIELD_COLUMNS.values()) if with_metafields else [])
-    is_hardware = HARDWARE in p["tags"]
-    images = p["images"]
+    is_hardware = HARDWARE in p["tags"] or MG_SHOP in p["tags"]
+    gift_card = p.get("gift_card", False)
+    images = image_list(p)
 
-    for index, (value, price, sku) in enumerate(p["variants"]):
+    for index, variant in enumerate(p["variants"]):
+        value, price, sku = variant[:3]
+        compare_at = variant[3] if len(variant) > 3 else ""
         r = {h: "" for h in header}
         r["URL handle"] = p["handle"]
         if index == 0:
             r["Title"] = p["title"]
             r["Description"] = p["body"]
-            r["Vendor"] = "MG Car Audio"
+            r["Vendor"] = p.get("vendor", "MG Car Audio")
             r["Product category"] = p["category"]
             r["Type"] = p["type"]
             r["Tags"] = ", ".join(p["tags"])
             r["Published on online store"] = "TRUE"
             r["Status"] = "Active"
             r["Option1 name"] = p["option_name"]
-            r["Gift card"] = "FALSE"
+            r["Gift card"] = "TRUE" if gift_card else "FALSE"
             r["SEO title"] = p["seo_title"]
             r["SEO description"] = p["seo_description"]
-            if is_hardware:
+            if is_hardware and not gift_card:
                 r["Google Shopping / Condition"] = "New"
                 r["Google Shopping / Custom product"] = "TRUE"
             if with_metafields:
@@ -2469,7 +2488,8 @@ def product_rows(p, with_metafields=True):
         r["SKU"] = sku
         r["Option1 value"] = value
         r["Price"] = price
-        r["Charge tax"] = "TRUE"
+        r["Compare-at price"] = compare_at
+        r["Charge tax"] = "FALSE" if gift_card else "TRUE"
         if p["shipping"]:
             r["Inventory tracker"] = "shopify"
             r["Inventory quantity"] = str(p["inventory"])
@@ -2483,17 +2503,16 @@ def product_rows(p, with_metafields=True):
         r["Fulfillment service"] = "manual"
         # Images: first image on the first variant row, further images on their own rows below.
         if index == 0 and images:
-            r["Product image URL"] = IMG[images[0]]
+            r["Product image URL"], r["Image alt text"] = images[0]
             r["Image position"] = "1"
-            r["Image alt text"] = ALT[images[0]]
         rows.append(r)
 
-    for position, key in enumerate(images[1:], start=2):
+    for position, (url, alt) in enumerate(images[1:], start=2):
         r = {h: "" for h in header}
         r["URL handle"] = p["handle"]
-        r["Product image URL"] = IMG[key]
+        r["Product image URL"] = url
         r["Image position"] = str(position)
-        r["Image alt text"] = ALT[key]
+        r["Image alt text"] = alt
         rows.append(r)
     return header, rows
 

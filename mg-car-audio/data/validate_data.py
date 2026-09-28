@@ -28,7 +28,9 @@ REQUIRED_SERVICE_PRICES = {
 }
 PAGES = {"about", "contact", "get-a-quote", "book-a-fitting", "carplay-installation", "bmw-carplay",
          "gallery", "faq", "warranty-returns", "shipping", "services"}
-EXTRA_TAGS = {"demo-placeholder", "wireless-carplay", "android-auto", "japan-to-europe", "booking-deposit"}
+EXTRA_TAGS = {"demo-placeholder", "mg-shop", "demo-price", "wireless-carplay", "android-auto", "japan-to-europe",
+              "booking-deposit"}
+BADGE_RE = re.compile(r"^badge:[A-Za-z0-9 ]{2,24}$")
 HANDLE_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 PRICE_RE = re.compile(r"^\d+\.\d{2}$")
 FITTED_RE = re.compile(r"^€\d+$")
@@ -163,20 +165,33 @@ def check_products(path, with_metafields):
         for t in tags:
             if t in COLLECTIONS:
                 counts[t] += 1
+            elif t.startswith("badge:"):
+                if not BADGE_RE.match(t):
+                    err("%s: %s badge tag %r should look like badge:Fitted in 1 hr" % (name, handle, t))
             elif not (t.startswith("make:") or t.startswith("type:") or t in EXTRA_TAGS):
                 err("%s: %s has unknown tag %r" % (name, handle, t))
         is_install = g("Type") == "Installation"
+        is_gift = g("Gift card") == "TRUE"
         ship_values = {v[col["Requires shipping"]] for v in p["variants"]}
-        if is_install:
+        for v in p["variants"]:
+            cap = v[col["Compare-at price"]]
+            if cap and (not PRICE_RE.match(cap) or float(cap) <= float(v[col["Price"]] or 0)):
+                err("%s: %s compare-at price %r must be higher than the price" % (name, handle, cap))
+        if is_gift:
+            if ship_values != {"FALSE"}:
+                err("%s: gift card %s must have Requires shipping FALSE" % (name, handle))
+            if "gift-vouchers" not in tags:
+                err("%s: gift card %s must be tagged gift-vouchers" % (name, handle))
+        elif is_install:
             if g("Vendor") != "MG Car Audio":
                 err("%s: installation %s must have vendor MG Car Audio" % (name, handle))
             if ship_values != {"FALSE"}:
                 err("%s: installation %s must have Requires shipping FALSE" % (name, handle))
             if "demo-placeholder" in tags:
-                err("%s: installation %s should not be tagged demo-placeholder" % (name, handle))
+                err("%s: installation %s should not be tagged demo-placeholder (use demo-price)" % (name, handle))
         else:
-            if "demo-placeholder" not in tags:
-                err("%s: hardware %s must be tagged demo-placeholder" % (name, handle))
+            if ("demo-placeholder" in tags) == ("mg-shop" in tags):
+                err("%s: hardware %s must be tagged either demo-placeholder or mg-shop" % (name, handle))
             if ship_values != {"TRUE"}:
                 err("%s: hardware %s must have Requires shipping TRUE" % (name, handle))
         if handle in REQUIRED_SERVICE_PRICES:
@@ -214,8 +229,11 @@ def check_products(path, with_metafields):
     for h in REQUIRED_SERVICE_PRICES:
         if h not in products:
             err("%s: required product %s is missing" % (name, h))
-    if not 4 <= counts["best-sellers"] <= 6:
-        err("%s: best-sellers has %d products, expected 4-6" % (name, counts["best-sellers"]))
+    if not 6 <= counts["best-sellers"] <= 8:
+        err("%s: best-sellers has %d products, expected 6-8" % (name, counts["best-sellers"]))
+    for c, n in counts.items():
+        if c != "gift-vouchers" and n < 4:
+            err("%s: collection %s has only %d products (the demo needs at least 4)" % (name, c, n))
     if counts["carplay-android-auto"] < 8:
         err("%s: carplay-android-auto has only %d products" % (name, counts["carplay-android-auto"]))
     return dict(products=products, col=col, counts=counts)

@@ -250,21 +250,16 @@ Don't assign these definitions to a product category ("category metafields"): th
 
 1. **Products → Import → Add file** → `mg-car-audio/data/products.csv`.
 2. Leave "Overwrite products with matching handles" unticked the first time (tick it for re-imports). Tick "Publish new products to all sales channels" if offered.
-3. **Upload and preview**. The preview should say **20 products**. **Import products**. Shopify downloads the 22 images from MG's Wix site, which takes a few minutes; you get an email when it's done.
+3. **Upload and preview**. The preview should say **59 products**. **Import products**. Shopify downloads the 66 images (MG's Wix site, Unsplash and the theme CDN), which takes a few minutes; you get an email when it's done.
 
-**What's in it:**
-
-| Group | Products | Prices |
-|---|---|---|
-| Demo hardware (tag `demo-placeholder`) | 10: CarPlay/Android Auto interfaces for BMW NBT/NBT EVO, Audi MMI 3G/3G+, Mercedes NTG 4.5/5, VW MIB2; 10.25" BMW F30 and 12.3" Mercedes W205 Android screens; 9" Android double-DIN radio; 7" CarPlay double-DIN radio; wireless CarPlay adapter; reverse camera kit | **All placeholders** (€79–€699) |
-| Installation services (type `Installation`, vendor MG Car Audio, no shipping) | 10: CarPlay Installation – BMW (4 iDrive variants, all €350), Android Auto BMW iDrive 7 (€299), Android radio installation (€150), BMW iDrive 7 video in motion (€149), BMW Japan-to-Europe (€450), Mercedes Japan-to-Europe (€450\*), VW Japan-to-Europe (€350\*), radio frequency conversion (€150\*), reverse camera installation (BMW €750, Audi €699, VW €650, Honda €399), booking deposit (€50) | **MG's real prices.** \*From MG's own service pages; the build spec lists these three as "price on request": confirm with MG |
+**What's in it:** see `data/PRODUCTS_README.md` (every product, price, real vs demo, collection counts and image credits). In short: MG's 3 real Wix shop products (tag `mg-shop`), MG's 10 real services (type `Installation`, real prices), 3 demo-priced services (tag `demo-price`) and 43 demo products (tag `demo-placeholder`, own-label, placeholder prices).
 
 **After, check:**
 
-1. **Products**: 20 products, all Active. Filter by tag `demo-placeholder`: 10.
-2. Open **Wireless CarPlay & Android Auto Interface – BMW NBT / NBT EVO**: 3 variants at €249, 1 image with alt text, and in **Metafields**: Car make `BMW`, Car model **8 separate items**, Fitted price `€350`.
+1. **Products**: 59 products, all Active. Filter by tag `demo-placeholder`: 43.
+2. Open **Wireless CarPlay & Android Auto Interface – BMW NBT / NBT EVO**: 3 variants at €249, 2 images with alt text, and in **Metafields**: Car make `BMW`, Car model **8 separate items**, Fitted price `€350`.
 3. Open **CarPlay Installation – BMW**: 4 variants at €350, "This is a physical product" unticked, "Charge tax" ticked.
-4. Hardware stock: tracked, 6–20 units at MG Car Audio – Ballymount.
+4. Hardware stock: tracked, 4–40 units at MG Car Audio – Ballymount.
 
 **If the metafields didn't import** (empty, or Car model is one item containing line breaks). Shopify's help centre couldn't be read from the build environment, so the list format in the CSV (one value per line in the cell, as Shopify's own exports write it) is the best available evidence rather than a confirmed spec (Appendix C). Then:
 
@@ -279,18 +274,18 @@ Don't assign these definitions to a product category ("category metafields"): th
 
 | Title | Handle = tag | Sort | Description (shown in the collection hero) | Products now |
 |---|---|---|---|---|
-| CarPlay & Android Auto | `carplay-android-auto` | Best selling | Wireless Apple CarPlay and Android Auto for your factory screen, plus widescreen upgrades and CarPlay radios, supplied and fitted at our Dublin 12 workshop. | 11 |
-| Android Radios | `android-radios` | Best selling | Android touchscreen radios with wireless CarPlay and Android Auto built in, and professional fitting for €150. | 2 |
-| Screen Upgrades | `screen-upgrades` | Best selling | OEM-style widescreen Android displays for BMW, Mercedes-Benz, Audi and VW, with wireless CarPlay and Android Auto. | 2 |
-| Speakers | `speakers` | Best selling | Door and dash speaker upgrades from trusted brands such as JBL, fitted properly for clearer sound. | 0 |
-| Subwoofers | `subwoofers` | Best selling | Deep, controlled bass for any car, from compact under-seat subwoofers to boot enclosures. | 0 |
-| Amplifiers | `amplifiers` | Best selling | Amplifiers that give your speakers and subwoofer the clean power they need. | 0 |
-| Dashcams | `dashcams` | Best selling | Front and rear dashcams, hard-wired with no trailing cables. | 0 |
-| Reverse Cameras | `reverse-cameras` | Best selling | HD reversing cameras that work with your factory or aftermarket screen, supplied and fitted in Dublin 12. | 2 |
-| Accessories | `accessories` | Best selling | Wireless CarPlay adapters, leads and the small upgrades that make a big difference. | 1 |
+| CarPlay & Android Auto | `carplay-android-auto` | Best selling | Wireless Apple CarPlay and Android Auto for your factory screen, plus widescreen upgrades and CarPlay radios, supplied and fitted at our Dublin 12 workshop. | 8 |
+| Android Radios | `android-radios` | Best selling | Android touchscreen radios with wireless CarPlay and Android Auto built in, and professional fitting for €150. | 7 |
+| Screen Upgrades | `screen-upgrades` | Best selling | OEM-style widescreen Android displays for BMW, Mercedes-Benz, Audi and VW, with wireless CarPlay and Android Auto. | 6 |
+| Speakers | `speakers` | Best selling | Door and dash speaker upgrades from trusted brands such as JBL, fitted properly for clearer sound. | 7 |
+| Subwoofers | `subwoofers` | Best selling | Deep, controlled bass for any car, from compact under-seat subwoofers to boot enclosures. | 6 |
+| Amplifiers | `amplifiers` | Best selling | Amplifiers that give your speakers and subwoofer the clean power they need. | 7 |
+| Dashcams | `dashcams` | Best selling | Front and rear dashcams, hard-wired with no trailing cables. | 5 |
+| Reverse Cameras | `reverse-cameras` | Best selling | HD reversing cameras that work with your factory or aftermarket screen, supplied and fitted in Dublin 12. | 4 |
+| Accessories | `accessories` | Best selling | Wireless CarPlay adapters, leads and the small upgrades that make a big difference. | 8 |
 | Installation Services | `installation-services` | Manually (put CarPlay Installation – BMW first) | Book CarPlay, Android Auto, radio, camera and conversion fittings at our Dublin 12 workshop. A €50 deposit secures your slot. | 9 |
-| Gift Vouchers | `gift-vouchers` | Best selling | Give the gift of a better drive. Our gift vouchers can be spent on products and fitting. | 0 |
-| Best Sellers | `best-sellers` | Manually | Our most popular upgrades and fitting services. | 6 |
+| Gift Vouchers | `gift-vouchers` | Best selling | Give the gift of a better drive. Our gift vouchers can be spent on products and fitting. | 1 |
+| Best Sellers | `best-sellers` | Manually | Our most popular upgrades and fitting services. | 8 |
 
 **SEO (Search engine listing)** for each collection:
 
@@ -313,7 +308,7 @@ Don't assign these definitions to a product category ("category metafields"): th
 
 **Collection images** (optional; the collection hero falls back to its own design): download and upload MG's pictures. BMW CarPlay (`c67c38_a37dca…png`) for CarPlay & Android Auto and Screen Upgrades; dash radio (`c67c38_5bc219…jpg`) for Android Radios; speaker pair (https://static.wixstatic.com/media/c67c38_5bd4a81395ac4bb39a3e5aeabc54406f~mv2.jpg) for Speakers; showroom (`c67c38_9f66ce…jpeg`) for Installation Services and Best Sellers. Full URLs are in `data/build_products.py`.
 
-The five empty collections (Speakers, Subwoofers, Amplifiers, Dashcams, Gift Vouchers) are created now because the theme and redirects link to them, but keep them out of the menu until Phase 2 adds products. Gift vouchers in Phase 2: **Products → Gift cards → Add gift card product**, denominations €50 / €100 / €250 *(placeholder)*, tag `gift-vouchers`.
+Every collection now has demo products (see `data/PRODUCTS_README.md`), so Speakers, Subwoofers, Amplifiers and Dashcams can go in the menu. The gift voucher is imported as a gift card product (€50 / €100 / €250 *(placeholder)*, tag `gift-vouchers`); if the import rejects it, create it in **Products → Gift cards**.
 
 ---
 
@@ -397,7 +392,7 @@ Apple CarPlay & Android Auto → `/pages/carplay-installation` · BMW Apple CarP
 | 6 | Price | Price |
 | 7 | Availability (already there by default) | Availability |
 
-A metafield only appears in the source list if its definition exists (§4.4). Filters only show on the storefront for values that products actually have. **Brand** (Vendor) has a single value in Phase 1, because every demo product's vendor is `MG Car Audio` (the hardware is own-label placeholder stock). It becomes useful in Phase 2, when MG's real products (JBL and so on) are added with their brand as the vendor.
+A metafield only appears in the source list if its definition exists (§4.4). Filters only show on the storefront for values that products actually have. **Brand** (Vendor) has two values in Phase 1: `JBL` (MG's real JBL Stadium listing) and `MG Car Audio` (everything else, including the own-label placeholder stock). It becomes more useful as MG's real branded products replace the demo stock.
 
 3. Check: `/collections/all?filter.p.m.custom.car_make=BMW` (the BMW page's "Shop BMW parts" button) should list only BMW products.
 4. **Synonyms** (Search & Discovery → Synonyms), one group per line:
@@ -578,6 +573,45 @@ In Shopify's bulk editor, separate list values with commas. Values containing a 
 | `radio-frequency-conversion-japan-to-europe` | Toyota; Lexus; Nissan; Honda; Mazda | – | – | €150 |
 | `reverse-camera-installation` | BMW; Audi; Volkswagen; Honda | – | – | €399 |
 | `booking-deposit` | – | – | – | – |
+| `jbl-stadium-52cf-speakers-set` | Universal | – | – | – |
+| `coaxial-speaker-pair` | Universal | – | – | – |
+| `compact-single-din` | Universal | – | – | – |
+| `mg-select-10in-android-radio-wireless-carplay` | Universal | – | 10.1" | €479 |
+| `mg-select-7in-android-radio` | Universal | – | 7" | €329 |
+| `mg-select-9in-android-radio-kit-vw-golf-mk6` | Volkswagen | Golf (Mk6); Passat (B6/B7); Tiguan (5N) | 9" | €499 |
+| `android-screen-upgrade-bmw-f10-10-25` | BMW | 5 Series (F10/F11) | 10.25" | €749 |
+| `bmw-e90-8-8-android-screen-upgrade` | BMW | 3 Series (E90/E91); 3 Series (E92/E93) | 8.8" | €599 |
+| `android-screen-upgrade-audi-a4-b8-10-25` | Audi | A4 (B8); A5 (8T) | 10.25" | €729 |
+| `android-screen-upgrade-mercedes-a-class-w176` | Mercedes-Benz | A-Class (W176); CLA (C117); GLA (X156); B-Class (W246) | 10.25" | €699 |
+| `mg-select-6-5in-component-speakers` | Universal | – | – | €228 |
+| `mg-select-6x9-coaxial-speakers` | Universal | – | – | €158 |
+| `mg-select-3-5in-dash-speakers` | Universal | – | – | €118 |
+| `bmw-speaker-upgrade-kit-f-series` | BMW | 1 Series (F20/F21); 2 Series (F22/F23); 3 Series (F30/F31); 4 Series (F32/F33/F36); X1 (F48) | – | €399 |
+| `speaker-fitting` | Universal | – | – | €79 |
+| `mg-select-10in-underseat-active-subwoofer` | Universal | – | – | €279 |
+| `mg-select-10in-slim-active-subwoofer-enclosure` | Universal | – | – | €349 |
+| `mg-select-12in-subwoofer-ported-enclosure` | Universal | – | – | €319 |
+| `mg-select-12in-subwoofer-driver` | Universal | – | – | – |
+| `bass-package-12in-subwoofer-amplifier` | Universal | – | – | €599 |
+| `subwoofer-amplifier-installation` | Universal | – | – | €149 |
+| `mg-select-4-channel-amplifier` | Universal | – | – | €319 |
+| `mg-select-mono-sub-amplifier` | Universal | – | – | €299 |
+| `mg-select-micro-4-channel-amplifier` | Universal | – | – | €249 |
+| `bmw-plug-and-play-dsp-amplifier` | BMW | 1 Series (F20/F21); 3 Series (F30/F31); 4 Series (F32/F33/F36); 3 Series (G20/G21); 5 Series (G30/G31) | – | €549 |
+| `amplifier-wiring-kit-4awg` | Universal | – | – | – |
+| `mg-select-2k-front-dash-cam` | Universal | – | – | €198 |
+| `mg-select-front-rear-dash-cam` | Universal | – | – | €288 |
+| `mg-select-4k-front-rear-dash-cam` | Universal | – | – | €358 |
+| `dash-cam-hardwire-kit` | Universal | – | – | – |
+| `dash-cam-installation` | Universal | – | – | €79 |
+| `mg-select-number-plate-reverse-camera` | Universal | – | – | €229 |
+| `bmw-idrive-reverse-camera-interface` | BMW | 1 Series (F20/F21); 3 Series (F30/F31); 5 Series (F10/F11); X1 (E84); X3 (F25) | – | €750 |
+| `magnetic-phone-mount` | Universal | – | – | – |
+| `usb-c-fast-car-charger` | Universal | – | – | – |
+| `carplay-android-auto-usb-cable` | Universal | – | – | – |
+| `steering-wheel-control-interface` | Universal | – | – | – |
+| `double-din-fascia-kit` | Universal | – | – | – |
+| `mg-car-audio-gift-voucher` | – | – | – | – |
 
 (`;` separates list items in this table only.)
 
