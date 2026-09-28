@@ -151,7 +151,16 @@
       <div class="mg-footer-cols__brand">
         <div class="mg-footer-cols__brand-copy">
           <p class="mg-footer-cols__logo">
-            <a href="{{ routes.root_url }}">{{ business_name | escape }}</a>
+            <a href="{{ routes.root_url }}" aria-label="{{ business_name | escape }}">
+              <img
+                src="{{ 'mg-logo-512.webp' | asset_url }}"
+                alt=""
+                width="72"
+                height="72"
+                loading="lazy"
+                class="mg-footer-cols__badge"
+              >
+            </a>
           </p>
           {%- if section.settings.show_tagline and settings.mg_tagline != blank -%}
             <p class="mg-footer-cols__tagline">{{ settings.mg_tagline | escape }}</p>
@@ -911,12 +920,12 @@
     text-decoration: none;
   }
 
-  .mg-footer-cols__logo a::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
-    background-color: var(--mg-red);
+  .mg-footer-cols__badge {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--mg-line);
   }
 
   .mg-footer-cols__tagline {

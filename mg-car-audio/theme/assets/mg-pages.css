@@ -1,14 +1,14 @@
 /* MG page styles: services hub, service pages, latest jobs, about, contact, FAQ. Owned by the pages task. */
 
 /*
- * Bold uppercase heading (v4): Prompt 600, tight tracking, for page h1s, big tile labels and
+ * Bold uppercase heading (v4): Barlow Condensed 700, for page h1s, big tile labels and
  * section heads on inner pages. Sentence-case copy stays as it is; CSS does the uppercasing so
  * screen readers read the words normally.
  */
 .mg-pg-caps {
-  font-family: var(--mg-font-ui);
-  font-weight: 600;
-  letter-spacing: -0.012em;
+  font-family: var(--mg-font-display);
+  font-weight: 700;
+  letter-spacing: 0.005em;
   text-transform: uppercase;
   text-wrap: balance;
 }

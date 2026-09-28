@@ -31,8 +31,8 @@
         "fallback_image": "mg-img-hero-1",
         "slideshow": true,
         "fallback_2": "mg-img-hero-2",
-        "fallback_3": "mg-img-hero-3",
-        "slide_seconds": 7
+        "slide_seconds": 7,
+        "fallback_3": "none"
       }
     },
     "trust_bar": {
@@ -501,7 +501,7 @@
             "title": "Screen upgrades",
             "group": "screens",
             "text": "Bigger widescreens with CarPlay and Android Auto built in.",
-            "price": "€X",
+            "price": "",
             "price_label": "From",
             "duration": "",
             "url": "/collections/screen-upgrades",
@@ -571,7 +571,7 @@
             "title": "Speaker and subwoofer upgrades",
             "group": "audio",
             "text": "JBL and Harman Kardon speakers, subs and amps for your car.",
-            "price": "€X",
+            "price": "",
             "price_label": "From",
             "duration": "",
             "url": "/collections/speakers",

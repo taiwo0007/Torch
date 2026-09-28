@@ -39,6 +39,9 @@
   if description == blank and section.settings.fallback_text != blank
     assign description = section.settings.fallback_text | escape | newline_to_br | prepend: '<p>' | append: '</p>'
   endif
+  if section.settings.show_description == false
+    assign description = ''
+  endif
 
   # Long descriptions are clamped server-side (over ~3 lines even at full width), so the
   # "Read more" button is in the first paint and nothing below it shifts.
@@ -116,13 +119,19 @@
     endif
   endif
 
+  # With the image off the header is plain text on the page (title, price, count), so the
+  # products start in the first screen, like a shop listing
+  assign section_classes = 'mg-section mg-ch'
   assign panel_classes = 'mg-panel mg-surface-night mg-red-line mg-ch__panel'
   if section.settings.show_image
     assign panel_classes = panel_classes | append: ' mg-ch__panel--media'
+  else
+    assign panel_classes = 'mg-ch__panel mg-ch__panel--plain'
+    assign section_classes = section_classes | append: ' mg-ch--compact'
   endif
 -%}
 
-<div class="mg-section mg-ch">
+<div class="{{ section_classes }}">
   <div class="mg-container">
     {%- if section.settings.show_breadcrumbs -%}
       <nav
@@ -579,6 +588,28 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Compact (image off): no panel, tight spacing, the grid follows straight after */
+  .mg-ch--compact.mg-section {
+    padding-block: var(--mg-space-4) 0;
+  }
+
+  .mg-ch__panel--plain {
+    padding: 0;
+  }
+
+  .mg-ch__panel--plain .mg-ch__title {
+    font-size: clamp(1.875rem, 4.2vw, 2.75rem);
+    text-transform: uppercase;
+  }
+
+  .mg-ch--compact .mg-ch__meta {
+    margin-block-start: var(--mg-space-1);
+  }
+
+  .mg-ch--compact .mg-ch__cars {
+    margin-block-start: var(--mg-space-3);
+  }
+
   /* Shop by car: label then a chip row (scrolls on phones, wraps from 750px) */
   .mg-ch__cars {
     display: grid;
@@ -948,6 +979,13 @@
     {
       "type": "header",
       "content": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "info": "Off keeps the header to the title, price and count, so the products start sooner.",
+      "default": true
     },
     {
       "type": "textarea",

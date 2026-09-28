@@ -93,8 +93,8 @@
   --mg-shadow-float: 0 4px 12px rgb(15 17 21 / 0.14), 0 12px 32px rgb(15 17 21 / 0.12);
 
   /* Type */
-  --mg-font-ui: 'Prompt', system-ui, sans-serif;
-  --mg-font-display: 'Source Serif 4', Georgia, serif;
+  --mg-font-ui: 'Barlow', system-ui, sans-serif;
+  --mg-font-display: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
   --mg-fs-hero: clamp(2.25rem, 6vw, 3.75rem);
   --mg-fs-statement: clamp(1.875rem, 4.5vw, 3rem);
   --mg-fs-banner: clamp(2rem, 5vw, 3.25rem);
@@ -618,15 +618,15 @@ progress {
   margin-inline: auto;
 }
 
-/* Serif statement ("Ireland's CarPlay and car audio specialist.") */
+/* Display statement, Barlow Condensed 700 ("Ireland's CarPlay and car audio specialist.") */
 .mg-display {
   margin: 0;
   padding-block-end: 0.08em; /* descender room for italic lines */
   font-family: var(--mg-font-display);
   font-size: var(--mg-fs-statement);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   text-wrap: balance;
   color: inherit;
 }
@@ -652,9 +652,9 @@ progress {
   padding-block-end: 0.06em;
   font-family: var(--mg-font-display);
   font-size: var(--mg-fs-banner);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.08;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   text-wrap: balance;
   color: inherit;
 }
@@ -2286,14 +2286,15 @@ html.mg-reveal-on [data-mg-reveal-stagger]:not(.is-revealed) > * {
 
 /* === task: home === */
 /*
- * Bold uppercase section heads (Radio Masters' structure, MG's type): Prompt 600, tight
- * tracking. Use with .mg-head: <div class="mg-head mg-head--caps">. Home sections only.
+ * Bold uppercase section heads (car-shop style): Barlow Condensed 700
+ * uppercase. Use with .mg-head: <div class="mg-head mg-head--caps">. Home sections only.
  */
 .mg-head--caps .mg-head__title {
-  font-size: clamp(1.5rem, 3.4vw, 2.25rem);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-family: var(--mg-font-display);
+  font-size: clamp(1.75rem, 3.8vw, 2.625rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.005em;
   text-transform: uppercase;
   text-wrap: balance;
 }
