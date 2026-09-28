@@ -253,18 +253,21 @@
     transition: transform var(--mg-dur-slow) var(--mg-ease-out);
   }
 
+  .mg-systems__img {
+    filter: brightness(1.18) saturate(1.08);
+  }
+
   .mg-systems__item--feature .mg-systems__img {
     object-position: var(--mg-pos-wide, 50% 50%);
   }
 
-  /* Scrim: dark under the text, a light shade over the whole photo */
+  /* Scrim: dark only under the text, the photo itself stays bright */
   .mg-systems__media::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.94) 0%, rgb(var(--mg-night-rgb) / 0.62) 36%, rgb(var(--mg-night-rgb) / 0.08) 72%),
-      rgb(var(--mg-night-rgb) / 0.14);
+      linear-gradient(to top, rgb(var(--mg-night-rgb) / 0.82) 0%, rgb(var(--mg-night-rgb) / 0.34) 34%, rgb(var(--mg-night-rgb) / 0) 62%);
   }
 
   /* Red edge on hover and focus, drawn above the photo */

@@ -54,7 +54,7 @@
                     aria-current="page"
                   {% endif %}
                 >
-                  {{- link.title -}}
+                  {%- render 'mg-menu-label', link: link -%}
                 </a>
               </li>
             {% endfor %}
@@ -111,7 +111,7 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">{%- render 'mg-menu-label', link: link -%}</span>
           </a>
           {%- if link.links != blank -%}
             <button

@@ -135,7 +135,7 @@
                         id="HeaderDrawer-{{ link.handle }}"
                         class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
                       >
-                        {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                        {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{% render 'mg-menu-label', link: link %}</span>
                         <span class="svg-wrapper icon-plus">
                           {{- 'icon-plus.svg' | inline_asset_content -}}
                         </span>
@@ -199,7 +199,7 @@
                       aria-current="page"
                     {% endif %}
                   >
-                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{% render 'mg-menu-label', link: link %}</span>
                   </a>
                   {% liquid
                     assign render_link_image = false
@@ -253,7 +253,7 @@
                       aria-current="page"
                     {% endif %}
                   >
-                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{% render 'mg-menu-label', link: link %}</span>
                   </a>
                 {% endif %}
               </li>
@@ -282,7 +282,7 @@
                       class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
                       on:click="header-drawer/open/submenu"
                     >
-                      {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                      {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{% render 'mg-menu-label', link: link %}</span>
                       <span class="svg-wrapper icon-caret icon-caret--forward">
                         {{- 'icon-caret.svg' | inline_asset_content -}}
                       </span>
@@ -582,7 +582,7 @@
                       aria-current="page"
                     {% endif %}
                   >
-                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                    {%- render 'mg-drawer-icon', link: link -%}<span class="menu-drawer__menu-item-text wrap-text">{% render 'mg-menu-label', link: link %}</span>
                   </a>
                 {%- endif -%}
               </li>

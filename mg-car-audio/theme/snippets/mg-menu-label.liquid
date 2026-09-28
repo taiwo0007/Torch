@@ -1,0 +1,29 @@
+{%- doc -%}
+  MG wording for the top-level menu items, so the header and phone menu read as MG's own
+  ("Shop parts", "Fitting services", "Your car", "Our work", "Why MG", "Find us"). Only the
+  stock titles set up for the demo are reworded; any title the owner types in Content → Menus
+  shows as typed.
+
+  @param {object} link - The menu link
+
+  @example
+  {% render 'mg-menu-label', link: link %}
+{%- enddoc -%}
+{%- liquid
+  assign t = link.title | strip
+  case t
+    when 'Shop'
+      assign t = 'Shop parts'
+    when 'Services'
+      assign t = 'Fitting services'
+    when 'Car makes'
+      assign t = 'Your car'
+    when 'Latest jobs'
+      assign t = 'Our work'
+    when 'About'
+      assign t = 'Why MG'
+    when 'Contact'
+      assign t = 'Find us'
+  endcase
+  echo t | escape
+-%}

@@ -74,7 +74,7 @@
       role="list"
     >
       {%- if section.settings.show_phone and phone != blank -%}
-        <li class="mg-topbar__item mg-topbar__item--desktop">
+        <li class="mg-topbar__item mg-topbar__item--phone">
           <a
             class="mg-topbar__link mg-topbar__link--strong"
             href="tel:+{{ phone }}"
@@ -254,6 +254,11 @@
     }
 
     .mg-topbar__item--desktop {
+      display: none;
+    }
+
+    /* Phones: phone number and rating; the location lives in the menu's workshop card */
+    .mg-topbar__item--location {
       display: none;
     }
 
