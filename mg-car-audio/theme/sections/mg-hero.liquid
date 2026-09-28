@@ -586,11 +586,34 @@
 
   @keyframes mg-hero-zoom {
     from {
-      transform: scale(1);
+      transform: scale(1.02);
     }
 
     to {
-      transform: scale(1.06);
+      transform: scale(1.14);
+    }
+  }
+
+  /* A light sweep across the red headline line, and a glow ring pulsing off the price sticker */
+  @keyframes mg-hero-shine {
+    0%,
+    55% {
+      background-position: 120% 0;
+    }
+
+    100% {
+      background-position: -20% 0;
+    }
+  }
+
+  @keyframes mg-hero-ping {
+    0% {
+      box-shadow: 0 0 0 0 rgb(var(--mg-red-rgb) / 0.55);
+    }
+
+    70%,
+    100% {
+      box-shadow: 0 0 0 18px rgb(var(--mg-red-rgb) / 0);
     }
   }
 
@@ -647,6 +670,21 @@
 
     .mg-hero--slides-3 .mg-hero__slide:nth-child(3) {
       animation-delay: var(--mg-hero-slide);
+    }
+
+    .mg-hero .mg-hero__accent {
+      background: linear-gradient(100deg, var(--mg-red) 0%, var(--mg-red) 40%, #ff9b8f 50%, var(--mg-red) 60%, var(--mg-red) 100%);
+      background-size: 250% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation:
+        mg-rise 640ms var(--mg-ease-out) var(--mg-load-delay, 0ms) both,
+        mg-hero-shine 4.5s ease-in-out 1.2s infinite;
+    }
+
+    .mg-hero__promo {
+      animation: mg-hero-ping 2.2s var(--mg-ease-out) 1.5s infinite;
     }
 
     /* Pause on hover, while a link has focus, offscreen, or when paused by the button */
@@ -888,7 +926,7 @@
       "type": "range",
       "id": "slide_seconds",
       "label": "Seconds per photo",
-      "min": 5,
+      "min": 3,
       "max": 12,
       "step": 1,
       "unit": "s",
