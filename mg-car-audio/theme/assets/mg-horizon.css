@@ -230,8 +230,8 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
 /* Round MG badge logo (assets/mg-logo-512.webp), no ring */
 #header-component .mg-logo-badge {
   display: block;
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   max-width: none;
   border-radius: 50%;
   object-fit: contain;
@@ -239,8 +239,8 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
 
 @media screen and (max-width: 749px) {
   #header-component .mg-logo-badge {
-    width: 46px;
-    height: 46px;
+    width: 64px;
+    height: 64px;
   }
 }
 
@@ -686,9 +686,8 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
 }
 
 @media screen and (max-width: 749px) {
-  #header-component .header__row--top .header__columns {
-    --padding-block-start: var(--mg-space-2);
-    --padding-block-end: var(--mg-space-2);
+  #header-component .header__row--top .header__columns.header__columns {
+    padding-block: 6px;
   }
 
   #header-component .header__drawer {
