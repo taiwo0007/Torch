@@ -371,6 +371,41 @@
     }
   }
 
+  /* MG's own tile CTA: sentence-case label beside a red round arrow chip (not an outlined box) */
+  .mg-systems__tile .mg-systems__cta {
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .mg-systems__tile .mg-systems__cta .mg-icon {
+    box-sizing: content-box;
+    width: 14px;
+    height: 14px;
+    padding: 7px;
+    border-radius: 999px;
+    background-color: var(--mg-red);
+    color: #fff;
+  }
+
+  @media (hover: hover) {
+    .mg-systems__tile:hover .mg-systems__cta {
+      border-color: transparent;
+      background: none;
+    }
+  }
+
+  .mg-systems__tile:focus-visible .mg-systems__cta {
+    border-color: transparent;
+    background: none;
+  }
+
   .mg-systems__tile:focus-visible {
     outline: 2px solid var(--mg-white);
     outline-offset: -6px;
@@ -552,7 +587,7 @@
       "id": "cta_label",
       "label": "Button text on each tile",
       "info": "An outlined button under each label. The whole tile is the link. Leave blank to hide it.",
-      "default": "Shop now"
+      "default": "See options"
     },
     {
       "type": "text",

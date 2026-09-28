@@ -202,7 +202,7 @@
         "feature_first": true,
         "columns_desktop": 3,
         "full_width": true,
-        "cta_label": "Shop now",
+        "cta_label": "See options",
         "price_fallback": ""
       }
     },
@@ -1175,10 +1175,10 @@
     "visit_callback": {
       "type": "mg-visit-callback",
       "settings": {
-        "heading": "Request a callback",
+        "heading": "Talk to the workshop",
         "text": "Tell us your car and what you need. We'll call you back with a fixed fitted price.",
         "message_placeholder": "For example: wireless CarPlay for a 2017 BMW 3 Series",
-        "button_label": "Request a callback",
+        "button_label": "Call me back",
         "form_note": "We call back during opening hours.",
         "enquiry_type": "Callback request (home page)",
         "success_heading": "Thanks, we'll call you back",

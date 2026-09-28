@@ -51,7 +51,7 @@
         "background": "page",
         "button_label": "Get a quote",
         "button_url": "/pages/get-a-quote",
-        "button_2_label": "Our services",
+        "button_2_label": "Browse services",
         "button_2_url": "/pages/services"
       }
     },

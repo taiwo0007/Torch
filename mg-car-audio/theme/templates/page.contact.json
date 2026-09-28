@@ -40,7 +40,7 @@
         "form_text": "Name, mobile and email are all we need. The car details help us answer faster.",
         "make_list": "BMW\nAudi\nVolkswagen\nMercedes-Benz\nToyota\nHonda\nNissan\nLexus\nFord\nMazda\nHyundai\nKia\nSkoda\nSEAT\nRenault\nPeugeot\nCitroën\nVolvo\nLand Rover\nOther",
         "service_list": "Apple CarPlay & Android Auto installation\nAndroid radio\nRadio upgrade\nScreen upgrade (BMW, Mercedes, Audi, VW)\nJBL radio\nSpeaker upgrade\nSubwoofer\nAmplifier\nDashcam installation\nReverse camera installation\nNo-sound repair\nBlack-screen repair\nRadio password / code\nJapan-to-Europe conversion (imports)\nNot sure yet, please advise",
-        "submit_label": "Send message",
+        "submit_label": "Send my enquiry",
         "privacy_text": "We only use your details to reply to this request.",
         "enquiry_type": "Contact page message",
         "show_whatsapp_photo_step": true,

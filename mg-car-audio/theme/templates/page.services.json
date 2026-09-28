@@ -191,7 +191,7 @@
         "subheading": "Tap a tile for prices, the cars we fit and recent jobs.",
         "columns_desktop": "3",
         "mosaic": true,
-        "details_label": "Details",
+        "details_label": "View service",
         "show_book": true,
         "book_label": "Book",
         "book_url": "/pages/book-a-fitting"
