@@ -159,8 +159,7 @@
 
       {%- if show_promo -%}
         <a
-          class="mg-hero__promo mg-load-rise"
-          style="--mg-load-delay: 520ms;"
+          class="mg-hero__promo"
           href="{{ promo_url }}"
         >
           {%- if promo_title != blank -%}
@@ -554,9 +553,9 @@
       margin-block-start: var(--mg-space-6);
     }
 
+    /* Top right, clear of the screens (they sit low in the photos) and under the pause button */
     .mg-hero__promo {
-      inset-block-start: auto;
-      inset-block-end: var(--mg-space-7);
+      inset-block-start: var(--mg-space-9);
       inset-inline-end: var(--mg-space-7);
       width: 128px;
     }
