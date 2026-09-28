@@ -64,7 +64,7 @@
 -%}
 
 <div
-  class="mg-topbar mg-topbar--mobile-{{ mobile }}"
+  class="mg-topbar mg-topbar--mobile-{{ mobile }}{% if template.name == 'product' %} mg-topbar--product{% endif %}"
   role="region"
   aria-label="{{ section.settings.region_label | default: 'Contact and opening hours' | escape }}"
 >

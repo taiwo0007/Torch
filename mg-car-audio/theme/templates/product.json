@@ -48,7 +48,7 @@
             "custom_width_mobile": 100,
             "height": "fit",
             "details_position": "flex-start",
-            "gap": 20,
+            "gap": 14,
             "sticky_details_desktop": false,
             "background_media": "none",
             "video_position": "cover",
@@ -131,7 +131,7 @@
                   "settings": {
                     "show_sale_price_first": true,
                     "show_installments": false,
-                    "show_tax_info": true,
+                    "show_tax_info": false,
                     "type_preset": "paragraph",
                     "width": "100%",
                     "alignment": "left",
@@ -490,7 +490,7 @@
         "equal_columns": true,
         "limit_details_width": false,
         "gap": 48,
-        "padding-block-start": 24,
+        "padding-block-start": 8,
         "padding-block-end": 0,
         "enable_sticky_add_to_cart": true
       }

@@ -853,3 +853,47 @@ html .product-details .variant-option--buttons .variant-option__button-label:has
 .collection-wrapper:not(:has(.facets)) .main-collection-grid__empty {
   display: none;
 }
+
+/* ---------- Phones: product page gets straight to the product ----------
+ * No contact strip above the header, a 4:3 photo, a tighter title and two-up option cards,
+ * so the photo, title, price, options and Add to cart fit in the first screen.
+ */
+@media screen and (max-width: 749px) {
+  .mg-topbar--product {
+    display: none;
+  }
+
+  .product-information .product-media-container {
+    --gallery-aspect-ratio: 4 / 3;
+  }
+
+  .product-information .product-media-container img {
+    object-fit: cover;
+  }
+
+  .product-details .group-block-content :is(h1, .h2) {
+    font-size: 1.375rem;
+    line-height: 1.2;
+  }
+
+  html .product-details .variant-picker .variant-option--buttons:not(.variant-option--swatches) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html .product-details .variant-picker .variant-option--buttons:not(.variant-option--swatches) legend {
+    margin-block-end: var(--mg-space-1);
+  }
+
+  html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch) {
+    gap: var(--mg-space-2);
+    min-height: 48px;
+    padding: var(--mg-space-2) var(--mg-space-3);
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  html .product-details .variant-option--buttons .variant-option__button-label:not(.variant-option__button-label--has-swatch)::before {
+    width: 16px;
+    height: 16px;
+  }
+}
