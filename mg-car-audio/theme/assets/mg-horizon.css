@@ -227,14 +227,13 @@ body:has(h1.mg-hero__title) #header-component > h1.visually-hidden {
   }
 }
 
-/* Round MG badge logo (assets/mg-logo-512.webp): a hairline ring keeps the black disc visible on the near-black header */
+/* Round MG badge logo (assets/mg-logo-512.webp), no ring */
 #header-component .mg-logo-badge {
   display: block;
   width: 56px;
   height: 56px;
   max-width: none;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--mg-line);
   object-fit: contain;
 }
 
