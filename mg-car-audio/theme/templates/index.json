@@ -12,10 +12,10 @@
     "hero": {
       "type": "mg-hero",
       "settings": {
-        "heading_line_1": "Big screens. Better sound.",
-        "heading_line_2": "Fitted in Dublin 12.",
+        "heading_line_1": "Your dash,",
+        "heading_line_2": "upgraded.",
         "heading_is_h1": true,
-        "lede": "Widescreen displays, wireless CarPlay and Android Auto, and premium audio for your car, fitted at our workshop for a fixed price.",
+        "lede": "Screens, CarPlay and sound, fitted in Dublin 12.",
         "primary_label": "See fitted prices",
         "primary_url": "/collections/carplay-android-auto",
         "secondary_label": "Book a fitting",

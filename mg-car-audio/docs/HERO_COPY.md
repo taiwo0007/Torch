@@ -7,8 +7,8 @@ Skills applied: copywriting (+ copy-frameworks, natural-transitions), cro, marke
 
 | Element | Copy |
 |---|---|
-| Heading line 1 | Big screens. Better sound. |
-| Heading line 2 (MG red) | Fitted in Dublin 12. |
+| Heading line 1 | Your dash, |
+| Heading line 2 (MG red) | upgraded. |
 | Text under the heading (17 words) | Wireless CarPlay and Android Auto on the screen your car came with. No phone mount, no dangling cable. |
 | Main button | See fitted prices (links to `/collections/carplay-android-auto`, Liquid fallback when blank) |
 | Second button | Book a fitting (`/pages/book-a-fitting`) |
@@ -93,3 +93,6 @@ CarPlay and Android Auto, and premium audio for your car, fitted at our workshop
 Pattern: two short stacked benefit claims plus a local proof line (the style big electronics and
 car brands use for range headlines). Alternatives kept for testing: "Make your car feel new. /
 Without changing cars." and "Upgrade your dash. / Fitted in Dublin 12."
+
+Later the same day: Taiwo wanted one short catchy line, not a list. Live now: **Your dash, / upgraded.**
+with the lede "Screens, CarPlay and sound, fitted in Dublin 12."
